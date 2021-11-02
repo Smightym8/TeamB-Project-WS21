@@ -8,6 +8,7 @@ public class HotelViewController {
     // Urls
     private static final String MAIN_MENU_URL = "/";
 
+
     // Views
     private static final String MAIN_MENU_VIEW = "mainMenu";
 
