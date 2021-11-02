@@ -1,3 +1,4 @@
+/*
 package at.fhv.se.hotel.view;
 
 import at.fhv.se.hotel.view.forms.BookingForm;
@@ -205,3 +206,4 @@ public class BankingViewController {
 }
 
 * */
+
