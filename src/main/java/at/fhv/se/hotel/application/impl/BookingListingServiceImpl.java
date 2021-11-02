@@ -32,6 +32,11 @@ public class BookingListingServiceImpl implements BookingListingService {
                         .withId("2")
                         .withStartDate(LocalDate.now().plusDays(2))
                         .withEndDate(LocalDate.now().plusDays(8))
+                        .build(),
+                BookingDTO.builder()
+                        .withId("3")
+                        .withStartDate(LocalDate.now().plusDays(30))
+                        .withEndDate(LocalDate.now().plusDays(40))
                         .build()
         );
 

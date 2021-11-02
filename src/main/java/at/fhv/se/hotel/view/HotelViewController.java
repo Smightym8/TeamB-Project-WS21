@@ -13,7 +13,7 @@ import java.util.List;
 public class HotelViewController {
     // Urls
     private static final String MAIN_MENU_URL = "/";
-    private static final String ALL_BOOKINGS_URL = "/booking";
+    private static final String ALL_BOOKINGS_URL = "/bookinglist";
 
     // Views
     private static final String MAIN_MENU_VIEW = "mainMenu";
@@ -41,7 +41,7 @@ public class HotelViewController {
     public String allBookings(Model model) {
         final List<BookingDTO> bookings = bookingListingService.allBookings();
 
-        model.addAttribute(bookings);
+        model.addAttribute("bookings", bookings);
 
         return ALL_BOOKINGS_VIEW;
     }
