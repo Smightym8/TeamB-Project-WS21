@@ -27,7 +27,7 @@ public class BookingDTO {
     private BookingDTO() {}
 
     public static class Builder {
-        private BookingDTO instance;
+        private final BookingDTO instance;
 
         private Builder() {
             this.instance = new BookingDTO();
