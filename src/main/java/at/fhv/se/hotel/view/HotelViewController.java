@@ -1,6 +1,8 @@
 package at.fhv.se.hotel.view;
 
+import at.fhv.se.hotel.application.api.GuestListingService;
 import at.fhv.se.hotel.application.api.RoomCategoryListingService;
+import at.fhv.se.hotel.application.dto.GuestDTO;
 import at.fhv.se.hotel.application.dto.RoomCategoryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,14 +16,19 @@ public class HotelViewController {
     // Urls
     private static final String MAIN_MENU_URL = "/";
     private static final String CHOOSE_CATEGORY_URL = "/choosecategory";
-
+    private static final String CHOOSE_GUEST_URL = "/chooseguest";
 
     // Views
     private static final String MAIN_MENU_VIEW = "mainMenu";
-    private static final String CHOOSE_CATEGORY_VIEW = "choosecategory";
+    private static final String CHOOSE_CATEGORY_VIEW = "chooseCategory";
+    private static final String CHOOSE_GUEST_VIEW = "chooseGuest";
 
+    // Services
     @Autowired
     private RoomCategoryListingService roomCategoryListingService;
+
+    @Autowired
+    private GuestListingService guestListingService;
 
     /**
      * This method handles a get request on /.
@@ -40,5 +47,14 @@ public class HotelViewController {
         model.addAttribute("categories", categories);
 
         return CHOOSE_CATEGORY_VIEW;
+    }
+
+    @GetMapping(CHOOSE_GUEST_URL)
+    public String chooseGuestForBooking(Model model) {
+        final List<GuestDTO> guests = guestListingService.allGuests();
+
+        model.addAttribute("guests", guests);
+
+        return CHOOSE_GUEST_VIEW;
     }
 }
