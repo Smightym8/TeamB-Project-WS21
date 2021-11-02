@@ -2,15 +2,12 @@
 package at.fhv.se.hotel.view;
 
 import at.fhv.se.hotel.view.forms.BookingForm;
-import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 
 import java.util.Date;
 
 @Controller
-@Getter
-@Setter
 public class BookingController {
 
     private String firstName;
@@ -34,7 +31,7 @@ public class BookingController {
 
     final BookingForm form = new BookingForm(firstName, lastName, eMail, tel, birthdate, country, postalCode, city, streetName, streetNumber, bookedUntil);
 
-    model.addAttribute("form", form);
+//    model.addAttribute("form", form);
 
 }
 /*
