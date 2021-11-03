@@ -23,6 +23,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Room Category</th>
                 <th>Start date</th>
                 <th>End date</th>
             </tr>
@@ -30,6 +31,7 @@
         <tbody>
             <tr th:each="booking : ${bookings}">
                 <td th:text="${booking.id}"></td>
+                <td th:text="${booking.roomCategory}"></td>
                 <td th:text="${booking.startDate}"></td>
                 <td th:text="${booking.endDate}"></td>
             </tr>

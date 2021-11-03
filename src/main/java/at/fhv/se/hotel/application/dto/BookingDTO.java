@@ -3,8 +3,12 @@ package at.fhv.se.hotel.application.dto;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * This class represents a Booking that will be displayed with the id, roomCategory, startDate and endDate.
+ */
 public class BookingDTO {
     private String id;
+    private String roomCategory;
     private LocalDate startDate;
     private LocalDate endDate;
 
@@ -14,6 +18,10 @@ public class BookingDTO {
 
     public String id() {
         return this.id;
+    }
+
+    public String roomCategory() {
+        return this.roomCategory;
     }
 
     public LocalDate startDate() {
@@ -38,6 +46,11 @@ public class BookingDTO {
             return this;
         }
 
+        public Builder withRoomCategory(String roomCategory) {
+            this.instance.roomCategory = roomCategory;
+            return this;
+        }
+
         public Builder withStartDate(LocalDate startDate) {
             this.instance.startDate = startDate;
             return this;
@@ -50,6 +63,7 @@ public class BookingDTO {
 
         public BookingDTO build() {
             Objects.requireNonNull(this.instance.id, "id must be set in BookingDTO");
+            Objects.requireNonNull(this.instance.roomCategory, "roomCategory must be set in BookingDTO");
             Objects.requireNonNull(this.instance.startDate, "startDate must be set in BookingDTO");
             Objects.requireNonNull(this.instance.endDate, "endDate must be set in BookingDTO");
 

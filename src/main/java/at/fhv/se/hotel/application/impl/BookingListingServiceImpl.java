@@ -25,16 +25,19 @@ public class BookingListingServiceImpl implements BookingListingService {
         final List<BookingDTO> bookings = Arrays.asList(
                 BookingDTO.builder()
                         .withId("1")
+                        .withRoomCategory("Single Room")
                         .withStartDate(LocalDate.now())
                         .withEndDate(LocalDate.now().plusDays(10))
                         .build(),
                 BookingDTO.builder()
                         .withId("2")
+                        .withRoomCategory("Junior Suite")
                         .withStartDate(LocalDate.now().plusDays(2))
                         .withEndDate(LocalDate.now().plusDays(8))
                         .build(),
                 BookingDTO.builder()
                         .withId("3")
+                        .withRoomCategory("Suite")
                         .withStartDate(LocalDate.now().plusDays(30))
                         .withEndDate(LocalDate.now().plusDays(40))
                         .build()
