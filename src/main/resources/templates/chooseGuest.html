@@ -24,14 +24,20 @@
             <h1>Choose Guest</h1>
         </div>
     </div>
-    <div class="row">
-        <div class="col-6">
-            <input class="form-control me-2" type="search" placeholder="Search by id" aria-label="Search by id">
+
+    <form th:action="@{/chooseguest}" method="get">
+        <div class="row">
+            <div class="col-6">
+                <input name="id" class="form-control me-2" type="search" placeholder="Search by id" aria-label="Search by id">
+                <button type="submit" class="btn btn-info">Search</button>
+                <button type="reset" class="btn btn-info">Reset</button>
+            </div>
+            <div class="col-6">
+                <input name="name" class="form-control me-2" type="search" placeholder="Search by name" aria-label="Search by name">
+            </div>
         </div>
-        <div class="col-6">
-            <input class="form-control me-2" type="search" placeholder="Search by name" aria-label="Search by name">
-        </div>
-    </div>
+    </form>
+
     <div class="row">
         <div class="col-12">
             <table class="table table-striped">

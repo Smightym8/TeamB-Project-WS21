@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -50,8 +52,15 @@ public class HotelViewController {
     }
 
     @GetMapping(CHOOSE_GUEST_URL)
-    public String chooseGuestForBooking(Model model) {
-        final List<GuestDTO> guests = guestListingService.allGuests();
+    public String chooseGuestForBooking(Model model,@RequestParam(value = "id", required = false) String id,
+                                        @RequestParam (value = "name", required = false) String name) {
+        List<GuestDTO> guests = guestListingService.allGuests();
+
+        if((id != null) && (!id.isEmpty())) {
+            guests = Collections.singletonList(guestListingService.findGuestById(id));
+        } else if((name != null) && (!name.isEmpty())) {
+            guests = guestListingService.findGuestByName(name);
+        }
 
         model.addAttribute("guests", guests);
 

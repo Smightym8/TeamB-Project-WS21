@@ -14,11 +14,13 @@ public class GuestListingServiceImpl implements GuestListingService {
     public List<GuestDTO> allGuests() {
         final List<GuestDTO> guests = Arrays.asList(
                 GuestDTO.builder()
+                        .withId("1")
                         .withFirstName("Ali")
                         .withLastName("Cinar")
                         .withBirthDate(LocalDate.of(1997, 8, 27))
                         .build(),
                 GuestDTO.builder()
+                        .withId("2")
                         .withFirstName("Michael")
                         .withLastName("Spiegel")
                         .withBirthDate(LocalDate.of(1999, 3, 20))
@@ -31,6 +33,7 @@ public class GuestListingServiceImpl implements GuestListingService {
     @Override
     public GuestDTO findGuestById(String id) {
         final GuestDTO guest = GuestDTO.builder()
+                .withId("1")
                 .withFirstName("Ali")
                 .withLastName("Cinar")
                 .withBirthDate(LocalDate.of(1997, 8, 27))
@@ -43,6 +46,7 @@ public class GuestListingServiceImpl implements GuestListingService {
     public List<GuestDTO> findGuestByName(String name) {
         final List<GuestDTO> guests = List.of(
                 GuestDTO.builder()
+                        .withId("2")
                         .withFirstName("Michael")
                         .withLastName("Spiegel")
                         .withBirthDate(LocalDate.of(1999, 3, 20))
