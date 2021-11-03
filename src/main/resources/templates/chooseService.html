@@ -22,11 +22,13 @@
 <table class="table table-striped">
     <thead>
     <tr>
+        <th>Id</th>
         <th>Name</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="service : ${services}">
+        <td th:text="${service.id}"></td>
         <td th:text="${service.name}"></td>
     </tr>
     </tbody>

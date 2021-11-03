@@ -39,7 +39,7 @@ public class ServiceDTO {
         }
 
         public ServiceDTO build() {
-            Objects.requireNonNull(this.instance.id, "id must be set in ServiceDTO")
+            Objects.requireNonNull(this.instance.id, "id must be set in ServiceDTO");
             Objects.requireNonNull(this.instance.name, "name must be set in ServiceDTO");
 
             return this.instance;
