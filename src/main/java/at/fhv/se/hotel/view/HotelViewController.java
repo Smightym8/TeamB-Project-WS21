@@ -95,38 +95,4 @@ public class HotelViewController {
 
         return CHOOSE_SERVICE_VIEW;
     }
-
-    @GetMapping(ADD_GUEST_TO_BOOKING_URL)
-    public ModelAndView addGuestToBooking(
-            @ModelAttribute BookingForm form,
-            @RequestParam(value = "guestId") String guestId,
-            @RequestParam(value = "firstName") String firstName,
-            @RequestParam(value = "lastName") String lastName) {
-
-        form.addGuest(guestId, firstName, lastName);
-        return redirectToCreateBooking(form);
-    }
-
-    @GetMapping(ADD_CATEGORY_TO_BOOKING_URL)
-    public ModelAndView addRoomCategoryToBooking(
-            @ModelAttribute BookingForm form,
-            @RequestParam(value = "roomCategory") String roomCategory) {
-
-        form.setRoomCategory(roomCategory);
-        return redirectToCreateBooking(form);
-    }
-
-    private static ModelAndView redirectToCreateBooking(final BookingForm form) {
-        return new ModelAndView("redirect:" +
-                CREATE_BOOKING_URL +
-                "?guestId=" +
-                form.getGuestId() +
-                "&firstName=" +
-                form.getFirstName() +
-                "&lastName=" +
-                form.getLastName() +
-                "&roomCategory=" +
-                form.getRoomCategory()
-        );
-    }
 }
