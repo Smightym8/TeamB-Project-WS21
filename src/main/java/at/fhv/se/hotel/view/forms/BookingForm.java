@@ -8,7 +8,7 @@ public class BookingForm {
     private String firstName;
     private String lastName;
     private String eMail;
-    private int tel;
+    private String tel;
 
     private Date birthDate;
 
@@ -28,7 +28,7 @@ public class BookingForm {
     }
 
 
-    public BookingForm(String fn, String lN, String eM, int telephone, Date bD, String co, String pC, String ci, String sNa, String sNu, Date bU){
+    public BookingForm(String fn, String lN, String eM, String telephone, Date bD, String co, String pC, String ci, String sNa, String sNu, Date bU){
 
         this.firstName = fn;
         this.lastName = lN;
@@ -73,11 +73,11 @@ public class BookingForm {
         this.eMail = eMail;
     }
 
-    public int getTel() {
+    public String getTel() {
         return tel;
     }
 
-    public void setTel(int tel) {
+    public void setTel(String tel) {
         this.tel = tel;
     }
 

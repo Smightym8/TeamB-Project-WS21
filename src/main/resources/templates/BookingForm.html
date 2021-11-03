@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form th:action = "@{src/main/java/at/fhv/se/hotel/view/BookingController}" th:object= "${BookingController}" method = post>
+<form th:action = "@{/BookingForm}" th:object= "${form}" method = "POST">
 
     <div>
         <label>First Name:</label>
@@ -22,7 +22,7 @@
     </div>
     <div>
         <label>Telephone Number:</label>
-        <input type = "number" th:field = "*{tel}" placeholder = "123 456 789" />
+        <input type = "text" th:field = "*{tel}" placeholder = "+33 123 456 789" />
     </div>
     <div>
         <label>Birth-Date:</label>

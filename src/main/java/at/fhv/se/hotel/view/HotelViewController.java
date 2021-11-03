@@ -4,10 +4,12 @@ import at.fhv.se.hotel.application.api.GuestListingService;
 import at.fhv.se.hotel.application.api.RoomCategoryListingService;
 import at.fhv.se.hotel.application.dto.GuestDTO;
 import at.fhv.se.hotel.application.dto.RoomCategoryDTO;
+import at.fhv.se.hotel.view.forms.BookingForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -22,6 +24,8 @@ public class HotelViewController {
     private static final String MAIN_MENU_VIEW = "mainMenu";
     private static final String CHOOSE_CATEGORY_VIEW = "chooseCategory";
     private static final String CHOOSE_GUEST_VIEW = "chooseGuest";
+
+
 
     // Services
     @Autowired
@@ -57,4 +61,5 @@ public class HotelViewController {
 
         return CHOOSE_GUEST_VIEW;
     }
+
 }

@@ -4,12 +4,16 @@ package at.fhv.se.hotel.view;
 import at.fhv.se.hotel.view.forms.BookingForm;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
 @Controller
 public class BookingController {
-
+    private static final String BOOKING_URL = "/BookingForm";
+    private static final String BOOKING_VIEW = "BookingForm";
+    /*
     private String firstName;
     private String lastName;
     private String eMail;
@@ -29,11 +33,31 @@ public class BookingController {
     @DateTimeFormat(pattern = "dd/mm/yyyy")
     private Date bookedUntil;
 
-    final BookingForm form = new BookingForm(firstName, lastName, eMail, tel, birthdate, country, postalCode, city, streetName, streetNumber, bookedUntil);
+    @GetMapping(BOOKING_URL)
+    public String Bookings(
+            @RequestParam("firstName") String firstName,
+            @RequestParam("lastName") String lastName,
+            @RequestParam("eMail") String eMail,
+            @RequestParam("tel") String tel,
+            @RequestParam("birthdate") String birthdate,
+            @RequestParam("country") String country,
+            @RequestParam("postalCode") String postalCode,
+            @RequestParam("city") String city,
+            @RequestParam("streetName") String streetName,
+            @RequestParam("streetNumber") String streetNumber,
+            @RequestParam("bookedUntil") String bookedUntil,
+            Model model) {
+
+        final BookingForm form = new BookingForm(firstName, lastName, eMail, tel, birthdate, country, postalCode, city, streetName, streetNumber, bookedUntil);
+
+        model.addAttribute("bookings", form);
+
+        return BOOKING_VIEW;
+    }
 
 //    model.addAttribute("form", form);
 
-}
+}*/
 /*
 * package at.fhv.se.banking.view;
 
