@@ -1,4 +1,4 @@
-package at.fhv.se.hotel.domain.models;
+package at.fhv.se.hotel.domain.models.Service;
 
 public class ServiceId {
     private String id;

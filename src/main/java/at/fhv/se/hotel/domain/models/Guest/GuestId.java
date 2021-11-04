@@ -1,4 +1,4 @@
-package at.fhv.se.hotel.domain.models;
+package at.fhv.se.hotel.domain.models.Guest;
 
 public class GuestId {
     private String id;
