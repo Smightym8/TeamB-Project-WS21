@@ -32,8 +32,6 @@ public class BookingDTO {
         return this.endDate;
     }
 
-    private BookingDTO() {}
-
     public static class Builder {
         private final BookingDTO instance;
 
