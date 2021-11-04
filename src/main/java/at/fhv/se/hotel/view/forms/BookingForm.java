@@ -1,20 +1,21 @@
 package at.fhv.se.hotel.view.forms;
 
+import java.time.LocalDate;
+
 public final class BookingForm {
     private String guestId;
-    private String firstName;
-    private String lastName;
-    private String roomCategory;
+    private String roomCategoryId;
+    private String serviceId;
+
 
     // required by spring/thymeleaf
     public BookingForm() {
     }
 
-    public BookingForm(String guestId, String firstName, String lastName, String roomCategory) {
+    public BookingForm(String guestId, String roomCategoryId, String serviceId) {
         this.guestId = guestId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.roomCategory = roomCategory;
+        this.roomCategoryId = roomCategoryId;
+        this.serviceId = serviceId;
     }
 
     public String getGuestId() {
@@ -25,23 +26,19 @@ public final class BookingForm {
         this.guestId = guestId;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getRoomCategoryId() {
+        return roomCategoryId;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setRoomCategoryId(String roomCategoryId) {
+        this.roomCategoryId = roomCategoryId;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getServiceId() {
+        return serviceId;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setRoomCategory(String roomCategory) {
-        this.roomCategory = roomCategory;
+    public void setServiceId(String serviceId) {
+        this.serviceId = serviceId;
     }
 }

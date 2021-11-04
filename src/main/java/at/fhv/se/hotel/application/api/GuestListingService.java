@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface GuestListingService {
     List<GuestDTO> allGuests();
-    GuestDTO findGuestById(String id);
+    Optional<GuestDTO> findGuestById(String id);
     List<GuestDTO> findGuestByName(String name);
 }

@@ -14,9 +14,11 @@ public class RoomCategoryListingServiceImpl implements RoomCategoryListingServic
     public List<RoomCategoryDTO> allRoomCategories() {
         final List<RoomCategoryDTO> categories = Arrays.asList(
                 RoomCategoryDTO.builder()
+                        .withId("1")
                         .withName("Single Room")
                         .build(),
                 RoomCategoryDTO.builder()
+                        .withId("2")
                         .withName("Double Room")
                         .build()
         );

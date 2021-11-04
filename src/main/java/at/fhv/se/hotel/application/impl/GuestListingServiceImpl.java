@@ -32,7 +32,7 @@ public class GuestListingServiceImpl implements GuestListingService {
     }
 
     @Override
-    public GuestDTO findGuestById(String id) {
+    public Optional<GuestDTO> findGuestById(String id) {
         final List<GuestDTO> guests = Arrays.asList(
                 GuestDTO.builder()
                         .withId("1")
@@ -56,7 +56,7 @@ public class GuestListingServiceImpl implements GuestListingService {
             }
         }
 
-        return guest;
+        return Optional.ofNullable(guest);
     }
 
     @Override

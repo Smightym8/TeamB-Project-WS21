@@ -5,23 +5,29 @@ import at.fhv.se.hotel.application.dto.BookingDTO;
 import at.fhv.se.hotel.application.dto.GuestDTO;
 import at.fhv.se.hotel.application.dto.RoomCategoryDTO;
 import at.fhv.se.hotel.application.dto.ServiceDTO;
+import at.fhv.se.hotel.view.forms.BookingForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import java.util.Collections;
+import org.springframework.web.servlet.ModelAndView;
+
 import java.util.List;
 
 @Controller
 public class HotelViewController {
     // Urls
     private static final String MAIN_MENU_URL = "/";
-    private static final String CREATE_BOOKING_URL = "/booking";
+    private static final String BOOKING_FORM_URL = "/booking";
     private static final String ALL_BOOKINGS_URL = "/bookinglist";
     private static final String CHOOSE_CATEGORY_URL = "/choosecategory";
     private static final String CHOOSE_GUEST_URL = "/chooseguest";
     private static final String CHOOSE_SERVICE_URL = "/chooseservice";
+
+    private static final String CREATE_BOOKING_URL = "/createBooking";
 
     // Views
     private static final String MAIN_MENU_VIEW = "mainMenu";
@@ -43,9 +49,6 @@ public class HotelViewController {
 
     @Autowired
     private ServiceListingService serviceListingService;
-
-    @Autowired
-    BookingCreationService bookingCreationService;
 
     /**
      * This method handles a get request on /.
@@ -70,8 +73,19 @@ public class HotelViewController {
         return ALL_BOOKINGS_VIEW;
     }
 
-    @GetMapping(CREATE_BOOKING_URL)
-    public String createBooking (Model model) {
+    @GetMapping(BOOKING_FORM_URL)
+    public String createBookingForm(Model model) {
+        List<GuestDTO> guests = guestListingService.allGuests();
+        List<RoomCategoryDTO> roomCategories = roomCategoryListingService.allRoomCategories();
+        List<ServiceDTO> services = serviceListingService.allServices();
+
+        BookingForm bookingForm = new BookingForm();
+
+        model.addAttribute("guests", guests);
+        model.addAttribute("roomCategories", roomCategories);
+        model.addAttribute("services", services);
+        model.addAttribute("form", bookingForm);
+
         return CREATE_BOOKING_VIEW;
     }
 
@@ -89,13 +103,8 @@ public class HotelViewController {
             @RequestParam(value = "id", required = false) String id,
             @RequestParam (value = "name", required = false) String name,
             Model model) {
-        List<GuestDTO> guests = guestListingService.allGuests();
 
-        if((id != null) && (!id.isEmpty())) {
-            guests = Collections.singletonList(guestListingService.findGuestById(id));
-        } else if((name != null) && (!name.isEmpty())) {
-            guests = guestListingService.findGuestByName(name);
-        }
+        List<GuestDTO> guests = guestListingService.allGuests();
 
         model.addAttribute("guests", guests);
 
@@ -109,5 +118,18 @@ public class HotelViewController {
         model.addAttribute("services", services);
 
         return CHOOSE_SERVICE_VIEW;
+    }
+
+    @PostMapping(CREATE_BOOKING_URL)
+    public String createBooking(@ModelAttribute("form") BookingForm form) {
+        System.out.println("GuestId: " + form.getGuestId() + "\n" +
+                "RoomCategoryId: " + form.getRoomCategoryId() + "\n" +
+                "ServiceId: " + form.getServiceId());
+
+        return redirectBookingForm();
+    }
+
+    private static String redirectBookingForm() {
+        return "redirect:" + BOOKING_FORM_URL;
     }
 }

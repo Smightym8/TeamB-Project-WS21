@@ -8,58 +8,32 @@
                 <h1>Create Booking</h1>
             </div>
         </div>
-        <div class="row">
-            <div class="col-6">
-                <div class="mb-3 row">
-                    <label for="guest" class="col-sm-2 col-form-label">Guest:</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="guest" readonly>
-                    </div>
-                </div>
+
+        <form th:action="@{/createBooking}" th:object="${form}" method="post">
+            <div class="form-group">
+                <label for="selectGuest">Choose Guest</label>
+                <select class="form-select" id="selectGuest" th:field="*{guestId}">
+                    <option value="0">Select Guest</option>
+                    <option th:each="guest : ${guests}" th:value="${guest.id}" th:text="${guest.firstName} + ' ' + ${guest.lastName}"></option>
+                </select>
             </div>
-            <div class="col-6">
-                <button type="button" class="btn btn-info"><a href="/chooseguest">Search Guest</a></button>
-                <button type="button" class="btn btn-info"><a href="#">Create Guest</a></button>
+            <div class="form-group">
+                <label for="selectCategory">Choose Room Category</label>
+                <select class="form-select" id="selectCategory" th:field="*{roomCategoryId}">
+                    <option value="0">Select Room Category</option>
+                    <option th:each="roomCategorie : ${roomCategories}" th:value="${roomCategorie.id}" th:text="${roomCategorie.name}"></option>
+                </select>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                <div class="mb-3 row">
-                    <label for="roomCategory" class="col-sm-2 col-form-label">Room Category:</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="roomCategory" readonly>
-                    </div>
-                </div>
+            <div class="form-group">
+                <label for="selectService">Choose Service</label>
+                <select class="form-select" id="selectService" th:field="*{serviceId}">
+                    <option value="0">Select Service</option>
+                    <option th:each="service : ${services}" th:value="${service.id}" th:text="${service.name}"></option>
+                </select>
             </div>
-            <div class="col-6">
-                <button type="button" class="btn btn-info"><a href="/choosecategory">Room Category</a></button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                <div class="mb-3 row">
-                    <label for="service" class="col-sm-2 col-form-label">Service:</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="service" readonly>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6">
-                <button type="button" class="btn btn-info"><a href="/chooseservice">Service</a></button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <label for="startDate">Start date:</label>
-                <input type="date" id="startDate" name="startDate">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <label for="endDate">End date:</label>
-                <input type="date" id="endDate" name="endDate">
-            </div>
-        </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
 </body>
 </html>
