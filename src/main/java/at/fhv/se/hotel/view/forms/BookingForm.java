@@ -1,52 +1,30 @@
 package at.fhv.se.hotel.view.forms;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.util.Date;
-
-public class BookingForm {
+public final class BookingForm {
+    private String guestId;
     private String firstName;
     private String lastName;
-    private String eMail;
-    private String tel;
+    private String roomCategory;
 
-    private Date birthDate;
-
-    private String country;
-    private String postalCode;
-    private String city;
-    private String streetName;
-    private String streetNumber;
-
-    //@DateTimeFormat(pattern = "dd/mm/yyyy")
-
-    //private Date bookedFrom;
-    private Date bookedUntil;
-
+    // required by spring/thymeleaf
     public BookingForm() {
+    }
 
+    public BookingForm(String guestId, String firstName, String lastName, String roomCategory) {
+        this.guestId = guestId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.roomCategory = roomCategory;
     }
 
 
-    public BookingForm(String fn, String lN, String eM, String telephone, Date bD, String co, String pC, String ci, String sNa, String sNu, Date bU){
 
-        this.firstName = fn;
-        this.lastName = lN;
-        this.eMail = eM;
-        this.tel = telephone;
+    public String getGuestId() {
+        return guestId;
+    }
 
-        this.birthDate = bD;
-
-        this.country = co;
-        this.postalCode = pC;
-        this.city = ci;
-        this.streetName = sNa;
-        this.streetNumber = sNu;
-
-        //@DateTimeFormat(pattern = "dd/mm/yyyy")
-        //private Date bookedFrom;
-        this.bookedUntil = bU;
-
+    public void setGuestId(String guestId) {
+        this.guestId = guestId;
     }
 
     public String getFirstName() {
@@ -65,75 +43,7 @@ public class BookingForm {
         this.lastName = lastName;
     }
 
-    public String geteMail() {
-        return eMail;
-    }
-
-    public void seteMail(String eMail) {
-        this.eMail = eMail;
-    }
-
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getPostalCode() {
-        return postalCode;
-    }
-
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getStreetName() {
-        return streetName;
-    }
-
-    public void setStreetName(String streetName) {
-        this.streetName = streetName;
-    }
-
-    public String getStreetNumber() {
-        return streetNumber;
-    }
-
-    public void setStreetNumber(String streetNumber) {
-        this.streetNumber = streetNumber;
-    }
-
-    public Date getBookedUntil() {
-        return bookedUntil;
-    }
-
-    public void setBookedUntil(Date bookedUntil) {
-        this.bookedUntil = bookedUntil;
+    public void setRoomCategory(String roomCategory) {
+        this.roomCategory = roomCategory;
     }
 }
