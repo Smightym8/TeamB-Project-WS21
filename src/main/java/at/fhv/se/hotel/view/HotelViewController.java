@@ -26,6 +26,7 @@ public class HotelViewController {
     private static final String CHOOSE_CATEGORY_URL = "/choosecategory";
     private static final String CHOOSE_GUEST_URL = "/chooseguest";
     private static final String CHOOSE_SERVICE_URL = "/chooseservice";
+    private static final String ERROR_URL = "/displayerror";
 
     private static final String CREATE_BOOKING_URL = "/createBooking";
 
@@ -36,6 +37,7 @@ public class HotelViewController {
     private static final String CHOOSE_CATEGORY_VIEW = "chooseCategory";
     private static final String CHOOSE_GUEST_VIEW = "chooseGuest";
     private static final String CHOOSE_SERVICE_VIEW = "chooseService";
+    private static final String ERROR_VIEW = "errorView";
 
     // Services
     @Autowired
@@ -131,5 +133,15 @@ public class HotelViewController {
 
     private static String redirectBookingForm() {
         return "redirect:" + BOOKING_FORM_URL;
+    }
+
+    @GetMapping(ERROR_URL)
+    public String displayError(@RequestParam("message") String message, Model model){
+        model.addAttribute("message", message);
+        return ERROR_VIEW;
+    }
+
+    private static ModelAndView redirectError(String message){
+        return new ModelAndView("redirect:" + ERROR_URL + "?message" + message);
     }
 }
