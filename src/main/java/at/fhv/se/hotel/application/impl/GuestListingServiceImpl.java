@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class GuestListingServiceImpl implements GuestListingService {
@@ -32,12 +33,28 @@ public class GuestListingServiceImpl implements GuestListingService {
 
     @Override
     public GuestDTO findGuestById(String id) {
-        final GuestDTO guest = GuestDTO.builder()
-                .withId("1")
-                .withFirstName("Ali")
-                .withLastName("Cinar")
-                .withBirthDate(LocalDate.of(1997, 8, 27))
-                .build();
+        final List<GuestDTO> guests = Arrays.asList(
+                GuestDTO.builder()
+                        .withId("1")
+                        .withFirstName("Ali")
+                        .withLastName("Cinar")
+                        .withBirthDate(LocalDate.of(1997, 8, 27))
+                        .build(),
+                GuestDTO.builder()
+                        .withId("2")
+                        .withFirstName("Michael")
+                        .withLastName("Spiegel")
+                        .withBirthDate(LocalDate.of(1999, 3, 20))
+                        .build()
+        );
+
+        GuestDTO guest = null;
+
+        for (GuestDTO g : guests) {
+            if(g.id().equals(id)){
+                guest = g;
+            }
+        }
 
         return guest;
     }
