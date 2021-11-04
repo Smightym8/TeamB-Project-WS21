@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class HotelViewController {
     private static final String CHOOSE_CATEGORY_URL = "/choosecategory";
     private static final String CHOOSE_GUEST_URL = "/chooseguest";
     private static final String CHOOSE_SERVICE_URL = "/chooseservice";
+    private static final String ERROR_URL = "/displayerror";
 
     // Views
     private static final String MAIN_MENU_VIEW = "mainMenu";
@@ -33,6 +36,7 @@ public class HotelViewController {
     private static final String CHOOSE_CATEGORY_VIEW = "chooseCategory";
     private static final String CHOOSE_GUEST_VIEW = "chooseGuest";
     private static final String CHOOSE_SERVICE_VIEW = "chooseService";
+    private static final String ERROR_VIEW = "errorView";
 
     // Services
     @Autowired
@@ -109,5 +113,15 @@ public class HotelViewController {
         model.addAttribute("services", services);
 
         return CHOOSE_SERVICE_VIEW;
+    }
+
+    @GetMapping(ERROR_URL)
+    public String displayError(@RequestParam("message") String message, Model model){
+        model.addAttribute("message", message);
+        return ERROR_VIEW;
+    }
+
+    private static ModelAndView redirectError(String message){
+        return new ModelAndView("redirect:" + ERROR_URL + "?message" + message);
     }
 }
