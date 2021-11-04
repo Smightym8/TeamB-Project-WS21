@@ -1,10 +1,7 @@
 package at.fhv.se.hotel.view;
 
-import at.fhv.se.hotel.application.api.BookingListingService;
+import at.fhv.se.hotel.application.api.*;
 import at.fhv.se.hotel.application.dto.BookingDTO;
-import at.fhv.se.hotel.application.api.GuestListingService;
-import at.fhv.se.hotel.application.api.RoomCategoryListingService;
-import at.fhv.se.hotel.application.api.ServiceListingService;
 import at.fhv.se.hotel.application.dto.GuestDTO;
 import at.fhv.se.hotel.application.dto.RoomCategoryDTO;
 import at.fhv.se.hotel.application.dto.ServiceDTO;
@@ -46,6 +43,9 @@ public class HotelViewController {
 
     @Autowired
     private ServiceListingService serviceListingService;
+
+    @Autowired
+    BookingCreationService bookingCreationService;
 
     /**
      * This method handles a get request on /.
