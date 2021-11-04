@@ -37,8 +37,6 @@ public class HotelViewController {
     private static final String CHOOSE_GUEST_VIEW = "chooseGuest";
     private static final String CHOOSE_SERVICE_VIEW = "chooseService";
 
-
-
     // Services
     @Autowired
     private RoomCategoryListingService roomCategoryListingService;

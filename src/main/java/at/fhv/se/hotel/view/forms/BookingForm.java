@@ -16,9 +16,7 @@ public final class BookingForm {
         this.lastName = lastName;
         this.roomCategory = roomCategory;
     }
-
-
-
+    
     public String getGuestId() {
         return guestId;
     }
