@@ -35,7 +35,7 @@ public class HibernateBookingRepository implements BookingRepository {
 
     @Override
     public Optional<Booking> bookingById(BookingId bookingId) {
-        TypedQuery<Booking> query = this.em.createQuery("from Booking as b where b.bookingId = :bookingId", Booking.class);
+        TypedQuery<Booking> query = this.em.createQuery("FROM Booking AS b WHERE b.bookingId = :bookingId", Booking.class);
         query.setParameter("bookingId", bookingId);
         return singleResultOptional(query);
     }
