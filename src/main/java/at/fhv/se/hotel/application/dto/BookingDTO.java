@@ -9,8 +9,8 @@ import java.util.Objects;
 public class BookingDTO {
     private String id;
     private String roomCategory;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDate checkInDate;
+    private LocalDate checkOutDate;
 
     public static Builder builder() {
         return new Builder();
@@ -24,12 +24,12 @@ public class BookingDTO {
         return this.roomCategory;
     }
 
-    public LocalDate startDate() {
-        return this.startDate;
+    public LocalDate checkInDate() {
+        return this.checkInDate;
     }
 
-    public LocalDate endDate() {
-        return this.endDate;
+    public LocalDate checkOutDate() {
+        return this.checkOutDate;
     }
 
     public static class Builder {
@@ -49,21 +49,21 @@ public class BookingDTO {
             return this;
         }
 
-        public Builder withStartDate(LocalDate startDate) {
-            this.instance.startDate = startDate;
+        public Builder withCheckInDate(LocalDate checkInDate) {
+            this.instance.checkInDate = checkInDate;
             return this;
         }
 
-        public Builder withEndDate(LocalDate endDate) {
-            this.instance.endDate = endDate;
+        public Builder withCheckOutDate(LocalDate checkOutDate) {
+            this.instance.checkOutDate = checkOutDate;
             return this;
         }
 
         public BookingDTO build() {
             Objects.requireNonNull(this.instance.id, "id must be set in BookingDTO");
             Objects.requireNonNull(this.instance.roomCategory, "roomCategory must be set in BookingDTO");
-            Objects.requireNonNull(this.instance.startDate, "startDate must be set in BookingDTO");
-            Objects.requireNonNull(this.instance.endDate, "endDate must be set in BookingDTO");
+            Objects.requireNonNull(this.instance.checkInDate, "checkInDate must be set in BookingDTO");
+            Objects.requireNonNull(this.instance.checkOutDate, "checkOutDate must be set in BookingDTO");
 
             return this.instance;
         }

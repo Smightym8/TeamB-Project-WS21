@@ -1,4 +1,4 @@
-package at.fhv.se.hotel.domain.models.RoomCategory;
+package at.fhv.se.hotel.domain.model.roomcategory;
 
 public class RoomCategoryId {
     private String id;

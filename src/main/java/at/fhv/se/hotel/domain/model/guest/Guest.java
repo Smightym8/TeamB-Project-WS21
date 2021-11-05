@@ -1,11 +1,14 @@
-package at.fhv.se.hotel.domain.models.Guest;
+package at.fhv.se.hotel.domain.model.guest;
 
-import at.fhv.se.hotel.domain.models.Booking.Booking;
+import at.fhv.se.hotel.domain.model.booking.Booking;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class Guest {
+    // Required by hibernate
+    private String id;
+    private GuestId guestId;
     private FullName name;
     private Address address;
     private LocalDate birthDate;
@@ -13,13 +16,28 @@ public class Guest {
     private String mailAddress;
     private List<Booking> bookings;
 
-    public Guest(FullName aName, Address aAddress, LocalDate aBirthdate, String aPhoneNumber, String aMailAddress, List<Booking> aBookings) {
+    public static Guest create (GuestId aGuestId, FullName aName, Address aAddress, LocalDate aBirthdate,
+                                String aPhoneNumber, String aMailAddress, List<Booking> aBookings) {
+        return new Guest(aGuestId, aName, aAddress, aBirthdate, aPhoneNumber, aMailAddress, aBookings);
+    }
+
+    private Guest(GuestId aGuestId, FullName aName, Address aAddress, LocalDate aBirthdate,
+                  String aPhoneNumber, String aMailAddress, List<Booking> aBookings) {
+        this.guestId = aGuestId;
         this.name = aName;
         this.address = aAddress;
         this.birthDate = aBirthdate;
         this.phoneNumber = aPhoneNumber;
         this.mailAddress = aMailAddress;
         this.bookings = aBookings;
+    }
+
+    public GuestId getGuestId() {
+        return guestId;
+    }
+
+    public void setGuestId(GuestId guestId) {
+        this.guestId = guestId;
     }
 
     public FullName getName() {

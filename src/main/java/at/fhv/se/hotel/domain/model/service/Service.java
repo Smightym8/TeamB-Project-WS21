@@ -1,16 +1,24 @@
-package at.fhv.se.hotel.domain.models.Service;
+package at.fhv.se.hotel.domain.model.service;
 
-import at.fhv.se.hotel.domain.models.Booking.Booking;
+import at.fhv.se.hotel.domain.model.booking.Booking;
 
 import java.util.List;
 
 public class Service {
+    // Required by hibernate
+    private String id;
     private ServiceId serviceId;
     private ServiceName serviceName;
     private Price servicePrice;
     private List<Booking> bookings;
 
-    public Service (ServiceId aServiceId, ServiceName aServiceName, Price aServicePrice, List<Booking> aBookings){
+    public static Service create (ServiceId aServiceId, ServiceName aServiceName,
+                                  Price aServicePrice, List<Booking> aBookings) {
+        return new Service(aServiceId, aServiceName, aServicePrice, aBookings);
+    }
+
+    private Service (ServiceId aServiceId, ServiceName aServiceName,
+                    Price aServicePrice, List<Booking> aBookings){
         this.serviceId = aServiceId;
         this.serviceName = aServiceName;
         this.servicePrice = aServicePrice;

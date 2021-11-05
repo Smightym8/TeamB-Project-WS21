@@ -1,9 +1,9 @@
-package at.fhv.se.hotel.domain.models.Guest;
+package at.fhv.se.hotel.domain.model.booking;
 
-public class GuestId {
+public class BookingId {
     private String id;
 
-    public GuestId(String id){
+    public BookingId(String id){
         this.id = id;
     }
 

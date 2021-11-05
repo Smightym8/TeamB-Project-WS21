@@ -1,7 +1,7 @@
-package at.fhv.se.hotel.domain.repositories;
+package at.fhv.se.hotel.domain.repository;
 
-import at.fhv.se.hotel.domain.models.Booking.Booking;
-import at.fhv.se.hotel.domain.models.Booking.BookingId;
+import at.fhv.se.hotel.domain.model.booking.Booking;
+import at.fhv.se.hotel.domain.model.booking.BookingId;
 
 import java.util.List;
 import java.util.Optional;

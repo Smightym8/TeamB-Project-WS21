@@ -1,16 +1,24 @@
-package at.fhv.se.hotel.domain.models.RoomCategory;
+package at.fhv.se.hotel.domain.model.roomcategory;
 
-import at.fhv.se.hotel.domain.models.Booking.Booking;
+import at.fhv.se.hotel.domain.model.booking.Booking;
 
 import java.util.List;
 
 public class RoomCategory {
+    // Required by hibernate
+    private String id;
     private RoomCategoryId roomCategoryId;
     private RoomCategoryName roomCategoryName;
     private Description description;
     private List<Booking> bookings;
 
-    public RoomCategory (RoomCategoryId aRoomCategoryId, RoomCategoryName aRoomCategoryName, Description aDescription, List<Booking> aBookings){
+    public static RoomCategory create (RoomCategoryId aRoomCategoryId, RoomCategoryName aRoomCategoryName,
+                                       Description aDescription, List<Booking> aBookings) {
+        return new RoomCategory(aRoomCategoryId, aRoomCategoryName, aDescription, aBookings);
+    }
+
+    private RoomCategory (RoomCategoryId aRoomCategoryId, RoomCategoryName aRoomCategoryName,
+                         Description aDescription, List<Booking> aBookings){
         this.roomCategoryId = aRoomCategoryId;
         this.roomCategoryName = aRoomCategoryName;
         this.description = aDescription;

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-access="field" default-cascade="all">
+    <class name="at.fhv.se.hotel.domain.model.booking.Booking" table="booking" lazy="true">
+        <cache usage="read-write"/>
+
+        <!-- Hibernate id -->
+        <id name="id" type="long" column="id" unsaved-value="-1">
+            <generator class="native"/>
+        </id>
+
+        <!-- Primitive datatypes of class booking -->
+        <property name="checkInDate" column="checkin_date" type="java.time.LocalDate" />
+        <property name="checkOutDate" column="checkout_date" type="java.time.LocalDate" />
+
+        <!-- Mapping to booking id class -->
+        <component name="bookingId" class="at.fhv.se.hotel.domain.model.booking.BookingId">
+            <property name="id" column="domain_id" type="java.lang.String" />
+        </component>
+
+        <!-- One to one mapping to the guest -->
+        <component name="guest" class="at.fhv.se.hotel.domain.model.guest.Guest">
+            <property name="guestId" column="guest_id" type="java.lang.String" />
+        </component>
+
+        <!-- Many to many mappings to roomcategory and service classes -->
+        <set name="roomCategories" inverse="true" cascade="all">
+            <key column="roomcategory_id" not-null="true" />
+            <many-to-many class="at.fhv.se.hotel.domain.model.roomcategory.RoomCategory"/>
+        </set>
+
+        <set name="services" inverse="true" cascade="all">
+            <key column="service_id" not-null="false" />
+            <many-to-many class="at.fhv.se.hotel.domain.model.service.Service"/>
+        </set>
+    </class>
+</hibernate-mapping>

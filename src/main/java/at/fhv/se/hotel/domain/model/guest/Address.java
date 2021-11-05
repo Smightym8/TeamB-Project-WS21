@@ -1,4 +1,4 @@
-package at.fhv.se.hotel.domain.models.Guest;
+package at.fhv.se.hotel.domain.model.guest;
 
 public class Address {
     private String streetName;
