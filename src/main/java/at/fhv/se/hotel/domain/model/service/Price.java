@@ -1,13 +1,15 @@
 package at.fhv.se.hotel.domain.model.service;
 
-public class Price {
-    private int price;
+import java.math.BigDecimal;
 
-    public Price (int aPrice){
+public class Price {
+    private BigDecimal price;
+
+    public Price (BigDecimal aPrice){
         this.price = aPrice;
     }
 
-    public int price(){
+    public BigDecimal price(){
         return this.price;
     }
 }
