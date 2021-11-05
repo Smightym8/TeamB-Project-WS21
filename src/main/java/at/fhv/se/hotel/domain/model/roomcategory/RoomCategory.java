@@ -6,7 +6,7 @@ import java.util.List;
 
 public class RoomCategory {
     // Required by hibernate
-    private String id;
+    private Long id;
     private RoomCategoryId roomCategoryId;
     private RoomCategoryName roomCategoryName;
     private Description description;

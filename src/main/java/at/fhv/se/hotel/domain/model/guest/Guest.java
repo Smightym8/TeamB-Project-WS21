@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Guest {
     // Required by hibernate
-    private String id;
+    private Long id;
     private GuestId guestId;
     private FullName name;
     private Address address;

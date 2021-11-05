@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Service {
     // Required by hibernate
-    private String id;
+    private Long id;
     private ServiceId serviceId;
     private ServiceName serviceName;
     private Price servicePrice;

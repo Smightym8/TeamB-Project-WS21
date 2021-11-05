@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Booking {
     // Required by hibernate
-    private String id;
+    private Long id;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
     private BookingId bookingId;
