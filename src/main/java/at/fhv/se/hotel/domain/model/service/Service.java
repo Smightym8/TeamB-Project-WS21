@@ -3,6 +3,7 @@ package at.fhv.se.hotel.domain.model.service;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Service {
     // Required by hibernate
@@ -49,5 +50,21 @@ public class Service {
 
     public void setServicePrice(Price servicePrice) {
         this.servicePrice = servicePrice;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Service service = (Service) o;
+        return Objects.equals(id, service.id)
+                && Objects.equals(serviceId, service.serviceId)
+                && Objects.equals(serviceName, service.serviceName)
+                && Objects.equals(servicePrice, service.servicePrice);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, serviceId, serviceName, servicePrice);
     }
 }

@@ -4,6 +4,7 @@ import at.fhv.se.hotel.domain.model.booking.Booking;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 public class Guest {
     // Required by hibernate
@@ -89,5 +90,27 @@ public class Guest {
 
     public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Guest guest = (Guest) o;
+        return Objects.equals(id, guest.id)
+                && Objects.equals(guestId, guest.guestId)
+                && Objects.equals(name, guest.name)
+                && Objects.equals(address, guest.address)
+                && Objects.equals(birthDate, guest.birthDate)
+                && Objects.equals(phoneNumber, guest.phoneNumber)
+                && Objects.equals(mailAddress, guest.mailAddress)
+                && Objects.equals(bookings, guest.bookings);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, guestId, name,
+                address, birthDate, phoneNumber,
+                mailAddress, bookings);
     }
 }

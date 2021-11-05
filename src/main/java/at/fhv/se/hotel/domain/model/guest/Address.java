@@ -1,5 +1,9 @@
 package at.fhv.se.hotel.domain.model.guest;
 
+import at.fhv.se.hotel.domain.model.booking.BookingId;
+
+import java.util.Objects;
+
 public class Address {
     private String streetName;
     private String streetNumber;
@@ -33,5 +37,22 @@ public class Address {
 
     public String country() {
         return this.country;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return Objects.equals(streetName, address.streetName)
+                && Objects.equals(streetNumber, address.streetNumber)
+                && Objects.equals(city, address.city)
+                && Objects.equals(zipCode, address.zipCode)
+                && Objects.equals(country, address.country);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(streetName, streetNumber, city, zipCode, country);
     }
 }
