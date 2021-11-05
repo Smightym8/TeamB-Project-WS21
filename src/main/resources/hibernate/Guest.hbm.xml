@@ -36,10 +36,10 @@
         </component>
 
         <!-- One to many mapping to booking class -->
-        <set name="bookings" inverse="true" cascade="all">
+        <bag name="bookings" inverse="true" cascade="all">
             <key column="booking_id" not-null="true" />
             <many-to-many class="at.fhv.se.hotel.domain.model.booking.Booking"/>
-        </set>
+        </bag>
 
     </class>
 </hibernate-mapping>

@@ -27,14 +27,14 @@
         </component>
 
         <!-- Many to many mappings to roomcategory and service classes -->
-        <set name="roomCategories" inverse="true" cascade="all">
+        <bag name="roomCategories" inverse="true" cascade="all">
             <key column="roomcategory_id" not-null="true" />
             <many-to-many class="at.fhv.se.hotel.domain.model.roomcategory.RoomCategory"/>
-        </set>
+        </bag>
 
-        <set name="services" inverse="true" cascade="all">
+        <bag name="services" inverse="true" cascade="all">
             <key column="service_id" not-null="false" />
             <many-to-many class="at.fhv.se.hotel.domain.model.service.Service"/>
-        </set>
+        </bag>
     </class>
 </hibernate-mapping>
