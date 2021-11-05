@@ -16,6 +16,9 @@ public class Guest {
     private String mailAddress;
     private List<Booking> bookings;
 
+    // Required by hibernate
+    public Guest() {}
+
     public static Guest create (GuestId aGuestId, FullName aName, Address aAddress, LocalDate aBirthdate,
                                 String aPhoneNumber, String aMailAddress, List<Booking> aBookings) {
         return new Guest(aGuestId, aName, aAddress, aBirthdate, aPhoneNumber, aMailAddress, aBookings);

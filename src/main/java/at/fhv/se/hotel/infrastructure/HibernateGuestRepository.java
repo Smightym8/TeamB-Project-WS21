@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class HibernateGuestRepository implements GuestRepository {
     @PersistenceContext
@@ -20,7 +21,7 @@ public class HibernateGuestRepository implements GuestRepository {
 
     @Override
     public GuestId nextIdentity() {
-        return null;
+        return new GuestId(UUID.randomUUID().toString().toUpperCase());
     }
 
     @Override

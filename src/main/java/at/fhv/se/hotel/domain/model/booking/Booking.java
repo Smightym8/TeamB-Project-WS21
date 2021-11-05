@@ -17,6 +17,9 @@ public class Booking {
     private List<RoomCategory> roomCategories;
     private List<Service> services;
 
+    // Required by hibernate
+    public Booking() {}
+
     public static Booking create(LocalDate aCheckInDate, LocalDate aCheckOutDate,
                                  BookingId aBookingId, Guest aGuest, List<RoomCategory> aRoomCategories,
                                  List<Service> aServices) {

@@ -6,6 +6,7 @@ import at.fhv.se.hotel.domain.repository.ServiceRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class HibernateServiceRepository implements ServiceRepository {
     @Override
@@ -15,7 +16,7 @@ public class HibernateServiceRepository implements ServiceRepository {
 
     @Override
     public ServiceId nextIdentity() {
-        return null;
+        return new ServiceId(UUID.randomUUID().toString().toUpperCase());
     }
 
     @Override

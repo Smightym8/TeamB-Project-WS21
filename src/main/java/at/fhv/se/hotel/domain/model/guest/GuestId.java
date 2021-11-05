@@ -1,7 +1,7 @@
 package at.fhv.se.hotel.domain.model.guest;
 
 public class GuestId {
-    private String id;
+    private final String id;
 
     public GuestId(String id){
         this.id = id;
