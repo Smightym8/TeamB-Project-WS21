@@ -21,7 +21,9 @@
 
         <!-- One to one mapping to the guest -->
         <component name="guest" class="at.fhv.se.hotel.domain.model.guest.Guest">
-            <property name="guestId" column="guest_id" type="java.lang.String" />
+            <component name="guestId" class="at.fhv.se.hotel.domain.model.guest.GuestId">
+                <property name="id" column="guest_id" type="java.lang.String" />
+            </component>
         </component>
 
         <!-- Many to many mappings to roomcategory and service classes -->

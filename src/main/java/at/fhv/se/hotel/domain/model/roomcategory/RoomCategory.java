@@ -10,19 +10,21 @@ public class RoomCategory {
     private RoomCategoryId roomCategoryId;
     private RoomCategoryName roomCategoryName;
     private Description description;
-    private List<Booking> bookings;
+
+    // Required by hibernate
+    public RoomCategory() {
+    }
 
     public static RoomCategory create (RoomCategoryId aRoomCategoryId, RoomCategoryName aRoomCategoryName,
-                                       Description aDescription, List<Booking> aBookings) {
-        return new RoomCategory(aRoomCategoryId, aRoomCategoryName, aDescription, aBookings);
+                                       Description aDescription) {
+        return new RoomCategory(aRoomCategoryId, aRoomCategoryName, aDescription);
     }
 
     private RoomCategory (RoomCategoryId aRoomCategoryId, RoomCategoryName aRoomCategoryName,
-                         Description aDescription, List<Booking> aBookings){
+                         Description aDescription){
         this.roomCategoryId = aRoomCategoryId;
         this.roomCategoryName = aRoomCategoryName;
         this.description = aDescription;
-        this.bookings = aBookings;
     }
 
     public RoomCategoryId getRoomCategoryId() {
@@ -47,13 +49,5 @@ public class RoomCategory {
 
     public void setDescription(Description description) {
         this.description = description;
-    }
-
-    public List<Booking> getBookings() {
-        return bookings;
-    }
-
-    public void setBookings(List<Booking> bookings) {
-        this.bookings = bookings;
     }
 }

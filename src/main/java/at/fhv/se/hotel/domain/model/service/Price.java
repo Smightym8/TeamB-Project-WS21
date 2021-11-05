@@ -5,6 +5,10 @@ import java.math.BigDecimal;
 public class Price {
     private BigDecimal price;
 
+    // Required by hibernate
+    public Price() {
+    }
+
     public Price (BigDecimal aPrice){
         this.price = aPrice;
     }

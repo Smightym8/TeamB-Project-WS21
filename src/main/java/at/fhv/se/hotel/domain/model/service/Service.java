@@ -10,19 +10,21 @@ public class Service {
     private ServiceId serviceId;
     private ServiceName serviceName;
     private Price servicePrice;
-    private List<Booking> bookings;
+
+    // Required by hibernate
+    public Service() {
+    }
 
     public static Service create (ServiceId aServiceId, ServiceName aServiceName,
-                                  Price aServicePrice, List<Booking> aBookings) {
-        return new Service(aServiceId, aServiceName, aServicePrice, aBookings);
+                                  Price aServicePrice) {
+        return new Service(aServiceId, aServiceName, aServicePrice);
     }
 
     private Service (ServiceId aServiceId, ServiceName aServiceName,
-                    Price aServicePrice, List<Booking> aBookings){
+                    Price aServicePrice){
         this.serviceId = aServiceId;
         this.serviceName = aServiceName;
         this.servicePrice = aServicePrice;
-        this.bookings = aBookings;
     }
 
     public ServiceId getServiceId() {
@@ -47,13 +49,5 @@ public class Service {
 
     public void setServicePrice(Price servicePrice) {
         this.servicePrice = servicePrice;
-    }
-
-    public List<Booking> getBookings() {
-        return bookings;
-    }
-
-    public void setBookings(List<Booking> bookings) {
-        this.bookings = bookings;
     }
 }

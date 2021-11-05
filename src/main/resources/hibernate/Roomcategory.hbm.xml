@@ -24,11 +24,5 @@
         <component name="description" class="at.fhv.se.hotel.domain.model.roomcategory.Description">
             <property name="description" column="description" type="java.lang.String" />
         </component>
-
-        <!-- Many to many mapping to booking class -->
-        <set name="bookings" inverse="true" cascade="all">
-            <key column="booking_id" not-null="false" />
-            <many-to-many class="at.fhv.se.hotel.domain.model.booking.Booking"/>
-        </set>
     </class>
 </hibernate-mapping>
