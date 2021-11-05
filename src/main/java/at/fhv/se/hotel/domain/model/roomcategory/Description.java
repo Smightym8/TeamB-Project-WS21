@@ -6,7 +6,7 @@ public class Description {
     private String description;
 
     // Required by hibernate
-    public Description() {
+    private Description() {
     }
 
     public Description(String aDescription){

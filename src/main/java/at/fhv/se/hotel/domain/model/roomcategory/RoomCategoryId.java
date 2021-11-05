@@ -6,7 +6,7 @@ public class RoomCategoryId {
     private String id;
 
     // Required by hibernate
-    public RoomCategoryId() {
+    private RoomCategoryId() {
     }
 
     public RoomCategoryId(String id){

@@ -13,7 +13,7 @@ public class Service {
     private Price servicePrice;
 
     // Required by hibernate
-    public Service() {
+    private Service() {
     }
 
     public static Service create (ServiceId aServiceId, ServiceName aServiceName,

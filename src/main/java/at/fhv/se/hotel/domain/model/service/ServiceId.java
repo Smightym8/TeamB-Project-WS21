@@ -6,7 +6,7 @@ public class ServiceId {
     private String id;
 
     // Required by hibernate
-    public ServiceId() {
+    private ServiceId() {
     }
 
     public ServiceId(String id){

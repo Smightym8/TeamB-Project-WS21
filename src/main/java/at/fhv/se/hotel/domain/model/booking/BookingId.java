@@ -6,7 +6,7 @@ public class BookingId {
     private String id;
 
     // Required by hibernate
-    public BookingId() {}
+    private BookingId() {}
 
     public BookingId(String id){
         this.id = id;

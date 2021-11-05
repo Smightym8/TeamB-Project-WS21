@@ -6,7 +6,7 @@ public class RoomCategoryName {
     private String name;
 
     // Required by hibernate
-    public RoomCategoryName() {
+    private RoomCategoryName() {
     }
 
     public RoomCategoryName(String aName){

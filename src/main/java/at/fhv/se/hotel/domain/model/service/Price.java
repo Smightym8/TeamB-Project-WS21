@@ -7,7 +7,7 @@ public class Price {
     private BigDecimal price;
 
     // Required by hibernate
-    public Price() {
+    private Price() {
     }
 
     public Price (BigDecimal aPrice){

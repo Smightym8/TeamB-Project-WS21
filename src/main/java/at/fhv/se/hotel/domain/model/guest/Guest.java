@@ -18,7 +18,7 @@ public class Guest {
     private List<Booking> bookings;
 
     // Required by hibernate
-    public Guest() {}
+    private Guest() {}
 
     public static Guest create (GuestId aGuestId, FullName aName, Address aAddress, LocalDate aBirthdate,
                                 String aPhoneNumber, String aMailAddress, List<Booking> aBookings) {

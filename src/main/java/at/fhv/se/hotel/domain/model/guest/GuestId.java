@@ -9,7 +9,8 @@ public class GuestId {
         this.id = id;
     }
 
-    public GuestId() {
+    //Required by hibernate
+    private GuestId() {
     }
 
     public String id(){

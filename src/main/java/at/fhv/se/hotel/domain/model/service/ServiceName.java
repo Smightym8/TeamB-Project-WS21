@@ -6,7 +6,7 @@ public class ServiceName {
     private String name;
 
     // Required by hibernate
-    public ServiceName() {
+    private ServiceName() {
     }
 
     public ServiceName(String aName){
