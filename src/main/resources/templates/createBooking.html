@@ -9,7 +9,7 @@
             </div>
         </div>
 
-        <form th:action="@{/createBooking}" th:object="${form}" method="post">
+        <form th:action="@{/bookingSummary}" th:object="${form}" method="post">
             <div class="form-group">
                 <label for="selectGuest">Choose Guest</label>
                 <select class="form-select" id="selectGuest" th:field="*{guestId}">

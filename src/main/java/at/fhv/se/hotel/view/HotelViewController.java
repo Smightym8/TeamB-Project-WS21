@@ -23,16 +23,16 @@ public class HotelViewController {
     private static final String MAIN_MENU_URL = "/";
     private static final String BOOKING_FORM_URL = "/booking";
     private static final String ALL_BOOKINGS_URL = "/bookinglist";
+    private static final String BOOKING_SUMMARY_URL = "/bookingSummary";
     private static final String CHOOSE_CATEGORY_URL = "/choosecategory";
     private static final String CHOOSE_GUEST_URL = "/chooseguest";
     private static final String CHOOSE_SERVICE_URL = "/chooseservice";
     private static final String ERROR_URL = "/displayerror";
 
-    private static final String CREATE_BOOKING_URL = "/createBooking";
-
     // Views
     private static final String MAIN_MENU_VIEW = "mainMenu";
     private static final String ALL_BOOKINGS_VIEW = "allBookings";
+    private static final String BOOKING_SUMMARY_VIEW = "bookingSummary";
     private static final String CREATE_BOOKING_VIEW = "createBooking";
     private static final String CHOOSE_CATEGORY_VIEW = "chooseCategory";
     private static final String CHOOSE_GUEST_VIEW = "chooseGuest";
@@ -122,17 +122,12 @@ public class HotelViewController {
         return CHOOSE_SERVICE_VIEW;
     }
 
-    @PostMapping(CREATE_BOOKING_URL)
-    public String createBooking(@ModelAttribute("form") BookingForm form) {
-        System.out.println("GuestId: " + form.getGuestId() + "\n" +
-                "RoomCategoryId: " + form.getRoomCategoryId() + "\n" +
-                "ServiceId: " + form.getServiceId());
+    @PostMapping(BOOKING_SUMMARY_URL)
+    public String showSummary(@ModelAttribute("form") BookingForm form, Model model) {
 
-        return redirectBookingForm();
-    }
+        model.addAttribute(form);
 
-    private static String redirectBookingForm() {
-        return "redirect:" + BOOKING_FORM_URL;
+        return BOOKING_SUMMARY_VIEW;
     }
 
     @GetMapping(ERROR_URL)
