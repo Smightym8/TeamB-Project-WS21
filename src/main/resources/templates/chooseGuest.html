@@ -9,37 +9,24 @@
             </div>
         </div>
 
-        <form th:action="@{/chooseguest}" method="get">
-            <div class="row">
-                <div class="col-6">
-                    <input name="id" class="form-control me-2" type="search" placeholder="Search by id" aria-label="Search by id">
-                    <button type="submit" class="btn btn-info">Search</button>
-                    <button type="reset" class="btn btn-info">Reset</button>
-                </div>
-                <div class="col-6">
-                    <input name="name" class="form-control me-2" type="search" placeholder="Search by name" aria-label="Search by name">
-                </div>
-            </div>
-        </form>
-
         <div class="row">
             <div class="col-12">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Birthdate</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="guest : ${guests}">
-                            <td th:text="${guest.firstName}"></td>
-                            <td th:text="${guest.lastName}"></td>
-                            <td th:text="${guest.birthDate}"></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <form action="/choosecategory" method="post" th:object="${form}">
+                    <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
+                    <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
+
+                    <select th:field="*{guestId}" id="guest-select" class="form-select" multiple aria-label="select guest">
+                        <option th:each="guest : ${guests}"
+                                th:value="${guest.id}"
+                                th:text="${guest.firstName}
+                            + ' '
+                            + ${guest.lastName}
+                            + ', '
+                            + ${guest.birthDate}">
+                        </option>
+                    </select>
+                    <button id="next-button" type="submit" class="btn btn-primary">Next</button>
+                </form>
             </div>
         </div>
     </div>

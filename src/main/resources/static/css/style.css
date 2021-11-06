@@ -10,3 +10,11 @@ h1 {
     box-shadow: 10px 10px 5px grey;
     background-color: rgba(160, 160, 160, 0.2);
 }
+
+#guest-select {
+    text-align: center;
+}
+
+#next-button {
+    /* TODO: make the button show up on the right side */
+}

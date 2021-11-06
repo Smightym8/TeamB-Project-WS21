@@ -15,13 +15,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 public class HotelViewController {
     // Urls
     private static final String MAIN_MENU_URL = "/";
-    private static final String BOOKING_FORM_URL = "/booking";
+    private static final String START_BOOKING_URL = "/booking";
     private static final String ALL_BOOKINGS_URL = "/bookinglist";
     private static final String BOOKING_SUMMARY_URL = "/bookingSummary";
     private static final String CHOOSE_CATEGORY_URL = "/choosecategory";
@@ -33,7 +34,7 @@ public class HotelViewController {
     private static final String MAIN_MENU_VIEW = "mainMenu";
     private static final String ALL_BOOKINGS_VIEW = "allBookings";
     private static final String BOOKING_SUMMARY_VIEW = "bookingSummary";
-    private static final String CREATE_BOOKING_VIEW = "createBooking";
+    private static final String CREATE_BOOKING_VIEW = "startCreateBooking";
     private static final String CHOOSE_CATEGORY_VIEW = "chooseCategory";
     private static final String CHOOSE_GUEST_VIEW = "chooseGuest";
     private static final String CHOOSE_SERVICE_VIEW = "chooseService";
@@ -75,49 +76,42 @@ public class HotelViewController {
         return ALL_BOOKINGS_VIEW;
     }
 
-    @GetMapping(BOOKING_FORM_URL)
+    @GetMapping(START_BOOKING_URL)
     public String createBookingForm(Model model) {
-        List<GuestDTO> guests = guestListingService.allGuests();
-        List<RoomCategoryDTO> roomCategories = roomCategoryListingService.allRoomCategories();
-        List<ServiceDTO> services = serviceListingService.allServices();
-
         BookingForm bookingForm = new BookingForm();
 
-        model.addAttribute("guests", guests);
-        model.addAttribute("roomCategories", roomCategories);
-        model.addAttribute("services", services);
         model.addAttribute("form", bookingForm);
 
         return CREATE_BOOKING_VIEW;
     }
 
-    @GetMapping(CHOOSE_CATEGORY_URL)
-    public String allRoomCategories(Model model) {
+    @PostMapping(CHOOSE_CATEGORY_URL)
+    public String chooseRoomCategories(@ModelAttribute("form") BookingForm form, Model model) {
         final List<RoomCategoryDTO> categories = roomCategoryListingService.allRoomCategories();
 
         model.addAttribute("categories", categories);
+        model.addAttribute("form", form);
 
         return CHOOSE_CATEGORY_VIEW;
     }
 
-    @GetMapping(CHOOSE_GUEST_URL)
-    public String chooseGuestForBooking(
-            @RequestParam(value = "id", required = false) String id,
-            @RequestParam (value = "name", required = false) String name,
-            Model model) {
+    @PostMapping(CHOOSE_GUEST_URL)
+    public String chooseGuestForBooking(@ModelAttribute("form") BookingForm form, Model model) {
 
         List<GuestDTO> guests = guestListingService.allGuests();
 
         model.addAttribute("guests", guests);
+        model.addAttribute("form", form);
 
         return CHOOSE_GUEST_VIEW;
     }
 
-    @GetMapping(CHOOSE_SERVICE_URL)
-    public String allServices(Model model) {
+    @PostMapping(CHOOSE_SERVICE_URL)
+    public String chooseServices(@ModelAttribute("form") BookingForm form, Model model) {
         final List<ServiceDTO> services = serviceListingService.allServices();
 
         model.addAttribute("services", services);
+        model.addAttribute("form", form);
 
         return CHOOSE_SERVICE_VIEW;
     }
@@ -125,7 +119,21 @@ public class HotelViewController {
     @PostMapping(BOOKING_SUMMARY_URL)
     public String showSummary(@ModelAttribute("form") BookingForm form, Model model) {
 
-        model.addAttribute(form);
+        GuestDTO guest = guestListingService.findGuestById(form.getGuestId()).get();
+
+        List<RoomCategoryDTO> roomCategories = new ArrayList<>();
+        for (String s : form.getRoomCategoryIds()){
+            roomCategories.add(roomCategoryListingService.findRoomCategoryById(s).get());
+        }
+
+        List<ServiceDTO> services = new ArrayList<>();
+        for (String s : form.getServiceIds()){
+            services.add(serviceListingService.findServiceById(s).get());
+        }
+
+        model.addAttribute("guest", guest);
+        model.addAttribute("roomCategories", roomCategories);
+        model.addAttribute("services", services);
 
         return BOOKING_SUMMARY_VIEW;
     }

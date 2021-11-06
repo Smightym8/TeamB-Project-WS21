@@ -1,8 +1,12 @@
 package at.fhv.se.hotel.application.impl;
 
 import at.fhv.se.hotel.application.api.ServiceListingService;
+import at.fhv.se.hotel.application.dto.RoomCategoryDTO;
 import at.fhv.se.hotel.application.dto.ServiceDTO;
+import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
+import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryId;
 import at.fhv.se.hotel.domain.model.service.Service;
+import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.repository.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class ServiceListingServiceImpl implements ServiceListingService {
@@ -34,5 +39,17 @@ public class ServiceListingServiceImpl implements ServiceListingService {
         }
 
         return dtos;
+    }
+
+    @Override
+    public Optional<ServiceDTO> findServiceById(String id) {
+        Service service = serviceRepository.serviceById(new ServiceId(id)).get();
+        ServiceDTO dto = ServiceDTO.builder()
+                .withId(service.getServiceId().id())
+                .withName(service.getServiceName().name())
+                .withPrice(service.getServicePrice().price())
+                .build();
+
+        return Optional.of(dto);
     }
 }

@@ -5,9 +5,36 @@
 <div layout:fragment="content">
   <h1>Summary</h1>
 
-  <p th:text="${form.guestId}"></p>
-  <p th:text="${form.roomCategoryId}"></p>
-  <p th:text="${form.serviceId}"></p>
+  <p th:text="${guest.firstName} + ' '  + ${guest.lastName}  + ', ' + ${guest.birthDate}"></p>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="service : ${services}">
+      <td th:text="${service.name}"></td>
+      <td th:text="${service.price} + '€'"></td>
+    </tr>
+    </tbody>
+  </table>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="category : ${roomCategories}">
+      <td th:text="${category.name}"></td>
+    </tr>
+    </tbody>
+  </table>
+
 </div>
 </body>
 </html>

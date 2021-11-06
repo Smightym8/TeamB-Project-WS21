@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<body>
+    <div layout:fragment="content">
+        <div class="row">
+            <div class="col-12">
+                <h1>Create Booking</h1>
+            </div>
+        </div>
+
+        <div class="row">
+                <div class="col-6">
+                    <form action="/chooseguest" th:object="${form}" method="post">
+                        <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
+                        <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
+                        <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
+
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            Create Booking with existing guest
+                        </button>
+                    </form>
+                </div>
+                <div class="col-6">
+                    <button onclick="alert('Not implemented yet.')" type="button" class="btn btn-primary btn-lg">
+                        Create Booking without existing guest
+                    </button>
+                </div>
+
+
+        </div>
+
+
+    </div>
+</body>
+</html>

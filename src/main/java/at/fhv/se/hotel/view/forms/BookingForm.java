@@ -1,18 +1,20 @@
 package at.fhv.se.hotel.view.forms;
 
+import java.util.List;
+
 public final class BookingForm {
     private String guestId;
-    private String roomCategoryId;
-    private String serviceId;
+    private List<String> roomCategoryIds;
+    private List<String> serviceIds;
 
     // required by spring/thymeleaf
     public BookingForm() {
     }
 
-    public BookingForm(String guestId, String roomCategoryId, String serviceId) {
+    public BookingForm(String guestId, List<String> roomCategoryIds, List<String> serviceIds) {
         this.guestId = guestId;
-        this.roomCategoryId = roomCategoryId;
-        this.serviceId = serviceId;
+        this.roomCategoryIds = roomCategoryIds;
+        this.serviceIds = serviceIds;
     }
 
     public String getGuestId() {
@@ -23,19 +25,19 @@ public final class BookingForm {
         this.guestId = guestId;
     }
 
-    public String getRoomCategoryId() {
-        return roomCategoryId;
+    public List<String> getRoomCategoryIds() {
+        return roomCategoryIds;
     }
 
-    public void setRoomCategoryId(String roomCategoryId) {
-        this.roomCategoryId = roomCategoryId;
+    public void setRoomCategoryIds(List<String> roomCategoryIds) {
+        this.roomCategoryIds = roomCategoryIds;
     }
 
-    public String getServiceId() {
-        return serviceId;
+    public List<String> getServiceIds() {
+        return serviceIds;
     }
 
-    public void setServiceId(String serviceId) {
-        this.serviceId = serviceId;
+    public void setServiceIds(List<String> serviceIds) {
+        this.serviceIds = serviceIds;
     }
 }
