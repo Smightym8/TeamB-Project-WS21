@@ -29,11 +29,13 @@ public class HibernateGuestRepository implements GuestRepository {
     @Override
     public void add(Guest guest) {
         this.em.persist(guest);
+        this.em.flush();
     }
 
     @Override
     public void remove(Guest guest) {
         this.em.remove(guest);
+        this.em.flush();
     }
 
     @Override

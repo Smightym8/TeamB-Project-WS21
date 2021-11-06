@@ -31,6 +31,7 @@ public class HibernateServiceRepository implements ServiceRepository {
     @Override
     public void add(Service service) {
         this.em.persist(service);
+        this.em.flush();
     }
 
     @Override

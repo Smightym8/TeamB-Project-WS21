@@ -31,6 +31,7 @@ public class HibernateBookingRepository implements BookingRepository {
     @Override
     public void add(Booking booking) {
         this.em.merge(booking);
+        this.em.flush();
     }
 
     @Override

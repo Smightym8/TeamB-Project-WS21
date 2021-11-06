@@ -1,12 +1,9 @@
 package at.fhv.se.hotel.view.forms;
 
-import java.time.LocalDate;
-
 public final class BookingForm {
     private String guestId;
     private String roomCategoryId;
     private String serviceId;
-
 
     // required by spring/thymeleaf
     public BookingForm() {

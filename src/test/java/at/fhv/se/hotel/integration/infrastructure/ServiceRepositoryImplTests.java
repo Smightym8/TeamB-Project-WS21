@@ -34,7 +34,6 @@ public class ServiceRepositoryImplTests {
 
         // when
         this.serviceRepository.add(serviceExpected);
-        this.em.flush();
         Service serviceActual = this.serviceRepository.serviceById(idExpected).get();
 
         // then
