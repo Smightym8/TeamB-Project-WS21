@@ -69,5 +69,16 @@ public class TestData implements ApplicationRunner {
                 "michael.spiegel@students.fhv.at",
                 Collections.emptyList());
         this.guestRepository.add(michael);
+
+        Guest ali = Guest.create(guestRepository.nextIdentity(),
+                new FullName("Ali", "Cinar"),
+                new Address("Hochschulstraße",
+                        "1", "Dornbirn",
+                        "6850", "Austria"),
+                LocalDate.of(1997, 8, 27),
+                "+43 676 123 456 789",
+                "ali.cinar@students.fhv.at",
+                Collections.emptyList());
+        this.guestRepository.add(ali);
     }
 }
