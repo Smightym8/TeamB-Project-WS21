@@ -6,6 +6,9 @@ public class FullName {
     private String firstName;
     private String lastName;
 
+    // Required by hibernate
+    private FullName(){}
+
     public FullName(String aFirstName, String aLastName){
         this.firstName = aFirstName;
         this.lastName = aLastName;

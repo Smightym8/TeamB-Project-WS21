@@ -1,11 +1,13 @@
 package at.fhv.se.hotel.application.dto;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class ServiceDTO {
 
     private String id;
     private String name;
+    private BigDecimal price;
 
     public static Builder builder() {
         return new Builder();
@@ -17,6 +19,10 @@ public class ServiceDTO {
 
     public String name() {
         return this.name;
+    }
+
+    public BigDecimal price() {
+        return this.price;
     }
 
     private ServiceDTO() {}
@@ -38,9 +44,15 @@ public class ServiceDTO {
             return this;
         }
 
+        public Builder withPrice(BigDecimal price) {
+            this.instance.price = price;
+            return this;
+        }
+
         public ServiceDTO build() {
             Objects.requireNonNull(this.instance.id, "id must be set in ServiceDTO");
             Objects.requireNonNull(this.instance.name, "name must be set in ServiceDTO");
+            Objects.requireNonNull(this.instance.price, "price must be set in ServiceDTO");
 
             return this.instance;
         }

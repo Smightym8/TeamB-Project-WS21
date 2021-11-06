@@ -27,6 +27,7 @@ public class ServiceListingServiceImpl implements ServiceListingService {
             ServiceDTO dto = ServiceDTO.builder()
                     .withId(service.getServiceId().id())
                     .withName(service.getServiceName().name())
+                    .withPrice(service.getServicePrice().price())
                     .build();
 
             dtos.add(dto);

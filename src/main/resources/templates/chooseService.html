@@ -7,14 +7,14 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Id</th>
                     <th>Name</th>
+                    <th>Price</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="service : ${services}">
-                    <td th:text="${service.id}"></td>
                     <td th:text="${service.name}"></td>
+                    <td th:text="${service.price} + '€'"></td>
                 </tr>
             </tbody>
         </table>

@@ -11,6 +11,9 @@ public class Address {
     private String zipCode;
     private String country;
 
+    // Required by hibernate
+    private Address(){}
+
     public Address(String aStreetName, String aStreetNumber, String aCity, String aZipCode, String aCountry) {
         this.streetName = aStreetName;
         this.streetNumber = aStreetNumber;
