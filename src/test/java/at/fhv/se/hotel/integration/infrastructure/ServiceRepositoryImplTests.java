@@ -4,6 +4,7 @@ import at.fhv.se.hotel.domain.model.service.Price;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
+import at.fhv.se.hotel.domain.repository.ServiceRepository;
 import at.fhv.se.hotel.infrastructure.HibernateServiceRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Transactional
 public class ServiceRepositoryImplTests {
     @Autowired
-    private HibernateServiceRepository serviceRepository;
+    private ServiceRepository serviceRepository;
 
     @Autowired
     private EntityManager em;

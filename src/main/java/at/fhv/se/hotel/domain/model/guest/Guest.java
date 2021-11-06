@@ -92,6 +92,10 @@ public class Guest {
         this.bookings = bookings;
     }
 
+    public void addBooking(Booking booking) {
+        this.bookings.add(booking);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
