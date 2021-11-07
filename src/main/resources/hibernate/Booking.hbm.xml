@@ -20,21 +20,17 @@
         </component>
 
         <!-- Many to one mapping to the guest -->
-        <component name="guest" class="at.fhv.se.hotel.domain.model.guest.Guest">
-            <component name="guestId" class="at.fhv.se.hotel.domain.model.guest.GuestId">
-                <property name="id" column="guest_id" type="java.lang.String" />
-            </component>
-        </component>
+        <many-to-one name="guest" column="guest_id" class="at.fhv.se.hotel.domain.model.guest.Guest" not-null="true"/>
 
         <!-- Many to many mappings to roomcategory and service classes -->
-        <bag name="roomCategories" inverse="true" cascade="all">
-            <key column="roomcategory_id" not-null="true" />
-            <many-to-many class="at.fhv.se.hotel.domain.model.roomcategory.RoomCategory"/>
+        <bag name="roomCategories" inverse="true" cascade="save-update">
+            <key column="booking_id" not-null="true" />
+            <many-to-many column="category_id" class="at.fhv.se.hotel.domain.model.roomcategory.RoomCategory"/>
         </bag>
 
-        <bag name="services" inverse="true" cascade="all">
-            <key column="service_id" not-null="false" />
-            <many-to-many class="at.fhv.se.hotel.domain.model.service.Service"/>
+        <bag name="services" inverse="true" cascade="save-update">
+            <key column="booking_id" not-null="false" />
+            <many-to-many column="service_id" class="at.fhv.se.hotel.domain.model.service.Service"/>
         </bag>
     </class>
 </hibernate-mapping>

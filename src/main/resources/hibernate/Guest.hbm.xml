@@ -35,11 +35,5 @@
             <property name="country" column="country" type="java.lang.String" />
         </component>
 
-        <!-- One to many mapping to booking class -->
-        <bag name="bookings" inverse="true" cascade="all">
-            <key column="booking_id" not-null="false" />
-            <one-to-many class="at.fhv.se.hotel.domain.model.booking.Booking"/>
-        </bag>
-
     </class>
 </hibernate-mapping>
