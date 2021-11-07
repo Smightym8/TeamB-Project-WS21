@@ -5,9 +5,9 @@
 <div layout:fragment="content">
   <h1>Summary</h1>
 
-  <p th:text="${guest.firstName} + ' '  + ${guest.lastName}  + ', ' + ${guest.birthDate}"></p>
-  <p th:text="'Check in date: ' + ${form.checkInDate}"></p>
-  <p th:text="'Check out date: ' + ${form.checkOutDate}"></p>
+  <p th:text="${bookingSummary.guest.firstName} + ' '  + ${bookingSummary.guest.lastName}  + ', ' + ${bookingSummary.guest.birthDate}"></p>
+  <p th:text="'Check in date: ' + ${bookingSummary.checkInDate}"></p>
+  <p th:text="'Check out date: ' + ${bookingSummary.checkOutDate}"></p>
 
   <table class="table table-striped">
     <thead>
@@ -17,7 +17,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="service : ${services}">
+    <tr th:each="service : ${bookingSummary.services}">
       <td th:text="${service.name}"></td>
       <td th:text="${service.price} + '€'"></td>
     </tr>
@@ -31,11 +31,25 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="category : ${roomCategories}">
+    <tr th:each="category : ${bookingSummary.roomCategories}">
       <td th:text="${category.name}"></td>
     </tr>
     </tbody>
   </table>
+
+  <div th:if="${isCreated}" class="alert alert-success" role="alert">
+    Booking successfully created!
+  </div>
+
+  <form th:if="${!isCreated}" action="/createbooking" method="post" th:object="${form}">
+    <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
+    <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
+    <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
+    <input type="hidden" id="checkInDate" name="checkInDate" th:field="*{checkInDate}" />
+    <input type="hidden" id="checkOutDate" name="checkOutDate" th:field="*{checkOutDate}" />
+    <button id="next-button" type="submit" class="btn btn-primary">Create booking</button>
+  </form>
+  <a class="btn btn-primary" th:if="${isCreated}" href="/">Back to main menu</a>
 
 </div>
 </body>

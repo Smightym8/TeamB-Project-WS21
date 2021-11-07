@@ -1,20 +1,15 @@
 package at.fhv.se.hotel.view;
 
 import at.fhv.se.hotel.application.api.*;
-import at.fhv.se.hotel.application.dto.BookingDTO;
-import at.fhv.se.hotel.application.dto.GuestDTO;
-import at.fhv.se.hotel.application.dto.RoomCategoryDTO;
-import at.fhv.se.hotel.application.dto.ServiceDTO;
+import at.fhv.se.hotel.application.dto.*;
 import at.fhv.se.hotel.view.forms.BookingForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +24,7 @@ public class HotelViewController {
     private static final String CHOOSE_GUEST_URL = "/chooseguest";
     private static final String CHOOSE_SERVICE_URL = "/chooseservice";
     private static final String CHOOSE_DATES_URL = "/choosedates";
+    private static final String CREATE_BOOKING_URL = "/createbooking";
     private static final String ERROR_URL = "/displayerror";
 
     // Views
@@ -54,6 +50,12 @@ public class HotelViewController {
 
     @Autowired
     private ServiceListingService serviceListingService;
+
+    @Autowired
+    private BookingSummaryService bookingSummaryService;
+
+    @Autowired
+    private BookingCreationService bookingCreationService;
 
     /**
      * This method handles a get request on /.
@@ -127,27 +129,31 @@ public class HotelViewController {
     }
 
     @PostMapping(BOOKING_SUMMARY_URL)
-    public String showSummary(@ModelAttribute("form") BookingForm form, Model model) {
+    public String showSummary(@ModelAttribute("form") BookingForm form,
+                              @RequestParam("isCreated") boolean isCreated,
+                              Model model) {
 
-        GuestDTO guest = guestListingService.findGuestById(form.getGuestId()).get();
+        BookingSummaryDTO bookingSummaryDTO = bookingSummaryService.createSummary(form.getGuestId(),
+                 form.getRoomCategoryIds(), form.getServiceIds(), form.getCheckInDate(), form.getCheckOutDate());
 
-        List<RoomCategoryDTO> roomCategories = new ArrayList<>();
-        for (String s : form.getRoomCategoryIds()){
-            roomCategories.add(roomCategoryListingService.findRoomCategoryById(s).get());
-        }
-
-        List<ServiceDTO> services = new ArrayList<>();
-        for (String s : form.getServiceIds()){
-            services.add(serviceListingService.findServiceById(s).get());
-        }
-
-        model.addAttribute("guest", guest);
-        model.addAttribute("roomCategories", roomCategories);
-        model.addAttribute("services", services);
+        model.addAttribute("bookingSummary", bookingSummaryDTO);
         model.addAttribute("form", form);
+        model.addAttribute("isCreated", isCreated);
 
         return BOOKING_SUMMARY_VIEW;
     }
+
+    @PostMapping(CREATE_BOOKING_URL)
+    public String createBooking(@ModelAttribute("form") BookingForm form,
+                                Model model){
+        bookingCreationService.createBooking(form.getGuestId(),
+                form.getRoomCategoryIds(),
+                form.getServiceIds(),
+                form.getCheckInDate(),
+                form.getCheckOutDate());
+        return showSummary(form, true, model);
+    }
+
 
     @GetMapping(ERROR_URL)
     public String displayError(@RequestParam("message") String message, Model model){

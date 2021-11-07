@@ -38,7 +38,7 @@
         <!-- One to many mapping to booking class -->
         <bag name="bookings" inverse="true" cascade="all">
             <key column="booking_id" not-null="false" />
-            <many-to-many class="at.fhv.se.hotel.domain.model.booking.Booking"/>
+            <one-to-many class="at.fhv.se.hotel.domain.model.booking.Booking"/>
         </bag>
 
     </class>
