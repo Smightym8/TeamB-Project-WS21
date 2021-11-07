@@ -144,6 +144,7 @@ public class HotelViewController {
         model.addAttribute("guest", guest);
         model.addAttribute("roomCategories", roomCategories);
         model.addAttribute("services", services);
+        model.addAttribute("form", form);
 
         return BOOKING_SUMMARY_VIEW;
     }

@@ -6,6 +6,8 @@
   <h1>Summary</h1>
 
   <p th:text="${guest.firstName} + ' '  + ${guest.lastName}  + ', ' + ${guest.birthDate}"></p>
+  <p th:text="'Check in date: ' + ${form.checkInDate}"></p>
+  <p th:text="'Check out date: ' + ${form.checkOutDate}"></p>
 
   <table class="table table-striped">
     <thead>
