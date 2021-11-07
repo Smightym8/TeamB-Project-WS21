@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<body>
+    <div layout:fragment="content">
+        <h1>Check in & Check out date</h1>
+
+        <div class="row">
+            <form action="/bookingSummary" method="post" th:object="${form}">
+                <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
+                <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
+                <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
+
+                <div class="col-6">
+                    <label for="checkin">Check in date:</label>
+                    <input type="date" id="checkin" name="checkin">
+                </div>
+                <div class="col-6">
+                    <label for="checkout">Check out date:</label>
+                    <input type="date" id="checkout" name="checkout">
+                </div>
+                <button id="next-button" type="submit" class="btn btn-primary">Next</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -28,6 +28,7 @@ public class HotelViewController {
     private static final String CHOOSE_CATEGORY_URL = "/choosecategory";
     private static final String CHOOSE_GUEST_URL = "/chooseguest";
     private static final String CHOOSE_SERVICE_URL = "/chooseservice";
+    private static final String CHOOSE_DATES_URL = "/choosedates";
     private static final String ERROR_URL = "/displayerror";
 
     // Views
@@ -38,6 +39,7 @@ public class HotelViewController {
     private static final String CHOOSE_CATEGORY_VIEW = "chooseCategory";
     private static final String CHOOSE_GUEST_VIEW = "chooseGuest";
     private static final String CHOOSE_SERVICE_VIEW = "chooseService";
+    private static final String CHOOSE_DATES_VIEW = "chooseBookingDates";
     private static final String ERROR_VIEW = "errorView";
 
     // Services
@@ -114,6 +116,14 @@ public class HotelViewController {
         model.addAttribute("form", form);
 
         return CHOOSE_SERVICE_VIEW;
+    }
+
+    @PostMapping(CHOOSE_DATES_URL)
+    public String chooseCheckInCheckOutDate(@ModelAttribute("form") BookingForm form, Model model) {
+
+        model.addAttribute("form", form);
+
+        return CHOOSE_DATES_VIEW;
     }
 
     @PostMapping(BOOKING_SUMMARY_URL)

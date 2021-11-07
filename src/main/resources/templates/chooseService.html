@@ -4,7 +4,7 @@
 <body>
     <div layout:fragment="content">
         <h1>Services</h1>
-        <form action="/bookingSummary" method="post" th:object="${form}">
+        <form action="/choosedates" method="post" th:object="${form}">
             <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
             <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
 
