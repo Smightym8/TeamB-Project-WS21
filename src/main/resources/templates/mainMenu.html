@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-
-  <title>Hotelmanagement Software</title>
-</head>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
 <body>
-
-  <h1>Main Menu</h1>
-
+  <div layout:fragment="content">
+    <h1>Main Menu</h1>
+    <div class="row">
+      <div class="col-6">
+        <a class="btn btn-primary btn-lg" href="/bookinglist">Booking list</a>
+      </div>
+      <div class="col-6">
+        <a class="btn btn-primary btn-lg" href="/booking">Create Booking</a>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

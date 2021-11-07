@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-access="field" default-cascade="all">
+    <class name="at.fhv.se.hotel.domain.model.guest.Guest" table="guest" lazy="true">
+        <cache usage="read-write"/>
+
+        <!-- Hibernate id -->
+        <id name="id" type="long" column="id" unsaved-value="-1">
+            <generator class="native"/>
+        </id>
+
+        <!-- Primitive datatypes of class guest -->
+        <property name="birthDate" column="birth_date" type="java.time.LocalDate" />
+        <property name="phoneNumber" column="phone_number" type="java.lang.String" />
+        <property name="mailAddress" column="mail_address" type="java.lang.String" />
+
+        <!-- Mapping to guest id class -->
+        <component name="guestId" class="at.fhv.se.hotel.domain.model.guest.GuestId">
+            <property name="id" column="domain_id" type="java.lang.String" />
+        </component>
+
+        <!-- One to one mapping to the name class-->
+        <component name="name" class="at.fhv.se.hotel.domain.model.guest.FullName">
+            <property name="firstName" column="first_name" type="java.lang.String" />
+            <property name="lastName" column="last_name" type="java.lang.String" />
+        </component>
+
+        <!-- One to one mapping to the address class -->
+        <component name="address" class="at.fhv.se.hotel.domain.model.guest.Address">
+            <property name="streetName" column="street_name" type="java.lang.String" />
+            <property name="streetNumber" column="street_number" type="java.lang.String" />
+            <property name="city" column="city" type="java.lang.String" />
+            <property name="zipCode" column="zip_code" type="java.lang.String" />
+            <property name="country" column="country" type="java.lang.String" />
+        </component>
+
+        <!-- One to many mapping to booking class -->
+        <bag name="bookings" inverse="true" cascade="all">
+            <key column="booking_id" not-null="false" />
+            <one-to-many class="at.fhv.se.hotel.domain.model.booking.Booking"/>
+        </bag>
+
+    </class>
+</hibernate-mapping>

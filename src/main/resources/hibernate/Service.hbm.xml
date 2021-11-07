@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-access="field" default-cascade="all">
+    <class name="at.fhv.se.hotel.domain.model.service.Service" table="service" lazy="true">
+        <cache usage="read-write"/>
+
+        <!-- Hibernate id -->
+        <id name="id" type="long" column="id" unsaved-value="-1">
+            <generator class="native"/>
+        </id>
+
+        <!-- Mapping to service id class -->
+        <component name="serviceId" class="at.fhv.se.hotel.domain.model.service.ServiceId">
+            <property name="id" column="domain_id" type="java.lang.String" />
+        </component>
+
+        <!-- One to one mapping to the service name class -->
+        <component name="serviceName" class="at.fhv.se.hotel.domain.model.service.ServiceName">
+            <property name="name" column="name" type="java.lang.String" />
+        </component>
+
+        <!-- One to one mapping to the price class -->
+        <component name="servicePrice" class="at.fhv.se.hotel.domain.model.service.Price">
+            <property name="price" column="price" type="java.math.BigDecimal" />
+        </component>
+    </class>
+</hibernate-mapping>

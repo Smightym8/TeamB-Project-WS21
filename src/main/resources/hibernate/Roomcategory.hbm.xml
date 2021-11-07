@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-access="field" default-cascade="all">
+    <class name="at.fhv.se.hotel.domain.model.roomcategory.RoomCategory" table="room_category" lazy="true">
+        <cache usage="read-write"/>
+
+        <!-- Hibernate id -->
+        <id name="id" type="long" column="id" unsaved-value="-1">
+            <generator class="native"/>
+        </id>
+
+        <!-- Mapping to room category id class -->
+        <component name="roomCategoryId" class="at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryId">
+            <property name="id" column="domain_id" type="java.lang.String" />
+        </component>
+
+        <!-- One to one mapping to the room category name class -->
+        <component name="roomCategoryName" class="at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryName">
+            <property name="name" column="name" type="java.lang.String" />
+        </component>
+
+        <!-- One to one mapping to the description class -->
+        <component name="description" class="at.fhv.se.hotel.domain.model.roomcategory.Description">
+            <property name="description" column="description" type="java.lang.String" />
+        </component>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<body>
+    <div layout:fragment="content">
+        <h1>Services</h1>
+        <form action="/choosedates" method="post" th:object="${form}">
+            <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
+            <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
+            <input type="hidden" id="checkInDate" name="checkInDate" th:field="*{checkInDate}" />
+            <input type="hidden" id="checkOutDate" name="checkOutDate" th:field="*{checkOutDate}" />
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Select</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="service : ${services}">
+                    <td>
+                        <div class="form-check">
+                            <input th:field="*{serviceIds}" class="form-check-input" type="checkbox" th:value="${service.id}" id="flexCheckDefault">
+                        </div>
+                    </td>
+                    <td th:text="${service.name}"></td>
+                    <td th:text="${service.price} + '€'"></td>
+                </tr>
+                </tbody>
+            </table>
+            <button id="next-button" type="submit" class="btn btn-primary">Next</button>
+        </form>
+    </div>
+</body>
+</html>
