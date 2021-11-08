@@ -2,9 +2,14 @@ package at.fhv.se.hotel.application.impl;
 
 import at.fhv.se.hotel.application.api.BookingListingService;
 import at.fhv.se.hotel.application.dto.BookingDTO;
+import at.fhv.se.hotel.domain.model.booking.Booking;
+import at.fhv.se.hotel.domain.repository.BookingRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,34 +20,29 @@ import java.util.List;
 @Component
 public class BookingListingServiceImpl implements BookingListingService {
 
+    @Autowired
+    BookingRepository bookingRepository;
+
     /**
      * This method provides bookings.
      * @return bookings contains the booking objects.
      */
+    @Transactional(readOnly=true)
     @Override
     public List<BookingDTO> allBookings() {
-        // TODO: this is fake test data, remove when implementing
-        final List<BookingDTO> bookings = Arrays.asList(
-                BookingDTO.builder()
-                        .withId("1")
-                        .withRoomCategory("Single Room")
-                        .withCheckInDate(LocalDate.now())
-                        .withCheckOutDate(LocalDate.now().plusDays(10))
-                        .build(),
-                BookingDTO.builder()
-                        .withId("2")
-                        .withRoomCategory("Junior Suite")
-                        .withCheckInDate(LocalDate.now().plusDays(2))
-                        .withCheckOutDate(LocalDate.now().plusDays(8))
-                        .build(),
-                BookingDTO.builder()
-                        .withId("3")
-                        .withRoomCategory("Suite")
-                        .withCheckInDate(LocalDate.now().plusDays(30))
-                        .withCheckOutDate(LocalDate.now().plusDays(40))
-                        .build()
-        );
+        List<Booking> bookings = bookingRepository.findAllBookings();
+        List<BookingDTO> dtos = new ArrayList<>();
 
-        return bookings;
+        for (Booking b : bookings) {
+            BookingDTO dto = BookingDTO.builder()
+                    .withId(b.getBookingId().id())
+                    .withCheckInDate(b.getCheckInDate())
+                    .withCheckOutDate(b.getCheckOutDate())
+                    .build();
+
+            dtos.add(dto);
+        }
+
+        return dtos;
     }
 }

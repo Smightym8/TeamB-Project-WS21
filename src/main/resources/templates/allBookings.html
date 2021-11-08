@@ -8,15 +8,13 @@
             <thead>
             <tr>
                 <th>Id</th>
-                <th>Room Category</th>
-                <th>Start date</th>
-                <th>End date</th>
+                <th>Check in date</th>
+                <th>Check out date</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="booking : ${bookings}">
                 <td th:text="${booking.id}"></td>
-                <td th:text="${booking.roomCategory}"></td>
                 <td th:text="${booking.checkInDate}"></td>
                 <td th:text="${booking.checkOutDate}"></td>
             </tr>

@@ -8,7 +8,6 @@ import java.util.Objects;
  */
 public class BookingDTO {
     private String id;
-    private String roomCategory;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
 
@@ -18,10 +17,6 @@ public class BookingDTO {
 
     public String id() {
         return this.id;
-    }
-
-    public String roomCategory() {
-        return this.roomCategory;
     }
 
     public LocalDate checkInDate() {
@@ -44,11 +39,6 @@ public class BookingDTO {
             return this;
         }
 
-        public Builder withRoomCategory(String roomCategory) {
-            this.instance.roomCategory = roomCategory;
-            return this;
-        }
-
         public Builder withCheckInDate(LocalDate checkInDate) {
             this.instance.checkInDate = checkInDate;
             return this;
@@ -61,7 +51,6 @@ public class BookingDTO {
 
         public BookingDTO build() {
             Objects.requireNonNull(this.instance.id, "id must be set in BookingDTO");
-            Objects.requireNonNull(this.instance.roomCategory, "roomCategory must be set in BookingDTO");
             Objects.requireNonNull(this.instance.checkInDate, "checkInDate must be set in BookingDTO");
             Objects.requireNonNull(this.instance.checkOutDate, "checkOutDate must be set in BookingDTO");
 
