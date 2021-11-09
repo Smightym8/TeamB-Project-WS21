@@ -61,5 +61,15 @@ public class BookingCreationServiceImpl implements BookingCreationService {
                                         bookingRepository.nextIdentity(), guest,
                                         categories, services);
         bookingRepository.add(booking);
+
+        Booking createdBooking = bookingRepository.bookingById(booking.getBookingId()).get();
+
+        for (Service s : createdBooking.getServices()) {
+            System.out.println(s.getServiceName().name());
+        }
+
+        for (RoomCategory rc : createdBooking.getRoomCategories()) {
+            System.out.println(rc.getRoomCategoryName().name());
+        }
     }
 }
