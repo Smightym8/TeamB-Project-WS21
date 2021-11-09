@@ -23,7 +23,7 @@
         </property>
 
         <!-- Many to one mapping to the roomCategory -->
-        <many-to-one name="roomCategory" column="room_category_id"
+        <many-to-one name="roomCategory" column="roomcategory_id"
                      class="at.fhv.se.hotel.domain.model.roomcategory.RoomCategory" not-null="true"/>
     </class>
 </hibernate-mapping>

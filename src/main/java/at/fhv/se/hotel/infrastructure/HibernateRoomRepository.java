@@ -18,11 +18,9 @@ public class HibernateRoomRepository implements RoomRepository {
 
     @Override
     public List<Room> roomsByCategoryAndStatus(String categoryId, RoomStatus status) {
-        TypedQuery<Room> query = this.em.createQuery("FROM Room AS r WHERE r.roomCategory = :roomCategory AND " +
-                "r.roomStatus := status", Room.class);
+        TypedQuery<Room> query = this.em.createQuery("FROM Room AS r WHERE r.roomCategory.roomCategoryId().id = :roomCategory ", Room.class);
 
         query.setParameter("roomCategory", categoryId);
-        query.setParameter("status", status);
 
         return query.getResultList();
     }
