@@ -6,16 +6,16 @@ public class Room {
     // eventually required by Hibernate
     private Long id;
     private String name;
-    private String status;
+    private RoomStatus status;
 
     // eventually required by Hibernate
     private Room(){}
 
-    public static Room create (String aName, String aStatus){
+    public static Room create (String aName, RoomStatus aStatus){
         return new Room(aName, aStatus);
     }
 
-    private Room (String aName, String aStatus) {
+    private Room (String aName, RoomStatus aStatus) {
         this.name = aName;
         this.status = aStatus;
     }
@@ -25,7 +25,7 @@ public class Room {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Room room = (Room) o;
-        return Objects.equals(id, room.id) && Objects.equals(name, room.name) && Objects.equals(status, room.status);
+        return Objects.equals(id, room.id) && Objects.equals(name, room.name) && status == room.status;
     }
 
     @Override
