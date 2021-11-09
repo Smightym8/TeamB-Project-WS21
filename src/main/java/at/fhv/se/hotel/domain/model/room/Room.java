@@ -1,5 +1,7 @@
 package at.fhv.se.hotel.domain.model.room;
 
+import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
+
 import java.util.Objects;
 
 public class Room {
@@ -7,17 +9,19 @@ public class Room {
     private Long id;
     private String name;
     private RoomStatus status;
+    private RoomCategory roomCategory;
 
     // eventually required by Hibernate
     private Room(){}
 
-    public static Room create (String aName, RoomStatus aStatus){
-        return new Room(aName, aStatus);
+    public static Room create (String aName, RoomStatus aStatus, RoomCategory aRoomCategory){
+        return new Room(aName, aStatus, aRoomCategory);
     }
 
-    private Room (String aName, RoomStatus aStatus) {
+    private Room (String aName, RoomStatus aStatus, RoomCategory aRoomCategory) {
         this.name = aName;
         this.status = aStatus;
+        this.roomCategory = aRoomCategory;
     }
 
     @Override
@@ -25,11 +29,11 @@ public class Room {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Room room = (Room) o;
-        return Objects.equals(id, room.id) && Objects.equals(name, room.name) && status == room.status;
+        return Objects.equals(id, room.id) && Objects.equals(name, room.name) && status == room.status && Objects.equals(roomCategory, room.roomCategory);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, status);
+        return Objects.hash(id, name, status, roomCategory);
     }
 }
