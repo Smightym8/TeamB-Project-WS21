@@ -22,9 +22,6 @@ public class ServiceRepositoryImplTests {
     @Autowired
     private ServiceRepository serviceRepository;
 
-    @Autowired
-    private EntityManager em;
-
     @Test
     void given_service_when_addservicerepository_then_returnequalsservice() {
         // given

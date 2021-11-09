@@ -24,6 +24,18 @@ public class Room {
         this.roomCategory = aRoomCategory;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public RoomStatus getStatus() {
+        return status;
+    }
+
+    public RoomCategory getRoomCategory() {
+        return roomCategory;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

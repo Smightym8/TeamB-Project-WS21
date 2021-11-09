@@ -3,6 +3,7 @@ package at.fhv.se.hotel.infrastructure;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.room.Room;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
+import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryId;
 import at.fhv.se.hotel.domain.repository.RoomRepository;
 import org.springframework.stereotype.Component;
 
@@ -17,10 +18,12 @@ public class HibernateRoomRepository implements RoomRepository {
     private EntityManager em;
 
     @Override
-    public List<Room> roomsByCategoryAndStatus(String categoryId, RoomStatus status) {
-        TypedQuery<Room> query = this.em.createQuery("FROM Room AS r WHERE r.roomCategory.roomCategoryId().id = :roomCategory ", Room.class);
+    public List<Room> roomsByCategoryAndStatus(RoomCategoryId categoryId, RoomStatus status) {
+        TypedQuery<Room> query = this.em.createQuery(
+                "FROM Room AS r WHERE r.roomCategory.roomCategoryId = :roomCategoryId AND r.status = :status", Room.class);
 
-        query.setParameter("roomCategory", categoryId);
+        query.setParameter("roomCategoryId", categoryId);
+        query.setParameter("status", status);
 
         return query.getResultList();
     }

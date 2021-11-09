@@ -18,7 +18,6 @@
             <column name="status" />
             <type name="org.hibernate.type.EnumType">
                 <param name="enumClass">at.fhv.se.hotel.domain.model.room.RoomStatus</param>
-                <param name="useNamed">true</param>
             </type>
         </property>
 
