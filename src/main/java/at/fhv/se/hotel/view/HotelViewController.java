@@ -26,6 +26,7 @@ public class HotelViewController {
     private static final String CHOOSE_DATES_URL = "/choosedates";
     private static final String CREATE_BOOKING_URL = "/createbooking";
     private static final String ERROR_URL = "/displayerror";
+    private static final String SHOW_BOOKING_DETAILS_URL = "/showbookingdetails";
 
     // Views
     private static final String MAIN_MENU_VIEW = "mainMenu";
@@ -37,6 +38,7 @@ public class HotelViewController {
     private static final String CHOOSE_SERVICE_VIEW = "chooseService";
     private static final String CHOOSE_DATES_VIEW = "chooseBookingDates";
     private static final String ERROR_VIEW = "errorView";
+    private static final String SHOW_BOOKING_DETAILS_VIEW = "bookingSummary";
 
     // Services
     @Autowired
@@ -128,7 +130,7 @@ public class HotelViewController {
         return CHOOSE_DATES_VIEW;
     }
 
-    @PostMapping(BOOKING_SUMMARY_URL)
+    @PostMapping(BOOKING_SUMMARY_URL)   //at the end of a booking
     public String showSummary(@ModelAttribute("form") BookingForm form,
                               @RequestParam("isCreated") boolean isCreated,
                               Model model) {
@@ -139,8 +141,24 @@ public class HotelViewController {
         model.addAttribute("bookingSummary", bookingSummaryDTO);
         model.addAttribute("form", form);
         model.addAttribute("isCreated", isCreated);
+        model.addAttribute("isCheckIn", false);
 
         return BOOKING_SUMMARY_VIEW;
+    }
+
+    @PostMapping(SHOW_BOOKING_DETAILS_URL)   //for check-in
+    public String showBookingDetails(@ModelAttribute("form") BookingForm form,
+                              Model model) {
+
+        BookingSummaryDTO bookingSummaryDTO = bookingSummaryService.createSummary(form.getGuestId(),
+                form.getRoomCategoryIds(), form.getServiceIds(), form.getCheckInDate(), form.getCheckOutDate());
+
+        model.addAttribute("bookingSummary", bookingSummaryDTO);
+        model.addAttribute("form", form);
+        model.addAttribute("isCreated", false);
+        model.addAttribute("isCheckIn", true);
+
+        return SHOW_BOOKING_DETAILS_VIEW;
     }
 
     @PostMapping(CREATE_BOOKING_URL)
