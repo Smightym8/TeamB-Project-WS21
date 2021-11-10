@@ -43,48 +43,24 @@ public class Booking {
         return checkInDate;
     }
 
-    public void setCheckInDate(LocalDate checkInDate) {
-        this.checkInDate = checkInDate;
-    }
-
     public LocalDate getCheckOutDate() {
         return checkOutDate;
-    }
-
-    public void setCheckOutDate(LocalDate checkOutDate) {
-        this.checkOutDate = checkOutDate;
     }
 
     public BookingId getBookingId() {
         return bookingId;
     }
 
-    public void setBookingId(BookingId bookingId) {
-        this.bookingId = bookingId;
-    }
-
     public Guest getGuest() {
         return guest;
-    }
-
-    public void setGuest(Guest guest) {
-        this.guest = guest;
     }
 
     public List<RoomCategory> getRoomCategories() {
         return roomCategories;
     }
 
-    public void setRoomCategories(List<RoomCategory> roomCategories) {
-        this.roomCategories = roomCategories;
-    }
-
     public List<Service> getServices() {
         return services;
-    }
-
-    public void setServices(List<Service> services) {
-        this.services = services;
     }
 
     @Override

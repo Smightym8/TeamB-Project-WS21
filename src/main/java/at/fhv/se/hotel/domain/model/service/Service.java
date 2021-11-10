@@ -32,24 +32,12 @@ public class Service {
         return serviceId;
     }
 
-    public void setServiceId(ServiceId serviceId) {
-        this.serviceId = serviceId;
-    }
-
     public ServiceName getServiceName() {
         return serviceName;
     }
 
-    public void setServiceName(ServiceName serviceName) {
-        this.serviceName = serviceName;
-    }
-
     public Price getServicePrice() {
         return servicePrice;
-    }
-
-    public void setServicePrice(Price servicePrice) {
-        this.servicePrice = servicePrice;
     }
 
     @Override
