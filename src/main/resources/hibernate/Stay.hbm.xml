@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-access="field" default-cascade="all">
+    <class name="at.fhv.se.hotel.domain.model.stay.Stay" table="stay" lazy="true">
+        <cache usage="read-write"/>
+
+        <!-- Hibernate id -->
+        <id name="id" type="long" column="id" unsaved-value="-1">
+            <generator class="native"/>
+        </id>
+
+        <!-- Mapping to stay id class -->
+        <component name="stayId" class="at.fhv.se.hotel.domain.model.stay.StayId">
+            <property name="id" column="domain_id" type="java.lang.String" />
+        </component>
+
+        <!-- One to many mapping to room class -->
+        <bag name="rooms" inverse="true" cascade="save-update">
+            <key column="stay_id" not-null="true" />
+            <one-to-many class="at.fhv.se.hotel.domain.model.room.Room" />
+        </bag>
+
+        <!--One to one mapping to booking class -->
+        <component name="booking" class="at.fhv.se.hotel.domain.model.booking.Booking">
+            <property name="bookingId" column="domain_id" type="java.lang.String" />
+        </component>
+
+    </class>
+</hibernate-mapping>
