@@ -20,8 +20,8 @@ public class Stay {
     public Stay() {
     }
 
-    public Stay create(Booking aBooking, List<Room> aRooms) {
-        return new Stay();
+    public static Stay create(Booking aBooking, List<Room> aRooms) {
+        return new Stay(aBooking, aRooms);
     }
 
     private Stay(Booking aBooking, List<Room> aRooms) {

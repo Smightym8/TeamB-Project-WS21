@@ -45,9 +45,9 @@ public class RoomRepositoryImplTests {
         List<Room> roomsExpected = roomNamesExpected.stream()
                 .map(name -> Room.create(name, roomStatusExpected, roomCategoryExpected))
                 .collect(Collectors.toList());
-        roomsExpected.forEach(room -> this.roomRepository.add(room));
 
         // when
+        roomsExpected.forEach(room -> this.roomRepository.add(room));
         List<Room> roomsActual = this.roomRepository.roomsByCategoryAndStatus(
                 roomCategoryExpected.getRoomCategoryId(),
                 roomStatusExpected);

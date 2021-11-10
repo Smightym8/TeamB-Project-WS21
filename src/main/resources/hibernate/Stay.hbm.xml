@@ -16,14 +16,16 @@
         </component>
 
         <!-- One to many mapping to room class -->
-        <bag name="rooms" inverse="true" cascade="save-update">
+        <bag name="rooms" cascade="save-update">
             <key column="stay_id" not-null="true" />
-            <one-to-many class="at.fhv.se.hotel.domain.model.room.Room" />
+            <many-to-many column="room_id" class="at.fhv.se.hotel.domain.model.room.Room" />
         </bag>
 
         <!--One to one mapping to booking class -->
         <component name="booking" class="at.fhv.se.hotel.domain.model.booking.Booking">
-            <property name="bookingId" column="domain_id" type="java.lang.String" />
+            <component name="bookingId" class="at.fhv.se.hotel.domain.model.booking.BookingId">
+                <property name="id" column="booking_id" type="java.lang.String" />
+            </component>
         </component>
 
     </class>
