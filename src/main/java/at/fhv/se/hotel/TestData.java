@@ -1,5 +1,6 @@
 package at.fhv.se.hotel;
 
+import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.guest.Address;
 import at.fhv.se.hotel.domain.model.guest.FullName;
 import at.fhv.se.hotel.domain.model.guest.Guest;
@@ -10,6 +11,7 @@ import at.fhv.se.hotel.domain.model.service.Price;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
+import at.fhv.se.hotel.domain.repository.BookingRepository;
 import at.fhv.se.hotel.domain.repository.GuestRepository;
 import at.fhv.se.hotel.domain.repository.RoomCategoryRepository;
 import at.fhv.se.hotel.domain.repository.ServiceRepository;
@@ -23,7 +25,9 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 @Component
 @Transactional
@@ -37,6 +41,9 @@ public class TestData implements ApplicationRunner {
     @Autowired
     GuestRepository guestRepository;
 
+    @Autowired
+    BookingRepository bookingRepository;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         // Insert fake services
@@ -49,11 +56,13 @@ public class TestData implements ApplicationRunner {
         // Insert fake categories
         RoomCategory singleRoom = RoomCategory.create(roomCategoryRepository.nextIdentity(),
                 new RoomCategoryName("Single Room"),
-                new Description("This is a single room"));
+                new Description("This is a single room")
+        );
 
         RoomCategory doubleRoom = RoomCategory.create(roomCategoryRepository.nextIdentity(),
                 new RoomCategoryName("Double Room"),
-                new Description("This is a double room"));
+                new Description("This is a double room")
+        );
 
         this.roomCategoryRepository.add(singleRoom);
         this.roomCategoryRepository.add(doubleRoom);
@@ -67,7 +76,8 @@ public class TestData implements ApplicationRunner {
                 LocalDate.of(1999, 3, 20),
                 "+43 660 123 456 789",
                 "michael.spiegel@students.fhv.at",
-                Collections.emptyList());
+                Collections.emptyList()
+        );
         this.guestRepository.add(michael);
 
         Guest ali = Guest.create(guestRepository.nextIdentity(),
@@ -78,7 +88,28 @@ public class TestData implements ApplicationRunner {
                 LocalDate.of(1997, 8, 27),
                 "+43 676 123 456 789",
                 "ali.cinar@students.fhv.at",
-                Collections.emptyList());
+                Collections.emptyList()
+        );
         this.guestRepository.add(ali);
+
+        Booking booking1 = Booking.create(
+                LocalDate.now(),
+                LocalDate.now().plusDays(10),
+                bookingRepository.nextIdentity(),
+                michael,
+                List.of(singleRoom),
+                List.of(tvService)
+        );
+        this.bookingRepository.add(booking1);
+
+        Booking booking2 = Booking.create(
+                LocalDate.now().plusDays(30),
+                LocalDate.now().plusDays(40),
+                bookingRepository.nextIdentity(),
+                ali,
+                List.of(singleRoom, doubleRoom),
+                List.of(tvService, breakfastService)
+        );
+        this.bookingRepository.add(booking2);
     }
 }

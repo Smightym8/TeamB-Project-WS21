@@ -9,8 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.awt.print.Book;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -146,7 +144,7 @@ public class HotelViewController {
     @PostMapping(CREATE_BOOKING_URL)
     public String createBooking(@ModelAttribute("form") BookingForm form,
                                 Model model){
-        bookingCreationService.createBooking(form.getGuestId(),
+        bookingCreationService.book(form.getGuestId(),
                 form.getRoomCategoryIds(),
                 form.getServiceIds(),
                 form.getCheckInDate(),

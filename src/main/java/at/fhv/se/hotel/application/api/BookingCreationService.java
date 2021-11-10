@@ -11,11 +11,11 @@ import java.util.List;
  */
 public interface BookingCreationService {
     /**
-     * See implementation {@link BookingCreationServiceImpl#createBooking(String, List, List, LocalDate, LocalDate)}
+     * See implementation {@link BookingCreationServiceImpl#book(String, List, List, LocalDate, LocalDate)}
      */
-    void createBooking(String guestId,
-                       List<String> roomCategoryIds,
-                       List<String> serviceIds,
-                       LocalDate checkInDate,
-                       LocalDate checkOutDate);
+    void book(String guestId,
+              List<String> roomCategoryIds,
+              List<String> serviceIds,
+              LocalDate checkInDate,
+              LocalDate checkOutDate);
 }

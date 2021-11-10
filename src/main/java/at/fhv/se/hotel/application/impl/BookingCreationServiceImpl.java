@@ -37,11 +37,11 @@ public class BookingCreationServiceImpl implements BookingCreationService {
 
     @Transactional(readOnly = false)
     @Override
-    public void createBooking(String guestId,
-                              List<String> roomCategoryIds,
-                              List<String> serviceIds,
-                              LocalDate checkInDate,
-                              LocalDate checkOutDate) {
+    public void book(String guestId,
+                     List<String> roomCategoryIds,
+                     List<String> serviceIds,
+                     LocalDate checkInDate,
+                     LocalDate checkOutDate) {
 
         Guest guest = guestRepository.guestById(new GuestId(guestId)).get();
 
