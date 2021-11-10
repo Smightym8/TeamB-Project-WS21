@@ -7,14 +7,16 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Id</th>
+                <th>Guest</th>
+                <th>Birthdate</th>
                 <th>Check in date</th>
                 <th>Check out date</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="booking : ${bookings}">
-                <td th:text="${booking.id}"></td>
+                <td th:text="${booking.guestName}"></td>
+                <td th:text="${booking.guestBirthDate}"></td>
                 <td th:text="${booking.checkInDate}"></td>
                 <td th:text="${booking.checkOutDate}"></td>
             </tr>
