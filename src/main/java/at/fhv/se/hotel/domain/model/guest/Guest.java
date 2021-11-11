@@ -40,56 +40,28 @@ public class Guest {
         return guestId;
     }
 
-    public void setGuestId(GuestId guestId) {
-        this.guestId = guestId;
-    }
-
     public FullName getName() {
         return name;
-    }
-
-    public void setName(FullName name) {
-        this.name = name;
     }
 
     public Address getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
     public LocalDate getBirthDate() {
         return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     public String getMailAddress() {
         return mailAddress;
     }
 
-    public void setMailAddress(String mailAddress) {
-        this.mailAddress = mailAddress;
-    }
-
     public List<Booking> getBookings() {
         return bookings;
-    }
-
-    public void setBookings(List<Booking> bookings) {
-        this.bookings = bookings;
     }
 
     public void addBooking(Booking booking) {

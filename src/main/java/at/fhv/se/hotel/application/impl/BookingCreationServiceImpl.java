@@ -37,11 +37,11 @@ public class BookingCreationServiceImpl implements BookingCreationService {
 
     @Transactional(readOnly = false)
     @Override
-    public void createBooking(String guestId,
-                              List<String> roomCategoryIds,
-                              List<String> serviceIds,
-                              LocalDate checkInDate,
-                              LocalDate checkOutDate) {
+    public void book(String guestId,
+                     List<String> roomCategoryIds,
+                     List<String> serviceIds,
+                     LocalDate checkInDate,
+                     LocalDate checkOutDate) {
 
         Guest guest = guestRepository.guestById(new GuestId(guestId)).get();
 
@@ -61,5 +61,15 @@ public class BookingCreationServiceImpl implements BookingCreationService {
                                         bookingRepository.nextIdentity(), guest,
                                         categories, services);
         bookingRepository.add(booking);
+
+        Booking createdBooking = bookingRepository.bookingById(booking.getBookingId()).get();
+
+        for (Service s : createdBooking.getServices()) {
+            System.out.println(s.getServiceName().name());
+        }
+
+        for (RoomCategory rc : createdBooking.getRoomCategories()) {
+            System.out.println(rc.getRoomCategoryName().name());
+        }
     }
 }
