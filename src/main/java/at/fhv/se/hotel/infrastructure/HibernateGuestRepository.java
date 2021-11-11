@@ -31,35 +31,22 @@ public class HibernateGuestRepository implements GuestRepository {
     @Override
     public void add(Guest guest) {
         this.em.persist(guest);
-        this.em.flush();
     }
 
     @Override
     public void remove(Guest guest) {
         this.em.remove(guest);
-        this.em.flush();
     }
 
     @Override
     public void update(Guest guest) {
         this.em.refresh(guest);
-        this.em.flush();
     }
 
     @Override
     public Optional<Guest> guestById(GuestId guestId) {
         TypedQuery<Guest> query = this.em.createQuery("FROM Guest AS g WHERE g.guestId = :guestId", Guest.class);
         query.setParameter("guestId", guestId);
-        return singleResultOptional(query);
-    }
-
-    private static <T> Optional<T> singleResultOptional(TypedQuery<T> query) {
-        // NOTE: getSingleResult throws an error if there is none
-        List<T> result = query.getResultList();
-        if (1 != result.size()) {
-            return Optional.empty();
-        }
-
-        return Optional.of(result.get(0));
+        return query.getResultStream().findFirst();
     }
 }
