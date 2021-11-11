@@ -24,8 +24,7 @@ public class HotelViewController {
     private static final String CHOOSE_DATES_URL = "/choosedates";
     private static final String CREATE_BOOKING_URL = "/createbooking";
     private static final String ERROR_URL = "/displayerror";
-    private static final String SHOW_BOOKING_DETAILS_URL = "/showbookingdetails";
-
+    private static final String SHOW_BOOKING_DETAILS_URL = "/booking/details/{id}";
     // Views
     private static final String MAIN_MENU_VIEW = "mainMenu";
     private static final String ALL_BOOKINGS_VIEW = "allBookings";
@@ -145,9 +144,11 @@ public class HotelViewController {
     }
 
     @PostMapping(SHOW_BOOKING_DETAILS_URL)   //for check-in
-    public String showBookingDetails(@ModelAttribute("form") BookingForm form,
+    public String showBookingDetails(@PathVariable String id,
                               Model model) {
 
+        System.out.println(id);
+        /*
         BookingSummaryDTO bookingSummaryDTO = bookingSummaryService.createSummary(form.getGuestId(),
                 form.getRoomCategoryIds(), form.getServiceIds(), form.getCheckInDate(), form.getCheckOutDate());
 
@@ -155,8 +156,9 @@ public class HotelViewController {
         model.addAttribute("form", form);
         model.addAttribute("isCreated", false);
         model.addAttribute("isCheckIn", true);
+         */
 
-        return SHOW_BOOKING_DETAILS_VIEW;
+        return MAIN_MENU_VIEW;
     }
 
     @PostMapping(CREATE_BOOKING_URL)
