@@ -8,6 +8,7 @@ import java.util.List;
 public final class BookingForm {
     private String guestId;
     private List<String> roomCategoryIds;
+    private List<Integer> amount;
     private List<String> serviceIds;
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate checkInDate;
@@ -19,12 +20,13 @@ public final class BookingForm {
     }
 
     public BookingForm(String guestId, List<String> roomCategoryIds, List<String> serviceIds,
-                       LocalDate checkInDate, LocalDate checkOutDate) {
+                       LocalDate checkInDate, LocalDate checkOutDate, List<Integer> amount) {
         this.guestId = guestId;
         this.roomCategoryIds = roomCategoryIds;
         this.serviceIds = serviceIds;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
+        this.amount = amount;
     }
 
     public String getGuestId() {
@@ -41,6 +43,14 @@ public final class BookingForm {
 
     public void setRoomCategoryIds(List<String> roomCategoryIds) {
         this.roomCategoryIds = roomCategoryIds;
+    }
+
+    public List<Integer> getAmount() {
+        return amount;
+    }
+
+    public void setAmount(List<Integer> amount) {
+        this.amount = amount;
     }
 
     public List<String> getServiceIds() {
