@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -55,6 +56,9 @@ public class HotelViewController {
 
     @Autowired
     private BookingCreationService bookingCreationService;
+
+    @Autowired
+    BookingDetailsService bookingDetailsService;
 
     /**
      * This method handles a get request on /.
@@ -143,14 +147,30 @@ public class HotelViewController {
         return BOOKING_SUMMARY_VIEW;
     }
 
-    @PostMapping(SHOW_BOOKING_DETAILS_URL)   //for check-in
+    @GetMapping(SHOW_BOOKING_DETAILS_URL)   //for check-in
     public String showBookingDetails(@PathVariable String id,
                               Model model) {
 
-        System.out.println(id);
+        BookingSummaryDTO bookingSummaryDTO =  bookingDetailsService.detailsByBookingId(id);
+        List<String> categoryIds = new ArrayList<>();
+        for(RoomCategoryDTO rc : bookingSummaryDTO.roomCategories()) {
+            categoryIds.add(rc.id());
+        }
+
+        List<String> serviceIds = new ArrayList<>();
+        for(ServiceDTO s : bookingSummaryDTO.services()) {
+            serviceIds.add(s.id());
+        }
+
+        // TODO: Create own checkin form
+        BookingForm form = new BookingForm(
+                bookingSummaryDTO.guest().id(),
+                categoryIds,
+                serviceIds,
+                bookingSummaryDTO.checkInDate(),
+                bookingSummaryDTO.checkOutDate());
         /*
-        BookingSummaryDTO bookingSummaryDTO = bookingSummaryService.createSummary(form.getGuestId(),
-                form.getRoomCategoryIds(), form.getServiceIds(), form.getCheckInDate(), form.getCheckOutDate());
+
 
         model.addAttribute("bookingSummary", bookingSummaryDTO);
         model.addAttribute("form", form);

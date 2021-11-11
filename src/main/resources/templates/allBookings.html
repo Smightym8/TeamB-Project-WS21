@@ -20,7 +20,7 @@
                 <td th:text="${booking.guestBirthDate}"></td>
                 <td th:text="${booking.checkInDate}"></td>
                 <td th:text="${booking.checkOutDate}"></td>
-                <td><button type="button" class="btn btn-dark">Dark</button></td>
+                <td><a th:href="@{/booking/details/{id}(id=${booking.id})}" type="button" class="btn btn-dark">Check-In</a></td>
             </tr>
             </tbody>
         </table>
