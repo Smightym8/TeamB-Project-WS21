@@ -2,11 +2,12 @@ package at.fhv.se.hotel.application.dto;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class BookingSummaryDTO {
     private GuestDTO guest;
-    private List<RoomCategoryDTO> roomCategories;
+    private Map<RoomCategoryDTO, Integer> categoriesWithAmounts;
     private List<ServiceDTO> services;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
@@ -19,8 +20,8 @@ public class BookingSummaryDTO {
         return this.guest;
     }
 
-    public List<RoomCategoryDTO> roomCategories() {
-        return this.roomCategories;
+    public Map<RoomCategoryDTO, Integer> categoriesWithAmounts() {
+        return this.categoriesWithAmounts;
     }
 
     public List<ServiceDTO> services() {
@@ -47,8 +48,8 @@ public class BookingSummaryDTO {
             return this;
         }
 
-        public Builder withRoomCategories(List<RoomCategoryDTO> categories) {
-            this.instance.roomCategories = categories;
+        public Builder withRoomCategoriesAndAmounts(Map<RoomCategoryDTO, Integer> categoriesWithAmounts) {
+            this.instance.categoriesWithAmounts = categoriesWithAmounts;
             return this;
         }
 
@@ -69,7 +70,8 @@ public class BookingSummaryDTO {
 
         public BookingSummaryDTO build() {
             Objects.requireNonNull(this.instance.guest, "guest must be set in BookingSummaryDTO");
-            Objects.requireNonNull(this.instance.roomCategories, "roomCategories must be set in BookingSummaryDTO");
+            Objects.requireNonNull(this.instance.categoriesWithAmounts,
+                    "categoriesWithAmounts must be set in BookingSummaryDTO");
             Objects.requireNonNull(this.instance.checkInDate, "checkInDate must be set in BookingDTO");
             Objects.requireNonNull(this.instance.checkOutDate, "checkOutDate must be set in BookingDTO");
 

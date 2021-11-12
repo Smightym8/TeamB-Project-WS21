@@ -134,6 +134,7 @@ public class HotelViewController {
         BookingSummaryDTO bookingSummaryDTO = bookingSummaryService.createSummary(
                 form.getGuestId(),
                 form.getRoomCategoryIds(),
+                form.getAmounts(),
                 form.getServiceIds(),
                 form.getCheckInDate(),
                 form.getCheckOutDate()

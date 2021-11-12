@@ -32,9 +32,9 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="category : ${bookingSummary.roomCategories}">
-      <td th:text="${category.name}"></td>
-      <td>0</td>
+    <tr th:each="category, stat : ${bookingSummary.categoriesWithAmounts}">
+      <td th:text="${category.key.name}"></td>
+      <td th:text="${category.value}"></td>
     </tr>
     </tbody>
   </table>
@@ -47,6 +47,7 @@
     <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
     <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
     <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
+    <input type="hidden" id="amounts" name="amounts" th:field="*{amounts}" />
     <input type="hidden" id="checkInDate" name="checkInDate" th:field="*{checkInDate}" />
     <input type="hidden" id="checkOutDate" name="checkOutDate" th:field="*{checkOutDate}" />
     <button id="next-button" type="submit" class="btn btn-primary">Create booking</button>

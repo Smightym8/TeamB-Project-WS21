@@ -14,6 +14,9 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Component
 public class BookingSummaryServiceImpl implements BookingSummaryService {
@@ -31,6 +34,7 @@ public class BookingSummaryServiceImpl implements BookingSummaryService {
     @Override
     public BookingSummaryDTO createSummary(String guestId,
                                            List<String> roomCategoryIds,
+                                           List<Integer> amounts,
                                            List<String> serviceIds,
                                            LocalDate checkInDate,
                                            LocalDate checkOutDate) {
@@ -41,6 +45,10 @@ public class BookingSummaryServiceImpl implements BookingSummaryService {
             roomCategories.add(roomCategoryListingService.findRoomCategoryById(s).get());
         }
 
+        Map<RoomCategoryDTO, Integer> categoriesWithAmounts = IntStream.range(0, roomCategories.size())
+                .boxed()
+                .collect(Collectors.toMap(roomCategories::get, amounts::get));
+
         List<ServiceDTO> services = new ArrayList<>();
         for (String s : serviceIds){
             services.add(serviceListingService.findServiceById(s).get());
@@ -48,7 +56,7 @@ public class BookingSummaryServiceImpl implements BookingSummaryService {
 
         BookingSummaryDTO bookingSummaryDTO = BookingSummaryDTO.builder()
                 .withGuest(guest)
-                .withRoomCategories(roomCategories)
+                .withRoomCategoriesAndAmounts(categoriesWithAmounts)
                 .withServices(services)
                 .withCheckInDate(checkInDate)
                 .withCheckOutDate(checkOutDate)

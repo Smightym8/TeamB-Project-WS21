@@ -14,6 +14,7 @@
                     <form action="/choosedates" th:object="${form}" method="post">
                         <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
                         <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
+                        <input type="hidden" id="amounts" name="amounts" th:field="*{amounts}" />
                         <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
                         <input type="hidden" id="checkInDate" name="checkInDate" th:field="*{checkInDate}" />
                         <input type="hidden" id="checkOutDate" name="checkOutDate" th:field="*{checkOutDate}" />
