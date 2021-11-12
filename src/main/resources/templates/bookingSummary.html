@@ -32,7 +32,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="category, stat : ${bookingSummary.categoriesWithAmounts}">
+    <tr th:each="category : ${bookingSummary.categoriesWithAmounts}" th:if="${category.value != 0}">
       <td th:text="${category.key.name}"></td>
       <td th:text="${category.value}"></td>
     </tr>
