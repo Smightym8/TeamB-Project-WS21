@@ -31,23 +31,13 @@ public class HibernateBookingRepository implements BookingRepository {
     @Override
     public void add(Booking booking) {
         this.em.persist(booking);
-        this.em.flush();
     }
 
     @Override
     public Optional<Booking> bookingById(BookingId bookingId) {
         TypedQuery<Booking> query = this.em.createQuery("FROM Booking AS b WHERE b.bookingId = :bookingId", Booking.class);
         query.setParameter("bookingId", bookingId);
-        return singleResultOptional(query);
+        return query.getResultStream().findFirst();
     }
 
-    private static <T> Optional<T> singleResultOptional(TypedQuery<T> query) {
-        // NOTE: getSingleResult throws an error if there is none
-        List<T> result = query.getResultList();
-        if (1 != result.size()) {
-            return Optional.empty();
-        }
-
-        return Optional.of(result.get(0));
-    }
 }

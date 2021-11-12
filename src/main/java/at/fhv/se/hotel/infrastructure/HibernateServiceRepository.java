@@ -31,23 +31,12 @@ public class HibernateServiceRepository implements ServiceRepository {
     @Override
     public void add(Service service) {
         this.em.persist(service);
-        this.em.flush();
     }
 
     @Override
     public Optional<Service> serviceById(ServiceId serviceId) {
         TypedQuery<Service> query = this.em.createQuery("FROM Service AS s WHERE s.serviceId = :serviceId", Service.class);
         query.setParameter("serviceId", serviceId);
-        return singleResultOptional(query);
-    }
-
-    private static <T> Optional<T> singleResultOptional(TypedQuery<T> query) {
-        // NOTE: getSingleResult throws an error if there is none
-        List<T> result = query.getResultList();
-        if (1 != result.size()) {
-            return Optional.empty();
-        }
-
-        return Optional.of(result.get(0));
+        return query.getResultStream().findFirst();
     }
 }
