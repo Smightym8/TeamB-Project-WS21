@@ -131,8 +131,13 @@ public class HotelViewController {
                               @RequestParam("isCreated") boolean isCreated,
                               Model model) {
 
-        BookingSummaryDTO bookingSummaryDTO = bookingSummaryService.createSummary(form.getGuestId(),
-                 form.getRoomCategoryIds(), form.getServiceIds(), form.getCheckInDate(), form.getCheckOutDate());
+        BookingSummaryDTO bookingSummaryDTO = bookingSummaryService.createSummary(
+                form.getGuestId(),
+                form.getRoomCategoryIds(),
+                form.getServiceIds(),
+                form.getCheckInDate(),
+                form.getCheckOutDate()
+        );
 
         model.addAttribute("bookingSummary", bookingSummaryDTO);
         model.addAttribute("form", form);

@@ -11,7 +11,7 @@
 
         <div class="row">
                 <div class="col-6">
-                    <form action="/chooseguest" th:object="${form}" method="post">
+                    <form action="/choosedates" th:object="${form}" method="post">
                         <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
                         <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
                         <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />

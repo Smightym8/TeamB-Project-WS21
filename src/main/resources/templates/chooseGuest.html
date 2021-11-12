@@ -11,9 +11,8 @@
 
         <div class="row">
             <div class="col-12">
-                <form action="/choosecategory" method="post" th:object="${form}">
+                <form action="/bookingSummary?isCreated=false" method="post" th:object="${form}">
                     <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
-                    <input type="hidden" id="amount" name="amount" th:field="*{amount}" />
                     <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
                     <input type="hidden" id="checkInDate" name="checkInDate" th:field="*{checkInDate}" />
                     <input type="hidden" id="checkOutDate" name="checkOutDate" th:field="*{checkOutDate}" />

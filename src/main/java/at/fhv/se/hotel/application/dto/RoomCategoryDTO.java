@@ -5,6 +5,7 @@ import java.util.Objects;
 public class RoomCategoryDTO {
     private String id;
     private String name;
+    private int amount;
 
     public static Builder builder() {
         return new Builder();
@@ -15,6 +16,9 @@ public class RoomCategoryDTO {
     }
     public String name() {
         return this.name;
+    }
+    public int amount() {
+        return this.amount;
     }
 
     private RoomCategoryDTO() {}
@@ -33,6 +37,11 @@ public class RoomCategoryDTO {
 
         public Builder withName(String name) {
             this.instance.name = name;
+            return this;
+        }
+
+        public Builder withAmount(int amount) {
+            this.instance.amount = amount;
             return this;
         }
 
