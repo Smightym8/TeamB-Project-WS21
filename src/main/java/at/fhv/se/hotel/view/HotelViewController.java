@@ -169,16 +169,13 @@ public class HotelViewController {
                 serviceIds,
                 bookingSummaryDTO.checkInDate(),
                 bookingSummaryDTO.checkOutDate());
-        /*
-
 
         model.addAttribute("bookingSummary", bookingSummaryDTO);
         model.addAttribute("form", form);
         model.addAttribute("isCreated", false);
         model.addAttribute("isCheckIn", true);
-         */
 
-        return MAIN_MENU_VIEW;
+        return BOOKING_SUMMARY_VIEW;
     }
 
     @PostMapping(CREATE_BOOKING_URL)
