@@ -26,6 +26,7 @@ public class HotelViewController {
     private static final String CHOOSE_DATES_URL = "/choosedates";
     private static final String CREATE_BOOKING_URL = "/createbooking";
     private static final String ERROR_URL = "/displayerror";
+    private static final String CREATE_GUEST_URL = "/createguest";
 
     // Views
     private static final String MAIN_MENU_VIEW = "mainMenu";
@@ -37,6 +38,7 @@ public class HotelViewController {
     private static final String CHOOSE_SERVICE_VIEW = "chooseService";
     private static final String CHOOSE_DATES_VIEW = "chooseBookingDates";
     private static final String ERROR_VIEW = "errorView";
+    private static final String CREATE_GUEST_VIEW = "createguest";
 
     // Services
     @Autowired
@@ -88,7 +90,16 @@ public class HotelViewController {
 
         return CREATE_BOOKING_VIEW;
     }
+/*
+    @GetMapping(CREATE_GUEST_URL)
+    public String createGuestForm(Model model) {
+        GuestForm guestForm = new GuestForm();
 
+        model.addAttribute("form", guestForm);
+
+        return CREATE_GUEST_VIEW;
+    }
+*/
     @PostMapping(CHOOSE_CATEGORY_URL)
     public String chooseRoomCategories(@ModelAttribute("form") BookingForm form, Model model) {
         final List<RoomCategoryDTO> categories = roomCategoryListingService.allRoomCategories();
