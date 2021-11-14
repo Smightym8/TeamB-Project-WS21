@@ -27,7 +27,9 @@ public class HotelViewController {
     private static final String CHOOSE_DATES_URL = "/choosedates";
     private static final String CREATE_BOOKING_URL = "/createbooking";
     private static final String ERROR_URL = "/displayerror";
+    private static final String GUEST_FORM_URL = "/guestform";
     private static final String CREATE_GUEST_URL = "/createguest";
+
 
     // Views
     private static final String MAIN_MENU_VIEW = "mainMenu";
@@ -59,6 +61,9 @@ public class HotelViewController {
 
     @Autowired
     private BookingCreationService bookingCreationService;
+
+    @Autowired
+    private GuestCreationService guestCreationService;
 
     /**
      * This method handles a get request on /.
@@ -92,7 +97,7 @@ public class HotelViewController {
         return CREATE_BOOKING_VIEW;
     }
 
-    @GetMapping(CREATE_GUEST_URL)
+    @GetMapping(GUEST_FORM_URL)
     public String createGuestForm(Model model) {
         GuestForm guestForm = new GuestForm();
 
@@ -101,6 +106,27 @@ public class HotelViewController {
         return CREATE_GUEST_VIEW;
     }
 
+    @PostMapping(CREATE_GUEST_URL)
+    public String createGuest(@ModelAttribute("form") GuestForm guestForm) {
+        // TODO: Redirect to create booking
+        // TODO: uncomment following line after GuestForm contains the fields.
+        /*
+        guestCreationService.createGuest(
+                guestForm.firstName,
+                guestForm.lastName,
+                guestForm.email,
+                guestForm.phoneNumber,
+                guestForm.birthDate,
+                guestForm.streetName,
+                guestForm.streetNumber,
+                guestForm.zipCode,
+                guestForm.city,
+                guestForm.country
+        );
+        */
+
+        return MAIN_MENU_VIEW;
+    }
 
     @PostMapping(CHOOSE_CATEGORY_URL)
     public String chooseRoomCategories(@ModelAttribute("form") BookingForm form, Model model) {
