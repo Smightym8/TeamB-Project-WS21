@@ -3,6 +3,7 @@ package at.fhv.se.hotel.view;
 import at.fhv.se.hotel.application.api.*;
 import at.fhv.se.hotel.application.dto.*;
 import at.fhv.se.hotel.view.forms.BookingForm;
+import at.fhv.se.hotel.view.forms.GuestForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -90,7 +91,7 @@ public class HotelViewController {
 
         return CREATE_BOOKING_VIEW;
     }
-/*
+
     @GetMapping(CREATE_GUEST_URL)
     public String createGuestForm(Model model) {
         GuestForm guestForm = new GuestForm();
@@ -99,7 +100,8 @@ public class HotelViewController {
 
         return CREATE_GUEST_VIEW;
     }
-*/
+
+
     @PostMapping(CHOOSE_CATEGORY_URL)
     public String chooseRoomCategories(@ModelAttribute("form") BookingForm form, Model model) {
         final List<RoomCategoryDTO> categories = roomCategoryListingService.allRoomCategories();
