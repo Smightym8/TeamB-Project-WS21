@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<body>
+<div layout:fragment="content">
+  <h1>Create Guest</h1>
+
+  <!--
+  Button in Check in Screen - New Customer
+
+fields:
+First name                            *required
+Last name                            *required
+email                                    *required
+telephone
+Needs to be a number (schema tel.number)
+birth date                             *required
+adress                                  *required
+postal code
+streetnumber
+street name
+city
+country
+Notification if the creation of a new customer was succesful or not
+When clicking the Submit button it saves the Customer & Generates an ID for them.
+Notification when the Field does not fit the requirements. (The fields will be validated e.g. Email must contain an @ )
+
+  -->
+
+  <form action="#" method="post">
+    <div class="row">
+      <div class="col-6" id="leftForm">
+        <div class="mb-3">
+          <label for="firstname" class="form-label">First Name:</label>
+          <input type="text" class="form-control" id="firstname" placeholder="John" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="lastname" class="form-label">Last Name:</label>
+          <input type="text" class="form-control" id="lastname" placeholder="Doe" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email:</label>
+          <input type="email" class="form-control" id="email" placeholder="john.doe@gmail.com">
+        </div>
+
+        <div class="mb-3">
+          <label for="phoneNumber" class="form-label">Telephone Number:</label>
+          <input type="tel" class="form-control" id="phoneNumber" placeholder="+43 699 123 456 789" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="birthDate" class="form-label">Birthdate:</label>
+          <input type="date" class="form-control" id="birthDate" required>
+        </div>
+
+      </div>
+      <div class="col-6" id="rightForm">
+        <div class="mb-3">
+          <label class="form-label">Address:</label>
+          <div class="input-group mb-3">
+            <span class="input-group-text">Streetname</span>
+            <input type="text" class="form-control" placeholder="Townhall street" aria-label="Streetname">
+            <span class="input-group-text">Nr.</span>
+            <input type="text" class="form-control" placeholder="42" aria-label="Streetnumber">
+          </div>
+
+          <div class="input-group mb-3">
+            <span class="input-group-text">Zip Code</span>
+            <input type="text" class="form-control" placeholder="6850" aria-label="Zip Code">
+            <span class="input-group-text">City</span>
+            <input type="text" class="form-control" placeholder="Dornbirn" aria-label="City">
+          </div>
+
+          <div class="input-group mb-3">
+            <span class="input-group-text">Country</span>
+            <input type="text" class="form-control" placeholder="Austria" aria-label="Country">
+          </div>
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="reset" class="btn btn-primary">Reset</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+</body>
+</html>

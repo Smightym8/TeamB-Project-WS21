@@ -18,3 +18,7 @@ h1 {
 #next-button {
     /* TODO: make the button show up on the right side */
 }
+
+#leftForm, #rightForm {
+    padding: 1em;
+}

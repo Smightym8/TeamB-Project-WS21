@@ -39,7 +39,7 @@ public class HotelViewController {
     private static final String CHOOSE_SERVICE_VIEW = "chooseService";
     private static final String CHOOSE_DATES_VIEW = "chooseBookingDates";
     private static final String ERROR_VIEW = "errorView";
-    private static final String CREATE_GUEST_VIEW = "createguest";
+    private static final String CREATE_GUEST_VIEW = "createGuest";
 
     // Services
     @Autowired
