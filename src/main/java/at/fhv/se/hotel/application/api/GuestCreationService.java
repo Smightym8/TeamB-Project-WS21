@@ -11,10 +11,11 @@ import java.time.LocalDate;
  */
 public interface GuestCreationService {
     /**
-     * See implementation {@link GuestCreationServiceImpl#createGuest(String, String, String, String, LocalDate,
+     * See implementation {@link GuestCreationServiceImpl#createGuest(String, String, String, String, String, LocalDate,
      * String, String, String, String, String)}
      * @param firstName contains the first name of the guest.
      * @param lastName contains the last name of the guest.
+     * @param gender contains the gender of the guest.
      * @param email contains the email of the guest.
      * @param telephone contains the telephone number of the guest.
      * @param birthDate contains the birthdate of the guest.
@@ -27,6 +28,7 @@ public interface GuestCreationService {
     void createGuest(
             String firstName,
             String lastName,
+            String gender,
             String email,
             String telephone,
             LocalDate birthDate,
