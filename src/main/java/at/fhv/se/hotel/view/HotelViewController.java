@@ -109,22 +109,20 @@ public class HotelViewController {
     @PostMapping(CREATE_GUEST_URL)
     public String createGuest(@ModelAttribute("form") GuestForm guestForm) {
         // TODO: Redirect to create booking
-        // TODO: uncomment following line after GuestForm contains the fields.
-        /*
+
         guestCreationService.createGuest(
-                guestForm.firstName,
-                guestForm.lastName,
-                guestForm.gender,
-                guestForm.email,
-                guestForm.phoneNumber,
-                guestForm.birthDate,
-                guestForm.streetName,
-                guestForm.streetNumber,
-                guestForm.zipCode,
-                guestForm.city,
-                guestForm.country
+                guestForm.getFirstName(),
+                guestForm.getLastName(),
+                guestForm.getGender(),
+                guestForm.geteMail(),
+                guestForm.getPhoneNumber(),
+                guestForm.getBirthDate(),
+                guestForm.getStreetName(),
+                guestForm.getStreetNumber(),
+                guestForm.getZipCode(),
+                guestForm.getCity(),
+                guestForm.getCountry()
         );
-        */
 
         return MAIN_MENU_VIEW;
     }

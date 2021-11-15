@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.Locale;
 
 /**
  * This class contains the functionality to create and to save a new guest.
@@ -53,7 +54,7 @@ public class GuestCreationServiceImpl implements GuestCreationService {
         Guest guest = Guest.create(
                 guestRepository.nextIdentity(),
                 new FullName(firstName, lastName),
-                Gender.valueOf(gender),
+                Gender.valueOf(gender.toUpperCase(Locale.ROOT)),
                 new Address(streetName, streetNumber, city, zipCode, country),
                 birthDate,
                 telephone,

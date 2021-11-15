@@ -19,7 +19,7 @@
         <property name="gender">
             <column name="gender" />
             <type name="org.hibernate.type.EnumType">
-                <param name="gender">at.fhv.se.hotel.domain.model.guest.Gender</param>
+                <param name="enumClass">at.fhv.se.hotel.domain.model.guest.Gender</param>
             </type>
         </property>
 
