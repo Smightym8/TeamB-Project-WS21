@@ -114,6 +114,7 @@ public class HotelViewController {
         guestCreationService.createGuest(
                 guestForm.firstName,
                 guestForm.lastName,
+                guestForm.gender,
                 guestForm.email,
                 guestForm.phoneNumber,
                 guestForm.birthDate,
