@@ -15,6 +15,14 @@
         <property name="phoneNumber" column="phone_number" type="java.lang.String" />
         <property name="mailAddress" column="mail_address" type="java.lang.String" />
 
+        <!-- Enum mapping -->
+        <property name="gender">
+            <column name="gender" />
+            <type name="org.hibernate.type.EnumType">
+                <param name="gender">at.fhv.se.hotel.domain.model.guest.Gender</param>
+            </type>
+        </property>
+
         <!-- Mapping to guest id class -->
         <component name="guestId" class="at.fhv.se.hotel.domain.model.guest.GuestId">
             <property name="id" column="domain_id" type="java.lang.String" />
