@@ -11,26 +11,31 @@
         <div class="mb-3">
           <label for="firstname" class="form-label">First Name:</label>
           <input th:field="*{firstName}" type="text" class="form-control" id="firstname" placeholder="John" required>
+          <p th:if="${#fields.hasErrors('firstName')}">Invalid First Name</p>
         </div>
 
         <div class="mb-3">
           <label for="lastname" class="form-label">Last Name:</label>
           <input th:field="*{lastName}" type="text" class="form-control" id="lastname" placeholder="Doe" required>
+          <p th:if="${#fields.hasErrors('lastName')}">Invalid Last Name</p>
         </div>
 
         <div class="mb-3">
           <label for="email" class="form-label">Email:</label>
           <input th:field="*{eMail}" type="email" class="form-control" id="email" placeholder="john.doe@gmail.com">
+          <p th:if="${#fields.hasErrors('eMail')}">Invalid E-Mail</p>
         </div>
 
         <div class="mb-3">
           <label for="phoneNumber" class="form-label">Telephone Number:</label>
           <input th:field="*{phoneNumber}" type="tel" class="form-control" id="phoneNumber" placeholder="+43 699 123 456 789" required>
+          <p th:if="${#fields.hasErrors('phoneNumber')}">Invalid Phonenumber</p>
         </div>
 
         <div class="mb-3">
           <label for="birthDate" class="form-label">Birthdate:</label>
           <input th:field="*{birthDate}" type="date" class="form-control" id="birthDate" required>
+          <p th:if="${#fields.hasErrors('birthDate')}">Invalid Birthdate</p>
         </div>
 
       </div>
@@ -42,6 +47,7 @@
             <label class="form-check-label" for="maleRadio">
               Male
             </label>
+            <p th:if="${#fields.hasErrors('gender')}">Invalid Gender</p>
           </div>
 
           <div class="form-check">
@@ -49,6 +55,7 @@
             <label class="form-check-label" for="femaleRadio">
               Female
             </label>
+            <p th:if="${#fields.hasErrors('gender')}">Invalid Gender</p>
           </div>
 
           <div class="form-check">
@@ -56,6 +63,7 @@
             <label class="form-check-label" for="diversRadio">
               Divers
             </label>
+            <p th:if="${#fields.hasErrors('gender')}">Invalid Gender</p>
           </div>
         </div>
 
@@ -64,20 +72,25 @@
           <div class="input-group mb-3">
             <span class="input-group-text">Streetname</span>
             <input th:field="*{streetName}" type="text" class="form-control" placeholder="Townhall street" aria-label="Streetname">
+            <p th:if="${#fields.hasErrors('streetName')}">Invalid Street name</p>
             <span class="input-group-text">Nr.</span>
             <input th:field="*{streetNumber}" type="text" class="form-control" placeholder="42" aria-label="Streetnumber">
+            <p th:if="${#fields.hasErrors('streetNumber')}">Invalid Street number</p>
           </div>
 
           <div class="input-group mb-3">
             <span class="input-group-text">Zip Code</span>
             <input th:field="*{zipCode}" type="text" class="form-control" placeholder="6850" aria-label="Zip Code">
+            <p th:if="${#fields.hasErrors('zipCode')}">Invalid Zipcode</p>
             <span class="input-group-text">City</span>
             <input th:field="*{city}" type="text" class="form-control" placeholder="Dornbirn" aria-label="City">
+            <p th:if="${#fields.hasErrors('city')}">Invalid City</p>
           </div>
 
           <div class="input-group mb-3">
             <span class="input-group-text">Country</span>
             <input th:field="*{country}" type="text" class="form-control" placeholder="Austria" aria-label="Country">
+            <p th:if="${#fields.hasErrors('country')}">Invalid Country</p>
           </div>
 
           <button type="submit" class="btn btn-primary">Submit</button>

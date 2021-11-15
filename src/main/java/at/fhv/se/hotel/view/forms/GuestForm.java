@@ -2,20 +2,43 @@ package at.fhv.se.hotel.view.forms;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 public class GuestForm {
+    @NotNull
+    @Size(min = 2, max = 20)
     private String firstName;
+
+    @NotNull
     private String lastName;
+
+    @NotNull
     private String gender;
+
     private String eMail;
+
+    @NotNull
     private String phoneNumber;
+
+    @NotNull
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate birthDate;
+
+    @NotNull
     private String streetName;
+
+    @NotNull
     private String streetNumber;
+
+    @NotNull
     private String zipCode;
+
+    @NotNull
     private String city;
+
+    @NotNull
     private String country;
     
     public GuestForm(){

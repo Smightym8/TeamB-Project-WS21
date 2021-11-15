@@ -7,9 +7,11 @@ import at.fhv.se.hotel.view.forms.GuestForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
@@ -107,8 +109,12 @@ public class HotelViewController {
     }
 
     @PostMapping(CREATE_GUEST_URL)
-    public String createGuest(@ModelAttribute("form") GuestForm guestForm) {
+    public String createGuest(@ModelAttribute("form") @Valid GuestForm guestForm, BindingResult bindingResult) {
         // TODO: Redirect to create booking
+
+        if (bindingResult.hasErrors()) {
+            return CREATE_GUEST_VIEW;
+        }
 
         guestCreationService.createGuest(
                 guestForm.getFirstName(),
