@@ -8,12 +8,12 @@ import java.util.List;
 public final class BookingForm {
     private String guestId;
     private List<String> roomCategoryIds;
-    private List<Integer> amounts;
     private List<String> serviceIds;
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate checkInDate;
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate checkOutDate;
+    private List<Integer> amounts;
 
     // required by spring/thymeleaf
     public BookingForm() {

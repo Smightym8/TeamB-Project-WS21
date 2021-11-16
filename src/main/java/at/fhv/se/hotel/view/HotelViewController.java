@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class HotelViewController {
@@ -159,8 +160,10 @@ public class HotelViewController {
 
         BookingSummaryDTO bookingSummaryDTO =  bookingDetailsService.detailsByBookingId(id);
         List<String> categoryIds = new ArrayList<>();
-        for(RoomCategoryDTO rc : bookingSummaryDTO.roomCategories()) {
-            categoryIds.add(rc.id());
+        List<Integer> amounts = new ArrayList<>();
+        for(Map.Entry<RoomCategoryDTO, Integer> entry : bookingSummaryDTO.categoriesWithAmounts().entrySet()) {
+            categoryIds.add(entry.getKey().id());
+            amounts.add(entry.getValue());
         }
 
         List<String> serviceIds = new ArrayList<>();
@@ -174,7 +177,8 @@ public class HotelViewController {
                 categoryIds,
                 serviceIds,
                 bookingSummaryDTO.checkInDate(),
-                bookingSummaryDTO.checkOutDate());
+                bookingSummaryDTO.checkOutDate(),
+                amounts);
 
         model.addAttribute("bookingSummary", bookingSummaryDTO);
         model.addAttribute("form", form);
@@ -189,12 +193,12 @@ public class HotelViewController {
                                 Model model){
         bookingCreationService.book(form.getGuestId(),
                 form.getRoomCategoryIds(),
+                form.getAmounts(),
                 form.getServiceIds(),
                 form.getCheckInDate(),
                 form.getCheckOutDate());
         return showSummary(form, true, model);
     }
-
 
     @GetMapping(ERROR_URL)
     public String displayError(@RequestParam("message") String message, Model model){

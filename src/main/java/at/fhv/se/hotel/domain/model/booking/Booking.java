@@ -15,28 +15,35 @@ public class Booking {
     private LocalDate checkOutDate;
     private BookingId bookingId;
     private Guest guest;
-    private List<RoomCategory> roomCategories;
+    private List<BookingWithRoomCategory> roomCategories;
     private List<Service> services;
 
     // Required by hibernate
     private Booking() {}
 
     public static Booking create(LocalDate aCheckInDate, LocalDate aCheckOutDate,
-                                 BookingId aBookingId, Guest aGuest, List<RoomCategory> aRoomCategories,
+                                 BookingId aBookingId, Guest aGuest,
                                  List<Service> aServices) {
 
-        return new Booking(aCheckInDate, aCheckOutDate, aBookingId, aGuest, aRoomCategories, aServices);
+        return new Booking(aCheckInDate, aCheckOutDate, aBookingId, aGuest, aServices);
     }
 
     private Booking(LocalDate aCheckInDate, LocalDate aCheckOutDate,
-                    BookingId aBookingId, Guest aGuest, List<RoomCategory> aRoomCategories,
+                    BookingId aBookingId, Guest aGuest,
                     List<Service> aServices) {
         this.checkInDate = aCheckInDate;
         this.checkOutDate = aCheckOutDate;
         this.bookingId = aBookingId;
         this.guest = aGuest;
-        this.roomCategories = aRoomCategories;
         this.services = aServices;
+    }
+
+    public void addRoomCategory(RoomCategory aRoomCategory, int anAmount) {
+        BookingWithRoomCategory bookingWithRoomCategory = BookingWithRoomCategory.create(
+                new BookingWithRoomCategoryId(this.bookingId, aRoomCategory.getRoomCategoryId()),
+                this,
+                aRoomCategory, anAmount
+        );
     }
 
     public LocalDate getCheckInDate() {
@@ -55,7 +62,7 @@ public class Booking {
         return guest;
     }
 
-    public List<RoomCategory> getRoomCategories() {
+    public List<BookingWithRoomCategory> getRoomCategories() {
         return roomCategories;
     }
 

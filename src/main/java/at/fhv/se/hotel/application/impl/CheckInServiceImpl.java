@@ -29,11 +29,14 @@ public class CheckInServiceImpl implements CheckInService {
 
     @Override
     public void checkIn(String bookingId) {
+/*
+
         Booking booking = bookingRepository.bookingById(new BookingId(bookingId)).get();
 
         List<Room> assignedRooms = new ArrayList<>();
         // Get rooms according to the booked category and by the booked amount
         // TODO: Implement logic to get rooms
+
         for(RoomCategory rc : booking.getRoomCategories()) {
             Room room = roomRepository.roomsByCategoryAndStatus(rc.getRoomCategoryId(), RoomStatus.FREE).get(0);
             assignedRooms.add(room);
@@ -43,5 +46,7 @@ public class CheckInServiceImpl implements CheckInService {
         Stay stay = Stay.create(booking, assignedRooms);
 
         stayRepository.add(stay);
+*/
+
     }
 }

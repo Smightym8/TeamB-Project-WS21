@@ -22,12 +22,7 @@
         <!-- Many to one mapping to the guest -->
         <many-to-one name="guest" column="guest_id" class="at.fhv.se.hotel.domain.model.guest.Guest" not-null="true"/>
 
-        <!-- Many to many mappings to roomcategory and service classes -->
-        <bag name="roomCategories" cascade="save-update">
-            <key column="booking_id" not-null="true" />
-            <many-to-many column="category_id" class="at.fhv.se.hotel.domain.model.roomcategory.RoomCategory"/>
-        </bag>
-
+        <!-- Many to many mappings to service classes -->
         <bag name="services" cascade="save-update">
             <key column="booking_id" not-null="false" />
             <many-to-many column="service_id" class="at.fhv.se.hotel.domain.model.service.Service"/>

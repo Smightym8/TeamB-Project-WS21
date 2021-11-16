@@ -97,9 +97,9 @@ public class TestData implements ApplicationRunner {
                 LocalDate.now().plusDays(10),
                 bookingRepository.nextIdentity(),
                 michael,
-                List.of(singleRoom),
                 List.of(tvService)
         );
+        booking1.addRoomCategory(singleRoom, 1);
         this.bookingRepository.add(booking1);
 
         Booking booking2 = Booking.create(
@@ -107,9 +107,10 @@ public class TestData implements ApplicationRunner {
                 LocalDate.now().plusDays(40),
                 bookingRepository.nextIdentity(),
                 ali,
-                List.of(singleRoom, doubleRoom),
                 List.of(tvService, breakfastService)
         );
+        booking2.addRoomCategory(singleRoom, 1);
+        booking2.addRoomCategory(doubleRoom, 1);
         this.bookingRepository.add(booking2);
     }
 }
