@@ -40,8 +40,11 @@
   <div th:if="${isCreated}" class="alert alert-success" role="alert">
     Booking successfully created!
   </div>
+  <div th:if="${isCheckIn}">
+    <a class="btn btn-primary" href="/">Check In</a>
+  </div>
 
-  <form th:if="${!isCreated}" action="/createbooking" method="post" th:object="${form}">
+  <form th:if="${!isCreated && !isCheckIn}" action="/createbooking" method="post" th:object="${form}">
     <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
     <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
     <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />

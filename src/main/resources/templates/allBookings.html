@@ -11,6 +11,7 @@
                 <th>Birthdate</th>
                 <th>Check in date</th>
                 <th>Check out date</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -19,6 +20,7 @@
                 <td th:text="${booking.guestBirthDate}"></td>
                 <td th:text="${booking.checkInDate}"></td>
                 <td th:text="${booking.checkOutDate}"></td>
+                <td><a th:href="@{/booking/details/{id}(id=${booking.id})}" type="button" class="btn btn-dark">Check-In</a></td>
             </tr>
             </tbody>
         </table>
