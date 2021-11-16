@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -24,7 +25,7 @@ public class HotelViewController {
     private static final String CHOOSE_DATES_URL = "/choosedates";
     private static final String CREATE_BOOKING_URL = "/createbooking";
     private static final String ERROR_URL = "/displayerror";
-
+    private static final String SHOW_BOOKING_DETAILS_URL = "/booking/details/{id}";
     // Views
     private static final String MAIN_MENU_VIEW = "mainMenu";
     private static final String ALL_BOOKINGS_VIEW = "allBookings";
@@ -35,6 +36,7 @@ public class HotelViewController {
     private static final String CHOOSE_SERVICE_VIEW = "chooseService";
     private static final String CHOOSE_DATES_VIEW = "chooseBookingDates";
     private static final String ERROR_VIEW = "errorView";
+    private static final String SHOW_BOOKING_DETAILS_VIEW = "bookingSummary";
 
     // Services
     @Autowired
@@ -54,6 +56,9 @@ public class HotelViewController {
 
     @Autowired
     private BookingCreationService bookingCreationService;
+
+    @Autowired
+    BookingDetailsService bookingDetailsService;
 
     /**
      * This method handles a get request on /.
@@ -126,7 +131,7 @@ public class HotelViewController {
         return CHOOSE_DATES_VIEW;
     }
 
-    @PostMapping(BOOKING_SUMMARY_URL)
+    @PostMapping(BOOKING_SUMMARY_URL)   //at the end of a booking
     public String showSummary(@ModelAttribute("form") BookingForm form,
                               @RequestParam("isCreated") boolean isCreated,
                               Model model) {
@@ -143,6 +148,38 @@ public class HotelViewController {
         model.addAttribute("bookingSummary", bookingSummaryDTO);
         model.addAttribute("form", form);
         model.addAttribute("isCreated", isCreated);
+        model.addAttribute("isCheckIn", false);
+
+        return BOOKING_SUMMARY_VIEW;
+    }
+
+    @GetMapping(SHOW_BOOKING_DETAILS_URL)   //for check-in
+    public String showBookingDetails(@PathVariable String id,
+                              Model model) {
+
+        BookingSummaryDTO bookingSummaryDTO =  bookingDetailsService.detailsByBookingId(id);
+        List<String> categoryIds = new ArrayList<>();
+        for(RoomCategoryDTO rc : bookingSummaryDTO.roomCategories()) {
+            categoryIds.add(rc.id());
+        }
+
+        List<String> serviceIds = new ArrayList<>();
+        for(ServiceDTO s : bookingSummaryDTO.services()) {
+            serviceIds.add(s.id());
+        }
+
+        // TODO: Create own checkin form
+        BookingForm form = new BookingForm(
+                bookingSummaryDTO.guest().id(),
+                categoryIds,
+                serviceIds,
+                bookingSummaryDTO.checkInDate(),
+                bookingSummaryDTO.checkOutDate());
+
+        model.addAttribute("bookingSummary", bookingSummaryDTO);
+        model.addAttribute("form", form);
+        model.addAttribute("isCreated", false);
+        model.addAttribute("isCheckIn", true);
 
         return BOOKING_SUMMARY_VIEW;
     }
