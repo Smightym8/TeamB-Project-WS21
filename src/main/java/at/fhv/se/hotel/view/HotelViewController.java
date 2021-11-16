@@ -3,12 +3,15 @@ package at.fhv.se.hotel.view;
 import at.fhv.se.hotel.application.api.*;
 import at.fhv.se.hotel.application.dto.*;
 import at.fhv.se.hotel.view.forms.BookingForm;
+import at.fhv.se.hotel.view.forms.GuestForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +29,9 @@ public class HotelViewController {
     private static final String CREATE_BOOKING_URL = "/createbooking";
     private static final String ERROR_URL = "/displayerror";
     private static final String SHOW_BOOKING_DETAILS_URL = "/booking/details/{id}";
+    private static final String GUEST_FORM_URL = "/guestform";
+    private static final String CREATE_GUEST_URL = "/createguest";
+
     // Views
     private static final String MAIN_MENU_VIEW = "mainMenu";
     private static final String ALL_BOOKINGS_VIEW = "allBookings";
@@ -37,6 +43,7 @@ public class HotelViewController {
     private static final String CHOOSE_DATES_VIEW = "chooseBookingDates";
     private static final String ERROR_VIEW = "errorView";
     private static final String SHOW_BOOKING_DETAILS_VIEW = "bookingSummary";
+    private static final String CREATE_GUEST_VIEW = "createGuest";
 
     // Services
     @Autowired
@@ -58,7 +65,11 @@ public class HotelViewController {
     private BookingCreationService bookingCreationService;
 
     @Autowired
-    BookingDetailsService bookingDetailsService;
+    private BookingDetailsService bookingDetailsService;
+
+    @Autowired
+    private GuestCreationService guestCreationService;
+
 
     /**
      * This method handles a get request on /.
@@ -90,6 +101,40 @@ public class HotelViewController {
         model.addAttribute("form", bookingForm);
 
         return CREATE_BOOKING_VIEW;
+    }
+
+    @GetMapping(GUEST_FORM_URL)
+    public String createGuestForm(Model model) {
+        GuestForm guestForm = new GuestForm();
+
+        model.addAttribute("form", guestForm);
+
+        return CREATE_GUEST_VIEW;
+    }
+
+    @PostMapping(CREATE_GUEST_URL)
+    public String createGuest(@ModelAttribute("form") @Valid GuestForm guestForm, BindingResult bindingResult) {
+        // TODO: Redirect to create booking
+
+        if (bindingResult.hasErrors()) {
+            return CREATE_GUEST_VIEW;
+        }
+
+        guestCreationService.createGuest(
+                guestForm.getFirstName(),
+                guestForm.getLastName(),
+                guestForm.getGender(),
+                guestForm.geteMail(),
+                guestForm.getPhoneNumber(),
+                guestForm.getBirthDate(),
+                guestForm.getStreetName(),
+                guestForm.getStreetNumber(),
+                guestForm.getZipCode(),
+                guestForm.getCity(),
+                guestForm.getCountry()
+        );
+
+        return MAIN_MENU_VIEW;
     }
 
     @PostMapping(CHOOSE_CATEGORY_URL)

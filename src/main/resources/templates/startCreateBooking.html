@@ -11,7 +11,7 @@
 
         <div class="row">
                 <div class="col-6">
-                    <form action="/chooseguest" th:object="${form}" method="post">
+                    <form th:action="@{/chooseguest}" th:object="${form}" method="post">
                         <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
                         <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
                         <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
@@ -24,15 +24,13 @@
                     </form>
                 </div>
                 <div class="col-6">
-                    <button onclick="alert('Not implemented yet.')" type="button" class="btn btn-primary btn-lg">
-                        Create Booking without existing guest
-                    </button>
+                    <form th:action="@{/guestform}" method="get">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            Create Booking without existing guest
+                        </button>
+                    </form>
                 </div>
-
-
         </div>
-
-
     </div>
 </body>
 </html>

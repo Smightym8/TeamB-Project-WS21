@@ -3,6 +3,7 @@ package at.fhv.se.hotel;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.guest.Address;
 import at.fhv.se.hotel.domain.model.guest.FullName;
+import at.fhv.se.hotel.domain.model.guest.Gender;
 import at.fhv.se.hotel.domain.model.guest.Guest;
 import at.fhv.se.hotel.domain.model.roomcategory.Description;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
@@ -70,6 +71,7 @@ public class TestData implements ApplicationRunner {
         // Insert fake guests
         Guest michael = Guest.create(guestRepository.nextIdentity(),
                 new FullName("Michael", "Spiegel"),
+                Gender.MALE,
                 new Address("Hochschulstraße",
                         "1", "Dornbirn",
                         "6850", "Austria"),
@@ -82,6 +84,7 @@ public class TestData implements ApplicationRunner {
 
         Guest ali = Guest.create(guestRepository.nextIdentity(),
                 new FullName("Ali", "Cinar"),
+                Gender.MALE,
                 new Address("Hochschulstraße",
                         "1", "Dornbirn",
                         "6850", "Austria"),

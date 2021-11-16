@@ -11,6 +11,7 @@ public class Guest {
     private Long id;
     private GuestId guestId;
     private FullName name;
+    private Gender gender;
     private Address address;
     private LocalDate birthDate;
     private String phoneNumber;
@@ -20,15 +21,16 @@ public class Guest {
     // Required by hibernate
     public Guest() {}
 
-    public static Guest create (GuestId aGuestId, FullName aName, Address aAddress, LocalDate aBirthdate,
+    public static Guest create (GuestId aGuestId, FullName aName, Gender aGender, Address aAddress, LocalDate aBirthdate,
                                 String aPhoneNumber, String aMailAddress, List<Booking> aBookings) {
-        return new Guest(aGuestId, aName, aAddress, aBirthdate, aPhoneNumber, aMailAddress, aBookings);
+        return new Guest(aGuestId, aName, aGender, aAddress, aBirthdate, aPhoneNumber, aMailAddress, aBookings);
     }
 
-    private Guest(GuestId aGuestId, FullName aName, Address aAddress, LocalDate aBirthdate,
+    private Guest(GuestId aGuestId, FullName aName, Gender aGender, Address aAddress, LocalDate aBirthdate,
                   String aPhoneNumber, String aMailAddress, List<Booking> aBookings) {
         this.guestId = aGuestId;
         this.name = aName;
+        this.gender = aGender;
         this.address = aAddress;
         this.birthDate = aBirthdate;
         this.phoneNumber = aPhoneNumber;
@@ -42,6 +44,10 @@ public class Guest {
 
     public FullName getName() {
         return name;
+    }
+
+    public Gender getGender() {
+        return gender;
     }
 
     public Address getAddress() {
@@ -76,6 +82,7 @@ public class Guest {
         return Objects.equals(id, guest.id)
                 && Objects.equals(guestId, guest.guestId)
                 && Objects.equals(name, guest.name)
+                && gender == guest.gender
                 && Objects.equals(address, guest.address)
                 && Objects.equals(birthDate, guest.birthDate)
                 && Objects.equals(phoneNumber, guest.phoneNumber)
@@ -86,7 +93,8 @@ public class Guest {
     @Override
     public int hashCode() {
         return Objects.hash(id, guestId, name,
-                address, birthDate, phoneNumber,
-                mailAddress, bookings);
+                gender, address, birthDate,
+                phoneNumber, mailAddress, bookings);
     }
 }
+
