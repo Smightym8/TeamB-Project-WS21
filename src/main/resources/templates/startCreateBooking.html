@@ -11,24 +11,10 @@
 
         <div class="row">
                 <div class="col-6">
-                    <form th:action="@{/chooseguest}" th:object="${form}" method="post">
-                        <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
-                        <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
-                        <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
-                        <input type="hidden" id="checkInDate" name="checkInDate" th:field="*{checkInDate}" />
-                        <input type="hidden" id="checkOutDate" name="checkOutDate" th:field="*{checkOutDate}" />
-
-                        <button type="submit" class="btn btn-primary btn-lg">
-                            Create Booking with existing guest
-                        </button>
-                    </form>
+                    <a class="btn btn-primary btn-lg" th:href="@{/chooseguest}">Book with existing guest</a>
                 </div>
                 <div class="col-6">
-                    <form th:action="@{/guestform}" method="get">
-                        <button type="submit" class="btn btn-primary btn-lg">
-                            Create Booking without existing guest
-                        </button>
-                    </form>
+                    <a class="btn btn-primary btn-lg" th:href="@{/guestform}">Book without existing guest</a>
                 </div>
         </div>
     </div>

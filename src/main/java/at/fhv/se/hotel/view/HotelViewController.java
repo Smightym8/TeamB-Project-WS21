@@ -95,10 +95,7 @@ public class HotelViewController {
     }
 
     @GetMapping(START_BOOKING_URL)
-    public String createBookingForm(Model model) {
-        BookingForm bookingForm = new BookingForm();
-
-        model.addAttribute("form", bookingForm);
+    public String createBookingForm() {
 
         return CREATE_BOOKING_VIEW;
     }
@@ -113,7 +110,7 @@ public class HotelViewController {
     }
 
     @PostMapping(CREATE_GUEST_URL)
-    public String createGuest(@ModelAttribute("form") @Valid GuestForm guestForm, BindingResult bindingResult) {
+    public String createGuest(@ModelAttribute("form") @Valid GuestForm guestForm, BindingResult bindingResult, Model model) {
         // TODO: Redirect to create booking
 
         if (bindingResult.hasErrors()) {
@@ -134,7 +131,7 @@ public class HotelViewController {
                 guestForm.getCountry()
         );
 
-        return MAIN_MENU_VIEW;
+        return chooseGuestForBooking(model);
     }
 
     @PostMapping(CHOOSE_CATEGORY_URL)
@@ -147,13 +144,14 @@ public class HotelViewController {
         return CHOOSE_CATEGORY_VIEW;
     }
 
-    @PostMapping(CHOOSE_GUEST_URL)
-    public String chooseGuestForBooking(@ModelAttribute("form") BookingForm form, Model model) {
+    @GetMapping(CHOOSE_GUEST_URL)
+    public String chooseGuestForBooking(Model model) {
+        BookingForm bookingForm = new BookingForm();
 
         List<GuestDTO> guests = guestListingService.allGuests();
 
         model.addAttribute("guests", guests);
-        model.addAttribute("form", form);
+        model.addAttribute("form", bookingForm);
 
         return CHOOSE_GUEST_VIEW;
     }
