@@ -8,28 +8,19 @@ public class BookingWithRoomCategory {
     // Required by hibernate
     private Long id;
     private BookingWithRoomCategoryId bookingWithRoomCategoryId;
-    private Booking booking;
-    private RoomCategory roomCategory;
     private int amount;
 
     // Required by hibernate
     private BookingWithRoomCategory() {}
 
     public static BookingWithRoomCategory create(BookingWithRoomCategoryId aBookingWithRoomCategoryId,
-                                                 Booking aBooking,
-                                                 RoomCategory aRoomCategory,
                                                  int anAmount) {
-        return new BookingWithRoomCategory(aBookingWithRoomCategoryId,
-                aBooking, aRoomCategory, anAmount);
+        return new BookingWithRoomCategory(aBookingWithRoomCategoryId, anAmount);
     }
 
     public BookingWithRoomCategory(BookingWithRoomCategoryId aBookingWithRoomCategoryId,
-                                   Booking aBooking,
-                                   RoomCategory aRoomCategory,
                                    int anAmount) {
         this.bookingWithRoomCategoryId = aBookingWithRoomCategoryId;
-        this.booking = aBooking;
-        this.roomCategory = aRoomCategory;
         this.amount = anAmount;
     }
 
@@ -37,12 +28,12 @@ public class BookingWithRoomCategory {
         return bookingWithRoomCategoryId;
     }
 
-    public Booking getBooking() {
-        return booking;
+    public RoomCategory getRoomCategory() {
+        return bookingWithRoomCategoryId.getRoomCategory();
     }
 
-    public RoomCategory getRoomCategory() {
-        return roomCategory;
+    public Booking getBooking() {
+        return bookingWithRoomCategoryId.getBooking();
     }
 
     public int getAmount() {
@@ -54,16 +45,11 @@ public class BookingWithRoomCategory {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BookingWithRoomCategory that = (BookingWithRoomCategory) o;
-        return amount == that.amount
-                && Objects.equals(id, that.id)
-                && Objects.equals(bookingWithRoomCategoryId, that.bookingWithRoomCategoryId)
-                && Objects.equals(booking, that.booking)
-                && Objects.equals(roomCategory, that.roomCategory);
+        return amount == that.amount && Objects.equals(id, that.id) && Objects.equals(bookingWithRoomCategoryId, that.bookingWithRoomCategoryId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, bookingWithRoomCategoryId,
-                booking, roomCategory, amount);
+        return Objects.hash(id, bookingWithRoomCategoryId, amount);
     }
 }

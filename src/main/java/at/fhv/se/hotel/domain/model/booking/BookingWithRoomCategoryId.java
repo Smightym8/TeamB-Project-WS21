@@ -17,6 +17,14 @@ public class BookingWithRoomCategoryId implements Serializable {
     // Required by hibernate
     private BookingWithRoomCategoryId() {}
 
+    protected Booking getBooking() {
+        return booking;
+    }
+
+    protected RoomCategory getRoomCategory() {
+        return roomCategory;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -43,8 +43,7 @@ public class Booking {
     public void addRoomCategory(RoomCategory aRoomCategory, int anAmount) {
         BookingWithRoomCategory bookingWithRoomCategory = BookingWithRoomCategory.create(
                 new BookingWithRoomCategoryId(this, aRoomCategory),
-                this,
-                aRoomCategory, anAmount
+                 anAmount
         );
 
         this.roomCategories.add(bookingWithRoomCategory);
