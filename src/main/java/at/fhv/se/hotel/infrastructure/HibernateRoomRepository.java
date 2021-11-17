@@ -1,6 +1,5 @@
 package at.fhv.se.hotel.infrastructure;
 
-import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.room.Room;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryId;
@@ -40,5 +39,11 @@ public class HibernateRoomRepository implements RoomRepository {
     public void add(Room room) {
         this.em.persist(room);
         this.em.flush();
+    }
+
+    @Override
+    public void occupyRoom(Room room) {
+        room.occupy();
+        em.merge(room);
     }
 }

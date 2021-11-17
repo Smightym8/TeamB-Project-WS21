@@ -36,6 +36,10 @@ public class Room {
         return roomCategory;
     }
 
+    public void occupy() {
+        this.status = RoomStatus.OCCUPIED;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

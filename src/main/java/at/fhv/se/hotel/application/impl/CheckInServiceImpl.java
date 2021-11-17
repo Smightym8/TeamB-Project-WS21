@@ -61,7 +61,11 @@ public class CheckInServiceImpl implements CheckInService {
 
         List<Room> assignedRooms = new ArrayList<>();
         for(RoomDTO r : rooms) {
-            assignedRooms.add(roomRepository.roomByName(r.name()).get());
+            Room room = roomRepository.roomByName(r.name()).get();
+            assignedRooms.add(room);
+
+            // Change room status to occupied
+            roomRepository.occupyRoom(room);
         }
 
         // Create Stay with the rooms and the booking
