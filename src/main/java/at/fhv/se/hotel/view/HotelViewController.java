@@ -159,6 +159,8 @@ public class HotelViewController {
                               Model model) {
 
         BookingSummaryDTO bookingSummaryDTO =  bookingDetailsService.detailsByBookingId(id);
+
+        // Because of using the existing SummaryView it is required to pass a BookingForm to Thymeleaf
         List<String> categoryIds = new ArrayList<>();
         List<Integer> amounts = new ArrayList<>();
         for(Map.Entry<RoomCategoryDTO, Integer> entry : bookingSummaryDTO.categoriesWithAmounts().entrySet()) {

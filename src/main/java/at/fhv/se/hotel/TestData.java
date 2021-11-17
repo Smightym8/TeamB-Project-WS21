@@ -4,6 +4,8 @@ import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.guest.Address;
 import at.fhv.se.hotel.domain.model.guest.FullName;
 import at.fhv.se.hotel.domain.model.guest.Guest;
+import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.Description;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryName;
@@ -11,10 +13,7 @@ import at.fhv.se.hotel.domain.model.service.Price;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
-import at.fhv.se.hotel.domain.repository.BookingRepository;
-import at.fhv.se.hotel.domain.repository.GuestRepository;
-import at.fhv.se.hotel.domain.repository.RoomCategoryRepository;
-import at.fhv.se.hotel.domain.repository.ServiceRepository;
+import at.fhv.se.hotel.domain.repository.*;
 import at.fhv.se.hotel.infrastructure.HibernateServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -43,6 +42,9 @@ public class TestData implements ApplicationRunner {
 
     @Autowired
     BookingRepository bookingRepository;
+
+    @Autowired
+    RoomRepository roomRepository;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -113,5 +115,23 @@ public class TestData implements ApplicationRunner {
         booking2.addRoomCategory(singleRoom, 2);
         booking2.addRoomCategory(doubleRoom, 1);
         this.bookingRepository.add(booking2);
+
+        Room room1 = Room.create("101", RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(room1);
+
+        Room room2 = Room.create("102", RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(room2);
+
+        Room room3 = Room.create("103", RoomStatus.OCCUPIED, singleRoom);
+        this.roomRepository.add(room3);
+
+        Room room4 = Room.create("201", RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(room4);
+
+        Room room5 = Room.create("202", RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(room5);
+
+        Room room6 = Room.create("203", RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(room6);
     }
 }

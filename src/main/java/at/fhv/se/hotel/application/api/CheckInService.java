@@ -1,5 +1,6 @@
 package at.fhv.se.hotel.application.api;
 
+import at.fhv.se.hotel.application.dto.RoomDTO;
 import at.fhv.se.hotel.application.impl.CheckInServiceImpl;
 
 import java.util.List;
@@ -9,8 +10,14 @@ import java.util.List;
  * The implementation is in {@link CheckInServiceImpl}.
  */
 public interface CheckInService {
+
     /**
-     * See implementation {@link CheckInServiceImpl#checkIn(String)}
+     * See implementation {@link CheckInServiceImpl#assignRooms(String)}
      */
-    void checkIn(String bookingId);
+    List<RoomDTO> assignRooms(String bookingId);
+
+    /**
+     * See implementation {@link CheckInServiceImpl#checkIn(String, List)}
+     */
+    void checkIn(String bookingId, List<RoomDTO> rooms);
 }

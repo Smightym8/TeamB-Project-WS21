@@ -11,7 +11,7 @@
         </id>
 
         <!-- Primitive datatypes of class room -->
-        <property name="name" column="name" type="java.lang.String" />
+        <property name="name" column="name" unique-key="name" type="java.lang.String" />
 
         <!-- Enum mapping -->
         <property name="status">

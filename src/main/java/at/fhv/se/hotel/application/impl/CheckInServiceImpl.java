@@ -1,12 +1,21 @@
 package at.fhv.se.hotel.application.impl;
 
 import at.fhv.se.hotel.application.api.CheckInService;
+import at.fhv.se.hotel.application.dto.RoomDTO;
+import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
+import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory;
+import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomStatus;
+import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.repository.BookingRepository;
 import at.fhv.se.hotel.domain.repository.RoomRepository;
 import at.fhv.se.hotel.domain.repository.StayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class CheckInServiceImpl implements CheckInService {
@@ -20,25 +29,44 @@ public class CheckInServiceImpl implements CheckInService {
     StayRepository stayRepository;
 
     @Override
-    public void checkIn(String bookingId) {
-/*
+    public List<RoomDTO> assignRooms(String bookingId) {
+        Booking booking = bookingRepository.bookingById(new BookingId(bookingId)).get();
+        List<RoomDTO> assignedRooms = new ArrayList<>();
 
+        for(BookingWithRoomCategory brc : booking.getRoomCategories()) {
+            // Get free rooms from current category
+            List<Room> freeRooms = roomRepository.roomsByCategoryAndStatus(
+                    brc.getRoomCategory().getRoomCategoryId(),
+                    RoomStatus.FREE
+            );
+
+            // Add booked amount of rooms
+            for(int i = 0; i < brc.getAmount(); i++) {
+                // Build dto and add it to assignedRooms
+                RoomDTO dto = RoomDTO.builder()
+                        .withName(freeRooms.get(0).getName())
+                        .build();
+
+                freeRooms.remove(0);
+                assignedRooms.add(dto);
+            }
+        }
+
+        return assignedRooms;
+    }
+
+    @Override
+    public void checkIn(String bookingId, List<RoomDTO> rooms) {
         Booking booking = bookingRepository.bookingById(new BookingId(bookingId)).get();
 
         List<Room> assignedRooms = new ArrayList<>();
-        // Get rooms according to the booked category and by the booked amount
-        // TODO: Implement logic to get rooms
-
-        for(RoomCategory rc : booking.getRoomCategories()) {
-            Room room = roomRepository.roomsByCategoryAndStatus(rc.getRoomCategoryId(), RoomStatus.FREE).get(0);
-            assignedRooms.add(room);
+        for(RoomDTO r : rooms) {
+            assignedRooms.add(roomRepository.roomByName(r.name()).get());
         }
 
         // Create Stay with the rooms and the booking
         Stay stay = Stay.create(booking, assignedRooms);
 
         stayRepository.add(stay);
-*/
-
     }
 }

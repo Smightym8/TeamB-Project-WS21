@@ -11,11 +11,19 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class HibernateRoomRepository implements RoomRepository {
     @PersistenceContext
     private EntityManager em;
+
+    @Override
+    public Optional<Room> roomByName(String name) {
+        TypedQuery<Room> query = this.em.createQuery("FROM Room AS r WHERE r.name = :name", Room.class);
+        query.setParameter("name", name);
+        return query.getResultStream().findFirst();
+    }
 
     @Override
     public List<Room> roomsByCategoryAndStatus(RoomCategoryId categoryId, RoomStatus status) {
