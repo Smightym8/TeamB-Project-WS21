@@ -43,8 +43,30 @@
     Booking successfully created!
   </div>
   <div th:if="${isCheckIn}">
-    <a class="btn btn-primary" href="/">Check In</a>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalRoomNumber">Check In</button>
   </div>
+
+<!-- Modal -->
+  <div class="modal fade" id="modalRoomNumber" tabindex="-1" role="dialog" aria-labelledby="modalRoomNumberLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalRoomNumberLabel">Room Number</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Fill Room Number here
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a href="/" class="btn btn-primary">Back to Main Menu</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <form th:if="${!isCreated && !isCheckIn}" action="/createbooking" method="post" th:object="${form}">
     <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
