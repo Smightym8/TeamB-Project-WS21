@@ -1,6 +1,5 @@
 package at.fhv.se.hotel.integration.infrastructure;
 
-import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
 import at.fhv.se.hotel.domain.model.guest.Address;
 import at.fhv.se.hotel.domain.model.guest.FullName;

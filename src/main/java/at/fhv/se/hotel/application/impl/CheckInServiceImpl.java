@@ -1,20 +1,12 @@
 package at.fhv.se.hotel.application.impl;
 
 import at.fhv.se.hotel.application.api.CheckInService;
-import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
-import at.fhv.se.hotel.domain.model.room.Room;
-import at.fhv.se.hotel.domain.model.room.RoomStatus;
-import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
-import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.repository.BookingRepository;
 import at.fhv.se.hotel.domain.repository.RoomRepository;
 import at.fhv.se.hotel.domain.repository.StayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 public class CheckInServiceImpl implements CheckInService {

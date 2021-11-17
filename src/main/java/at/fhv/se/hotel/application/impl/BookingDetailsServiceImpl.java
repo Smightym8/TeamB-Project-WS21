@@ -5,7 +5,6 @@ import at.fhv.se.hotel.application.dto.*;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
 import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory;
-import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.repository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;

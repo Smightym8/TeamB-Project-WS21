@@ -5,6 +5,7 @@ import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
 import at.fhv.se.hotel.domain.model.service.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,14 +37,17 @@ public class Booking {
         this.bookingId = aBookingId;
         this.guest = aGuest;
         this.services = aServices;
+        this.roomCategories = new ArrayList<>();
     }
 
     public void addRoomCategory(RoomCategory aRoomCategory, int anAmount) {
         BookingWithRoomCategory bookingWithRoomCategory = BookingWithRoomCategory.create(
-                new BookingWithRoomCategoryId(this.bookingId, aRoomCategory.getRoomCategoryId()),
+                new BookingWithRoomCategoryId(this, aRoomCategory),
                 this,
                 aRoomCategory, anAmount
         );
+
+        this.roomCategories.add(bookingWithRoomCategory);
     }
 
     public LocalDate getCheckInDate() {
