@@ -27,6 +27,7 @@ public class HotelViewController {
     private static final String CREATE_BOOKING_URL = "/createbooking";
     private static final String ERROR_URL = "/displayerror";
     private static final String SHOW_BOOKING_DETAILS_URL = "/booking/details/{id}";
+    private static final String MODAL_ROOM_NR_URL = "/modalroomnr";
     // Views
     private static final String MAIN_MENU_VIEW = "mainMenu";
     private static final String ALL_BOOKINGS_VIEW = "allBookings";
@@ -38,7 +39,7 @@ public class HotelViewController {
     private static final String CHOOSE_DATES_VIEW = "chooseBookingDates";
     private static final String ERROR_VIEW = "errorView";
     private static final String SHOW_BOOKING_DETAILS_VIEW = "bookingSummary";
-
+    private static final String MODAL_ROOM_NR_VIEW = "modalRoomNr";
     // Services
     @Autowired
     private BookingListingService bookingListingService;
@@ -188,6 +189,11 @@ public class HotelViewController {
         model.addAttribute("isCheckIn", true);
 
         return BOOKING_SUMMARY_VIEW;
+    }
+
+    @GetMapping(MODAL_ROOM_NR_URL)
+    public String modalRoomNr(){
+        return MODAL_ROOM_NR_VIEW;
     }
 
     @PostMapping(CREATE_BOOKING_URL)
