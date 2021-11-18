@@ -19,7 +19,21 @@
             </tbody>
         </table>
 
-        <a class="btn btn-primary" href="#">Accept</a>
+        <div th:if="${isCheckedIn}">
+            <div class="alert alert-success" role="alert">
+                Checked in successfully!
+            </div>
+            <a class="btn btn-primary" th:href="@{/}">
+                Back to main menu
+            </a>
+        </div>
+
+        <div th:if="${!isCheckedIn}">
+            <a class="btn btn-primary" th:href="@{'/assignedRooms?bookingId=' + ${bookingId} + '&isCheckedIn=true'}">
+                Accept
+            </a>
+            <a th:href="@{/booking/details/{id}(id=${bookingId})}" type="button" class="btn btn-primary">Back</a>
+        </div>
     </div>
 </body>
 </html>

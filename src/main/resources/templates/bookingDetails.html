@@ -39,7 +39,10 @@
         </tbody>
     </table>
 
-    <a class="btn btn-primary" th:href="@{'/assignedRooms?bookingId=' + ${bookingDetails.id}}">Assign Rooms</a>
+    <a class="btn btn-primary" th:href="@{'/assignedRooms?bookingId=' + ${bookingDetails.id} + '&isCheckedIn=false'}">
+        Assign Rooms
+    </a>
+    <a th:href="@{/bookinglist}" type="button" class="btn btn-primary">Back</a>
 </div>
 </body>
 </html>

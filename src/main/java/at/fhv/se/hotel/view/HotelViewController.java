@@ -37,7 +37,6 @@ public class HotelViewController {
     private static final String CHOOSE_SERVICE_VIEW = "chooseService";
     private static final String CHOOSE_DATES_VIEW = "chooseBookingDates";
     private static final String ERROR_VIEW = "errorView";
-    private static final String SHOW_BOOKING_DETAILS_VIEW = "bookingSummary";
     private static final String ASSIGNED_ROOMS_VIEW = "assignedRooms";
     // Services
     @Autowired
@@ -152,7 +151,6 @@ public class HotelViewController {
         model.addAttribute("bookingSummary", bookingSummaryDTO);
         model.addAttribute("form", form);
         model.addAttribute("isCreated", isCreated);
-        model.addAttribute("isCheckIn", false);
 
         return BOOKING_SUMMARY_VIEW;
     }
@@ -168,12 +166,19 @@ public class HotelViewController {
     }
 
     @GetMapping(ASSIGNED_ROOMS_URL)
-    public String assignedRooms(@RequestParam("bookingId") String bookingId, Model model) {
+    public String assignedRooms(@RequestParam("bookingId") String bookingId,
+                                @RequestParam("isCheckedIn") boolean isCheckedIn,
+                                Model model) {
 
         List<RoomDTO> assignedRooms = checkInService.assignRooms(bookingId);
 
+        if(isCheckedIn) {
+            checkInService.checkIn(bookingId, assignedRooms);
+        }
+
         model.addAttribute("bookingId", bookingId);
         model.addAttribute("assignedRooms", assignedRooms);
+        model.addAttribute("isCheckedIn", isCheckedIn);
 
         return ASSIGNED_ROOMS_VIEW;
     }

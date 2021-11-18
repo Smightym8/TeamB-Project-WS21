@@ -13,6 +13,7 @@ import at.fhv.se.hotel.domain.repository.RoomRepository;
 import at.fhv.se.hotel.domain.repository.StayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class CheckInServiceImpl implements CheckInService {
     @Autowired
     StayRepository stayRepository;
 
-
+    @Transactional
     @Override
     public List<RoomDTO> assignRooms(String bookingId) {
         Booking booking = bookingRepository.bookingById(new BookingId(bookingId)).get();
@@ -57,6 +58,7 @@ public class CheckInServiceImpl implements CheckInService {
         return assignedRooms;
     }
 
+    @Transactional
     @Override
     public void checkIn(String bookingId, List<RoomDTO> rooms) {
         //TODO: Check if rooms are occupied
