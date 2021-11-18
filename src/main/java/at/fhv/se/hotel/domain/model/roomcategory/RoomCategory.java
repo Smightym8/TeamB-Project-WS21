@@ -13,7 +13,7 @@ public class RoomCategory {
     private Description description;
 
     // Required by hibernate
-    private RoomCategory() {
+    protected RoomCategory() {
     }
 
     public static RoomCategory create (RoomCategoryId aRoomCategoryId, RoomCategoryName aRoomCategoryName,

@@ -5,6 +5,7 @@ import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
 import at.fhv.se.hotel.domain.model.service.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,30 +14,41 @@ public class Booking {
     private Long id;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
+    private boolean isActive;
     private BookingId bookingId;
     private Guest guest;
-    private List<RoomCategory> roomCategories;
+    private List<BookingWithRoomCategory> roomCategories;
     private List<Service> services;
 
     // Required by hibernate
     private Booking() {}
 
     public static Booking create(LocalDate aCheckInDate, LocalDate aCheckOutDate,
-                                 BookingId aBookingId, Guest aGuest, List<RoomCategory> aRoomCategories,
+                                 BookingId aBookingId, Guest aGuest,
                                  List<Service> aServices) {
 
-        return new Booking(aCheckInDate, aCheckOutDate, aBookingId, aGuest, aRoomCategories, aServices);
+        return new Booking(aCheckInDate, aCheckOutDate, aBookingId, aGuest, aServices);
     }
 
     private Booking(LocalDate aCheckInDate, LocalDate aCheckOutDate,
-                    BookingId aBookingId, Guest aGuest, List<RoomCategory> aRoomCategories,
+                    BookingId aBookingId, Guest aGuest,
                     List<Service> aServices) {
         this.checkInDate = aCheckInDate;
         this.checkOutDate = aCheckOutDate;
+        this.isActive = true;
         this.bookingId = aBookingId;
         this.guest = aGuest;
-        this.roomCategories = aRoomCategories;
         this.services = aServices;
+        this.roomCategories = new ArrayList<>();
+    }
+
+    public void addRoomCategory(RoomCategory aRoomCategory, int anAmount) {
+        BookingWithRoomCategory bookingWithRoomCategory = BookingWithRoomCategory.create(
+                new BookingWithRoomCategoryId(this, aRoomCategory),
+                 anAmount
+        );
+
+        this.roomCategories.add(bookingWithRoomCategory);
     }
 
     public LocalDate getCheckInDate() {
@@ -47,6 +59,10 @@ public class Booking {
         return checkOutDate;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
     public BookingId getBookingId() {
         return bookingId;
     }
@@ -55,12 +71,16 @@ public class Booking {
         return guest;
     }
 
-    public List<RoomCategory> getRoomCategories() {
+    public List<BookingWithRoomCategory> getRoomCategories() {
         return roomCategories;
     }
 
     public List<Service> getServices() {
         return services;
+    }
+
+    public void deactivate() {
+        isActive = false;
     }
 
     @Override

@@ -13,18 +13,20 @@ public final class BookingForm {
     private LocalDate checkInDate;
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate checkOutDate;
+    private List<Integer> amounts;
 
     // required by spring/thymeleaf
     public BookingForm() {
     }
 
     public BookingForm(String guestId, List<String> roomCategoryIds, List<String> serviceIds,
-                       LocalDate checkInDate, LocalDate checkOutDate) {
+                       LocalDate checkInDate, LocalDate checkOutDate, List<Integer> amounts) {
         this.guestId = guestId;
         this.roomCategoryIds = roomCategoryIds;
         this.serviceIds = serviceIds;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
+        this.amounts = amounts;
     }
 
     public String getGuestId() {
@@ -41,6 +43,14 @@ public final class BookingForm {
 
     public void setRoomCategoryIds(List<String> roomCategoryIds) {
         this.roomCategoryIds = roomCategoryIds;
+    }
+
+    public List<Integer> getAmounts() {
+        return amounts;
+    }
+
+    public void setAmounts(List<Integer> amounts) {
+        this.amounts = amounts;
     }
 
     public List<String> getServiceIds() {

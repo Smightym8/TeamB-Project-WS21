@@ -4,14 +4,16 @@ import at.fhv.se.hotel.application.api.BookingDetailsService;
 import at.fhv.se.hotel.application.dto.*;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
-import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
+import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.repository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class BookingDetailsServiceImpl implements BookingDetailsService {
@@ -20,7 +22,7 @@ public class BookingDetailsServiceImpl implements BookingDetailsService {
     BookingRepository bookingRepository;
 
     @Override
-    public BookingSummaryDTO detailsByBookingId(String bookingId) {
+    public BookingDetailsDTO detailsByBookingId(String bookingId) {
 
         Booking booking = bookingRepository.bookingById(new BookingId(bookingId)).get();
         GuestDTO guestDTO = GuestDTO.builder()
@@ -30,14 +32,14 @@ public class BookingDetailsServiceImpl implements BookingDetailsService {
                 .withBirthDate(booking.getGuest().getBirthDate())
                 .build();
 
-        List<RoomCategoryDTO> categoryDtos = new ArrayList<>();
-        for(RoomCategory rc : booking.getRoomCategories()) {
+        Map<RoomCategoryDTO, Integer> categoriesWithAmount = new HashMap<>();
+        for(BookingWithRoomCategory brc : booking.getRoomCategories()) {
             RoomCategoryDTO categoryDTO = RoomCategoryDTO.builder()
-                    .withId(rc.getRoomCategoryId().id())
-                    .withName(rc.getRoomCategoryName().name())
+                    .withId(brc.getRoomCategory().getRoomCategoryId().id())
+                    .withName(brc.getRoomCategory().getRoomCategoryName().name())
                     .build();
-
-            categoryDtos.add(categoryDTO);
+            Integer amount = brc.getAmount();
+            categoriesWithAmount.put(categoryDTO, amount);
         }
 
         List<ServiceDTO> serviceDtos = new ArrayList<>();
@@ -51,14 +53,15 @@ public class BookingDetailsServiceImpl implements BookingDetailsService {
             serviceDtos.add(serviceDTO);
         }
 
-        BookingSummaryDTO bookingSummaryDTO = BookingSummaryDTO.builder()
+        BookingDetailsDTO bookingDetailsDTO = BookingDetailsDTO.builder()
+                .withId(bookingId)
                 .withGuest(guestDTO)
-                .withRoomCategories(categoryDtos)
+                .withRoomCategoriesAndAmounts(categoriesWithAmount)
                 .withServices(serviceDtos)
                 .withCheckInDate(booking.getCheckInDate())
                 .withCheckOutDate(booking.getCheckOutDate())
                 .build();
 
-        return bookingSummaryDTO;
+        return bookingDetailsDTO;
     }
 }

@@ -40,6 +40,7 @@ public class BookingListingServiceImpl implements BookingListingService {
                     .withBirthDate(b.getGuest().getBirthDate())
                     .withCheckInDate(b.getCheckInDate())
                     .withCheckOutDate(b.getCheckOutDate())
+                    .withStatus(b.isActive())
                     .build();
 
             dtos.add(dto);

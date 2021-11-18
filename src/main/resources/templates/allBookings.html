@@ -15,7 +15,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="booking : ${bookings}">
+            <tr th:each="booking : ${bookings}" th:if="${booking.isActive}">
                 <td th:text="${booking.guestName}"></td>
                 <td th:text="${booking.guestBirthDate}"></td>
                 <td th:text="${booking.checkInDate}"></td>

@@ -1,24 +1,25 @@
 package at.fhv.se.hotel.integration.infrastructure;
 
+import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
 import at.fhv.se.hotel.domain.model.guest.Address;
 import at.fhv.se.hotel.domain.model.guest.FullName;
 import at.fhv.se.hotel.domain.model.guest.Guest;
+import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.Description;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryName;
 import at.fhv.se.hotel.domain.model.service.Price;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
-import at.fhv.se.hotel.domain.repository.BookingRepository;
-import at.fhv.se.hotel.domain.repository.GuestRepository;
-import at.fhv.se.hotel.domain.repository.RoomCategoryRepository;
-import at.fhv.se.hotel.domain.repository.ServiceRepository;
+import at.fhv.se.hotel.domain.model.stay.Stay;
+import at.fhv.se.hotel.domain.repository.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -26,11 +27,13 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @Transactional
-public class BookingRepositoryImplTests {
+public class StayRepositoryImplTests {
+    @Autowired
+    StayRepository stayRepository;
+
     @Autowired
     BookingRepository bookingRepository;
 
@@ -43,8 +46,11 @@ public class BookingRepositoryImplTests {
     @Autowired
     RoomCategoryRepository roomCategoryRepository;
 
+    @Autowired
+    RoomRepository roomRepository;
+
     @Test
-    void given_booking_when_addbookingtorepository_then_returnequalsbooking() {
+    void given_stay_when_addstayrepository_then_returnequalsstay() {
         // given
         Guest guestExpected = Guest.create(guestRepository.nextIdentity(),
                 new FullName("Michael", "Spiegel"),
@@ -56,13 +62,10 @@ public class BookingRepositoryImplTests {
                 "michael.spiegel@students.fhv.at",
                 Collections.emptyList());
 
-        List<RoomCategory> categoriesExpected = Arrays.asList(
+        List<RoomCategory> categoriesExpected = List.of(
                 RoomCategory.create(roomCategoryRepository.nextIdentity(),
                         new RoomCategoryName("Single Room"),
-                        new Description("This is a single room")),
-                RoomCategory.create(roomCategoryRepository.nextIdentity(),
-                        new RoomCategoryName("Double Room"),
-                        new Description("This is a double room"))
+                        new Description("This is a single room"))
         );
 
         List<Service> servicesExpected = Arrays.asList(
@@ -74,35 +77,32 @@ public class BookingRepositoryImplTests {
                         new Price(new BigDecimal("100")))
         );
 
-        BookingId idExpcted = new BookingId("42");
         Booking bookingExpected = Booking.create(
                 LocalDate.now(),
                 LocalDate.now().plusDays(10),
-                idExpcted,
+                bookingRepository.nextIdentity(),
                 guestExpected,
                 categoriesExpected,
                 servicesExpected
         );
 
+        String roomNameExpected = "Room 1";
+        RoomStatus roomStatusExpected = RoomStatus.FREE;
+
+        List<Room> roomsExpected =
+                List.of(Room.create(
+                        roomNameExpected,
+                        roomStatusExpected,
+                        categoriesExpected.get(0)));
+
+        Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
+
         // when
-        this.bookingRepository.add(bookingExpected);
-        Booking bookingActual = this.bookingRepository.bookingById(idExpcted).get();
+        this.roomRepository.add(roomsExpected.get(0));
+        this.stayRepository.add(stayExpected);
+        Stay stayActual = this.stayRepository.stayById(stayExpected.getStayId()).get();
 
         // then
-        assertEquals(bookingExpected, bookingActual);
-        assertEquals(bookingExpected.getBookingId(), bookingActual.getBookingId());
-        assertEquals(bookingExpected.getGuest(), bookingActual.getGuest());
-        assertEquals(bookingExpected.getCheckInDate(), bookingActual.getCheckInDate());
-        assertEquals(bookingExpected.getCheckOutDate(), bookingActual.getCheckOutDate());
-        assertEquals(bookingExpected.getRoomCategories().size(), bookingActual.getRoomCategories().size());
-        assertEquals(bookingExpected.getServices().size(), bookingActual.getServices().size());
-
-        for (RoomCategory rc : bookingActual.getRoomCategories()) {
-            assertTrue(categoriesExpected.contains(rc));
-        }
-
-        for(Service s : bookingActual.getServices()) {
-            assertTrue(servicesExpected.contains(s));
-        }
+        assertEquals(stayExpected, stayActual);
     }
 }

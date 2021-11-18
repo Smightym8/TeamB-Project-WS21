@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-access="field" default-cascade="all">
+    <class name="at.fhv.se.hotel.domain.model.room.Room" table="room" lazy="true">
+        <cache usage="read-write"/>
+
+        <!-- Hibernate id -->
+        <id name="id" type="long" column="id" unsaved-value="-1">
+            <generator class="native"/>
+        </id>
+
+        <!-- Primitive datatypes of class room -->
+        <property name="name" column="name" unique-key="name" type="java.lang.String" />
+
+        <!-- Enum mapping -->
+        <property name="status">
+            <column name="status" />
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">at.fhv.se.hotel.domain.model.room.RoomStatus</param>
+            </type>
+        </property>
+
+        <!-- Many to one mapping to the roomCategory -->
+        <many-to-one name="roomCategory" column="roomcategory_id"
+                     class="at.fhv.se.hotel.domain.model.roomcategory.RoomCategory" not-null="true"/>
+
+    </class>
+</hibernate-mapping>

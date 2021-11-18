@@ -2,6 +2,7 @@ package at.fhv.se.hotel.application.impl;
 
 import at.fhv.se.hotel.application.api.BookingCreationService;
 import at.fhv.se.hotel.domain.model.booking.Booking;
+import at.fhv.se.hotel.domain.model.booking.BookingId;
 import at.fhv.se.hotel.domain.model.guest.Guest;
 import at.fhv.se.hotel.domain.model.guest.GuestId;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
@@ -39,17 +40,14 @@ public class BookingCreationServiceImpl implements BookingCreationService {
     @Override
     public void book(String guestId,
                      List<String> roomCategoryIds,
+                     List<Integer> amounts,
                      List<String> serviceIds,
                      LocalDate checkInDate,
                      LocalDate checkOutDate) {
 
-        Guest guest = guestRepository.guestById(new GuestId(guestId)).get();
+        BookingId bookingId = bookingRepository.nextIdentity();
 
-        List<RoomCategory> categories = new ArrayList<>();
-        for (String s : roomCategoryIds) {
-            RoomCategory category = roomCategoryRepository.roomCategoryById(new RoomCategoryId(s)).get();
-            categories.add(category);
-        }
+        Guest guest = guestRepository.guestById(new GuestId(guestId)).get();
 
         List<Service> services = new ArrayList<>();
         for (String s : serviceIds) {
@@ -57,19 +55,17 @@ public class BookingCreationServiceImpl implements BookingCreationService {
             services.add(service);
         }
 
-        Booking booking = Booking.create(checkInDate, checkOutDate,
-                                        bookingRepository.nextIdentity(), guest,
-                                        categories, services);
+        Booking booking = Booking.create(checkInDate, checkOutDate, bookingId, guest, services);
+
+        int i = 0;
+        for (String s : roomCategoryIds) {
+            if (amounts.get(i) > 0) {
+                RoomCategory category = roomCategoryRepository.roomCategoryById(new RoomCategoryId(s)).get();
+                booking.addRoomCategory(category, amounts.get(i));
+                i++;
+            }
+        }
+
         bookingRepository.add(booking);
-
-        Booking createdBooking = bookingRepository.bookingById(booking.getBookingId()).get();
-
-        for (Service s : createdBooking.getServices()) {
-            System.out.println(s.getServiceName().name());
-        }
-
-        for (RoomCategory rc : createdBooking.getRoomCategories()) {
-            System.out.println(rc.getRoomCategoryName().name());
-        }
     }
 }
