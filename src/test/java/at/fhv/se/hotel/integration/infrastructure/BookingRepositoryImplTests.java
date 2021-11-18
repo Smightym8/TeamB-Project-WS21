@@ -1,8 +1,11 @@
 package at.fhv.se.hotel.integration.infrastructure;
 
+import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
+import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory;
 import at.fhv.se.hotel.domain.model.guest.Address;
 import at.fhv.se.hotel.domain.model.guest.FullName;
+import at.fhv.se.hotel.domain.model.guest.Gender;
 import at.fhv.se.hotel.domain.model.guest.Guest;
 import at.fhv.se.hotel.domain.model.roomcategory.Description;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
@@ -48,21 +51,19 @@ public class BookingRepositoryImplTests {
         // given
         Guest guestExpected = Guest.create(guestRepository.nextIdentity(),
                 new FullName("Michael", "Spiegel"),
+                Gender.MALE,
                 new Address("Hochschulstraße",
                         "1", "Dornbirn",
                         "6850", "Austria"),
                 LocalDate.of(1999, 3, 20),
                 "+43 660 123 456 789",
                 "michael.spiegel@students.fhv.at",
-                Collections.emptyList());
+                Collections.emptyList()
+        );
 
-        List<RoomCategory> categoriesExpected = Arrays.asList(
-                RoomCategory.create(roomCategoryRepository.nextIdentity(),
-                        new RoomCategoryName("Single Room"),
-                        new Description("This is a single room")),
-                RoomCategory.create(roomCategoryRepository.nextIdentity(),
-                        new RoomCategoryName("Double Room"),
-                        new Description("This is a double room"))
+        RoomCategory categoryExpected = RoomCategory.create(roomCategoryRepository.nextIdentity(),
+                new RoomCategoryName("Single Room"),
+                new Description("This is a single room")
         );
 
         List<Service> servicesExpected = Arrays.asList(
@@ -74,19 +75,20 @@ public class BookingRepositoryImplTests {
                         new Price(new BigDecimal("100")))
         );
 
-        BookingId idExpcted = new BookingId("42");
+        BookingId idExpected = new BookingId("42");
         Booking bookingExpected = Booking.create(
                 LocalDate.now(),
                 LocalDate.now().plusDays(10),
-                idExpcted,
+                idExpected,
                 guestExpected,
-                categoriesExpected,
                 servicesExpected
         );
+        bookingExpected.addRoomCategory(categoryExpected, 1);
 
         // when
+        System.out.println(bookingExpected);
         this.bookingRepository.add(bookingExpected);
-        Booking bookingActual = this.bookingRepository.bookingById(idExpcted).get();
+        Booking bookingActual = this.bookingRepository.bookingById(idExpected).get();
 
         // then
         assertEquals(bookingExpected, bookingActual);
@@ -96,13 +98,5 @@ public class BookingRepositoryImplTests {
         assertEquals(bookingExpected.getCheckOutDate(), bookingActual.getCheckOutDate());
         assertEquals(bookingExpected.getRoomCategories().size(), bookingActual.getRoomCategories().size());
         assertEquals(bookingExpected.getServices().size(), bookingActual.getServices().size());
-
-        for (RoomCategory rc : bookingActual.getRoomCategories()) {
-            assertTrue(categoriesExpected.contains(rc));
-        }
-
-        for(Service s : bookingActual.getServices()) {
-            assertTrue(servicesExpected.contains(s));
-        }
     }
 }

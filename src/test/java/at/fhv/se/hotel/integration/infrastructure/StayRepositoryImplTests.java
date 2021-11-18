@@ -4,6 +4,7 @@ import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
 import at.fhv.se.hotel.domain.model.guest.Address;
 import at.fhv.se.hotel.domain.model.guest.FullName;
+import at.fhv.se.hotel.domain.model.guest.Gender;
 import at.fhv.se.hotel.domain.model.guest.Guest;
 import at.fhv.se.hotel.domain.model.room.Room;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
@@ -54,18 +55,23 @@ public class StayRepositoryImplTests {
         // given
         Guest guestExpected = Guest.create(guestRepository.nextIdentity(),
                 new FullName("Michael", "Spiegel"),
+                Gender.MALE,
                 new Address("Hochschulstraße",
                         "1", "Dornbirn",
                         "6850", "Austria"),
                 LocalDate.of(1999, 3, 20),
                 "+43 660 123 456 789",
                 "michael.spiegel@students.fhv.at",
-                Collections.emptyList());
+                Collections.emptyList()
+        );
 
-        List<RoomCategory> categoriesExpected = List.of(
+        List<RoomCategory> categoriesExpected = Arrays.asList(
                 RoomCategory.create(roomCategoryRepository.nextIdentity(),
                         new RoomCategoryName("Single Room"),
-                        new Description("This is a single room"))
+                        new Description("This is a single room")),
+                RoomCategory.create(roomCategoryRepository.nextIdentity(),
+                        new RoomCategoryName("Double Room"),
+                        new Description("This is a double room"))
         );
 
         List<Service> servicesExpected = Arrays.asList(
@@ -82,9 +88,10 @@ public class StayRepositoryImplTests {
                 LocalDate.now().plusDays(10),
                 bookingRepository.nextIdentity(),
                 guestExpected,
-                categoriesExpected,
                 servicesExpected
         );
+        bookingExpected.addRoomCategory(categoriesExpected.get(0), 1);
+        bookingExpected.addRoomCategory(categoriesExpected.get(1), 1);
 
         String roomNameExpected = "Room 1";
         RoomStatus roomStatusExpected = RoomStatus.FREE;
