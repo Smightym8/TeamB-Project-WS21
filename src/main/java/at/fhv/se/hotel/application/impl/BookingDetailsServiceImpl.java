@@ -22,7 +22,7 @@ public class BookingDetailsServiceImpl implements BookingDetailsService {
     BookingRepository bookingRepository;
 
     @Override
-    public BookingSummaryDTO detailsByBookingId(String bookingId) {
+    public BookingDetailsDTO detailsByBookingId(String bookingId) {
 
         Booking booking = bookingRepository.bookingById(new BookingId(bookingId)).get();
         GuestDTO guestDTO = GuestDTO.builder()
@@ -53,7 +53,8 @@ public class BookingDetailsServiceImpl implements BookingDetailsService {
             serviceDtos.add(serviceDTO);
         }
 
-        BookingSummaryDTO bookingSummaryDTO = BookingSummaryDTO.builder()
+        BookingDetailsDTO bookingDetailsDTO = BookingDetailsDTO.builder()
+                .withId(bookingId)
                 .withGuest(guestDTO)
                 .withRoomCategoriesAndAmounts(categoriesWithAmount)
                 .withServices(serviceDtos)
@@ -61,6 +62,6 @@ public class BookingDetailsServiceImpl implements BookingDetailsService {
                 .withCheckOutDate(booking.getCheckOutDate())
                 .build();
 
-        return bookingSummaryDTO;
+        return bookingDetailsDTO;
     }
 }

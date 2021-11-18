@@ -28,6 +28,7 @@ public class CheckInServiceImpl implements CheckInService {
     @Autowired
     StayRepository stayRepository;
 
+
     @Override
     public List<RoomDTO> assignRooms(String bookingId) {
         Booking booking = bookingRepository.bookingById(new BookingId(bookingId)).get();
@@ -57,6 +58,7 @@ public class CheckInServiceImpl implements CheckInService {
 
     @Override
     public void checkIn(String bookingId, List<RoomDTO> rooms) {
+        //TODO: Check if rooms are occupied
         Booking booking = bookingRepository.bookingById(new BookingId(bookingId)).get();
 
         List<Room> assignedRooms = new ArrayList<>();

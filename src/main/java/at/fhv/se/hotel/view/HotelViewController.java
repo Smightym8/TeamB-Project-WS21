@@ -9,9 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class HotelViewController {
@@ -27,11 +25,12 @@ public class HotelViewController {
     private static final String CREATE_BOOKING_URL = "/createbooking";
     private static final String ERROR_URL = "/displayerror";
     private static final String SHOW_BOOKING_DETAILS_URL = "/booking/details/{id}";
-    private static final String MODAL_ROOM_NR_URL = "/modalroomnr";
+    private static final String MODAL_ROOMS_URL = "/assignedRoomsModal";
     // Views
     private static final String MAIN_MENU_VIEW = "mainMenu";
     private static final String ALL_BOOKINGS_VIEW = "allBookings";
     private static final String BOOKING_SUMMARY_VIEW = "bookingSummary";
+    private static final String BOOKING_DETAILS_VIEW = "bookingDetails";
     private static final String CREATE_BOOKING_VIEW = "startCreateBooking";
     private static final String CHOOSE_CATEGORY_VIEW = "chooseCategory";
     private static final String CHOOSE_GUEST_VIEW = "chooseGuest";
@@ -39,7 +38,7 @@ public class HotelViewController {
     private static final String CHOOSE_DATES_VIEW = "chooseBookingDates";
     private static final String ERROR_VIEW = "errorView";
     private static final String SHOW_BOOKING_DETAILS_VIEW = "bookingSummary";
-    private static final String MODAL_ROOM_NR_VIEW = "modalRoomNr";
+    private static final String MODAL_ROOMS_VIEW = "modalRooms";
     // Services
     @Autowired
     private BookingListingService bookingListingService;
@@ -61,6 +60,9 @@ public class HotelViewController {
 
     @Autowired
     BookingDetailsService bookingDetailsService;
+
+    @Autowired
+    CheckInService checkInService;
 
     /**
      * This method handles a get request on /.
@@ -159,41 +161,21 @@ public class HotelViewController {
     public String showBookingDetails(@PathVariable String id,
                               Model model) {
 
-        BookingSummaryDTO bookingSummaryDTO =  bookingDetailsService.detailsByBookingId(id);
+        BookingDetailsDTO bookingDetailsDTO =  bookingDetailsService.detailsByBookingId(id);
+        model.addAttribute("bookingDetails", bookingDetailsDTO);
 
-        // Because of using the existing SummaryView it is required to pass a BookingForm to Thymeleaf
-        List<String> categoryIds = new ArrayList<>();
-        List<Integer> amounts = new ArrayList<>();
-        for(Map.Entry<RoomCategoryDTO, Integer> entry : bookingSummaryDTO.categoriesWithAmounts().entrySet()) {
-            categoryIds.add(entry.getKey().id());
-            amounts.add(entry.getValue());
-        }
-
-        List<String> serviceIds = new ArrayList<>();
-        for(ServiceDTO s : bookingSummaryDTO.services()) {
-            serviceIds.add(s.id());
-        }
-
-        // TODO: Create own checkin form
-        BookingForm form = new BookingForm(
-                bookingSummaryDTO.guest().id(),
-                categoryIds,
-                serviceIds,
-                bookingSummaryDTO.checkInDate(),
-                bookingSummaryDTO.checkOutDate(),
-                amounts);
-
-        model.addAttribute("bookingSummary", bookingSummaryDTO);
-        model.addAttribute("form", form);
-        model.addAttribute("isCreated", false);
-        model.addAttribute("isCheckIn", true);
-
-        return BOOKING_SUMMARY_VIEW;
+        return BOOKING_DETAILS_VIEW;
     }
 
-    @GetMapping(MODAL_ROOM_NR_URL)
-    public String modalRoomNr(){
-        return MODAL_ROOM_NR_VIEW;
+    @GetMapping(MODAL_ROOMS_URL)
+    public String assignedRoomsModal(@RequestParam("bookingId") String bookingId, Model model) {
+
+        List<RoomDTO> assignedRooms = checkInService.assignRooms(bookingId);
+
+        model.addAttribute("bookingId", bookingId);
+        model.addAttribute("assignedRooms", assignedRooms);
+
+        return MODAL_ROOMS_VIEW;
     }
 
     @PostMapping(CREATE_BOOKING_URL)
