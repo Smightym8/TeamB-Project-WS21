@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<body>
+    <div layout:fragment="content">
+        <h1>Assigned Rooms</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Room</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="room : ${assignedRooms}">
+                    <td th:text="${room.name}"></td>
+                    <td th:text="${room.categoryName}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <a class="btn btn-primary" href="#">Accept</a>
+    </div>
+</body>
+</html>

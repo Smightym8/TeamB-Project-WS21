@@ -25,7 +25,7 @@ public class HotelViewController {
     private static final String CREATE_BOOKING_URL = "/createbooking";
     private static final String ERROR_URL = "/displayerror";
     private static final String SHOW_BOOKING_DETAILS_URL = "/booking/details/{id}";
-    private static final String MODAL_ROOMS_URL = "/assignedRoomsModal";
+    private static final String ASSIGNED_ROOMS_URL = "/assignedRooms";
     // Views
     private static final String MAIN_MENU_VIEW = "mainMenu";
     private static final String ALL_BOOKINGS_VIEW = "allBookings";
@@ -38,7 +38,7 @@ public class HotelViewController {
     private static final String CHOOSE_DATES_VIEW = "chooseBookingDates";
     private static final String ERROR_VIEW = "errorView";
     private static final String SHOW_BOOKING_DETAILS_VIEW = "bookingSummary";
-    private static final String MODAL_ROOMS_VIEW = "modalRooms";
+    private static final String ASSIGNED_ROOMS_VIEW = "assignedRooms";
     // Services
     @Autowired
     private BookingListingService bookingListingService;
@@ -167,15 +167,15 @@ public class HotelViewController {
         return BOOKING_DETAILS_VIEW;
     }
 
-    @GetMapping(MODAL_ROOMS_URL)
-    public String assignedRoomsModal(@RequestParam("bookingId") String bookingId, Model model) {
+    @GetMapping(ASSIGNED_ROOMS_URL)
+    public String assignedRooms(@RequestParam("bookingId") String bookingId, Model model) {
 
         List<RoomDTO> assignedRooms = checkInService.assignRooms(bookingId);
 
         model.addAttribute("bookingId", bookingId);
         model.addAttribute("assignedRooms", assignedRooms);
 
-        return MODAL_ROOMS_VIEW;
+        return ASSIGNED_ROOMS_VIEW;
     }
 
     @PostMapping(CREATE_BOOKING_URL)

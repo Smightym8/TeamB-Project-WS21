@@ -39,24 +39,7 @@
         </tbody>
     </table>
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">
-        Check in
-    </button>
-
-    <th:block th:replace="modalRooms :: modal('modal')">modal</th:block>
-
+    <a class="btn btn-primary" th:href="@{'/assignedRooms?bookingId=' + ${bookingDetails.id}}">Assign Rooms</a>
 </div>
-
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-<script>
-    $('#modal').on('show.bs.modal', function () {
-        var bookingId = [[${bookingId}]];
-
-        $.get("/assignedRoomsModal?bookingId=" + bookingId, function (data) {
-            $('#modal').find('.modal-body').html(data);
-        })
-    })
-</script>
 </body>
 </html>

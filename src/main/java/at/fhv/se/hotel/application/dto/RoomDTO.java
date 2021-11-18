@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class RoomDTO {
     private String name;
+    private String categoryName;
 
     public static Builder builder() {
         return new Builder();
@@ -11,6 +12,10 @@ public class RoomDTO {
 
     public String name() {
         return this.name;
+    }
+
+    public String categoryName() {
+        return this.categoryName;
     }
 
     public static class Builder {
@@ -25,8 +30,14 @@ public class RoomDTO {
             return this;
         }
 
+        public Builder withCategory(String categoryName) {
+            this.instance.categoryName = categoryName;
+            return this;
+        }
+
         public RoomDTO build() {
-            Objects.requireNonNull(this.instance.name, "name must be set in GuestDTO");
+            Objects.requireNonNull(this.instance.name, "name must be set in RoomDTO");
+            Objects.requireNonNull(this.instance.categoryName, "categoryName must be set in RoomDTO");
 
             return this.instance;
         }
