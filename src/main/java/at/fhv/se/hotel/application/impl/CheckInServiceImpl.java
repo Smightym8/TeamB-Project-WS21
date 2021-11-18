@@ -70,11 +70,12 @@ public class CheckInServiceImpl implements CheckInService {
             assignedRooms.add(room);
 
             // Change room status to occupied
-            roomRepository.occupyRoom(room);
+            room.occupy();
         }
 
         // Create Stay with the rooms and the booking
         Stay stay = Stay.create(booking, assignedRooms);
+        booking.deactivate();
 
         stayRepository.add(stay);
     }

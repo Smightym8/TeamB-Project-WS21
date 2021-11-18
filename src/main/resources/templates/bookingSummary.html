@@ -42,11 +42,6 @@
   <div th:if="${isCreated}" class="alert alert-success" role="alert">
     Booking successfully created!
   </div>
-  <div th:if="${isCheckIn}">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalRoomNumber">Check In</button>
-  </div>
-
-  <th:block th:replace="modalRoomNr :: modal('modalRoomNumber')">modal</th:block>
 
   <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
   <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>

@@ -13,6 +13,4 @@ public interface RoomRepository {
     List<Room> roomsByCategoryAndStatus(RoomCategoryId categoryId, RoomStatus status);
 
     void add(Room room);
-
-    void occupyRoom(Room room);
 }

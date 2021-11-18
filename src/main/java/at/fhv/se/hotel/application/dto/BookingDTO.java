@@ -12,6 +12,7 @@ public class BookingDTO {
     private LocalDate guestBirthDate;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
+    private boolean isActive;
 
     public static Builder builder() {
         return new Builder();
@@ -35,6 +36,10 @@ public class BookingDTO {
 
     public LocalDate checkOutDate() {
         return this.checkOutDate;
+    }
+
+    public boolean isActive() {
+        return this.isActive;
     }
 
     public static class Builder {
@@ -66,6 +71,11 @@ public class BookingDTO {
 
         public Builder withCheckOutDate(LocalDate checkOutDate) {
             this.instance.checkOutDate = checkOutDate;
+            return this;
+        }
+
+        public Builder withStatus(boolean isActive) {
+            this.instance.isActive = isActive;
             return this;
         }
 

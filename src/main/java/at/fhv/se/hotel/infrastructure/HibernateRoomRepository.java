@@ -40,10 +40,4 @@ public class HibernateRoomRepository implements RoomRepository {
         this.em.persist(room);
         this.em.flush();
     }
-
-    @Override
-    public void occupyRoom(Room room) {
-        room.occupy();
-        em.merge(room);
-    }
 }

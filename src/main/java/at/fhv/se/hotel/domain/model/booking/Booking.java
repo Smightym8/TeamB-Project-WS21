@@ -14,6 +14,7 @@ public class Booking {
     private Long id;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
+    private boolean isActive;
     private BookingId bookingId;
     private Guest guest;
     private List<BookingWithRoomCategory> roomCategories;
@@ -34,6 +35,7 @@ public class Booking {
                     List<Service> aServices) {
         this.checkInDate = aCheckInDate;
         this.checkOutDate = aCheckOutDate;
+        this.isActive = true;
         this.bookingId = aBookingId;
         this.guest = aGuest;
         this.services = aServices;
@@ -57,6 +59,10 @@ public class Booking {
         return checkOutDate;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
     public BookingId getBookingId() {
         return bookingId;
     }
@@ -71,6 +77,10 @@ public class Booking {
 
     public List<Service> getServices() {
         return services;
+    }
+
+    public void deactivate() {
+        isActive = false;
     }
 
     @Override

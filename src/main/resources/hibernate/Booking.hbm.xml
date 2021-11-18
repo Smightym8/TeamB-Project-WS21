@@ -13,6 +13,7 @@
         <!-- Primitive datatypes of class booking -->
         <property name="checkInDate" column="checkin_date" type="java.time.LocalDate" />
         <property name="checkOutDate" column="checkout_date" type="java.time.LocalDate" />
+        <property name="isActive" column="is_active" type="java.lang.Boolean" />
 
         <!-- Mapping to booking id class -->
         <component name="bookingId" class="at.fhv.se.hotel.domain.model.booking.BookingId">
