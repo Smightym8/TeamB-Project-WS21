@@ -88,7 +88,7 @@ public class Booking {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Booking booking = (Booking) o;
-        return isActive == booking.isActive && Objects.equals(id, booking.id) && Objects.equals(checkInDate, booking.checkInDate) && Objects.equals(checkOutDate, booking.checkOutDate) && Objects.equals(bookingId, booking.bookingId) && Objects.equals(guest, booking.guest) && Objects.equals(roomCategories, booking.roomCategories) && Objects.equals(services, booking.services);
+        return isActive == booking.isActive && Objects.equals(checkInDate, booking.checkInDate) && Objects.equals(checkOutDate, booking.checkOutDate) && Objects.equals(bookingId, booking.bookingId) && Objects.equals(guest, booking.guest) && Objects.equals(roomCategories, booking.roomCategories) && Objects.equals(services, booking.services);
     }
 
     @Override

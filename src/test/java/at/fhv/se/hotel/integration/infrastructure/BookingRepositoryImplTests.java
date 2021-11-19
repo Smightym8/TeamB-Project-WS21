@@ -2,7 +2,6 @@ package at.fhv.se.hotel.integration.infrastructure;
 
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
-import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory;
 import at.fhv.se.hotel.domain.model.guest.Address;
 import at.fhv.se.hotel.domain.model.guest.FullName;
 import at.fhv.se.hotel.domain.model.guest.Gender;
@@ -29,7 +28,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @Transactional
@@ -86,7 +84,7 @@ public class BookingRepositoryImplTests {
         bookingExpected.addRoomCategory(categoryExpected, 1);
 
         // when
-        System.out.println(bookingExpected);
+        this.roomCategoryRepository.add(categoryExpected);
         this.bookingRepository.add(bookingExpected);
         Booking bookingActual = this.bookingRepository.bookingById(idExpected).get();
 
