@@ -62,8 +62,8 @@ public class BookingCreationServiceImpl implements BookingCreationService {
             if (amounts.get(i) > 0) {
                 RoomCategory category = roomCategoryRepository.roomCategoryById(new RoomCategoryId(s)).get();
                 booking.addRoomCategory(category, amounts.get(i));
-                i++;
             }
+            i++;
         }
 
         bookingRepository.add(booking);
