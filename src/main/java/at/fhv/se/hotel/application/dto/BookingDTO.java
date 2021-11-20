@@ -8,9 +8,11 @@ import java.util.Objects;
  */
 public class BookingDTO {
     private String id;
-    private String roomCategory;
+    private String guestName;
+    private LocalDate guestBirthDate;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
+    private boolean isActive;
 
     public static Builder builder() {
         return new Builder();
@@ -20,8 +22,12 @@ public class BookingDTO {
         return this.id;
     }
 
-    public String roomCategory() {
-        return this.roomCategory;
+    public String guestName() {
+        return this.guestName;
+    }
+
+    public LocalDate guestBirthDate() {
+        return this.guestBirthDate;
     }
 
     public LocalDate checkInDate() {
@@ -30,6 +36,10 @@ public class BookingDTO {
 
     public LocalDate checkOutDate() {
         return this.checkOutDate;
+    }
+
+    public boolean isActive() {
+        return this.isActive;
     }
 
     public static class Builder {
@@ -44,8 +54,13 @@ public class BookingDTO {
             return this;
         }
 
-        public Builder withRoomCategory(String roomCategory) {
-            this.instance.roomCategory = roomCategory;
+        public Builder withGuestName(String guestName) {
+            this.instance.guestName = guestName;
+            return this;
+        }
+
+        public Builder withBirthDate(LocalDate birthDate) {
+            this.instance.guestBirthDate = birthDate;
             return this;
         }
 
@@ -59,9 +74,15 @@ public class BookingDTO {
             return this;
         }
 
+        public Builder withStatus(boolean isActive) {
+            this.instance.isActive = isActive;
+            return this;
+        }
+
         public BookingDTO build() {
             Objects.requireNonNull(this.instance.id, "id must be set in BookingDTO");
-            Objects.requireNonNull(this.instance.roomCategory, "roomCategory must be set in BookingDTO");
+            Objects.requireNonNull(this.instance.guestName, "guestName must be set in BookingDTO");
+            Objects.requireNonNull(this.instance.guestBirthDate, "guestBirthDate must be set in BookingDTO");
             Objects.requireNonNull(this.instance.checkInDate, "checkInDate must be set in BookingDTO");
             Objects.requireNonNull(this.instance.checkOutDate, "checkOutDate must be set in BookingDTO");
 

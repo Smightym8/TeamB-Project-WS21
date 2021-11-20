@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-access="field" default-cascade="all">
+    <class name="at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory" table="booking_roomcategory" lazy="true">
+        <cache usage="read-write"/>
+
+        <!-- Mapping to BookingWithRoomCategory id class -->
+        <composite-id name="bookingWithRoomCategoryId" class="at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategoryId">
+            <key-many-to-one name="booking" column="booking_id" />
+            <key-many-to-one name="roomCategory" column="room_category_id" />
+        </composite-id>
+
+        <!-- Primitive datatypes of class BookingWithRoomCategory -->
+        <property name="amount" column="amount" type="java.lang.Integer" />
+    </class>
+</hibernate-mapping>

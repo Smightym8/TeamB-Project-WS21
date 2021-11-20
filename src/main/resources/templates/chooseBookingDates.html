@@ -5,9 +5,10 @@
     <div layout:fragment="content">
         <h1>Check in & Check out date</h1>
 
-            <form action="/bookingSummary?isCreated=false" method="post" th:object="${form}">
+            <form action="/choosecategory" method="post" th:object="${form}">
                 <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
                 <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
+                <input type="hidden" id="amounts" name="amounts" th:field="*{amounts}" />
                 <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
 
                 <div class="row">

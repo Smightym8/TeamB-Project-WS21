@@ -15,15 +15,13 @@ import javax.transaction.Transactional;
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @Transactional
 public class ServiceRepositoryImplTests {
     @Autowired
     private ServiceRepository serviceRepository;
-
-    @Autowired
-    private EntityManager em;
 
     @Test
     void given_service_when_addservicerepository_then_returnequalsservice() {

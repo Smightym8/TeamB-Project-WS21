@@ -13,7 +13,7 @@ public class RoomCategory {
     private Description description;
 
     // Required by hibernate
-    private RoomCategory() {
+    protected RoomCategory() {
     }
 
     public static RoomCategory create (RoomCategoryId aRoomCategoryId, RoomCategoryName aRoomCategoryName,
@@ -32,24 +32,12 @@ public class RoomCategory {
         return roomCategoryId;
     }
 
-    public void setRoomCategoryId(RoomCategoryId roomCategoryId) {
-        this.roomCategoryId = roomCategoryId;
-    }
-
     public RoomCategoryName getRoomCategoryName() {
         return roomCategoryName;
     }
 
-    public void setRoomCategoryName(RoomCategoryName roomCategoryName) {
-        this.roomCategoryName = roomCategoryName;
-    }
-
     public Description getDescription() {
         return description;
-    }
-
-    public void setDescription(Description description) {
-        this.description = description;
     }
 
     @Override

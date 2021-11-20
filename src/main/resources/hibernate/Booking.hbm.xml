@@ -13,6 +13,7 @@
         <!-- Primitive datatypes of class booking -->
         <property name="checkInDate" column="checkin_date" type="java.time.LocalDate" />
         <property name="checkOutDate" column="checkout_date" type="java.time.LocalDate" />
+        <property name="isActive" column="is_active" type="java.lang.Boolean" />
 
         <!-- Mapping to booking id class -->
         <component name="bookingId" class="at.fhv.se.hotel.domain.model.booking.BookingId">
@@ -20,21 +21,19 @@
         </component>
 
         <!-- Many to one mapping to the guest -->
-        <component name="guest" class="at.fhv.se.hotel.domain.model.guest.Guest">
-            <component name="guestId" class="at.fhv.se.hotel.domain.model.guest.GuestId">
-                <property name="id" column="guest_id" type="java.lang.String" />
-            </component>
-        </component>
+        <many-to-one name="guest" column="guest_id" class="at.fhv.se.hotel.domain.model.guest.Guest" not-null="true"/>
 
-        <!-- Many to many mappings to roomcategory and service classes -->
-        <bag name="roomCategories" inverse="true" cascade="all">
-            <key column="roomcategory_id" not-null="true" />
-            <many-to-many class="at.fhv.se.hotel.domain.model.roomcategory.RoomCategory"/>
+        <!-- Many to many mapping to service class -->
+        <bag name="services" cascade="save-update">
+            <key column="booking_id" not-null="false" />
+            <many-to-many column="service_id" class="at.fhv.se.hotel.domain.model.service.Service"/>
         </bag>
 
-        <bag name="services" inverse="true" cascade="all">
-            <key column="service_id" not-null="false" />
-            <many-to-many class="at.fhv.se.hotel.domain.model.service.Service"/>
+        <bag name="roomCategories" lazy="true" access="field" fetch="select" cascade="all">
+            <key>
+                <column name="booking_id" not-null="true" />
+            </key>
+            <one-to-many class="at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory"/>
         </bag>
     </class>
 </hibernate-mapping>

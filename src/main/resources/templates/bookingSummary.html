@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
+      layout:decorate="~{layout}" xmlns:th="http://www.w3.org/1999/html">
 <body>
 <div layout:fragment="content">
   <h1>Summary</h1>
@@ -28,11 +28,13 @@
     <thead>
     <tr>
       <th>Name</th>
+      <th>Amount</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="category : ${bookingSummary.roomCategories}">
-      <td th:text="${category.name}"></td>
+    <tr th:each="category : ${bookingSummary.categoriesWithAmounts}" th:if="${category.value != 0}">
+      <td th:text="${category.key.name}"></td>
+      <td th:text="${category.value}"></td>
     </tr>
     </tbody>
   </table>
@@ -41,10 +43,15 @@
     Booking successfully created!
   </div>
 
+  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+  <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
   <form th:if="${!isCreated}" action="/createbooking" method="post" th:object="${form}">
     <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
     <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
     <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
+    <input type="hidden" id="amounts" name="amounts" th:field="*{amounts}" />
     <input type="hidden" id="checkInDate" name="checkInDate" th:field="*{checkInDate}" />
     <input type="hidden" id="checkOutDate" name="checkOutDate" th:field="*{checkOutDate}" />
     <button id="next-button" type="submit" class="btn btn-primary">Create booking</button>

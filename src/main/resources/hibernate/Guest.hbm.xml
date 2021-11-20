@@ -15,6 +15,14 @@
         <property name="phoneNumber" column="phone_number" type="java.lang.String" />
         <property name="mailAddress" column="mail_address" type="java.lang.String" />
 
+        <!-- Enum mapping -->
+        <property name="gender">
+            <column name="gender" />
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">at.fhv.se.hotel.domain.model.guest.Gender</param>
+            </type>
+        </property>
+
         <!-- Mapping to guest id class -->
         <component name="guestId" class="at.fhv.se.hotel.domain.model.guest.GuestId">
             <property name="id" column="domain_id" type="java.lang.String" />
@@ -34,12 +42,6 @@
             <property name="zipCode" column="zip_code" type="java.lang.String" />
             <property name="country" column="country" type="java.lang.String" />
         </component>
-
-        <!-- One to many mapping to booking class -->
-        <bag name="bookings" inverse="true" cascade="all">
-            <key column="booking_id" not-null="false" />
-            <one-to-many class="at.fhv.se.hotel.domain.model.booking.Booking"/>
-        </bag>
 
     </class>
 </hibernate-mapping>

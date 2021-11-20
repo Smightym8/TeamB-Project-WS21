@@ -34,7 +34,6 @@ public class HibernateRoomCategoryRepository implements RoomCategoryRepository {
     @Override
     public void add(RoomCategory roomCategory) {
         this.em.persist(roomCategory);
-        this.em.flush();
     }
 
     @Override
@@ -42,16 +41,7 @@ public class HibernateRoomCategoryRepository implements RoomCategoryRepository {
         TypedQuery<RoomCategory> query = this.em.createQuery(
                 "FROM RoomCategory AS rc WHERE rc.roomCategoryId = :roomCategoryId", RoomCategory.class);
         query.setParameter("roomCategoryId", roomCategoryId);
-        return singleResultOptional(query);
+        return query.getResultStream().findFirst();
     }
 
-    private static <T> Optional<T> singleResultOptional(TypedQuery<T> query) {
-        // NOTE: getSingleResult throws an error if there is none
-        List<T> result = query.getResultList();
-        if (1 != result.size()) {
-            return Optional.empty();
-        }
-
-        return Optional.of(result.get(0));
-    }
 }
