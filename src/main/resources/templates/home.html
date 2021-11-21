@@ -3,11 +3,32 @@
 <body id="Home">
 
     <div layout:fragment="content">
-        <p class="h4">Main Menu</p>
+        <p class="h3">Upcoming Check-Ins</p>
         <br>
-          <div class="col-3">
-            <a class="btn btn-primary btn-lg" href="/bookinglist">Check-In</a>
-          </div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th class="col-1">Guest</th>
+                <th class="col-1">Birthdate</th>
+                <th class="col-1">Check in date</th>
+                <th class="col-1">Check out date</th>
+                <th class="col-1"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="booking : ${bookings}" th:if="${booking.isActive}">
+                <td th:text="${booking.guestName}"></td>
+                <td th:text="${booking.guestBirthDate}"></td>
+                <td th:text="${booking.checkInDate}"></td>
+                <td th:text="${booking.checkOutDate}"></td>
+                <td><a th:href="@{/booking/details/{id}(id=${booking.id})}" type="button" class="btn btn-primary btn-sm" align-self-center"">Check-In</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <p class="h3">Upcoming Check-Outs</p>
+        <br>
     </div>
 
 </body>

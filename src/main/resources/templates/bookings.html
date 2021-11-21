@@ -2,29 +2,36 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"  layout:decorate="~{layout}">
 <body id="Bookings">
 
-    <div layout:fragment="content">
-        <p class="h4">Bookings</p>
-        <br>
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Guest</th>
-                    <th>Birthdate</th>
-                    <th>Check in date</th>
-                    <th>Check out date</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="booking : ${bookings}" th:if="${booking.isActive}">
-                    <td th:text="${booking.guestName}"></td>
-                    <td th:text="${booking.guestBirthDate}"></td>
-                    <td th:text="${booking.checkInDate}"></td>
-                    <td th:text="${booking.checkOutDate}"></td>
-                    <td><a th:href="@{/booking/details/{id}(id=${booking.id})}" type="button" class="btn btn-dark">Check-In</a></td>
-                </tr>
-                </tbody>
-            </table>
+<div layout:fragment="content">
+    <div class="d-flex">
+        <p class="h3">Bookings</p>
+        <a class="btn btn-primary ms-5" href="#">Create Booking</a>
+    </div>
+    <br>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th class="col-1">Guest</th>
+                <th class="col-1">Birthdate</th>
+                <th class="col-1">Check in date</th>
+                <th class="col-1">Check out date</th>
+                <th class="col-1"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="booking : ${bookings}" th:if="${booking.isActive}">
+                <td th:text="${booking.guestName}"></td>
+                <td th:text="${booking.guestBirthDate}"></td>
+                <td th:text="${booking.checkInDate}"></td>
+                <td th:text="${booking.checkOutDate}"></td>
+                <td>
+                    <a th:href="@{/booking/details/{id}(id=${booking.id})}" type="button" class="btn btn-secondary btn-sm">Check-In</a>
+                    <a class="btn btn-secondary btn-sm" href="#">Modify</a>
+                    <a class="btn btn-danger btn-sm" href="#">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </body>
 </html>

@@ -16,10 +16,12 @@ import java.util.List;
 
 @Controller
 public class HotelViewController {
+
     // Urls
     private static final String HOME_URL = "/";
     private static final String BOOKINGS_URL = "/bookings";
-
+    private static final String GUESTS_URL = "/guests";
+    private static final String CREATE_GUEST_URL = "/createguest";
 
 
     private static final String BOOKING_SUMMARY_URL = "/bookingSummary";
@@ -31,12 +33,15 @@ public class HotelViewController {
     private static final String ERROR_URL = "/displayerror";
     private static final String SHOW_BOOKING_DETAILS_URL = "/booking/details/{id}";
     private static final String GUEST_FORM_URL = "/guestform";
-    private static final String CREATE_GUEST_URL = "/createguest";
+    private static final String CREATE_GUEST_URL_OLD = "/createguestold";
     private static final String ASSIGNED_ROOMS_URL = "/assignedRooms";
+
 
     // Views
     private static final String HOME_VIEW = "home";
     private static final String BOOKINGS_VIEW = "bookings";
+    private static final String GUESTS_VIEW = "guests";
+    private static final String CREATE_GUEST_VIEW = "createguest";
 
 
     private static final String BOOKING_SUMMARY_VIEW = "bookingSummary";
@@ -46,8 +51,9 @@ public class HotelViewController {
     private static final String CHOOSE_SERVICE_VIEW = "chooseService";
     private static final String CHOOSE_DATES_VIEW = "chooseBookingDates";
     private static final String ERROR_VIEW = "errorView";
-    private static final String CREATE_GUEST_VIEW = "createGuest";
+    private static final String CREATE_GUEST_VIEW_OLD = "createGuestold";
     private static final String ASSIGNED_ROOMS_VIEW = "assignedRooms";
+
 
     // Services
     @Autowired
@@ -77,20 +83,16 @@ public class HotelViewController {
     @Autowired
     private CheckInService checkInService;
 
-    /**
-     * This method handles a get request on /.
-     * @return MAIN_MENU_VIEW - contains the main menu view.
-     */
+
     @GetMapping(HOME_URL)
-    public String mainMenu() {
+    public String home(Model model) {
+        final List<BookingDTO> bookings = bookingListingService.allBookings();
+
+        model.addAttribute("bookings", bookings);
+
         return HOME_VIEW;
     }
 
-    /**
-     * This method handles a get request on /booking and passes the bookings to the allBookings view.
-     * @param model contains the model to be presented in the view.
-     * @return ALL_BOOKINGS_VIEW contains the view with all bookings.
-     */
     @GetMapping(BOOKINGS_URL)
     public String allBookings(Model model) {
         final List<BookingDTO> bookings = bookingListingService.allBookings();
@@ -100,19 +102,61 @@ public class HotelViewController {
         return BOOKINGS_VIEW;
     }
 
-    @GetMapping(GUEST_FORM_URL)
+    @GetMapping(GUESTS_URL)
+    public String allGuests(Model model) {
+        final List<GuestDTO> guests = guestListingService.allGuests();
+
+        model.addAttribute("guests", guests);
+
+        return GUESTS_VIEW;
+    }
+
+    @GetMapping(CREATE_GUEST_URL)
     public String createGuestForm(Model model) {
         GuestForm guestForm = new GuestForm();
 
-        model.addAttribute("form", guestForm);
+        model.addAttribute("guest", guestForm);
 
         return CREATE_GUEST_VIEW;
     }
 
     @PostMapping(CREATE_GUEST_URL)
-    public String createGuest(@ModelAttribute("form") @Valid GuestForm guestForm, BindingResult bindingResult, Model model) {
+    public String createGuestSave(@ModelAttribute("guest") @Valid GuestForm guestForm, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return CREATE_GUEST_VIEW;
+        }
+
+        guestCreationService.createGuest(
+                guestForm.getFirstName(),
+                guestForm.getLastName(),
+                guestForm.getGender(),
+                guestForm.geteMail(),
+                guestForm.getPhoneNumber(),
+                guestForm.getBirthDate(),
+                guestForm.getStreetName(),
+                guestForm.getStreetNumber(),
+                guestForm.getZipCode(),
+                guestForm.getCity(),
+                guestForm.getCountry()
+        );
+
+        return allGuests(model);
+    }
+
+
+    @GetMapping(GUEST_FORM_URL)
+    public String createGuestFormOld(Model model) {
+        GuestForm guestForm = new GuestForm();
+
+        model.addAttribute("form", guestForm);
+
+        return CREATE_GUEST_VIEW_OLD;
+    }
+
+    @PostMapping(CREATE_GUEST_URL_OLD)
+    public String createGuest(@ModelAttribute("form") @Valid GuestForm guestForm, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return CREATE_GUEST_VIEW_OLD;
         }
 
         guestCreationService.createGuest(
