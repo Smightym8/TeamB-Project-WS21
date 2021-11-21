@@ -18,7 +18,9 @@ import java.util.List;
 public class HotelViewController {
     // Urls
     private static final String HOME_URL = "/";
-    private static final String START_BOOKING_URL = "/booking";
+
+
+
     private static final String ALL_BOOKINGS_URL = "/bookinglist";
     private static final String BOOKING_SUMMARY_URL = "/bookingSummary";
     private static final String CHOOSE_CATEGORY_URL = "/choosecategory";
@@ -34,10 +36,11 @@ public class HotelViewController {
 
     // Views
     private static final String HOME_VIEW = "home";
+
+
     private static final String ALL_BOOKINGS_VIEW = "allBookings";
     private static final String BOOKING_SUMMARY_VIEW = "bookingSummary";
     private static final String BOOKING_DETAILS_VIEW = "bookingDetails";
-    private static final String CREATE_BOOKING_VIEW = "startCreateBooking";
     private static final String CHOOSE_CATEGORY_VIEW = "chooseCategory";
     private static final String CHOOSE_GUEST_VIEW = "chooseGuest";
     private static final String CHOOSE_SERVICE_VIEW = "chooseService";
@@ -95,12 +98,6 @@ public class HotelViewController {
         model.addAttribute("bookings", bookings);
 
         return ALL_BOOKINGS_VIEW;
-    }
-
-    @GetMapping(START_BOOKING_URL)
-    public String createBookingForm() {
-
-        return CREATE_BOOKING_VIEW;
     }
 
     @GetMapping(GUEST_FORM_URL)

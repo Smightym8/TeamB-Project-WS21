@@ -15,6 +15,7 @@
 
 <body>
 
+    <!-- sidebar -->
     <div class="sidebar bg-dark text-white p-4">
         <a href="/" class="d-flex text-white text-decoration-none">
             <p class="h4">Hotelmanagement<br>Software</p>
@@ -22,13 +23,23 @@
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li>
-                <a href="#" class="nav-link text-white">Home</a>
+                <a href="/" class="nav-link text-white">Home</a>
+            </li>
+            <li>
+                <a href="#" class="nav-link text-white">Rooms</a>
             </li>
             <li>
                 <a href="#" class="nav-link text-white">Guests</a>
             </li>
             <li>
                 <a href="#" class="nav-link text-white">Bookings</a>
+            </li>
+            <hr>
+            <li>
+                <a href="#" class="nav-link text-white">Create Guest</a>
+            </li>
+            <li>
+                <a href="#" class="nav-link text-white" data-bs-toggle="modal" data-bs-target="#bookingModal">Create Booking</a>
             </li>
             <li>
                 <a href="#" class="nav-link text-white">Check-In</a>
@@ -37,6 +48,25 @@
                 <a href="#" class="nav-link text-white">Check-Out</a>
             </li>
         </ul>
+    </div>
+
+    <!-- booking modal -->
+    <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="h5 modal-title">Create Booking with</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body row">
+                    <div class="col-1"></div>
+                    <a class="btn btn-primary col" href="chooseBookingDates">existing guest</a>
+                    <div class="col-1"></div>
+                    <a class="btn btn-primary col" th:href="createGuest">new guest</a>
+                    <div class="col-1"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="content p-5 pt-4 flex-grow-1" layout:fragment="content">
@@ -57,7 +87,7 @@
         }
     </script>
 
-    <script src="bootstrap.bundle.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
