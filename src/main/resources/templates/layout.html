@@ -15,9 +15,9 @@
 
 <body>
 
-    <div class="sidebar bg-dark text-white p-3">
+    <div class="sidebar bg-dark text-white p-4">
         <a href="/" class="d-flex text-white text-decoration-none">
-            <h1>Hotelmanagement<br>Software</h1>
+            <p class="h4">Hotelmanagement<br>Software</p>
         </a>
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
@@ -39,11 +39,11 @@
         </ul>
     </div>
 
-    <div class="content pt-3 p-5 flex-grow-1" layout:fragment="content">
+    <div class="content p-5 pt-4 flex-grow-1" layout:fragment="content">
         <!-- content -->
     </div>
 
-    <script src="/js/bootstrap.bundle.min.js">
+    <script>
         let bodyId = document.getElementsByTagName("body");
         bodyId = bodyId[0].id;
 
@@ -56,6 +56,8 @@
             }
         }
     </script>
+
+    <script src="bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

@@ -17,7 +17,7 @@ import java.util.List;
 @Controller
 public class HotelViewController {
     // Urls
-    private static final String MAIN_MENU_URL = "/";
+    private static final String HOME_URL = "/";
     private static final String START_BOOKING_URL = "/booking";
     private static final String ALL_BOOKINGS_URL = "/bookinglist";
     private static final String BOOKING_SUMMARY_URL = "/bookingSummary";
@@ -33,7 +33,7 @@ public class HotelViewController {
     private static final String ASSIGNED_ROOMS_URL = "/assignedRooms";
 
     // Views
-    private static final String MAIN_MENU_VIEW = "mainMenu";
+    private static final String HOME_VIEW = "home";
     private static final String ALL_BOOKINGS_VIEW = "allBookings";
     private static final String BOOKING_SUMMARY_VIEW = "bookingSummary";
     private static final String BOOKING_DETAILS_VIEW = "bookingDetails";
@@ -78,9 +78,9 @@ public class HotelViewController {
      * This method handles a get request on /.
      * @return MAIN_MENU_VIEW - contains the main menu view.
      */
-    @GetMapping(MAIN_MENU_URL)
+    @GetMapping(HOME_URL)
     public String mainMenu() {
-        return MAIN_MENU_VIEW;
+        return HOME_VIEW;
     }
 
     /**

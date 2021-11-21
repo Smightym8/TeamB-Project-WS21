@@ -24,17 +24,12 @@
 /*-----------------*/
 
 .sidebar {
-    width: 235px;
+    width: 250px;
     height: 100vh;
     position: fixed;
 }
 
 .content {
-    margin-left: 235px;
+    margin-left: 250px;
     min-height: 100vh;
-}
-
-h1 {
-    margin: 0;
-    font-size: 24px;
 }
