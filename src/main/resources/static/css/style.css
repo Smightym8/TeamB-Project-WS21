@@ -1,6 +1,3 @@
-h1 {
-    text-align: center;
-}
 
 #content {
     margin-top: 2em;
@@ -21,4 +18,23 @@ h1 {
 
 #leftForm, #rightForm {
     padding: 1em;
+}
+
+
+/*-----------------*/
+
+.sidebar {
+    width: 235px;
+    height: 100vh;
+    position: fixed;
+}
+
+.content {
+    margin-left: 235px;
+    min-height: 100vh;
+}
+
+h1 {
+    margin: 0;
+    font-size: 24px;
 }
