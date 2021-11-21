@@ -4,7 +4,7 @@
 <body>
     <div layout:fragment="content">
         <h1>Room Categories</h1>
-        <form action="/chooseservice" method="post" th:object="${form}">
+        <form action="/chooseservice" method="post" id="myform" th:object="${form}">
             <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
             <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
             <input type="hidden" id="checkInDate" name="checkInDate" th:field="*{checkInDate}" />
@@ -29,7 +29,27 @@
                 </tr>
                 </tbody>
             </table>
-            <button id="next-button" type="submit" class="btn btn-primary">Next</button>
+            <button id="next-button" type="submit" class="btn btn-primary" onClick="amountValidation()">Next</button>
+            <script>
+                function amountValidation() {
+                    let elements = document.getElementById("myform").elements;
+                    let total = 0;
+
+                    for (let i = 0; element; element = elements[i++]) {
+                        if (element.type === "number") {
+                            total = total + element.value;
+                        }
+                    }
+                    if (total > 0) {
+                        myform.setCustomValidity('');
+                    } else {
+                        myform.setCustomValidity('Please choose at least 1 room of any category!');
+                    }
+
+                    console.log('amount customError ', document.getElementById('myform').validity.customError);
+                    console.log('amount validationMessage ', document.getElementById('myform').validationMessage);
+                }
+            </script>
         </form>
     </div>
 </body>

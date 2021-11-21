@@ -14,14 +14,28 @@
                 <div class="row">
                     <div class="col-6">
                         <label for="checkin">Check in date:</label>
-                        <input th:field="*{checkInDate}" type="date" id="checkin" name="checkin">
+                        <input th:field="*{checkInDate}" type="date" id="checkin" name="checkin" th:required="required">
                     </div>
                     <div class="col-6">
                         <label for="checkout">Check out date:</label>
-                        <input th:field="*{checkOutDate}" type="date" id="checkout" name="checkout">
+                        <input th:field="*{checkOutDate}" type="date" id="checkout" name="checkout" th:requred="required">
                     </div>
                 </div>
-                <button id="next-button" type="submit" class="btn btn-primary">Next</button>
+                <button id="next-button" type="submit" class="btn btn-primary" onClick="DateValidation()">Next</button>
+                <script>
+                    function DateValidation() {
+                        let checkin = document.getElementById('checkin');
+                        let checkout = document.getElementById('checkout');
+
+                        if (checkin.value < checkout.value) {
+                            checkout.setCustomValidity('');
+                        } else {
+                            checkout.setCustomValidity('Checkout date must be placed after the checkin date!');
+                        }
+                        console.log('checkout customError ', document.getElementById('checkout').validity.customError);
+                        console.log('checkout validationMessage ', document.getElementById('checkout').validationMessage);
+                    }
+                </script>
             </form>
 
     </div>
