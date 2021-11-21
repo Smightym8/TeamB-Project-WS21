@@ -33,21 +33,23 @@
             <script>
                 function amountValidation() {
                     let elements = document.getElementById("myform").elements;
+                    let amount = document.getElementById("amount");
                     let total = 0;
 
-                    for (let i = 0; element; element = elements[i++]) {
-                        if (element.type === "number") {
-                            total = total + element.value;
+                    for (let i = 0; i < elements.length; i++) {
+                        if (elements[i].type === "number") {
+                            total += elements[i].value;
                         }
                     }
+
                     if (total > 0) {
-                        myform.setCustomValidity('');
+                        amount.setCustomValidity('');
                     } else {
-                        myform.setCustomValidity('Please choose at least 1 room of any category!');
+                        amount.setCustomValidity('Please choose at least 1 room of any category!');
                     }
 
-                    console.log('amount customError ', document.getElementById('myform').validity.customError);
-                    console.log('amount validationMessage ', document.getElementById('myform').validationMessage);
+                    console.log('amount customError ', document.getElementById('amount').validity.customError);
+                    console.log('amount validationMessage ', document.getElementById('amount').validationMessage);
                 }
             </script>
         </form>
