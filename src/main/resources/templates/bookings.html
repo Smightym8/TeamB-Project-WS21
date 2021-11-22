@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
-<body id="Home">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"  layout:decorate="~{layout}">
+<body id="Bookings">
 
-    <div layout:fragment="content">
-        <p class="h3">Upcoming Check-Ins</p>
-        <br>
+<div layout:fragment="content">
+    <div class="d-flex">
+        <p class="h3">Bookings</p>
+        <a class="btn btn-primary ms-5" href="#">Create Booking</a>
+    </div>
+    <br>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -21,15 +24,14 @@
                 <td th:text="${booking.guestBirthDate}"></td>
                 <td th:text="${booking.checkInDate}"></td>
                 <td th:text="${booking.checkOutDate}"></td>
-                <td><a th:href="@{/booking/details/{id}(id=${booking.id})}" type="button" class="btn btn-primary btn-sm" align-self-center"">Check-In</a></td>
+                <td>
+                    <a th:href="@{/booking/details/{id}(id=${booking.id})}" type="button" class="btn btn-secondary btn-sm">Check-In</a>
+                    <a class="btn btn-secondary btn-sm" href="#">Modify</a>
+                    <a class="btn btn-danger btn-sm" href="#">Delete</a>
+                </td>
             </tr>
             </tbody>
         </table>
-        <br>
-        <br>
-        <p class="h3">Upcoming Check-Outs</p>
-        <br>
     </div>
-
 </body>
 </html>

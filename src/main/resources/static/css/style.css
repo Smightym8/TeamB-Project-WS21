@@ -32,4 +32,14 @@
 .content {
     margin-left: 250px;
     min-height: 100vh;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.modal {
+    margin-left: 125px;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    margin: 0; !important;
 }
