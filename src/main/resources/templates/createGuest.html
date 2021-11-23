@@ -5,7 +5,7 @@
 <div layout:fragment="content">
   <h1>Create Guest</h1>
 
-  <form th:action="@{/createguest}" onsubmit="return validation()" method="post" th:object="${form}">
+  <form th:action="@{/createguest}" method="post" th:object="${form}">
     <div class="row">
       <div class="col-6" id="leftForm">
         <div class="mb-3">
@@ -93,7 +93,7 @@
             <p th:if="${#fields.hasErrors('country')}">Invalid Country</p>
           </div>
 
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary" onclick="validation()">Submit</button>
           <button type="reset" class="btn btn-primary">Reset</button>
         </div>
       </div>
@@ -103,38 +103,14 @@
         let maleRadio = document.getElementById('maleRadio');
         let femaleRadio = document.getElementById('femaleRadio');
         let diversRadio = document.getElementById('diversRadio');
-        let birthDate = document.getElementById('birthDate').value;
 
-        let today = new Date();
-        let nowyear = today.getFullYear();
-        let nowmonth = today.getMonth();
-        let nowday = today.getDate();
-
-        let birth = new Date(birthDate);
-        let birthyear = birth.getFullYear();
-        let birthmonth = birth.getMonth();
-        let birthday = birth.getDate();
-
-        let age = nowyear - birthyear;
-        let age_month = nowmonth - birthmonth;
-        let age_day = nowday - birthday;
-
-        if (!(maleRadio.checked || femaleRadio.checked || diversRadio.checked)) {
-          alert("Please select a Gender!");
-          return false;
+        if (maleRadio.checked || femaleRadio.checked || diversRadio.checked) {
+          maleRadio.setCustomValidity('');}
+        else{
+          maleRadio.setCustomValidity('Please select a Gender');
         }
-
-        if (age > 100) {
-          alert("Age cannot be more than 100 Years.Please enter correct age")
-          return false;
-        }
-        if (age_month < 0 || (age_month == 0 && age_day < 0)) {
-          age = parseInt(age) - 1;
-        }
-        if ((age == 18 && age_month <= 0 && age_day <= 0) || age < 18) {
-          alert("Age should be more than 18 years.Please enter a valid Date of Birth");
-          return false;
-        }
+        console.log('maleRadio customError ', document.getElementById('maleRadio').validity.customError);
+        console.log('maleRadio validationMessage ', document.getElementById('maleRadio').validationMessage);
       }
     </script>
   </form>
