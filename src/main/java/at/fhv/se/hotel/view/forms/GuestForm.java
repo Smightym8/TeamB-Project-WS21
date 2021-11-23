@@ -2,7 +2,9 @@ package at.fhv.se.hotel.view.forms;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
@@ -12,11 +14,13 @@ public class GuestForm {
     private String firstName;
 
     @NotNull
+    @Size(min = 2, max = 20)
     private String lastName;
 
     @NotNull
     private String gender;
 
+    @Email
     private String eMail;
 
     @NotNull
@@ -24,6 +28,7 @@ public class GuestForm {
 
     @NotNull
     @DateTimeFormat(pattern="yyyy-MM-dd")
+    @Past
     private LocalDate birthDate;
 
     @NotNull
