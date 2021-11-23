@@ -31,6 +31,9 @@ public class RoomRepositoryImplTests {
     @Autowired
     RoomRepository roomRepository;
 
+    @Autowired
+    private EntityManager em;
+
     @Test
     void given_3freesingleroomsinrepository_when_fetchfreesinglerooms_then_returnequalrooms() {
         // given
@@ -48,6 +51,7 @@ public class RoomRepositoryImplTests {
 
         // when
         roomsExpected.forEach(room -> this.roomRepository.add(room));
+        em.flush();
         List<Room> roomsActual = this.roomRepository.roomsByCategoryAndStatus(
                 roomCategoryExpected.getRoomCategoryId(),
                 roomStatusExpected);
