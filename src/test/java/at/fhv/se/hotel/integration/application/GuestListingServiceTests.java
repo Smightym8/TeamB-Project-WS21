@@ -1,4 +1,4 @@
-package at.fhv.se.hotel.smoketests.application;
+package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.GuestListingService;
 import at.fhv.se.hotel.application.dto.GuestDTO;
