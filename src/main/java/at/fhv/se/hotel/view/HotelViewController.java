@@ -35,12 +35,24 @@ public class HotelViewController {
     private static final String INVOICES_URL = "/invoices";
     private static final String INVOICES_VIEW = "invoices";
 
-    /*---*/
-
     private static final String CREATE_GUEST_URL = "/createguest";
-    private static final String CREATE_GUEST_VIEW = "createguest";
+    private static final String CREATE_GUEST_VIEW = "createGuest";
 
     /*---*/
+
+    private static final String CREATE_BOOKING_GUEST_URL = "/createbooking-guest";
+    private static final String CREATE_BOOKING_GUEST_VIEW = "createBookingGuest";
+
+    private static final String CREATE_BOOKING_DATE_URL = "/createbooking-category";
+    private static final String CREATE_BOOKING_DATE_VIEW = "createbooking-category";
+
+    private static final String CREATE_BOOKING_CATEGORY_URL = "/createbooking-category";
+    private static final String CREATE_BOOKING_CATEGORY_VIEW = "createbooking-category";
+
+    private static final String CREATE_BOOKING_SERVICES_URL = "/createbooking-category";
+    private static final String CREATE_BOOKING_SERVICES_VIEW = "createbooking-category";
+
+
 
     private static final String BOOKING_SUMMARY_URL = "/bookingSummary";
     private static final String CHOOSE_CATEGORY_URL = "/choosecategory";
@@ -52,8 +64,6 @@ public class HotelViewController {
     private static final String SHOW_BOOKING_DETAILS_URL = "/booking/details/{id}";
     private static final String GUEST_FORM_URL = "/guestform";
     private static final String ASSIGNED_ROOMS_URL = "/assignedRooms";
-
-    // Views
 
     private static final String BOOKING_SUMMARY_VIEW = "bookingSummary";
     private static final String BOOKING_DETAILS_VIEW = "bookingDetails";
@@ -146,15 +156,9 @@ public class HotelViewController {
         return INVOICES_VIEW;
     }
 
-    /*-----------*/
-
-
-
-
-
-
+//  ---CreateGuest---
     @GetMapping(CREATE_GUEST_URL)
-    public String createGuestForm(Model model) {
+    public String createGuestGet(Model model) {
         GuestForm guestForm = new GuestForm();
 
         model.addAttribute("guest", guestForm);
@@ -163,7 +167,7 @@ public class HotelViewController {
     }
 
     @PostMapping(CREATE_GUEST_URL)
-    public String createGuestSave(@ModelAttribute("guest") @Valid GuestForm guestForm, BindingResult bindingResult, Model model) {
+    public String createGuestPost(@ModelAttribute("guest") @Valid GuestForm guestForm, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return CREATE_GUEST_VIEW;
         }
@@ -184,6 +188,55 @@ public class HotelViewController {
 
         return "redirect:" + GUESTS_URL;
     }
+
+//  ---CreateBooking---
+    @GetMapping(CREATE_BOOKING_GUEST_URL)
+    public String createBookingGuest(Model model) {
+        final List<GuestDTO> guests = guestListingService.allGuests();
+        BookingForm bookingForm = new BookingForm();
+
+        model.addAttribute("guests", guests);
+        model.addAttribute("booking", bookingForm);
+
+        return CHOOSE_GUEST_VIEW;
+    }
+
+    @PostMapping(CHOOSE_CATEGORY_URL)
+    public String createBookingCategory(@ModelAttribute("form") BookingForm form, Model model) {
+        final List<RoomCategoryDTO> categories = roomCategoryListingService.allRoomCategories();
+
+        model.addAttribute("categories", categories);
+        model.addAttribute("form", form);
+
+        return CHOOSE_CATEGORY_VIEW;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @GetMapping(CHOOSE_DATES_URL)
+    public String chooseCheckInCheckOutDate(Model model) {
+
+        BookingForm form = new BookingForm();
+
+        model.addAttribute("form", form);
+
+        return CHOOSE_DATES_VIEW;
+    }
+
+
+    /*-----------*/
+
+
 
 
     @PostMapping(CHOOSE_CATEGORY_URL)
@@ -216,15 +269,7 @@ public class HotelViewController {
         return CHOOSE_SERVICE_VIEW;
     }
 
-    @GetMapping(CHOOSE_DATES_URL)
-    public String chooseCheckInCheckOutDate(Model model) {
 
-        BookingForm form = new BookingForm();
-
-        model.addAttribute("form", form);
-
-        return CHOOSE_DATES_VIEW;
-    }
 
     @PostMapping(BOOKING_SUMMARY_URL)   //at the end of a booking
     public String showSummary(@ModelAttribute("form") BookingForm form,

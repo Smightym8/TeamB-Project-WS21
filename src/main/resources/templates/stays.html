@@ -4,8 +4,8 @@
 
     <div layout:fragment="content">
         <div class="d-flex">
-        <p class="h3">Guests</p>
-        <a class="btn btn-primary ms-5" href="createguest">Create Guest</a>
+            <p class="h3">Stays</p>
+            <a class="btn btn-primary ms-5" href="createguest">Create Guest</a>
         </div>
         <br>
         <table class="table table-striped">
@@ -13,17 +13,15 @@
             <tr>
                 <th class="col-1">Firstname</th>
                 <th class="col-1">Lastname</th>
-                <th class="col-1">Birthdate</th>
                 <th class="col-1">Address</th>
-                <th class="col-1"></th>
+                <th class="col-1">Rooms</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="guest : ${guests}">
-                <td th:text="${guest.firstName}"></td>
-                <td th:text="${guest.lastName()}"></td>
-                <td th:text="${guest.birthDate()}"></td>
-                <td></td>
+            <tr>
+                <td>Ali</td>
+                <td>Cinar</td>
+                <td>Free</td>
                 <td>
                     <a class="btn btn-secondary btn-sm" href="#">Modify</a>
                     <a class="btn btn-danger btn-sm" href="#">Delete</a>
@@ -32,5 +30,6 @@
             </tbody>
         </table>
     </div>
+
 </body>
 </html>
