@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
-<body>
-<div layout:fragment="content">
-  <h1>Create Guest</h1>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<body id="Guests">
 
+<div layout:fragment="content">
+    <div class="d-flex">
+        <p class="h3">Guests</p>
+        <a class="btn btn-primary ms-5" href="createguest">Create Guest</a>
+    </div>
+  <br>
   <form th:action="@{/createguest}" method="post" th:object="${guest}">
     <div class="row">
       <div class="col-6" id="leftForm">
