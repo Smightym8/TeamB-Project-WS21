@@ -1,6 +1,7 @@
 package at.fhv.se.hotel.api;
 
 import at.fhv.se.hotel.application.api.BookingListingService;
+import at.fhv.se.hotel.application.api.StayListingService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class ViewApiTests {
     @MockBean
     BookingListingService bookingListingService;
 
+    @MockBean
+    StayListingService stayListingService;
+
     @Test
     public void when_rooturl_then_statusok_and_mainMenuView_called() throws Exception {
         this.mockMvc.perform(get("/").accept(org.springframework.http.MediaType.TEXT_PLAIN))
@@ -45,5 +49,18 @@ public class ViewApiTests {
 
         // then
         Mockito.verify(bookingListingService, times(1)).allBookings();
+    }
+
+    @Test
+    public void when_staylisturl_then_statusok_and_allStaysView_and_stayListingService_called() throws Exception {
+        // when ... then
+        this.mockMvc.perform(get("/staylist").accept(org.springframework.http.MediaType.TEXT_PLAIN))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(view().name("allStays"));
+
+        // then
+        Mockito.verify(stayListingService, times(1)).allStays();
     }
 }

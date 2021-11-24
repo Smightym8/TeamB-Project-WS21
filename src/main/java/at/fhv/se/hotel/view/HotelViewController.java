@@ -31,6 +31,7 @@ public class HotelViewController {
     private static final String GUEST_FORM_URL = "/guestform";
     private static final String CREATE_GUEST_URL = "/createguest";
     private static final String ASSIGNED_ROOMS_URL = "/assignedRooms";
+    private static final String ALL_STAYS_URL = "/staylist";
 
     // Views
     private static final String MAIN_MENU_VIEW = "mainMenu";
@@ -45,6 +46,7 @@ public class HotelViewController {
     private static final String ERROR_VIEW = "errorView";
     private static final String CREATE_GUEST_VIEW = "createGuest";
     private static final String ASSIGNED_ROOMS_VIEW = "assignedRooms";
+    private static final String ALL_STAYS_VIEW = "allStays";
 
     // Services
     @Autowired
@@ -73,6 +75,9 @@ public class HotelViewController {
 
     @Autowired
     private CheckInService checkInService;
+
+    @Autowired
+    private StayListingService stayListingService;
 
     /**
      * This method handles a get request on /.
@@ -234,6 +239,15 @@ public class HotelViewController {
                 form.getCheckInDate(),
                 form.getCheckOutDate());
         return showSummary(form, true, model);
+    }
+
+    @GetMapping(ALL_STAYS_URL)
+    public String allStays(Model model) {
+        List<StayDTO> stays = stayListingService.allStays();
+
+        model.addAttribute("stays", stays);
+
+        return ALL_STAYS_VIEW;
     }
 
     @GetMapping(ERROR_URL)
