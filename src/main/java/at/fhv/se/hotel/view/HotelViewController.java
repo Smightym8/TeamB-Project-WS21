@@ -17,12 +17,30 @@ import java.util.List;
 @Controller
 public class HotelViewController {
 
-    // Urls
     private static final String HOME_URL = "/";
-    private static final String BOOKINGS_URL = "/bookings";
-    private static final String GUESTS_URL = "/guests";
-    private static final String CREATE_GUEST_URL = "/createguest";
+    private static final String HOME_VIEW = "home";
 
+    private static final String ROOMS_URL = "/rooms";
+    private static final String ROOMS_VIEW = "rooms";
+
+    private static final String GUESTS_URL = "/guests";
+    private static final String GUESTS_VIEW = "guests";
+
+    private static final String BOOKINGS_URL = "/bookings";
+    private static final String BOOKINGS_VIEW = "bookings";
+
+    private static final String STAYS_URL = "/stays";
+    private static final String STAYS_VIEW = "stays";
+
+    private static final String INVOICES_URL = "/invoices";
+    private static final String INVOICES_VIEW = "invoices";
+
+    /*---*/
+
+    private static final String CREATE_GUEST_URL = "/createguest";
+    private static final String CREATE_GUEST_VIEW = "createguest";
+
+    /*---*/
 
     private static final String BOOKING_SUMMARY_URL = "/bookingSummary";
     private static final String CHOOSE_CATEGORY_URL = "/choosecategory";
@@ -33,16 +51,9 @@ public class HotelViewController {
     private static final String ERROR_URL = "/displayerror";
     private static final String SHOW_BOOKING_DETAILS_URL = "/booking/details/{id}";
     private static final String GUEST_FORM_URL = "/guestform";
-    private static final String CREATE_GUEST_URL_OLD = "/createguestold";
     private static final String ASSIGNED_ROOMS_URL = "/assignedRooms";
 
-
     // Views
-    private static final String HOME_VIEW = "home";
-    private static final String BOOKINGS_VIEW = "bookings";
-    private static final String GUESTS_VIEW = "guests";
-    private static final String CREATE_GUEST_VIEW = "createguest";
-
 
     private static final String BOOKING_SUMMARY_VIEW = "bookingSummary";
     private static final String BOOKING_DETAILS_VIEW = "bookingDetails";
@@ -51,11 +62,10 @@ public class HotelViewController {
     private static final String CHOOSE_SERVICE_VIEW = "chooseService";
     private static final String CHOOSE_DATES_VIEW = "chooseBookingDates";
     private static final String ERROR_VIEW = "errorView";
-    private static final String CREATE_GUEST_VIEW_OLD = "createGuestold";
     private static final String ASSIGNED_ROOMS_VIEW = "assignedRooms";
 
 
-    // Services
+
     @Autowired
     private BookingListingService bookingListingService;
 
@@ -83,7 +93,9 @@ public class HotelViewController {
     @Autowired
     private CheckInService checkInService;
 
+    /*---------*/
 
+//  ---Home---
     @GetMapping(HOME_URL)
     public String home(Model model) {
         final List<BookingDTO> bookings = bookingListingService.allBookings();
@@ -93,8 +105,26 @@ public class HotelViewController {
         return HOME_VIEW;
     }
 
+//  ---Rooms---
+    @GetMapping(ROOMS_URL)
+    public String rooms(Model model) {
+
+        return ROOMS_VIEW;
+    }
+
+//  ---Guests---
+    @GetMapping(GUESTS_URL)
+    public String guests(Model model) {
+        final List<GuestDTO> guests = guestListingService.allGuests();
+
+        model.addAttribute("guests", guests);
+
+        return GUESTS_VIEW;
+    }
+
+//  ---Bookings---
     @GetMapping(BOOKINGS_URL)
-    public String allBookings(Model model) {
+    public String bookings(Model model) {
         final List<BookingDTO> bookings = bookingListingService.allBookings();
 
         model.addAttribute("bookings", bookings);
@@ -102,14 +132,26 @@ public class HotelViewController {
         return BOOKINGS_VIEW;
     }
 
-    @GetMapping(GUESTS_URL)
-    public String allGuests(Model model) {
-        final List<GuestDTO> guests = guestListingService.allGuests();
+//  ---Stays---
+    @GetMapping(STAYS_URL)
+    public String stays(Model model) {
 
-        model.addAttribute("guests", guests);
-
-        return GUESTS_VIEW;
+        return STAYS_VIEW;
     }
+
+//  ---Invoices---
+    @GetMapping(INVOICES_URL)
+    public String invoices(Model model) {
+
+        return INVOICES_VIEW;
+    }
+
+    /*-----------*/
+
+
+
+
+
 
     @GetMapping(CREATE_GUEST_URL)
     public String createGuestForm(Model model) {
@@ -140,41 +182,9 @@ public class HotelViewController {
                 guestForm.getCountry()
         );
 
-        return allGuests(model);
+        return "redirect:" + GUESTS_URL;
     }
 
-
-    @GetMapping(GUEST_FORM_URL)
-    public String createGuestFormOld(Model model) {
-        GuestForm guestForm = new GuestForm();
-
-        model.addAttribute("form", guestForm);
-
-        return CREATE_GUEST_VIEW_OLD;
-    }
-
-    @PostMapping(CREATE_GUEST_URL_OLD)
-    public String createGuest(@ModelAttribute("form") @Valid GuestForm guestForm, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            return CREATE_GUEST_VIEW_OLD;
-        }
-
-        guestCreationService.createGuest(
-                guestForm.getFirstName(),
-                guestForm.getLastName(),
-                guestForm.getGender(),
-                guestForm.geteMail(),
-                guestForm.getPhoneNumber(),
-                guestForm.getBirthDate(),
-                guestForm.getStreetName(),
-                guestForm.getStreetNumber(),
-                guestForm.getZipCode(),
-                guestForm.getCity(),
-                guestForm.getCountry()
-        );
-
-        return chooseCheckInCheckOutDate(model);
-    }
 
     @PostMapping(CHOOSE_CATEGORY_URL)
     public String chooseRoomCategories(@ModelAttribute("form") BookingForm form, Model model) {
