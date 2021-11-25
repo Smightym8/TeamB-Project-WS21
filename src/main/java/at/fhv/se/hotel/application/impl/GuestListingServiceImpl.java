@@ -76,7 +76,7 @@ public class GuestListingServiceImpl implements GuestListingService {
                         .withStreetNumber("1")
                         .withCity("Dornbirn")
                         .withZipCode("6850")
-                        .withCountry("Vorarlberg")
+                        .withCountry("Austria")
                         .build()
         );
 
