@@ -33,7 +33,7 @@ public enum Season {
             LocalDate adjustedSeasonStart = LocalDate.of(checkInDate.getYear(), s.startDate.getMonth(), s.startDate.getDayOfMonth());
             // Because 31.01 is before 01.12 in the same year, add 1 year to the winter end date
             LocalDate adjustedSeasonEnd = s.equals(Season.WINTER) ?
-                    LocalDate.of(checkInDate.getYear() + 1, s.endDate.getMonth(), s.endDate.getDayOfMonth()) :
+                    LocalDate.of(checkInDate.getYear(), s.endDate.getMonth(), s.endDate.getDayOfMonth()).plusYears(1) :
                     LocalDate.of(checkInDate.getYear(), s.endDate.getMonth(), s.endDate.getDayOfMonth());
             if(isOverLapping(adjustedSeasonStart, adjustedSeasonEnd, checkInDate, checkOutDate)) {
                 seasons.add(s);
@@ -46,10 +46,16 @@ public enum Season {
     private static boolean isOverLapping (LocalDate seasonStart, LocalDate seasonEnd,
                                    LocalDate checkInDate, LocalDate checkOutDate) {
 
-        return (checkInDate.equals(seasonStart) ||
-                checkOutDate.equals(seasonEnd) ||
+        return (checkInDate.isEqual(seasonStart) ||
+                checkInDate.isEqual(seasonEnd) ||
+                checkOutDate.isEqual(seasonStart) ||
+                checkOutDate.isEqual(seasonEnd) ||
+                // Check if booking range is in the range of the season
                 (checkInDate.isAfter(seasonStart) && checkInDate.isBefore(seasonEnd)) ||
-                (checkOutDate.isAfter(seasonStart) && checkOutDate.isBefore(seasonEnd))
+                (checkOutDate.isAfter(seasonStart) && checkOutDate.isBefore(seasonEnd)) ||
+                // Check if season range is in the range of the booking
+                (seasonStart.isAfter(checkInDate) && seasonStart.isBefore(checkOutDate)) ||
+                (seasonEnd.isAfter(checkInDate) && seasonEnd.isBefore(checkOutDate))
         );
     }
 }

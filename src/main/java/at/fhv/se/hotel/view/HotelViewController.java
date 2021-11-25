@@ -137,7 +137,9 @@ public class HotelViewController {
 
     @PostMapping(CHOOSE_CATEGORY_URL)
     public String chooseRoomCategories(@ModelAttribute("form") BookingForm form, Model model) {
-        final List<RoomCategoryDTO> categories = roomCategoryListingService.allRoomCategories();
+        final List<RoomCategoryDTO> categories = roomCategoryListingService.allRoomCategoriesWithPrices(
+                form.getCheckInDate(), form.getCheckOutDate()
+        );
 
         model.addAttribute("categories", categories);
         model.addAttribute("form", form);

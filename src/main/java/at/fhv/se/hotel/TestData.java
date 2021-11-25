@@ -7,9 +7,7 @@ import at.fhv.se.hotel.domain.model.guest.Gender;
 import at.fhv.se.hotel.domain.model.guest.Guest;
 import at.fhv.se.hotel.domain.model.room.Room;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
-import at.fhv.se.hotel.domain.model.roomcategory.Description;
-import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
-import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryName;
+import at.fhv.se.hotel.domain.model.roomcategory.*;
 import at.fhv.se.hotel.domain.model.service.Price;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
@@ -47,6 +45,9 @@ public class TestData implements ApplicationRunner {
     @Autowired
     RoomRepository roomRepository;
 
+    @Autowired
+    RoomCategoryPriceRepository roomCategoryPriceRepository;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         // Insert fake services
@@ -69,6 +70,56 @@ public class TestData implements ApplicationRunner {
 
         this.roomCategoryRepository.add(singleRoom);
         this.roomCategoryRepository.add(doubleRoom);
+
+        RoomCategoryPrice singleRoomSummerPrice = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                Season.SUMMER,
+                singleRoom,
+                new BigDecimal("600")
+        );
+
+        RoomCategoryPrice singleRoomWinterPrice = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                Season.WINTER,
+                singleRoom,
+                new BigDecimal("300")
+        );
+
+        RoomCategoryPrice singleRoomSpringPrice = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                Season.SPRING,
+                singleRoom,
+                new BigDecimal("200")
+        );
+
+        RoomCategoryPrice doubleRoomSummerPrice = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                Season.SUMMER,
+                doubleRoom,
+                new BigDecimal("900")
+        );
+
+        RoomCategoryPrice doubleRoomWinterPrice = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                Season.WINTER,
+                doubleRoom,
+                new BigDecimal("500")
+        );
+
+        RoomCategoryPrice doubleRoomSpringPrice = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                Season.SPRING,
+                doubleRoom,
+                new BigDecimal("400")
+        );
+
+
+        this.roomCategoryPriceRepository.add(singleRoomWinterPrice);
+        this.roomCategoryPriceRepository.add(singleRoomSpringPrice);
+        this.roomCategoryPriceRepository.add(singleRoomSummerPrice);
+        this.roomCategoryPriceRepository.add(doubleRoomWinterPrice);
+        this.roomCategoryPriceRepository.add(doubleRoomSpringPrice);
+        this.roomCategoryPriceRepository.add(doubleRoomSummerPrice);
 
         // Insert fake guests
         Guest michael = Guest.create(guestRepository.nextIdentity(),

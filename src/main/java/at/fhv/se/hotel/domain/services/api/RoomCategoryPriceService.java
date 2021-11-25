@@ -7,5 +7,5 @@ import at.fhv.se.hotel.domain.model.roomcategory.Season;
 import java.math.BigDecimal;
 
 public interface RoomCategoryPriceService {
-    RoomCategoryPrice by(RoomCategory r, Season s);
+    RoomCategoryPrice by(RoomCategory roomCategory, Season season);
 }
