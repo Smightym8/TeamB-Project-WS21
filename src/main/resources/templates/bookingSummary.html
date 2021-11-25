@@ -6,6 +6,7 @@
   <h1>Summary</h1>
 
   <!--<p th:text="${bookingSummary.guest.firstName} + ' '  + ${bookingSummary.guest.lastName}  + ', ' + ${bookingSummary.guest.birthDate}"></p>-->
+  <p th:text="${bookingSummary.guest.firstName} + ' '  + ${bookingSummary.guest.lastName}  + ', ' + ${bookingSummary.guest.streetName} + ' ' + ${bookingSummary.guest.streetNumber} + ', ' + ${bookingSummary.guest.city} + ', ' + ${bookingSummary.guest.zipCode} + ', ' + ${bookingSummary.guest.country}></p>
   <p th:text="'Check in date: ' + ${bookingSummary.checkInDate}"></p>
   <p th:text="'Check out date: ' + ${bookingSummary.checkOutDate}"></p>
 
