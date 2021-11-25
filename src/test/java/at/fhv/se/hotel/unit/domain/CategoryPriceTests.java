@@ -1,13 +1,10 @@
 package at.fhv.se.hotel.unit.domain;
 
 import at.fhv.se.hotel.domain.model.roomcategory.*;
-import at.fhv.se.hotel.domain.repository.RoomCategoryRepository;
 import at.fhv.se.hotel.domain.services.api.RoomCategoryPriceService;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -20,15 +17,12 @@ public class CategoryPriceTests {
     @Autowired
     private RoomCategoryPriceService roomCategoryPriceService;
 
-    @MockBean
-    private RoomCategoryRepository roomCategoryRepository;
+    // TODO Mock RoomCategoryRepo
 
     @Test
     void given_categoryandseason_then_expectedprice() {
         // given
-        Mockito.when(roomCategoryRepository.nextIdentity()).thenReturn(new RoomCategoryId(UUID.randomUUID().toString().toUpperCase()));
-
-        RoomCategory singleRoom = RoomCategory.create(roomCategoryRepository.nextIdentity(),
+        RoomCategory singleRoom = RoomCategory.create(new RoomCategoryId(UUID.randomUUID().toString().toUpperCase()),
                 new RoomCategoryName("Single Room"),
                 new Description("This is a single room")
         );
