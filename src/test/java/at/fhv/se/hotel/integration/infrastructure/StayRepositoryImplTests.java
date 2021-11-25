@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -49,6 +50,9 @@ public class StayRepositoryImplTests {
 
     @Autowired
     RoomRepository roomRepository;
+
+    @Autowired
+    private EntityManager em;
 
     @Test
     void given_stay_when_addstayrepository_then_returnequalsstay() {
@@ -107,6 +111,7 @@ public class StayRepositoryImplTests {
         // when
         this.roomRepository.add(roomsExpected.get(0));
         this.stayRepository.add(stayExpected);
+        em.flush();
         Stay stayActual = this.stayRepository.stayById(stayExpected.getStayId()).get();
 
         // then

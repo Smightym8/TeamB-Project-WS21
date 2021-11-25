@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -43,6 +44,9 @@ public class BookingRepositoryImplTests {
 
     @Autowired
     RoomCategoryRepository roomCategoryRepository;
+
+    @Autowired
+    private EntityManager em;
 
     @Test
     void given_booking_when_addbookingtorepository_then_returnequalsbooking() {
@@ -84,8 +88,10 @@ public class BookingRepositoryImplTests {
         bookingExpected.addRoomCategory(categoryExpected, 1);
 
         // when
+        servicesExpected.forEach(service -> this.serviceRepository.add(service));
         this.roomCategoryRepository.add(categoryExpected);
         this.bookingRepository.add(bookingExpected);
+        em.flush();
         Booking bookingActual = this.bookingRepository.bookingById(idExpected).get();
 
         // then
