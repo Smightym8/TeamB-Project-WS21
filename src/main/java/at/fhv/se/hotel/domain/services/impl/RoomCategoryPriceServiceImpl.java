@@ -1,6 +1,7 @@
 package at.fhv.se.hotel.domain.services.impl;
 
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
+import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
 import at.fhv.se.hotel.domain.model.roomcategory.Season;
 import at.fhv.se.hotel.domain.repository.RoomCategoryPriceRepository;
 import at.fhv.se.hotel.domain.services.api.RoomCategoryPriceService;
@@ -16,9 +17,8 @@ public class RoomCategoryPriceServiceImpl implements RoomCategoryPriceService {
     private RoomCategoryPriceRepository roomCategoryPriceRepository;
 
     @Override
-    public BigDecimal by(RoomCategory roomCategory, Season season) {
+    public RoomCategoryPrice by(RoomCategory roomCategory, Season season) {
         return roomCategoryPriceRepository.priceBySeasonAndCategory(season, roomCategory.getRoomCategoryId())
-                .get()
-                .getPrice();
+                .get();
     }
 }
