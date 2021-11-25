@@ -16,7 +16,8 @@ import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.model.stay.Stay;
-import at.fhv.se.hotel.domain.model.stay.StayId;
+import at.fhv.se.hotel.domain.repository.GuestRepository;
+import at.fhv.se.hotel.domain.repository.ServiceRepository;
 import at.fhv.se.hotel.domain.repository.StayRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -29,10 +30,8 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public class StayListingServiceTests {
@@ -112,10 +111,12 @@ public class StayListingServiceTests {
         List<StayDTO> staysActual = stayListingService.allStays();
 
         // then
-       // assertEquals(staysExpected, staysActual, "Stay do not match!");
-     /*   for (int i = 0; i < staysActual.size(); i++){
-            assertTrue(staysExpected.contains(staysActual));
-        } */
         assertEquals(staysExpected.size(),staysActual.size());
+        for (int i = 0; i < staysActual.size(); i++){
+            assertEquals(staysExpected.get(i).getBooking().getGuest().getName().firstName(), staysActual.get(i).guestFirstName());
+            assertEquals(staysExpected.get(i).getBooking().getGuest().getName().lastName(), staysActual.get(i).guestLastName());
+            assertEquals(staysExpected.get(i).getBooking().getCheckInDate(), staysActual.get(i).checkInDate());
+            assertEquals(staysExpected.get(i).getBooking().getCheckOutDate(), staysActual.get(i).checkOutDate());
+        }
     }
 }
