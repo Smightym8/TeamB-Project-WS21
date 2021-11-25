@@ -9,7 +9,8 @@ import java.util.Objects;
 public class BookingDTO {
     private String id;
     private String guestName;
-    private LocalDate guestBirthDate;
+    //private LocalDate guestBirthDate;
+    private String guestAddress;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
     private boolean isActive;
@@ -26,9 +27,10 @@ public class BookingDTO {
         return this.guestName;
     }
 
-    public LocalDate guestBirthDate() {
+    /*public LocalDate guestBirthDate() {
         return this.guestBirthDate;
-    }
+    }*/
+    public String getGuestAddress() { return this.guestAddress;}
 
     public LocalDate checkInDate() {
         return this.checkInDate;
@@ -59,8 +61,12 @@ public class BookingDTO {
             return this;
         }
 
-        public Builder withBirthDate(LocalDate birthDate) {
+        /*public Builder withBirthDate(LocalDate birthDate) {
             this.instance.guestBirthDate = birthDate;
+            return this;
+        }*/
+        public Builder withGuestAddress(String guestAddress) {
+            this.instance.guestAddress = guestAddress;
             return this;
         }
 
@@ -82,7 +88,8 @@ public class BookingDTO {
         public BookingDTO build() {
             Objects.requireNonNull(this.instance.id, "id must be set in BookingDTO");
             Objects.requireNonNull(this.instance.guestName, "guestName must be set in BookingDTO");
-            Objects.requireNonNull(this.instance.guestBirthDate, "guestBirthDate must be set in BookingDTO");
+            //Objects.requireNonNull(this.instance.guestBirthDate, "guestBirthDate must be set in BookingDTO");
+            Objects.requireNonNull(this.instance.guestAddress, "guestAddress must be set in BookingDTO");
             Objects.requireNonNull(this.instance.checkInDate, "checkInDate must be set in BookingDTO");
             Objects.requireNonNull(this.instance.checkOutDate, "checkOutDate must be set in BookingDTO");
 
