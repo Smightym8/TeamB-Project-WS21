@@ -77,4 +77,56 @@ public class SeasonsTest {
             assertTrue(seasonsExpected.contains(s));
         }
     }
+
+    @Test
+    void given_currentstaydateandseason_then_returntrue() {
+        // given
+        LocalDate currentDate = LocalDate.of(2021,11,26);
+        Season expectedSeason = Season.SUMMER;
+
+        // when ... then
+        assertTrue(Season.isInSeason(currentDate, expectedSeason), "Season does not match");
+    }
+
+    @Test
+    void given_3datesand3seasons_then_returnalltrue() {
+        // given
+        LocalDate date1 = LocalDate.of(2021,11,26);
+        Season expectedSeason1 = Season.SUMMER;
+
+        LocalDate date2 = LocalDate.of(2021,12,12);
+        Season expectedSeason2 = Season.WINTER;
+
+        LocalDate date3 = LocalDate.of(2022,2,5);
+        Season expectedSeason3 = Season.SPRING;
+
+        // when ... then
+        assertTrue(Season.isInSeason(date1, expectedSeason1), "Season does not match");
+        assertTrue(Season.isInSeason(date2, expectedSeason2), "Season does not match");
+        assertTrue(Season.isInSeason(date3, expectedSeason3), "Season does not match");
+    }
+
+    @Test
+    void given_6currentstaydatesonseasonborderand3seasons_then_returntrue() {
+        // given
+        LocalDate startDate1 = LocalDate.of(2021,6,1);
+        LocalDate endDate1 = LocalDate.of(2021,11,30);
+        Season expectedSeason1 = Season.SUMMER;
+
+        LocalDate startDate2 = LocalDate.of(2021,12,1);
+        LocalDate endDate2 = LocalDate.of(2022,1,31);
+        Season expectedSeason2 = Season.WINTER;
+
+        LocalDate startDate3 = LocalDate.of(2021,2,1);
+        LocalDate endDate3 = LocalDate.of(2021,5,31);
+        Season expectedSeason3 = Season.SPRING;
+
+        // when ... then
+        assertTrue(Season.isInSeason(startDate1, expectedSeason1), "Summer Start does not match");
+        assertTrue(Season.isInSeason(endDate1, expectedSeason1), "Summer end does not match");
+        assertTrue(Season.isInSeason(startDate2, expectedSeason2), "Winter start does not match");
+        assertTrue(Season.isInSeason(endDate2, expectedSeason2), "Winter end does not match");
+        assertTrue(Season.isInSeason(startDate3, expectedSeason3), "Spring start does not match");
+        assertTrue(Season.isInSeason(endDate3, expectedSeason3), "Spring end does not match");
+    }
 }

@@ -59,4 +59,18 @@ public enum Season {
         );
     }
 
+    public static boolean isInSeason (LocalDate currentDate, Season season){
+
+        LocalDate adjustedSeasonStart = LocalDate.of(currentDate.getYear(), season.startDate.getMonth(), season.startDate.getDayOfMonth());
+        // Because 31.01 is before 01.12 in the same year, add 1 year to the winter end date
+        LocalDate adjustedSeasonEnd = season.equals(Season.WINTER) ?
+                LocalDate.of(currentDate.getYear(), season.endDate.getMonth(), season.endDate.getDayOfMonth()).plusYears(1) :
+                LocalDate.of(currentDate.getYear(), season.endDate.getMonth(), season.endDate.getDayOfMonth());
+
+        return (currentDate.isEqual(adjustedSeasonStart) ||
+                currentDate.isEqual(adjustedSeasonEnd) ||
+                (currentDate.isAfter(adjustedSeasonStart) && currentDate.isBefore(adjustedSeasonEnd))
+        );
+    }
+
 }
