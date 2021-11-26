@@ -58,4 +58,5 @@ public enum Season {
                 (seasonEnd.isAfter(checkInDate) && seasonEnd.isBefore(checkOutDate))
         );
     }
+
 }

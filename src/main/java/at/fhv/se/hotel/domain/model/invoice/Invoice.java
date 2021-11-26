@@ -1,7 +1,13 @@
 package at.fhv.se.hotel.domain.model.invoice;
 
+import at.fhv.se.hotel.domain.model.roomcategory.Season;
+import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.stay.Stay;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.List;
 import java.util.Objects;
 
 public class Invoice {
@@ -9,7 +15,7 @@ public class Invoice {
     private Long id;
     private InvoiceId invoiceId;
     private Stay stay;
-    // TODO: invoiceAmount is part of Task 140
+    private BigDecimal totalAmount;
 
     // Required by hibernate
     private Invoice() {
@@ -22,6 +28,8 @@ public class Invoice {
     private Invoice(InvoiceId anInvoiceId, Stay aStay) {
         this.invoiceId = anInvoiceId;
         this.stay = aStay;
+        this.totalAmount = new BigDecimal("0");
+        this.calculate();
     }
 
     public InvoiceId getInvoiceId() {
@@ -30,6 +38,33 @@ public class Invoice {
 
     public Stay getStay() {
         return stay;
+    }
+
+    public BigDecimal getTotalAmount(){
+        return totalAmount;
+    }
+
+    public void calculate () {
+        // Calculate Services
+        for (Service s : this.stay.getServices()) {
+            this.totalAmount = this.totalAmount.add(s.getServicePrice().price());
+        }
+
+        // Calculate RoomCategoryPrices
+        List<Season> matchingSeasons = Season.seasons(this.stay.getCheckInDate(), this.stay.getCheckOutDate());
+        int nights = Period.between(this.stay.getCheckInDate(), this.stay.getCheckOutDate()).getDays();
+        LocalDate tempDate = this.stay.getCheckInDate();
+        for(int i = 0; i < nights; i++){
+            // TODO: check if tempDate is in Season
+            /*
+                für x Nächte prüfe:
+                    isInSeason(actualDate, season)
+                        totalPrice += RoomCategoryPrice.by(category, season)
+                        actualDate.plusDays(1)
+                    Wenn nicht in Season
+                        season = seasons.next
+             */
+        }
     }
 
     @Override

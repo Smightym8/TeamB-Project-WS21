@@ -94,4 +94,61 @@ public class InvoiceTest {
         assertNotEquals(id0_1, id1, "the ids should not be equal");
         assertNotEquals(id0_2, id1, "the ids should not be equal");
     }
+
+    @Test
+    void given_invoicedetails_when_calculate_then_returnexpectedamount() {
+        // given
+        Guest guest = Guest.create(new GuestId("1"),
+                new FullName("Michael", "Spiegel"),
+                Gender.MALE,
+                new Address("Hochschulstraße",
+                        "1", "Dornbirn",
+                        "6850", "Austria"),
+                LocalDate.of(1999, 3, 20),
+                "+43 660 123 456 789",
+                "michael.spiegel@students.fhv.at",
+                Collections.emptyList()
+        );
+
+        RoomCategory category = RoomCategory.create(new RoomCategoryId("1"),
+                new RoomCategoryName("Single Room"),
+                new Description("This is a single room")
+        );
+
+        List<Service> services = Arrays.asList(
+                Service.create(new ServiceId("1"),
+                        new ServiceName("TV"),
+                        new Price(new BigDecimal("100"))),
+                Service.create(new ServiceId("2"),
+                        new ServiceName("Breakfast"),
+                        new Price(new BigDecimal("100")))
+        );
+
+        Booking booking = Booking.create(
+                LocalDate.of(2021, 11, 26),
+                LocalDate.of(2021,11,29),
+                new BookingId("1"),
+                guest,
+                services
+        );
+        booking.addRoomCategory(category, 1);
+
+        List<Room> rooms = List.of(
+                Room.create("101", RoomStatus.FREE, category)
+        );
+        Stay stayExpected = Stay.create(booking, rooms);
+
+        InvoiceId id = new InvoiceId("42");
+        BigDecimal totalAmountServices = new BigDecimal("200");
+        BigDecimal totalAmountNights = new BigDecimal("1800");
+
+        BigDecimal totalAmountExpected = totalAmountNights.add(totalAmountServices);
+
+        // when
+        Invoice invoice = Invoice.create(id, stayExpected);
+
+        // then
+        assertEquals(totalAmountExpected, invoice.getTotalAmount());
+    }
+    
 }
