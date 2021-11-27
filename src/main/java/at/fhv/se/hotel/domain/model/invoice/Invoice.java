@@ -23,15 +23,14 @@ public class Invoice {
     private Invoice() {
     }
 
-    public static Invoice create(InvoiceId anInvoiceId, Stay aStay) {
-        return new Invoice(anInvoiceId, aStay);
+    public static Invoice create(InvoiceId anInvoiceId, Stay aStay, BigDecimal aAmount) {
+        return new Invoice(anInvoiceId, aStay, aAmount);
     }
 
-    private Invoice(InvoiceId anInvoiceId, Stay aStay) {
+    private Invoice(InvoiceId anInvoiceId, Stay aStay, BigDecimal aAmount) {
         this.invoiceId = anInvoiceId;
         this.stay = aStay;
-        this.totalAmount = new BigDecimal("0");
-        calculate();
+        this.totalAmount = aAmount;
     }
 
     public InvoiceId getInvoiceId() {
@@ -44,31 +43,6 @@ public class Invoice {
 
     public BigDecimal getTotalAmount(){
         return totalAmount;
-    }
-
-    public void calculate() {
-        // Calculate Services
-        for (Service s : this.stay.getServices()) {
-            this.totalAmount = this.totalAmount.add(s.getServicePrice().price());
-        }
-
-        // Calculate RoomCategoryPrices
-        int nights = Period.between(this.stay.getCheckInDate(), this.stay.getCheckOutDate()).getDays();
-        LocalDate tempDate = this.stay.getCheckInDate();
-
-        for(int i = 0; i < nights; i++) {
-            Season currentSeason = Season.seasonByDate(tempDate);
-            for(BookingWithRoomCategory brc : stay.getBooking().getRoomCategories()) {
-                this.totalAmount = this.totalAmount.add(
-                        (
-                                new BigDecimal("1")
-                              // Get price of current room category for current season
-                        ).multiply(new BigDecimal(brc.getAmount()))
-                );
-            }
-
-            tempDate = tempDate.plusDays(1);
-        }
     }
 
     @Override

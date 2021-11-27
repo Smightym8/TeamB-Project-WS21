@@ -7,16 +7,19 @@ import at.fhv.se.hotel.domain.model.invoice.Invoice;
 import at.fhv.se.hotel.domain.model.invoice.InvoiceId;
 import at.fhv.se.hotel.domain.model.room.Room;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
-import at.fhv.se.hotel.domain.model.roomcategory.Description;
-import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
-import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryId;
-import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryName;
+import at.fhv.se.hotel.domain.model.roomcategory.*;
 import at.fhv.se.hotel.domain.model.service.Price;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.model.stay.Stay;
+import at.fhv.se.hotel.domain.repository.RoomCategoryPriceRepository;
+import at.fhv.se.hotel.domain.services.api.InvoiceCalculationService;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -27,7 +30,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+@SpringBootTest
 public class InvoiceTest {
+    @Autowired
+    InvoiceCalculationService invoiceCalculationService;
+
+    @MockBean
+    RoomCategoryPriceRepository roomCategoryPriceRepository;
 
     @Test
     void given_invoicedetails_when_createinvoice_then_detailsequals() {
@@ -59,8 +68,8 @@ public class InvoiceTest {
         );
 
         Booking booking = Booking.create(
-                LocalDate.now(),
-                LocalDate.now().plusDays(10),
+                LocalDate.of(2021, 8, 1),
+                LocalDate.of(2021, 8, 10),
                 new BookingId("1"),
                 guest,
                 services
@@ -75,7 +84,7 @@ public class InvoiceTest {
         Stay stayExpected = Stay.create(booking, rooms);
 
         InvoiceId idExpected = new InvoiceId("42");
-        Invoice invoiceExpected = Invoice.create(idExpected, stayExpected);
+        Invoice invoiceExpected = Invoice.create(idExpected, stayExpected, new BigDecimal("0"));
 
         // then
         assertEquals(idExpected, invoiceExpected.getInvoiceId());
@@ -136,16 +145,27 @@ public class InvoiceTest {
         List<Room> rooms = List.of(
                 Room.create("101", RoomStatus.FREE, category)
         );
+
+
+        RoomCategoryPrice price = RoomCategoryPrice.create(
+                new RoomCategoryPriceId("1"),
+                Season.SUMMER,
+                category,
+                new BigDecimal("600")
+        );
+
         Stay stayExpected = Stay.create(booking, rooms);
 
-        InvoiceId id = new InvoiceId("42");
         BigDecimal totalAmountServices = new BigDecimal("200");
         BigDecimal totalAmountNights = new BigDecimal("1800");
 
         BigDecimal totalAmountExpected = totalAmountNights.add(totalAmountServices); // 2.000
 
         // when
-        Invoice invoice = Invoice.create(id, stayExpected);
+        Mockito.when(roomCategoryPriceRepository.priceBySeasonAndCategory(Season.SUMMER, category.getRoomCategoryId()))
+                .thenReturn(java.util.Optional.of(price));
+        
+        Invoice invoice = invoiceCalculationService.calculateInvoice(stayExpected);
 
         // then
         assertEquals(totalAmountExpected, invoice.getTotalAmount());
