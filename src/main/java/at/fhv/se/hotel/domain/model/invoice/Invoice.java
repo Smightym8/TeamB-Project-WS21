@@ -1,13 +1,15 @@
 package at.fhv.se.hotel.domain.model.invoice;
 
+import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory;
 import at.fhv.se.hotel.domain.model.roomcategory.Season;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.stay.Stay;
+import at.fhv.se.hotel.domain.services.api.RoomCategoryPriceService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.List;
 import java.util.Objects;
 
 public class Invoice {
@@ -29,7 +31,7 @@ public class Invoice {
         this.invoiceId = anInvoiceId;
         this.stay = aStay;
         this.totalAmount = new BigDecimal("0");
-        this.calculate();
+        calculate();
     }
 
     public InvoiceId getInvoiceId() {
@@ -44,26 +46,28 @@ public class Invoice {
         return totalAmount;
     }
 
-    public void calculate () {
+    public void calculate() {
         // Calculate Services
         for (Service s : this.stay.getServices()) {
             this.totalAmount = this.totalAmount.add(s.getServicePrice().price());
         }
 
         // Calculate RoomCategoryPrices
-        List<Season> matchingSeasons = Season.seasons(this.stay.getCheckInDate(), this.stay.getCheckOutDate());
         int nights = Period.between(this.stay.getCheckInDate(), this.stay.getCheckOutDate()).getDays();
         LocalDate tempDate = this.stay.getCheckInDate();
-        for(int i = 0; i < nights; i++){
-            // TODO: check if tempDate is in Season
-            /*
-                für x Nächte prüfe:
-                    isInSeason(actualDate, season)
-                        totalPrice += RoomCategoryPrice.by(category, season)
-                        actualDate.plusDays(1)
-                    Wenn nicht in Season
-                        season = seasons.next
-             */
+
+        for(int i = 0; i < nights; i++) {
+            Season currentSeason = Season.seasonByDate(tempDate);
+            for(BookingWithRoomCategory brc : stay.getBooking().getRoomCategories()) {
+                this.totalAmount = this.totalAmount.add(
+                        (
+                                new BigDecimal("1")
+                              // Get price of current room category for current season
+                        ).multiply(new BigDecimal(brc.getAmount()))
+                );
+            }
+
+            tempDate = tempDate.plusDays(1);
         }
     }
 

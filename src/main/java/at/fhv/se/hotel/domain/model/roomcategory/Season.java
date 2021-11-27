@@ -59,6 +59,17 @@ public enum Season {
         );
     }
 
+    public static Season seasonByDate(LocalDate date) {
+        Season season = null;
+        for(Season s : Season.values()) {
+            if(isInSeason(date, s)) {
+                season = s;
+            }
+        }
+
+        return season;
+    }
+
     public static boolean isInSeason (LocalDate currentDate, Season season){
 
         LocalDate adjustedSeasonStart = LocalDate.of(currentDate.getYear(), season.startDate.getMonth(), season.startDate.getDayOfMonth());
