@@ -21,7 +21,7 @@
                 <td th:text="${booking.guestBirthDate}"></td>
                 <td th:text="${booking.checkInDate}"></td>
                 <td th:text="${booking.checkOutDate}"></td>
-                <td><a th:href="@{/booking/details/{id}(id=${booking.id})}" type="button" class="btn btn-primary btn-sm" align-self-center"">Check-In</a></td>
+                <td><a th:href="@{/showbooking/{id}(id=${booking.id})}" type="button" class="btn btn-primary btn-sm" align-self-center"">Check-In</a></td>
             </tr>
             </tbody>
         </table>
