@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<body>
+    <div layout:fragment="content">
+        <h1>Assigned Rooms new</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Room</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="room : ${assignedRooms}">
+                    <td th:text="${room.name}"></td>
+                    <td th:text="${room.categoryName}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div th:if="${isCheckedIn}">
+            <div class="alert alert-success" role="alert">
+                Checked in successfully!
+            </div>
+            <a class="btn btn-primary" th:href="@{/}">
+                Back to main menu
+            </a>
+        </div>
+
+        <div th:if="${!isCheckedIn}">
+            <a class="btn btn-primary" th:href="@{'/assignedRooms?bookingId=' + ${bookingId} + '&isCheckedIn=true'}">
+                Accept
+            </a>
+            <a href="/" type="button" class="btn btn-primary">Back</a>
+        </div>
+    </div>
+</body>
+</html>

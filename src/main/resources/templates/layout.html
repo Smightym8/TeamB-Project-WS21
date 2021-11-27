@@ -29,6 +29,9 @@
                 <a href="/rooms" class="nav-link text-white">Rooms</a>
             </li>
             <li>
+                <a href="/pricing" class="nav-link text-white">Pricing</a>
+            </li>
+            <li>
                 <a href="/guests" class="nav-link text-white">Guests</a>
             </li>
             <li>
@@ -45,31 +48,9 @@
                 <a href="/createguest" class="nav-link text-white">Create Guest</a>
             </li>
             <li>
-                <a href="/createbooking/guest" class="nav-link text-white">Create Booking new</a>
-            </li>
-            <li>
-                <a href="#" class="nav-link text-white" data-bs-toggle="modal" data-bs-target="#bookingModal">Create Booking</a>
+                <a href="/createbooking/guest" class="nav-link text-white">Create Booking</a>
             </li>
         </ul>
-    </div>
-
-    <!-- booking modal -->
-    <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <p class="h5 modal-title">Create Booking with</p>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body row">
-                    <div class="col-1"></div>
-                    <a class="btn btn-primary col" href="choosedates">existing guest</a>
-                    <div class="col-1"></div>
-                    <a class="btn btn-primary col" href="guestform">new guest</a>
-                    <div class="col-1"></div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <div class="content px-5 flex-grow-1" layout:fragment="content">

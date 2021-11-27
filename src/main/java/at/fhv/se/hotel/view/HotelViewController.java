@@ -25,6 +25,9 @@ public class HotelViewController {
     private static final String ROOMS_URL = "/rooms";
     private static final String ROOMS_VIEW = "rooms";
 
+    private static final String PRICING_URL = "/pricing";
+    private static final String PRICING_VIEW = "pricing";
+
     private static final String GUESTS_URL = "/guests";
     private static final String GUESTS_VIEW = "guests";
 
@@ -59,6 +62,15 @@ public class HotelViewController {
 
     private static final String CREATE_BOOKING_URL = "/createbooking";
 
+
+
+    private static final String SHOW_BOOKING_URL = "/showbooking/{id}";
+    private static final String SHOW_BOOKING_VIEW = "showBooking";
+
+
+    private static final String CHECK_IN_URL = "/check-in";
+    private static final String CHECK_IN_VIEW = "checkIn";
+
     /* -- Check-In -- */
 
 
@@ -67,28 +79,11 @@ public class HotelViewController {
 
 
 
-    private static final String CHOOSE_GUEST_URL = "/chooseguest";
-    private static final String CHOOSE_GUEST_VIEW = "chooseGuest";
-
-    private static final String BOOKING_SUMMARY_URL = "/bookingSummary";
-    private static final String CHOOSE_CATEGORY_URL = "/choosecategory";
-
-    private static final String CHOOSE_SERVICE_URL = "/chooseservice";
-    private static final String CHOOSE_DATES_URL = "/choosedates";
 
     private static final String ERROR_URL = "/displayerror";
-    private static final String SHOW_BOOKING_DETAILS_URL = "/booking/details/{id}";
-    private static final String GUEST_FORM_URL = "/guestform";
-    private static final String ASSIGNED_ROOMS_URL = "/assignedRooms";
 
-    private static final String BOOKING_SUMMARY_VIEW = "bookingSummary";
-    private static final String BOOKING_DETAILS_VIEW = "bookingDetails";
-    private static final String CHOOSE_CATEGORY_VIEW = "chooseCategory";
-
-    private static final String CHOOSE_SERVICE_VIEW = "chooseService";
-    private static final String CHOOSE_DATES_VIEW = "chooseBookingDates";
     private static final String ERROR_VIEW = "errorView";
-    private static final String ASSIGNED_ROOMS_VIEW = "assignedRooms";
+
 
 
 
@@ -137,6 +132,14 @@ public class HotelViewController {
 
         return ROOMS_VIEW;
     }
+
+    //  ---Stays---
+    @GetMapping(PRICING_URL)
+    public String pricing(Model model) {
+
+        return PRICING_VIEW;
+    }
+
 
 //  ---Guests---
     @GetMapping(GUESTS_URL)
@@ -277,28 +280,26 @@ public class HotelViewController {
 
         }
 
-        return createBookingSummary(form, false, model);
+        return createBookingSummary(form, true, model);
 
     }
 
-
-
-//  ---Check-In---
-
-
-
-    @GetMapping(SHOW_BOOKING_DETAILS_URL)   //for check-in
-    public String showBookingDetails(@PathVariable String id,
-                                     Model model) {
+//  ---Booking Details---
+    @GetMapping(SHOW_BOOKING_URL)   //for check-in
+    public String showBooking(@PathVariable String id, Model model) {
 
         BookingDetailsDTO bookingDetailsDTO =  bookingDetailsService.detailsByBookingId(id);
         model.addAttribute("bookingDetails", bookingDetailsDTO);
 
-        return BOOKING_DETAILS_VIEW;
+        return SHOW_BOOKING_VIEW;
     }
 
-    @GetMapping(ASSIGNED_ROOMS_URL)
-    public String assignedRooms(@RequestParam("bookingId") String bookingId,
+
+
+
+//  ---Check-In---
+@GetMapping(CHECK_IN_URL)
+    public String checkIn(@RequestParam("bookingId") String bookingId,
                                 @RequestParam("isCheckedIn") boolean isCheckedIn,
                                 Model model) {
 
@@ -312,75 +313,12 @@ public class HotelViewController {
         model.addAttribute("assignedRooms", assignedRooms);
         model.addAttribute("isCheckedIn", isCheckedIn);
 
-        return ASSIGNED_ROOMS_VIEW;
+        return CHECK_IN_VIEW;
     }
 
 
 
-/*---------------------------*/
 
-    @PostMapping(BOOKING_SUMMARY_URL)   //at the end of a booking
-    public String showSummary(@ModelAttribute("form") BookingForm form,
-                              @RequestParam("isCreated") boolean isCreated,
-                              Model model) {
-
-        BookingSummaryDTO bookingSummaryDTO = bookingSummaryService.createSummary(
-                form.getGuestId(),
-                form.getRoomCategoryIds(),
-                form.getAmounts(),
-                form.getServiceIds(),
-                form.getCheckInDate(),
-                form.getCheckOutDate()
-        );
-
-        model.addAttribute("bookingSummary", bookingSummaryDTO);
-        model.addAttribute("form", form);
-        model.addAttribute("isCreated", isCreated);
-
-        return BOOKING_SUMMARY_VIEW;
-    }
-
-    @PostMapping(CHOOSE_DATES_URL)
-    public String chooseGuestForBooking(@ModelAttribute("form") BookingForm bookingForm, Model model) {
-        List<GuestDTO> guests = guestListingService.allGuests();
-
-        model.addAttribute("guests", guests);
-        model.addAttribute("form", bookingForm);
-
-        return CHOOSE_GUEST_VIEW;
-    }
-
-
-
-    @GetMapping(CHOOSE_DATES_URL)
-    public String chooseCheckInCheckOutDate(Model model) {
-
-        BookingForm form = new BookingForm();
-
-        model.addAttribute("form", form);
-
-        return CHOOSE_DATES_VIEW;
-    }
-
-    @PostMapping(CHOOSE_CATEGORY_URL)
-    public String chooseRoomCategories(@ModelAttribute("form") BookingForm form, Model model) {
-        final List<RoomCategoryDTO> categories = roomCategoryListingService.allRoomCategories();
-
-        model.addAttribute("categories", categories);
-        model.addAttribute("form", form);
-
-        return CHOOSE_CATEGORY_VIEW;
-    }
-
-    @PostMapping(CHOOSE_SERVICE_URL)
-    public String chooseServices(@ModelAttribute("form") BookingForm form, Model model) {
-        final List<ServiceDTO> services = serviceListingService.allServices();
-
-        model.addAttribute("services", services);
-        model.addAttribute("form", form);
-
-        return CHOOSE_SERVICE_VIEW;
-    }
 
     @GetMapping(ERROR_URL)
     public String displayError(@RequestParam("message") String message, Model model){
