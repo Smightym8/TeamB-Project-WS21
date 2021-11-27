@@ -164,7 +164,7 @@ public class InvoiceTest {
         // when
         Mockito.when(roomCategoryPriceRepository.priceBySeasonAndCategory(Season.SUMMER, category.getRoomCategoryId()))
                 .thenReturn(java.util.Optional.of(price));
-        
+
         Invoice invoice = invoiceCalculationService.calculateInvoice(stayExpected);
 
         // then
