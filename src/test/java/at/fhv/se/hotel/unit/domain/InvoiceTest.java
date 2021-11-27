@@ -142,7 +142,7 @@ public class InvoiceTest {
         BigDecimal totalAmountServices = new BigDecimal("200");
         BigDecimal totalAmountNights = new BigDecimal("1800");
 
-        BigDecimal totalAmountExpected = totalAmountNights.add(totalAmountServices);
+        BigDecimal totalAmountExpected = totalAmountNights.add(totalAmountServices); // 2.000
 
         // when
         Invoice invoice = Invoice.create(id, stayExpected);
