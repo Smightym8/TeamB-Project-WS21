@@ -29,7 +29,7 @@
         </div>
 
         <div th:if="${!isCheckedIn}">
-            <a class="btn btn-primary" th:href="@{'/assignedRooms?bookingId=' + ${bookingId} + '&isCheckedIn=true'}">
+            <a class="btn btn-primary" th:href="@{'/check-in?bookingId=' + ${bookingId} + '&isCheckedIn=true'}">
                 Accept
             </a>
             <a href="/" type="button" class="btn btn-primary">Back</a>
