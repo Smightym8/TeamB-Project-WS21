@@ -3,32 +3,79 @@
 <body id="Home">
 
     <div layout:fragment="content">
-        <p class="h3">Upcoming Check-Ins</p>
+
+        <div class="d-flex justify-content-between ">
+            <p class="h3">Upcoming Check-Ins</p>
+            <div class="btn-group">
+                <a href="#" class="btn btn-primary active">Today</a>
+                <a href="#" class="btn btn-primary">Next Week</a>
+                <a href="#" class="btn btn-primary">All</a>
+            </div>
+        </div>
+
         <br>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th class="col-1">Guest</th>
-                <th class="col-1">Birthdate</th>
-                <th class="col-1">Check in date</th>
-                <th class="col-1">Check out date</th>
-                <th class="col-1"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="booking : ${bookings}" th:if="${booking.isActive}">
-                <td th:text="${booking.guestName}"></td>
-                <td th:text="${booking.guestBirthDate}"></td>
-                <td th:text="${booking.checkInDate}"></td>
-                <td th:text="${booking.checkOutDate}"></td>
-                <td><a th:href="@{/showbooking/{id}(id=${booking.id})}" type="button" class="btn btn-primary btn-sm" align-self-center"">Check-In</a></td>
-            </tr>
-            </tbody>
-        </table>
+
+        <div class="overflow-auto" style="height: 40vh">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th class="col-1">Guest</th>
+                    <th class="col-1">Birthdate</th>
+                    <th class="col-1">Check in date</th>
+                    <th class="col-1">Check out date</th>
+                    <th class="col-1"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="booking : ${bookings}" th:if="${booking.isActive}">
+                    <td th:text="${booking.guestName}"></td>
+                    <td th:text="${booking.guestBirthDate}"></td>
+                    <td th:text="${booking.checkInDate}"></td>
+                    <td th:text="${booking.checkOutDate}"></td>
+                    <td><a th:href="@{/bookingdetails/{id}(id=${booking.id})}" type="button" class="btn btn-primary btn-sm">View / Check-In</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
         <br>
         <br>
-        <p class="h3">Upcoming Check-Outs</p>
         <br>
+
+        <div class="d-flex justify-content-between">
+            <p class="h3">Upcoming Check-Outs</p>
+            <div class="btn-group">
+                <a href="#" class="btn btn-primary active">Today</a>
+                <a href="#" class="btn btn-primary">Next Week</a>
+                <a href="#" class="btn btn-primary">All</a>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="overflow-auto" style="height: 40vh">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th class="col-1">Guest</th>
+                    <th class="col-1">Birthdate</th>
+                    <th class="col-1">Check in date</th>
+                    <th class="col-1">Check out date</th>
+                    <th class="col-1"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="booking : ${bookings}" th:if="${booking.isActive}">
+                    <td th:text="${booking.guestName}"></td>
+                    <td th:text="${booking.guestBirthDate}"></td>
+                    <td th:text="${booking.checkInDate}"></td>
+                    <td th:text="${booking.checkOutDate}"></td>
+                    <td><a th:href="@{/bookingdetails/{id}(id=${booking.id})}" type="button" class="btn btn-primary btn-sm">View / Check-Out</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 
 </body>
