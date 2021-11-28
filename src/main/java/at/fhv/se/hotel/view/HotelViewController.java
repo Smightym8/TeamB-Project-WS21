@@ -10,82 +10,68 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 public class HotelViewController {
 
-    /* -- Main -- */
+/* ----- Sidebar ----- */
     private static final String HOME_URL = "/";
-    private static final String HOME_VIEW = "home";
+    private static final String HOME_VIEW = "sidebar/home";
 
     private static final String ROOMS_URL = "/rooms";
-    private static final String ROOMS_VIEW = "rooms";
+    private static final String ROOMS_VIEW = "sidebar/rooms";
 
     private static final String PRICING_URL = "/pricing";
-    private static final String PRICING_VIEW = "pricing";
+    private static final String PRICING_VIEW = "sidebar/pricing";
 
     private static final String GUESTS_URL = "/guests";
-    private static final String GUESTS_VIEW = "guests";
+    private static final String GUESTS_VIEW = "sidebar/guests";
 
     private static final String BOOKINGS_URL = "/bookings";
-    private static final String BOOKINGS_VIEW = "bookings";
+    private static final String BOOKINGS_VIEW = "sidebar/bookings";
 
     private static final String STAYS_URL = "/stays";
-    private static final String STAYS_VIEW = "stays";
+    private static final String STAYS_VIEW = "sidebar/stays";
 
     private static final String INVOICES_URL = "/invoices";
-    private static final String INVOICES_VIEW = "invoices";
+    private static final String INVOICES_VIEW = "sidebar/invoices";
 
-    /* -- Create Guest -- */
+/*----- Create Guest -----*/
     private static final String CREATE_GUEST_URL = "/createguest";
     private static final String CREATE_GUEST_VIEW = "createGuest";
 
-    /* -- Create Booking -- */
+/*----- Create Booking -----*/
     private static final String CREATE_BOOKING_GUEST_URL = "/createbooking/guest";
-    private static final String CREATE_BOOKING_GUEST_VIEW = "createBookingGuest";
+    private static final String CREATE_BOOKING_GUEST_VIEW = "booking/createBookingGuest";
 
     private static final String CREATE_BOOKING_DATE_URL = "/createbooking/date";
-    private static final String CREATE_BOOKING_DATE_VIEW = "createBookingDate";
+    private static final String CREATE_BOOKING_DATE_VIEW = "booking/createBookingDate";
 
     private static final String CREATE_BOOKING_CATEGORY_URL = "/createbooking/category";
-    private static final String CREATE_BOOKING_CATEGORY_VIEW = "createBookingCategory";
+    private static final String CREATE_BOOKING_CATEGORY_VIEW = "booking/createBookingCategory";
 
     private static final String CREATE_BOOKING_SERVICE_URL = "/createbooking/service";
-    private static final String CREATE_BOOKING_SERVICE_VIEW = "createBookingService";
+    private static final String CREATE_BOOKING_SERVICE_VIEW = "booking/createBookingService";
 
     private static final String CREATE_BOOKING_SUMMARY_URL = "/createbooking/summary";
-    private static final String CREATE_BOOKING_SUMMARY_VIEW = "createBookingSummary";
+    private static final String CREATE_BOOKING_SUMMARY_VIEW = "booking/createBookingSummary";
 
     private static final String CREATE_BOOKING_URL = "/createbooking";
 
+    private static final String BOOKING_DETAILS_URL = "/bookingdetails/{id}";
+    private static final String BOOKING_DETAILS_VIEW = "booking/bookingDetails";
 
-
-    private static final String SHOW_BOOKING_URL = "/showbooking/{id}";
-    private static final String SHOW_BOOKING_VIEW = "showBooking";
-
-
+/*----- Check-In -----*/
     private static final String CHECK_IN_URL = "/check-in";
     private static final String CHECK_IN_VIEW = "checkIn";
 
-    /* -- Check-In -- */
+/*----- Error -----*/
+    private static final String ERROR_URL = "/error";
+    private static final String ERROR_VIEW = "error";
 
-
-
-
-
-
-
-
-    private static final String ERROR_URL = "/displayerror";
-
-    private static final String ERROR_VIEW = "errorView";
-
-
-
+/*--------------------------------------------------------------------------------------------------------------------*/
 
     @Autowired
     private BookingListingService bookingListingService;
@@ -114,9 +100,9 @@ public class HotelViewController {
     @Autowired
     private CheckInService checkInService;
 
-    /*---------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
 
-//  ---Home---
+/*----- Home -----*/
     @GetMapping(HOME_URL)
     public String home(Model model) {
         final List<BookingDTO> bookings = bookingListingService.allBookings();
@@ -126,22 +112,21 @@ public class HotelViewController {
         return HOME_VIEW;
     }
 
-//  ---Rooms---
+/*----- Rooms -----*/
     @GetMapping(ROOMS_URL)
     public String rooms(Model model) {
 
         return ROOMS_VIEW;
     }
 
-    //  ---Stays---
+/*----- Pricing -----*/
     @GetMapping(PRICING_URL)
     public String pricing(Model model) {
 
         return PRICING_VIEW;
     }
 
-
-//  ---Guests---
+/*----- Guests -----*/
     @GetMapping(GUESTS_URL)
     public String guests(Model model) {
         final List<GuestDTO> guests = guestListingService.allGuests();
@@ -151,7 +136,7 @@ public class HotelViewController {
         return GUESTS_VIEW;
     }
 
-//  ---Bookings---
+/*----- Bookings -----*/
     @GetMapping(BOOKINGS_URL)
     public String bookings(Model model) {
         final List<BookingDTO> bookings = bookingListingService.allBookings();
@@ -161,21 +146,21 @@ public class HotelViewController {
         return BOOKINGS_VIEW;
     }
 
-//  ---Stays---
+/*----- Stays -----*/
     @GetMapping(STAYS_URL)
     public String stays(Model model) {
 
         return STAYS_VIEW;
     }
 
-//  ---Invoices---
+/*----- Invoices -----*/
     @GetMapping(INVOICES_URL)
     public String invoices(Model model) {
 
         return INVOICES_VIEW;
     }
 
-//  ---CreateGuest---
+/*----- Create Guest -----*/
     @GetMapping(CREATE_GUEST_URL)
     public String createGuestGet(Model model) {
         GuestForm guestForm = new GuestForm();
@@ -208,7 +193,7 @@ public class HotelViewController {
         return "redirect:" + GUESTS_URL;
     }
 
-//  ---CreateBooking---
+/*----- Create Booking -----*/
     @GetMapping(CREATE_BOOKING_GUEST_URL)
     public String createBookingGuest(Model model) {
         final List<GuestDTO> guests = guestListingService.allGuests();
@@ -281,24 +266,19 @@ public class HotelViewController {
         }
 
         return createBookingSummary(form, true, model);
-
     }
 
-//  ---Booking Details---
-    @GetMapping(SHOW_BOOKING_URL)   //for check-in
+    @GetMapping(BOOKING_DETAILS_URL)
     public String showBooking(@PathVariable String id, Model model) {
 
         BookingDetailsDTO bookingDetailsDTO =  bookingDetailsService.detailsByBookingId(id);
         model.addAttribute("bookingDetails", bookingDetailsDTO);
 
-        return SHOW_BOOKING_VIEW;
+        return BOOKING_DETAILS_VIEW;
     }
 
-
-
-
-//  ---Check-In---
-@GetMapping(CHECK_IN_URL)
+/*----- Check-In -----*/
+    @GetMapping(CHECK_IN_URL)
     public String checkIn(@RequestParam("bookingId") String bookingId,
                                 @RequestParam("isCheckedIn") boolean isCheckedIn,
                                 Model model) {
@@ -316,10 +296,7 @@ public class HotelViewController {
         return CHECK_IN_VIEW;
     }
 
-
-
-
-
+/*----- Error -----*/
     @GetMapping(ERROR_URL)
     public String displayError(@RequestParam("message") String message, Model model){
         model.addAttribute("message", message);
