@@ -1,7 +1,15 @@
 package at.fhv.se.hotel.domain.model.invoice;
 
+import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory;
+import at.fhv.se.hotel.domain.model.roomcategory.Season;
+import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.stay.Stay;
+import at.fhv.se.hotel.domain.services.api.RoomCategoryPriceService;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Objects;
 
 public class Invoice {
@@ -9,19 +17,20 @@ public class Invoice {
     private Long id;
     private InvoiceId invoiceId;
     private Stay stay;
-    // TODO: invoiceAmount is part of Task 140
+    private BigDecimal totalAmount;
 
     // Required by hibernate
     private Invoice() {
     }
 
-    public static Invoice create(InvoiceId anInvoiceId, Stay aStay) {
-        return new Invoice(anInvoiceId, aStay);
+    public static Invoice create(InvoiceId anInvoiceId, Stay aStay, BigDecimal aAmount) {
+        return new Invoice(anInvoiceId, aStay, aAmount);
     }
 
-    private Invoice(InvoiceId anInvoiceId, Stay aStay) {
+    private Invoice(InvoiceId anInvoiceId, Stay aStay, BigDecimal aAmount) {
         this.invoiceId = anInvoiceId;
         this.stay = aStay;
+        this.totalAmount = aAmount;
     }
 
     public InvoiceId getInvoiceId() {
@@ -30,6 +39,10 @@ public class Invoice {
 
     public Stay getStay() {
         return stay;
+    }
+
+    public BigDecimal getTotalAmount(){
+        return totalAmount;
     }
 
     @Override

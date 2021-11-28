@@ -23,6 +23,9 @@
                     <td>
                         <input th:name="amounts" th:value="${0}" type="number" id="amount" name="amount" th:placeholder="0" min="0">
                     </td>
+                    <td th:each="seasonalprice : ${category.prices()}">
+                        <p th:text="'€ ' + ${seasonalprice.value} + ' (' + ${seasonalprice.key.toLowerCase()} + 'season)'"></p>
+                    </td>
                     <td>
                         <input th:name="roomCategoryIds" type="hidden" th:value="${category.id}" id="roomCategoryId">
                     </td>
