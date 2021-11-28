@@ -5,10 +5,10 @@
     <div layout:fragment="content">
 
         <div class="d-flex justify-content-between ">
-            <p class="h3">Upcoming Check-Ins</p>
+            <p class="h3">Upcoming check-ins [Today]</p>
             <div class="btn-group">
                 <a href="#" class="btn btn-primary active">Today</a>
-                <a href="#" class="btn btn-primary">Next Week</a>
+                <a href="#" class="btn btn-primary">Next week</a>
                 <a href="#" class="btn btn-primary">All</a>
             </div>
         </div>
@@ -20,19 +20,19 @@
                 <thead>
                 <tr>
                     <th class="col-1">Guest</th>
-                    <th class="col-1">Birthdate</th>
-                    <th class="col-1">Check in date</th>
-                    <th class="col-1">Check out date</th>
+                    <th class="col-1">Address</th>
+                    <th class="col-1">Check-in date</th>
+                    <th class="col-1">Number of Guests</th>
                     <th class="col-1"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="booking : ${bookings}" th:if="${booking.isActive}">
                     <td th:text="${booking.guestName}"></td>
-                    <td th:text="${booking.guestBirthDate}"></td>
+                    <td>Straße 123, 1234 Stadt</td>
                     <td th:text="${booking.checkInDate}"></td>
-                    <td th:text="${booking.checkOutDate}"></td>
-                    <td><a th:href="@{/bookingdetails/{id}(id=${booking.id})}" type="button" class="btn btn-primary btn-sm">View / Check-In</a></td>
+                    <td>2</td>
+                    <td><a th:href="@{/bookingdetails/{id}(id=${booking.id})}" type="button" class="btn btn-primary btn-sm">View / Check-in</a></td>
                 </tr>
                 </tbody>
             </table>
@@ -42,11 +42,11 @@
         <br>
         <br>
 
-        <div class="d-flex justify-content-between">
-            <p class="h3">Upcoming Check-Outs</p>
+        <div class="d-flex justify-content-between ">
+            <p class="h3">Upcoming check-outs [Today]</p>
             <div class="btn-group">
                 <a href="#" class="btn btn-primary active">Today</a>
-                <a href="#" class="btn btn-primary">Next Week</a>
+                <a href="#" class="btn btn-primary">Next week</a>
                 <a href="#" class="btn btn-primary">All</a>
             </div>
         </div>
@@ -57,20 +57,20 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
+                    <th class="col-1">Room(s)</th>
                     <th class="col-1">Guest</th>
-                    <th class="col-1">Birthdate</th>
-                    <th class="col-1">Check in date</th>
-                    <th class="col-1">Check out date</th>
+                    <th class="col-1">Check-out date</th>
+                    <th class="col-1"></th>
                     <th class="col-1"></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="booking : ${bookings}" th:if="${booking.isActive}">
+                    <td>S101, S103</td>
                     <td th:text="${booking.guestName}"></td>
-                    <td th:text="${booking.guestBirthDate}"></td>
-                    <td th:text="${booking.checkInDate}"></td>
                     <td th:text="${booking.checkOutDate}"></td>
-                    <td><a th:href="@{/bookingdetails/{id}(id=${booking.id})}" type="button" class="btn btn-primary btn-sm">View / Check-Out</a></td>
+                    <td></td>
+                    <td><a th:href="@{/bookingdetails/{id}(id=${booking.id})}" type="button" class="btn btn-primary btn-sm">View / Check-out</a></td>
                 </tr>
                 </tbody>
             </table>
