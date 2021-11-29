@@ -1,9 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}" xmlns:th="http://www.w3.org/1999/html">
-<body>
-<div layout:fragment="content">
-  <h1>Summary</h1>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<body id="Create booking">
+
+    <div layout:fragment="content">
+
+  <p class="h3">Create booking - summary</p>
+  <br>
+
+  <div th:if="${create}">
+    <div class="progress" style="height: 4px; margin-top: 10px">
+      <div class="progress-bar" role="progressbar" style="width: 100%; background-color: #198754" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+  </div>
+
+  <div th:if="${!create}">
+    <div class="progress" style="height: 4px; margin-top: 10px">
+      <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+  </div>
+
+
+
+
+
+  <br>
 
   <p th:text="${bookingSummary.guest.firstName} + ' '  + ${bookingSummary.guest.lastName}  + ', ' + ${bookingSummary.guest.birthDate}"></p>
   <p th:text="'Check in date: ' + ${bookingSummary.checkInDate}"></p>
@@ -39,7 +59,7 @@
     </tbody>
   </table>
 
-  <div th:if="${isCreated}" class="alert alert-success" role="alert">
+  <div th:if="${create}" class="alert alert-success" role="alert">
     Booking successfully created!
   </div>
 
@@ -47,7 +67,7 @@
   <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
   <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 
-  <form th:if="${!isCreated}" action="/createbooking" method="post" th:object="${form}">
+  <form th:if="${!create}" action="/createbooking?create=true" method="post" th:object="${booking}">
     <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
     <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
     <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
@@ -56,7 +76,7 @@
     <input type="hidden" id="checkOutDate" name="checkOutDate" th:field="*{checkOutDate}" />
     <button id="next-button" type="submit" class="btn btn-primary">Create booking</button>
   </form>
-  <a class="btn btn-primary" th:if="${isCreated}" href="/">Back to main menu</a>
+  <a class="btn btn-primary" th:if="${create}" href="/">Back to main menu</a>
 
 </div>
 </body>

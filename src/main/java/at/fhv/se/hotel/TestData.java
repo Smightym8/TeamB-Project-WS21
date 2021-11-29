@@ -148,16 +148,272 @@ public class TestData implements ApplicationRunner {
         );
         this.guestRepository.add(ali);
 
-        Booking booking1 = Booking.create(
-                LocalDate.now(),
-                LocalDate.now().plusDays(10),
-                bookingRepository.nextIdentity(),
-                michael,
-                List.of(tvService)
-        );
+        {
+            Booking booking1 = Booking.create(
+                    LocalDate.now(),
+                    LocalDate.now().plusDays(10),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService)
+            );
 
-        booking1.addRoomCategory(singleRoom, 1);
-        this.bookingRepository.add(booking1);
+            booking1.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking1);
+        }
+        {
+            Booking booking1 = Booking.create(
+                    LocalDate.now(),
+                    LocalDate.now().plusDays(10),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService)
+            );
+
+            booking1.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking1);
+        }
+        {
+            Booking booking1 = Booking.create(
+                    LocalDate.now(),
+                    LocalDate.now().plusDays(10),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService)
+            );
+
+            booking1.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking1);
+        }
+        {
+            Booking booking1 = Booking.create(
+                    LocalDate.now(),
+                    LocalDate.now().plusDays(10),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService)
+            );
+
+            booking1.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking1);
+        }
+        {
+            Booking booking1 = Booking.create(
+                    LocalDate.now(),
+                    LocalDate.now().plusDays(10),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService)
+            );
+
+            booking1.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking1);
+        }
+        {
+            Booking booking1 = Booking.create(
+                    LocalDate.now(),
+                    LocalDate.now().plusDays(10),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService)
+            );
+
+            booking1.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking1);
+        }
+        {
+            Booking booking1 = Booking.create(
+                    LocalDate.now(),
+                    LocalDate.now().plusDays(10),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService)
+            );
+
+            booking1.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking1);
+        }
+        {
+            Booking booking1 = Booking.create(
+                    LocalDate.now(),
+                    LocalDate.now().plusDays(10),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService)
+            );
+
+            booking1.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking1);
+        }
+        {
+            Booking booking1 = Booking.create(
+                    LocalDate.now(),
+                    LocalDate.now().plusDays(10),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService)
+            );
+
+            booking1.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking1);
+        }
+        {
+            Booking booking1 = Booking.create(
+                    LocalDate.now(),
+                    LocalDate.now().plusDays(10),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService)
+            );
+
+            booking1.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking1);
+        }
+        {
+            Booking booking1 = Booking.create(
+                    LocalDate.now(),
+                    LocalDate.now().plusDays(10),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService)
+            );
+
+            booking1.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking1);
+        }
+        {
+            Booking booking1 = Booking.create(
+                    LocalDate.now(),
+                    LocalDate.now().plusDays(10),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService)
+            );
+
+            booking1.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking1);
+        }
+        {
+            Booking booking1 = Booking.create(
+                    LocalDate.now(),
+                    LocalDate.now().plusDays(10),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService)
+            );
+
+            booking1.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking1);
+        }
+        {
+            Booking booking1 = Booking.create(
+                    LocalDate.now(),
+                    LocalDate.now().plusDays(10),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService)
+            );
+
+            booking1.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking1);
+        }
+        {
+            Booking booking1 = Booking.create(
+                    LocalDate.now(),
+                    LocalDate.now().plusDays(10),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService)
+            );
+
+            booking1.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking1);
+        }
+        {
+            Booking booking1 = Booking.create(
+                    LocalDate.now(),
+                    LocalDate.now().plusDays(10),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService)
+            );
+
+            booking1.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking1);
+        }
+        {
+            Booking booking1 = Booking.create(
+                    LocalDate.now(),
+                    LocalDate.now().plusDays(10),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService)
+            );
+
+            booking1.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking1);
+        }
+        {
+            Booking booking1 = Booking.create(
+                    LocalDate.now(),
+                    LocalDate.now().plusDays(10),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService)
+            );
+
+            booking1.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking1);
+        }
+        {
+            Booking booking1 = Booking.create(
+                    LocalDate.now(),
+                    LocalDate.now().plusDays(10),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService)
+            );
+
+            booking1.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking1);
+        }
+        {
+            Booking booking1 = Booking.create(
+                    LocalDate.now(),
+                    LocalDate.now().plusDays(10),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService)
+            );
+
+            booking1.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking1);
+        }
+        {
+            Booking booking1 = Booking.create(
+                    LocalDate.now(),
+                    LocalDate.now().plusDays(10),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService)
+            );
+
+            booking1.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking1);
+        }
+        {
+            Booking booking1 = Booking.create(
+                    LocalDate.now(),
+                    LocalDate.now().plusDays(10),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService)
+            );
+
+            booking1.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking1);
+        }
+
+
 
         Booking booking2 = Booking.create(
                 LocalDate.now().plusDays(30),
@@ -173,19 +429,45 @@ public class TestData implements ApplicationRunner {
         Room room1 = Room.create("101", RoomStatus.FREE, singleRoom);
         this.roomRepository.add(room1);
 
-        Room room2 = Room.create("102", RoomStatus.FREE, singleRoom);
+        Room room2 = Room.create("102", RoomStatus.OCCUPIED, singleRoom);
         this.roomRepository.add(room2);
 
-        Room room3 = Room.create("103", RoomStatus.OCCUPIED, singleRoom);
+        Room room3 = Room.create("103", RoomStatus.FREE, singleRoom);
         this.roomRepository.add(room3);
 
-        Room room4 = Room.create("201", RoomStatus.FREE, doubleRoom);
+        Room room4 = Room.create("104", RoomStatus.FREE, singleRoom);
         this.roomRepository.add(room4);
 
-        Room room5 = Room.create("202", RoomStatus.FREE, doubleRoom);
+        Room room5 = Room.create("105", RoomStatus.FREE, singleRoom);
         this.roomRepository.add(room5);
 
-        Room room6 = Room.create("203", RoomStatus.FREE, doubleRoom);
+        Room room6 = Room.create("106", RoomStatus.FREE, singleRoom);
         this.roomRepository.add(room6);
+
+        Room room7 = Room.create("107", RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(room7);
+
+        Room room8 = Room.create("108", RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(room8);
+
+
+
+        Room room10 = Room.create("201", RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(room10);
+
+        Room room11 = Room.create("202", RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(room11);
+
+        Room room12 = Room.create("203", RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(room12);
+
+        Room room13 = Room.create("204", RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(room13);
+
+        Room room14 = Room.create("205", RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(room14);
+
+        Room room15 = Room.create("206", RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(room15);
     }
 }

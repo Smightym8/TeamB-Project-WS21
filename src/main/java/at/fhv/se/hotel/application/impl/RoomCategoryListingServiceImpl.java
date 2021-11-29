@@ -46,7 +46,6 @@ public class RoomCategoryListingServiceImpl implements RoomCategoryListingServic
             RoomCategoryDTO dto = RoomCategoryDTO.builder()
                     .withId(roomCategory.getRoomCategoryId().id())
                     .withName(roomCategory.getRoomCategoryName().name())
-                    .withPrices(prices)
                     .build();
 
             dtos.add(dto);

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<body id="Home">
+
+    <div layout:fragment="content">
+
+        <div class="d-flex justify-content-between ">
+            <p class="h3">Upcoming check-ins [Today]</p>
+            <div class="btn-group">
+                <a href="#" class="btn btn-primary active">Today</a>
+                <a href="#" class="btn btn-primary">Next week</a>
+                <a href="#" class="btn btn-primary">All</a>
+            </div>
+        </div>
+
+        <br>
+
+        <p>Delete & Modify?</p>
+
+        <br>
+
+        <div class="overflow-auto" style="height: 40vh">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th class="col-1">Guest</th>
+                    <th class="col-1">Address</th>
+                    <th class="col-1">Check-in date</th>
+                    <th class="col-1">Number of Guests</th>
+                    <th class="col-1"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="booking : ${bookings}" th:if="${booking.isActive}">
+                    <td th:text="${booking.guestName}"></td>
+                    <td>Straße 123, 1234 Stadt</td>
+                    <td th:text="${booking.checkInDate}"></td>
+                    <td>2</td>
+                    <td><a th:href="@{/bookingdetails/{id}(id=${booking.id})}" type="button" class="btn btn-primary btn-sm">View / Check-in</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <br>
+        <br>
+        <br>
+
+        <div class="d-flex justify-content-between ">
+            <p class="h3">Upcoming check-outs [Today]</p>
+            <div class="btn-group">
+                <a href="#" class="btn btn-primary active">Today</a>
+                <a href="#" class="btn btn-primary">Next week</a>
+                <a href="#" class="btn btn-primary">All</a>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="overflow-auto" style="height: 40vh">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th class="col-1">Room(s)</th>
+                    <th class="col-1">Guest</th>
+                    <th class="col-1">Check-out date</th>
+                    <th class="col-1"></th>
+                    <th class="col-1"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="booking : ${bookings}" th:if="${booking.isActive}">
+                    <td>S101, S103</td>
+                    <td th:text="${booking.guestName}"></td>
+                    <td th:text="${booking.checkOutDate}"></td>
+                    <td></td>
+                    <td><a th:href="@{/bookingdetails/{id}(id=${booking.id})}" type="button" class="btn btn-primary btn-sm">View / Check-out</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</body>
+</html>

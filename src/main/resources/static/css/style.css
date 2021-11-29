@@ -1,24 +1,26 @@
-h1 {
-    text-align: center;
+.sidebar {
+    width: 235px;
+    height: 100vh;
+    position: fixed;
 }
 
-#content {
-    margin-top: 2em;
-    padding: 1em;
-    border: 1px solid black;
-    border-radius: 5px;
-    box-shadow: 10px 10px 5px grey;
-    background-color: rgba(160, 160, 160, 0.2);
+.content {
+    margin-left: 235px;
+    min-height: 100vh;
 }
 
-#guest-select {
-    text-align: center;
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    margin: 0 !important;
 }
 
-#next-button {
-    /* TODO: make the button show up on the right side */
+.h3 {
+    font-size: 28px;
 }
 
-#leftForm, #rightForm {
-    padding: 1em;
+.h4 {
+    font-size: 22px;
+}
+
+hr {
+    opacity: 50%;
 }
