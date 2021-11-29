@@ -82,7 +82,7 @@ public class RoomCategoryRepositoryImplTests {
         // then
         assertEquals(roomCategoriesExpected.size(), roomCategoriesActual.size());
         for (int i = 0; i < 2; i++) {
-            assertEquals(roomCategoriesExpected.get(i).getRoomCategoryId(), roomCategoriesActual.get(i).getRoomCategoryId()wun);
+            assertEquals(roomCategoriesExpected.get(i).getRoomCategoryId(), roomCategoriesActual.get(i).getRoomCategoryId());
             assertEquals(roomCategoriesExpected.get(i).getRoomCategoryName(), roomCategoriesActual.get(i).getRoomCategoryName());
         }
     }
