@@ -154,6 +154,9 @@ public class HotelViewController {
 /*----- Stays -----*/
     @GetMapping(STAYS_URL)
     public String stays(Model model) {
+        final List<StayDTO> stays = stayListingService.allStays();
+
+        model.addAttribute("stays", stays);
 
         return STAYS_VIEW;
     }
