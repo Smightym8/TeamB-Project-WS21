@@ -108,11 +108,13 @@ public class InvoiceRepositoryImplTests {
         String roomNameExpected = "Room 1";
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
-        List<Room> roomsExpected =
-                List.of(Room.create(
+        List<Room> roomsExpected = List.of(
+                Room.create(
                         roomNameExpected,
                         roomStatusExpected,
-                        categoriesExpected.get(0)));
+                        categoriesExpected.get(0)
+                )
+        );
         Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
         BigDecimal amountExpected = new BigDecimal(1000);
 
@@ -121,6 +123,10 @@ public class InvoiceRepositoryImplTests {
                             stayExpected, amountExpected);
 
         //when
+        servicesExpected.forEach(service -> this.serviceRepository.add(service));
+        this.guestRepository.add(guestExpected);
+        categoriesExpected.forEach(category -> this.roomCategoryRepository.add(category));
+        this.bookingRepository.add(bookingExpected);
         this.roomRepository.add(roomsExpected.get(0));
         this.invoiceRepository.add(invoiceExpected);
         em.flush();
@@ -168,6 +174,7 @@ public class InvoiceRepositoryImplTests {
                         Collections.emptyList()
                 )
         );
+
         List<RoomCategory> categoriesExpected = Arrays.asList(
                 RoomCategory.create(roomCategoryRepository.nextIdentity(),
                         new RoomCategoryName("Single Room"),
@@ -242,14 +249,18 @@ public class InvoiceRepositoryImplTests {
                 .map(id -> Invoice.create(id,staysExpected.listIterator().next(),amountExpected))
                 .collect(Collectors.toList());
         //when
-        //this.roomRepository.add(roomsExpected.get(0));
+        guestsExpected.forEach(guest -> this.guestRepository.add(guest));
+        categoriesExpected.forEach(category -> this.roomCategoryRepository.add(category));
+        servicesExpected.forEach(service -> this.serviceRepository.add(service));
+        bookingsExpected.forEach(booking -> this.bookingRepository.add(booking));
         roomsExpected.forEach(room -> this.roomRepository.add(room));
+        staysExpected.forEach(stay -> this.stayRepository.add(stay));
         invoicesExpected.forEach(invoice -> this.invoiceRepository.add(invoice));
         em.flush();
         List<Invoice> invoicesActual = this.invoiceRepository.findAllInvoices();
 
         //then
-        assertEquals(invoicesExpected.size(),invoicesActual.size());
+        assertEquals(invoicesExpected.size(), invoicesActual.size());
         for (Invoice i : invoicesActual) {
             assertTrue(invoicesExpected.contains(i));
         }
