@@ -7,7 +7,6 @@ public class StayDTO {
     private String id;
     private String guestFirstName;
     private String guestLastName;
-    private LocalDate checkInDate;
     private LocalDate checkOutDate;
 
     public static Builder builder(){
@@ -26,9 +25,6 @@ public class StayDTO {
         return guestLastName;
     }
 
-    public LocalDate checkInDate() {
-        return checkInDate;
-    }
 
     public LocalDate checkOutDate() {
         return checkOutDate;
@@ -56,11 +52,6 @@ public class StayDTO {
             return this;
         }
 
-        public Builder withCheckInDate(LocalDate checkInDate) {
-            this.instance.checkInDate = checkInDate;
-            return this;
-        }
-
         public Builder withCheckOutDate(LocalDate checkOutDate) {
             this.instance.checkOutDate = checkOutDate;
             return this;
@@ -71,7 +62,6 @@ public class StayDTO {
             Objects.requireNonNull(this.instance.id, "id must be set in StayDTO");
             Objects.requireNonNull(this.instance.guestFirstName, "guestFirstName must be set in StayDTO");
             Objects.requireNonNull(this.instance.guestLastName, "guestLastName must be set in StayDTO");
-            Objects.requireNonNull(this.instance.checkInDate, "checkInDate must be set in StayDTO");
             Objects.requireNonNull(this.instance.checkOutDate, "checkOutDate must be set in StayDTO");
 
             return this.instance;

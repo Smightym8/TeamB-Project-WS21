@@ -22,11 +22,7 @@
         </bag>
 
         <!--One to one mapping to booking class -->
-        <component name="booking" class="at.fhv.se.hotel.domain.model.booking.Booking">
-            <component name="bookingId" class="at.fhv.se.hotel.domain.model.booking.BookingId">
-                <property name="id" column="booking_id" type="java.lang.String" />
-            </component>
-        </component>
+        <one-to-one name="booking" class="at.fhv.se.hotel.domain.model.booking.Booking" cascade="all"/>
 
     </class>
 </hibernate-mapping>

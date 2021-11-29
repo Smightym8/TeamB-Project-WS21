@@ -1,7 +1,6 @@
 package at.fhv.se.hotel.view.forms;
 
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;

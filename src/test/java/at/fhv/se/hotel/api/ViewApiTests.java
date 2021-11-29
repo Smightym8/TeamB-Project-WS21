@@ -1,5 +1,6 @@
 package at.fhv.se.hotel.api;
 
+import at.fhv.se.hotel.application.api.BookingDetailsService;
 import at.fhv.se.hotel.application.api.BookingListingService;
 import at.fhv.se.hotel.application.api.StayListingService;
 import org.junit.jupiter.api.Test;
@@ -28,6 +29,7 @@ public class ViewApiTests {
 
     @MockBean
     StayListingService stayListingService;
+
 
     @Test
     public void when_rooturl_then_statusok_and_mainMenuView_called() throws Exception {
@@ -63,4 +65,48 @@ public class ViewApiTests {
         // then
         Mockito.verify(stayListingService, times(1)).allStays();
     }
+    public void when_startbookingurl_then_statusok_and_createBookingView_called() throws Exception {
+        // when ... then
+        this.mockMvc.perform(get("/booking").accept(org.springframework.http.MediaType.TEXT_PLAIN))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(view().name("startCreateBooking"));
+    }
+
+    @Test
+    public void when_guestformurl_then_statusok_and_createGuestView_called() throws Exception {
+        // when ... then
+        this.mockMvc.perform(get("/guestform").accept(org.springframework.http.MediaType.TEXT_PLAIN))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(view().name("createGuest"));
+    }
+
+    @Test
+    public void when_choosedatesurl_then_statusok_and_chooseBookingDatesView_called() throws Exception {
+        // when ... then
+        this.mockMvc.perform(get("/choosedates").accept(org.springframework.http.MediaType.TEXT_PLAIN))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(view().name("chooseBookingDates"));
+    }
+
+    @Test
+    public void when_errorurl_then_statusok_and_errorView_called_and_message_displayed() throws Exception {
+        // when ... then
+        this.mockMvc.perform(get("/displayerror")
+                .param("message", "testMessage")
+                .accept(org.springframework.http.MediaType.TEXT_PLAIN))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(view().name("errorView"));
+    }
+
+    // TODO: Implement test for post mappings
+
+    // TODO: Implement test for mappings with path variables
 }

@@ -44,11 +44,8 @@ public class RoomCategory {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RoomCategory category = (RoomCategory) o;
-        return Objects.equals(id, category.id)
-                && Objects.equals(roomCategoryId, category.roomCategoryId)
-                && Objects.equals(roomCategoryName, category.roomCategoryName)
-                && Objects.equals(description, category.description);
+        RoomCategory that = (RoomCategory) o;
+        return Objects.equals(id, that.id) && Objects.equals(roomCategoryId, that.roomCategoryId) && Objects.equals(roomCategoryName, that.roomCategoryName) && Objects.equals(description, that.description);
     }
 
     @Override

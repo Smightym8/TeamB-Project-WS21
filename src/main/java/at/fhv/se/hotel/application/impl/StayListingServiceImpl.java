@@ -26,11 +26,12 @@ public class StayListingServiceImpl implements StayListingService {
                     .withId(stay.getStayId().id())
                     .withGuestFirstName(stay.getGuest().getName().firstName())
                     .withGuestLastName(stay.getGuest().getName().lastName())
-                    .withCheckInDate(stay.getCheckInDate())
                     .withCheckOutDate(stay.getCheckOutDate())
                     .build();
+
             stayDTOs.add(stayDTO);
         }
+
         return stayDTOs;
     }
 }

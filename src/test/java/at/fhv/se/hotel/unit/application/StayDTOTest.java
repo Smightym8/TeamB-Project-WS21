@@ -14,7 +14,6 @@ public class StayDTOTest {
         String idExpected = "10";
         String guestFirstNameExpected = "John";
         String guestLastNameExpected = "Doe";
-        LocalDate checkInDateExpected = LocalDate.of(2021,11,23);
         LocalDate checkOutDateExpected = LocalDate.of(2021, 12, 1);
 
         //when
@@ -22,7 +21,6 @@ public class StayDTOTest {
                 .withId(idExpected)
                 .withGuestFirstName(guestFirstNameExpected)
                 .withGuestLastName(guestLastNameExpected)
-                .withCheckInDate(checkInDateExpected)
                 .withCheckOutDate(checkOutDateExpected)
                 .build();
 
@@ -30,7 +28,6 @@ public class StayDTOTest {
         assertEquals(idExpected,stayDTOExpected.id());
         assertEquals(guestFirstNameExpected, stayDTOExpected.guestFirstName());
         assertEquals(guestLastNameExpected, stayDTOExpected.guestLastName());
-        assertEquals(checkInDateExpected, stayDTOExpected.checkInDate());
         assertEquals(checkOutDateExpected, stayDTOExpected.checkOutDate());
     }
 }
