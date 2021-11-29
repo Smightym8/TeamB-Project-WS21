@@ -1,9 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}" xmlns:th="http://www.w3.org/1999/html">
-<body>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<body id="Create booking">
+
 <div layout:fragment="content">
-  <h1>Summary</h1>
+
+  <p class="h3">Create booking - summary</p>
+  <br>
+
+  <div th:if="${create}">
+    <div class="progress" style="height: 4px; margin-top: 10px">
+      <div class="progress-bar" role="progressbar" style="width: 100%; background-color: #198754" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+  </div>
+
+  <div th:if="${!create}">
+    <div class="progress" style="height: 4px; margin-top: 10px">
+      <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+  </div>
+
+
+
+
+
+  <br>
 
   <p th:text="${bookingSummary.guest.firstName} + ' '  + ${bookingSummary.guest.lastName}  + ', ' + ${bookingSummary.guest.birthDate}"></p>
   <p th:text="'Check in date: ' + ${bookingSummary.checkInDate}"></p>
