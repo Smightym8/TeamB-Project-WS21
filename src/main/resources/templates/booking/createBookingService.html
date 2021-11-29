@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 <body id="Create booking">
 
-<div layout:fragment="content">
+    <div layout:fragment="content">
 
     <p class="h3">Create booking - services</p>
     <br>
@@ -42,6 +42,20 @@
             </table>
             <button id="next-button" type="submit" class="btn btn-primary">Next</button>
         </form>
+
+        <br>
+
+        <label>Additional notes:</label>
+        <textarea></textarea>
+
+        <br>
+        <br>
+        <label>Payment method</label>
+        <select class="form-select" aria-label="Default select" >
+            <option selected="1">Credit card</option>
+            <option value="2">cash</option>
+        </select>
+
     </div>
 </body>
 </html>

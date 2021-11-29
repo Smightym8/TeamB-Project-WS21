@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}" xmlns:th="http://www.w3.org/1999/html">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 <body>
-<div layout:fragment="content">
-    <h1>Summary new</h1>
+
+    <div layout:fragment="content">
+
+    <p class="h3">Booking details</p>
+
+    <br>
 
     <p th:text="${bookingDetails.guest.firstName} + ' '  + ${bookingDetails.guest.lastName}  + ', ' + ${bookingDetails.guest.birthDate}"></p>
     <p th:text="'Check in date: ' + ${bookingDetails.checkInDate}"></p>

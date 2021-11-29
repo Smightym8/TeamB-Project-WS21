@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 <body>
-<div layout:fragment="content">
-    <div class="alert alert-danger" role="alert">
-        <h1 th:text="'Error! ' + ${message}"></h1>
+
+    <div layout:fragment="content">
+
+        <div class="alert alert-danger" role="alert">
+            <p class="h3" th:text="'Error! ' + ${message}"></p>
+        </div>
+
     </div>
-</div>
+
 </body>
 </html>

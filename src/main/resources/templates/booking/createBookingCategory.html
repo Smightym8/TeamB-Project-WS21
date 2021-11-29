@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 <body id="Create booking">
 
-<div layout:fragment="content">
+    <div layout:fragment="content">
 
     <p class="h3">Create booking - categories</p>
     <br>
@@ -22,8 +22,9 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Amount</th>
+                    <th class="row-1">Name</th>
+                    <th class="row-1">Amount</th>
+                    <th class="row-1">Nr of guests</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -31,6 +32,9 @@
                     <td th:text="${category.name}"></td>
                     <td>
                         <input th:name="amounts" th:value="${0}" type="number" id="amount" name="amount" th:placeholder="0" min="0">
+                    </td>
+                    <td>
+                        <input>
                     </td>
                     <td>
                         <input th:name="roomCategoryIds" type="hidden" th:value="${category.id}" id="roomCategoryId">
