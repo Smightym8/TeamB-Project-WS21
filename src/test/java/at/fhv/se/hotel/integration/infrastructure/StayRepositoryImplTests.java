@@ -2,17 +2,16 @@ package at.fhv.se.hotel.integration.infrastructure;
 
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
-import at.fhv.se.hotel.domain.model.guest.Address;
-import at.fhv.se.hotel.domain.model.guest.FullName;
-import at.fhv.se.hotel.domain.model.guest.Gender;
-import at.fhv.se.hotel.domain.model.guest.Guest;
+import at.fhv.se.hotel.domain.model.guest.*;
 import at.fhv.se.hotel.domain.model.room.Room;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.Description;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
+import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryId;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryName;
 import at.fhv.se.hotel.domain.model.service.Price;
 import at.fhv.se.hotel.domain.model.service.Service;
+import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.repository.*;
@@ -57,7 +56,7 @@ public class StayRepositoryImplTests {
     @Test
     void given_stay_when_addstayrepository_then_returnequalsstay() {
         // given
-        Guest guestExpected = Guest.create(guestRepository.nextIdentity(),
+        Guest guestExpected = Guest.create(new GuestId("1"),
                 new FullName("Michael", "Spiegel"),
                 Gender.MALE,
                 new Address("Hochschulstraße",
@@ -70,19 +69,19 @@ public class StayRepositoryImplTests {
         );
 
         List<RoomCategory> categoriesExpected = Arrays.asList(
-                RoomCategory.create(roomCategoryRepository.nextIdentity(),
+                RoomCategory.create(new RoomCategoryId("1"),
                         new RoomCategoryName("Single Room"),
                         new Description("This is a single room")),
-                RoomCategory.create(roomCategoryRepository.nextIdentity(),
+                RoomCategory.create(new RoomCategoryId("2"),
                         new RoomCategoryName("Double Room"),
                         new Description("This is a double room"))
         );
 
         List<Service> servicesExpected = Arrays.asList(
-                Service.create(serviceRepository.nextIdentity(),
+                Service.create(new ServiceId("1"),
                         new ServiceName("TV"),
                         new Price(new BigDecimal("100"))),
-                Service.create(serviceRepository.nextIdentity(),
+                Service.create(new ServiceId("2"),
                         new ServiceName("Breakfast"),
                         new Price(new BigDecimal("100")))
         );
@@ -90,7 +89,7 @@ public class StayRepositoryImplTests {
         Booking bookingExpected = Booking.create(
                 LocalDate.now(),
                 LocalDate.now().plusDays(10),
-                bookingRepository.nextIdentity(),
+                new BookingId("1"),
                 guestExpected,
                 servicesExpected
         );
@@ -100,18 +99,27 @@ public class StayRepositoryImplTests {
         String roomNameExpected = "Room 1";
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
-        List<Room> roomsExpected =
-                List.of(Room.create(
+        List<Room> roomsExpected = List.of(
+                Room.create(
                         roomNameExpected,
                         roomStatusExpected,
-                        categoriesExpected.get(0)));
+                        categoriesExpected.get(0)
+                )
+        );
 
         Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
 
         // when
+        this.guestRepository.add(guestExpected);
+        this.roomCategoryRepository.add(categoriesExpected.get(0));
+        this.roomCategoryRepository.add(categoriesExpected.get(1));
+        this.serviceRepository.add(servicesExpected.get(0));
+        this.serviceRepository.add(servicesExpected.get(1));
+        this.bookingRepository.add(bookingExpected);
         this.roomRepository.add(roomsExpected.get(0));
         this.stayRepository.add(stayExpected);
         em.flush();
+
         Stay stayActual = this.stayRepository.stayById(stayExpected.getStayId()).get();
 
         // then

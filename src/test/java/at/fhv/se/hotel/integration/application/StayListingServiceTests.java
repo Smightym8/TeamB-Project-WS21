@@ -101,10 +101,7 @@ public class StayListingServiceTests {
                 Stay.create(bookingExpected2,roomsExpected),
                 Stay.create(bookingExpected3,roomsExpected)
         );
-/*
-        List<Stay> stays = staysExpected.stream()
-                .map(stay -> Stay.create(bookingExpected,roomsExpected))
-                .collect(Collectors.toList()); */
+
         Mockito.when(stayRepository.findAllStays()).thenReturn(staysExpected);
 
         // when
@@ -115,7 +112,6 @@ public class StayListingServiceTests {
         for (int i = 0; i < staysActual.size(); i++){
             assertEquals(staysExpected.get(i).getBooking().getGuest().getName().firstName(), staysActual.get(i).guestFirstName());
             assertEquals(staysExpected.get(i).getBooking().getGuest().getName().lastName(), staysActual.get(i).guestLastName());
-            assertEquals(staysExpected.get(i).getBooking().getCheckInDate(), staysActual.get(i).checkInDate());
             assertEquals(staysExpected.get(i).getBooking().getCheckOutDate(), staysActual.get(i).checkOutDate());
         }
     }
