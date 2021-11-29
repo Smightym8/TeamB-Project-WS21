@@ -19,6 +19,7 @@ import at.fhv.se.hotel.infrastructure.HibernateServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
@@ -29,6 +30,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+@Profile("!test")
 @Component
 @Transactional
 public class TestData implements ApplicationRunner {
