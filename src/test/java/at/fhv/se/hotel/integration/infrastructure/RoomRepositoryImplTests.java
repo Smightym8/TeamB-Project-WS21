@@ -11,6 +11,7 @@ import at.fhv.se.hotel.domain.repository.RoomRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@ActiveProfiles("RoomRepoTest")
 @SpringBootTest
 @Transactional
 public class RoomRepositoryImplTests {
@@ -61,5 +63,27 @@ public class RoomRepositoryImplTests {
         for(Room r : roomsActual) {
             assertTrue(roomsExpected.contains(r));
         }
+    }
+
+    @Test
+    void given_room_when_fetchingbyname_then_returnequalsroom() {
+        // given
+        RoomCategory singleRoom = RoomCategory.create(roomCategoryRepository.nextIdentity(),
+                new RoomCategoryName("Single Room"),
+                new Description("This is a single room")
+        );
+
+        Room roomExpected = Room.create("101", RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomExpected);
+
+        // when
+        Room roomActual = roomRepository.roomByName("101").get();
+
+        // then
+        assertEquals(roomExpected, roomActual);
+        assertEquals(roomExpected.getRoomCategory(), roomActual.getRoomCategory());
+        assertEquals(roomExpected.getName(), roomActual.getName());
+        assertEquals(roomExpected.getStatus(), roomActual.getStatus());
+
     }
 }
