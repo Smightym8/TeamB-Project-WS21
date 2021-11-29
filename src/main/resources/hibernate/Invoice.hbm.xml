@@ -2,9 +2,22 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-access="field" default-cascade="all">
-    <class name="at.fhv.se.hotel.domain.model.invoice.Invoice" table="" lazy="">
+    <class name="at.fhv.se.hotel.domain.model.invoice.Invoice" table="invoice" lazy="true">
 
+        <!-- Hibernate id -->
+        <id name="id" type="long" column="id" unsaved-value="-1">
+            <generator class="native"/>
+        </id>
 
+        <!-- Mapping to invoide id class -->
+        <component name="invoiceId" class="at.fhv.se.hotel.domain.model.invoice.InvoiceId">
+            <property name="id" column="domain_id" type="java.lang.String" />
+        </component>
 
+        <!-- Primitive datatypes of class booking -->
+        <property name="totalAmount" column="total_amount" type="java.math.BigDecimal" />
+
+        <!-- Many to one mapping to stay -->
+        <many-to-one name="stay" column="stay_id" class="at.fhv.se.hotel.domain.model.stay.Stay" not-null="true"/>
     </class>
 </hibernate-mapping>

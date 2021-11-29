@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -35,6 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
+@Transactional
 public class InvoiceRepositoryImplTests {
 
     @Autowired
@@ -54,6 +56,9 @@ public class InvoiceRepositoryImplTests {
 
     @Autowired
     RoomCategoryRepository roomCategoryRepository;
+
+    @Autowired
+    RoomRepository roomRepository;
 
     @Autowired
     private EntityManager em;
@@ -109,13 +114,16 @@ public class InvoiceRepositoryImplTests {
                         roomStatusExpected,
                         categoriesExpected.get(0)));
         Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
+        BigDecimal amountExpected = new BigDecimal(1000);
 
         InvoiceId invoiceIdExpected = new InvoiceId("1337");
         Invoice invoiceExpected = Invoice.create(invoiceIdExpected,
-                            stayExpected);
+                            stayExpected, amountExpected);
 
         //when
+        this.roomRepository.add(roomsExpected.get(0));
         this.invoiceRepository.add(invoiceExpected);
+        em.flush();
         Invoice invoiceActual = this.invoiceRepository.invoiceById(invoiceIdExpected).get();
 
         //then
@@ -229,10 +237,13 @@ public class InvoiceRepositoryImplTests {
                 new InvoiceId("1338"),
                 new InvoiceId("1339")
         );
+        BigDecimal amountExpected = new BigDecimal(1000);
         List<Invoice> invoicesExpected = invoiceIdsExpected.stream()
-                .map(id -> Invoice.create(id,staysExpected.listIterator().next()))
+                .map(id -> Invoice.create(id,staysExpected.listIterator().next(),amountExpected))
                 .collect(Collectors.toList());
         //when
+        //this.roomRepository.add(roomsExpected.get(0));
+        roomsExpected.forEach(room -> this.roomRepository.add(room));
         invoicesExpected.forEach(invoice -> this.invoiceRepository.add(invoice));
         em.flush();
         List<Invoice> invoicesActual = this.invoiceRepository.findAllInvoices();
@@ -240,7 +251,7 @@ public class InvoiceRepositoryImplTests {
         //then
         assertEquals(invoicesExpected.size(),invoicesActual.size());
         for (Invoice i : invoicesActual) {
-            assertTrue(staysExpected.contains(i));
+            assertTrue(invoicesExpected.contains(i));
         }
     }
 }
