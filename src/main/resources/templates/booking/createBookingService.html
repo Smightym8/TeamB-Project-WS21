@@ -13,7 +13,7 @@
 
     <br>
 
-        <form action="/createbooking/summary?create=false" method="post" th:object="${booking}">
+        <form action="/createbooking/summary?isCreated=false" method="post" th:object="${bookingForm}">
             <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
             <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
             <input type="hidden" id="amounts" name="amounts" th:field="*{amounts}" />
