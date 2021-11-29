@@ -11,70 +11,107 @@
 
         <br>
 
-        <div class="accordion accordion-flush" id="accordionFlush">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="flush-headingOne">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                        Accordion Item #1
-                    </button>
-                </h2>
-                <div id="flush-collapseOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlush">
-                    <div class="accordion-body">
-                        <strong>This is the first item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="flush-headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                        Accordion Item #2
-                    </button>
-                </h2>
-                <div id="flush-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlush">
-                    <div class="accordion-body">
-                        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="flush-headingThree">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                        Accordion Item #3
-                    </button>
-                </h2>
-                <div id="flush-collapseThree" class="accordion-collapse collapse show" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlush">
-                    <div class="accordion-body">
-                        <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-
         <table class="table table-striped">
+
             <thead>
-            <tr>
-                <th class="col-1">Firstname</th>
-                <th class="col-1">Lastname</th>
-                <th class="col-1">Address</th>
-                <th class="col-1">Rooms</th>
-                <th class="col-1"></th>
-            </tr>
+                <tr>
+                    <th class="col-1">Season</th>
+                    <th class="col-1">Start date</th>
+                    <th class="col-1">End date</th>
+                    <th class="col-1"></th>
+                </tr>
             </thead>
+
             <tbody>
-            <tr>
-                <td>Ali</td>
-                <td>Cinar</td>
-                <td>Straße 1234, 6850 Dornbirn</td>
-                <td>S101, S102, D304</td>
-                <td>
-                    <a class="btn btn-secondary btn-sm" href="#">View</a>
-                </td>
-            </tr>
+                <tr>
+                    <td>Winter</td>
+                    <td>
+                        <select class="form-select" aria-label="Default select" disabled>
+                            <option selected="1">12-01</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-select" aria-label="Default select" disabled>
+                            <option selected="1">02-01</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">Expand</button>
+                    </td>
+                </tr>
+
+                <tr id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionBasic">
+                    <td>
+                        <label>Single room</label>
+                        <div class="input-group">
+                            <span class="input-group-text">€</span>
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                        </div>
+                    </td>
+                    <td>
+                        <label>Double room</label>
+                        <div class="input-group">
+                            <span class="input-group-text">€</span>
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                        </div>
+                    </td>
+                    <td>
+                        <label>Luxury room</label>
+                        <div class="input-group">
+                            <span class="input-group-text">€</span>
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>Christmas</td>
+                    <td>
+                        <select class="form-select" aria-label="Default select" disabled>
+                            <option selected="1">12-20</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-select" aria-label="Default select" disabled>
+                            <option selected="1">01-10</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">Expand</button>
+                    </td>
+                </tr>
+
+                <tr id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionBasic">
+                    <td>
+                        <label>Single room</label>
+                        <div class="input-group">
+                            <span class="input-group-text">€</span>
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                        </div>
+                    </td>
+                    <td>
+                        <label>Double room</label>
+                        <div class="input-group">
+                            <span class="input-group-text">€</span>
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                        </div>
+                    </td>
+                    <td>
+                        <label>Luxury room</label>
+                        <div class="input-group">
+                            <span class="input-group-text">€</span>
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                        </div>
+                    </td>
+                    <td></td>
+
+                </tr>
             </tbody>
         </table>
+
+        <p>hierarchie bei überschneidungen und default für lücken</p>
+
     </div>
 
 </body>

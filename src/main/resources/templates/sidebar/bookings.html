@@ -3,30 +3,33 @@
 <body id="Bookings">
 
     <div layout:fragment="content">
+
         <div class="d-flex">
             <p class="h3">Bookings</p>
-            <a class="btn btn-primary ms-5" href="createguest">Create Guest</a>
+            <a class="btn btn-primary ms-5" href="/createbooking/guest">Create booking</a>
         </div>
         <br>
         <table class="table table-striped">
             <thead>
             <tr>
                 <th class="col-1">Guest</th>
-                <th class="col-1">Birthdate</th>
+                <th class="col-1">Address</th>
                 <th class="col-1">Check in date</th>
                 <th class="col-1">Check out date</th>
+                <th class="col-1">Number of Guests</th>
                 <th class="col-1"></th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="booking : ${bookings}" th:if="${booking.isActive}">
                 <td th:text="${booking.guestName}"></td>
-                <td th:text="${booking.guestBirthDate}"></td>
+                <td></td>
                 <td th:text="${booking.checkInDate}"></td>
                 <td th:text="${booking.checkOutDate}"></td>
+                <td>4</td>
                 <td>
-                    <a th:href="@{/booking/details/{id}(id=${booking.id})}" type="button" class="btn btn-secondary btn-sm">Check-In</a>
-                    <a class="btn btn-secondary btn-sm" href="#">Modify</a>
+                    <a th:href="@{/booking/details/{id}(id=${booking.id})}" type="button" class="btn btn-primary btn-sm">Check-In</a>
+                    <a class="btn btn-primary btn-sm" href="#">View / Modify</a>
                     <a class="btn btn-danger btn-sm" href="#">Delete</a>
                 </td>
             </tr>

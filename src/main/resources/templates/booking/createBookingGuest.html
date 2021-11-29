@@ -1,13 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
-<body>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<body id="Create booking">
+
     <div layout:fragment="content">
-        <div class="row">
-            <div class="col-12">
-                <h1>Choose Guest new</h1>
-            </div>
+
+        <p class="h3">Create booking - guest</p>
+        <br>
+
+        <div class="progress" style="height: 4px; margin-top: 10px">
+            <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
+
+        <br>
+
 
         <div class="row">
             <div class="col-12">
@@ -32,6 +37,12 @@
                 </form>
             </div>
         </div>
+
+        <br>
+
+        <p>guest doch am schluss?, datum + category in einem? , category mit refresh nach jedem ändern vom datum?<br>oder doch date, category und service weil preis<br>category von date abhängig und preis von date und category bzw. wenn
+        service je nach category dann auch service von category abhänging</p>
+
     </div>
 </body>
 </html>
