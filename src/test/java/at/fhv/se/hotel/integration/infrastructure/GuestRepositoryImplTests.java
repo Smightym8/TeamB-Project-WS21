@@ -105,9 +105,10 @@ public class GuestRepositoryImplTests {
         guestRepository.add(guestExpected2);
         guestRepository.add(guestExpected3);
         em.flush();
-        List<Guest> guestsActual = guestRepository.findAllGuests();
 
         // then
+        List<Guest> guestsActual = guestRepository.findAllGuests();
+        
         assertEquals(guestsExpected.size(), guestsActual.size());
         for (int i = 0; i < 3; i++) {
             assertEquals(guestsExpected.get(i).getGuestId(), guestsActual.get(i).getGuestId());

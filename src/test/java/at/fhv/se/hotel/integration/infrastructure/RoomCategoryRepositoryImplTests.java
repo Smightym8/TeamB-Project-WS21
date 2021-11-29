@@ -72,14 +72,15 @@ public class RoomCategoryRepositoryImplTests {
         List<RoomCategory> roomCategoriesExpected = new ArrayList<>();
         roomCategoriesExpected.add(categoryExpected1);
         roomCategoriesExpected.add(categoryExpected2);
+
+        // when
         roomCategoryRepository.add(categoryExpected1);
         roomCategoryRepository.add(categoryExpected2);
         em.flush();
 
-        // when
+        // then
         List<RoomCategory> roomCategoriesActual = roomCategoryRepository.findAllRoomCategories();
 
-        // then
         assertEquals(roomCategoriesExpected.size(), roomCategoriesActual.size());
         for (int i = 0; i < 2; i++) {
             assertEquals(roomCategoriesExpected.get(i).getRoomCategoryId(), roomCategoriesActual.get(i).getRoomCategoryId());
