@@ -33,23 +33,13 @@ public class HibernateStayRepository implements StayRepository {
     public Optional<Stay> stayById(StayId stayId) {
         TypedQuery<Stay> query = this.em.createQuery("FROM Stay AS s WHERE s.stayId = :stayId", Stay.class);
         query.setParameter("stayId", stayId);
-        return singleResultOptional(query);
+        return query.getResultList().stream().findFirst();
     }
 
     @Override
     public List<Stay> stayByCheckout(LocalDate checkOutDate) {
-        TypedQuery<Stay> query = this.em.createQuery("FROM Stay AS s WHERE s.getCheckOutDate() = :checkOutDate", Stay.class);
+        TypedQuery<Stay> query = this.em.createQuery("FROM Stay AS s WHERE s.booking.checkOutDate = :checkOutDate", Stay.class);
         query.setParameter("checkOutDate", checkOutDate);
         return query.getResultList();
-    }
-
-    private static <T> Optional<T> singleResultOptional(TypedQuery<T> query) {
-        // NOTE: getSingleResult throws an error if there is none
-        List<T> result = query.getResultList();
-        if (1 != result.size()) {
-            return Optional.empty();
-        }
-
-        return Optional.of(result.get(0));
     }
 }

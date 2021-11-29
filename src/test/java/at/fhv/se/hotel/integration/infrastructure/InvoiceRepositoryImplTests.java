@@ -235,10 +235,11 @@ public class InvoiceRepositoryImplTests {
         );
 
         List<Stay> staysExpected = List.of(
-                Stay.create(bookingsExpected.get(0),roomsExpected),
-                Stay.create(bookingsExpected.get(1),roomsExpected),
-                Stay.create(bookingsExpected.get(2),roomsExpected)
+                Stay.create(bookingsExpected.get(0), roomsExpected),
+                Stay.create(bookingsExpected.get(1), roomsExpected),
+                Stay.create(bookingsExpected.get(2), roomsExpected)
         );
+
         List<InvoiceId> invoiceIdsExpected = List.of(
                 new InvoiceId("1337"),
                 new InvoiceId("1338"),
