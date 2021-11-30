@@ -68,21 +68,23 @@ public class RoomRepositoryImplTests {
     void given_room_when_fetchingbyname_then_returnequalsroom() {
         // given
         RoomCategory singleRoom = RoomCategory.create(roomCategoryRepository.nextIdentity(),
-                new RoomCategoryName("Single Room"),
+                new RoomCategoryName("Single Room Test"),
                 new Description("This is a single room")
         );
 
-        Room roomExpected = Room.create("101", RoomStatus.FREE, singleRoom);
+        Room roomExpected = Room.create("101 Test", RoomStatus.FREE, singleRoom);
+
+        this.roomCategoryRepository.add(singleRoom);
         this.roomRepository.add(roomExpected);
+        this.em.flush();
 
         // when
-        Room roomActual = roomRepository.roomByName("101").get();
+        Room roomActual = roomRepository.roomByName("101 Test").get();
 
         // then
         assertEquals(roomExpected, roomActual);
         assertEquals(roomExpected.getRoomCategory(), roomActual.getRoomCategory());
         assertEquals(roomExpected.getName(), roomActual.getName());
         assertEquals(roomExpected.getStatus(), roomActual.getStatus());
-
     }
 }
