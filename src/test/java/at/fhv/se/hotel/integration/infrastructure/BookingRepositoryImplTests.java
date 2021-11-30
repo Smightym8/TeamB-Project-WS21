@@ -31,7 +31,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ActiveProfiles("BookingRepoTest")
+
 @SpringBootTest
 @Transactional
 public class BookingRepositoryImplTests {
