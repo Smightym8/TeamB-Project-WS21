@@ -12,7 +12,7 @@
 
     <br>
 
-        <form action="/createbooking/service" method="post" th:object="${bookingForm}">
+        <form id="myform" action="/createbooking/service" method="post" th:object="${bookingForm}">
             <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
             <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
             <input type="hidden" id="checkInDate" name="checkInDate" th:field="*{checkInDate}" />
