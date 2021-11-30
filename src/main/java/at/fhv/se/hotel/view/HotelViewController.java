@@ -154,8 +154,11 @@ public class HotelViewController {
 /*----- Stays -----*/
     @GetMapping(STAYS_URL)
     public String stays(Model model) {
+        // Hibernate shows error if there are no bookings?
+        final List<BookingDTO> bookings = bookingListingService.allBookings();
         final List<StayDTO> stays = stayListingService.allStays();
 
+        model.addAttribute("bookings", bookings);
         model.addAttribute("stays", stays);
 
         return STAYS_VIEW;

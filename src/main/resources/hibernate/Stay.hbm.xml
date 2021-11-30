@@ -21,8 +21,9 @@
             <many-to-many column="room_id" class="at.fhv.se.hotel.domain.model.room.Room" />
         </bag>
 
-        <!--One to one mapping to booking class -->
-        <one-to-one name="booking" class="at.fhv.se.hotel.domain.model.booking.Booking" cascade="all"/>
+        <!-- One to one with Many to one mapping to the booking -->
+        <many-to-one name="booking" column="booking_id" class="at.fhv.se.hotel.domain.model.booking.Booking"
+                     not-null="true" unique="true"/>
 
     </class>
 </hibernate-mapping>
