@@ -18,6 +18,7 @@ import at.fhv.se.hotel.domain.repository.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -30,6 +31,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@ActiveProfiles("test")
 @SpringBootTest
 @Transactional
 public class StayRepositoryImplTests {
@@ -194,14 +196,15 @@ public class StayRepositoryImplTests {
         this.bookingRepository.add(bookingExpected);
         this.roomRepository.add(roomsExpected.get(0));
         this.stayRepository.add(stayExpected);
-        em.flush();
+        this.em.flush();
 
-        List<Stay> stayActual = this.stayRepository.stayByCheckout(LocalDate.of(2022, 5, 10));
+        List<Stay> staysActual = this.stayRepository.stayByCheckout(LocalDate.of(2022, 5, 10));
+        Stay stayActual = staysActual.get(0); // Inserted only one stay
 
         // then
-        assertTrue(stayActual.contains(stayExpected));
+        assertEquals(stayExpected, stayActual);
+        assertEquals(stayExpected.getStayId(), stayActual.getStayId());
     }
-
 
     @Test
     void given_3stays_when_fetchallstays_then_returnequalstays() {

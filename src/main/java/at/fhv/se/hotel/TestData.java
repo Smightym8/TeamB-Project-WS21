@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+@Profile("!test")
 @Component
 @Transactional
 public class TestData implements ApplicationRunner {

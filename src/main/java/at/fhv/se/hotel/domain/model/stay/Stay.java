@@ -64,10 +64,7 @@ public class Stay {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Stay stay = (Stay) o;
-        return Objects.equals(id, stay.id) &&
-                Objects.equals(stayId, stay.stayId) &&
-                Objects.equals(rooms, stay.rooms) &&
-                Objects.equals(booking, stay.booking);
+        return Objects.equals(id, stay.id) && Objects.equals(stayId, stay.stayId) && Objects.equals(rooms, stay.rooms) && Objects.equals(booking, stay.booking);
     }
 
     @Override
