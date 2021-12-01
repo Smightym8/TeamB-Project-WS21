@@ -29,7 +29,12 @@ public class BookingDetailsServiceImpl implements BookingDetailsService {
                 .withId(booking.getGuest().getGuestId().id())
                 .withFirstName(booking.getGuest().getName().firstName())
                 .withLastName(booking.getGuest().getName().lastName())
-                .withBirthDate(booking.getGuest().getBirthDate())
+                //.withBirthDate(booking.getGuest().getBirthDate())
+                .withStreetName(booking.getGuest().getAddress().streetName())
+                .withStreetNumber(booking.getGuest().getAddress().streetNumber())
+                .withCity(booking.getGuest().getAddress().city())
+                .withZipCode(booking.getGuest().getAddress().zipCode())
+                .withCountry(booking.getGuest().getAddress().country())
                 .build();
 
         Map<RoomCategoryDTO, Integer> categoriesWithAmount = new HashMap<>();

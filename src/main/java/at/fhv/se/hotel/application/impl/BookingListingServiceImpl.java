@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
+//import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -37,7 +37,8 @@ public class BookingListingServiceImpl implements BookingListingService {
             BookingDTO dto = BookingDTO.builder()
                     .withId(b.getBookingId().id())
                     .withGuestName(b.getGuest().getName().firstName() + " " + b.getGuest().getName().lastName())
-                    .withBirthDate(b.getGuest().getBirthDate())
+                    //.withBirthDate(b.getGuest().getBirthDate())
+                    .withGuestAddress(b.getGuest().getAddress().streetName() + " " + b.getGuest().getAddress().streetNumber() + ", " + b.getGuest().getAddress().city() + ", " + b.getGuest().getAddress().zipCode() + ", " + b.getGuest().getAddress().country())
                     .withCheckInDate(b.getCheckInDate())
                     .withCheckOutDate(b.getCheckOutDate())
                     .withStatus(b.isActive())

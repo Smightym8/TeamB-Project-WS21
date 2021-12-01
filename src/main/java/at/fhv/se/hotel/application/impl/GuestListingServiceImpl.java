@@ -30,7 +30,12 @@ public class GuestListingServiceImpl implements GuestListingService {
         for(Guest guest : guests) {
             GuestDTO dto = GuestDTO.builder()
                     .withId(guest.getGuestId().id())
-                    .withBirthDate(guest.getBirthDate())
+                    //.withBirthDate(guest.getBirthDate())
+                    .withStreetName(guest.getAddress().streetName())
+                    .withStreetNumber(guest.getAddress().streetNumber())
+                    .withCity(guest.getAddress().city())
+                    .withZipCode(guest.getAddress().zipCode())
+                    .withCountry(guest.getAddress().country())
                     .withFirstName(guest.getName().firstName())
                     .withLastName(guest.getName().lastName())
                     .build();
@@ -46,7 +51,12 @@ public class GuestListingServiceImpl implements GuestListingService {
         Guest guest = guestRepository.guestById(new GuestId(id)).get();
         GuestDTO dto = GuestDTO.builder()
                 .withId(guest.getGuestId().id())
-                .withBirthDate(guest.getBirthDate())
+                //.withBirthDate(guest.getBirthDate())
+                .withStreetName(guest.getAddress().streetName())
+                .withStreetNumber(guest.getAddress().streetNumber())
+                .withCity(guest.getAddress().city())
+                .withZipCode(guest.getAddress().zipCode())
+                .withCountry(guest.getAddress().country())
                 .withFirstName(guest.getName().firstName())
                 .withLastName(guest.getName().lastName())
                 .build();
@@ -61,7 +71,12 @@ public class GuestListingServiceImpl implements GuestListingService {
                         .withId("2")
                         .withFirstName("Michael")
                         .withLastName("Spiegel")
-                        .withBirthDate(LocalDate.of(1999, 3, 20))
+                        //.withBirthDate(LocalDate.of(1999, 3, 20))
+                        .withStreetName("Hochschulstraße")
+                        .withStreetNumber("1")
+                        .withCity("Dornbirn")
+                        .withZipCode("6850")
+                        .withCountry("Austria")
                         .build()
         );
 
