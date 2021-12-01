@@ -81,7 +81,7 @@ public class BookingRepositoryImplTests {
 
         int amountOfAdultsExpected = 2;
         int amountOfChildrenExpected = 1;
-        String additionalInfoExpected = "Vegan";
+        String additionalInfoExpected = "Nothing";
         BookingId idExpected = new BookingId("42");
         Booking bookingExpected = Booking.create(
                 LocalDate.now(),
@@ -91,7 +91,7 @@ public class BookingRepositoryImplTests {
                 servicesExpected,
                 amountOfAdultsExpected,
                 amountOfChildrenExpected,
-                additionalInfoExpected
+                ""
         );
         bookingExpected.addRoomCategory(categoryExpected, 1);
 
@@ -112,7 +112,7 @@ public class BookingRepositoryImplTests {
         assertEquals(bookingExpected.getServices().size(), bookingActual.getServices().size());
         assertEquals(bookingExpected.getAmountOfAdults(), bookingActual.getAmountOfAdults());
         assertEquals(bookingExpected.getAmountOfChildren(), bookingActual.getAmountOfChildren());
-        assertEquals(bookingExpected.getAdditionalInformation(), bookingActual.getAdditionalInformation());
+        assertEquals(additionalInfoExpected, bookingActual.getAdditionalInformation());
     }
 
     @Test

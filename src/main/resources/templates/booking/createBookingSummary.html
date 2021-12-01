@@ -21,10 +21,19 @@
 
   <br>
 
+  <h5>Guest information:</h5>
   <p th:text="${bookingSummary.guest.firstName} + ' '  + ${bookingSummary.guest.lastName}  + ', ' + ${bookingSummary.guest.birthDate}"></p>
+
+  <h5>Additional Information:</h5>
+  <div class="mb-3">
+    <p th:text="${bookingSummary.additionalInformation}"></p>
+  </div>
+
+  <h5>Booking information:</h5>
   <p th:text="'Check in date: ' + ${bookingSummary.checkInDate}"></p>
   <p th:text="'Check out date: ' + ${bookingSummary.checkOutDate}"></p>
 
+  <h6>Amount of guests:</h6>
   <table class="table table-striped">
     <thead>
     <tr>
@@ -40,21 +49,7 @@
     </tbody>
   </table>
 
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th>Name</th>
-      <th>Price</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="service : ${bookingSummary.services}">
-      <td th:text="${service.name}"></td>
-      <td th:text="${service.price} + '€'"></td>
-    </tr>
-    </tbody>
-  </table>
-
+  <h6>Room Categories:</h6>
   <table class="table table-striped">
     <thead>
     <tr>
@@ -70,9 +65,21 @@
     </tbody>
   </table>
 
-  <div class="mb-3">
-    <p th:text="${bookingSummary.additionalInformation}"></p>
-  </div>
+  <h6>Services:</h6>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="service : ${bookingSummary.services}">
+      <td th:text="${service.name}"></td>
+      <td th:text="${service.price} + '€'"></td>
+    </tr>
+    </tbody>
+  </table>
 
   <div th:if="${isCreated}" class="alert alert-success" role="alert">
     Booking successfully created!
