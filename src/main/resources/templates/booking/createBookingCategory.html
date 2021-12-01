@@ -17,23 +17,21 @@
             <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
             <input type="hidden" id="checkInDate" name="checkInDate" th:field="*{checkInDate}" />
             <input type="hidden" id="checkOutDate" name="checkOutDate" th:field="*{checkOutDate}" />
+            <input type="hidden" id="amountOfAdults" name="amountOfAdults" th:field="*{amountOfAdults}" />
+            <input type="hidden" id="amountOfChildren" name="amountOfChildren" th:field="*{amountOfChildren}" />
 
             <table class="table table-striped">
                 <thead>
                 <tr>
                     <th class="row-1">Name</th>
                     <th class="row-1">Amount</th>
-                    <th class="row-1">Nr of guests</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="category : ${categories}">
                     <td th:text="${category.name}"></td>
                     <td>
-                        <input th:name="amounts" th:value="${0}" type="number" id="amount" name="amount" th:placeholder="0" min="0">
-                    </td>
-                    <td>
-                        <input>
+                        <input th:name="amountsOfRoomCategories" th:value="${0}" type="number" id="amount" name="amount" th:placeholder="0" min="0">
                     </td>
                     <td>
                         <input th:name="roomCategoryIds" type="hidden" th:value="${category.id}" id="roomCategoryId">

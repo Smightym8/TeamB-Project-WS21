@@ -72,7 +72,9 @@ public class InvoiceTest {
                 LocalDate.of(2021, 8, 10),
                 new BookingId("1"),
                 guest,
-                services
+                services,
+                2,
+                1
         );
         booking.addRoomCategory(category, 1);
 
@@ -138,7 +140,9 @@ public class InvoiceTest {
                 LocalDate.of(2021,11,29),
                 new BookingId("1"),
                 guest,
-                services
+                services,
+                2,
+                1
         );
         booking.addRoomCategory(category, 1);
 

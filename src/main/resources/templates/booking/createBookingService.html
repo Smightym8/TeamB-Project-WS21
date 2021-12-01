@@ -16,9 +16,11 @@
         <form action="/createbooking/summary?isCreated=false" method="post" th:object="${bookingForm}">
             <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
             <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
-            <input type="hidden" id="amounts" name="amounts" th:field="*{amounts}" />
+            <input type="hidden" id="amounts" name="amounts" th:field="*{amountsOfRoomCategories}" />
             <input type="hidden" id="checkInDate" name="checkInDate" th:field="*{checkInDate}" />
             <input type="hidden" id="checkOutDate" name="checkOutDate" th:field="*{checkOutDate}" />
+            <input type="hidden" id="amountOfAdults" name="amountOfAdults" th:field="*{amountOfAdults}" />
+            <input type="hidden" id="amountOfChildren" name="amountOfChildren" th:field="*{amountOfChildren}" />
 
             <table class="table table-striped">
                 <thead>

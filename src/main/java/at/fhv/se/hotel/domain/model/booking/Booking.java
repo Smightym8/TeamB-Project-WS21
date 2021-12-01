@@ -19,20 +19,24 @@ public class Booking {
     private Guest guest;
     private List<BookingWithRoomCategory> roomCategories;
     private List<Service> services;
+    private int amountOfAdults;
+    private int amountOfChildren;
 
     // Required by hibernate
     private Booking() {}
 
     public static Booking create(LocalDate aCheckInDate, LocalDate aCheckOutDate,
                                  BookingId aBookingId, Guest aGuest,
-                                 List<Service> aServices) {
+                                 List<Service> aServices,
+                                 int anAmountOfAdults, int anAmountOfChildren) {
 
-        return new Booking(aCheckInDate, aCheckOutDate, aBookingId, aGuest, aServices);
+        return new Booking(aCheckInDate, aCheckOutDate, aBookingId, aGuest, aServices, anAmountOfAdults, anAmountOfChildren);
     }
 
     private Booking(LocalDate aCheckInDate, LocalDate aCheckOutDate,
                     BookingId aBookingId, Guest aGuest,
-                    List<Service> aServices) {
+                    List<Service> aServices,
+                    int anAmountOfAdults, int anAmountOfChildren) {
         this.checkInDate = aCheckInDate;
         this.checkOutDate = aCheckOutDate;
         this.isActive = true;
@@ -79,6 +83,14 @@ public class Booking {
         return services;
     }
 
+    public int getAmountOfAdults() {
+        return amountOfAdults;
+    }
+
+    public int getAmountOfChildren() {
+        return amountOfChildren;
+    }
+
     public void deactivate() {
         isActive = false;
     }
@@ -88,11 +100,11 @@ public class Booking {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Booking booking = (Booking) o;
-        return isActive == booking.isActive && Objects.equals(id, booking.id) && Objects.equals(checkInDate, booking.checkInDate) && Objects.equals(checkOutDate, booking.checkOutDate) && Objects.equals(bookingId, booking.bookingId) && Objects.equals(guest, booking.guest) && Objects.equals(roomCategories, booking.roomCategories) && Objects.equals(services, booking.services);
+        return isActive == booking.isActive && amountOfAdults == booking.amountOfAdults && amountOfChildren == booking.amountOfChildren && Objects.equals(id, booking.id) && Objects.equals(checkInDate, booking.checkInDate) && Objects.equals(checkOutDate, booking.checkOutDate) && Objects.equals(bookingId, booking.bookingId) && Objects.equals(guest, booking.guest) && Objects.equals(roomCategories, booking.roomCategories) && Objects.equals(services, booking.services);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, checkInDate, checkOutDate, isActive, bookingId, guest, roomCategories, services);
+        return Objects.hash(id, checkInDate, checkOutDate, isActive, bookingId, guest, roomCategories, services, amountOfAdults, amountOfChildren);
     }
 }

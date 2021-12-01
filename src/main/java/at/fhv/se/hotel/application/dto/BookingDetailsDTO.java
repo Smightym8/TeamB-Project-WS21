@@ -12,6 +12,8 @@ public class BookingDetailsDTO {
     private List<ServiceDTO> services;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
+    private int amountOfAdults;
+    private int amountOfChildren;
 
     public static Builder builder() {
         return new Builder();
@@ -39,6 +41,14 @@ public class BookingDetailsDTO {
 
     public LocalDate checkOutDate() {
         return this.checkOutDate;
+    }
+
+    public int amountOfAdults() {
+        return amountOfAdults;
+    }
+
+    public int amountOfChildren() {
+        return amountOfChildren;
     }
 
     public static class Builder {
@@ -75,6 +85,16 @@ public class BookingDetailsDTO {
 
         public Builder withCheckOutDate(LocalDate checkOutDate) {
             this.instance.checkOutDate = checkOutDate;
+            return this;
+        }
+
+        public Builder withAmountOfAdults(int amountOfAdults) {
+            this.instance.amountOfAdults = amountOfAdults;
+            return this;
+        }
+
+        public Builder withAmountOfChildren(int amountOfChildren) {
+            this.instance.amountOfChildren= amountOfChildren;
             return this;
         }
 

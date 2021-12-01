@@ -70,21 +70,27 @@ public class StayListingServiceTests {
                     LocalDate.now().plusDays(10),
                     new BookingId("1"),
                     guestExpected,
-                    servicesExpected
+                    servicesExpected,
+                2,
+                1
                 );
         Booking bookingExpected2 = Booking.create(
                         LocalDate.now(),
                         LocalDate.now().plusDays(10),
                         new BookingId("2"),
                         guestExpected,
-                        servicesExpected
+                        servicesExpected,
+                2,
+                1
                 );
         Booking bookingExpected3 = Booking.create(
                         LocalDate.now(),
                         LocalDate.now().plusDays(10),
                         new BookingId("3"),
                         guestExpected,
-                        servicesExpected
+                        servicesExpected,
+                2,
+                1
                 );
         RoomCategory categoryExpected = RoomCategory.create(
                 new RoomCategoryId("1"),

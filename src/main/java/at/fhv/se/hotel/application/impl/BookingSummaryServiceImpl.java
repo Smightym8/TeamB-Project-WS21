@@ -37,7 +37,9 @@ public class BookingSummaryServiceImpl implements BookingSummaryService {
                                            List<Integer> amounts,
                                            List<String> serviceIds,
                                            LocalDate checkInDate,
-                                           LocalDate checkOutDate) {
+                                           LocalDate checkOutDate,
+                                           int amountOfAdults,
+                                           int amountOfChildren) {
         GuestDTO guest = guestListingService.findGuestById(guestId).get();
 
         List<RoomCategoryDTO> roomCategories = new ArrayList<>();
@@ -60,6 +62,8 @@ public class BookingSummaryServiceImpl implements BookingSummaryService {
                 .withServices(services)
                 .withCheckInDate(checkInDate)
                 .withCheckOutDate(checkOutDate)
+                .withAmountOfAdults(amountOfAdults)
+                .withAmountOfChildren(amountOfChildren)
                 .build();
 
         return bookingSummaryDTO;

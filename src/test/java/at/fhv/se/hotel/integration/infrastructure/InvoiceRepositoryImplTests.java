@@ -94,7 +94,9 @@ public class InvoiceRepositoryImplTests {
                 LocalDate.now().plusDays(10),
                 idExpected,
                 guestExpected,
-                servicesExpected
+                servicesExpected,
+                2,
+                1
         );
         List<RoomCategory> categoriesExpected = Arrays.asList(
                 RoomCategory.create(roomCategoryRepository.nextIdentity(),
@@ -200,19 +202,19 @@ public class InvoiceRepositoryImplTests {
                         LocalDate.now().plusDays(10),
                         bookingRepository.nextIdentity(),
                         guestsExpected.get(0),
-                        servicesExpected),
+                        servicesExpected,  2, 1),
                 Booking.create(
                         LocalDate.now(),
                         LocalDate.now().plusDays(10),
                         bookingRepository.nextIdentity(),
                         guestsExpected.get(1),
-                        servicesExpected),
+                        servicesExpected, 2, 1),
                 Booking.create(
                         LocalDate.now(),
                         LocalDate.now().plusDays(10),
                         bookingRepository.nextIdentity(),
                         guestsExpected.get(2),
-                        servicesExpected)
+                        servicesExpected, 2, 1)
         );
         bookingsExpected.get(0).addRoomCategory(categoriesExpected.get(0), 1);
         bookingsExpected.get(1).addRoomCategory(categoriesExpected.get(1), 1);

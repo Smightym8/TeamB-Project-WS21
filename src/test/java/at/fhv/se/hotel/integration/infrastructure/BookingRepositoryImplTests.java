@@ -85,7 +85,9 @@ public class BookingRepositoryImplTests {
                 LocalDate.now().plusDays(10),
                 idExpected,
                 guestExpected,
-                servicesExpected
+                servicesExpected,
+                2,
+                1
         );
         bookingExpected.addRoomCategory(categoryExpected, 1);
 
@@ -170,7 +172,9 @@ public class BookingRepositoryImplTests {
                 LocalDate.now().plusDays(10),
                 idExpected1,
                 guestExpected1,
-                servicesExpected1
+                servicesExpected1,
+                2,
+                1
         );
 
         BookingId idExpected2 = new BookingId("1337");
@@ -179,7 +183,9 @@ public class BookingRepositoryImplTests {
                 LocalDate.now().plusDays(13),
                 idExpected2,
                 guestExpected2,
-                servicesExpected2
+                servicesExpected2,
+                2,
+                1
         );
 
         bookingExpected1.addRoomCategory(categoryExpected1, 1);

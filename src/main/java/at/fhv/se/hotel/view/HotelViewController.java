@@ -248,21 +248,23 @@ public class HotelViewController {
 
     @PostMapping(CREATE_BOOKING_SUMMARY_URL)
     public String createBookingSummary(
-            @ModelAttribute("bookingForm") BookingForm bookingform,
+            @ModelAttribute("bookingForm") BookingForm bookingForm,
             @RequestParam("isCreated") boolean isCreated,
             Model model) {
 
         BookingSummaryDTO bookingSummaryDTO = bookingSummaryService.createSummary(
-                bookingform.getGuestId(),
-                bookingform.getRoomCategoryIds(),
-                bookingform.getAmounts(),
-                bookingform.getServiceIds(),
-                bookingform.getCheckInDate(),
-                bookingform.getCheckOutDate()
+                bookingForm.getGuestId(),
+                bookingForm.getRoomCategoryIds(),
+                bookingForm.getAmountsOfRoomCategories(),
+                bookingForm.getServiceIds(),
+                bookingForm.getCheckInDate(),
+                bookingForm.getCheckOutDate(),
+                bookingForm.getAmountOfAdults(),
+                bookingForm.getAmountOfChildren()
         );
 
         model.addAttribute("bookingSummary", bookingSummaryDTO);
-        model.addAttribute("bookingForm", bookingform);
+        model.addAttribute("bookingForm", bookingForm);
         model.addAttribute("isCreated", isCreated);
 
         return CREATE_BOOKING_SUMMARY_VIEW;
@@ -273,10 +275,12 @@ public class HotelViewController {
 
         bookingCreationService.book(bookingForm.getGuestId(),
                 bookingForm.getRoomCategoryIds(),
-                bookingForm.getAmounts(),
+                bookingForm.getAmountsOfRoomCategories(),
                 bookingForm.getServiceIds(),
                 bookingForm.getCheckInDate(),
-                bookingForm.getCheckOutDate());
+                bookingForm.getCheckOutDate(),
+                bookingForm.getAmountOfAdults(),
+                bookingForm.getAmountOfChildren());
 
         return createBookingSummary(bookingForm, true, model);
     }
