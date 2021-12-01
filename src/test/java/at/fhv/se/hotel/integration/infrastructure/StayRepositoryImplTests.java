@@ -96,7 +96,8 @@ public class StayRepositoryImplTests {
                 guestExpected,
                 servicesExpected,
                 2,
-                1
+                1,
+                "Nothing"
         );
         bookingExpected.addRoomCategory(categoriesExpected.get(0), 1);
         bookingExpected.addRoomCategory(categoriesExpected.get(1), 1);
@@ -173,7 +174,8 @@ public class StayRepositoryImplTests {
                 guestExpected,
                 servicesExpected,
                 2,
-                1
+                1,
+                "Nothing"
         );
         bookingExpected.addRoomCategory(categoriesExpected.get(0), 1);
         bookingExpected.addRoomCategory(categoriesExpected.get(1), 1);
@@ -272,19 +274,28 @@ public class StayRepositoryImplTests {
                         LocalDate.now().plusDays(10),
                         new BookingId("1"),
                         guestsExpected.get(0),
-                        servicesExpected, 2, 1),
+                        servicesExpected,
+                        2,
+                        1,
+                        "Nothing"),
                 Booking.create(
                         LocalDate.now(),
                         LocalDate.now().plusDays(10),
                         new BookingId("2"),
                         guestsExpected.get(1),
-                        servicesExpected, 2, 1),
+                        servicesExpected,
+                        2,
+                        1,
+                        "Nothing"),
                 Booking.create(
                         LocalDate.now(),
                         LocalDate.now().plusDays(10),
                         new BookingId("3"),
                         guestsExpected.get(2),
-                        servicesExpected, 2, 1)
+                        servicesExpected,
+                        2,
+                        1,
+                        "Nothing")
         );
 
         bookingsExpected.get(0).addRoomCategory(categoriesExpected.get(0), 1);

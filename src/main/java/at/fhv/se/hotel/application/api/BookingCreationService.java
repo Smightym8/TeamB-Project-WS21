@@ -11,7 +11,8 @@ import java.util.List;
  */
 public interface BookingCreationService {
     /**
-     * See implementation {@link BookingCreationServiceImpl#book(String, List, List, List, LocalDate, LocalDate, int, int)}
+     * See implementation
+     * {@link BookingCreationServiceImpl#book(String, List, List, List, LocalDate, LocalDate, int, int, String)}
      */
     public void book(String guestId,
                      List<String> roomCategoryIds,
@@ -20,5 +21,6 @@ public interface BookingCreationService {
                      LocalDate checkInDate,
                      LocalDate checkOutDate,
                      int amountOfAdults,
-                     int amountOfChildren);
+                     int amountOfChildren,
+                     String additionalInformation);
 }

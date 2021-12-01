@@ -81,6 +81,7 @@ public class BookingRepositoryImplTests {
 
         int amountOfAdultsExpected = 2;
         int amountOfChildrenExpected = 1;
+        String additionalInfoExpected = "Vegan";
         BookingId idExpected = new BookingId("42");
         Booking bookingExpected = Booking.create(
                 LocalDate.now(),
@@ -89,7 +90,8 @@ public class BookingRepositoryImplTests {
                 guestExpected,
                 servicesExpected,
                 amountOfAdultsExpected,
-                amountOfChildrenExpected
+                amountOfChildrenExpected,
+                additionalInfoExpected
         );
         bookingExpected.addRoomCategory(categoryExpected, 1);
 
@@ -110,6 +112,7 @@ public class BookingRepositoryImplTests {
         assertEquals(bookingExpected.getServices().size(), bookingActual.getServices().size());
         assertEquals(bookingExpected.getAmountOfAdults(), bookingActual.getAmountOfAdults());
         assertEquals(bookingExpected.getAmountOfChildren(), bookingActual.getAmountOfChildren());
+        assertEquals(bookingExpected.getAdditionalInformation(), bookingActual.getAdditionalInformation());
     }
 
     @Test
@@ -172,6 +175,8 @@ public class BookingRepositoryImplTests {
 
         int amountOfAdultsExpected = 2;
         int amountOfChildrenExpected = 1;
+        String additionalInfoExpected = "Vegan";
+
         BookingId idExpected1 = new BookingId("42");
         Booking bookingExpected1 = Booking.create(
                 LocalDate.now(),
@@ -180,7 +185,8 @@ public class BookingRepositoryImplTests {
                 guestExpected1,
                 servicesExpected1,
                 amountOfAdultsExpected,
-                amountOfChildrenExpected
+                amountOfChildrenExpected,
+                additionalInfoExpected
         );
 
         BookingId idExpected2 = new BookingId("1337");
@@ -191,7 +197,8 @@ public class BookingRepositoryImplTests {
                 guestExpected2,
                 servicesExpected2,
                 amountOfAdultsExpected,
-                amountOfChildrenExpected
+                amountOfChildrenExpected,
+                additionalInfoExpected
         );
 
         bookingExpected1.addRoomCategory(categoryExpected1, 1);
@@ -222,6 +229,7 @@ public class BookingRepositoryImplTests {
             assertEquals(bookingsExpected.get(i).getServices().size(), bookingsActual.get(i).getServices().size());
             assertEquals(bookingsExpected.get(i).getAmountOfAdults(), bookingsActual.get(i).getAmountOfAdults());
             assertEquals(bookingsExpected.get(i).getAmountOfChildren(), bookingsActual.get(i).getAmountOfChildren());
+            assertEquals(bookingsExpected.get(i).getAdditionalInformation(), bookingsActual.get(i).getAdditionalInformation());
         }
     }
 }

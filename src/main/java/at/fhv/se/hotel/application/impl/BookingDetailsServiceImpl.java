@@ -63,6 +63,7 @@ public class BookingDetailsServiceImpl implements BookingDetailsService {
                 .withCheckOutDate(booking.getCheckOutDate())
                 .withAmountOfAdults(booking.getAmountOfAdults())
                 .withAmountOfChildren(booking.getAmountOfChildren())
+                .withAdditionalInformation(booking.getAdditionalInformation())
                 .build();
 
         return bookingDetailsDTO;

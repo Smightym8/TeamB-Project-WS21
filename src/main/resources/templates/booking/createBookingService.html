@@ -22,6 +22,11 @@
             <input type="hidden" id="amountOfAdults" name="amountOfAdults" th:field="*{amountOfAdults}" />
             <input type="hidden" id="amountOfChildren" name="amountOfChildren" th:field="*{amountOfChildren}" />
 
+            <div class="mb-3">
+                <label for="additionalInformation" class="form-label">Additional Information</label>
+                <textarea th:field="*{additionalInformation}" class="form-control" id="additionalInformation" name="additionalInformation" rows="3"></textarea>
+            </div>
+
             <table class="table table-striped">
                 <thead>
                 <tr>

@@ -72,7 +72,8 @@ public class StayListingServiceTests {
                     guestExpected,
                     servicesExpected,
                 2,
-                1
+                1,
+                ""
                 );
         Booking bookingExpected2 = Booking.create(
                         LocalDate.now(),
@@ -81,7 +82,8 @@ public class StayListingServiceTests {
                         guestExpected,
                         servicesExpected,
                 2,
-                1
+                1,
+                ""
                 );
         Booking bookingExpected3 = Booking.create(
                         LocalDate.now(),
@@ -90,7 +92,8 @@ public class StayListingServiceTests {
                         guestExpected,
                         servicesExpected,
                 2,
-                1
+                1,
+                ""
                 );
         RoomCategory categoryExpected = RoomCategory.create(
                 new RoomCategoryId("1"),

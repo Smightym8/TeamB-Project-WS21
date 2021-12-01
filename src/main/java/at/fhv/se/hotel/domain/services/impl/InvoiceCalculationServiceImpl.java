@@ -6,6 +6,7 @@ import at.fhv.se.hotel.domain.model.invoice.InvoiceId;
 import at.fhv.se.hotel.domain.model.roomcategory.Season;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.stay.Stay;
+import at.fhv.se.hotel.domain.repository.InvoiceRepository;
 import at.fhv.se.hotel.domain.services.api.InvoiceCalculationService;
 import at.fhv.se.hotel.domain.services.api.RoomCategoryPriceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ import java.time.Period;
 public class InvoiceCalculationServiceImpl implements InvoiceCalculationService {
     @Autowired
     RoomCategoryPriceService roomCategoryPriceService;
+
+    @Autowired
+    InvoiceRepository invoiceRepository;
 
     @Override
     public Invoice calculateInvoice(Stay stay) {
@@ -48,7 +52,6 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
             tempDate = tempDate.plusDays(1);
         }
 
-        // TODO: Use InvoiceRepo to generate id
-        return Invoice.create(new InvoiceId("1"), stay, totalAmount);
+        return Invoice.create(invoiceRepository.nextIdentity(), stay, totalAmount);
     }
 }

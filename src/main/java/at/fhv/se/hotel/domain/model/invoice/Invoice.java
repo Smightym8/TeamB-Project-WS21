@@ -19,6 +19,8 @@ public class Invoice {
     private Stay stay;
     private BigDecimal totalAmount;
 
+    // TODO: InvoiceNr (e.g. 20210112001), localTax, valueAddedTax, Prices per RoomCategory, paymentMethod
+
     // Required by hibernate
     private Invoice() {
     }

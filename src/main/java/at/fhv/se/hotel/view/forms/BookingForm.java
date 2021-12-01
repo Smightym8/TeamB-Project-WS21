@@ -16,6 +16,7 @@ public final class BookingForm {
     private List<Integer> amountsOfRoomCategories;
     private int amountOfAdults;
     private int amountOfChildren;
+    String additionalInformation;
 
     // required by spring/thymeleaf
     public BookingForm() {
@@ -96,5 +97,13 @@ public final class BookingForm {
 
     public void setAmountOfChildren(int amountOfChildren) {
         this.amountOfChildren = amountOfChildren;
+    }
+
+    public String getAdditionalInformation() {
+        return additionalInformation;
+    }
+
+    public void setAdditionalInformation(String additionalInformation) {
+        this.additionalInformation = additionalInformation;
     }
 }

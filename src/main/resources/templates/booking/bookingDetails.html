@@ -57,6 +57,10 @@
         </tbody>
     </table>
 
+    <div class="mb-3">
+        <p th:text="${bookingDetails.additionalInformation}"></p>
+    </div>
+
     <a class="btn btn-primary" th:href="@{'/check-in?bookingId=' + ${bookingDetails.id} + '&isCheckedIn=false'}">
         Assign Rooms
     </a>

@@ -13,7 +13,8 @@ import java.util.List;
  */
 public interface BookingSummaryService {
     /**
-     * See implementation {@link BookingSummaryServiceImpl#createSummary(String, List, List, List, LocalDate, LocalDate, int, int)}
+     * See implementation
+     * {@link BookingSummaryServiceImpl#createSummary(String, List, List, List, LocalDate, LocalDate, int, int, String)}
      */
     BookingSummaryDTO createSummary(String guestId,
                                     List<String> roomCategoryIds,
@@ -22,5 +23,6 @@ public interface BookingSummaryService {
                                     LocalDate checkInDate,
                                     LocalDate checkOutDate,
                                     int amountOfAdults,
-                                    int amountOfChildren);
+                                    int amountOfChildren,
+                                    String additionalInformation);
 }

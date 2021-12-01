@@ -260,7 +260,8 @@ public class HotelViewController {
                 bookingForm.getCheckInDate(),
                 bookingForm.getCheckOutDate(),
                 bookingForm.getAmountOfAdults(),
-                bookingForm.getAmountOfChildren()
+                bookingForm.getAmountOfChildren(),
+                bookingForm.getAdditionalInformation()
         );
 
         model.addAttribute("bookingSummary", bookingSummaryDTO);
@@ -280,7 +281,8 @@ public class HotelViewController {
                 bookingForm.getCheckInDate(),
                 bookingForm.getCheckOutDate(),
                 bookingForm.getAmountOfAdults(),
-                bookingForm.getAmountOfChildren());
+                bookingForm.getAmountOfChildren(),
+                bookingForm.getAdditionalInformation());
 
         return createBookingSummary(bookingForm, true, model);
     }

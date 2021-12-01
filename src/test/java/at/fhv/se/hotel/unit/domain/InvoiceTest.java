@@ -74,7 +74,8 @@ public class InvoiceTest {
                 guest,
                 services,
                 2,
-                1
+                1,
+                ""
         );
         booking.addRoomCategory(category, 1);
 
@@ -142,7 +143,8 @@ public class InvoiceTest {
                 guest,
                 services,
                 2,
-                1
+                1,
+                ""
         );
         booking.addRoomCategory(category, 1);
 

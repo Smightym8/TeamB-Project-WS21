@@ -159,7 +159,8 @@ public class TestData implements ApplicationRunner {
                 michael,
                 List.of(tvService),
                 2,
-                0
+                0,
+                "Extra pillow"
         );
 
         booking1.addRoomCategory(singleRoom, 1);
@@ -172,7 +173,8 @@ public class TestData implements ApplicationRunner {
                 ali,
                 List.of(tvService, breakfastService),
                 2,
-                0
+                0,
+                "Vegetarian"
         );
         booking2.addRoomCategory(singleRoom, 2);
         booking2.addRoomCategory(doubleRoom, 1);
