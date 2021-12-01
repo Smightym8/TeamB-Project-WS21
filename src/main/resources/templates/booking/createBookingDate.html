@@ -35,8 +35,15 @@
                         let checkin = document.getElementById('checkin');
                         let checkout = document.getElementById('checkout');
                         let today = new Date();
-                        let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-                        if (checkin.value >= date){
+                        let checkinDate = new Date(checkin.value);
+                        //let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+                        let todayDay = today.getDay();
+                        let todayMonth = today.getMonth();
+                        let todayYear = today.getFullYear();
+                        let checkinDay = checkinDate.getDay();
+                        let checkinMonth = checkinDate.getMonth();
+                        let checkinYear = checkinDate.getFullYear();
+                        if (checkinDay >= todayDay && checkinMonth >= todayMonth && checkinYear >= todayYear) {
                             checkin.setCustomValidity('');
                         } else {
                             checkin.setCustomValidity('Checkin date must be in the future!');
