@@ -44,6 +44,8 @@ public class Booking {
         this.guest = aGuest;
         this.services = aServices;
         this.roomCategories = new ArrayList<>();
+        this.amountOfAdults = anAmountOfAdults;
+        this.amountOfChildren = anAmountOfChildren;
     }
 
     public void addRoomCategory(RoomCategory aRoomCategory, int anAmount) {

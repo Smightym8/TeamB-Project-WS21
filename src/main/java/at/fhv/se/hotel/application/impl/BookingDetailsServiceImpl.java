@@ -25,6 +25,7 @@ public class BookingDetailsServiceImpl implements BookingDetailsService {
     public BookingDetailsDTO detailsByBookingId(String bookingId) {
 
         Booking booking = bookingRepository.bookingById(new BookingId(bookingId)).get();
+
         GuestDTO guestDTO = GuestDTO.builder()
                 .withId(booking.getGuest().getGuestId().id())
                 .withFirstName(booking.getGuest().getName().firstName())
