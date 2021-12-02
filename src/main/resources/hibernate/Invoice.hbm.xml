@@ -15,7 +15,9 @@
         </component>
 
         <!-- Primitive datatypes of class booking -->
+        <property name="invoiceDate" column="invoice_date" type="java.time.LocalDate" />
         <property name="totalAmount" column="total_amount" type="java.math.BigDecimal" />
+        <property name="amountOfNights" column="amount_of_nights" type="java.lang.Integer" />
 
         <!-- Many to one mapping to stay -->
         <many-to-one name="stay" column="stay_id" class="at.fhv.se.hotel.domain.model.stay.Stay" not-null="true"/>

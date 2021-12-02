@@ -52,6 +52,6 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
             tempDate = tempDate.plusDays(1);
         }
 
-        return Invoice.create(invoiceRepository.nextIdentity(), stay, totalAmount);
+        return Invoice.create(invoiceRepository.nextIdentity(), stay, nights, totalAmount);
     }
 }

@@ -120,12 +120,13 @@ public class InvoiceRepositoryImplTests {
                         categoriesExpected.get(0)
                 )
         );
+
         Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
         BigDecimal amountExpected = new BigDecimal(1000);
 
         InvoiceId invoiceIdExpected = new InvoiceId("1337");
         Invoice invoiceExpected = Invoice.create(invoiceIdExpected,
-                            stayExpected, amountExpected);
+                            stayExpected, 9, amountExpected);
 
         //when
         servicesExpected.forEach(service -> this.serviceRepository.add(service));
@@ -255,7 +256,7 @@ public class InvoiceRepositoryImplTests {
         );
         BigDecimal amountExpected = new BigDecimal(1000);
         List<Invoice> invoicesExpected = invoiceIdsExpected.stream()
-                .map(id -> Invoice.create(id,staysExpected.listIterator().next(),amountExpected))
+                .map(id -> Invoice.create(id,staysExpected.listIterator().next(), 9, amountExpected))
                 .collect(Collectors.toList());
         //when
         guestsExpected.forEach(guest -> this.guestRepository.add(guest));

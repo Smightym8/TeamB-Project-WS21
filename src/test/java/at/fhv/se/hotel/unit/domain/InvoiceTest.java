@@ -87,7 +87,7 @@ public class InvoiceTest {
         Stay stayExpected = Stay.create(booking, rooms);
 
         InvoiceId idExpected = new InvoiceId("42");
-        Invoice invoiceExpected = Invoice.create(idExpected, stayExpected, new BigDecimal("0"));
+        Invoice invoiceExpected = Invoice.create(idExpected, stayExpected, 8, new BigDecimal("0"));
 
         // then
         assertEquals(idExpected, invoiceExpected.getInvoiceId());
