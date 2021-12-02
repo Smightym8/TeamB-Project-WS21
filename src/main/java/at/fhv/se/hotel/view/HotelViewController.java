@@ -11,7 +11,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class HotelViewController {
@@ -59,6 +61,7 @@ public class HotelViewController {
     private static final String CREATE_BOOKING_SUMMARY_VIEW = "booking/createBookingSummary";
 
     private static final String CREATE_BOOKING_URL = "/createbooking";
+    private static final String CREATE_BOOKING_SUCCESS_URL = "/createbookingSuccess";
 
     private static final String BOOKING_DETAILS_URL = "/bookingdetails/{id}";
     private static final String BOOKING_DETAILS_VIEW = "booking/bookingDetails";
@@ -90,9 +93,6 @@ public class HotelViewController {
 
     @Autowired
     private BookingCreationService bookingCreationService;
-
-    @Autowired
-    private BookingDetailsService bookingDetailsService;
 
     @Autowired
     private GuestCreationService guestCreationService;
@@ -274,7 +274,7 @@ public class HotelViewController {
     @PostMapping(CREATE_BOOKING_URL)
     public String createBooking(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model) {
 
-        bookingCreationService.book(bookingForm.getGuestId(),
+        String bookingId = bookingCreationService.book(bookingForm.getGuestId(),
                 bookingForm.getRoomCategoryIds(),
                 bookingForm.getAmountsOfRoomCategories(),
                 bookingForm.getServiceIds(),
@@ -284,13 +284,55 @@ public class HotelViewController {
                 bookingForm.getAmountOfChildren(),
                 bookingForm.getAdditionalInformation());
 
-        return createBookingSummary(bookingForm, true, model);
+
+        // Redirect to post mapping: GET isn't supported
+        return "redirect:" + CREATE_BOOKING_SUCCESS_URL
+                + "?bookingId=" + bookingId + "&isCreated=" + true;
+    }
+
+    @GetMapping(CREATE_BOOKING_SUCCESS_URL)
+    public String createBookingSuccess(
+            @RequestParam("bookingId") String bookingId,
+            @RequestParam("isCreated") boolean isCreated,
+            Model model
+    ) {
+        BookingSummaryDTO bookingSummaryDTO = bookingSummaryService.summaryByBookingId(bookingId);
+        List<String> roomCategoryIds = new ArrayList<>();
+
+
+        bookingSummaryDTO.categoriesWithAmounts().keySet().forEach(
+                key -> roomCategoryIds.add(key.id())
+        );
+
+        List<Integer> amounts = new ArrayList<>(bookingSummaryDTO.categoriesWithAmounts().values());
+
+        List<String> serviceIds = new ArrayList<>();
+        bookingSummaryDTO.services().forEach(
+                serviceDTO -> serviceIds.add(serviceDTO.id())
+        );
+
+        BookingForm bookingForm = new BookingForm(
+                bookingSummaryDTO.guest().id(),
+                roomCategoryIds,
+                serviceIds,
+                bookingSummaryDTO.checkInDate(),
+                bookingSummaryDTO.checkOutDate(),
+                amounts,
+                bookingSummaryDTO.amountOfAdults(),
+                bookingSummaryDTO.amountOfChildren()
+        );
+
+        model.addAttribute("bookingSummary", bookingSummaryDTO);
+        model.addAttribute("bookingForm", bookingForm);
+        model.addAttribute("isCreated", isCreated);
+
+        return CREATE_BOOKING_SUMMARY_VIEW;
     }
 
     @GetMapping(BOOKING_DETAILS_URL)
     public String showBooking(@PathVariable String id, Model model) {
 
-        BookingDetailsDTO bookingDetailsDTO =  bookingDetailsService.detailsByBookingId(id);
+        BookingDetailsDTO bookingDetailsDTO =  bookingSummaryService.detailsByBookingId(id);
         model.addAttribute("bookingDetails", bookingDetailsDTO);
 
         return BOOKING_DETAILS_VIEW;
@@ -323,6 +365,6 @@ public class HotelViewController {
     }
 
     private static ModelAndView redirectError(String message){
-        return new ModelAndView("redirect:" + ERROR_URL + "?message" + message);
+        return new ModelAndView("redirect:" + ERROR_URL + "?message=" + message);
     }
 }

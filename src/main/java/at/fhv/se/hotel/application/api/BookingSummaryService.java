@@ -1,5 +1,6 @@
 package at.fhv.se.hotel.application.api;
 
+import at.fhv.se.hotel.application.dto.BookingDetailsDTO;
 import at.fhv.se.hotel.application.dto.BookingSummaryDTO;
 import at.fhv.se.hotel.application.impl.BookingListingServiceImpl;
 import at.fhv.se.hotel.application.impl.BookingSummaryServiceImpl;
@@ -25,4 +26,8 @@ public interface BookingSummaryService {
                                     int amountOfAdults,
                                     int amountOfChildren,
                                     String additionalInformation);
+
+    BookingSummaryDTO summaryByBookingId(String bookingId);
+
+    BookingDetailsDTO detailsByBookingId(String bookingId);
 }

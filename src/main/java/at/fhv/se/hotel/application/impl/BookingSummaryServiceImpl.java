@@ -4,15 +4,18 @@ import at.fhv.se.hotel.application.api.BookingSummaryService;
 import at.fhv.se.hotel.application.api.GuestListingService;
 import at.fhv.se.hotel.application.api.RoomCategoryListingService;
 import at.fhv.se.hotel.application.api.ServiceListingService;
-import at.fhv.se.hotel.application.dto.BookingSummaryDTO;
-import at.fhv.se.hotel.application.dto.GuestDTO;
-import at.fhv.se.hotel.application.dto.RoomCategoryDTO;
-import at.fhv.se.hotel.application.dto.ServiceDTO;
+import at.fhv.se.hotel.application.dto.*;
+import at.fhv.se.hotel.domain.model.booking.Booking;
+import at.fhv.se.hotel.domain.model.booking.BookingId;
+import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory;
+import at.fhv.se.hotel.domain.model.service.Service;
+import at.fhv.se.hotel.domain.repository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -30,6 +33,8 @@ public class BookingSummaryServiceImpl implements BookingSummaryService {
     @Autowired
     private ServiceListingService serviceListingService;
 
+    @Autowired
+    BookingRepository bookingRepository;
 
     @Override
     public BookingSummaryDTO createSummary(String guestId,
@@ -70,5 +75,91 @@ public class BookingSummaryServiceImpl implements BookingSummaryService {
                 .build();
 
         return bookingSummaryDTO;
+    }
+
+    @Override
+    public BookingSummaryDTO summaryByBookingId(String bookingId) {
+        Booking booking = bookingRepository.bookingById(new BookingId(bookingId)).get();
+
+        GuestDTO guest = guestListingService.findGuestById(booking.getGuest().getGuestId().id()).get();
+
+        Map<RoomCategoryDTO, Integer> categoriesWithAmounts = new HashMap<>();
+        for (BookingWithRoomCategory brc : booking.getRoomCategories()) {
+            RoomCategoryDTO roomCategoryDTO = RoomCategoryDTO.builder()
+                    .withId(brc.getRoomCategory().getRoomCategoryId().id())
+                    .withName(brc.getRoomCategory().getRoomCategoryName().name())
+                    .build();
+
+            categoriesWithAmounts.put(roomCategoryDTO, brc.getAmount());
+        }
+
+        List<ServiceDTO> services = new ArrayList<>();
+        for(Service s : booking.getServices()) {
+            services.add(
+              ServiceDTO.builder()
+                      .withId(s.getServiceId().id())
+                      .withName(s.getServiceName().name())
+                      .withPrice(s.getServicePrice().price())
+                      .build()
+            );
+        }
+
+        BookingSummaryDTO bookingSummaryDTO = BookingSummaryDTO.builder()
+                .withGuest(guest)
+                .withRoomCategoriesAndAmounts(categoriesWithAmounts)
+                .withServices(services)
+                .withCheckInDate(booking.getCheckInDate())
+                .withCheckOutDate(booking.getCheckOutDate())
+                .build();
+
+        return bookingSummaryDTO;
+    }
+
+    @Override
+    public BookingDetailsDTO detailsByBookingId(String bookingId) {
+
+        Booking booking = bookingRepository.bookingById(new BookingId(bookingId)).get();
+
+        GuestDTO guestDTO = GuestDTO.builder()
+                .withId(booking.getGuest().getGuestId().id())
+                .withFirstName(booking.getGuest().getName().firstName())
+                .withLastName(booking.getGuest().getName().lastName())
+                .withBirthDate(booking.getGuest().getBirthDate())
+                .build();
+
+        Map<RoomCategoryDTO, Integer> categoriesWithAmount = new HashMap<>();
+        for(BookingWithRoomCategory brc : booking.getRoomCategories()) {
+            RoomCategoryDTO categoryDTO = RoomCategoryDTO.builder()
+                    .withId(brc.getRoomCategory().getRoomCategoryId().id())
+                    .withName(brc.getRoomCategory().getRoomCategoryName().name())
+                    .build();
+            Integer amount = brc.getAmount();
+            categoriesWithAmount.put(categoryDTO, amount);
+        }
+
+        List<ServiceDTO> serviceDtos = new ArrayList<>();
+        for(Service s : booking.getServices()) {
+            ServiceDTO serviceDTO = ServiceDTO.builder()
+                    .withId(s.getServiceId().id())
+                    .withName(s.getServiceName().name())
+                    .withPrice(s.getServicePrice().price())
+                    .build();
+
+            serviceDtos.add(serviceDTO);
+        }
+
+        BookingDetailsDTO bookingDetailsDTO = BookingDetailsDTO.builder()
+                .withId(bookingId)
+                .withGuest(guestDTO)
+                .withRoomCategoriesAndAmounts(categoriesWithAmount)
+                .withServices(serviceDtos)
+                .withCheckInDate(booking.getCheckInDate())
+                .withCheckOutDate(booking.getCheckOutDate())
+                .withAdditionalInformation(booking.getAdditionalInformation())
+                .withAmountOfAdults(booking.getAmountOfAdults())
+                .withAmountOfChildren(booking.getAmountOfChildren())
+                .build();
+
+        return bookingDetailsDTO;
     }
 }

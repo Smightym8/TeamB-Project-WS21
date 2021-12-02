@@ -1,6 +1,5 @@
 package at.fhv.se.hotel.api;
 
-import at.fhv.se.hotel.application.api.BookingDetailsService;
 import at.fhv.se.hotel.application.api.BookingListingService;
 import at.fhv.se.hotel.application.api.StayListingService;
 import org.junit.jupiter.api.Test;
