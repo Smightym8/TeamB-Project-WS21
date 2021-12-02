@@ -10,32 +10,81 @@ public class Invoice {
     // Required by hibernate
     private Long id;
     private InvoiceId invoiceId;
+    private String invoiceNumber;
     private LocalDate invoiceDate;
     private Stay stay;
     private int amountOfNights;
-    private BigDecimal totalAmount;
+    private BigDecimal localTaxPerPerson;
+    private BigDecimal localTaxTotal;
+    private BigDecimal valueAddedTaxInPercent;
+    private BigDecimal valueAddedTaxInEuro;
+    private BigDecimal totalNetAmount;
+    private BigDecimal totalGrossAmount;
 
-    // TODO: InvoiceNr (e.g. 20210112001), localTax, valueAddedTax, Prices per RoomCategory, paymentMethod
+    // TODO: Prices per RoomCategory, paymentMethod
 
     // Required by hibernate
     private Invoice() {
     }
 
-    public static Invoice create(InvoiceId anInvoiceId, Stay aStay, int anAmountOfNights, BigDecimal aAmount) {
-
-        return new Invoice(anInvoiceId, LocalDate.now(), aStay, anAmountOfNights, aAmount);
+    public static Invoice create(
+            InvoiceId anInvoiceId,
+            String anInvoiceNumber,
+            Stay aStay,
+            int anAmountOfNights,
+            BigDecimal aLocalTaxPerPerson,
+            BigDecimal aLocalTaxTotal,
+            BigDecimal aValueAddedTaxInPercent,
+            BigDecimal aValueAddedTaxInEuro,
+            BigDecimal aTotalNetAmount,
+            BigDecimal aTotalGrossAmount
+    ) {
+        return new Invoice(
+                anInvoiceId,
+                anInvoiceNumber,
+                LocalDate.now(),
+                aStay,
+                anAmountOfNights,
+                aLocalTaxPerPerson,
+                aLocalTaxTotal,
+                aValueAddedTaxInPercent,
+                aValueAddedTaxInEuro,
+                aTotalNetAmount,
+                aTotalGrossAmount);
     }
 
-    private Invoice(InvoiceId anInvoiceId, LocalDate invoiceDate, Stay aStay, int anAmountOfNights, BigDecimal aAmount) {
+    private Invoice(
+            InvoiceId anInvoiceId,
+            String anInvoiceNumber,
+            LocalDate invoiceDate,
+            Stay aStay,
+            int anAmountOfNights,
+            BigDecimal aLocalTaxPerPerson,
+            BigDecimal aLocalTaxTotal,
+            BigDecimal aValueAddedTaxInPercent,
+            BigDecimal aValueAddedTaxInEuro,
+            BigDecimal aTotalNetAmount,
+            BigDecimal aTotalGrossAmount
+    ) {
         this.invoiceId = anInvoiceId;
+        this.invoiceNumber = anInvoiceNumber;
         this.invoiceDate = invoiceDate;
         this.stay = aStay;
         this.amountOfNights = anAmountOfNights;
-        this.totalAmount = aAmount;
+        this.localTaxPerPerson = aLocalTaxPerPerson;
+        this.localTaxTotal = aLocalTaxTotal;
+        this.valueAddedTaxInPercent = aValueAddedTaxInPercent;
+        this.valueAddedTaxInEuro = aValueAddedTaxInEuro;
+        this.totalNetAmount = aTotalNetAmount;
+        this.totalGrossAmount = aTotalGrossAmount;
     }
 
     public InvoiceId getInvoiceId() {
         return invoiceId;
+    }
+
+    public String getInvoiceNumber() {
+        return invoiceNumber;
     }
 
     public LocalDate getInvoiceDate() {
@@ -50,8 +99,28 @@ public class Invoice {
         return amountOfNights;
     }
 
-    public BigDecimal getTotalAmount(){
-        return totalAmount;
+    public BigDecimal getLocalTaxPerPerson() {
+        return localTaxPerPerson;
+    }
+
+    public BigDecimal getLocalTaxTotal() {
+        return localTaxTotal;
+    }
+
+    public BigDecimal getValueAddedTaxInPercent() {
+        return valueAddedTaxInPercent;
+    }
+
+    public BigDecimal getValueAddedTaxInEuro() {
+        return valueAddedTaxInEuro;
+    }
+
+    public BigDecimal getTotalNetAmount() {
+        return totalNetAmount;
+    }
+
+    public BigDecimal getTotalGrossAmount() {
+        return totalGrossAmount;
     }
 
     @Override
@@ -59,11 +128,13 @@ public class Invoice {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Invoice invoice = (Invoice) o;
-        return amountOfNights == invoice.amountOfNights && Objects.equals(id, invoice.id) && Objects.equals(invoiceId, invoice.invoiceId) && Objects.equals(stay, invoice.stay) && Objects.equals(totalAmount, invoice.totalAmount);
+        return amountOfNights == invoice.amountOfNights && Objects.equals(id, invoice.id) && Objects.equals(invoiceId, invoice.invoiceId) && Objects.equals(invoiceNumber, invoice.invoiceNumber) && Objects.equals(invoiceDate, invoice.invoiceDate) && Objects.equals(stay, invoice.stay) && Objects.equals(localTaxPerPerson, invoice.localTaxPerPerson) && Objects.equals(localTaxTotal, invoice.localTaxTotal) && Objects.equals(valueAddedTaxInPercent, invoice.valueAddedTaxInPercent) && Objects.equals(valueAddedTaxInEuro, invoice.valueAddedTaxInEuro) && Objects.equals(totalNetAmount, invoice.totalNetAmount) && Objects.equals(totalGrossAmount, invoice.totalGrossAmount);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, invoiceId, stay, amountOfNights, totalAmount);
+        return Objects.hash(id, invoiceId, invoiceNumber, invoiceDate, stay, amountOfNights, localTaxPerPerson, localTaxTotal, valueAddedTaxInPercent, valueAddedTaxInEuro, totalNetAmount, totalGrossAmount);
     }
+
+    // Ali bitte create equals und hashcode
 }

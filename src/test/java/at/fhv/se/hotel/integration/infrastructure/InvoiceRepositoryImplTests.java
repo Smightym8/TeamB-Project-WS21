@@ -121,12 +121,29 @@ public class InvoiceRepositoryImplTests {
                 )
         );
 
-        Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
-        BigDecimal amountExpected = new BigDecimal(1000);
-
         InvoiceId invoiceIdExpected = new InvoiceId("1337");
-        Invoice invoiceExpected = Invoice.create(invoiceIdExpected,
-                            stayExpected, 9, amountExpected);
+        String invoiceNumberExpected = "30112021001";
+        Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
+        int amountOfNightsExpected = 9;
+        BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76");
+        BigDecimal localTaxTotalExpected = new BigDecimal("1.52");
+        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.1");
+        BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("100");
+        BigDecimal totalNetAmountExpected = new BigDecimal("200");
+        BigDecimal totalGrossAmountExpected = new BigDecimal("300");
+
+        Invoice invoiceExpected = Invoice.create(
+                invoiceIdExpected,
+                invoiceNumberExpected,
+                stayExpected,
+                amountOfNightsExpected,
+                localTaxPerPersonExpected,
+                localTaxTotalExpected,
+                valueAddedTaxInPercentExpected,
+                valueAddedTaxInEuroExpected,
+                totalNetAmountExpected,
+                totalGrossAmountExpected
+        );
 
         //when
         servicesExpected.forEach(service -> this.serviceRepository.add(service));
@@ -140,6 +157,7 @@ public class InvoiceRepositoryImplTests {
 
         //then
         assertEquals(invoiceExpected, invoiceActual);
+        assertEquals(invoiceIdExpected, invoiceActual.getInvoiceId());
     }
 
     @Test
@@ -254,10 +272,28 @@ public class InvoiceRepositoryImplTests {
                 new InvoiceId("1338"),
                 new InvoiceId("1339")
         );
-        BigDecimal amountExpected = new BigDecimal(1000);
+        String invoiceNumberExpected = "30112021001";
+        int amountOfNightsExpected = 9;
+        BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76");
+        BigDecimal localTaxTotalExpected = new BigDecimal("1.52");
+        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.1");
+        BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("100");
+        BigDecimal totalNetAmountExpected = new BigDecimal("200");
+        BigDecimal totalGrossAmountExpected = new BigDecimal("300");
+
         List<Invoice> invoicesExpected = invoiceIdsExpected.stream()
-                .map(id -> Invoice.create(id,staysExpected.listIterator().next(), 9, amountExpected))
-                .collect(Collectors.toList());
+                .map(id -> Invoice.create(
+                        id,
+                        invoiceNumberExpected,
+                        staysExpected.listIterator().next(),
+                        amountOfNightsExpected,
+                        localTaxPerPersonExpected,
+                        localTaxTotalExpected,
+                        valueAddedTaxInPercentExpected,
+                        valueAddedTaxInEuroExpected,
+                        totalNetAmountExpected,
+                        totalGrossAmountExpected
+                )).collect(Collectors.toList());
         //when
         guestsExpected.forEach(guest -> this.guestRepository.add(guest));
         categoriesExpected.forEach(category -> this.roomCategoryRepository.add(category));
