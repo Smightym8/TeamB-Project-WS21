@@ -38,7 +38,7 @@ public class BookingCreationServiceImpl implements BookingCreationService {
 
     @Transactional(readOnly = false)
     @Override
-    public void book(String guestId,
+    public String book(String guestId,
                      List<String> roomCategoryIds,
                      List<Integer> amounts,
                      List<String> serviceIds,
@@ -67,5 +67,7 @@ public class BookingCreationServiceImpl implements BookingCreationService {
         }
 
         bookingRepository.add(booking);
+
+        return booking.getBookingId().id();
     }
 }
