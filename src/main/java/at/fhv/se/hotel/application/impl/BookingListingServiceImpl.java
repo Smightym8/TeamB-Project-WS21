@@ -37,10 +37,7 @@ public class BookingListingServiceImpl implements BookingListingService {
             BookingDTO dto = BookingDTO.builder()
                     .withId(b.getBookingId().id())
                     .withGuestName(b.getGuest().getName().firstName() + " " + b.getGuest().getName().lastName())
-                    //.withBirthDate(b.getGuest().getBirthDate())
-                    .withGuestAddress(b.getGuest().getAddress().streetName() + " " + b.getGuest().getAddress().streetNumber() + ", " + b.getGuest().getAddress().city() + ", " + b.getGuest().getAddress().zipCode() + ", " + b.getGuest().getAddress().country())
                     .withCheckInDate(b.getCheckInDate())
-                    .withCheckOutDate(b.getCheckOutDate())
                     .withStatus(b.isActive())
                     .build();
 

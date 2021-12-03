@@ -2,6 +2,7 @@ package at.fhv.se.hotel.domain.model.stay;
 
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.guest.Guest;
+import at.fhv.se.hotel.domain.model.invoice.Invoice;
 import at.fhv.se.hotel.domain.model.room.Room;
 import at.fhv.se.hotel.domain.model.service.Service;
 
@@ -63,10 +64,7 @@ public class Stay {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Stay stay = (Stay) o;
-        return Objects.equals(id, stay.id) &&
-                Objects.equals(stayId, stay.stayId) &&
-                Objects.equals(rooms, stay.rooms) &&
-                Objects.equals(booking, stay.booking);
+        return Objects.equals(id, stay.id) && Objects.equals(stayId, stay.stayId) && Objects.equals(rooms, stay.rooms) && Objects.equals(booking, stay.booking);
     }
 
     @Override

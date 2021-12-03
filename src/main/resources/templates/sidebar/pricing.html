@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<body id="Pricing">
+
+    <div layout:fragment="content">
+
+        <div class="d-flex">
+            <p class="h3">Pricing</p>
+            <a class="btn btn-primary ms-5">Modify</a>
+        </div>
+
+        <br>
+
+        <table class="table table-striped">
+
+            <thead>
+                <tr>
+                    <th class="col-1">Season</th>
+                    <th class="col-1">Start date</th>
+                    <th class="col-1">End date</th>
+                    <th class="col-1"></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Winter</td>
+                    <td>
+                        <select class="form-select" aria-label="Default select" disabled>
+                            <option selected="1">12-01</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-select" aria-label="Default select" disabled>
+                            <option selected="1">02-01</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">Expand</button>
+                    </td>
+                </tr>
+
+                <tr id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionBasic">
+                    <td>
+                        <label>Single room</label>
+                        <div class="input-group">
+                            <span class="input-group-text">€</span>
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                        </div>
+                    </td>
+                    <td>
+                        <label>Double room</label>
+                        <div class="input-group">
+                            <span class="input-group-text">€</span>
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                        </div>
+                    </td>
+                    <td>
+                        <label>Luxury room</label>
+                        <div class="input-group">
+                            <span class="input-group-text">€</span>
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>Christmas</td>
+                    <td>
+                        <select class="form-select" aria-label="Default select" disabled>
+                            <option selected="1">12-20</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-select" aria-label="Default select" disabled>
+                            <option selected="1">01-10</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">Expand</button>
+                    </td>
+                </tr>
+
+                <tr id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionBasic">
+                    <td>
+                        <label>Single room</label>
+                        <div class="input-group">
+                            <span class="input-group-text">€</span>
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                        </div>
+                    </td>
+                    <td>
+                        <label>Double room</label>
+                        <div class="input-group">
+                            <span class="input-group-text">€</span>
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                        </div>
+                    </td>
+                    <td>
+                        <label>Luxury room</label>
+                        <div class="input-group">
+                            <span class="input-group-text">€</span>
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                        </div>
+                    </td>
+                    <td></td>
+
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- hierarchie bei überschneidungen und default für lücken -->
+
+    </div>
+
+</body>
+</html>

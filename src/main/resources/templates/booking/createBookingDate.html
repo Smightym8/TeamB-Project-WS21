@@ -1,15 +1,26 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
-<body>
-    <div layout:fragment="content">
-        <h1>Check in & Check out date</h1>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<body id="Create booking">
 
-            <form action="/choosecategory" method="post" th:object="${form}">
+    <div layout:fragment="content">
+
+    <p class="h3">Create booking - dates</p>
+    <br>
+
+    <div class="progress" style="height: 4px; margin-top: 10px">
+        <div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+
+    <br>
+
+            <form action="/createbooking/category" method="post" th:object="${bookingForm}">
                 <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
                 <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
-                <input type="hidden" id="amounts" name="amounts" th:field="*{amounts}" />
+                <input type="hidden" id="amounts" name="amounts" th:field="*{amountsOfRoomCategories}" />
                 <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
+                <input type="hidden" id="amountOfAdults" name="amountOfAdults" th:field="*{amountOfAdults}" />
+                <input type="hidden" id="amountOfChildren" name="amountOfChildren" th:field="*{amountOfChildren}" />
+                <input type="hidden" id="additionalInformation" name="additionalInformation" th:field="*{additionalInformation}" />
 
                 <div class="row">
                     <div class="col-6">
@@ -27,19 +38,29 @@
                         let checkin = document.getElementById('checkin');
                         let checkout = document.getElementById('checkout');
                         let today = new Date();
-                        let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-                        if (checkin.value >= date){
+                        let checkinDate = new Date(checkin.value);
+                        let todayDay = today.getDate();
+                        let todayMonth = today.getMonth();
+                        let todayYear = today.getFullYear();
+                        let checkinDay = checkinDate.getDate();
+                        let checkinMonth = checkinDate.getMonth();
+                        let checkinYear = checkinDate.getFullYear();
+
+                        if (checkinDay >= todayDay && checkinMonth >= todayMonth && checkinYear >= todayYear) {
                             checkin.setCustomValidity('');
                         } else {
                             checkin.setCustomValidity('Checkin date must be in the future!');
                         }
+
                         console.log('checkin customError ', document.getElementById('checkin').validity.customError);
                         console.log('checkin validationMessage ', document.getElementById('checkin').validationMessage);
+                        
                         if (checkin.value < checkout.value) {
                             checkout.setCustomValidity('');
                         } else {
                             checkout.setCustomValidity('Checkout date must be placed after the checkin date!');
                         }
+
                         console.log('checkout customError ', document.getElementById('checkout').validity.customError);
                         console.log('checkout validationMessage ', document.getElementById('checkout').validationMessage);
                     }

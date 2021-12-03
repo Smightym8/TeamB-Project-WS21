@@ -1,13 +1,25 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
-<body>
-<div layout:fragment="content">
-  <h1>Create Guest</h1>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<body id="Create guest">
 
-  <form th:action="@{/createguest}" method="post" th:object="${form}">
+    <div layout:fragment="content">
+
+        <p class="h3">Create Guest</p>
+
+  <br>
+  <form th:action="@{/createguest}" method="post" th:object="${guest}">
     <div class="row">
       <div class="col-6" id="leftForm">
+
+        <div class="mb-3">
+          <label for="firstname" class="form-label">Type of guest:</label>
+          <select class="form-select" aria-label="Default select">
+            <option selected="1">Private</option>
+            <option value="2">Travel irgendwas</option>
+          </select>
+
+        </div>
+
         <div class="mb-3">
           <label for="firstname" class="form-label">First Name:</label>
           <input th:field="*{firstName}" type="text" class="form-control" id="firstname" placeholder="John" required>
@@ -37,7 +49,7 @@
           <input th:field="*{birthDate}" type="date" class="form-control" id="birthDate" required>
           <p th:if="${#fields.hasErrors('birthDate')}">Invalid Birthdate</p>
         </div>
-
+-
       </div>
       <div class="col-6" id="rightForm">
         <div class="mb-3">
@@ -114,6 +126,9 @@
       }
     </script>
   </form>
+
+  <!-- guest type oder voucher code ... voucher code flexibler? -->
+
 </div>
 </body>
 </html>

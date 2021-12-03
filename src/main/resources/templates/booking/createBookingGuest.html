@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<body id="Create booking">
+
+    <div layout:fragment="content">
+
+        <p class="h3">Create booking - guest</p>
+        <br>
+
+        <div class="progress" style="height: 4px; margin-top: 10px">
+            <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+
+        <br>
+
+
+        <div class="row">
+            <div class="col-12">
+                <form action="/createbooking/date" method="post" th:object="${bookingForm}">
+                    <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
+                    <input type="hidden" id="amounts" name="amounts" th:field="*{amountsOfRoomCategories}" />
+                    <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
+                    <input type="hidden" id="checkInDate" name="checkInDate" th:field="*{checkInDate}" />
+                    <input type="hidden" id="checkOutDate" name="checkOutDate" th:field="*{checkOutDate}" />
+                    <input type="hidden" id="additionalInformation" name="additionalInformation" th:field="*{additionalInformation}" />
+
+                    <select th:field="*{guestId}" id="guest-select" class="form-select" multiple aria-label="select guest" th:required="required">
+                        <option th:each="guest : ${guests}"
+                                th:value="${guest.id}"
+                                th:text="${guest.firstName}
+                            + ' '
+                            + ${guest.lastName}"
+                        </option>
+                    </select>
+
+                    <label for="amountOfAdults">Amount of Adults</label>
+                    <input id="amountOfAdults" name="amountOfAdults" type="number"
+                           th:field="*{amountOfAdults}" th:value="1" th:min="1" th:required="required"/>
+
+                    <label for="amountOfChildren">Amount of Children</label>
+                    <input id="amountOfChildren" name="amountOfChildren" type="number"
+                           th:field="*{amountOfChildren}" th:value="0" th:min="0" th:required="required"/>
+
+                    <button id="next-button" type="submit" class="btn btn-primary">Next</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -38,6 +38,5 @@ public class HibernateRoomRepository implements RoomRepository {
     @Override
     public void add(Room room) {
         this.em.persist(room);
-        this.em.flush();
     }
 }

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<body id="Invoices">
+
+    <div layout:fragment="content">
+
+        <p class="h3">Invoices</p>
+
+        <br>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th class="col-1">Invoice Number</th>
+                <th class="col-1">Guest</th>
+                <th class="col-1">Address</th>
+                <th class="col-1">Amount</th>
+                <th class="col-1">State</th>
+                <th class="col-1"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>0305404500</td>
+                <td>Ali Cinar</td>
+                <td>Straße 1234, 6850 Dornbirn</td>
+                <td>435.45€</td>
+                <td>Paid</td>
+                <td>
+                    <a class="btn btn-secondary btn-sm" href="#">View</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
