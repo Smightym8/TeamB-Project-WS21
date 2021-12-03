@@ -43,7 +43,10 @@ public class BookingCreationServiceImpl implements BookingCreationService {
                      List<Integer> amounts,
                      List<String> serviceIds,
                      LocalDate checkInDate,
-                     LocalDate checkOutDate) {
+                     LocalDate checkOutDate,
+                     int amountOfAdults,
+                     int amountOfChildren,
+                     String additionalInformation) {
 
         BookingId bookingId = bookingRepository.nextIdentity();
 
@@ -55,7 +58,10 @@ public class BookingCreationServiceImpl implements BookingCreationService {
             services.add(service);
         }
 
-        Booking booking = Booking.create(checkInDate, checkOutDate, bookingId, guest, services);
+        Booking booking = Booking.create(
+                checkInDate, checkOutDate, bookingId,
+                guest, services, amountOfAdults, amountOfChildren, additionalInformation
+        );
 
         int i = 0;
         for (String s : roomCategoryIds) {

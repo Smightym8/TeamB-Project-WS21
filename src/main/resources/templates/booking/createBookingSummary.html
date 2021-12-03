@@ -21,25 +21,35 @@
 
   <br>
 
+  <h5>Guest information:</h5>
   <p th:text="${bookingSummary.guest.firstName} + ' '  + ${bookingSummary.guest.lastName}  + ', ' + ${bookingSummary.guest.birthDate}"></p>
+
+  <h5>Additional Information:</h5>
+  <div class="mb-3">
+    <p th:text="${bookingSummary.additionalInformation}"></p>
+  </div>
+
+  <h5>Booking information:</h5>
   <p th:text="'Check in date: ' + ${bookingSummary.checkInDate}"></p>
   <p th:text="'Check out date: ' + ${bookingSummary.checkOutDate}"></p>
 
+  <h6>Amount of guests:</h6>
   <table class="table table-striped">
     <thead>
     <tr>
-      <th>Name</th>
-      <th>Price</th>
+      <th>Adults</th>
+      <th>Children</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="service : ${bookingSummary.services}">
-      <td th:text="${service.name}"></td>
-      <td th:text="${service.price} + '€'"></td>
+    <tr>
+      <td th:text="${bookingSummary.amountOfAdults}"></td>
+      <td th:text="${bookingSummary.amountOfChildren}"></td>
     </tr>
     </tbody>
   </table>
 
+  <h6>Room Categories:</h6>
   <table class="table table-striped">
     <thead>
     <tr>
@@ -55,25 +65,45 @@
     </tbody>
   </table>
 
+  <h6>Services:</h6>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="service : ${bookingSummary.services}">
+      <td th:text="${service.name}"></td>
+      <td th:text="${service.price} + '€'"></td>
+    </tr>
+    </tbody>
+  </table>
+
   <div th:if="${isCreated}" class="alert alert-success" role="alert">
     Booking successfully created!
   </div>
-
-  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-  <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-  <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 
   <form th:if="${!isCreated}" action="/createbooking?isCreated=true" method="post" th:object="${bookingForm}">
     <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
     <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
     <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
-    <input type="hidden" id="amounts" name="amounts" th:field="*{amounts}" />
+    <input type="hidden" id="amounts" name="amounts" th:field="*{amountsOfRoomCategories}" />
     <input type="hidden" id="checkInDate" name="checkInDate" th:field="*{checkInDate}" />
     <input type="hidden" id="checkOutDate" name="checkOutDate" th:field="*{checkOutDate}" />
+    <input type="hidden" id="amountOfAdults" name="amountOfAdults" th:field="*{amountOfAdults}" />
+    <input type="hidden" id="amountOfChildren" name="amountOfChildren" th:field="*{amountOfChildren}" />
+    <input type="hidden" id="additionalInformation" name="additionalInformation" th:field="*{additionalInformation}" />
+
     <button id="next-button" type="submit" class="btn btn-primary">Create booking</button>
   </form>
   <a class="btn btn-primary" th:if="${isCreated}" href="/">Back to main menu</a>
 
 </div>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </body>
 </html>

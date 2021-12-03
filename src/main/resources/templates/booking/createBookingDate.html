@@ -16,8 +16,11 @@
             <form action="/createbooking/category" method="post" th:object="${bookingForm}">
                 <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
                 <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
-                <input type="hidden" id="amounts" name="amounts" th:field="*{amounts}" />
+                <input type="hidden" id="amounts" name="amounts" th:field="*{amountsOfRoomCategories}" />
                 <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
+                <input type="hidden" id="amountOfAdults" name="amountOfAdults" th:field="*{amountOfAdults}" />
+                <input type="hidden" id="amountOfChildren" name="amountOfChildren" th:field="*{amountOfChildren}" />
+                <input type="hidden" id="additionalInformation" name="additionalInformation" th:field="*{additionalInformation}" />
 
                 <div class="row">
                     <div class="col-6">
@@ -42,18 +45,22 @@
                         let checkinDay = checkinDate.getDay();
                         let checkinMonth = checkinDate.getMonth();
                         let checkinYear = checkinDate.getFullYear();
+
                         if (checkinDay >= todayDay && checkinMonth >= todayMonth && checkinYear >= todayYear) {
                             checkin.setCustomValidity('');
                         } else {
                             checkin.setCustomValidity('Checkin date must be in the future!');
                         }
+
                         console.log('checkin customError ', document.getElementById('checkin').validity.customError);
                         console.log('checkin validationMessage ', document.getElementById('checkin').validationMessage);
+                        
                         if (checkin.value < checkout.value) {
                             checkout.setCustomValidity('');
                         } else {
                             checkout.setCustomValidity('Checkout date must be placed after the checkin date!');
                         }
+
                         console.log('checkout customError ', document.getElementById('checkout').validity.customError);
                         console.log('checkout validationMessage ', document.getElementById('checkout').validationMessage);
                     }

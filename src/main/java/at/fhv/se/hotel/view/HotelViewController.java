@@ -255,10 +255,13 @@ public class HotelViewController {
         BookingSummaryDTO bookingSummaryDTO = bookingSummaryService.createSummary(
                 bookingForm.getGuestId(),
                 bookingForm.getRoomCategoryIds(),
-                bookingForm.getAmounts(),
+                bookingForm.getAmountsOfRoomCategories(),
                 bookingForm.getServiceIds(),
                 bookingForm.getCheckInDate(),
-                bookingForm.getCheckOutDate()
+                bookingForm.getCheckOutDate(),
+                bookingForm.getAmountOfAdults(),
+                bookingForm.getAmountOfChildren(),
+                bookingForm.getAdditionalInformation()
         );
 
         model.addAttribute("bookingSummary", bookingSummaryDTO);
@@ -273,11 +276,14 @@ public class HotelViewController {
 
         String bookingId = bookingCreationService.book(bookingForm.getGuestId(),
                 bookingForm.getRoomCategoryIds(),
-                bookingForm.getAmounts(),
+                bookingForm.getAmountsOfRoomCategories(),
                 bookingForm.getServiceIds(),
                 bookingForm.getCheckInDate(),
-                bookingForm.getCheckOutDate()
-        );
+                bookingForm.getCheckOutDate(),
+                bookingForm.getAmountOfAdults(),
+                bookingForm.getAmountOfChildren(),
+                bookingForm.getAdditionalInformation());
+
 
         // Redirect to post mapping: GET isn't supported
         return "redirect:" + CREATE_BOOKING_SUCCESS_URL
@@ -311,7 +317,9 @@ public class HotelViewController {
                 serviceIds,
                 bookingSummaryDTO.checkInDate(),
                 bookingSummaryDTO.checkOutDate(),
-                amounts
+                amounts,
+                bookingSummaryDTO.amountOfAdults(),
+                bookingSummaryDTO.amountOfChildren()
         );
 
         model.addAttribute("bookingSummary", bookingSummaryDTO);

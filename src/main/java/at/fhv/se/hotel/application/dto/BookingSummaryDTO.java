@@ -11,6 +11,9 @@ public class BookingSummaryDTO {
     private List<ServiceDTO> services;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
+    private int amountOfAdults;
+    private int amountOfChildren;
+    private String additionalInformation;
 
     public static Builder builder() {
         return new Builder();
@@ -35,6 +38,16 @@ public class BookingSummaryDTO {
     public LocalDate checkOutDate() {
         return this.checkOutDate;
     }
+
+    public int amountOfAdults() {
+        return amountOfAdults;
+    }
+
+    public int amountOfChildren() {
+        return amountOfChildren;
+    }
+
+    public String additionalInformation() { return additionalInformation; };
 
     public static class Builder {
         private final BookingSummaryDTO instance;
@@ -68,13 +81,27 @@ public class BookingSummaryDTO {
             return this;
         }
 
+        public Builder withAmountOfAdults(int amountOfAdults) {
+            this.instance.amountOfAdults = amountOfAdults;
+            return this;
+        }
+
+        public Builder withAmountOfChildren(int amountOfChildren) {
+            this.instance.amountOfChildren = amountOfChildren;
+            return this;
+        }
+
+        public Builder withAdditionalInformation(String additionalInformation) {
+            this.instance.additionalInformation = additionalInformation;
+            return this;
+        }
+
         public BookingSummaryDTO build() {
-            // TODO: Change BookingDTO to BookingSummaryDTO
             Objects.requireNonNull(this.instance.guest, "guest must be set in BookingSummaryDTO");
             Objects.requireNonNull(this.instance.categoriesWithAmounts,
                     "categoriesWithAmounts must be set in BookingSummaryDTO");
-            Objects.requireNonNull(this.instance.checkInDate, "checkInDate must be set in BookingDTO");
-            Objects.requireNonNull(this.instance.checkOutDate, "checkOutDate must be set in BookingDTO");
+            Objects.requireNonNull(this.instance.checkInDate, "checkInDate must be set in BookingSummaryDTO");
+            Objects.requireNonNull(this.instance.checkOutDate, "checkOutDate must be set in BookingSummaryDTO");
 
             return this.instance;
         }

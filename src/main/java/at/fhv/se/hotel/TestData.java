@@ -158,7 +158,10 @@ public class TestData implements ApplicationRunner {
                 LocalDate.now().plusDays(10),
                 bookingRepository.nextIdentity(),
                 michael,
-                List.of(tvService)
+                List.of(tvService),
+                2,
+                0,
+                "Extra pillow"
         );
 
         booking1.addRoomCategory(singleRoom, 1);
@@ -169,7 +172,10 @@ public class TestData implements ApplicationRunner {
                 LocalDate.now().plusDays(40),
                 bookingRepository.nextIdentity(),
                 ali,
-                List.of(tvService, breakfastService)
+                List.of(tvService, breakfastService),
+                2,
+                0,
+                "Vegetarian"
         );
         booking2.addRoomCategory(singleRoom, 2);
         booking2.addRoomCategory(doubleRoom, 1);

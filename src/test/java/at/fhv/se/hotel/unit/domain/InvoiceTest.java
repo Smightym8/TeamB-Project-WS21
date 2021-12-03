@@ -72,7 +72,10 @@ public class InvoiceTest {
                 LocalDate.of(2021, 8, 10),
                 new BookingId("1"),
                 guest,
-                services
+                services,
+                2,
+                1,
+                ""
         );
         booking.addRoomCategory(category, 1);
 
@@ -84,11 +87,40 @@ public class InvoiceTest {
         Stay stayExpected = Stay.create(booking, rooms);
 
         InvoiceId idExpected = new InvoiceId("42");
-        Invoice invoiceExpected = Invoice.create(idExpected, stayExpected, new BigDecimal("0"));
+        String invoiceNumberExpected = "30112021001";
+        int amountOfNightsExpected = 9;
+        BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76");
+        BigDecimal localTaxTotalExpected = new BigDecimal("1.52");
+        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.1");
+        BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("100");
+        BigDecimal totalNetAmountExpected = new BigDecimal("200");
+        BigDecimal totalGrossAmountExpected = new BigDecimal("300");
+
+        // when
+        Invoice invoiceActual = Invoice.create(
+                idExpected,
+                invoiceNumberExpected,
+                stayExpected,
+                amountOfNightsExpected,
+                localTaxPerPersonExpected,
+                localTaxTotalExpected,
+                valueAddedTaxInPercentExpected,
+                valueAddedTaxInEuroExpected,
+                totalNetAmountExpected,
+                totalGrossAmountExpected
+        );
 
         // then
-        assertEquals(idExpected, invoiceExpected.getInvoiceId());
-        assertEquals(stayExpected, invoiceExpected.getStay());
+        assertEquals(idExpected, invoiceActual.getInvoiceId());
+        assertEquals(invoiceNumberExpected, invoiceActual.getInvoiceNumber());
+        assertEquals(stayExpected, invoiceActual.getStay());
+        assertEquals(amountOfNightsExpected, invoiceActual.getAmountOfNights());
+        assertEquals(localTaxPerPersonExpected, invoiceActual.getLocalTaxPerPerson());
+        assertEquals(localTaxTotalExpected, invoiceActual.getLocalTaxTotal());
+        assertEquals(valueAddedTaxInPercentExpected, invoiceActual.getValueAddedTaxInPercent());
+        assertEquals(valueAddedTaxInEuroExpected, invoiceActual.getValueAddedTaxInEuro());
+        assertEquals(totalNetAmountExpected, invoiceActual.getTotalNetAmount());
+        assertEquals(totalGrossAmountExpected, invoiceActual.getTotalGrossAmount());
     }
 
     @Test
@@ -138,7 +170,10 @@ public class InvoiceTest {
                 LocalDate.of(2021,11,29),
                 new BookingId("1"),
                 guest,
-                services
+                services,
+                2,
+                1,
+                ""
         );
         booking.addRoomCategory(category, 1);
 
@@ -156,10 +191,7 @@ public class InvoiceTest {
 
         Stay stayExpected = Stay.create(booking, rooms);
 
-        BigDecimal totalAmountServices = new BigDecimal("200");
-        BigDecimal totalAmountNights = new BigDecimal("1800");
-
-        BigDecimal totalAmountExpected = totalAmountNights.add(totalAmountServices); // 2.000
+        BigDecimal totalAmountExpected = new BigDecimal("2201.52");
 
         // when
         Mockito.when(roomCategoryPriceRepository.priceBySeasonAndCategory(Season.SUMMER, category.getRoomCategoryId()))
@@ -168,7 +200,6 @@ public class InvoiceTest {
         Invoice invoice = invoiceCalculationService.calculateInvoice(stayExpected);
 
         // then
-        assertEquals(totalAmountExpected, invoice.getTotalAmount());
+        assertEquals(totalAmountExpected, invoice.getTotalGrossAmount());
     }
-    
 }
