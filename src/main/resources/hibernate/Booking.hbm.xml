@@ -27,7 +27,7 @@
         <many-to-one name="guest" column="guest_id" class="at.fhv.se.hotel.domain.model.guest.Guest" not-null="true"/>
 
         <!-- Many to many mapping to service class -->
-        <bag name="services" cascade="save-update">
+        <bag name="services" cascade="all">
             <key column="booking_id" not-null="false" />
             <many-to-many column="service_id" class="at.fhv.se.hotel.domain.model.service.Service"/>
         </bag>
