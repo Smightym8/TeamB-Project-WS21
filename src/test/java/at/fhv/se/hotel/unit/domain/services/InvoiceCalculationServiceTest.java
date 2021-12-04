@@ -4,6 +4,7 @@ import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
 import at.fhv.se.hotel.domain.model.guest.*;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
+import at.fhv.se.hotel.domain.model.invoice.InvoiceId;
 import at.fhv.se.hotel.domain.model.room.Room;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.*;
@@ -12,6 +13,7 @@ import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.model.stay.Stay;
+import at.fhv.se.hotel.domain.repository.InvoiceRepository;
 import at.fhv.se.hotel.domain.repository.RoomCategoryPriceRepository;
 import at.fhv.se.hotel.domain.services.api.InvoiceCalculationService;
 import org.junit.jupiter.api.Test;
@@ -24,9 +26,11 @@ import org.springframework.test.context.ActiveProfiles;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -39,6 +43,9 @@ public class InvoiceCalculationServiceTest {
 
     @MockBean
     RoomCategoryPriceRepository roomCategoryPriceRepository;
+
+    @MockBean
+    InvoiceRepository invoiceRepository;
 
     @Test
     void given_invoicedetails_when_calculate_then_returnexpectedamount() {
@@ -95,6 +102,7 @@ public class InvoiceCalculationServiceTest {
 
         Stay stayExpected = Stay.create(booking, rooms);
 
+        String invoiceNumberExpected = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001";
         int amountOfNightsExpected = 3;
         BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76");
         BigDecimal localTaxTotalExpected = new BigDecimal("1.52");
@@ -104,12 +112,19 @@ public class InvoiceCalculationServiceTest {
         BigDecimal totalGrossAmountExpected = new BigDecimal("2201.52");
 
         // when
+        Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
+
+        Mockito.when(invoiceRepository.nextIdentity()).thenReturn(
+            new InvoiceId(UUID.randomUUID().toString().toUpperCase())
+        );
+
         Mockito.when(roomCategoryPriceRepository.priceBySeasonAndCategory(Season.SUMMER, category.getRoomCategoryId()))
                 .thenReturn(java.util.Optional.of(price));
 
         Invoice invoice = invoiceCalculationService.calculateInvoice(stayExpected);
 
         // then
+        assertEquals(invoiceNumberExpected, invoice.getInvoiceNumber());
         assertEquals(amountOfNightsExpected, invoice.getAmountOfNights());
         assertEquals(localTaxPerPersonExpected, invoice.getLocalTaxPerPerson());
         assertEquals(localTaxTotalExpected, invoice.getLocalTaxTotal());

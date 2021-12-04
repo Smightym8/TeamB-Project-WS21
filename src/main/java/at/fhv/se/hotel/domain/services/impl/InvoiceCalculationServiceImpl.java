@@ -34,15 +34,15 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
 
     @Override
     public Invoice calculateInvoice(Stay stay) {
-        int todaysInvoicesAmount = invoiceRepository.invoicesByDate(LocalDate.now()).size();
+        int todaysInvoicesAmount = invoiceRepository.invoicesByDate(LocalDate.now()).size() + 1;
         List<RoomCategoryPrice> roomCategoryPriceList = new ArrayList<>();
 
         String invoiceSuffix = "";
 
         if (todaysInvoicesAmount < 10) {
-            invoiceSuffix = "00" + String.valueOf(todaysInvoicesAmount);
+            invoiceSuffix = "00" + todaysInvoicesAmount;
         } else if (todaysInvoicesAmount < 100) {
-            invoiceSuffix = "0" + String.valueOf(todaysInvoicesAmount);
+            invoiceSuffix = "0" + todaysInvoicesAmount;
         } else {
             invoiceSuffix = String.valueOf(todaysInvoicesAmount);
         }

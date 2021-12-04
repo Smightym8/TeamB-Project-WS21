@@ -122,6 +122,7 @@ public class CheckOutServiceTest {
         BigDecimal totalGrossAmountExpected = new BigDecimal("3191.52");
 
 
+        Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
         Mockito.when(stayRepository.stayById(idExpected)).thenReturn(Optional.of(stayExpected));
         Mockito.when(roomCategoryPriceRepository.by(categoriesExpected.get(0), Season.SUMMER))
                 .thenReturn(roomCategoryPricesExpected.get(0));
