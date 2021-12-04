@@ -1,6 +1,6 @@
 package at.fhv.se.hotel.unit.application;
 
-import at.fhv.se.hotel.application.dto.StayDTO;
+import at.fhv.se.hotel.application.dto.StayListingDTO;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -17,7 +17,7 @@ public class StayDTOTest {
         LocalDate checkOutDateExpected = LocalDate.of(2021, 12, 1);
 
         //when
-        StayDTO stayDTOExpected = StayDTO.builder()
+        StayListingDTO stayDTOExpected = StayListingDTO.builder()
                 .withId(idExpected)
                 .withGuestFirstName(guestFirstNameExpected)
                 .withGuestLastName(guestLastNameExpected)
