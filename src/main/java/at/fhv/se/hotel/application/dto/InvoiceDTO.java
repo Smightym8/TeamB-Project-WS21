@@ -18,10 +18,13 @@ public class InvoiceDTO {
     private List<BigDecimal> roomCategoryPrices;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
-    private BigDecimal invoiceAmount;
-    private BigDecimal invoiceTaxes;
-    private BigDecimal invoiceTotalAmount;
-    private LocalDate dueByDate;
+    private int amountOfNights;
+    private BigDecimal localTaxPerPerson;
+    private BigDecimal localTaxTotal;
+    private BigDecimal valueAddedTaxInPercent;
+    private BigDecimal valueAddedTaxInEuro;
+    private BigDecimal totalNetAmount;
+    private BigDecimal totalGrossAmount;
 
     public static Builder builder() {
         return new Builder();
@@ -71,20 +74,32 @@ public class InvoiceDTO {
         return checkOutDate;
     }
 
-    public BigDecimal invoiceAmount() {
-        return invoiceAmount;
+    public int amountOfNights() {
+        return amountOfNights;
     }
 
-    public BigDecimal invoiceTaxes() {
-        return invoiceTaxes;
+    public BigDecimal localTaxPerPerson() {
+        return localTaxPerPerson;
     }
 
-    public BigDecimal invoiceTotalAmount() {
-        return invoiceTotalAmount;
+    public BigDecimal localTaxTotal() {
+        return localTaxTotal;
     }
 
-    public LocalDate dueByDate() {
-        return dueByDate;
+    public BigDecimal valueAddedTaxInPercent() {
+        return valueAddedTaxInPercent;
+    }
+
+    public BigDecimal valueAddedTaxInEuro() {
+        return valueAddedTaxInEuro;
+    }
+
+    public BigDecimal totalNetAmount() {
+        return totalNetAmount;
+    }
+
+    public BigDecimal totalGrossAmount() {
+        return totalGrossAmount;
     }
 
     public static class Builder {
@@ -149,23 +164,38 @@ public class InvoiceDTO {
             return this;
         }
 
-        public Builder withInvoiceAmount(BigDecimal invoiceAmount) {
-            this.instance.invoiceAmount = invoiceAmount;
+        public Builder withAmountOfNights(int amountOfNights) {
+            this.instance.amountOfNights = amountOfNights;
             return this;
         }
 
-        public Builder withInvoiceTaxes(BigDecimal invoiceTaxes) {
-            this.instance.invoiceTaxes = invoiceTaxes;
+        public Builder withLocalTaxPerPerson(BigDecimal localTaxPerPerson) {
+            this.instance.localTaxPerPerson = localTaxPerPerson;
             return this;
         }
 
-        public Builder withTotalAmount(BigDecimal invoiceTotalAmount) {
-            this.instance.invoiceTotalAmount = invoiceTotalAmount;
+        public Builder withLocalTaxTotal(BigDecimal localTaxTotal) {
+            this.instance.localTaxTotal = localTaxTotal;
             return this;
         }
 
-        public Builder withDueByDate(LocalDate dueByDate) {
-            this.instance.dueByDate = dueByDate;
+        public Builder withValueAddedTaxInPercent(BigDecimal valueAddedTaxInPercent) {
+            this.instance.valueAddedTaxInPercent = valueAddedTaxInPercent;
+            return this;
+        }
+
+        public Builder withValueAddedTaxInEuro(BigDecimal valueAddedTaxInEuro) {
+            this.instance.valueAddedTaxInEuro = valueAddedTaxInEuro;
+            return this;
+        }
+
+        public Builder withTotalNetAmount(BigDecimal totalNetAmount) {
+            this.instance.totalNetAmount = totalNetAmount;
+            return this;
+        }
+
+        public Builder withTotalGrossAmount(BigDecimal totalGrossAmount) {
+            this.instance.totalGrossAmount = totalGrossAmount;
             return this;
         }
 
@@ -180,10 +210,12 @@ public class InvoiceDTO {
             Objects.requireNonNull(this.instance.roomCategoryPrices, "roomCategoryPrices must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.checkInDate, "checkInDate must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.checkOutDate, "checkOutDate must be set in InvoiceDTO");
-            Objects.requireNonNull(this.instance.invoiceAmount, "invoiceAmount must be set in InvoiceDTO");
-            Objects.requireNonNull(this.instance.invoiceTaxes, "invoiceTaxes must be set in InvoiceDTO");
-            Objects.requireNonNull(this.instance.invoiceTotalAmount, "invoiceTotalAmount must be set in InvoiceDTO");
-            Objects.requireNonNull(this.instance.dueByDate, "dueByDate must be set in InvoiceDTO");
+            Objects.requireNonNull(this.instance.localTaxPerPerson, "localTaxPerPerson must be set in InvoiceDTO");
+            Objects.requireNonNull(this.instance.localTaxTotal, "localTaxTotal must be set in InvoiceDTO");
+            Objects.requireNonNull(this.instance.valueAddedTaxInPercent, "valueAddedTaxInPercent must be set in InvoiceDTO");
+            Objects.requireNonNull(this.instance.valueAddedTaxInEuro, "valueAddedTaxInEuro must be set in InvoiceDTO");
+            Objects.requireNonNull(this.instance.totalNetAmount, "totalNetAmount must be set in InvoiceDTO");
+            Objects.requireNonNull(this.instance.totalGrossAmount, "totalGrossAmount must be set in InvoiceDTO");
 
             return this.instance;
         }

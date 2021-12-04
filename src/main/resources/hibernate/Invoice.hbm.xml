@@ -28,5 +28,11 @@
 
         <!-- Many to one mapping to stay -->
         <many-to-one name="stay" column="stay_id" class="at.fhv.se.hotel.domain.model.stay.Stay" not-null="true"/>
+
+        <!-- Many to Many mapping to RoomCategoryPrice -->
+        <bag name="roomCategoryPriceList" cascade="save-update">
+            <key column="invoice_id" not-null="true" />
+            <many-to-many column="roomcategory_price_id" class="at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice"/>
+        </bag>
     </class>
 </hibernate-mapping>

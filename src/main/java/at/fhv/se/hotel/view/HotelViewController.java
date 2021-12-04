@@ -63,12 +63,16 @@ public class HotelViewController {
     private static final String CREATE_BOOKING_URL = "/createbooking";
     private static final String CREATE_BOOKING_SUCCESS_URL = "/createbookingSuccess";
 
+/*----- Check-In -----*/
     private static final String BOOKING_DETAILS_URL = "/bookingdetails/{id}";
     private static final String BOOKING_DETAILS_VIEW = "booking/bookingDetails";
 
-/*----- Check-In -----*/
     private static final String CHECK_IN_URL = "/check-in";
     private static final String CHECK_IN_VIEW = "checkIn";
+
+/*----- Check-Out -----*/
+    private static final String STAY_DETAILS_URL = "/staydetails/{id}";
+    private static final String STAY_DETAILS_VIEW = "stay/stayDetails";
 
 /*----- Error -----*/
     private static final String ERROR_URL = "/error";
@@ -102,6 +106,9 @@ public class HotelViewController {
 
     @Autowired
     private StayListingService stayListingService;
+
+    @Autowired
+    private StayDetailsService stayDetailsService;
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
@@ -355,6 +362,18 @@ public class HotelViewController {
         model.addAttribute("isCheckedIn", isCheckedIn);
 
         return CHECK_IN_VIEW;
+    }
+
+/*----- Check-Out -----*/
+
+    @GetMapping(STAY_DETAILS_URL)
+    public String showStay(@PathVariable String id, Model model) {
+
+        BookingDetailsDTO bookingDetailsDTO =  bookingSummaryService.detailsByBookingId(id);
+        StayDetailsDTO stayDetailsDTO =  stayDetailsService.detailsById(id);
+        model.addAttribute("stayDetails", stayDetailsDTO);
+
+        return STAY_DETAILS_VIEW;
     }
 
 /*----- Error -----*/

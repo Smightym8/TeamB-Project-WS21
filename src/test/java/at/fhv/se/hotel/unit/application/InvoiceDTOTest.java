@@ -35,10 +35,13 @@ public class InvoiceDTOTest {
         );
         LocalDate checkInDateExpected = LocalDate.of(2021,11,20);
         LocalDate checkOutDateExpected = LocalDate.of(2021,11,23);
-        BigDecimal invoiceAmountExpected = new BigDecimal("1100");
-        BigDecimal invoiceTaxesExpected = new BigDecimal("200");
-        BigDecimal invoiceTotalAmountExpected = new BigDecimal("1300");
-        LocalDate dueByExpected = checkOutDateExpected.plusDays(14);
+        int amountOfNightsExpected = 9;
+        BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76");
+        BigDecimal localTaxTotalExpected = new BigDecimal("1.52");
+        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.1");
+        BigDecimal totalNetAmountExpected = new BigDecimal("2900");
+        BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("290");
+        BigDecimal totalGrossAmountExpected = new BigDecimal("3191.52");
 
         // when
         InvoiceDTO invoiceDTOExpected = InvoiceDTO.builder()
@@ -53,10 +56,13 @@ public class InvoiceDTOTest {
                 .withCategoryPrices(roomCategoryPricesExpected)
                 .withCheckInDate(checkInDateExpected)
                 .withCheckOutDate(checkOutDateExpected)
-                .withInvoiceAmount(invoiceAmountExpected)
-                .withInvoiceTaxes(invoiceTaxesExpected)
-                .withTotalAmount(invoiceTotalAmountExpected)
-                .withDueByDate(dueByExpected)
+                .withAmountOfNights(amountOfNightsExpected)
+                .withLocalTaxPerPerson(localTaxPerPersonExpected)
+                .withLocalTaxTotal(localTaxTotalExpected)
+                .withValueAddedTaxInPercent(valueAddedTaxInPercentExpected)
+                .withValueAddedTaxInEuro(valueAddedTaxInEuroExpected)
+                .withTotalNetAmount(totalNetAmountExpected)
+                .withTotalGrossAmount(totalGrossAmountExpected)
                 .build();
 
         // then
@@ -71,9 +77,12 @@ public class InvoiceDTOTest {
         assertEquals(roomCategoryPricesExpected.size(), invoiceDTOExpected.roomCategoryPrices().size());
         assertEquals(checkInDateExpected, invoiceDTOExpected.checkInDate());
         assertEquals(checkOutDateExpected, invoiceDTOExpected.checkOutDate());
-        assertEquals(invoiceAmountExpected, invoiceDTOExpected.invoiceAmount());
-        assertEquals(invoiceTaxesExpected, invoiceDTOExpected.invoiceTaxes());
-        assertEquals(invoiceTotalAmountExpected, invoiceDTOExpected.invoiceTotalAmount());
-        assertEquals(dueByExpected, invoiceDTOExpected.dueByDate());
+        assertEquals(amountOfNightsExpected, invoiceDTOExpected.amountOfNights());
+        assertEquals(localTaxPerPersonExpected, invoiceDTOExpected.localTaxPerPerson());
+        assertEquals(localTaxTotalExpected, invoiceDTOExpected.localTaxTotal());
+        assertEquals(valueAddedTaxInPercentExpected, invoiceDTOExpected.valueAddedTaxInPercent());
+        assertEquals(totalNetAmountExpected, invoiceDTOExpected.totalNetAmount());
+        assertEquals(valueAddedTaxInEuroExpected, invoiceDTOExpected.valueAddedTaxInEuro());
+        assertEquals(totalGrossAmountExpected, invoiceDTOExpected.totalGrossAmount());
     }
 }
