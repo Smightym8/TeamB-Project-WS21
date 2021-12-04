@@ -30,7 +30,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class CheckOutServiceTest {
@@ -147,5 +147,108 @@ public class CheckOutServiceTest {
         assertEquals(totalNetAmountExpected, invoiceActual.totalNetAmount());
         assertEquals(valueAddedTaxInEuroExpected, invoiceActual.valueAddedTaxInEuro());
         assertEquals(totalGrossAmountExpected, invoiceActual.totalGrossAmount());
+    }
+
+    @Test
+    void given_existingstay_whencheckout_thenreturntrue() {
+
+        // given
+        Guest guestExpected = Guest.create(new GuestId("1"),
+                new FullName("Michael", "Spiegel"),
+                Gender.MALE,
+                new Address("Hochschulstraße",
+                        "1", "Dornbirn",
+                        "6850", "Austria"),
+                LocalDate.of(1999, 3, 20),
+                "+43 660 123 456 789",
+                "michael.spiegel@students.fhv.at",
+                Collections.emptyList()
+        );
+
+        List<RoomCategory> categoriesExpected = List.of(
+                RoomCategory.create(new RoomCategoryId("1"),
+                        new RoomCategoryName("Single Room"),
+                        new Description("This is a single room"))
+        );
+
+        List<Service> servicesExpected = Arrays.asList(
+                Service.create(new ServiceId("1"),
+                        new ServiceName("TV"),
+                        new Price(new BigDecimal("100"))),
+                Service.create(new ServiceId("2"),
+                        new ServiceName("Breakfast"),
+                        new Price(new BigDecimal("100")))
+        );
+
+        Booking bookingExpected = Booking.create(
+                LocalDate.of(2021, 8, 1),
+                LocalDate.of(2021, 8, 10),
+                new BookingId("1"),
+                guestExpected,
+                servicesExpected,
+                2,
+                1,
+                "Nothing"
+        );
+
+        categoriesExpected.forEach(roomCategory -> bookingExpected.addRoomCategory(roomCategory, 1));
+
+        List<RoomCategoryPrice> roomCategoryPricesExpected = List.of(
+                RoomCategoryPrice.create(
+                        new RoomCategoryPriceId("1"),
+                        Season.SUMMER,
+                        categoriesExpected.get(0),
+                        new BigDecimal("300")
+                )
+        );
+
+        String roomNameExpected = "Room 1";
+        RoomStatus roomStatusExpected = RoomStatus.FREE;
+
+        List<Room> roomsExpected = List.of(
+                Room.create(
+                        roomNameExpected,
+                        roomStatusExpected,
+                        categoriesExpected.get(0)
+                )
+        );
+
+        StayId idExpected = new StayId(bookingExpected.getBookingId().id());
+        Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
+
+        int amountOfNightsExpected = 9;
+        BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76");
+        BigDecimal localTaxTotalExpected = new BigDecimal("1.52");
+        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.1");
+        BigDecimal totalNetAmountExpected = new BigDecimal("2901.52");
+        BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("290.0");
+        BigDecimal totalGrossAmountExpected = new BigDecimal("3191.52");
+
+
+        Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
+        Mockito.when(stayRepository.stayById(idExpected)).thenReturn(Optional.of(stayExpected));
+        Mockito.when(roomCategoryPriceRepository.by(categoriesExpected.get(0), Season.SUMMER))
+                .thenReturn(roomCategoryPricesExpected.get(0));
+
+        // when
+        boolean statusActual = checkOutService.checkOut(stayExpected.getStayId().id());
+
+        // then
+        assertTrue(statusActual);
+    }
+
+
+    @Test
+    void given_nonexistingstay_whencheckout_thenreturnfalse() {
+
+        // given
+        String nonExistingId = "0";
+
+        // when
+        boolean statusActual = checkOutService.checkOut(nonExistingId);
+
+        // then
+        assertFalse(statusActual);
+
     }
 }

@@ -8,10 +8,12 @@ import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.model.stay.StayId;
+import at.fhv.se.hotel.domain.repository.InvoiceRepository;
 import at.fhv.se.hotel.domain.repository.StayRepository;
 import at.fhv.se.hotel.domain.services.api.InvoiceCalculationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -28,6 +30,10 @@ public class CheckOutServiceImpl implements CheckOutService {
     @Autowired
     InvoiceCalculationService invoiceCalculationService;
 
+    @Autowired
+    InvoiceRepository invoiceRepository;
+
+    @Transactional(readOnly = true)
     @Override
     public InvoiceDTO createInvoice(String stayId) {
         Stay stay = stayRepository.stayById(new StayId(stayId)).get();
@@ -72,8 +78,21 @@ public class CheckOutServiceImpl implements CheckOutService {
         return invoiceDTO;
     }
 
+    @Transactional
     @Override
-    public void checkOut(String stayId) {
+    public boolean checkOut(String stayId) {
         // TODO: Write test and implement method
+        if (stayRepository.stayById(new StayId(stayId)).isPresent()) {
+
+            Stay stay = stayRepository.stayById(new StayId(stayId)).get();
+            Invoice invoice = invoiceCalculationService.calculateInvoice(stay);
+
+            invoiceRepository.add(invoice);
+            stay.deactivate();
+
+            return true;
+        } else {
+            return false;
+        }
     }
 }
