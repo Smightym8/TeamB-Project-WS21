@@ -74,7 +74,9 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
                         ).multiply(new BigDecimal(brc.getAmount()))
                 );
 
-                roomCategoryPriceList.add(currentCategoryPrice);
+                if(!roomCategoryPriceList.contains(currentCategoryPrice)) {
+                    roomCategoryPriceList.add(currentCategoryPrice);
+                }
             }
 
             tempDate = tempDate.plusDays(1);
