@@ -3,6 +3,7 @@ package at.fhv.se.hotel.application.dto;
 import java.time.LocalDate;
 import java.util.Objects;
 
+// Todo change name to StayListDTO
 public class StayDTO {
     private String id;
     private String guestFirstName;

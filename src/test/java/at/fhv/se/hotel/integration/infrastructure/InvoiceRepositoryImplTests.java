@@ -10,9 +10,7 @@ import at.fhv.se.hotel.domain.model.invoice.Invoice;
 import at.fhv.se.hotel.domain.model.invoice.InvoiceId;
 import at.fhv.se.hotel.domain.model.room.Room;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
-import at.fhv.se.hotel.domain.model.roomcategory.Description;
-import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
-import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryName;
+import at.fhv.se.hotel.domain.model.roomcategory.*;
 import at.fhv.se.hotel.domain.model.service.Price;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
@@ -60,6 +58,9 @@ public class InvoiceRepositoryImplTests {
     RoomCategoryRepository roomCategoryRepository;
 
     @Autowired
+    RoomCategoryPriceRepository roomCategoryPriceRepository;
+
+    @Autowired
     RoomRepository roomRepository;
 
     @Autowired
@@ -90,8 +91,8 @@ public class InvoiceRepositoryImplTests {
 
         BookingId idExpected = new BookingId("1337");
         Booking bookingExpected = Booking.create(
-                LocalDate.now(),
-                LocalDate.now().plusDays(10),
+                LocalDate.of(2021, 12, 5),
+                LocalDate.of(2021, 12, 15),
                 idExpected,
                 guestExpected,
                 servicesExpected,
@@ -109,6 +110,21 @@ public class InvoiceRepositoryImplTests {
         );
         bookingExpected.addRoomCategory(categoriesExpected.get(0), 1);
         bookingExpected.addRoomCategory(categoriesExpected.get(1), 1);
+
+        List<RoomCategoryPrice> categoryPricesExpected = List.of(
+                RoomCategoryPrice.create(
+                        roomCategoryPriceRepository.nextIdentity(),
+                        Season.WINTER,
+                        categoriesExpected.get(0),
+                        new BigDecimal("300")
+                ),
+                RoomCategoryPrice.create(
+                        roomCategoryPriceRepository.nextIdentity(),
+                        Season.WINTER,
+                        categoriesExpected.get(1),
+                        new BigDecimal("500")
+                )
+        );
 
         String roomNameExpected = "Room 1";
         RoomStatus roomStatusExpected = RoomStatus.FREE;
@@ -136,6 +152,7 @@ public class InvoiceRepositoryImplTests {
                 invoiceIdExpected,
                 invoiceNumberExpected,
                 stayExpected,
+                categoryPricesExpected,
                 amountOfNightsExpected,
                 localTaxPerPersonExpected,
                 localTaxTotalExpected,
@@ -150,6 +167,7 @@ public class InvoiceRepositoryImplTests {
         this.guestRepository.add(guestExpected);
         categoriesExpected.forEach(category -> this.roomCategoryRepository.add(category));
         this.bookingRepository.add(bookingExpected);
+        categoryPricesExpected.forEach(roomCategoryPrice -> this.roomCategoryPriceRepository.add(roomCategoryPrice));
         this.roomRepository.add(roomsExpected.get(0));
         this.invoiceRepository.add(invoiceExpected);
         em.flush();
@@ -243,6 +261,21 @@ public class InvoiceRepositoryImplTests {
         bookingsExpected.get(1).addRoomCategory(categoriesExpected.get(1), 1);
         bookingsExpected.get(2).addRoomCategory(categoriesExpected.get(0),2);
 
+        List<RoomCategoryPrice> categoryPricesExpected = List.of(
+                RoomCategoryPrice.create(
+                        roomCategoryPriceRepository.nextIdentity(),
+                        Season.WINTER,
+                        categoriesExpected.get(0),
+                        new BigDecimal("300")
+                ),
+                RoomCategoryPrice.create(
+                        roomCategoryPriceRepository.nextIdentity(),
+                        Season.WINTER,
+                        categoriesExpected.get(1),
+                        new BigDecimal("500")
+                )
+        );
+
         List<String> roomsNameExpected = Arrays.asList("Room1","Room2","Room3");
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
@@ -286,6 +319,7 @@ public class InvoiceRepositoryImplTests {
                         id,
                         invoiceNumberExpected,
                         staysExpected.listIterator().next(),
+                        categoryPricesExpected,
                         amountOfNightsExpected,
                         localTaxPerPersonExpected,
                         localTaxTotalExpected,
@@ -299,6 +333,7 @@ public class InvoiceRepositoryImplTests {
         categoriesExpected.forEach(category -> this.roomCategoryRepository.add(category));
         servicesExpected.forEach(service -> this.serviceRepository.add(service));
         bookingsExpected.forEach(booking -> this.bookingRepository.add(booking));
+        categoryPricesExpected.forEach(roomCategoryPrice -> this.roomCategoryPriceRepository.add(roomCategoryPrice));
         roomsExpected.forEach(room -> this.roomRepository.add(room));
         staysExpected.forEach(stay -> this.stayRepository.add(stay));
         invoicesExpected.forEach(invoice -> this.invoiceRepository.add(invoice));

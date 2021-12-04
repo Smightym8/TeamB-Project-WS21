@@ -25,5 +25,8 @@
         <many-to-one name="booking" column="booking_id" class="at.fhv.se.hotel.domain.model.booking.Booking"
                      not-null="true" unique="true"/>
 
+        <!-- Primitive datatypes of class stay -->
+        <property name="isActive" column="is_active" type="java.lang.Boolean" />
+
     </class>
 </hibernate-mapping>
