@@ -74,7 +74,7 @@
                     <td th:text="${stay.guestFirstName} + ' ' + ${stay.guestLastName}"></td>
                     <td th:text="${stay.checkOutDate}"></td>
                     <td></td>
-                    <td><a th:href="@{/}" type="button" class="btn btn-primary btn-sm">View / Check-out</a></td>
+                    <td><a th:href="@{/staydetails/{id}(id=${stay.id})}" type="button" class="btn btn-primary btn-sm">View / Check-Out</a></td>
                 </tr>
                 </tbody>
             </table>
