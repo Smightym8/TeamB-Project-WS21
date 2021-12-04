@@ -26,6 +26,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -41,6 +42,10 @@ public class InvoiceTest {
     @Test
     void given_invoicedetails_when_createinvoice_then_detailsequals() {
         // given
+        Mockito.when(roomCategoryPriceRepository.nextIdentity()).thenReturn(
+            new RoomCategoryPriceId(UUID.randomUUID().toString().toUpperCase())
+        );
+
         Guest guest = Guest.create(new GuestId("1"),
                 new FullName("Michael", "Spiegel"),
                 Gender.MALE,
@@ -79,6 +84,15 @@ public class InvoiceTest {
         );
         booking.addRoomCategory(category, 1);
 
+        List<RoomCategoryPrice> categoryPricesExpected = List.of(
+                RoomCategoryPrice.create(
+                        roomCategoryPriceRepository.nextIdentity(),
+                        Season.SUMMER,
+                        category,
+                        new BigDecimal("300")
+                )
+        );
+
         List<Room> rooms = List.of(
                 Room.create("101", RoomStatus.FREE, category)
         );
@@ -101,6 +115,7 @@ public class InvoiceTest {
                 idExpected,
                 invoiceNumberExpected,
                 stayExpected,
+                categoryPricesExpected,
                 amountOfNightsExpected,
                 localTaxPerPersonExpected,
                 localTaxTotalExpected,
@@ -134,72 +149,5 @@ public class InvoiceTest {
         assertEquals(id0_1, id0_2, "both ids should be equal");
         assertNotEquals(id0_1, id1, "the ids should not be equal");
         assertNotEquals(id0_2, id1, "the ids should not be equal");
-    }
-
-    @Test
-    void given_invoicedetails_when_calculate_then_returnexpectedamount() {
-        // given
-        Guest guest = Guest.create(new GuestId("1"),
-                new FullName("Michael", "Spiegel"),
-                Gender.MALE,
-                new Address("Hochschulstraße",
-                        "1", "Dornbirn",
-                        "6850", "Austria"),
-                LocalDate.of(1999, 3, 20),
-                "+43 660 123 456 789",
-                "michael.spiegel@students.fhv.at",
-                Collections.emptyList()
-        );
-
-        RoomCategory category = RoomCategory.create(new RoomCategoryId("1"),
-                new RoomCategoryName("Single Room"),
-                new Description("This is a single room")
-        );
-
-        List<Service> services = Arrays.asList(
-                Service.create(new ServiceId("1"),
-                        new ServiceName("TV"),
-                        new Price(new BigDecimal("100"))),
-                Service.create(new ServiceId("2"),
-                        new ServiceName("Breakfast"),
-                        new Price(new BigDecimal("100")))
-        );
-
-        Booking booking = Booking.create(
-                LocalDate.of(2021, 11, 26),
-                LocalDate.of(2021,11,29),
-                new BookingId("1"),
-                guest,
-                services,
-                2,
-                1,
-                ""
-        );
-        booking.addRoomCategory(category, 1);
-
-        List<Room> rooms = List.of(
-                Room.create("101", RoomStatus.FREE, category)
-        );
-
-
-        RoomCategoryPrice price = RoomCategoryPrice.create(
-                new RoomCategoryPriceId("1"),
-                Season.SUMMER,
-                category,
-                new BigDecimal("600")
-        );
-
-        Stay stayExpected = Stay.create(booking, rooms);
-
-        BigDecimal totalAmountExpected = new BigDecimal("2201.52");
-
-        // when
-        Mockito.when(roomCategoryPriceRepository.priceBySeasonAndCategory(Season.SUMMER, category.getRoomCategoryId()))
-                .thenReturn(java.util.Optional.of(price));
-
-        Invoice invoice = invoiceCalculationService.calculateInvoice(stayExpected);
-
-        // then
-        assertEquals(totalAmountExpected, invoice.getTotalGrossAmount());
     }
 }

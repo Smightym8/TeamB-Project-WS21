@@ -3,6 +3,7 @@ package at.fhv.se.hotel.domain.services.impl;
 import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
 import at.fhv.se.hotel.domain.model.invoice.InvoiceId;
+import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
 import at.fhv.se.hotel.domain.model.roomcategory.Season;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.stay.Stay;
@@ -16,6 +17,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class InvoiceCalculationServiceImpl implements InvoiceCalculationService {
@@ -31,8 +34,8 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
 
     @Override
     public Invoice calculateInvoice(Stay stay) {
-
         int todaysInvoicesAmount = invoiceRepository.invoicesByDate(LocalDate.now()).size();
+        List<RoomCategoryPrice> roomCategoryPriceList = new ArrayList<>();
 
         String invoiceSuffix = "";
 
@@ -61,13 +64,17 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
         for(int i = 0; i < nights; i++) {
             Season currentSeason = Season.seasonByDate(tempDate);
             for(BookingWithRoomCategory brc : stay.getBooking().getRoomCategories()) {
+                RoomCategoryPrice currentCategoryPrice = roomCategoryPriceService.by(
+                        brc.getRoomCategory(), currentSeason
+                );
+
                 totalNetAmount = totalNetAmount.add(
                         (
-                                roomCategoryPriceService.by(
-                                        brc.getRoomCategory(), currentSeason
-                                ).getPrice()
+                                currentCategoryPrice.getPrice()
                         ).multiply(new BigDecimal(brc.getAmount()))
                 );
+
+                roomCategoryPriceList.add(currentCategoryPrice);
             }
 
             tempDate = tempDate.plusDays(1);
@@ -93,6 +100,7 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
                 invoiceRepository.nextIdentity(),
                 invoiceNumber,
                 stay,
+                roomCategoryPriceList,
                 nights,
                 localTaxInEuro,
                 localTaxTotal,
