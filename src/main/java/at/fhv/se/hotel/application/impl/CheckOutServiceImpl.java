@@ -63,6 +63,8 @@ public class CheckOutServiceImpl implements CheckOutService {
                 .withStreetNumber(invoice.getStay().getGuest().getAddress().streetNumber())
                 .withZipCode(invoice.getStay().getGuest().getAddress().zipCode())
                 .withCity(invoice.getStay().getGuest().getAddress().city())
+                .withAmountOfAdults(invoice.getStay().getBooking().getAmountOfAdults())
+                .withAmountOfChildren(invoice.getStay().getBooking().getAmountOfChildren())
                 .withServices(services)
                 .withCategories(roomCategories)
                 .withCategoryPrices(roomCategoryPrices)

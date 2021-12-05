@@ -16,6 +16,8 @@ public class InvoiceDTO {
     private String streetNumber;
     private String zipCode;
     private String city;
+    private int amountOfAdults;
+    private int amountOfChildren;
     private Map<String, BigDecimal> services;
     private Map<String, Integer> roomCategories;
     private List<BigDecimal> roomCategoryPrices;
@@ -63,6 +65,14 @@ public class InvoiceDTO {
 
     public String city() {
         return city;
+    }
+
+    public int amountOfAdults() {
+        return amountOfAdults;
+    }
+
+    public int amountOfChildren() {
+        return amountOfChildren;
     }
 
     public Map<String, BigDecimal> services() {
@@ -157,6 +167,16 @@ public class InvoiceDTO {
 
         public Builder withCity(String city) {
             this.instance.city = city;
+            return this;
+        }
+
+        public Builder withAmountOfAdults(int amountOfAdults) {
+            this.instance.amountOfAdults = amountOfAdults;
+            return this;
+        }
+
+        public Builder withAmountOfChildren(int amountOfChildren) {
+            this.instance.amountOfChildren = amountOfChildren;
             return this;
         }
 

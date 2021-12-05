@@ -78,6 +78,10 @@
                 <div class="col">
                     <div th:text="'Booking period: ' + ${invoice.checkInDate} + ' - ' + ${invoice.checkOutDate}"></div>
                     <div th:text="${invoice.amountOfNights} + ' Overnight stays'"></div>
+                    <div th:text="'Adults: ' + ${invoice.amountOfAdults}"></div>
+                    <div th:if="${invoice.amountOfChildren} > 0"
+                         th:text="'Children: ' + ${invoice.amountOfChildren}">
+                    </div>
                 </div>
             </div>
 
@@ -103,6 +107,31 @@
             </div>
 
             <div class="card-header">
+                Further Services
+            </div>
+
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th class="h6 col-2">Quantity</th>
+                        <th class="h6 col-2">Description</th>
+                        <th class="h6 col-1">Cost per Adult</th>
+                        <th class="h6 col-1">Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td th:text="${invoice.amountOfAdults}"></td>
+                        <td th:text="'Local Tax'"></td>
+                        <td th:text="'€' + ${invoice.localTaxPerPerson}"></td>
+                        <td  th:text="'€' + ${invoice.localTaxTotal}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-header">
                 Total
             </div>
 
@@ -112,12 +141,6 @@
                     <div class="col-2">
                         <table class="table table-clear">
                             <tbody>
-                            <tr>
-                                <td>
-                                    <strong>Local tax</strong>
-                                </td>
-                                <td class="col-1 text-end" th:text="'€' + ${invoice.localTaxTotal}"></td>
-                            </tr>
                             <tr>
                                 <td>
                                     <strong>Net amount</strong>
