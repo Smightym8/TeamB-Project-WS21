@@ -72,7 +72,11 @@ public enum Season {
 
     public static boolean isInSeason (LocalDate currentDate, Season season){
 
-        LocalDate adjustedSeasonStart = LocalDate.of(currentDate.getYear(), season.startDate.getMonth(), season.startDate.getDayOfMonth());
+        LocalDate adjustedSeasonStart = season.equals(Season.WINTER) &&
+                (currentDate.getMonth().equals(Season.WINTER.endDate.getMonth())) ?
+                LocalDate.of(currentDate.getYear(), season.startDate.getMonth(), season.startDate.getDayOfMonth()).plusYears(-1) :
+                LocalDate.of(currentDate.getYear(), season.startDate.getMonth(), season.startDate.getDayOfMonth());
+
         // Because 31.01 is before 01.12 in the same year, add 1 year to the winter end date.
         // But check if currentDate is not in the january because then winter season end has to have the same year
         LocalDate adjustedSeasonEnd = season.equals(Season.WINTER) &&
