@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class InvoiceDTO {
+    private String stayId;
     private String invoiceNumber;
     private LocalDate invoiceDate;
     private String guestFirstName;
@@ -33,6 +34,10 @@ public class InvoiceDTO {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    public String stayId() {
+        return stayId;
     }
 
     public String invoiceNumber() {
@@ -128,6 +133,11 @@ public class InvoiceDTO {
 
         private Builder() {
             this.instance = new InvoiceDTO();
+        }
+
+        public Builder withStayId(String stayId) {
+            this.instance.stayId = stayId;
+            return this;
         }
 
         public Builder withInvoiceNumber(String invoiceNumber) {
@@ -241,6 +251,7 @@ public class InvoiceDTO {
         }
 
         public InvoiceDTO build() {
+            Objects.requireNonNull(this.instance.stayId, "stayId must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.invoiceNumber, "invoiceNumber must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.invoiceDate, "invoiceDate must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.guestFirstName, "guestFirstName must be set in InvoiceDTO");

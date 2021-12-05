@@ -67,7 +67,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="stay : ${stays}">
+                <tr th:each="stay : ${stays}" th:if="${stay.isActive}">
                     <td th:text="${stay.guestFirstName} + ' ' + ${stay.guestLastName}"></td>
                     <td>
                         <ul style="list-style: none">

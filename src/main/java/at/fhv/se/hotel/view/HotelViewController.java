@@ -76,6 +76,8 @@ public class HotelViewController {
     private static final String INVOICE_URL = "/invoice/{id}";
     private static final String INVOICE_VIEW = "invoice";
 
+    private static final String CHECK_OUT_URL = "/check-out";
+
 /*----- Error -----*/
     private static final String ERROR_URL = "/error";
     private static final String ERROR_VIEW = "error";
@@ -395,6 +397,15 @@ public class HotelViewController {
         model.addAttribute("invoice", invoiceDTO);
 
         return INVOICE_VIEW;
+    }
+
+    @GetMapping(CHECK_OUT_URL)
+    public String checkOut(@RequestParam("stayId") String stayId) {
+
+        BookingDetailsDTO bookingDetailsDTO =  bookingSummaryService.detailsByBookingId(stayId);
+        checkOutService.checkOut(stayId);
+
+        return "redirect:" + HOME_URL;
     }
 
 /*----- Error -----*/

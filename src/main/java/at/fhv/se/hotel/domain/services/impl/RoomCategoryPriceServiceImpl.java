@@ -8,8 +8,6 @@ import at.fhv.se.hotel.domain.services.api.RoomCategoryPriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-
 @Component
 public class RoomCategoryPriceServiceImpl implements RoomCategoryPriceService {
 
