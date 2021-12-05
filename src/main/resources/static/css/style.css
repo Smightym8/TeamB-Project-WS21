@@ -24,3 +24,14 @@
 hr {
     opacity: 50%;
 }
+
+@media print {
+
+    .sidebar {
+        display: none !important;
+    }
+
+    .content {
+        margin: 0 !important;
+    }
+}

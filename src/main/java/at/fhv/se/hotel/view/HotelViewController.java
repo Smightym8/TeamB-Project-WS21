@@ -74,6 +74,9 @@ public class HotelViewController {
     private static final String STAY_DETAILS_URL = "/staydetails/{id}";
     private static final String STAY_DETAILS_VIEW = "stay/stayDetails";
 
+    private static final String INVOICE_URL = "/invoice/{id}";
+    private static final String INVOICE_VIEW = "invoice";
+
 /*----- Error -----*/
     private static final String ERROR_URL = "/error";
     private static final String ERROR_VIEW = "error";
@@ -109,6 +112,9 @@ public class HotelViewController {
 
     @Autowired
     private StayDetailsService stayDetailsService;
+
+    @Autowired
+    private CheckOutService checkOutService;
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
@@ -375,6 +381,17 @@ public class HotelViewController {
 
         return STAY_DETAILS_VIEW;
     }
+
+    @GetMapping(INVOICE_URL)
+    public String showInvoice(@PathVariable String id, Model model) {
+/*
+        InvoiceDTO invoiceDTO = checkOutService.createInvoice(id);
+        model.addAttribute("invoice", invoiceDTO);
+*/
+        return INVOICE_VIEW;
+    }
+
+
 
 /*----- Error -----*/
     @GetMapping(ERROR_URL)
