@@ -11,6 +11,7 @@ import at.fhv.se.hotel.domain.repository.RoomRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@ActiveProfiles("test")
 @SpringBootTest
 @Transactional
 public class RoomRepositoryImplTests {
@@ -30,6 +32,9 @@ public class RoomRepositoryImplTests {
 
     @Autowired
     RoomRepository roomRepository;
+
+    @Autowired
+    private EntityManager em;
 
     @Test
     void given_3freesingleroomsinrepository_when_fetchfreesinglerooms_then_returnequalrooms() {
@@ -48,6 +53,7 @@ public class RoomRepositoryImplTests {
 
         // when
         roomsExpected.forEach(room -> this.roomRepository.add(room));
+        em.flush();
         List<Room> roomsActual = this.roomRepository.roomsByCategoryAndStatus(
                 roomCategoryExpected.getRoomCategoryId(),
                 roomStatusExpected);
@@ -57,5 +63,29 @@ public class RoomRepositoryImplTests {
         for(Room r : roomsActual) {
             assertTrue(roomsExpected.contains(r));
         }
+    }
+
+    @Test
+    void given_room_when_fetchingbyname_then_returnequalsroom() {
+        // given
+        RoomCategory singleRoom = RoomCategory.create(roomCategoryRepository.nextIdentity(),
+                new RoomCategoryName("Single Room Test"),
+                new Description("This is a single room")
+        );
+
+        Room roomExpected = Room.create("101 Test", RoomStatus.FREE, singleRoom);
+
+        this.roomCategoryRepository.add(singleRoom);
+        this.roomRepository.add(roomExpected);
+        this.em.flush();
+
+        // when
+        Room roomActual = roomRepository.roomByName("101 Test").get();
+
+        // then
+        assertEquals(roomExpected, roomActual);
+        assertEquals(roomExpected.getRoomCategory(), roomActual.getRoomCategory());
+        assertEquals(roomExpected.getName(), roomActual.getName());
+        assertEquals(roomExpected.getStatus(), roomActual.getStatus());
     }
 }

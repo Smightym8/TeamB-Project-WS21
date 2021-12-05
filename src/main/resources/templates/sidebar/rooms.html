@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<body id="Rooms">
+
+    <div layout:fragment="content">
+
+        <div class="d-flex">
+            <p class="h3">Rooms</p>
+            <a class="btn btn-primary ms-5" id="modify" onclick="enable()">Modify</a>
+        </div>
+
+        <br>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th class="col-1">Room number</th>
+                <th class="col-1">Room category</th>
+                <th class="col-1"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>S101</td>
+                <td>Single Room</td>
+                <td>
+                    <select class="form-select" aria-label="Default select" disabled>
+                        <option selected="1">Not available</option>
+                        <option value="2">Free</option>
+                        <option value="3">Occupied</option>
+                        <option value="4">Dirty</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>S102</td>
+                <td>Single Room</td>
+                <td>
+                    <select class="form-select" aria-label="Default select" disabled>
+                        <option selected="1">Not available</option>
+                        <option value="2">Free</option>
+                        <option value="3">Occupied</option>
+                        <option value="4">Dirty</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>D201</td>
+                <td>Double Room</td>
+                <td>
+                    <select class="form-select" aria-label="Default select" disabled>
+                        <option selected="1">Not available</option>
+                        <option value="2">Free</option>
+                        <option value="3">Occupied</option>
+                        <option value="4">Dirty</option>
+                    </select>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Nur veränderbar wenn aktuell frei und keine Buchung in Zukunft<br>Speicher Warnhinweis -->
+
+        <script>
+
+            function enable() {
+                let x = document.getElementsByTagName("select");
+
+                for(let i = 0; i <x.length; i += 1) {
+
+                    if(x[i].getAttribute("disabled") == null) {
+
+                        x[i].setAttribute("disabled","disabled");
+
+                    } else {
+
+                        x[i].removeAttribute("disabled");
+
+                    }
+                }
+
+                let y = document.getElementById("modify");
+
+                if(y.innerHTML == "Modify") {
+                    y.innerHTML = "Save";
+                    y.setAttribute("class","btn btn-warning ms-5");
+                } else {
+                    y.innerHTML = "Modify"
+                    y.setAttribute("class","btn btn-primary ms-5");
+                }
+            }
+
+        </script>
+
+    </div>
+
+</body>
+</html>
+

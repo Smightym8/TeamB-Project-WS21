@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<body id="Bookings">
+
+    <div layout:fragment="content">
+
+        <div class="d-flex">
+            <p class="h3">Bookings</p>
+            <a class="btn btn-primary ms-5" href="/createbooking/guest">Create booking</a>
+        </div>
+        <br>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th class="col-1">Guest</th>
+                <th class="col-1">Address</th>
+                <th class="col-1">Check in date</th>
+                <th class="col-1"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="booking : ${bookings}" th:if="${booking.isActive}">
+                <td th:text="${booking.guestName}"></td>
+                <td>Hochschulstraße 1, 6850 Dornbirn</td>
+                <td th:text="${booking.checkInDate}"></td>
+                <td>
+                    <a th:href="@{/bookingdetails/{id}(id=${booking.id})}" type="button" class="btn btn-primary btn-sm">Check-In</a>
+                    <a class="btn btn-primary btn-sm" href="#">View / Modify</a>
+                    <a class="btn btn-danger btn-sm" href="#">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

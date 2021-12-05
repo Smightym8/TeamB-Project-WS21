@@ -21,12 +21,12 @@
             <many-to-many column="room_id" class="at.fhv.se.hotel.domain.model.room.Room" />
         </bag>
 
-        <!--One to one mapping to booking class -->
-        <component name="booking" class="at.fhv.se.hotel.domain.model.booking.Booking">
-            <component name="bookingId" class="at.fhv.se.hotel.domain.model.booking.BookingId">
-                <property name="id" column="booking_id" type="java.lang.String" />
-            </component>
-        </component>
+        <!-- One to one with Many to one mapping to the booking -->
+        <many-to-one name="booking" column="booking_id" class="at.fhv.se.hotel.domain.model.booking.Booking"
+                     not-null="true" unique="true"/>
+
+        <!-- Primitive datatypes of class stay -->
+        <property name="isActive" column="is_active" type="java.lang.Boolean" />
 
     </class>
 </hibernate-mapping>

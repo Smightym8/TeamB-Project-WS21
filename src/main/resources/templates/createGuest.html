@@ -1,23 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
-<body>
-<div layout:fragment="content">
-  <h1>Create Guest</h1>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<body id="Create guest">
 
-  <form th:action="@{/createguest}" method="post" th:object="${form}">
+    <div layout:fragment="content">
+
+        <p class="h3">Create Guest</p>
+
+  <br>
+  <form th:action="@{/createguest}" method="post" th:object="${guest}">
     <div class="row">
       <div class="col-6" id="leftForm">
+
+        <div class="mb-3">
+          <label for="firstname" class="form-label">Type of guest:</label>
+          <select class="form-select" aria-label="Default select">
+            <option selected="1">Private</option>
+            <option value="TravelAgency">Travel Agency</option>
+            <option value="Company Guest">Company Guest</option>
+          </select>
+
+        </div>
+
         <div class="mb-3">
           <label for="firstname" class="form-label">First Name:</label>
           <input th:field="*{firstName}" type="text" class="form-control" id="firstname" placeholder="John" required>
-          <p th:if="${#fields.hasErrors('firstName')}">Invalid First Name</p>
+          <p th:if="${#fields.hasErrors('firstName')}">Name must be at least 2 and most 20 characters long</p>
         </div>
 
         <div class="mb-3">
           <label for="lastname" class="form-label">Last Name:</label>
           <input th:field="*{lastName}" type="text" class="form-control" id="lastname" placeholder="Doe" required>
-          <p th:if="${#fields.hasErrors('lastName')}">Invalid Last Name</p>
+          <p th:if="${#fields.hasErrors('lastName')}">Name must be at least 2 and most 20 characters long</p>
         </div>
 
         <div class="mb-3">
@@ -37,7 +50,7 @@
           <input th:field="*{birthDate}" type="date" class="form-control" id="birthDate" required>
           <p th:if="${#fields.hasErrors('birthDate')}">Invalid Birthdate</p>
         </div>
-
+-
       </div>
       <div class="col-6" id="rightForm">
         <div class="mb-3">
@@ -71,34 +84,52 @@
           <label class="form-label">Address:</label>
           <div class="input-group mb-3">
             <span class="input-group-text">Streetname</span>
-            <input th:field="*{streetName}" type="text" class="form-control" placeholder="Townhall street" aria-label="Streetname">
+            <input th:field="*{streetName}" type="text" class="form-control" placeholder="Townhall street" aria-label="Streetname" required>
             <p th:if="${#fields.hasErrors('streetName')}">Invalid Street name</p>
             <span class="input-group-text">Nr.</span>
-            <input th:field="*{streetNumber}" type="text" class="form-control" placeholder="42" aria-label="Streetnumber">
+            <input th:field="*{streetNumber}" type="text" class="form-control" placeholder="42" aria-label="Streetnumber" required>
             <p th:if="${#fields.hasErrors('streetNumber')}">Invalid Street number</p>
           </div>
 
           <div class="input-group mb-3">
             <span class="input-group-text">Zip Code</span>
-            <input th:field="*{zipCode}" type="text" class="form-control" placeholder="6850" aria-label="Zip Code">
+            <input th:field="*{zipCode}" type="text" class="form-control" placeholder="6850" aria-label="Zip Code" required>
             <p th:if="${#fields.hasErrors('zipCode')}">Invalid Zipcode</p>
             <span class="input-group-text">City</span>
-            <input th:field="*{city}" type="text" class="form-control" placeholder="Dornbirn" aria-label="City">
+            <input th:field="*{city}" type="text" class="form-control" placeholder="Dornbirn" aria-label="City"required>
             <p th:if="${#fields.hasErrors('city')}">Invalid City</p>
           </div>
 
           <div class="input-group mb-3">
             <span class="input-group-text">Country</span>
-            <input th:field="*{country}" type="text" class="form-control" placeholder="Austria" aria-label="Country">
+            <input th:field="*{country}" type="text" class="form-control" placeholder="Austria" aria-label="Country" required>
             <p th:if="${#fields.hasErrors('country')}">Invalid Country</p>
           </div>
 
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary" onclick="validation()">Submit</button>
           <button type="reset" class="btn btn-primary">Reset</button>
         </div>
       </div>
     </div>
+    <script>
+      function validation() {
+        let maleRadio = document.getElementById('maleRadio');
+        let femaleRadio = document.getElementById('femaleRadio');
+        let diversRadio = document.getElementById('diversRadio');
+
+        if (maleRadio.checked || femaleRadio.checked || diversRadio.checked) {
+          maleRadio.setCustomValidity('');}
+        else{
+          maleRadio.setCustomValidity('Please select a Gender');
+        }
+        console.log('maleRadio customError ', document.getElementById('maleRadio').validity.customError);
+        console.log('maleRadio validationMessage ', document.getElementById('maleRadio').validationMessage);
+      }
+    </script>
   </form>
+
+  <!-- guest type oder voucher code ... voucher code flexibler? -->
+
 </div>
 </body>
 </html>

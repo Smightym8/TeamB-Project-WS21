@@ -54,9 +54,7 @@ public class Guest {
         return address;
     }
 
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
+    public LocalDate getBirthDate() { return birthDate; }
 
     public String getPhoneNumber() {
         return phoneNumber;

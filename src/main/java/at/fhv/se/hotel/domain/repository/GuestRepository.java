@@ -13,9 +13,5 @@ public interface GuestRepository {
 
     void add(Guest guest);
 
-    void remove(Guest guest);
-
-    void update(Guest guest);
-
     Optional<Guest> guestById(GuestId guestId);
 }

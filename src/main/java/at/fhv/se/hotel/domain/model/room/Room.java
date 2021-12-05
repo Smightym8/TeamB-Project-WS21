@@ -40,6 +40,10 @@ public class Room {
         this.status = RoomStatus.OCCUPIED;
     }
 
+    public void clean() {
+        this.status = RoomStatus.CLEANING;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

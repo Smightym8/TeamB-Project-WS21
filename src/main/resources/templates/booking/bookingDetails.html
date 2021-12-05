@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<body>
+
+    <div layout:fragment="content">
+
+    <p class="h3">Booking details</p>
+
+    <h5>Guest information:</h5>
+    <p th:text="${bookingDetails.guest.firstName} + ' '  + ${bookingDetails.guest.lastName}"></p>
+
+    <h5>Additional Information:</h5>
+    <div class="mb-3">
+        <p th:text="${bookingDetails.additionalInformation}"></p>
+    </div>
+
+    <h5>Booking information:</h5>
+    <p th:text="'Check in date: ' + ${bookingDetails.checkInDate}"></p>
+    <p th:text="'Check out date: ' + ${bookingDetails.checkOutDate}"></p>
+
+    <h6>Amount of guests:</h6>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Adults</th>
+            <th>Children</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${bookingDetails.amountOfAdults}"></td>
+            <td th:text="${bookingDetails.amountOfChildren}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h6>Room Categories:</h6>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="category : ${bookingDetails.categoriesWithAmounts}" th:if="${category.value != 0}">
+            <td th:text="${category.key.name}"></td>
+            <td th:text="${category.value}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h6>Services:</h6>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="service : ${bookingDetails.services}">
+            <td th:text="${service.name}"></td>
+            <td th:text="${service.price} + '€'"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" th:href="@{'/check-in?bookingId=' + ${bookingDetails.id} + '&isCheckedIn=false'}">
+        Assign Rooms
+    </a>
+    <a href="/" type="button" class="btn btn-primary">Back</a>
+    </div>
+</body>
+</html>
