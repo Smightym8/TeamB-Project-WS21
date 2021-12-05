@@ -296,8 +296,6 @@ public class HotelViewController {
                 bookingForm.getAmountOfChildren(),
                 bookingForm.getAdditionalInformation());
 
-
-        // Redirect to post mapping: GET isn't supported
         return "redirect:" + CREATE_BOOKING_SUCCESS_URL
                 + "?bookingId=" + bookingId + "&isCreated=" + true;
     }
@@ -374,6 +372,10 @@ public class HotelViewController {
     @GetMapping(STAY_DETAILS_URL)
     public String showStay(@PathVariable String id, Model model) {
 
+        // Error! org.hibernate.HibernateException:
+        // HHH000143: Bytecode enhancement failed because no public, protected or package-private default constructor
+        // was found for entity: at.fhv.se.hotel.domain.model.booking.Booking.
+        // Private constructors don't work with runtime proxies!
         BookingDetailsDTO bookingDetailsDTO =  bookingSummaryService.detailsByBookingId(id);
         StayDetailsDTO stayDetailsDTO =  stayDetailsService.detailsById(id);
         model.addAttribute("stayDetails", stayDetailsDTO);
@@ -383,14 +385,17 @@ public class HotelViewController {
 
     @GetMapping(INVOICE_URL)
     public String showInvoice(@PathVariable String id, Model model) {
-/*
+
+        // Error! org.hibernate.HibernateException:
+        // HHH000143: Bytecode enhancement failed because no public, protected or package-private default constructor
+        // was found for entity: at.fhv.se.hotel.domain.model.booking.Booking.
+        // Private constructors don't work with runtime proxies!
+        BookingDetailsDTO bookingDetailsDTO =  bookingSummaryService.detailsByBookingId(id);
         InvoiceDTO invoiceDTO = checkOutService.createInvoice(id);
         model.addAttribute("invoice", invoiceDTO);
-*/
+
         return INVOICE_VIEW;
     }
-
-
 
 /*----- Error -----*/
     @GetMapping(ERROR_URL)

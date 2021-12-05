@@ -25,6 +25,11 @@ hr {
     opacity: 50%;
 }
 
+.card-header {
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
 @media print {
 
     .sidebar {

@@ -1,6 +1,7 @@
 package at.fhv.se.hotel.unit.application;
 
 import at.fhv.se.hotel.application.dto.InvoiceDTO;
+import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -15,6 +16,8 @@ public class InvoiceDTOTest {
     @Test
     void given_invoicedtodetails_when_createinvoicedto_then_detailsequals() {
         // given
+        String invoiceNumberExpected = "20210112001";
+        LocalDate invoiceDateExpected = LocalDate.of(2021, 12, 1);
         String guestFirstNameExpected = "John";
         String guestLastNameExpected = "Doe";
         String streetNameExpected = "Nowherestreet";
@@ -45,6 +48,8 @@ public class InvoiceDTOTest {
 
         // when
         InvoiceDTO invoiceDTOExpected = InvoiceDTO.builder()
+                .withInvoiceNumber(invoiceNumberExpected)
+                .withInvoiceDate(invoiceDateExpected)
                 .withGuestFirstName(guestFirstNameExpected)
                 .withGuestLastName(guestLastNameExpected)
                 .withStreetName(streetNameExpected)
@@ -66,6 +71,8 @@ public class InvoiceDTOTest {
                 .build();
 
         // then
+        assertEquals(invoiceNumberExpected, invoiceDTOExpected.invoiceNumber());
+        assertEquals(invoiceDateExpected, invoiceDTOExpected.invoiceDate());
         assertEquals(guestFirstNameExpected, invoiceDTOExpected.guestFirstName());
         assertEquals(guestLastNameExpected, invoiceDTOExpected.guestLastName());
         assertEquals(streetNameExpected, invoiceDTOExpected.streetName());

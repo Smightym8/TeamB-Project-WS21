@@ -55,6 +55,8 @@ public class CheckOutServiceImpl implements CheckOutService {
         }
 
         InvoiceDTO invoiceDTO = InvoiceDTO.builder()
+                .withInvoiceNumber(invoice.getInvoiceNumber())
+                .withInvoiceDate(invoice.getInvoiceDate())
                 .withGuestFirstName(invoice.getStay().getGuest().getName().firstName())
                 .withGuestLastName(invoice.getStay().getGuest().getName().lastName())
                 .withStreetName(invoice.getStay().getGuest().getAddress().streetName())

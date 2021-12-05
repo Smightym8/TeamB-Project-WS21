@@ -1,5 +1,6 @@
 package at.fhv.se.hotel.application.dto;
 
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -7,6 +8,8 @@ import java.util.Map;
 import java.util.Objects;
 
 public class InvoiceDTO {
+    private String invoiceNumber;
+    private LocalDate invoiceDate;
     private String guestFirstName;
     private String guestLastName;
     private String streetName;
@@ -28,6 +31,14 @@ public class InvoiceDTO {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    public String invoiceNumber() {
+        return invoiceNumber;
+    }
+
+    public LocalDate invoiceDate() {
+        return invoiceDate;
     }
 
     public String guestFirstName() {
@@ -107,6 +118,16 @@ public class InvoiceDTO {
 
         private Builder() {
             this.instance = new InvoiceDTO();
+        }
+
+        public Builder withInvoiceNumber(String invoiceNumber) {
+            this.instance.invoiceNumber = invoiceNumber;
+            return this;
+        }
+
+        public Builder withInvoiceDate(LocalDate invoiceDate) {
+            this.instance.invoiceDate = invoiceDate;
+            return this;
         }
 
         public Builder withGuestFirstName(String guestFirstName) {
@@ -200,6 +221,8 @@ public class InvoiceDTO {
         }
 
         public InvoiceDTO build() {
+            Objects.requireNonNull(this.instance.invoiceNumber, "invoiceNumber must be set in InvoiceDTO");
+            Objects.requireNonNull(this.instance.invoiceDate, "invoiceDate must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.guestFirstName, "guestFirstName must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.guestLastName, "guestLastName must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.streetName, "streetName must be set in InvoiceDTO");
