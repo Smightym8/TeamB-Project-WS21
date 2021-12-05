@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class HotelViewController {
@@ -122,7 +121,7 @@ public class HotelViewController {
     @GetMapping(HOME_URL)
     public String home(Model model) {
         final List<BookingDTO> bookings = bookingListingService.allBookings();
-        final List<StayDTO> stays = stayListingService.allStays();
+        final List<StayListingDTO> stays = stayListingService.allStays();
 
         model.addAttribute("bookings", bookings);
         model.addAttribute("stays", stays);
@@ -169,7 +168,7 @@ public class HotelViewController {
     public String stays(Model model) {
         // Hibernate shows error if there are no bookings?
         final List<BookingDTO> bookings = bookingListingService.allBookings();
-        final List<StayDTO> stays = stayListingService.allStays();
+        final List<StayListingDTO> stays = stayListingService.allStays();
 
         model.addAttribute("bookings", bookings);
         model.addAttribute("stays", stays);

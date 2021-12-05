@@ -1,13 +1,16 @@
 package at.fhv.se.hotel.application.dto;
 
-import java.time.LocalDate;
 import java.util.Objects;
 
 public class GuestDTO {
     private String id;
     private String firstName;
     private String lastName;
-    private LocalDate birthDate;
+    private String streetName;
+    private String streetNumber;
+    private String city;
+    private String zipCode;
+    private String country;
 
     public static Builder builder() {
         return new Builder();
@@ -25,9 +28,15 @@ public class GuestDTO {
         return this.lastName;
     }
 
-    public LocalDate birthDate(){
-        return this.birthDate;
-    }
+    public String streetName() {return this.streetName;}
+
+    public String streetNumber() {return this.streetNumber;}
+
+    public String city() {return this.city;}
+
+    public String zipCode() {return this.zipCode;}
+
+    public String country() {return this.country;}
 
     public static class Builder {
         private final GuestDTO instance;
@@ -51,16 +60,41 @@ public class GuestDTO {
             return this;
         }
 
-        public Builder withBirthDate(LocalDate birthDate) {
-            this.instance.birthDate = birthDate;
+        public Builder withStreetName(String streetName) {
+            this.instance.streetName = streetName;
             return this;
         }
+
+        public Builder withStreetNumber(String streetNumber) {
+            this.instance.streetNumber = streetNumber;
+            return this;
+        }
+
+        public Builder withCity(String city) {
+            this.instance.city = city;
+            return this;
+        }
+
+        public Builder withZipCode(String zipCode) {
+            this.instance.zipCode = zipCode;
+            return this;
+        }
+
+        public Builder withCountry(String country) {
+            this.instance.country = country;
+            return this;
+        }
+
 
         public GuestDTO build() {
             Objects.requireNonNull(this.instance.id, "id must be set in GuestDTO");
             Objects.requireNonNull(this.instance.firstName, "firstName must be set in GuestDTO");
             Objects.requireNonNull(this.instance.lastName, "lastName must be set in GuestDTO");
-            Objects.requireNonNull(this.instance.birthDate, "birthDate must be set in GuestDTO");
+            Objects.requireNonNull(this.instance.streetName, "streetName must be set in GuestDTO");
+            Objects.requireNonNull(this.instance.streetNumber, "streetNumber must be set in GuestDTO");
+            Objects.requireNonNull(this.instance.city, "city must be set in GuestDTO");
+            Objects.requireNonNull(this.instance.zipCode, "zipCode must be set in GuestDTO");
+            Objects.requireNonNull(this.instance.country, "country must be set in GuestDTO");
 
             return this.instance;
         }

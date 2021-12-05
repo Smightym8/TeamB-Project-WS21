@@ -1,7 +1,7 @@
 package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.StayListingService;
-import at.fhv.se.hotel.application.dto.StayDTO;
+import at.fhv.se.hotel.application.dto.StayListingDTO;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
 import at.fhv.se.hotel.domain.model.guest.*;
@@ -16,8 +16,6 @@ import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.model.stay.Stay;
-import at.fhv.se.hotel.domain.repository.GuestRepository;
-import at.fhv.se.hotel.domain.repository.ServiceRepository;
 import at.fhv.se.hotel.domain.repository.StayRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -114,7 +112,7 @@ public class StayListingServiceTests {
         Mockito.when(stayRepository.findAllStays()).thenReturn(staysExpected);
 
         // when
-        List<StayDTO> staysActual = stayListingService.allStays();
+        List<StayListingDTO> staysActual = stayListingService.allStays();
 
         // then
         assertEquals(staysExpected.size(),staysActual.size());

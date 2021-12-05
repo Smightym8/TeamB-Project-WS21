@@ -120,12 +120,7 @@ public class BookingSummaryServiceImpl implements BookingSummaryService {
 
         Booking booking = bookingRepository.bookingById(new BookingId(bookingId)).get();
 
-        GuestDTO guestDTO = GuestDTO.builder()
-                .withId(booking.getGuest().getGuestId().id())
-                .withFirstName(booking.getGuest().getName().firstName())
-                .withLastName(booking.getGuest().getName().lastName())
-                .withBirthDate(booking.getGuest().getBirthDate())
-                .build();
+        GuestDTO guestDTO = guestListingService.findGuestById(booking.getGuest().getGuestId().id()).get();
 
         Map<RoomCategoryDTO, Integer> categoriesWithAmount = new HashMap<>();
         for(BookingWithRoomCategory brc : booking.getRoomCategories()) {

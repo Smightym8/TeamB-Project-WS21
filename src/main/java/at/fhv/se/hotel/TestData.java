@@ -22,6 +22,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -116,7 +117,6 @@ public class TestData implements ApplicationRunner {
                 new BigDecimal("400")
         );
 
-
         this.roomCategoryPriceRepository.add(singleRoomWinterPrice);
         this.roomCategoryPriceRepository.add(singleRoomSpringPrice);
         this.roomCategoryPriceRepository.add(singleRoomSummerPrice);
@@ -204,8 +204,6 @@ public class TestData implements ApplicationRunner {
 
         Room room8 = Room.create("108", RoomStatus.FREE, singleRoom);
         this.roomRepository.add(room8);
-
-
 
         Room room10 = Room.create("201", RoomStatus.FREE, doubleRoom);
         this.roomRepository.add(room10);

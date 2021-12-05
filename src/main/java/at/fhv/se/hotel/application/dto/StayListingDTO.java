@@ -1,14 +1,15 @@
 package at.fhv.se.hotel.application.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
-// Todo change name to StayListDTO
-public class StayDTO {
+public class StayListingDTO {
     private String id;
     private String guestFirstName;
     private String guestLastName;
     private LocalDate checkOutDate;
+    private List<String> rooms;
 
     public static Builder builder(){
         return new Builder();
@@ -26,16 +27,19 @@ public class StayDTO {
         return guestLastName;
     }
 
-
     public LocalDate checkOutDate() {
         return checkOutDate;
     }
 
+    public List<String> rooms() {
+        return rooms;
+    }
+
     public static class Builder{
-        private final StayDTO instance;
+        private final StayListingDTO instance;
 
         private Builder() {
-            this.instance = new StayDTO();
+            this.instance = new StayListingDTO();
         }
 
         public Builder withId(String id) {
@@ -59,11 +63,17 @@ public class StayDTO {
 
         }
 
-        public StayDTO build() {
-            Objects.requireNonNull(this.instance.id, "id must be set in StayDTO");
-            Objects.requireNonNull(this.instance.guestFirstName, "guestFirstName must be set in StayDTO");
-            Objects.requireNonNull(this.instance.guestLastName, "guestLastName must be set in StayDTO");
-            Objects.requireNonNull(this.instance.checkOutDate, "checkOutDate must be set in StayDTO");
+        public Builder withRooms(List<String> rooms) {
+            this.instance.rooms = rooms;
+            return this;
+        }
+
+        public StayListingDTO build() {
+            Objects.requireNonNull(this.instance.id, "id must be set in StayListingDTO");
+            Objects.requireNonNull(this.instance.guestFirstName, "guestFirstName must be set in StayListingDTO");
+            Objects.requireNonNull(this.instance.guestLastName, "guestLastName must be set in StayListingDTO");
+            Objects.requireNonNull(this.instance.checkOutDate, "checkOutDate must be set in StayListingDTO");
+            Objects.requireNonNull(this.instance.rooms, "rooms must be set in StayListingDTO");
 
             return this.instance;
         }
