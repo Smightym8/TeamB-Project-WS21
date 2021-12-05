@@ -26,23 +26,14 @@ public class RoomCategoryListingServiceImpl implements RoomCategoryListingServic
     @Autowired
     private RoomCategoryRepository roomCategoryRepository;
 
-    @Autowired
-    private RoomCategoryPriceService roomCategoryPriceService;
-
     @Transactional(readOnly = true)
     @Override
-    public List<RoomCategoryDTO> allRoomCategoriesWithPrices(LocalDate checkInDate, LocalDate checkOutDate) {
-        List<Season> matchingSeasons = Season.seasons(checkInDate, checkOutDate);
+    public List<RoomCategoryDTO> allRoomCategories() {
         List<RoomCategory> roomCategories = roomCategoryRepository.findAllRoomCategories();
 
         List<RoomCategoryDTO> dtos = new ArrayList<>();
 
         for(RoomCategory roomCategory : roomCategories) {
-            Map<String, BigDecimal> prices = new HashMap<>();
-            for(Season s : matchingSeasons) {
-                prices.put(s.name(), roomCategoryPriceService.by(roomCategory, s).getPrice());
-            }
-
             RoomCategoryDTO dto = RoomCategoryDTO.builder()
                     .withId(roomCategory.getRoomCategoryId().id())
                     .withName(roomCategory.getRoomCategoryName().name())

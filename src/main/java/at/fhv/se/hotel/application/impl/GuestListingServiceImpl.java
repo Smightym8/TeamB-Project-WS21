@@ -58,10 +58,4 @@ public class GuestListingServiceImpl implements GuestListingService {
 
         return Optional.of(dto);
     }
-
-    @Override
-    public List<GuestDTO> findGuestByName(String name) {
-
-        return Collections.emptyList();
-    }
 }

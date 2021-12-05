@@ -8,6 +8,7 @@ import java.util.Objects;
  */
 public class BookingDTO {
     private String id;
+    // TODO: Split up into guestFirstName and guestLastName --> change BookingListingServiceTests
     private String guestName;
     private LocalDate checkInDate;
     private boolean isActive;

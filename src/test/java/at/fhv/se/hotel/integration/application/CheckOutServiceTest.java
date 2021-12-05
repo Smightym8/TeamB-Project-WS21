@@ -216,15 +216,6 @@ public class CheckOutServiceTest {
         StayId idExpected = new StayId(bookingExpected.getBookingId().id());
         Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
 
-        int amountOfNightsExpected = 9;
-        BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76");
-        BigDecimal localTaxTotalExpected = new BigDecimal("1.52");
-        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.1");
-        BigDecimal totalNetAmountExpected = new BigDecimal("2901.52");
-        BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("290.0");
-        BigDecimal totalGrossAmountExpected = new BigDecimal("3191.52");
-
-
         Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
         Mockito.when(stayRepository.stayById(idExpected)).thenReturn(Optional.of(stayExpected));
         Mockito.when(roomCategoryPriceRepository.by(categoriesExpected.get(0), Season.SUMMER))

@@ -232,9 +232,7 @@ public class HotelViewController {
 
     @PostMapping(CREATE_BOOKING_CATEGORY_URL)
     public String createBookingCategory(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model) {
-        final List<RoomCategoryDTO> categories = roomCategoryListingService.allRoomCategoriesWithPrices(
-                bookingForm.getCheckInDate(), bookingForm.getCheckOutDate()
-        );
+        final List<RoomCategoryDTO> categories = roomCategoryListingService.allRoomCategories();
 
         model.addAttribute("booking", bookingForm);
         model.addAttribute("categories", categories);
