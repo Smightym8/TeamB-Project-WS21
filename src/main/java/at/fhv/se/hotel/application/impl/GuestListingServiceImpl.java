@@ -53,18 +53,4 @@ public class GuestListingServiceImpl implements GuestListingService {
 
         return Optional.of(dto);
     }
-
-    @Override
-    public List<GuestDTO> findGuestByName(String name) {
-        final List<GuestDTO> guests = List.of(
-                GuestDTO.builder()
-                        .withId("2")
-                        .withFirstName("Michael")
-                        .withLastName("Spiegel")
-                        .withBirthDate(LocalDate.of(1999, 3, 20))
-                        .build()
-        );
-
-        return guests;
-    }
 }

@@ -11,10 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -67,5 +64,33 @@ public class GuestListingServiceTests {
             assertEquals(guestsExpected.get(i).getName().firstName(), guestsActual.get(i).firstName());
             assertEquals(guestsExpected.get(i).getName().lastName(), guestsActual.get(i).lastName());
         }
+    }
+
+    @Test
+    void given_guestinrepository_when_fetchbyid_then_returnequalsguest() {
+        // given
+        GuestId idExpected = new GuestId("42");
+        Guest guestExpected = Guest.create(
+                idExpected,
+                new FullName("John", "Doe"),
+                Gender.MALE,
+                new Address("Hochschulstraße",
+                        "1", "Dornbirn",
+                        "6850", "Austria"),
+                LocalDate.of(1980, 5, 20),
+                "+43 660 123 456 789",
+                "john.doe@developer.tdd.at",
+                Collections.emptyList()
+        );
+
+        Mockito.when(guestRepository.guestById(idExpected)).thenReturn(Optional.of(guestExpected));
+
+        // when
+        GuestDTO guestActual = guestListingService.findGuestById(idExpected.id()).get();
+
+        // then
+        assertEquals(guestExpected.getGuestId().id(), guestActual.id());
+        assertEquals(guestExpected.getName().firstName(), guestActual.firstName());
+        assertEquals(guestExpected.getName().lastName(), guestActual.lastName());
     }
 }
