@@ -16,6 +16,7 @@ public class InvoiceDTOTest {
     @Test
     void given_invoicedtodetails_when_createinvoicedto_then_detailsequals() {
         // given
+        String stayIdExpected = "1";
         String invoiceNumberExpected = "20210112001";
         LocalDate invoiceDateExpected = LocalDate.of(2021, 12, 1);
         String guestFirstNameExpected = "John";
@@ -48,6 +49,7 @@ public class InvoiceDTOTest {
 
         // when
         InvoiceDTO invoiceDTOExpected = InvoiceDTO.builder()
+                .withStayId(stayIdExpected)
                 .withInvoiceNumber(invoiceNumberExpected)
                 .withInvoiceDate(invoiceDateExpected)
                 .withGuestFirstName(guestFirstNameExpected)
@@ -71,6 +73,7 @@ public class InvoiceDTOTest {
                 .build();
 
         // then
+        assertEquals(stayIdExpected, invoiceDTOExpected.stayId());
         assertEquals(invoiceNumberExpected, invoiceDTOExpected.invoiceNumber());
         assertEquals(invoiceDateExpected, invoiceDTOExpected.invoiceDate());
         assertEquals(guestFirstNameExpected, invoiceDTOExpected.guestFirstName());

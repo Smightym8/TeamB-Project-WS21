@@ -402,6 +402,10 @@ public class HotelViewController {
     @GetMapping(CHECK_OUT_URL)
     public String checkOut(@RequestParam("stayId") String stayId) {
 
+        // Error! org.hibernate.HibernateException:
+        // HHH000143: Bytecode enhancement failed because no public, protected or package-private default constructor
+        // was found for entity: at.fhv.se.hotel.domain.model.booking.Booking.
+        // Private constructors don't work with runtime proxies!
         BookingDetailsDTO bookingDetailsDTO =  bookingSummaryService.detailsByBookingId(stayId);
         checkOutService.checkOut(stayId);
 
