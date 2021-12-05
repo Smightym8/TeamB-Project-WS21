@@ -1,5 +1,6 @@
 package at.fhv.se.hotel.application.dto;
 
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -7,12 +8,17 @@ import java.util.Map;
 import java.util.Objects;
 
 public class InvoiceDTO {
+    private String stayId;
+    private String invoiceNumber;
+    private LocalDate invoiceDate;
     private String guestFirstName;
     private String guestLastName;
     private String streetName;
     private String streetNumber;
     private String zipCode;
     private String city;
+    private int amountOfAdults;
+    private int amountOfChildren;
     private Map<String, BigDecimal> services;
     private Map<String, Integer> roomCategories;
     private List<BigDecimal> roomCategoryPrices;
@@ -28,6 +34,18 @@ public class InvoiceDTO {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    public String stayId() {
+        return stayId;
+    }
+
+    public String invoiceNumber() {
+        return invoiceNumber;
+    }
+
+    public LocalDate invoiceDate() {
+        return invoiceDate;
     }
 
     public String guestFirstName() {
@@ -52,6 +70,14 @@ public class InvoiceDTO {
 
     public String city() {
         return city;
+    }
+
+    public int amountOfAdults() {
+        return amountOfAdults;
+    }
+
+    public int amountOfChildren() {
+        return amountOfChildren;
     }
 
     public Map<String, BigDecimal> services() {
@@ -109,6 +135,21 @@ public class InvoiceDTO {
             this.instance = new InvoiceDTO();
         }
 
+        public Builder withStayId(String stayId) {
+            this.instance.stayId = stayId;
+            return this;
+        }
+
+        public Builder withInvoiceNumber(String invoiceNumber) {
+            this.instance.invoiceNumber = invoiceNumber;
+            return this;
+        }
+
+        public Builder withInvoiceDate(LocalDate invoiceDate) {
+            this.instance.invoiceDate = invoiceDate;
+            return this;
+        }
+
         public Builder withGuestFirstName(String guestFirstName) {
             this.instance.guestFirstName = guestFirstName;
             return this;
@@ -136,6 +177,16 @@ public class InvoiceDTO {
 
         public Builder withCity(String city) {
             this.instance.city = city;
+            return this;
+        }
+
+        public Builder withAmountOfAdults(int amountOfAdults) {
+            this.instance.amountOfAdults = amountOfAdults;
+            return this;
+        }
+
+        public Builder withAmountOfChildren(int amountOfChildren) {
+            this.instance.amountOfChildren = amountOfChildren;
             return this;
         }
 
@@ -200,6 +251,9 @@ public class InvoiceDTO {
         }
 
         public InvoiceDTO build() {
+            Objects.requireNonNull(this.instance.stayId, "stayId must be set in InvoiceDTO");
+            Objects.requireNonNull(this.instance.invoiceNumber, "invoiceNumber must be set in InvoiceDTO");
+            Objects.requireNonNull(this.instance.invoiceDate, "invoiceDate must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.guestFirstName, "guestFirstName must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.guestLastName, "guestLastName must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.streetName, "streetName must be set in InvoiceDTO");

@@ -10,6 +10,7 @@ public class StayListingDTO {
     private String guestLastName;
     private LocalDate checkOutDate;
     private List<String> rooms;
+    private boolean isActive;
 
     public static Builder builder(){
         return new Builder();
@@ -33,6 +34,10 @@ public class StayListingDTO {
 
     public List<String> rooms() {
         return rooms;
+    }
+
+    public boolean isActive() {
+        return isActive;
     }
 
     public static class Builder{
@@ -65,6 +70,11 @@ public class StayListingDTO {
 
         public Builder withRooms(List<String> rooms) {
             this.instance.rooms = rooms;
+            return this;
+        }
+
+        public Builder withIsActive(boolean isActive) {
+            this.instance.isActive = isActive;
             return this;
         }
 
