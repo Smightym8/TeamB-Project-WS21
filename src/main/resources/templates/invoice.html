@@ -67,9 +67,7 @@
                         th:with="category = ${entry.key}, quantity = ${entry.value}">
                         <td th:text="${quantity}"></td>
                         <td th:text="${category}"></td>
-                        <td th:each="price : ${invoice.roomCategoryPrices}">
-                            <p th:text="'€' + ${price}"></p>
-                        </td>
+                        <td th:text="'€' + ${invoice.roomCategoryPrices[entryStat.index]}"></td>
                         <td th:text="'€3000.00'"></td>
                     </tr>
                     </tbody>
