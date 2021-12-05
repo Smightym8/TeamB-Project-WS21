@@ -60,6 +60,7 @@ public class GuestListingServiceTests {
         List<GuestDTO> guestsActual = guestListingService.allGuests();
 
         // then
+        assertEquals(guestsExpected.size(), guestsActual.size());
         for(int i = 0; i < guestsActual.size(); i++) {
             assertEquals(guestsExpected.get(i).getName().firstName(), guestsActual.get(i).firstName());
             assertEquals(guestsExpected.get(i).getName().lastName(), guestsActual.get(i).lastName());

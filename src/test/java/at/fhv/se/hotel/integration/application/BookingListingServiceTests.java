@@ -153,6 +153,7 @@ public class BookingListingServiceTests {
         List<BookingDTO> bookingsActual = bookingListingService.allBookings();
 
         // then
+        assertEquals(bookingsExpected.size(), bookingsActual.size());
         for(int i = 0; i < bookingsExpected.size(); i++) {
             assertEquals(bookingsExpected.get(i).getBookingId().id(), bookingsActual.get(i).id());
             assertEquals(bookingsExpected.get(i).getCheckInDate(), bookingsActual.get(i).checkInDate());

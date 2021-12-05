@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -43,5 +45,43 @@ public class RoomCategoryListingServiceTests {
         // then
         assertEquals(categoryExpected.getRoomCategoryId().id(), categoryActual.id());
         assertEquals(categoryExpected.getRoomCategoryName().name(), categoryActual.name());
+    }
+
+    @Test
+    void given_3categoriesinrepository_when_fetchinall_then_returnqualscategories() {
+        // given
+        Mockito.when(roomCategoryRepository.nextIdentity())
+                .thenReturn(new RoomCategoryId(UUID.randomUUID().toString().toUpperCase()));
+
+        List<RoomCategory> categoriesExpected = List.of(
+                RoomCategory.create(
+                        roomCategoryRepository.nextIdentity(),
+                        new RoomCategoryName("Single Room"),
+                        new Description("This is a single room")
+                ),
+                RoomCategory.create(
+                        roomCategoryRepository.nextIdentity(),
+                        new RoomCategoryName("Double Room"),
+                        new Description("This is a double room")
+                ),
+                RoomCategory.create(
+                        roomCategoryRepository.nextIdentity(),
+                        new RoomCategoryName("Luxury Suite"),
+                        new Description("This is a luxury suite")
+                )
+        );
+
+        Mockito.when(roomCategoryRepository.findAllRoomCategories()).thenReturn(categoriesExpected);
+
+        // when
+        List<RoomCategoryDTO> categoriesActual = roomCategoryListingService.allRoomCategories();
+
+        // then
+        assertEquals(categoriesExpected.size(), categoriesActual.size());
+
+        for(int i = 0; i < categoriesExpected.size(); i++) {
+            assertEquals(categoriesExpected.get(i).getRoomCategoryId().id(), categoriesActual.get(i).id());
+            assertEquals(categoriesExpected.get(i).getRoomCategoryName().name(), categoriesActual.get(i).name());
+        }
     }
 }

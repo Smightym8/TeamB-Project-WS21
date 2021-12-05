@@ -1,10 +1,8 @@
 package at.fhv.se.hotel.application.api;
 
-import at.fhv.se.hotel.application.dto.GuestDTO;
 import at.fhv.se.hotel.application.dto.RoomCategoryDTO;
 import at.fhv.se.hotel.application.impl.RoomCategoryListingServiceImpl;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,8 +12,8 @@ import java.util.Optional;
  */
 public interface RoomCategoryListingService {
     /**
-     * See implementation {@link RoomCategoryListingServiceImpl#allRoomCategoriesWithPrices(LocalDate, LocalDate)}
+     * See implementation {@link RoomCategoryListingServiceImpl#allRoomCategories )}
      */
-    List<RoomCategoryDTO> allRoomCategoriesWithPrices(LocalDate checkInDate, LocalDate checkOutDate);
+    List<RoomCategoryDTO> allRoomCategories();
     Optional<RoomCategoryDTO> findRoomCategoryById(String id);
 }
