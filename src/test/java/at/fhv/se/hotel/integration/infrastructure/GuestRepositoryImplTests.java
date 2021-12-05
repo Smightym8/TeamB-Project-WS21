@@ -16,7 +16,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ActiveProfiles("GuestRepoTest")
+@ActiveProfiles("test")
 @SpringBootTest
 @Transactional
 public class GuestRepositoryImplTests {

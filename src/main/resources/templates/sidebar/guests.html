@@ -21,8 +21,8 @@
             <tbody>
             <tr th:each="guest : ${guests}">
                 <td th:text="${guest.firstName}"></td>
-                <td th:text="${guest.lastName()}"></td>
-                <td></td>
+                <td th:text="${guest.lastName}"></td>
+                <td>Hochschulstraße 1, 6850 Dornbirn</td>
                 <td>
                     <a class="btn btn-primary btn-sm" href="#">View / Modify</a>
                     <a class="btn btn-danger btn-sm" href="#">Delete</a>
@@ -31,7 +31,7 @@
             </tbody>
         </table>
 
-        <p>mail, number, ...?<br>guestview</p>
+        <!-- mail, number, ...? guestview -->
 
     </div>
 

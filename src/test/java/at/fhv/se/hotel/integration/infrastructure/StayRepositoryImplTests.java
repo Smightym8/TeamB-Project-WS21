@@ -18,6 +18,7 @@ import at.fhv.se.hotel.domain.repository.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -30,6 +31,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@ActiveProfiles("test")
 @SpringBootTest
 @Transactional
 public class StayRepositoryImplTests {
@@ -92,7 +94,10 @@ public class StayRepositoryImplTests {
                 LocalDate.now().plusDays(10),
                 new BookingId("1"),
                 guestExpected,
-                servicesExpected
+                servicesExpected,
+                2,
+                1,
+                "Nothing"
         );
         bookingExpected.addRoomCategory(categoriesExpected.get(0), 1);
         bookingExpected.addRoomCategory(categoriesExpected.get(1), 1);
@@ -167,7 +172,10 @@ public class StayRepositoryImplTests {
                 checkOutDateExpected,
                 new BookingId("1"),
                 guestExpected,
-                servicesExpected
+                servicesExpected,
+                2,
+                1,
+                "Nothing"
         );
         bookingExpected.addRoomCategory(categoriesExpected.get(0), 1);
         bookingExpected.addRoomCategory(categoriesExpected.get(1), 1);
@@ -194,14 +202,15 @@ public class StayRepositoryImplTests {
         this.bookingRepository.add(bookingExpected);
         this.roomRepository.add(roomsExpected.get(0));
         this.stayRepository.add(stayExpected);
-        em.flush();
+        this.em.flush();
 
-        List<Stay> stayActual = this.stayRepository.stayByCheckout(LocalDate.of(2022, 5, 10));
+        List<Stay> staysActual = this.stayRepository.stayByCheckout(LocalDate.of(2022, 5, 10));
+        Stay stayActual = staysActual.get(0); // Inserted only one stay
 
         // then
-        assertTrue(stayActual.contains(stayExpected));
+        assertEquals(stayExpected, stayActual);
+        assertEquals(stayExpected.getStayId(), stayActual.getStayId());
     }
-
 
     @Test
     void given_3stays_when_fetchallstays_then_returnequalstays() {
@@ -265,19 +274,28 @@ public class StayRepositoryImplTests {
                         LocalDate.now().plusDays(10),
                         new BookingId("1"),
                         guestsExpected.get(0),
-                        servicesExpected),
+                        servicesExpected,
+                        2,
+                        1,
+                        "Nothing"),
                 Booking.create(
                         LocalDate.now(),
                         LocalDate.now().plusDays(10),
                         new BookingId("2"),
                         guestsExpected.get(1),
-                        servicesExpected),
+                        servicesExpected,
+                        2,
+                        1,
+                        "Nothing"),
                 Booking.create(
                         LocalDate.now(),
                         LocalDate.now().plusDays(10),
                         new BookingId("3"),
                         guestsExpected.get(2),
-                        servicesExpected)
+                        servicesExpected,
+                        2,
+                        1,
+                        "Nothing")
         );
 
         bookingsExpected.get(0).addRoomCategory(categoriesExpected.get(0), 1);

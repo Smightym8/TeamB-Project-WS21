@@ -1,9 +1,9 @@
 package at.fhv.se.hotel.application.api;
 
-import at.fhv.se.hotel.application.dto.StayDTO;
+import at.fhv.se.hotel.application.dto.StayListingDTO;
 
 import java.util.List;
 
 public interface StayListingService {
-    List<StayDTO> allStays();
+    List<StayListingDTO> allStays();
 }

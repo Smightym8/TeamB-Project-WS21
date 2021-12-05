@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<body>
+
+<div layout:fragment="content">
+
+    <p class="h3">Stay details</p>
+
+    <h5>Guest information:</h5>
+    <p th:text="${stayDetails.guestFirstName} + ' '  + ${stayDetails.guestLastName}"></p>
+
+    <h5>Additional Information:</h5>
+    <div class="mb-3">
+        <p th:text="${stayDetails.additionalInformation}"></p>
+    </div>
+
+    <h5>Stay information:</h5>
+    <p th:text="'Check in date: ' + ${stayDetails.checkInDate}"></p>
+    <p th:text="'Check out date: ' + ${stayDetails.checkOutDate}"></p>
+
+    <h6>Amount of guests:</h6>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Adults</th>
+            <th>Children</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${stayDetails.amountOfAdults}"></td>
+            <td th:text="${stayDetails.amountOfChildren}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h6>Rooms:</h6>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="room : ${stayDetails.rooms}">
+            <td th:text="${room}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h6>Services:</h6>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="service : ${stayDetails.services}">
+            <td th:text="${service.key}"></td>
+            <td th:text="${service.value} + '€'"></td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="/" type="button" class="btn btn-primary">Back</a>
+</div>
+</body>
+</html>

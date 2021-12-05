@@ -1,7 +1,7 @@
 package at.fhv.se.hotel.application.impl;
 
 import at.fhv.se.hotel.application.api.StayListingService;
-import at.fhv.se.hotel.application.dto.StayDTO;
+import at.fhv.se.hotel.application.dto.StayListingDTO;
 import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.repository.StayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +17,20 @@ public class StayListingServiceImpl implements StayListingService {
     StayRepository stayRepository;
 
     @Override
-    public List<StayDTO> allStays() {
+    public List<StayListingDTO> allStays() {
         List<Stay> stays = stayRepository.findAllStays();
-        List<StayDTO> stayDTOs = new ArrayList<>();
+        List<StayListingDTO> stayDTOs = new ArrayList<>();
 
         for (Stay stay : stays){
-            StayDTO stayDTO = StayDTO.builder()
+            List<String> rooms = new ArrayList<>();
+            stay.getRooms().forEach(room -> rooms.add(room.getName()));
+
+            StayListingDTO stayDTO = StayListingDTO.builder()
                     .withId(stay.getStayId().id())
                     .withGuestFirstName(stay.getGuest().getName().firstName())
                     .withGuestLastName(stay.getGuest().getName().lastName())
                     .withCheckOutDate(stay.getCheckOutDate())
+                    .withRooms(rooms)
                     .build();
 
             stayDTOs.add(stayDTO);

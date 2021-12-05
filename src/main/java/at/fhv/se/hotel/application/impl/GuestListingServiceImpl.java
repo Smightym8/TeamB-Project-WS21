@@ -10,10 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 public class GuestListingServiceImpl implements GuestListingService {
@@ -30,9 +27,13 @@ public class GuestListingServiceImpl implements GuestListingService {
         for(Guest guest : guests) {
             GuestDTO dto = GuestDTO.builder()
                     .withId(guest.getGuestId().id())
-                    .withBirthDate(guest.getBirthDate())
                     .withFirstName(guest.getName().firstName())
                     .withLastName(guest.getName().lastName())
+                    .withStreetName(guest.getAddress().streetName())
+                    .withStreetNumber(guest.getAddress().streetNumber())
+                    .withCity(guest.getAddress().city())
+                    .withZipCode(guest.getAddress().zipCode())
+                    .withCountry(guest.getAddress().country())
                     .build();
 
             dtos.add(dto);
@@ -46,9 +47,13 @@ public class GuestListingServiceImpl implements GuestListingService {
         Guest guest = guestRepository.guestById(new GuestId(id)).get();
         GuestDTO dto = GuestDTO.builder()
                 .withId(guest.getGuestId().id())
-                .withBirthDate(guest.getBirthDate())
                 .withFirstName(guest.getName().firstName())
                 .withLastName(guest.getName().lastName())
+                .withStreetName(guest.getAddress().streetName())
+                .withStreetNumber(guest.getAddress().streetNumber())
+                .withCity(guest.getAddress().city())
+                .withZipCode(guest.getAddress().zipCode())
+                .withCountry(guest.getAddress().country())
                 .build();
 
         return Optional.of(dto);

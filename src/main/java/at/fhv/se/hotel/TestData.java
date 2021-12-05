@@ -17,10 +17,12 @@ import at.fhv.se.hotel.infrastructure.HibernateServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -28,7 +30,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-@Profile("dev")
+@Profile("!test")
 @Component
 @Transactional
 public class TestData implements ApplicationRunner {
@@ -115,7 +117,6 @@ public class TestData implements ApplicationRunner {
                 new BigDecimal("400")
         );
 
-
         this.roomCategoryPriceRepository.add(singleRoomWinterPrice);
         this.roomCategoryPriceRepository.add(singleRoomSpringPrice);
         this.roomCategoryPriceRepository.add(singleRoomSummerPrice);
@@ -156,7 +157,10 @@ public class TestData implements ApplicationRunner {
                 LocalDate.now().plusDays(10),
                 bookingRepository.nextIdentity(),
                 michael,
-                List.of(tvService)
+                List.of(tvService),
+                2,
+                0,
+                "Extra pillow"
         );
 
         booking1.addRoomCategory(singleRoom, 1);
@@ -167,7 +171,10 @@ public class TestData implements ApplicationRunner {
                 LocalDate.now().plusDays(40),
                 bookingRepository.nextIdentity(),
                 ali,
-                List.of(tvService, breakfastService)
+                List.of(tvService, breakfastService),
+                2,
+                0,
+                "Vegetarian"
         );
         booking2.addRoomCategory(singleRoom, 2);
         booking2.addRoomCategory(doubleRoom, 1);
@@ -197,8 +204,6 @@ public class TestData implements ApplicationRunner {
 
         Room room8 = Room.create("108", RoomStatus.FREE, singleRoom);
         this.roomRepository.add(room8);
-
-
 
         Room room10 = Room.create("201", RoomStatus.FREE, doubleRoom);
         this.roomRepository.add(room10);

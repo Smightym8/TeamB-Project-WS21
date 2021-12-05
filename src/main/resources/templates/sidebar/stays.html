@@ -10,25 +10,26 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th class="col-1">Room(s)</th>
                 <th class="col-1">Guest</th>
                 <th class="col-1">Check-out date</th>
+                <th class="col-1">Room(s)</th>
                 <th class="col-1"></th>
                 <th class="col-1"></th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="stay : ${stays}">
-                <td>S101, S103</td>
+
                 <td th:text="${stay.guestFirstName} + ' ' + ${stay.guestLastName}"></td>
                 <td th:text="${stay.checkOutDate}"></td>
+                <td>S101, S103</td>
                 <td></td>
                 <td><a th:href="@{/}" type="button" class="btn btn-primary btn-sm">View / Check-out</a></td>
             </tr>
             </tbody>
         </table>
 
-        <p>infos?, button add services / generate bill ...?</p>
+        <!-- infos?, button add services / generate bill ...? -->
 
     </div>
 

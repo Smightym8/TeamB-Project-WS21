@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -59,13 +60,18 @@ public class HotelViewController {
     private static final String CREATE_BOOKING_SUMMARY_VIEW = "booking/createBookingSummary";
 
     private static final String CREATE_BOOKING_URL = "/createbooking";
+    private static final String CREATE_BOOKING_SUCCESS_URL = "/createbookingSuccess";
 
+/*----- Check-In -----*/
     private static final String BOOKING_DETAILS_URL = "/bookingdetails/{id}";
     private static final String BOOKING_DETAILS_VIEW = "booking/bookingDetails";
 
-/*----- Check-In -----*/
     private static final String CHECK_IN_URL = "/check-in";
     private static final String CHECK_IN_VIEW = "checkIn";
+
+/*----- Check-Out -----*/
+    private static final String STAY_DETAILS_URL = "/staydetails/{id}";
+    private static final String STAY_DETAILS_VIEW = "stay/stayDetails";
 
 /*----- Error -----*/
     private static final String ERROR_URL = "/error";
@@ -92,9 +98,6 @@ public class HotelViewController {
     private BookingCreationService bookingCreationService;
 
     @Autowired
-    private BookingDetailsService bookingDetailsService;
-
-    @Autowired
     private GuestCreationService guestCreationService;
 
     @Autowired
@@ -103,13 +106,16 @@ public class HotelViewController {
     @Autowired
     private StayListingService stayListingService;
 
+    @Autowired
+    private StayDetailsService stayDetailsService;
+
 /*--------------------------------------------------------------------------------------------------------------------*/
 
 /*----- Home -----*/
     @GetMapping(HOME_URL)
     public String home(Model model) {
         final List<BookingDTO> bookings = bookingListingService.allBookings();
-        final List<StayDTO> stays = stayListingService.allStays();
+        final List<StayListingDTO> stays = stayListingService.allStays();
 
         model.addAttribute("bookings", bookings);
         model.addAttribute("stays", stays);
@@ -154,8 +160,11 @@ public class HotelViewController {
 /*----- Stays -----*/
     @GetMapping(STAYS_URL)
     public String stays(Model model) {
-        final List<StayDTO> stays = stayListingService.allStays();
+        // Hibernate shows error if there are no bookings?
+        final List<BookingDTO> bookings = bookingListingService.allBookings();
+        final List<StayListingDTO> stays = stayListingService.allStays();
 
+        model.addAttribute("bookings", bookings);
         model.addAttribute("stays", stays);
 
         return STAYS_VIEW;
@@ -245,21 +254,24 @@ public class HotelViewController {
 
     @PostMapping(CREATE_BOOKING_SUMMARY_URL)
     public String createBookingSummary(
-            @ModelAttribute("bookingForm") BookingForm bookingform,
+            @ModelAttribute("bookingForm") BookingForm bookingForm,
             @RequestParam("isCreated") boolean isCreated,
             Model model) {
 
         BookingSummaryDTO bookingSummaryDTO = bookingSummaryService.createSummary(
-                bookingform.getGuestId(),
-                bookingform.getRoomCategoryIds(),
-                bookingform.getAmounts(),
-                bookingform.getServiceIds(),
-                bookingform.getCheckInDate(),
-                bookingform.getCheckOutDate()
+                bookingForm.getGuestId(),
+                bookingForm.getRoomCategoryIds(),
+                bookingForm.getAmountsOfRoomCategories(),
+                bookingForm.getServiceIds(),
+                bookingForm.getCheckInDate(),
+                bookingForm.getCheckOutDate(),
+                bookingForm.getAmountOfAdults(),
+                bookingForm.getAmountOfChildren(),
+                bookingForm.getAdditionalInformation()
         );
 
         model.addAttribute("bookingSummary", bookingSummaryDTO);
-        model.addAttribute("bookingForm", bookingform);
+        model.addAttribute("bookingForm", bookingForm);
         model.addAttribute("isCreated", isCreated);
 
         return CREATE_BOOKING_SUMMARY_VIEW;
@@ -268,20 +280,65 @@ public class HotelViewController {
     @PostMapping(CREATE_BOOKING_URL)
     public String createBooking(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model) {
 
-        bookingCreationService.book(bookingForm.getGuestId(),
+        String bookingId = bookingCreationService.book(bookingForm.getGuestId(),
                 bookingForm.getRoomCategoryIds(),
-                bookingForm.getAmounts(),
+                bookingForm.getAmountsOfRoomCategories(),
                 bookingForm.getServiceIds(),
                 bookingForm.getCheckInDate(),
-                bookingForm.getCheckOutDate());
+                bookingForm.getCheckOutDate(),
+                bookingForm.getAmountOfAdults(),
+                bookingForm.getAmountOfChildren(),
+                bookingForm.getAdditionalInformation());
 
-        return createBookingSummary(bookingForm, true, model);
+
+        // Redirect to post mapping: GET isn't supported
+        return "redirect:" + CREATE_BOOKING_SUCCESS_URL
+                + "?bookingId=" + bookingId + "&isCreated=" + true;
+    }
+
+    @GetMapping(CREATE_BOOKING_SUCCESS_URL)
+    public String createBookingSuccess(
+            @RequestParam("bookingId") String bookingId,
+            @RequestParam("isCreated") boolean isCreated,
+            Model model
+    ) {
+        BookingSummaryDTO bookingSummaryDTO = bookingSummaryService.summaryByBookingId(bookingId);
+        List<String> roomCategoryIds = new ArrayList<>();
+
+
+        bookingSummaryDTO.categoriesWithAmounts().keySet().forEach(
+                key -> roomCategoryIds.add(key.id())
+        );
+
+        List<Integer> amounts = new ArrayList<>(bookingSummaryDTO.categoriesWithAmounts().values());
+
+        List<String> serviceIds = new ArrayList<>();
+        bookingSummaryDTO.services().forEach(
+                serviceDTO -> serviceIds.add(serviceDTO.id())
+        );
+
+        BookingForm bookingForm = new BookingForm(
+                bookingSummaryDTO.guest().id(),
+                roomCategoryIds,
+                serviceIds,
+                bookingSummaryDTO.checkInDate(),
+                bookingSummaryDTO.checkOutDate(),
+                amounts,
+                bookingSummaryDTO.amountOfAdults(),
+                bookingSummaryDTO.amountOfChildren()
+        );
+
+        model.addAttribute("bookingSummary", bookingSummaryDTO);
+        model.addAttribute("bookingForm", bookingForm);
+        model.addAttribute("isCreated", isCreated);
+
+        return CREATE_BOOKING_SUMMARY_VIEW;
     }
 
     @GetMapping(BOOKING_DETAILS_URL)
     public String showBooking(@PathVariable String id, Model model) {
 
-        BookingDetailsDTO bookingDetailsDTO =  bookingDetailsService.detailsByBookingId(id);
+        BookingDetailsDTO bookingDetailsDTO =  bookingSummaryService.detailsByBookingId(id);
         model.addAttribute("bookingDetails", bookingDetailsDTO);
 
         return BOOKING_DETAILS_VIEW;
@@ -306,6 +363,18 @@ public class HotelViewController {
         return CHECK_IN_VIEW;
     }
 
+/*----- Check-Out -----*/
+
+    @GetMapping(STAY_DETAILS_URL)
+    public String showStay(@PathVariable String id, Model model) {
+
+        BookingDetailsDTO bookingDetailsDTO =  bookingSummaryService.detailsByBookingId(id);
+        StayDetailsDTO stayDetailsDTO =  stayDetailsService.detailsById(id);
+        model.addAttribute("stayDetails", stayDetailsDTO);
+
+        return STAY_DETAILS_VIEW;
+    }
+
 /*----- Error -----*/
     @GetMapping(ERROR_URL)
     public String displayError(@RequestParam("message") String message, Model model){
@@ -314,6 +383,6 @@ public class HotelViewController {
     }
 
     private static ModelAndView redirectError(String message){
-        return new ModelAndView("redirect:" + ERROR_URL + "?message" + message);
+        return new ModelAndView("redirect:" + ERROR_URL + "?message=" + message);
     }
 }

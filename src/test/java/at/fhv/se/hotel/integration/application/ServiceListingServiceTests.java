@@ -2,7 +2,6 @@ package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.ServiceListingService;
 import at.fhv.se.hotel.application.dto.ServiceDTO;
-import at.fhv.se.hotel.domain.model.guest.GuestId;
 import at.fhv.se.hotel.domain.model.service.Price;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
@@ -21,7 +20,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public class ServiceListingServiceTests {
@@ -47,6 +45,7 @@ public class ServiceListingServiceTests {
                         new ServiceName("Breakfast"),
                         new Price(new BigDecimal("100"))));
         Mockito.when(serviceRepository.findAllServices()).thenReturn(servicesExpected);
+
         //when
         List<ServiceDTO> servicesActual = serviceListingService.allServices();
 

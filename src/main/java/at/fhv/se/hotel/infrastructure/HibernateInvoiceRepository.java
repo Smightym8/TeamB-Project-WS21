@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -38,6 +39,13 @@ public class HibernateInvoiceRepository implements InvoiceRepository {
         TypedQuery<Invoice> query = this.em.createQuery("FROM Invoice AS i WHERE i.invoiceId = :invoiceId", Invoice.class);
         query.setParameter("invoiceId", invoiceId);
         return query.getResultStream().findFirst();
+    }
+
+    @Override
+    public List<Invoice> invoicesByDate(LocalDate invoiceDate) {
+        TypedQuery<Invoice> query = this.em.createQuery("FROM Invoice AS i WHERE i.invoiceDate = :invoiceDate", Invoice.class);
+        query.setParameter("invoiceDate", invoiceDate);
+        return query.getResultList();
     }
 
 }

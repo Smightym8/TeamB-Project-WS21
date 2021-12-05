@@ -13,9 +13,6 @@ public class ApplicationControllerSmokeTests {
     BookingCreationService bookingCreationService;
 
     @Autowired
-    BookingDetailsService bookingDetailsService;
-
-    @Autowired
     BookingListingService bookingListingService;
 
     @Autowired
@@ -23,6 +20,9 @@ public class ApplicationControllerSmokeTests {
 
     @Autowired
     CheckInService checkInService;
+
+    @Autowired
+    CheckOutService checkOutService;
 
     @Autowired
     GuestCreationService guestCreationService;
@@ -36,16 +36,24 @@ public class ApplicationControllerSmokeTests {
     @Autowired
     ServiceListingService serviceListingService;
 
+    @Autowired
+    StayDetailsService stayDetailsService;
+
+    @Autowired
+    StayListingService stayListingService;
+
     @Test
     public void given_applicationcontrollers_when_injected_then_allnotnull() {
         assertNotNull(bookingCreationService);
-        assertNotNull(bookingDetailsService);
         assertNotNull(bookingListingService);
         assertNotNull(bookingSummaryService);
         assertNotNull(checkInService);
+        assertNotNull(checkOutService);
         assertNotNull(guestCreationService);
         assertNotNull(guestListingService);
         assertNotNull(roomCategoryListingService);
         assertNotNull(serviceListingService);
+        assertNotNull(stayDetailsService);
+        assertNotNull(stayListingService);
     }
 }

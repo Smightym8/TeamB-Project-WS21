@@ -10,9 +10,7 @@ import at.fhv.se.hotel.domain.model.invoice.Invoice;
 import at.fhv.se.hotel.domain.model.invoice.InvoiceId;
 import at.fhv.se.hotel.domain.model.room.Room;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
-import at.fhv.se.hotel.domain.model.roomcategory.Description;
-import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
-import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryName;
+import at.fhv.se.hotel.domain.model.roomcategory.*;
 import at.fhv.se.hotel.domain.model.service.Price;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
@@ -21,6 +19,7 @@ import at.fhv.se.hotel.domain.repository.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -35,6 +34,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@ActiveProfiles("test")
 @SpringBootTest
 @Transactional
 public class InvoiceRepositoryImplTests {
@@ -56,6 +56,9 @@ public class InvoiceRepositoryImplTests {
 
     @Autowired
     RoomCategoryRepository roomCategoryRepository;
+
+    @Autowired
+    RoomCategoryPriceRepository roomCategoryPriceRepository;
 
     @Autowired
     RoomRepository roomRepository;
@@ -88,11 +91,14 @@ public class InvoiceRepositoryImplTests {
 
         BookingId idExpected = new BookingId("1337");
         Booking bookingExpected = Booking.create(
-                LocalDate.now(),
-                LocalDate.now().plusDays(10),
+                LocalDate.of(2021, 12, 5),
+                LocalDate.of(2021, 12, 15),
                 idExpected,
                 guestExpected,
-                servicesExpected
+                servicesExpected,
+                2,
+                1,
+                "Nothing"
         );
         List<RoomCategory> categoriesExpected = Arrays.asList(
                 RoomCategory.create(roomCategoryRepository.nextIdentity(),
@@ -105,6 +111,21 @@ public class InvoiceRepositoryImplTests {
         bookingExpected.addRoomCategory(categoriesExpected.get(0), 1);
         bookingExpected.addRoomCategory(categoriesExpected.get(1), 1);
 
+        List<RoomCategoryPrice> categoryPricesExpected = List.of(
+                RoomCategoryPrice.create(
+                        roomCategoryPriceRepository.nextIdentity(),
+                        Season.WINTER,
+                        categoriesExpected.get(0),
+                        new BigDecimal("300")
+                ),
+                RoomCategoryPrice.create(
+                        roomCategoryPriceRepository.nextIdentity(),
+                        Season.WINTER,
+                        categoriesExpected.get(1),
+                        new BigDecimal("500")
+                )
+        );
+
         String roomNameExpected = "Room 1";
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
@@ -115,18 +136,38 @@ public class InvoiceRepositoryImplTests {
                         categoriesExpected.get(0)
                 )
         );
-        Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
-        BigDecimal amountExpected = new BigDecimal(1000);
 
         InvoiceId invoiceIdExpected = new InvoiceId("1337");
-        Invoice invoiceExpected = Invoice.create(invoiceIdExpected,
-                            stayExpected, amountExpected);
+        String invoiceNumberExpected = "30112021001";
+        Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
+        int amountOfNightsExpected = 9;
+        BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76");
+        BigDecimal localTaxTotalExpected = new BigDecimal("1.52");
+        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.1");
+        BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("100");
+        BigDecimal totalNetAmountExpected = new BigDecimal("200");
+        BigDecimal totalGrossAmountExpected = new BigDecimal("300");
+
+        Invoice invoiceExpected = Invoice.create(
+                invoiceIdExpected,
+                invoiceNumberExpected,
+                stayExpected,
+                categoryPricesExpected,
+                amountOfNightsExpected,
+                localTaxPerPersonExpected,
+                localTaxTotalExpected,
+                valueAddedTaxInPercentExpected,
+                valueAddedTaxInEuroExpected,
+                totalNetAmountExpected,
+                totalGrossAmountExpected
+        );
 
         //when
         servicesExpected.forEach(service -> this.serviceRepository.add(service));
         this.guestRepository.add(guestExpected);
         categoriesExpected.forEach(category -> this.roomCategoryRepository.add(category));
         this.bookingRepository.add(bookingExpected);
+        categoryPricesExpected.forEach(roomCategoryPrice -> this.roomCategoryPriceRepository.add(roomCategoryPrice));
         this.roomRepository.add(roomsExpected.get(0));
         this.invoiceRepository.add(invoiceExpected);
         em.flush();
@@ -134,6 +175,7 @@ public class InvoiceRepositoryImplTests {
 
         //then
         assertEquals(invoiceExpected, invoiceActual);
+        assertEquals(invoiceIdExpected, invoiceActual.getInvoiceId());
     }
 
     @Test
@@ -198,23 +240,41 @@ public class InvoiceRepositoryImplTests {
                         LocalDate.now().plusDays(10),
                         bookingRepository.nextIdentity(),
                         guestsExpected.get(0),
-                        servicesExpected),
+                        servicesExpected,  2, 1,
+                        "Nothing"),
                 Booking.create(
                         LocalDate.now(),
                         LocalDate.now().plusDays(10),
                         bookingRepository.nextIdentity(),
                         guestsExpected.get(1),
-                        servicesExpected),
+                        servicesExpected, 2, 1,
+                        "Nothing"),
                 Booking.create(
                         LocalDate.now(),
                         LocalDate.now().plusDays(10),
                         bookingRepository.nextIdentity(),
                         guestsExpected.get(2),
-                        servicesExpected)
+                        servicesExpected, 2, 1,
+                        "Nothing")
         );
         bookingsExpected.get(0).addRoomCategory(categoriesExpected.get(0), 1);
         bookingsExpected.get(1).addRoomCategory(categoriesExpected.get(1), 1);
         bookingsExpected.get(2).addRoomCategory(categoriesExpected.get(0),2);
+
+        List<RoomCategoryPrice> categoryPricesExpected = List.of(
+                RoomCategoryPrice.create(
+                        roomCategoryPriceRepository.nextIdentity(),
+                        Season.WINTER,
+                        categoriesExpected.get(0),
+                        new BigDecimal("300")
+                ),
+                RoomCategoryPrice.create(
+                        roomCategoryPriceRepository.nextIdentity(),
+                        Season.WINTER,
+                        categoriesExpected.get(1),
+                        new BigDecimal("500")
+                )
+        );
 
         List<String> roomsNameExpected = Arrays.asList("Room1","Room2","Room3");
         RoomStatus roomStatusExpected = RoomStatus.FREE;
@@ -245,15 +305,35 @@ public class InvoiceRepositoryImplTests {
                 new InvoiceId("1338"),
                 new InvoiceId("1339")
         );
-        BigDecimal amountExpected = new BigDecimal(1000);
+        String invoiceNumberExpected = "30112021001";
+        int amountOfNightsExpected = 9;
+        BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76");
+        BigDecimal localTaxTotalExpected = new BigDecimal("1.52");
+        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.1");
+        BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("100");
+        BigDecimal totalNetAmountExpected = new BigDecimal("200");
+        BigDecimal totalGrossAmountExpected = new BigDecimal("300");
+
         List<Invoice> invoicesExpected = invoiceIdsExpected.stream()
-                .map(id -> Invoice.create(id,staysExpected.listIterator().next(),amountExpected))
-                .collect(Collectors.toList());
+                .map(id -> Invoice.create(
+                        id,
+                        invoiceNumberExpected,
+                        staysExpected.listIterator().next(),
+                        categoryPricesExpected,
+                        amountOfNightsExpected,
+                        localTaxPerPersonExpected,
+                        localTaxTotalExpected,
+                        valueAddedTaxInPercentExpected,
+                        valueAddedTaxInEuroExpected,
+                        totalNetAmountExpected,
+                        totalGrossAmountExpected
+                )).collect(Collectors.toList());
         //when
         guestsExpected.forEach(guest -> this.guestRepository.add(guest));
         categoriesExpected.forEach(category -> this.roomCategoryRepository.add(category));
         servicesExpected.forEach(service -> this.serviceRepository.add(service));
         bookingsExpected.forEach(booking -> this.bookingRepository.add(booking));
+        categoryPricesExpected.forEach(roomCategoryPrice -> this.roomCategoryPriceRepository.add(roomCategoryPrice));
         roomsExpected.forEach(room -> this.roomRepository.add(room));
         staysExpected.forEach(stay -> this.stayRepository.add(stay));
         invoicesExpected.forEach(invoice -> this.invoiceRepository.add(invoice));

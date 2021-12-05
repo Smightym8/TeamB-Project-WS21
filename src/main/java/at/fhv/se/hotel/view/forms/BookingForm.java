@@ -13,20 +13,26 @@ public final class BookingForm {
     private LocalDate checkInDate;
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate checkOutDate;
-    private List<Integer> amounts;
+    private List<Integer> amountsOfRoomCategories;
+    private int amountOfAdults;
+    private int amountOfChildren;
+    String additionalInformation;
 
     // required by spring/thymeleaf
     public BookingForm() {
     }
 
     public BookingForm(String guestId, List<String> roomCategoryIds, List<String> serviceIds,
-                       LocalDate checkInDate, LocalDate checkOutDate, List<Integer> amounts) {
+                       LocalDate checkInDate, LocalDate checkOutDate, List<Integer> amountsOfRoomCategories,
+                       int amountOfAdults, int amountOfChildren) {
         this.guestId = guestId;
         this.roomCategoryIds = roomCategoryIds;
         this.serviceIds = serviceIds;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
-        this.amounts = amounts;
+        this.amountsOfRoomCategories = amountsOfRoomCategories;
+        this.amountOfAdults = amountOfAdults;
+        this.amountOfChildren = amountOfChildren;
     }
 
     public String getGuestId() {
@@ -45,12 +51,12 @@ public final class BookingForm {
         this.roomCategoryIds = roomCategoryIds;
     }
 
-    public List<Integer> getAmounts() {
-        return amounts;
+    public List<Integer> getAmountsOfRoomCategories() {
+        return amountsOfRoomCategories;
     }
 
-    public void setAmounts(List<Integer> amounts) {
-        this.amounts = amounts;
+    public void setAmountsOfRoomCategories(List<Integer> amountsOfRoomCategories) {
+        this.amountsOfRoomCategories = amountsOfRoomCategories;
     }
 
     public List<String> getServiceIds() {
@@ -75,5 +81,29 @@ public final class BookingForm {
 
     public void setCheckOutDate(LocalDate checkOutDate) {
         this.checkOutDate = checkOutDate;
+    }
+
+    public int getAmountOfAdults() {
+        return amountOfAdults;
+    }
+
+    public void setAmountOfAdults(int amountOfAdults) {
+        this.amountOfAdults = amountOfAdults;
+    }
+
+    public int getAmountOfChildren() {
+        return amountOfChildren;
+    }
+
+    public void setAmountOfChildren(int amountOfChildren) {
+        this.amountOfChildren = amountOfChildren;
+    }
+
+    public String getAdditionalInformation() {
+        return additionalInformation;
+    }
+
+    public void setAdditionalInformation(String additionalInformation) {
+        this.additionalInformation = additionalInformation;
     }
 }

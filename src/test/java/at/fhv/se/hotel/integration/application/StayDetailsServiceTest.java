@@ -1,7 +1,7 @@
 package at.fhv.se.hotel.integration.application;
 
-import at.fhv.se.hotel.application.api.StayListingService;
-import at.fhv.se.hotel.application.dto.StayListingDTO;
+import at.fhv.se.hotel.application.api.StayDetailsService;
+import at.fhv.se.hotel.application.dto.StayDetailsDTO;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
 import at.fhv.se.hotel.domain.model.guest.*;
@@ -16,6 +16,7 @@ import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.model.stay.Stay;
+import at.fhv.se.hotel.domain.model.stay.StayId;
 import at.fhv.se.hotel.domain.repository.StayRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -28,20 +29,30 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
-public class StayListingServiceTests {
+public class StayDetailsServiceTest {
+
     @Autowired
-    private StayListingService stayListingService;
+    StayDetailsService stayDetailsService;
 
     @MockBean
-    private StayRepository stayRepository;
+    StayRepository stayRepository;
 
     @Test
-    void given_3staysinrepository_when_fetchingallstays_then3matchingstayid(){
+    void given_staydetails_when_fetchingdetails_thenreturnequalsdetails() {
         //given
+        String idExpected = "1";
+        LocalDate checkInExpected = LocalDate.of(2021, 12, 1);
+        LocalDate checkOutExpected = LocalDate.of(2021, 12, 3);
+        int amountOfAdultsExpected = 2;
+        int amountOfChildrenExpected = 1;
+        String additionalInformationExpected = "Vegan";
+
         List<Service> servicesExpected = Arrays.asList(
                 Service.create(
                         new ServiceId("1"),
@@ -64,62 +75,44 @@ public class StayListingServiceTests {
                 Collections.emptyList()
         );
         Booking bookingExpected = Booking.create(
-                    LocalDate.now(),
-                    LocalDate.now().plusDays(10),
-                    new BookingId("1"),
-                    guestExpected,
-                    servicesExpected,
-                2,
-                1,
-                ""
-                );
-        Booking bookingExpected2 = Booking.create(
-                        LocalDate.now(),
-                        LocalDate.now().plusDays(10),
-                        new BookingId("2"),
-                        guestExpected,
-                        servicesExpected,
-                2,
-                1,
-                ""
-                );
-        Booking bookingExpected3 = Booking.create(
-                        LocalDate.now(),
-                        LocalDate.now().plusDays(10),
-                        new BookingId("3"),
-                        guestExpected,
-                        servicesExpected,
-                2,
-                1,
-                ""
-                );
+                checkInExpected,
+                checkOutExpected,
+                new BookingId(idExpected),
+                guestExpected,
+                servicesExpected,
+                amountOfAdultsExpected,
+                amountOfChildrenExpected,
+                additionalInformationExpected
+        );
         RoomCategory categoryExpected = RoomCategory.create(
                 new RoomCategoryId("1"),
                 new RoomCategoryName("Single Room"),
                 new Description("This is a single room")
         );
         List<Room> roomsExpected = Arrays.asList(
-                Room.create("single Room",RoomStatus.FREE,categoryExpected),
-                Room.create("double Room",RoomStatus.FREE,categoryExpected)
-                );
-
-        List<Stay> staysExpected = List.of(
-                Stay.create(bookingExpected,roomsExpected),
-                Stay.create(bookingExpected2,roomsExpected),
-                Stay.create(bookingExpected3,roomsExpected)
+                Room.create("S101", RoomStatus.FREE,categoryExpected)
         );
 
-        Mockito.when(stayRepository.findAllStays()).thenReturn(staysExpected);
+        Stay staysExpected = Stay.create(bookingExpected,roomsExpected);
+        Mockito.when(stayRepository.stayById(new StayId(idExpected))).thenReturn(Optional.of(staysExpected));
 
         // when
-        List<StayListingDTO> staysActual = stayListingService.allStays();
+        StayDetailsDTO stayDetailsDTOActual = stayDetailsService.detailsById(idExpected);
 
         // then
-        assertEquals(staysExpected.size(),staysActual.size());
-        for (int i = 0; i < staysActual.size(); i++){
-            assertEquals(staysExpected.get(i).getBooking().getGuest().getName().firstName(), staysActual.get(i).guestFirstName());
-            assertEquals(staysExpected.get(i).getBooking().getGuest().getName().lastName(), staysActual.get(i).guestLastName());
-            assertEquals(staysExpected.get(i).getBooking().getCheckOutDate(), staysActual.get(i).checkOutDate());
+        assertEquals(idExpected, stayDetailsDTOActual.id());
+        assertEquals(guestExpected.getName().firstName(), stayDetailsDTOActual.guestFirstName());
+        assertEquals(guestExpected.getName().lastName(), stayDetailsDTOActual.guestLastName());
+        assertEquals(roomsExpected.size(), stayDetailsDTOActual.rooms().size());
+        assertEquals(servicesExpected.size(), stayDetailsDTOActual.services().size());
+        assertEquals(checkInExpected, stayDetailsDTOActual.checkInDate());
+        assertEquals(checkOutExpected, stayDetailsDTOActual.checkOutDate());
+        assertEquals(amountOfAdultsExpected, stayDetailsDTOActual.amountOfAdults());
+        assertEquals(amountOfChildrenExpected, stayDetailsDTOActual.amountOfChildren());
+        assertEquals(additionalInformationExpected, stayDetailsDTOActual.additionalInformation());
+
+        for(Room r : roomsExpected) {
+            assertTrue(stayDetailsDTOActual.rooms().contains(r.getName()));
         }
     }
 }

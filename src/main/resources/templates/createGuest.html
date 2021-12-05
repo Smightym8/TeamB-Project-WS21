@@ -15,7 +15,8 @@
           <label for="firstname" class="form-label">Type of guest:</label>
           <select class="form-select" aria-label="Default select">
             <option selected="1">Private</option>
-            <option value="2">Travel irgendwas</option>
+            <option value="TravelAgency">Travel Agency</option>
+            <option value="Company Guest">Company Guest</option>
           </select>
 
         </div>
@@ -43,13 +44,13 @@
           <input th:field="*{phoneNumber}" type="tel" class="form-control" id="phoneNumber" placeholder="+43 699 123 456 789" required>
           <p th:if="${#fields.hasErrors('phoneNumber')}">Invalid Phonenumber</p>
         </div>
-<!--
+
         <div class="mb-3">
           <label for="birthDate" class="form-label">Birthdate:</label>
           <input th:field="*{birthDate}" type="date" class="form-control" id="birthDate" required>
           <p th:if="${#fields.hasErrors('birthDate')}">Invalid Birthdate</p>
         </div>
--->
+-
       </div>
       <div class="col-6" id="rightForm">
         <div class="mb-3">
@@ -127,7 +128,7 @@
     </script>
   </form>
 
-  <p>guest type oder voucher code ... voucher code flexibler?</p>
+  <!-- guest type oder voucher code ... voucher code flexibler? -->
 
 </div>
 </body>

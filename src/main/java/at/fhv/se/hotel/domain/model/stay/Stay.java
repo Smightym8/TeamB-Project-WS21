@@ -16,6 +16,7 @@ public class Stay {
     private StayId stayId;
     private List<Room> rooms;
     private Booking booking;
+    private boolean isActive;
 
     // Required by hibernate
     public Stay() {
@@ -29,34 +30,43 @@ public class Stay {
         this.stayId = new StayId(aBooking.getBookingId().id());
         this.booking = aBooking;
         this.rooms = aRooms;
+        this.isActive = true;
     }
 
     public StayId getStayId() {
-        return this.stayId;
+        return stayId;
     }
 
     public List<Room> getRooms() {
-        return this.rooms;
+        return rooms;
     }
 
     public Booking getBooking() {
-        return this.booking;
-    }
-
-    public LocalDate getCheckInDate() {
-        return this.booking.getCheckInDate();
-    }
-
-    public LocalDate getCheckOutDate() {
-        return this.booking.getCheckOutDate();
+        return booking;
     }
 
     public Guest getGuest() {
-        return this.booking.getGuest();
+        return booking.getGuest();
+    }
+
+    public LocalDate getCheckInDate() {
+        return booking.getCheckInDate();
+    }
+
+    public LocalDate getCheckOutDate() {
+        return booking.getCheckOutDate();
     }
 
     public List<Service> getServices() {
-        return this.booking.getServices();
+        return booking.getServices();
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void deactivate() {
+        isActive = false;
     }
 
     @Override
@@ -64,14 +74,11 @@ public class Stay {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Stay stay = (Stay) o;
-        return Objects.equals(id, stay.id) &&
-                Objects.equals(stayId, stay.stayId) &&
-                Objects.equals(rooms, stay.rooms) &&
-                Objects.equals(booking, stay.booking);
+        return isActive == stay.isActive && Objects.equals(id, stay.id) && Objects.equals(stayId, stay.stayId) && Objects.equals(rooms, stay.rooms) && Objects.equals(booking, stay.booking);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, stayId, rooms, booking);
+        return Objects.hash(id, stayId, rooms, booking, isActive);
     }
 }

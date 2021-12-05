@@ -14,20 +14,27 @@ public class GuestDTOTest {
         String idExpected = "42";
         String firstNameExpected = "John";
         String lastNameExpected = "Doe";
-        LocalDate birthDateExpected = LocalDate.of(1980, 1, 1);
+        String streetNameExpected = "Streetname";
+        String streetNumberExpected = "1a";
+        String cityExpected = "City";
+        String zipCodeExpected = "6850";
+        String countryExpected = "Austria";
 
         // when
         GuestDTO guestDTOExpected = GuestDTO.builder()
                 .withId(idExpected)
                 .withFirstName(firstNameExpected)
                 .withLastName(lastNameExpected)
-                .withBirthDate(birthDateExpected)
+                .withStreetName(streetNameExpected)
+                .withStreetNumber(streetNumberExpected)
+                .withCity(cityExpected)
+                .withZipCode(zipCodeExpected)
+                .withCountry(countryExpected)
                 .build();
 
         // then
         assertEquals(idExpected, guestDTOExpected.id());
         assertEquals(firstNameExpected, guestDTOExpected.firstName());
         assertEquals(lastNameExpected, guestDTOExpected.lastName());
-        assertEquals(birthDateExpected, guestDTOExpected.birthDate());
     }
 }

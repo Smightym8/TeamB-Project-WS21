@@ -92,5 +92,10 @@ public class GuestListingServiceTests {
         assertEquals(guestExpected.getGuestId().id(), guestActual.id());
         assertEquals(guestExpected.getName().firstName(), guestActual.firstName());
         assertEquals(guestExpected.getName().lastName(), guestActual.lastName());
+        assertEquals(guestExpected.getAddress().city(), guestActual.city());
+        assertEquals(guestExpected.getAddress().country(), guestActual.country());
+        assertEquals(guestExpected.getAddress().streetName(), guestActual.streetName());
+        assertEquals(guestExpected.getAddress().streetNumber(), guestActual.streetNumber());
+        assertEquals(guestExpected.getAddress().zipCode(), guestActual.zipCode());
     }
 }

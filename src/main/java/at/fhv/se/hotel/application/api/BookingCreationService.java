@@ -11,12 +11,16 @@ import java.util.List;
  */
 public interface BookingCreationService {
     /**
-     * See implementation {@link BookingCreationServiceImpl#book(String, List, List, List, LocalDate, LocalDate)}
+     * See implementation
+     * {@link BookingCreationServiceImpl#book(String, List, List, List, LocalDate, LocalDate, int, int, String)}
      */
-    public void book(String guestId,
+    String book(String guestId,
                      List<String> roomCategoryIds,
                      List<Integer> amounts,
                      List<String> serviceIds,
                      LocalDate checkInDate,
-                     LocalDate checkOutDate);
+                     LocalDate checkOutDate,
+                     int amountOfAdults,
+                     int amountOfChildren,
+                     String additionalInformation);
 }

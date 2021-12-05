@@ -1,15 +1,17 @@
 package at.fhv.se.hotel.application.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class BookingDetailsDTO {
+public class StayDetailsDTO {
     private String id;
-    private GuestDTO guest;
-    private Map<RoomCategoryDTO, Integer> categoriesWithAmounts;
-    private List<ServiceDTO> services;
+    private String guestFirstName;
+    private String guestLastName;
+    private List<String> rooms;
+    private Map<String, BigDecimal> services;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
     private int amountOfAdults;
@@ -21,27 +23,31 @@ public class BookingDetailsDTO {
     }
 
     public String id() {
-        return this.id;
+        return id;
     }
 
-    public GuestDTO guest() {
-        return this.guest;
+    public String guestFirstName() {
+        return guestFirstName;
     }
 
-    public Map<RoomCategoryDTO, Integer> categoriesWithAmounts() {
-        return this.categoriesWithAmounts;
+    public String guestLastName() {
+        return guestLastName;
     }
 
-    public List<ServiceDTO> services() {
-        return this.services;
+    public List<String> rooms() {
+        return rooms;
+    }
+
+    public Map<String, BigDecimal> services() {
+        return services;
     }
 
     public LocalDate checkInDate() {
-        return this.checkInDate;
+        return checkInDate;
     }
 
     public LocalDate checkOutDate() {
-        return this.checkOutDate;
+        return checkOutDate;
     }
 
     public int amountOfAdults() {
@@ -52,13 +58,15 @@ public class BookingDetailsDTO {
         return amountOfChildren;
     }
 
-    public String additionalInformation() { return additionalInformation; };
+    public String additionalInformation() {
+        return additionalInformation;
+    }
 
     public static class Builder {
-        private final BookingDetailsDTO instance;
+        private final StayDetailsDTO instance;
 
         public Builder() {
-            this.instance = new BookingDetailsDTO();
+            this.instance = new StayDetailsDTO();
         }
 
         public Builder withId(String id) {
@@ -66,17 +74,22 @@ public class BookingDetailsDTO {
             return this;
         }
 
-        public Builder withGuest(GuestDTO guest) {
-            this.instance.guest = guest;
+        public Builder withGuestFirstName(String guestFirstName) {
+            this.instance.guestFirstName = guestFirstName;
             return this;
         }
 
-        public Builder withRoomCategoriesAndAmounts(Map<RoomCategoryDTO, Integer> categoriesWithAmounts) {
-            this.instance.categoriesWithAmounts = categoriesWithAmounts;
+        public Builder withGuestLastName(String guestLastName) {
+            this.instance.guestLastName = guestLastName;
             return this;
         }
 
-        public Builder withServices(List<ServiceDTO> services) {
+        public Builder withRooms(List<String> rooms) {
+            this.instance.rooms = rooms;
+            return this;
+        }
+
+        public Builder withServices(Map<String, BigDecimal> services) {
             this.instance.services = services;
             return this;
         }
@@ -106,14 +119,14 @@ public class BookingDetailsDTO {
             return this;
         }
 
-        public BookingDetailsDTO build() {
-            Objects.requireNonNull(this.instance.id, "id must be set in BookingDetailsDTO");
-            Objects.requireNonNull(this.instance.guest, "guest must be set in BookingDetailsDTO");
-            Objects.requireNonNull(this.instance.categoriesWithAmounts,
-                    "categoriesWithAmounts must be set in BookingDetailsDTO");
-            Objects.requireNonNull(this.instance.checkInDate, "checkInDate must be set in BookingDetailsDTO");
-            Objects.requireNonNull(this.instance.checkOutDate, "checkOutDate must be set in BookingDetailsDTO");
-            
+        public StayDetailsDTO build() {
+            Objects.requireNonNull(this.instance.id, "id must be set in StayDetailsDTO");
+            Objects.requireNonNull(this.instance.guestFirstName, "guestFirstName must be set in StayDetailsDTO");
+            Objects.requireNonNull(this.instance.guestLastName, "guestLastName must be set in StayDetailsDTO");
+            Objects.requireNonNull(this.instance.rooms, "rooms must be set in StayDetailsDTO");
+            Objects.requireNonNull(this.instance.checkInDate, "checkInDate must be set in StayDetailsDTO");
+            Objects.requireNonNull(this.instance.checkOutDate, "checkOutDate must be set in StayDetailsDTO");
+
             return this.instance;
         }
     }
