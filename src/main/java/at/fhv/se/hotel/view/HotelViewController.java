@@ -196,7 +196,7 @@ public class HotelViewController {
     }
 
     @PostMapping(CREATE_GUEST_URL)
-    public String createGuestPost(@ModelAttribute("guest") @Valid GuestForm guestForm, BindingResult bindingResult, Model model) {
+    public String createGuestPost(@ModelAttribute("guest") @Valid GuestForm guestForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return CREATE_GUEST_VIEW;
         }
