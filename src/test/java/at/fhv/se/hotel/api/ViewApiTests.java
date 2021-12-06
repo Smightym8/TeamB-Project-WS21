@@ -92,5 +92,5 @@ public class ViewApiTests {
 
     // TODO: Implement test for post mappings
 
-    // TODO: Implement test for mappings with path variables
+    // TODO: Implement test for mappings with parameters
 }

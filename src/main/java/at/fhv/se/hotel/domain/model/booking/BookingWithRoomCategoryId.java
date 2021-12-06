@@ -5,6 +5,7 @@ import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
 import java.io.Serializable;
 import java.util.Objects;
 
+// TODO: Test
 public class BookingWithRoomCategoryId implements Serializable {
     private Booking booking;
     private RoomCategory roomCategory;

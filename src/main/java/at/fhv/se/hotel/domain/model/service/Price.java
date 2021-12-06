@@ -3,6 +3,7 @@ package at.fhv.se.hotel.domain.model.service;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+// TODO: Test
 public class Price {
     private BigDecimal price;
 

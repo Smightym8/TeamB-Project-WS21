@@ -3,6 +3,7 @@ package at.fhv.se.hotel.domain.model.roomcategory;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+// TODO: Test
 public class RoomCategoryPrice {
     // Required by hibernate
     private Long id;

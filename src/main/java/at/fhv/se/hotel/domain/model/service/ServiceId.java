@@ -2,6 +2,7 @@ package at.fhv.se.hotel.domain.model.service;
 
 import java.util.Objects;
 
+// TODO: Test
 public class ServiceId {
     private String id;
 

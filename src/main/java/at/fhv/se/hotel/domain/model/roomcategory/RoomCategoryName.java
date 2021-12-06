@@ -2,6 +2,7 @@ package at.fhv.se.hotel.domain.model.roomcategory;
 
 import java.util.Objects;
 
+// TODO: Test
 public class RoomCategoryName {
     private String name;
 

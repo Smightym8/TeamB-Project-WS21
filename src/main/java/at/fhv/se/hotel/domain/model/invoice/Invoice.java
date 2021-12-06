@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
+// TODO: Test
 public class Invoice {
     // Required by hibernate
     private Long id;

@@ -2,6 +2,7 @@ package at.fhv.se.hotel.domain.model.invoice;
 
 import java.util.Objects;
 
+// TODO: Test
 public class InvoiceId {
     private String id;
 

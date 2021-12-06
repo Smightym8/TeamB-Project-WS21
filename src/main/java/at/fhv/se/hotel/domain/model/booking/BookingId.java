@@ -2,6 +2,7 @@ package at.fhv.se.hotel.domain.model.booking;
 
 import java.util.Objects;
 
+// TODO: Test
 public class BookingId {
     private String id;
 

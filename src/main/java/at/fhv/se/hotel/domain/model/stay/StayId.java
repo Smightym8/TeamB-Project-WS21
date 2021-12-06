@@ -2,6 +2,7 @@ package at.fhv.se.hotel.domain.model.stay;
 
 import java.util.Objects;
 
+// TODO: Test
 public class StayId {
     private String id;
 

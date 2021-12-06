@@ -5,6 +5,7 @@ import at.fhv.se.hotel.domain.model.booking.Booking;
 import java.util.List;
 import java.util.Objects;
 
+// TODO: Test
 public class RoomCategory {
     // Required by hibernate
     private Long id;

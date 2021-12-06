@@ -2,6 +2,7 @@ package at.fhv.se.hotel.domain.model.guest;
 
 import java.util.Objects;
 
+// TODO: Test
 public class FullName {
     private String firstName;
     private String lastName;

@@ -4,6 +4,7 @@ import at.fhv.se.hotel.domain.model.booking.BookingId;
 
 import java.util.Objects;
 
+// TODO: Test
 public class Address {
     private String streetName;
     private String streetNumber;
