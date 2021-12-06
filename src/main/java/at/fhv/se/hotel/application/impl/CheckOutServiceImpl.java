@@ -4,6 +4,7 @@ import at.fhv.se.hotel.application.api.CheckOutService;
 import at.fhv.se.hotel.application.dto.InvoiceDTO;
 import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
+import at.fhv.se.hotel.domain.model.room.Room;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.stay.Stay;
@@ -55,12 +56,17 @@ public class CheckOutServiceImpl implements CheckOutService {
         }
 
         InvoiceDTO invoiceDTO = InvoiceDTO.builder()
+                .withStayId(stayId)
+                .withInvoiceNumber(invoice.getInvoiceNumber())
+                .withInvoiceDate(invoice.getInvoiceDate())
                 .withGuestFirstName(invoice.getStay().getGuest().getName().firstName())
                 .withGuestLastName(invoice.getStay().getGuest().getName().lastName())
                 .withStreetName(invoice.getStay().getGuest().getAddress().streetName())
                 .withStreetNumber(invoice.getStay().getGuest().getAddress().streetNumber())
                 .withZipCode(invoice.getStay().getGuest().getAddress().zipCode())
                 .withCity(invoice.getStay().getGuest().getAddress().city())
+                .withAmountOfAdults(invoice.getStay().getBooking().getAmountOfAdults())
+                .withAmountOfChildren(invoice.getStay().getBooking().getAmountOfChildren())
                 .withServices(services)
                 .withCategories(roomCategories)
                 .withCategoryPrices(roomCategoryPrices)
@@ -88,6 +94,11 @@ public class CheckOutServiceImpl implements CheckOutService {
             Invoice invoice = invoiceCalculationService.calculateInvoice(stay);
 
             invoiceRepository.add(invoice);
+
+            for(Room room : stay.getRooms()) {
+                room.clean();
+            }
+
             stay.deactivate();
 
             return true;
