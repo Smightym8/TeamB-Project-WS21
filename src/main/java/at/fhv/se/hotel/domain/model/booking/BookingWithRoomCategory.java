@@ -1,5 +1,6 @@
 package at.fhv.se.hotel.domain.model.booking;
 
+import at.fhv.se.hotel.domain.Generated;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
 
 import java.util.Objects;
@@ -41,6 +42,7 @@ public class BookingWithRoomCategory {
         return amount;
     }
 
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -49,6 +51,7 @@ public class BookingWithRoomCategory {
         return amount == that.amount && Objects.equals(id, that.id) && Objects.equals(bookingWithRoomCategoryId, that.bookingWithRoomCategoryId);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(id, bookingWithRoomCategoryId, amount);

@@ -1,5 +1,6 @@
 package at.fhv.se.hotel.domain.model.room;
 
+import at.fhv.se.hotel.domain.Generated;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
 
 import java.util.Objects;
@@ -45,6 +46,7 @@ public class Room {
         this.status = RoomStatus.CLEANING;
     }
 
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -53,6 +55,7 @@ public class Room {
         return Objects.equals(id, room.id) && Objects.equals(name, room.name) && status == room.status && Objects.equals(roomCategory, room.roomCategory);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(id, name, status, roomCategory);

@@ -1,5 +1,6 @@
 package at.fhv.se.hotel.domain.model.service;
 
+import at.fhv.se.hotel.domain.Generated;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 
 import java.util.List;
@@ -41,6 +42,7 @@ public class Service {
         return servicePrice;
     }
 
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,6 +54,7 @@ public class Service {
                 && Objects.equals(servicePrice, service.servicePrice);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(id, serviceId, serviceName, servicePrice);

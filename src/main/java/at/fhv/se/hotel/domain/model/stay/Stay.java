@@ -1,5 +1,6 @@
 package at.fhv.se.hotel.domain.model.stay;
 
+import at.fhv.se.hotel.domain.Generated;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.guest.Guest;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
@@ -70,6 +71,7 @@ public class Stay {
         isActive = false;
     }
 
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -78,6 +80,7 @@ public class Stay {
         return isActive == stay.isActive && Objects.equals(id, stay.id) && Objects.equals(stayId, stay.stayId) && Objects.equals(rooms, stay.rooms) && Objects.equals(booking, stay.booking);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(id, stayId, rooms, booking, isActive);

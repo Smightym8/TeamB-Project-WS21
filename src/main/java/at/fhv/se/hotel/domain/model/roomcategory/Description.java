@@ -1,5 +1,7 @@
 package at.fhv.se.hotel.domain.model.roomcategory;
 
+import at.fhv.se.hotel.domain.Generated;
+
 import java.util.Objects;
 
 public class Description {
@@ -17,6 +19,7 @@ public class Description {
         return this.description;
     }
 
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -25,6 +28,7 @@ public class Description {
         return Objects.equals(description, that.description);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(description);

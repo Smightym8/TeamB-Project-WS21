@@ -1,5 +1,6 @@
 package at.fhv.se.hotel.domain.model.guest;
 
+import at.fhv.se.hotel.domain.Generated;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 
 import java.time.LocalDate;
@@ -73,6 +74,7 @@ public class Guest {
         this.bookings.add(booking);
     }
 
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -89,6 +91,7 @@ public class Guest {
                 && Objects.equals(bookings, guest.bookings);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(id, guestId, name,
