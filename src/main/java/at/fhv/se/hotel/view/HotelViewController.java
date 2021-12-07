@@ -169,10 +169,10 @@ public class HotelViewController {
     @GetMapping(STAYS_URL)
     public String stays(Model model) {
         // Hibernate shows error if there are no bookings?
+        // TODO: Find reason for error and remove BookingDTO
         final List<BookingDTO> bookings = bookingListingService.allBookings();
         final List<StayListingDTO> stays = stayListingService.allStays();
 
-        model.addAttribute("bookings", bookings);
         model.addAttribute("stays", stays);
 
         return STAYS_VIEW;
@@ -350,28 +350,26 @@ public class HotelViewController {
     }
 
 /*----- Check-In -----*/
-    // TODO: Test
     @GetMapping(CHECK_IN_URL)
     public String checkIn(
             @RequestParam("bookingId") String bookingId,
-            @RequestParam("isCheckedIn") boolean isCheckedIn,
+            @RequestParam("isCheckIn") boolean isCheckIn,
             Model model) {
 
         List<RoomDTO> assignedRooms = checkInService.assignRooms(bookingId);
 
-        if(isCheckedIn) {
+        if(isCheckIn) {
             checkInService.checkIn(bookingId, assignedRooms);
         }
 
         model.addAttribute("bookingId", bookingId);
         model.addAttribute("assignedRooms", assignedRooms);
-        model.addAttribute("isCheckedIn", isCheckedIn);
+        model.addAttribute("isCheckIn", isCheckIn);
 
         return CHECK_IN_VIEW;
     }
 
 /*----- Check-Out -----*/
-    // TODO: Test
     @GetMapping(STAY_DETAILS_URL)
     public String showStay(@PathVariable String id, Model model) {
 
@@ -379,6 +377,7 @@ public class HotelViewController {
         // HHH000143: Bytecode enhancement failed because no public, protected or package-private default constructor
         // was found for entity: at.fhv.se.hotel.domain.model.booking.Booking.
         // Private constructors don't work with runtime proxies!
+        // TODO: Find reason for error and remove BookingDetailsDTO
         BookingDetailsDTO bookingDetailsDTO =  bookingSummaryService.detailsByBookingId(id);
         StayDetailsDTO stayDetailsDTO =  stayDetailsService.detailsById(id);
         model.addAttribute("stayDetails", stayDetailsDTO);
@@ -386,7 +385,6 @@ public class HotelViewController {
         return STAY_DETAILS_VIEW;
     }
 
-    // TODO: Test
     @GetMapping(INVOICE_URL)
     public String showInvoice(@PathVariable String id, Model model) {
 
@@ -394,6 +392,7 @@ public class HotelViewController {
         // HHH000143: Bytecode enhancement failed because no public, protected or package-private default constructor
         // was found for entity: at.fhv.se.hotel.domain.model.booking.Booking.
         // Private constructors don't work with runtime proxies!
+        // TODO: Find reason for error and remove BookingDetailsDTO
         BookingDetailsDTO bookingDetailsDTO =  bookingSummaryService.detailsByBookingId(id);
         InvoiceDTO invoiceDTO = checkOutService.createInvoice(id);
         model.addAttribute("invoice", invoiceDTO);
@@ -409,6 +408,7 @@ public class HotelViewController {
         // HHH000143: Bytecode enhancement failed because no public, protected or package-private default constructor
         // was found for entity: at.fhv.se.hotel.domain.model.booking.Booking.
         // Private constructors don't work with runtime proxies!
+        // TODO: Find reason for error and remove BookingDetailsDTO
         BookingDetailsDTO bookingDetailsDTO =  bookingSummaryService.detailsByBookingId(stayId);
         checkOutService.checkOut(stayId);
 

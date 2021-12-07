@@ -20,7 +20,7 @@
             </tbody>
         </table>
 
-        <div th:if="${isCheckedIn}">
+        <div th:if="${isCheckIn}">
             <div class="alert alert-success" role="alert">
                 Checked in successfully!
             </div>
@@ -29,7 +29,7 @@
             </a>
         </div>
 
-        <div th:if="${!isCheckedIn}">
+        <div th:if="${!isCheckIn}">
             <a class="btn btn-primary" th:href="@{'/check-in?bookingId=' + ${bookingId} + '&isCheckedIn=true'}">
                 Accept
             </a>
@@ -37,10 +37,6 @@
         </div>
 
         <br>
-
-        <!-- acitve sidebarelement?? -->
-
     </div>
-
 </body>
 </html>

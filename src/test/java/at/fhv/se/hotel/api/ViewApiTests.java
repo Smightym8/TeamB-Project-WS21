@@ -61,6 +61,15 @@ public class ViewApiTests {
     @MockBean
     BookingCreationService bookingCreationService;
 
+    @MockBean
+    CheckInService checkInService;
+
+    @MockBean
+    StayDetailsService stayDetailsService;
+
+    @MockBean
+    CheckOutService checkOutService;
+
     @Test
     public void when_get_rootUrl_then_statusOk_and_homeView_and_allBookings_and_allStays_called() throws Exception {
         // when ... then
@@ -517,8 +526,6 @@ public class ViewApiTests {
             throws Exception {
         // given
         String bookingIdExpected = "1";
-
-        String guestIdExpected = "1";
         String amountOfAdultsExpected = "2";
         String amountOfChildrenExpected = "0";
         LocalDate checkInDateExpected = LocalDate.of(2021, 8, 1);
@@ -526,7 +533,7 @@ public class ViewApiTests {
         String additionalInformationExpected = "Vegan";
 
         GuestDTO guestExpected = GuestDTO.builder()
-                .withId(guestIdExpected)
+                .withId("1")
                 .withFirstName("John")
                 .withLastName("Doe")
                 .withStreetName("Street")
@@ -650,6 +657,162 @@ public class ViewApiTests {
 
         // then
         Mockito.verify(bookingSummaryService, times(1)).detailsByBookingId(bookingIdExpected);
+    }
+
+    @Test
+    public void when_get_checkInUrl_with_isCheckInFalse_then_statusOk_and_checkInView_and_checkInService_called() throws Exception {
+        // given
+        String bookingIdExpected = "1";
+        String isCheckInExpected = "false";
+
+        List<RoomDTO> roomDTOsExpected = List.of(
+                RoomDTO.builder()
+                        .withName("101")
+                        .withCategory("Single Room")
+                        .build()
+        );
+
+        Mockito.when(checkInService.assignRooms(bookingIdExpected)).thenReturn(roomDTOsExpected);
+
+        // when ... then
+        this.mockMvc.perform(get("/check-in")
+                .param("bookingId", bookingIdExpected)
+                .param("isCheckIn", isCheckInExpected)
+                .accept(org.springframework.http.MediaType.TEXT_PLAIN))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(view().name("checkIn"));
+
+        // then
+        Mockito.verify(checkInService, times(1)).assignRooms(bookingIdExpected);
+        Mockito.verify(checkInService, times(0)).checkIn(bookingIdExpected, roomDTOsExpected);
+    }
+
+    @Test
+    public void when_get_checkInUrl_with_isCheckInTrue_then_statusOk_and_checkInView_and_checkInService_called() throws Exception {
+        // given
+        String bookingIdExpected = "1";
+        String isCheckInExpected = "true";
+
+        List<RoomDTO> roomDTOsExpected = List.of(
+                RoomDTO.builder()
+                        .withName("101")
+                        .withCategory("Single Room")
+                        .build()
+        );
+
+        Mockito.when(checkInService.assignRooms(bookingIdExpected)).thenReturn(roomDTOsExpected);
+        Mockito.doNothing().when(checkInService).checkIn(bookingIdExpected, roomDTOsExpected);
+
+        // when ... then
+        this.mockMvc.perform(get("/check-in")
+                        .param("bookingId", bookingIdExpected)
+                        .param("isCheckIn", isCheckInExpected)
+                        .accept(org.springframework.http.MediaType.TEXT_PLAIN))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(view().name("checkIn"));
+
+        // then
+        Mockito.verify(checkInService, times(1)).assignRooms(bookingIdExpected);
+        Mockito.verify(checkInService, times(1)).checkIn(bookingIdExpected, roomDTOsExpected);
+    }
+
+    @Test
+    public void when_get_stayDetailsUrl_then_statusOk_and_stayDetailsView_and_stayDetailsService_called() throws Exception {
+        // given
+        String stayIdExpected = "1";
+        StayDetailsDTO stayDetailsDTOExpected = StayDetailsDTO.builder()
+                .withId(stayIdExpected)
+                .withGuestFirstName("John")
+                .withGuestLastName("Doe")
+                .withRooms(List.of("101", "102"))
+                .withServices(Map.of("", new BigDecimal("30")))
+                .withCheckInDate(LocalDate.of(2021, 8, 1))
+                .withCheckOutDate(LocalDate.of(2021, 8, 10))
+                .withAmountOfAdults(2)
+                .withAmountOfChildren(1)
+                .withAdditionalInformation("Vegan")
+                .build();
+
+        Mockito.when(stayDetailsService.detailsById(stayIdExpected)).thenReturn(stayDetailsDTOExpected);
+
+        // when ... then
+        this.mockMvc.perform(get("/staydetails/" + stayIdExpected)
+                .accept(org.springframework.http.MediaType.TEXT_PLAIN))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(view().name("stay/stayDetails"));
+
+        // then
+        Mockito.verify(stayDetailsService, times(1)).detailsById(stayIdExpected);
+    }
+
+    @Test
+    public void when_get_invoiceUrl_then_statusOk_and_invoiceView_and_checkOutService_called() throws Exception {
+        // given
+        String stayIdExpected = "1";
+        InvoiceDTO invoiceDTOExpected = InvoiceDTO.builder()
+                .withStayId(stayIdExpected)
+                .withInvoiceNumber("20211207001")
+                .withInvoiceDate(LocalDate.of(2021, 12, 7))
+                .withGuestFirstName("John")
+                .withGuestLastName("Doe")
+                .withStreetName("Street")
+                .withStreetNumber("1")
+                .withZipCode("6850")
+                .withCity("Dornbirn")
+                .withAmountOfAdults(2)
+                .withAmountOfChildren(1)
+                .withServices(Map.of("Breakfast", new BigDecimal("10")))
+                .withCategories(Map.of("Single Room", 2))
+                .withCategoryPrices(List.of(new BigDecimal("200")))
+                .withCheckInDate(LocalDate.of(2021, 12, 1))
+                .withCheckOutDate(LocalDate.of(2021, 12, 7))
+                .withAmountOfNights(6)
+                .withLocalTaxPerPerson(new BigDecimal("0.76"))
+                .withLocalTaxTotal(new BigDecimal("1.52"))
+                .withValueAddedTaxInPercent(new BigDecimal("0.1"))
+                .withValueAddedTaxInEuro(new BigDecimal("200"))
+                .withTotalNetAmount(new BigDecimal("2000"))
+                .withTotalGrossAmount(new BigDecimal("2500"))
+                .build();
+
+        Mockito.when(checkOutService.createInvoice(stayIdExpected)).thenReturn(invoiceDTOExpected);
+
+        // when ... then
+        this.mockMvc.perform(get("/invoice/" + stayIdExpected)
+                .accept(org.springframework.http.MediaType.TEXT_PLAIN))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(view().name("invoice"));
+
+        // then
+        Mockito.verify(checkOutService, times(1)).createInvoice(stayIdExpected);
+    }
+
+    @Test
+    public void when_get_checkOutUrl_then_statusRedirect_and_redirectToHome_and_checkOut_called() throws Exception {
+        // given
+        String stayIdExpected = "1";
+
+        Mockito.when(checkOutService.checkOut(stayIdExpected)).thenReturn(true);
+
+        // when ... then
+        this.mockMvc.perform(get("/check-out")
+                .param("stayId", stayIdExpected)
+                .accept(org.springframework.http.MediaType.TEXT_PLAIN))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/"));
+
+        // then
+
+        Mockito.verify(checkOutService, times(1)).checkOut(stayIdExpected);
     }
 
     @Test
