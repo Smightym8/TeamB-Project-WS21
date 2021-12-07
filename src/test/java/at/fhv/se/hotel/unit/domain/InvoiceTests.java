@@ -13,22 +13,18 @@ import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.model.stay.Stay;
-import at.fhv.se.hotel.domain.repository.RoomCategoryPriceRepository;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-public class InvoiceTest {
+public class InvoiceTests {
     @Test
     void given_invoicedetails_when_createinvoice_then_detailsequals() {
         // given
@@ -135,5 +131,17 @@ public class InvoiceTest {
         assertEquals(id0_1, id0_2, "both ids should be equal");
         assertNotEquals(id0_1, id1, "the ids should not be equal");
         assertNotEquals(id0_2, id1, "the ids should not be equal");
+    }
+
+    @Test
+    void given_id_when_create_id_then_return_equals() {
+        // given
+        String invoiceIdStr = "123";
+
+        // when
+        InvoiceId invoiceId = new InvoiceId(invoiceIdStr);
+
+        // then
+        assertEquals(invoiceIdStr, invoiceId.id());
     }
 }

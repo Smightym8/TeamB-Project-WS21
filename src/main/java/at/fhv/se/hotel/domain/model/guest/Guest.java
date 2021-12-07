@@ -70,10 +70,6 @@ public class Guest {
         return bookings;
     }
 
-    public void addBooking(Booking booking) {
-        this.bookings.add(booking);
-    }
-
     @Generated
     @Override
     public boolean equals(Object o) {
