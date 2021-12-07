@@ -14,11 +14,8 @@ import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.repository.RoomCategoryPriceRepository;
-import at.fhv.se.hotel.domain.services.api.InvoiceCalculationService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.math.BigDecimal;
@@ -31,21 +28,10 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-@SpringBootTest
 public class InvoiceTest {
-    @Autowired
-    InvoiceCalculationService invoiceCalculationService;
-
-    @MockBean
-    RoomCategoryPriceRepository roomCategoryPriceRepository;
-
     @Test
     void given_invoicedetails_when_createinvoice_then_detailsequals() {
         // given
-        Mockito.when(roomCategoryPriceRepository.nextIdentity()).thenReturn(
-            new RoomCategoryPriceId(UUID.randomUUID().toString().toUpperCase())
-        );
-
         Guest guest = Guest.create(new GuestId("1"),
                 new FullName("Michael", "Spiegel"),
                 Gender.MALE,
@@ -86,7 +72,7 @@ public class InvoiceTest {
 
         List<RoomCategoryPrice> categoryPricesExpected = List.of(
                 RoomCategoryPrice.create(
-                        roomCategoryPriceRepository.nextIdentity(),
+                        new RoomCategoryPriceId("1"),
                         Season.SUMMER,
                         category,
                         new BigDecimal("300")
