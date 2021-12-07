@@ -1,10 +1,12 @@
 package at.fhv.se.hotel.domain.model.roomcategory;
 
+import at.fhv.se.hotel.domain.Generated;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 
 import java.util.List;
 import java.util.Objects;
 
+// TODO: Test
 public class RoomCategory {
     // Required by hibernate
     private Long id;
@@ -40,6 +42,7 @@ public class RoomCategory {
         return description;
     }
 
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -48,6 +51,7 @@ public class RoomCategory {
         return Objects.equals(id, that.id) && Objects.equals(roomCategoryId, that.roomCategoryId) && Objects.equals(roomCategoryName, that.roomCategoryName) && Objects.equals(description, that.description);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(id, roomCategoryId, roomCategoryName, description);

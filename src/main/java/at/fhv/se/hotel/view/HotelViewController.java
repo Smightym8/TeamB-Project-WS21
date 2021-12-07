@@ -196,7 +196,7 @@ public class HotelViewController {
     }
 
     @PostMapping(CREATE_GUEST_URL)
-    public String createGuestPost(@ModelAttribute("guest") @Valid GuestForm guestForm, BindingResult bindingResult, Model model) {
+    public String createGuestPost(@ModelAttribute("guest") @Valid GuestForm guestForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return CREATE_GUEST_VIEW;
         }
@@ -286,7 +286,8 @@ public class HotelViewController {
     @PostMapping(CREATE_BOOKING_URL)
     public String createBooking(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model) {
 
-        String bookingId = bookingCreationService.book(bookingForm.getGuestId(),
+        String bookingId = bookingCreationService.book(
+                bookingForm.getGuestId(),
                 bookingForm.getRoomCategoryIds(),
                 bookingForm.getAmountsOfRoomCategories(),
                 bookingForm.getServiceIds(),
@@ -349,10 +350,12 @@ public class HotelViewController {
     }
 
 /*----- Check-In -----*/
+    // TODO: Test
     @GetMapping(CHECK_IN_URL)
-    public String checkIn(@RequestParam("bookingId") String bookingId,
-                                @RequestParam("isCheckedIn") boolean isCheckedIn,
-                                Model model) {
+    public String checkIn(
+            @RequestParam("bookingId") String bookingId,
+            @RequestParam("isCheckedIn") boolean isCheckedIn,
+            Model model) {
 
         List<RoomDTO> assignedRooms = checkInService.assignRooms(bookingId);
 
@@ -368,7 +371,7 @@ public class HotelViewController {
     }
 
 /*----- Check-Out -----*/
-
+    // TODO: Test
     @GetMapping(STAY_DETAILS_URL)
     public String showStay(@PathVariable String id, Model model) {
 
@@ -383,6 +386,7 @@ public class HotelViewController {
         return STAY_DETAILS_VIEW;
     }
 
+    // TODO: Test
     @GetMapping(INVOICE_URL)
     public String showInvoice(@PathVariable String id, Model model) {
 
@@ -397,6 +401,7 @@ public class HotelViewController {
         return INVOICE_VIEW;
     }
 
+    // TODO: Test
     @GetMapping(CHECK_OUT_URL)
     public String checkOut(@RequestParam("stayId") String stayId) {
 

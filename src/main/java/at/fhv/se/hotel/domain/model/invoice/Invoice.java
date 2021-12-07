@@ -1,5 +1,6 @@
 package at.fhv.se.hotel.domain.model.invoice;
 
+import at.fhv.se.hotel.domain.Generated;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
 import at.fhv.se.hotel.domain.model.stay.Stay;
 
@@ -8,6 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
+// TODO: Test
 public class Invoice {
     // Required by hibernate
     private Long id;
@@ -134,6 +136,7 @@ public class Invoice {
         return totalGrossAmount;
     }
 
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -142,6 +145,7 @@ public class Invoice {
         return amountOfNights == invoice.amountOfNights && Objects.equals(id, invoice.id) && Objects.equals(invoiceId, invoice.invoiceId) && Objects.equals(invoiceNumber, invoice.invoiceNumber) && Objects.equals(invoiceDate, invoice.invoiceDate) && Objects.equals(stay, invoice.stay) && Objects.equals(roomCategoryPriceList, invoice.roomCategoryPriceList) && Objects.equals(localTaxPerPerson, invoice.localTaxPerPerson) && Objects.equals(localTaxTotal, invoice.localTaxTotal) && Objects.equals(valueAddedTaxInPercent, invoice.valueAddedTaxInPercent) && Objects.equals(valueAddedTaxInEuro, invoice.valueAddedTaxInEuro) && Objects.equals(totalNetAmount, invoice.totalNetAmount) && Objects.equals(totalGrossAmount, invoice.totalGrossAmount);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(id, invoiceId, invoiceNumber, invoiceDate, stay, roomCategoryPriceList, amountOfNights, localTaxPerPerson, localTaxTotal, valueAddedTaxInPercent, valueAddedTaxInEuro, totalNetAmount, totalGrossAmount);

@@ -1,7 +1,10 @@
 package at.fhv.se.hotel.domain.model.booking;
 
+import at.fhv.se.hotel.domain.Generated;
+
 import java.util.Objects;
 
+// TODO: Test
 public class BookingId {
     private String id;
 
@@ -16,6 +19,7 @@ public class BookingId {
         return this.id;
     }
 
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -24,6 +28,7 @@ public class BookingId {
         return Objects.equals(id, bookingId.id);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(id);

@@ -1,4 +1,4 @@
-package at.fhv.se.hotel.unit.domain.services;
+package at.fhv.se.hotel.integration.domain;
 
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;

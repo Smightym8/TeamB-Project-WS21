@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+// TODO: Test
 @Component
 public class BookingSummaryServiceImpl implements BookingSummaryService {
 
