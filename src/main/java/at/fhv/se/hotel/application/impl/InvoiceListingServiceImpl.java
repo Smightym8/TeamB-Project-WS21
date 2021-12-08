@@ -21,8 +21,19 @@ public class InvoiceListingServiceImpl implements InvoiceListingService {
 
         List<InvoiceListingDTO> invoiceListingDTOs = new ArrayList<>();
         for(Invoice i : invoices) {
-            // TODO: After implementing DTO, use withXXX methods
-            invoiceListingDTOs.add(new InvoiceListingDTO());
+            InvoiceListingDTO invoiceListingDTO = InvoiceListingDTO.builder()
+                    .withId(i.getInvoiceId().id())
+                    .withInvoiceNumber(i.getInvoiceNumber())
+                    .withGuestFirstName(i.getStay().getGuest().getName().firstName())
+                    .withGuestLastName(i.getStay().getGuest().getName().lastName())
+                    .withStreetName(i.getStay().getGuest().getAddress().streetName())
+                    .withStreetNumber(i.getStay().getGuest().getAddress().streetNumber())
+                    .withZipCode(i.getStay().getGuest().getAddress().zipCode())
+                    .withCity(i.getStay().getGuest().getAddress().city())
+                    .withTotalGrossAmountAmount(i.getTotalGrossAmount().toString())
+                    .build();
+
+            invoiceListingDTOs.add(invoiceListingDTO);
         }
 
         return invoiceListingDTOs;

@@ -50,7 +50,7 @@ public class InvoiceListingDTO {
         return city;
     }
 
-    public String amount() {
+    public String totalGrossAmount() {
         return totalGrossAmount;
     }
 
@@ -61,48 +61,48 @@ public class InvoiceListingDTO {
             this.instance = new InvoiceListingDTO();
         }
 
-        private Builder withId(String id) {
+        public Builder withId(String id) {
             this.instance.id = id;
             return this;
         }
 
-        private Builder withInvoiceNumber(String invoiceNumber) {
+        public Builder withInvoiceNumber(String invoiceNumber) {
             this.instance.invoiceNumber = invoiceNumber;
             return this;
         }
 
-        private Builder withGuestFirstName(String guestFirstName) {
+        public Builder withGuestFirstName(String guestFirstName) {
             this.instance.guestFirstName = guestFirstName;
             return this;
         }
 
-        private Builder withGuestLastName(String guestLastName) {
+        public Builder withGuestLastName(String guestLastName) {
             this.instance.guestLastName = guestLastName;
             return this;
         }
 
-        private Builder withStreetName(String streetName) {
+        public Builder withStreetName(String streetName) {
             this.instance.streetName = streetName;
             return this;
         }
 
-        private Builder withStreetNumber(String streetNumber) {
+        public Builder withStreetNumber(String streetNumber) {
             this.instance.streetNumber = streetNumber;
             return this;
         }
 
-        private Builder withZipCode(String zipCode) {
+        public Builder withZipCode(String zipCode) {
             this.instance.zipCode = zipCode;
             return this;
         }
 
-        private Builder withCity(String city) {
-            this.instance.city =city;
+        public Builder withCity(String city) {
+            this.instance.city = city;
             return this;
         }
 
-        private Builder withTotalGrossAmountAmount(String totalGrossAmountAmount) {
-            this.instance.totalGrossAmount = totalGrossAmountAmount;
+        public Builder withTotalGrossAmountAmount(String totalGrossAmount) {
+            this.instance.totalGrossAmount = totalGrossAmount;
             return this;
         }
 
