@@ -26,7 +26,7 @@ public class Invoice {
     private BigDecimal totalNetAmount;
     private BigDecimal totalGrossAmount;
 
-    // TODO: paymentMethod
+    // TODO: paymentMethod, status (isPaid)
 
     // Required by hibernate
     private Invoice() {
