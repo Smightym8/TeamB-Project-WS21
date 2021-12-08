@@ -42,6 +42,9 @@ public class ApplicationControllerSmokeTests {
     @Autowired
     StayListingService stayListingService;
 
+    @Autowired
+    InvoiceListingService invoiceListingService;
+
     @Test
     public void given_applicationcontrollers_when_injected_then_allnotnull() {
         assertNotNull(bookingCreationService);
@@ -55,5 +58,6 @@ public class ApplicationControllerSmokeTests {
         assertNotNull(serviceListingService);
         assertNotNull(stayDetailsService);
         assertNotNull(stayListingService);
+        assertNotNull(invoiceListingService);
     }
 }
