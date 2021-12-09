@@ -78,10 +78,6 @@ public class HotelViewController {
 
     private static final String CHECK_OUT_URL = "/check-out";
 
-/*----- Error -----*/
-    private static final String ERROR_URL = "/error";
-    private static final String ERROR_VIEW = "error";
-
 /*--------------------------------------------------------------------------------------------------------------------*/
 
     @Autowired
@@ -413,16 +409,5 @@ public class HotelViewController {
         checkOutService.checkOut(stayId);
 
         return "redirect:" + HOME_URL;
-    }
-
-/*----- Error -----*/
-    @GetMapping(ERROR_URL)
-    public String displayError(@RequestParam("message") String message, Model model){
-        model.addAttribute("message", message);
-        return ERROR_VIEW;
-    }
-
-    private static ModelAndView redirectError(String message){
-        return new ModelAndView("redirect:" + ERROR_URL + "?message=" + message);
     }
 }

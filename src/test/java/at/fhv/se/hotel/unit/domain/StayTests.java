@@ -15,7 +15,6 @@ import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.model.stay.StayId;
-import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

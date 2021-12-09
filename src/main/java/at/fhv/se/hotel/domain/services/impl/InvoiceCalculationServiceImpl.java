@@ -2,7 +2,6 @@ package at.fhv.se.hotel.domain.services.impl;
 
 import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
-import at.fhv.se.hotel.domain.model.invoice.InvoiceId;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
 import at.fhv.se.hotel.domain.model.roomcategory.Season;
 import at.fhv.se.hotel.domain.model.service.Service;
@@ -53,8 +52,10 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
         BigDecimal totalNetAmount = new BigDecimal("0");
 
         // Calculate Services
+        List<Service> services = new ArrayList<>();
         for (Service s : stay.getServices()) {
             totalNetAmount = totalNetAmount.add(s.getServicePrice().price());
+            services.add(s);
         }
 
         // Calculate RoomCategoryPrices
@@ -103,6 +104,7 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
                 invoiceNumber,
                 stay,
                 roomCategoryPriceList,
+                services,
                 nights,
                 localTaxInEuro,
                 localTaxTotal,

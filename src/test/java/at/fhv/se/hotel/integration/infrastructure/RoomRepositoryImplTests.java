@@ -5,7 +5,6 @@ import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.Description;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryName;
-import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.repository.RoomCategoryRepository;
 import at.fhv.se.hotel.domain.repository.RoomRepository;
 import org.junit.jupiter.api.Test;

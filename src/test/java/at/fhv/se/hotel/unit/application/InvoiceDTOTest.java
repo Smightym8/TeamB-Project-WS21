@@ -1,7 +1,6 @@
 package at.fhv.se.hotel.unit.application;
 
 import at.fhv.se.hotel.application.dto.InvoiceDTO;
-import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
