@@ -1,6 +1,5 @@
 package at.fhv.se.hotel.application.api;
 
-import at.fhv.se.hotel.application.dto.RoomCategoryDTO;
 import at.fhv.se.hotel.application.dto.ServiceDTO;
 import at.fhv.se.hotel.application.impl.ServiceListingServiceImpl;
 import java.util.List;

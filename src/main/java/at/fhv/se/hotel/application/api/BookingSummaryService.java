@@ -2,7 +2,6 @@ package at.fhv.se.hotel.application.api;
 
 import at.fhv.se.hotel.application.dto.BookingDetailsDTO;
 import at.fhv.se.hotel.application.dto.BookingSummaryDTO;
-import at.fhv.se.hotel.application.impl.BookingListingServiceImpl;
 import at.fhv.se.hotel.application.impl.BookingSummaryServiceImpl;
 
 import java.time.LocalDate;

@@ -1,10 +1,7 @@
 package at.fhv.se.hotel.application.impl;
 
 import at.fhv.se.hotel.application.api.ServiceListingService;
-import at.fhv.se.hotel.application.dto.RoomCategoryDTO;
 import at.fhv.se.hotel.application.dto.ServiceDTO;
-import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
-import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryId;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.repository.ServiceRepository;

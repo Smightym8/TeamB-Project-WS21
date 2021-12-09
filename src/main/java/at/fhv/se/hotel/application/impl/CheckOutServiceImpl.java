@@ -41,7 +41,7 @@ public class CheckOutServiceImpl implements CheckOutService {
         Invoice invoice = invoiceCalculationService.calculateInvoice(stay);
 
         Map<String, BigDecimal> services = new HashMap<>();
-        for(Service s : invoice.getStay().getServices()) {
+        for(Service s : invoice.getServices()) {
             services.put(s.getServiceName().name(), s.getServicePrice().price());
         }
 

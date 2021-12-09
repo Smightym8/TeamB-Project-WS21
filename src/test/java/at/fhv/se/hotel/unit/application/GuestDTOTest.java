@@ -3,8 +3,6 @@ package at.fhv.se.hotel.unit.application;
 import at.fhv.se.hotel.application.dto.GuestDTO;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GuestDTOTest {
