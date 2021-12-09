@@ -98,6 +98,7 @@ public class InvoiceTests {
                 invoiceNumberExpected,
                 stayExpected,
                 categoryPricesExpected,
+                services,
                 amountOfNightsExpected,
                 localTaxPerPersonExpected,
                 localTaxTotalExpected,

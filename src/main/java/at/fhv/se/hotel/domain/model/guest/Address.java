@@ -1,7 +1,6 @@
 package at.fhv.se.hotel.domain.model.guest;
 
 import at.fhv.se.hotel.domain.Generated;
-import at.fhv.se.hotel.domain.model.booking.BookingId;
 
 import java.util.Objects;
 

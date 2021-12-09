@@ -1,7 +1,5 @@
 package at.fhv.se.hotel.domain.repository;
 
-import at.fhv.se.hotel.domain.model.guest.Guest;
-import at.fhv.se.hotel.domain.model.guest.GuestId;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryId;
 
