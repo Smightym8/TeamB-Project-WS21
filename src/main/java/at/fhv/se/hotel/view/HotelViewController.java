@@ -5,12 +5,20 @@ import at.fhv.se.hotel.application.dto.*;
 import at.fhv.se.hotel.view.forms.BookingForm;
 import at.fhv.se.hotel.view.forms.GuestForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,6 +85,10 @@ public class HotelViewController {
     private static final String INVOICE_VIEW = "invoice";
 
     private static final String CHECK_OUT_URL = "/check-out";
+
+/*----- Invoice Download -----*/
+    private static final String INVOICES_PATH = "src/main/resources/static/invoices/";
+    private static final String INVOICE_DOWNLOAD_URL = "/download-invoice/{invoiceNo}";
 
 /*----- Error -----*/
     private static final String ERROR_URL = "/error";
@@ -413,6 +425,31 @@ public class HotelViewController {
         checkOutService.checkOut(stayId);
 
         return "redirect:" + HOME_URL;
+    }
+
+/*----- Invoice Download -----*/
+    // Temporary implementation
+    @GetMapping(INVOICE_DOWNLOAD_URL)
+    public ResponseEntity<ByteArrayResource> downloadInvoice(@PathVariable("invoiceNo") String invoiceNo) {
+        // TODO: Move logic into some service
+        String fileName = "invoice_" + invoiceNo + ".pdf";
+        Path path = Paths.get(INVOICES_PATH + fileName);
+
+        byte[] data = new byte[0];
+        try {
+            data = Files.readAllBytes(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ByteArrayResource resource = new ByteArrayResource(data);
+
+        return ResponseEntity.ok()
+                // Content-Disposition
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + path.getFileName().toString())
+                .contentType(MediaType.APPLICATION_PDF)
+                // Content-Length
+                .contentLength(data.length)
+                .body(resource);
     }
 
 /*----- Error -----*/
