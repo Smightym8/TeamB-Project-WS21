@@ -1,6 +1,9 @@
 package at.fhv.se.hotel.application.impl;
 
 import at.fhv.se.hotel.application.api.BookingCreationService;
+import at.fhv.se.hotel.application.api.exception.GuestNotFoundException;
+import at.fhv.se.hotel.application.api.exception.RoomCategoryNotFoundException;
+import at.fhv.se.hotel.application.api.exception.ServiceNotFoundException;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
 import at.fhv.se.hotel.domain.model.guest.Guest;
@@ -21,6 +24,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: Write test to ensure exception is thrown
 @Component
 public class BookingCreationServiceImpl implements BookingCreationService {
 
@@ -46,15 +50,19 @@ public class BookingCreationServiceImpl implements BookingCreationService {
                      LocalDate checkOutDate,
                      int amountOfAdults,
                      int amountOfChildren,
-                     String additionalInformation) {
+                     String additionalInformation) throws GuestNotFoundException, ServiceNotFoundException, RoomCategoryNotFoundException {
 
         BookingId bookingId = bookingRepository.nextIdentity();
 
-        Guest guest = guestRepository.guestById(new GuestId(guestId)).get();
+        Guest guest = guestRepository.guestById(new GuestId(guestId)).orElseThrow(
+                () -> new GuestNotFoundException("Guest with id " + guestId + " not found")
+        );
 
         List<Service> services = new ArrayList<>();
         for (String s : serviceIds) {
-            Service service = serviceRepository.serviceById(new ServiceId(s)).get();
+            Service service = serviceRepository.serviceById(new ServiceId(s)).orElseThrow(
+                    () -> new ServiceNotFoundException("Service with id " + s + " not found")
+            );
             services.add(service);
         }
 
@@ -65,10 +73,14 @@ public class BookingCreationServiceImpl implements BookingCreationService {
 
         int i = 0;
         for (String s : roomCategoryIds) {
+
             if (amounts.get(i) > 0) {
-                RoomCategory category = roomCategoryRepository.roomCategoryById(new RoomCategoryId(s)).get();
+                RoomCategory category = roomCategoryRepository.roomCategoryById(new RoomCategoryId(s)).orElseThrow(
+                        () -> new RoomCategoryNotFoundException("RoomCategory with id " + s + " not found")
+                );
                 booking.addRoomCategory(category, amounts.get(i));
             }
+
             i++;
         }
 
