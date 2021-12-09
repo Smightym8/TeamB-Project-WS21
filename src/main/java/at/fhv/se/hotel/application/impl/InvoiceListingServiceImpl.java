@@ -6,6 +6,7 @@ import at.fhv.se.hotel.domain.model.invoice.Invoice;
 import at.fhv.se.hotel.domain.repository.InvoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ public class InvoiceListingServiceImpl implements InvoiceListingService {
     @Autowired
     InvoiceRepository invoiceRepository;
 
+    @Transactional(readOnly = true)
     @Override
     public List<InvoiceListingDTO> allInvoices() {
         List<Invoice> invoices = invoiceRepository.findAllInvoices();

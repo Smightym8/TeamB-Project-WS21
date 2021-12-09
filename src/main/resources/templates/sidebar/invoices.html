@@ -19,13 +19,13 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>0305404500</td>
-                <td>Ali Cinar</td>
-                <td>Straße 1234, 6850 Dornbirn</td>
-                <td>435.45€</td>
+            <tr th:each="invoice : ${invoices}">
+                <td th:text="${invoice.invoiceNumber}"></td>
+                <td th:text="${invoice.guestFirstName} + ' ' + ${invoice.guestLastName}"></td>
+                <td th:text="${invoice.streetName} + ' ' + ${invoice.streetNumber} + ' ' +
+                             ${invoice.zipCode} + ' ' + ${invoice.city}"></td>
+                <td th:text="${invoice.totalGrossAmount}"></td>
                 <td>Paid</td>
-                <td>
                     <a class="btn btn-secondary btn-sm" href="#">View</a>
                 </td>
             </tr>
