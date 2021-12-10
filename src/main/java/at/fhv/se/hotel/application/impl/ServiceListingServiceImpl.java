@@ -1,6 +1,7 @@
 package at.fhv.se.hotel.application.impl;
 
 import at.fhv.se.hotel.application.api.ServiceListingService;
+import at.fhv.se.hotel.application.api.exception.ServiceNotFoundException;
 import at.fhv.se.hotel.application.dto.RoomCategoryDTO;
 import at.fhv.se.hotel.application.dto.ServiceDTO;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
@@ -42,8 +43,11 @@ public class ServiceListingServiceImpl implements ServiceListingService {
     }
 
     @Override
-    public Optional<ServiceDTO> findServiceById(String id) {
-        Service service = serviceRepository.serviceById(new ServiceId(id)).get();
+    public Optional<ServiceDTO> findServiceById(String id) throws ServiceNotFoundException {
+        Service service = serviceRepository.serviceById(new ServiceId(id)).orElseThrow(
+                () -> new ServiceNotFoundException("Service with id " + id + "not found")
+        );
+
         ServiceDTO dto = ServiceDTO.builder()
                 .withId(service.getServiceId().id())
                 .withName(service.getServiceName().name())

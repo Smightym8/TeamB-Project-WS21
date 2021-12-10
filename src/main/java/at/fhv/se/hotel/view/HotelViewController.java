@@ -1,10 +1,7 @@
 package at.fhv.se.hotel.view;
 
 import at.fhv.se.hotel.application.api.*;
-import at.fhv.se.hotel.application.api.exception.BookingNotFoundException;
-import at.fhv.se.hotel.application.api.exception.GuestNotFoundException;
-import at.fhv.se.hotel.application.api.exception.RoomCategoryNotFoundException;
-import at.fhv.se.hotel.application.api.exception.ServiceNotFoundException;
+import at.fhv.se.hotel.application.api.exception.*;
 import at.fhv.se.hotel.application.dto.*;
 import at.fhv.se.hotel.view.forms.BookingForm;
 import at.fhv.se.hotel.view.forms.GuestForm;
@@ -378,22 +375,31 @@ public class HotelViewController {
 
 /*----- Check-In -----*/
     @GetMapping(CHECK_IN_URL)
-    public String checkIn(
+    public ModelAndView checkIn(
             @RequestParam("bookingId") String bookingId,
             @RequestParam("isCheckedIn") boolean isCheckedIn,
             Model model) {
 
-        List<RoomDTO> assignedRooms = checkInService.assignRooms(bookingId);
+        List<RoomDTO> assignedRooms;
+        try {
+            assignedRooms = checkInService.assignRooms(bookingId);
+        } catch (BookingNotFoundException e) {
+            return redirectError(e.getMessage());
+        }
 
         if(isCheckedIn) {
-            checkInService.checkIn(bookingId, assignedRooms);
+            try {
+                checkInService.checkIn(bookingId, assignedRooms);
+            } catch (BookingNotFoundException | RoomNotFoundException e) {
+                return redirectError(e.getMessage());
+            }
         }
 
         model.addAttribute("bookingId", bookingId);
         model.addAttribute("assignedRooms", assignedRooms);
         model.addAttribute("isCheckedIn", isCheckedIn);
 
-        return CHECK_IN_VIEW;
+        return new ModelAndView(CHECK_IN_VIEW);
     }
 
 /*----- Check-Out -----*/
@@ -410,8 +416,14 @@ public class HotelViewController {
         } catch (BookingNotFoundException | GuestNotFoundException e) {
             return redirectError(e.getMessage());
         }
-        StayDetailsDTO stayDetailsDTO =  stayDetailsService.detailsById(id);
-        model.addAttribute("stayDetails", stayDetailsDTO);
+
+        StayDetailsDTO stayDetailsDTO;
+        try {
+            stayDetailsDTO = stayDetailsService.detailsById(id);
+            model.addAttribute("stayDetails", stayDetailsDTO);
+        } catch (StayNotFoundException e) {
+            return redirectError(e.getMessage());
+        }
 
         return new ModelAndView(STAY_DETAILS_VIEW);
     }
@@ -428,7 +440,13 @@ public class HotelViewController {
         } catch (BookingNotFoundException | GuestNotFoundException e) {
             return redirectError(e.getMessage());
         }
-        InvoiceDTO invoiceDTO = checkOutService.createInvoice(id);
+
+        InvoiceDTO invoiceDTO;
+        try {
+            invoiceDTO = checkOutService.createInvoice(id);
+        } catch (StayNotFoundException e) {
+            return redirectError(e.getMessage());
+        }
         model.addAttribute("invoice", invoiceDTO);
 
         return new ModelAndView(INVOICE_VIEW);

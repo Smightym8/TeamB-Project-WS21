@@ -1,6 +1,7 @@
 package at.fhv.se.hotel.application.impl;
 
 import at.fhv.se.hotel.application.api.CheckOutService;
+import at.fhv.se.hotel.application.api.exception.StayNotFoundException;
 import at.fhv.se.hotel.application.dto.InvoiceDTO;
 import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
@@ -36,8 +37,11 @@ public class CheckOutServiceImpl implements CheckOutService {
 
     @Transactional(readOnly = true)
     @Override
-    public InvoiceDTO createInvoice(String stayId) {
-        Stay stay = stayRepository.stayById(new StayId(stayId)).get();
+    public InvoiceDTO createInvoice(String stayId) throws StayNotFoundException {
+        Stay stay = stayRepository.stayById(new StayId(stayId)).orElseThrow(
+                () -> new StayNotFoundException("Stay with id " + stayId + " not found")
+        );
+
         Invoice invoice = invoiceCalculationService.calculateInvoice(stay);
 
         Map<String, BigDecimal> services = new HashMap<>();

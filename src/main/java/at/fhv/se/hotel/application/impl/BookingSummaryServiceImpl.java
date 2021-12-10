@@ -50,7 +50,7 @@ public class BookingSummaryServiceImpl implements BookingSummaryService {
                                            LocalDate checkOutDate,
                                            int amountOfAdults,
                                            int amountOfChildren,
-                                           String additionalInformation) throws GuestNotFoundException, RoomCategoryNotFoundException, ServiceNotFoundException {
+                                           String additionalInformation) throws GuestNotFoundException, ServiceNotFoundException, RoomCategoryNotFoundException {
 
         GuestDTO guest = guestListingService.findGuestById(guestId).orElseThrow(
                 () -> new GuestNotFoundException("Guest with id " + guestId + " not found")
@@ -59,9 +59,7 @@ public class BookingSummaryServiceImpl implements BookingSummaryService {
         List<RoomCategoryDTO> roomCategories = new ArrayList<>();
         for (String s : roomCategoryIds){
             roomCategories.add(
-                    roomCategoryListingService.findRoomCategoryById(s).orElseThrow(
-                            () -> new RoomCategoryNotFoundException("Room Category with id " + s + " not found")
-                    )
+                    roomCategoryListingService.findRoomCategoryById(s)
             );
         }
 

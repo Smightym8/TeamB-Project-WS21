@@ -29,7 +29,7 @@ public interface BookingSummaryService {
                                     LocalDate checkOutDate,
                                     int amountOfAdults,
                                     int amountOfChildren,
-                                    String additionalInformation) throws GuestNotFoundException, RoomCategoryNotFoundException, ServiceNotFoundException;
+                                    String additionalInformation) throws GuestNotFoundException, ServiceNotFoundException, RoomCategoryNotFoundException;
 
     BookingSummaryDTO summaryByBookingId(String bookingId) throws BookingNotFoundException, GuestNotFoundException;
 

@@ -1,6 +1,8 @@
 package at.fhv.se.hotel.application.impl;
 
 import at.fhv.se.hotel.application.api.CheckInService;
+import at.fhv.se.hotel.application.api.exception.BookingNotFoundException;
+import at.fhv.se.hotel.application.api.exception.RoomNotFoundException;
 import at.fhv.se.hotel.application.dto.RoomDTO;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
@@ -31,8 +33,11 @@ public class CheckInServiceImpl implements CheckInService {
 
     @Transactional
     @Override
-    public List<RoomDTO> assignRooms(String bookingId) {
-        Booking booking = bookingRepository.bookingById(new BookingId(bookingId)).get();
+    public List<RoomDTO> assignRooms(String bookingId) throws BookingNotFoundException {
+        Booking booking = bookingRepository.bookingById(new BookingId(bookingId)).orElseThrow(
+                () -> new BookingNotFoundException("Booking with id " + bookingId + " not found")
+        );
+
         List<RoomDTO> assignedRooms = new ArrayList<>();
 
         for(BookingWithRoomCategory brc : booking.getRoomCategories()) {
@@ -60,13 +65,18 @@ public class CheckInServiceImpl implements CheckInService {
 
     @Transactional
     @Override
-    public void checkIn(String bookingId, List<RoomDTO> rooms) {
+    public void checkIn(String bookingId, List<RoomDTO> rooms) throws BookingNotFoundException, RoomNotFoundException {
         //TODO: Check if rooms are occupied
-        Booking booking = bookingRepository.bookingById(new BookingId(bookingId)).get();
+        Booking booking = bookingRepository.bookingById(new BookingId(bookingId)).orElseThrow(
+                () -> new BookingNotFoundException("Booking with id " + bookingId + " not found")
+        );
 
         List<Room> assignedRooms = new ArrayList<>();
         for(RoomDTO r : rooms) {
-            Room room = roomRepository.roomByName(r.name()).get();
+            Room room = roomRepository.roomByName(r.name()).orElseThrow(
+                    () -> new RoomNotFoundException("Room with name " + r.name() + " not found")
+            );
+
             assignedRooms.add(room);
 
             // Change room status to occupied
