@@ -83,8 +83,8 @@ public class HotelViewController {
     private static final String CHECK_OUT_URL = "/check-out";
 
 /*----- Error -----*/
-    private static final String ERROR_URL = "/error";
-    private static final String ERROR_VIEW = "error";
+    private static final String ERROR_URL = "/displayerror";
+    private static final String ERROR_VIEW = "errorView";
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
@@ -268,7 +268,7 @@ public class HotelViewController {
             @RequestParam("isCreated") boolean isCreated,
             Model model) {
 
-        BookingSummaryDTO bookingSummaryDTO = null;
+        BookingSummaryDTO bookingSummaryDTO;
         try {
             bookingSummaryDTO = bookingSummaryService.createSummary(
                     bookingForm.getGuestId(),
@@ -323,7 +323,7 @@ public class HotelViewController {
             @RequestParam("isCreated") boolean isCreated,
             Model model
     ) {
-        BookingSummaryDTO bookingSummaryDTO = null;
+        BookingSummaryDTO bookingSummaryDTO;
         try {
             bookingSummaryDTO = bookingSummaryService.summaryByBookingId(bookingId);
         } catch (BookingNotFoundException | GuestNotFoundException e) {
@@ -365,7 +365,7 @@ public class HotelViewController {
     @GetMapping(BOOKING_DETAILS_URL)
     public ModelAndView showBooking(@PathVariable String id, Model model) {
 
-        BookingDetailsDTO bookingDetailsDTO = null;
+        BookingDetailsDTO bookingDetailsDTO;
         try {
             bookingDetailsDTO = bookingSummaryService.detailsByBookingId(id);
         } catch (BookingNotFoundException | GuestNotFoundException e) {
@@ -453,14 +453,14 @@ public class HotelViewController {
 
 /*----- Error -----*/
     @GetMapping(ERROR_URL)
-    public String displayError(@RequestParam("message") String message, Model model){
+    public ModelAndView displayError(@RequestParam("message") String message, Model model){
         model.addAttribute("message", message);
-        return ERROR_VIEW;
+        return new ModelAndView(ERROR_VIEW);
     }
 
     // NOTE: used to redirect to an error page displaying an error message
     @SuppressWarnings("unused")
-    private static ModelAndView redirectError(String message){
+    private static ModelAndView redirectError(String message) {
         return new ModelAndView("redirect:" + ERROR_URL + "?message=" + message);
     }
 }

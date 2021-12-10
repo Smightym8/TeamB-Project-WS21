@@ -81,13 +81,13 @@ public class ViewApiTests {
     @Test
     public void when_errorurl_then_statusok_and_errorView_called_and_message_displayed() throws Exception {
         // when ... then
-        this.mockMvc.perform(get("/error")
+        this.mockMvc.perform(get("/displayerror")
                 .param("message", "testMessage")
                 .accept(org.springframework.http.MediaType.TEXT_PLAIN))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("text/html;charset=UTF-8"))
-                .andExpect(view().name("error"));
+                .andExpect(view().name("errorView"));
     }
 
     // TODO: Implement test for post mappings
