@@ -130,6 +130,9 @@ public class HotelViewController {
     @Autowired
     private CheckOutService checkOutService;
 
+    @Autowired
+    private InvoiceDownloadService invoiceDownloadService;
+
 /*--------------------------------------------------------------------------------------------------------------------*/
 
 /*----- Home -----*/
@@ -487,24 +490,20 @@ public class HotelViewController {
     // Temporary implementation
     @GetMapping(INVOICE_DOWNLOAD_URL)
     public ResponseEntity<ByteArrayResource> downloadInvoice(@PathVariable("invoiceNo") String invoiceNo) {
-        // TODO: Move logic into some service
-        String fileName = "invoice_" + invoiceNo + ".pdf";
-        Path path = Paths.get(INVOICES_PATH + fileName);
+        ByteArrayResource resource = null;
 
-        byte[] data = new byte[0];
         try {
-            data = Files.readAllBytes(path);
-        } catch (IOException e) {
+            resource = invoiceDownloadService.download(invoiceNo);
+        } catch (InvoiceNotFoundException e) {
             e.printStackTrace();
         }
-        ByteArrayResource resource = new ByteArrayResource(data);
 
         return ResponseEntity.ok()
                 // Content-Disposition
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + path.getFileName().toString())
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=Invoice_" + invoiceNo + ".pdf")
                 .contentType(MediaType.APPLICATION_PDF)
                 // Content-Length
-                .contentLength(data.length)
+                .contentLength(resource.contentLength())
                 .body(resource);
     }
 
