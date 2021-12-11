@@ -4,6 +4,10 @@ import at.fhv.se.hotel.application.api.BookingSummaryService;
 import at.fhv.se.hotel.application.api.GuestListingService;
 import at.fhv.se.hotel.application.api.RoomCategoryListingService;
 import at.fhv.se.hotel.application.api.ServiceListingService;
+import at.fhv.se.hotel.application.api.exception.BookingNotFoundException;
+import at.fhv.se.hotel.application.api.exception.GuestNotFoundException;
+import at.fhv.se.hotel.application.api.exception.RoomCategoryNotFoundException;
+import at.fhv.se.hotel.application.api.exception.ServiceNotFoundException;
 import at.fhv.se.hotel.application.dto.*;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
@@ -21,7 +25,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-// TODO: Test
+// TODO: Write test to ensure exception is thrown
 @Component
 public class BookingSummaryServiceImpl implements BookingSummaryService {
 
@@ -46,13 +50,17 @@ public class BookingSummaryServiceImpl implements BookingSummaryService {
                                            LocalDate checkOutDate,
                                            int amountOfAdults,
                                            int amountOfChildren,
-                                           String additionalInformation) {
+                                           String additionalInformation) throws GuestNotFoundException, ServiceNotFoundException, RoomCategoryNotFoundException {
 
-        GuestDTO guest = guestListingService.findGuestById(guestId).get();
+        GuestDTO guest = guestListingService.findGuestById(guestId).orElseThrow(
+                () -> new GuestNotFoundException("Guest with id " + guestId + " not found")
+        );
 
         List<RoomCategoryDTO> roomCategories = new ArrayList<>();
         for (String s : roomCategoryIds){
-            roomCategories.add(roomCategoryListingService.findRoomCategoryById(s).get());
+            roomCategories.add(
+                    roomCategoryListingService.findRoomCategoryById(s)
+            );
         }
 
         Map<RoomCategoryDTO, Integer> categoriesWithAmounts = IntStream.range(0, roomCategories.size())
@@ -61,7 +69,11 @@ public class BookingSummaryServiceImpl implements BookingSummaryService {
 
         List<ServiceDTO> services = new ArrayList<>();
         for (String s : serviceIds){
-            services.add(serviceListingService.findServiceById(s).get());
+            services.add(
+                    serviceListingService.findServiceById(s).orElseThrow(
+                            () -> new ServiceNotFoundException("Service with id " + s + " not found")
+                    )
+            );
         }
 
         BookingSummaryDTO bookingSummaryDTO = BookingSummaryDTO.builder()
@@ -79,10 +91,14 @@ public class BookingSummaryServiceImpl implements BookingSummaryService {
     }
 
     @Override
-    public BookingSummaryDTO summaryByBookingId(String bookingId) {
-        Booking booking = bookingRepository.bookingById(new BookingId(bookingId)).get();
+    public BookingSummaryDTO summaryByBookingId(String bookingId) throws BookingNotFoundException, GuestNotFoundException {
+        Booking booking = bookingRepository.bookingById(new BookingId(bookingId)).orElseThrow(
+                () -> new BookingNotFoundException("Booking with id " + bookingId + " not found")
+        );
 
-        GuestDTO guest = guestListingService.findGuestById(booking.getGuest().getGuestId().id()).get();
+        GuestDTO guest = guestListingService.findGuestById(booking.getGuest().getGuestId().id()).orElseThrow(
+                () -> new GuestNotFoundException("Guest for booking with id " + bookingId + " not found")
+        );
 
         Map<RoomCategoryDTO, Integer> categoriesWithAmounts = new HashMap<>();
         for (BookingWithRoomCategory brc : booking.getRoomCategories()) {
@@ -117,11 +133,14 @@ public class BookingSummaryServiceImpl implements BookingSummaryService {
     }
 
     @Override
-    public BookingDetailsDTO detailsByBookingId(String bookingId) {
+    public BookingDetailsDTO detailsByBookingId(String bookingId) throws BookingNotFoundException, GuestNotFoundException {
+        Booking booking = bookingRepository.bookingById(new BookingId(bookingId)).orElseThrow(
+                () -> new BookingNotFoundException("Booking with id " + bookingId + " not found")
+        );
 
-        Booking booking = bookingRepository.bookingById(new BookingId(bookingId)).get();
-
-        GuestDTO guestDTO = guestListingService.findGuestById(booking.getGuest().getGuestId().id()).get();
+        GuestDTO guestDTO = guestListingService.findGuestById(booking.getGuest().getGuestId().id()).orElseThrow(
+                () -> new GuestNotFoundException("Guest for booking with id " + bookingId + " not found")
+        );
 
         Map<RoomCategoryDTO, Integer> categoriesWithAmount = new HashMap<>();
         for(BookingWithRoomCategory brc : booking.getRoomCategories()) {

@@ -1,5 +1,6 @@
 package at.fhv.se.hotel.application.api;
 
+import at.fhv.se.hotel.application.api.exception.RoomCategoryNotFoundException;
 import at.fhv.se.hotel.application.dto.RoomCategoryDTO;
 import at.fhv.se.hotel.application.impl.RoomCategoryListingServiceImpl;
 
@@ -15,5 +16,5 @@ public interface RoomCategoryListingService {
      * See implementation {@link RoomCategoryListingServiceImpl#allRoomCategories )}
      */
     List<RoomCategoryDTO> allRoomCategories();
-    Optional<RoomCategoryDTO> findRoomCategoryById(String id);
+    RoomCategoryDTO findRoomCategoryById(String id) throws RoomCategoryNotFoundException;
 }

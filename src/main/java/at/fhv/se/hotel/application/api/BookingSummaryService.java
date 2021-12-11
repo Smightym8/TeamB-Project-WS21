@@ -1,5 +1,9 @@
 package at.fhv.se.hotel.application.api;
 
+import at.fhv.se.hotel.application.api.exception.BookingNotFoundException;
+import at.fhv.se.hotel.application.api.exception.GuestNotFoundException;
+import at.fhv.se.hotel.application.api.exception.RoomCategoryNotFoundException;
+import at.fhv.se.hotel.application.api.exception.ServiceNotFoundException;
 import at.fhv.se.hotel.application.dto.BookingDetailsDTO;
 import at.fhv.se.hotel.application.dto.BookingSummaryDTO;
 import at.fhv.se.hotel.application.impl.BookingSummaryServiceImpl;
@@ -24,9 +28,9 @@ public interface BookingSummaryService {
                                     LocalDate checkOutDate,
                                     int amountOfAdults,
                                     int amountOfChildren,
-                                    String additionalInformation);
+                                    String additionalInformation) throws GuestNotFoundException, ServiceNotFoundException, RoomCategoryNotFoundException;
 
-    BookingSummaryDTO summaryByBookingId(String bookingId);
+    BookingSummaryDTO summaryByBookingId(String bookingId) throws BookingNotFoundException, GuestNotFoundException;
 
-    BookingDetailsDTO detailsByBookingId(String bookingId);
+    BookingDetailsDTO detailsByBookingId(String bookingId) throws BookingNotFoundException, GuestNotFoundException;
 }
