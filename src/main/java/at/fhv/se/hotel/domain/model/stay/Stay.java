@@ -6,6 +6,7 @@ import at.fhv.se.hotel.domain.model.guest.Guest;
 import at.fhv.se.hotel.domain.model.room.Room;
 import at.fhv.se.hotel.domain.model.service.Service;
 
+import javax.xml.bind.annotation.XmlElement;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -16,6 +17,8 @@ public class Stay {
     private Long id;
     private StayId stayId;
     private List<Room> rooms;
+
+    @XmlElement(name = "booking")
     private Booking booking;
     private boolean isActive;
 

@@ -5,6 +5,7 @@ import at.fhv.se.hotel.domain.model.guest.Guest;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
 import at.fhv.se.hotel.domain.model.service.Service;
 
+import javax.xml.bind.annotation.XmlElement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,14 +15,19 @@ import java.util.Objects;
 public class Booking {
     // Required by hibernate
     private Long id;
+    @XmlElement(name = "checkInDate")
     private LocalDate checkInDate;
+    @XmlElement(name = "checkOutDate")
     private LocalDate checkOutDate;
     private boolean isActive;
     private BookingId bookingId;
+    @XmlElement(name = "guest")
     private Guest guest;
     private List<BookingWithRoomCategory> roomCategories;
     private List<Service> services;
+    @XmlElement(name = "amountOfAdults")
     private int amountOfAdults;
+    @XmlElement(name = "amountOfChildren")
     private int amountOfChildren;
     private String additionalInformation;
 

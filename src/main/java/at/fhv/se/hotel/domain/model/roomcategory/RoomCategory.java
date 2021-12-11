@@ -2,6 +2,7 @@ package at.fhv.se.hotel.domain.model.roomcategory;
 
 import at.fhv.se.hotel.domain.Generated;
 
+import javax.xml.bind.annotation.XmlElement;
 import java.util.Objects;
 
 // TODO: Test
@@ -9,7 +10,10 @@ public class RoomCategory {
     // Required by hibernate
     private Long id;
     private RoomCategoryId roomCategoryId;
+
+    @XmlElement(name = "roomCategoryName")
     private RoomCategoryName roomCategoryName;
+
     private Description description;
 
     // Required by hibernate

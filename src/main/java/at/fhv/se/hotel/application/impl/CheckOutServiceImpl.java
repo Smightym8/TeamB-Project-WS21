@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.xml.bind.JAXB;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,6 +44,7 @@ public class CheckOutServiceImpl implements CheckOutService {
         );
 
         Invoice invoice = invoiceCalculationService.calculateInvoice(stay);
+        JAXB.marshal(invoice, System.out);
 
         Map<String, BigDecimal> services = new HashMap<>();
         for(Service s : invoice.getServices()) {
@@ -91,7 +93,7 @@ public class CheckOutServiceImpl implements CheckOutService {
     @Transactional
     @Override
     public boolean checkOut(String stayId) {
-        // TODO: Write test and implement method
+        // TODO: Change return type to void and throw exception if stay is not found
         if (stayRepository.stayById(new StayId(stayId)).isPresent()) {
 
             Stay stay = stayRepository.stayById(new StayId(stayId)).get();

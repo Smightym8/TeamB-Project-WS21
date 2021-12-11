@@ -3,6 +3,7 @@ package at.fhv.se.hotel.domain.model.guest;
 import at.fhv.se.hotel.domain.Generated;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 
+import javax.xml.bind.annotation.XmlElement;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -12,8 +13,10 @@ public class Guest {
     // Required by hibernate
     private Long id;
     private GuestId guestId;
+    @XmlElement(name = "fullName")
     private FullName name;
     private Gender gender;
+    @XmlElement(name = "address")
     private Address address;
     private LocalDate birthDate;
     private String phoneNumber;

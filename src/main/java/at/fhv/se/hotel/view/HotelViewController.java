@@ -481,13 +481,13 @@ public class HotelViewController {
         } catch (BookingNotFoundException | GuestNotFoundException e) {
             return redirectError(e.getMessage());
         }
+
         checkOutService.checkOut(stayId);
 
         return new ModelAndView("redirect:" + HOME_URL);
     }
 
 /*----- Invoice Download -----*/
-    // Temporary implementation
     @GetMapping(INVOICE_DOWNLOAD_URL)
     public ResponseEntity<ByteArrayResource> downloadInvoice(@PathVariable("invoiceNo") String invoiceNo) {
         ByteArrayResource resource = null;
@@ -495,7 +495,7 @@ public class HotelViewController {
         try {
             resource = invoiceDownloadService.download(invoiceNo);
         } catch (InvoiceNotFoundException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // TODO: Return to errorView --> return type mismatch
         }
 
         return ResponseEntity.ok()

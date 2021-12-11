@@ -2,10 +2,12 @@ package at.fhv.se.hotel.domain.model.service;
 
 import at.fhv.se.hotel.domain.Generated;
 
+import javax.xml.bind.annotation.XmlElement;
 import java.util.Objects;
 
 // TODO: Test
 public class ServiceName {
+    @XmlElement(name = "name")
     private String name;
 
     // Required by hibernate
