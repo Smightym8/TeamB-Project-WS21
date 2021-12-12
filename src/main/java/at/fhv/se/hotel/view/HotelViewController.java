@@ -78,6 +78,10 @@ public class HotelViewController {
 
     private static final String CHECK_OUT_URL = "/check-out";
 
+/*----- Error -----*/
+    private static final String ERROR_URL = "/displayerror";
+    private static final String ERROR_VIEW = "errorView";
+
 /*--------------------------------------------------------------------------------------------------------------------*/
 
     @Autowired
@@ -409,5 +413,18 @@ public class HotelViewController {
         checkOutService.checkOut(stayId);
 
         return "redirect:" + HOME_URL;
+    }
+
+/*----- Error -----*/
+    @GetMapping(ERROR_URL)
+    public ModelAndView displayError(@RequestParam("message") String message, Model model){
+        model.addAttribute("message", message);
+        return new ModelAndView(ERROR_VIEW);
+    }
+
+    // NOTE: used to redirect to an error page displaying an error message
+    @SuppressWarnings("unused")
+    private static ModelAndView redirectError(String message) {
+        return new ModelAndView("redirect:" + ERROR_URL + "?message=" + message);
     }
 }

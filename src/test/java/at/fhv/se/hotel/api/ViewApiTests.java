@@ -658,14 +658,14 @@ public class ViewApiTests {
         String messageExpected = "test message";
 
         // when ... then
-        this.mockMvc.perform(get("/error")
+        this.mockMvc.perform(get("/displayerror")
                 .param("message", messageExpected)
                 .accept(org.springframework.http.MediaType.TEXT_PLAIN))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("text/html;charset=UTF-8"))
                 .andExpect(content().string(containsString(messageExpected)))
-                .andExpect(view().name("error"));
+                .andExpect(view().name("errorView"));
     }
 
     // Helper Function
