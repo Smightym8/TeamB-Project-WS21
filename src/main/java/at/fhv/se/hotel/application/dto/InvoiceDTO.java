@@ -4,6 +4,8 @@ package at.fhv.se.hotel.application.dto;
 import at.fhv.se.hotel.domain.model.LocalDateAdapter;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlList;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.math.BigDecimal;
@@ -12,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-@XmlRootElement
+@XmlRootElement(name = "invoice")
 public class InvoiceDTO {
     private String stayId;
 
@@ -53,7 +55,8 @@ public class InvoiceDTO {
     @XmlElement(name = "roomCategory)")
     private Map<String, Integer> roomCategories;
 
-    @XmlElement(name = "roomCategoryPrice")
+    @XmlElementWrapper(name="roomCategories")
+    @XmlElement(name="roomCategoryPrice")
     private List<BigDecimal> roomCategoryPrices;
 
     @XmlElement(name = "checkInDate")

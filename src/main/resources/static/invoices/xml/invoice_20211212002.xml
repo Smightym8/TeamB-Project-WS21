@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<invoice>
-    <invoiceNumber>20211212001</invoiceNumber>
+<invoiceDTO>
+    <invoiceNumber>20211212002</invoiceNumber>
     <invoiceDate>2021-12-12</invoiceDate>
     <guestFirstName>Ali</guestFirstName>
     <guestLastName>Cinar</guestLastName>
@@ -30,10 +30,7 @@
             <value>1</value>
         </entry>
     </roomCategories>
-    <roomCategories>
-        <roomCategoryPrice>300.00</roomCategoryPrice>
-        <roomCategoryPrice>500.00</roomCategoryPrice>
-    </roomCategories>
+    <roomCategoryPrice>300.00 500.00</roomCategoryPrice>
     <checkInDate>2022-01-11</checkInDate>
     <checkOutDate>2022-01-21</checkOutDate>
     <amountOfNights>10</amountOfNights>
@@ -43,4 +40,4 @@
     <valueAddedTaxInEuro>1120.000</valueAddedTaxInEuro>
     <totalNetAmount>11201.52</totalNetAmount>
     <totalGrossAmount>12321.520</totalGrossAmount>
-</invoice>
+</invoiceDTO>
