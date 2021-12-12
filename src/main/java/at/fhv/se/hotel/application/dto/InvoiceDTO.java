@@ -51,11 +51,11 @@ public class InvoiceDTO {
     @XmlElement(name = "service")
     private Map<String, BigDecimal> services;
 
-    @XmlElement(name = "roomCategory)")
+    @XmlElement(name = "roomCategories")
     private Map<String, Integer> roomCategories;
 
-    @XmlElementWrapper(name="roomCategories")
-    @XmlElement(name="roomCategoryPrice")
+    @XmlElementWrapper(name = "roomCategories")
+    @XmlElement(name = "roomCategoryPrice")
     private List<BigDecimal> roomCategoryPrices;
 
     @XmlElement(name = "checkInDate")
