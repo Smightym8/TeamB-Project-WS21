@@ -55,7 +55,7 @@
 						<fo:block>
 							<fo:table>
 								<fo:table-header border-width="1pt" border-style="solid">
-									<fo:table-row>
+									<fo:table-row font-weight="bold">
 										<fo:table-cell>
 											<fo:block>Quantity</fo:block>
 										</fo:table-cell>
@@ -123,7 +123,7 @@
 						<fo:block>
 							<fo:table>
 								<fo:table-header border-width="1pt" border-style="solid">
-									<fo:table-row>
+									<fo:table-row font-weight="bold">
 										<fo:table-cell>
 											<fo:block>Service</fo:block>
 										</fo:table-cell>
@@ -160,7 +160,7 @@
 						<fo:block>
 							<fo:table>
 								<fo:table-header border-width="1pt" border-style="solid">
-									<fo:table-row>
+									<fo:table-row font-weight="bold">
 										<fo:table-cell>
 											<fo:block>Quantity</fo:block>
 										</fo:table-cell>
@@ -216,7 +216,7 @@
 						<fo:block>
 							<fo:table>
 								<fo:table-header border-width="1pt" border-style="solid">
-									<fo:table-row>
+									<fo:table-row font-weight="bold">
 										<fo:table-cell>
 											<fo:block>Net Amount</fo:block>
 										</fo:table-cell>
