@@ -10,6 +10,7 @@ import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.model.stay.StayId;
+import at.fhv.se.hotel.domain.repository.InvoicePDFRepository;
 import at.fhv.se.hotel.domain.repository.InvoiceRepository;
 import at.fhv.se.hotel.domain.repository.StayRepository;
 import at.fhv.se.hotel.domain.services.api.InvoiceCalculationService;
@@ -18,6 +19,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.xml.bind.JAXB;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,6 +38,9 @@ public class CheckOutServiceImpl implements CheckOutService {
 
     @Autowired
     InvoiceRepository invoiceRepository;
+
+    @Autowired
+    InvoicePDFRepository invoicePDFRepository;
 
     @Transactional(readOnly = true)
     @Override
@@ -86,7 +92,7 @@ public class CheckOutServiceImpl implements CheckOutService {
                 .withTotalGrossAmount(invoice.getTotalGrossAmount())
                 .build();
 
-        JAXB.marshal(invoiceDTO, System.out);
+        invoicePDFRepository.saveAsXml(invoiceDTO);
 
         return invoiceDTO;
     }
