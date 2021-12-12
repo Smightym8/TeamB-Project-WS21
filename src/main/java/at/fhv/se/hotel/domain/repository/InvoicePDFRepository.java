@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface InvoicePDFRepository {
     Optional<ByteArrayResource> findInvoiceByNo(String invoiceNo);
 
-    void saveAsXml(InvoiceDTO invoiceDTO);
+    void saveAsPDF(InvoiceDTO invoiceDTO);
 }

@@ -10,10 +10,7 @@ public class RoomCategory {
     // Required by hibernate
     private Long id;
     private RoomCategoryId roomCategoryId;
-
-    @XmlElement(name = "roomCategoryName")
     private RoomCategoryName roomCategoryName;
-
     private Description description;
 
     // Required by hibernate

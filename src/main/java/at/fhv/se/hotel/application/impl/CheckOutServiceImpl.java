@@ -18,9 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.xml.bind.JAXB;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -92,7 +89,7 @@ public class CheckOutServiceImpl implements CheckOutService {
                 .withTotalGrossAmount(invoice.getTotalGrossAmount())
                 .build();
 
-        invoicePDFRepository.saveAsXml(invoiceDTO);
+        invoicePDFRepository.saveAsPDF(invoiceDTO);
 
         return invoiceDTO;
     }

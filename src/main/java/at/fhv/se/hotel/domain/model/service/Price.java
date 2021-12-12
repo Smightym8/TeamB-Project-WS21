@@ -8,7 +8,6 @@ import java.util.Objects;
 
 // TODO: Test
 public class Price {
-    @XmlElement(name = "price")
     private BigDecimal price;
 
     // Required by hibernate

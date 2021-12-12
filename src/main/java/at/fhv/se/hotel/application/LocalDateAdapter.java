@@ -1,4 +1,4 @@
-package at.fhv.se.hotel.domain.model;
+package at.fhv.se.hotel.application;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.time.LocalDate;

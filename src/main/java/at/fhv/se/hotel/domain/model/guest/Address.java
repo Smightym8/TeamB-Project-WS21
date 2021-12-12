@@ -7,19 +7,10 @@ import java.util.Objects;
 
 // TODO: Test
 public class Address {
-    @XmlElement(name = "streetName")
     private String streetName;
-
-    @XmlElement(name = "streetNumber")
     private String streetNumber;
-
-    @XmlElement(name = "city")
     private String city;
-
-    @XmlElement(name = "zipCode")
     private String zipCode;
-
-    @XmlElement(name = "country")
     private String country;
 
     // Required by hibernate

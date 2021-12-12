@@ -7,7 +7,6 @@ import java.util.Objects;
 
 // TODO: Test
 public class ServiceName {
-    @XmlElement(name = "name")
     private String name;
 
     // Required by hibernate

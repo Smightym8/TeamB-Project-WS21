@@ -13,10 +13,8 @@ public class Guest {
     // Required by hibernate
     private Long id;
     private GuestId guestId;
-    @XmlElement(name = "fullName")
     private FullName name;
     private Gender gender;
-    @XmlElement(name = "address")
     private Address address;
     private LocalDate birthDate;
     private String phoneNumber;

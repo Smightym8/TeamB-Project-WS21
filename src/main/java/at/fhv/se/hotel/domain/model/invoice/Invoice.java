@@ -1,13 +1,10 @@
 package at.fhv.se.hotel.domain.model.invoice;
 
 import at.fhv.se.hotel.domain.Generated;
-import at.fhv.se.hotel.domain.model.LocalDateAdapter;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.stay.Stay;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;

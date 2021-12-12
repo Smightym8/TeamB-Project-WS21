@@ -11,11 +11,7 @@ public class Service {
     // Required by hibernate
     private Long id;
     private ServiceId serviceId;
-
-    @XmlElement(name = "serviceName")
     private ServiceName serviceName;
-
-    @XmlElement(name = "servicePrice")
     private Price servicePrice;
 
     // Required by hibernate

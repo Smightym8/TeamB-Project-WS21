@@ -15,19 +15,14 @@ import java.util.Objects;
 public class Booking {
     // Required by hibernate
     private Long id;
-    @XmlElement(name = "checkInDate")
     private LocalDate checkInDate;
-    @XmlElement(name = "checkOutDate")
     private LocalDate checkOutDate;
     private boolean isActive;
     private BookingId bookingId;
-    @XmlElement(name = "guest")
     private Guest guest;
     private List<BookingWithRoomCategory> roomCategories;
     private List<Service> services;
-    @XmlElement(name = "amountOfAdults")
     private int amountOfAdults;
-    @XmlElement(name = "amountOfChildren")
     private int amountOfChildren;
     private String additionalInformation;
 

@@ -11,7 +11,7 @@
                         Invoice <strong th:text="'#' + ${invoice.invoiceNumber}"></strong>
                     </div>
                     <div>
-                        <a th:href="@{/download-invoice/{invoiceNo}(invoiceNo='20211209001')}" class="btn btn-sm btn-white m-b-10 p-l-5"><i class="fa fa-file t-plus-1 text-danger fa-fw fa-lg"></i> Export as PDF</a>
+                        <a th:href="@{/download-invoice/{invoiceNo}(invoiceNo=${invoice.invoiceNumber})}" class="btn btn-sm btn-white m-b-10 p-l-5"><i class="fa fa-file t-plus-1 text-danger fa-fw fa-lg"></i> Export as PDF</a>
                         <a onclick="window.print()" class="btn btn-sm btn-white m-b-10 p-l-5"><i class="fa fa-print t-plus-1 fa-fw fa-lg"></i> Print</a>
                     </div>
                 </div>

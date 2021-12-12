@@ -11,14 +11,8 @@ public class RoomCategoryPrice {
     // Required by hibernate
     private Long id;
     private RoomCategoryPriceId roomCategoryPriceId;
-
-    @XmlElement(name = "season")
     private Season season;
-
-    @XmlElement(name = "roomCategory")
     private RoomCategory roomCategory;
-
-    @XmlElement(name = "price")
     private BigDecimal price;
 
     public static RoomCategoryPrice create(RoomCategoryPriceId aRoomCategoryPriceId, Season aSeason, RoomCategory aRoomCategory, BigDecimal aPrice) {

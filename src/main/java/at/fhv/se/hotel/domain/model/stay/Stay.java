@@ -17,8 +17,6 @@ public class Stay {
     private Long id;
     private StayId stayId;
     private List<Room> rooms;
-
-    @XmlElement(name = "booking")
     private Booking booking;
     private boolean isActive;
 

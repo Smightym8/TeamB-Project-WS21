@@ -7,10 +7,7 @@ import java.util.Objects;
 
 // TODO: Test
 public class FullName {
-    @XmlElement(name = "firstName")
     private String firstName;
-
-    @XmlElement(name = "lastName")
     private String lastName;
 
     // Required by hibernate
