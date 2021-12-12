@@ -13,7 +13,7 @@
                     margin-bottom="8mm" margin-left="25mm" margin-right="10mm" margin-top="10mm">
                     
                     <fo:region-body margin-bottom="28mm" margin-left="0mm" margin-right="44mm" margin-top="20mm"/>
-                    
+
 				</fo:simple-page-master>
 				
 			</fo:layout-master-set>
@@ -45,6 +45,19 @@
 							<xsl:value-of select="invoice/zipCode"/>
 							<xsl:text>&#x20;</xsl:text>
 							<xsl:value-of select="invoice/city"/>
+						</fo:block>
+					</fo:block>
+
+					<fo:block>
+						<xsl:text>Details: </xsl:text>
+						<fo:block>
+							<xsl:text>Invoice number: </xsl:text>
+							<xsl:value-of select="invoice/invoiceNumber" />
+						</fo:block>
+
+						<fo:block>
+							<xsl:text>Invoice date: </xsl:text>
+							<xsl:value-of select="invoice/invoiceDate" />
 						</fo:block>
 					</fo:block>
 
@@ -94,7 +107,7 @@
 						</fo:block>
 
 						<fo:block>
-							<xsl:text>Booking period: From</xsl:text>
+							<xsl:text>Booking period: From </xsl:text>
 							<xsl:value-of select="invoice/checkInDate" />
 							<xsl:text> to </xsl:text>
 							<xsl:value-of select="invoice/checkOutDate" />
@@ -257,6 +270,47 @@
 									</fo:table-row>
 								</fo:table-body>
 							</fo:table>
+						</fo:block>
+					</fo:block>
+
+					<!-- Footer info -->
+					<fo:block>
+						<fo:block>
+							<xsl:text>Hotel Schwarz</xsl:text>
+						</fo:block>
+
+						<fo:block>
+							<xsl:text>Thomas Schwarz</xsl:text>
+						</fo:block>
+
+						<fo:block>
+							<xsl:text>Straße 12</xsl:text>
+						</fo:block>
+
+						<fo:block>
+							<xsl:text>6845 Stadt</xsl:text>
+						</fo:block>
+
+						<fo:block>
+							<xsl:text>Email: hotel@schwarz.at</xsl:text>
+						</fo:block>
+
+						<fo:block>
+							<xsl:text>Phone: +43 5512 204576</xsl:text>
+						</fo:block>
+					</fo:block>
+
+					<fo:block>
+						<fo:block>
+							<xsl:text>BAWAG P.S.K</xsl:text>
+						</fo:block>
+
+						<fo:block>
+							<xsl:text>IBAN: AT02 6000 0000 0134 9870</xsl:text>
+						</fo:block>
+
+						<fo:block>
+							<xsl:text>BIC: OPSKATWW</xsl:text>
 						</fo:block>
 					</fo:block>
 
