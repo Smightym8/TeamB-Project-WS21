@@ -28,7 +28,6 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -70,12 +69,12 @@ public class InvoiceRepositoryImplTests {
     void given_invoice_when_invoicerepository_then_returnequalinvoice() {
         //given
         List<Service> servicesExpected = Arrays.asList(
-        Service.create(serviceRepository.nextIdentity(),
-                new ServiceName("TV"),
-                new Price(new BigDecimal("100"))),
-                    Service.create(serviceRepository.nextIdentity(),
-                new ServiceName("Breakfast"),
-                new Price(new BigDecimal("100")))
+            Service.create(serviceRepository.nextIdentity(),
+                    new ServiceName("TV"),
+                    new Price(new BigDecimal("100"))),
+                        Service.create(serviceRepository.nextIdentity(),
+                    new ServiceName("Breakfast"),
+                    new Price(new BigDecimal("100")))
         );
         Guest guestExpected = Guest.create(guestRepository.nextIdentity(),
                 new FullName("Michael", "Spiegel"),
@@ -153,6 +152,7 @@ public class InvoiceRepositoryImplTests {
                 invoiceNumberExpected,
                 stayExpected,
                 categoryPricesExpected,
+                servicesExpected,
                 amountOfNightsExpected,
                 localTaxPerPersonExpected,
                 localTaxTotalExpected,
@@ -320,6 +320,7 @@ public class InvoiceRepositoryImplTests {
                         invoiceNumberExpected,
                         staysExpected.listIterator().next(),
                         categoryPricesExpected,
+                        servicesExpected,
                         amountOfNightsExpected,
                         localTaxPerPersonExpected,
                         localTaxTotalExpected,

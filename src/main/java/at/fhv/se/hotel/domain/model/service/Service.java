@@ -1,10 +1,10 @@
 package at.fhv.se.hotel.domain.model.service;
 
-import at.fhv.se.hotel.domain.model.booking.Booking;
+import at.fhv.se.hotel.domain.Generated;
 
-import java.util.List;
 import java.util.Objects;
 
+// TODO: Test
 public class Service {
     // Required by hibernate
     private Long id;
@@ -40,6 +40,7 @@ public class Service {
         return servicePrice;
     }
 
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -51,6 +52,7 @@ public class Service {
                 && Objects.equals(servicePrice, service.servicePrice);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(id, serviceId, serviceName, servicePrice);

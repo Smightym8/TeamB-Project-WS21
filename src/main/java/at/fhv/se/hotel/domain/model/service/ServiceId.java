@@ -1,7 +1,10 @@
 package at.fhv.se.hotel.domain.model.service;
 
+import at.fhv.se.hotel.domain.Generated;
+
 import java.util.Objects;
 
+// TODO: Test
 public class ServiceId {
     private String id;
 
@@ -17,6 +20,7 @@ public class ServiceId {
         return this.id;
     }
 
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -25,6 +29,7 @@ public class ServiceId {
         return Objects.equals(id, serviceId.id);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(id);

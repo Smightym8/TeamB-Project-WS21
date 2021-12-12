@@ -1,8 +1,11 @@
 package at.fhv.se.hotel.domain.model.roomcategory;
 
+import at.fhv.se.hotel.domain.Generated;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
+// TODO: Test
 public class RoomCategoryPrice {
     // Required by hibernate
     private Long id;
@@ -41,6 +44,7 @@ public class RoomCategoryPrice {
         return price;
     }
 
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -49,6 +53,7 @@ public class RoomCategoryPrice {
         return Objects.equals(id, that.id) && Objects.equals(roomCategoryPriceId, that.roomCategoryPriceId) && season == that.season && Objects.equals(roomCategory, that.roomCategory) && Objects.equals(price, that.price);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(id, roomCategoryPriceId, season, roomCategory, price);

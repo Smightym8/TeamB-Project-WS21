@@ -1,7 +1,10 @@
 package at.fhv.se.hotel.domain.model.guest;
 
+import at.fhv.se.hotel.domain.Generated;
+
 import java.util.Objects;
 
+// TODO: Test
 public class FullName {
     private String firstName;
     private String lastName;
@@ -22,6 +25,7 @@ public class FullName {
         return this.lastName;
     }
 
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -31,6 +35,7 @@ public class FullName {
                 && Objects.equals(lastName, fullName.lastName);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(firstName, lastName);

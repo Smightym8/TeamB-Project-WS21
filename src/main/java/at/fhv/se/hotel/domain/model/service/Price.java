@@ -1,8 +1,11 @@
 package at.fhv.se.hotel.domain.model.service;
 
+import at.fhv.se.hotel.domain.Generated;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
+// TODO: Test
 public class Price {
     private BigDecimal price;
 
@@ -18,6 +21,7 @@ public class Price {
         return this.price;
     }
 
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -26,6 +30,7 @@ public class Price {
         return Objects.equals(price, price1.price);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(price);

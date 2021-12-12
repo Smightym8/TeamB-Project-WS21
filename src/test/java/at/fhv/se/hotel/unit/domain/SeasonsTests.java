@@ -8,7 +8,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SeasonsTest {
+public class SeasonsTests {
 
     @Test
     void given_checkincheckoutdate_when_booking_then_returnmatchingseason() {

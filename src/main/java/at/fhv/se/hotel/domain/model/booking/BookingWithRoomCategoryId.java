@@ -1,10 +1,12 @@
 package at.fhv.se.hotel.domain.model.booking;
 
+import at.fhv.se.hotel.domain.Generated;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+// TODO: Test
 public class BookingWithRoomCategoryId implements Serializable {
     private Booking booking;
     private RoomCategory roomCategory;
@@ -25,6 +27,7 @@ public class BookingWithRoomCategoryId implements Serializable {
         return roomCategory;
     }
 
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -33,6 +36,7 @@ public class BookingWithRoomCategoryId implements Serializable {
         return Objects.equals(booking, that.booking) && Objects.equals(roomCategory, that.roomCategory);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(booking, roomCategory);

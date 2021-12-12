@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: Test
 @Component
 public class CheckInServiceImpl implements CheckInService {
     @Autowired

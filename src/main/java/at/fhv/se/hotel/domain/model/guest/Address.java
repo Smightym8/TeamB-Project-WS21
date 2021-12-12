@@ -1,9 +1,10 @@
 package at.fhv.se.hotel.domain.model.guest;
 
-import at.fhv.se.hotel.domain.model.booking.BookingId;
+import at.fhv.se.hotel.domain.Generated;
 
 import java.util.Objects;
 
+// TODO: Test
 public class Address {
     private String streetName;
     private String streetNumber;
@@ -42,6 +43,7 @@ public class Address {
         return this.country;
     }
 
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -54,6 +56,7 @@ public class Address {
                 && Objects.equals(country, address.country);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(streetName, streetNumber, city, zipCode, country);

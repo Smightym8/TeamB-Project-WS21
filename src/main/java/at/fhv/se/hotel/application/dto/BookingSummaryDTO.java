@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+// TODO: Remove nestings (e.g. String guestFirstName, ...)
 public class BookingSummaryDTO {
     private GuestDTO guest;
     private Map<RoomCategoryDTO, Integer> categoriesWithAmounts;

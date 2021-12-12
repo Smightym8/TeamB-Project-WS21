@@ -1,4 +1,4 @@
-package at.fhv.se.hotel.unit.domain;
+package at.fhv.se.hotel.integration.domain;
 
 import at.fhv.se.hotel.domain.model.roomcategory.*;
 import at.fhv.se.hotel.domain.repository.RoomCategoryPriceRepository;

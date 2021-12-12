@@ -1,11 +1,13 @@
 package at.fhv.se.hotel.domain.model.guest;
 
+import at.fhv.se.hotel.domain.Generated;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
+// TODO: Test
 public class Guest {
     // Required by hibernate
     private Long id;
@@ -68,10 +70,7 @@ public class Guest {
         return bookings;
     }
 
-    public void addBooking(Booking booking) {
-        this.bookings.add(booking);
-    }
-
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -88,6 +87,7 @@ public class Guest {
                 && Objects.equals(bookings, guest.bookings);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(id, guestId, name,
