@@ -14,47 +14,21 @@ import java.util.List;
 import java.util.Objects;
 
 // TODO: Test
-@XmlRootElement
 public class Invoice {
     // Required by hibernate
     private Long id;
     private InvoiceId invoiceId;
-
-    @XmlElement(name = "invoiceNumber")
     private String invoiceNumber;
-
-    @XmlElement(name = "invoiceDate")
-    @XmlJavaTypeAdapter(value = LocalDateAdapter.class)
     private LocalDate invoiceDate;
-
-    @XmlElement(name = "stay")
     private Stay stay;
-
-    @XmlElement(name = "roomCategoryPrice")
     private List<RoomCategoryPrice> roomCategoryPriceList;
-
-    @XmlElement(name = "service")
     private List<Service> services;
-
-    @XmlElement(name = "amountOfNights")
     private int amountOfNights;
-
-    @XmlElement(name = "localTaxPerPerson")
     private BigDecimal localTaxPerPerson;
-
-    @XmlElement(name = "localTaxTotal")
     private BigDecimal localTaxTotal;
-
-    @XmlElement(name = "valueAddedTaxInPercent")
     private BigDecimal valueAddedTaxInPercent;
-
-    @XmlElement(name = "valueAddedTaxInEuro")
     private BigDecimal valueAddedTaxInEuro;
-
-    @XmlElement(name = "totalNetAmount")
     private BigDecimal totalNetAmount;
-
-    @XmlElement(name = "totalGrossAmount")
     private BigDecimal totalGrossAmount;
 
     // TODO: paymentMethod

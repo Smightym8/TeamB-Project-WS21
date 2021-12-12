@@ -44,7 +44,6 @@ public class CheckOutServiceImpl implements CheckOutService {
         );
 
         Invoice invoice = invoiceCalculationService.calculateInvoice(stay);
-        JAXB.marshal(invoice, System.out);
 
         Map<String, BigDecimal> services = new HashMap<>();
         for(Service s : invoice.getServices()) {
@@ -86,6 +85,8 @@ public class CheckOutServiceImpl implements CheckOutService {
                 .withTotalNetAmount(invoice.getTotalNetAmount())
                 .withTotalGrossAmount(invoice.getTotalGrossAmount())
                 .build();
+
+        JAXB.marshal(invoiceDTO, System.out);
 
         return invoiceDTO;
     }

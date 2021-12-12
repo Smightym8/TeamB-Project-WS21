@@ -1,35 +1,88 @@
 package at.fhv.se.hotel.application.dto;
 
 
+import at.fhv.se.hotel.domain.model.LocalDateAdapter;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+@XmlRootElement
 public class InvoiceDTO {
     private String stayId;
+
+    @XmlElement(name = "invoiceNumber")
     private String invoiceNumber;
+
+    @XmlElement(name = "invoiceDate")
+    @XmlJavaTypeAdapter(value = LocalDateAdapter.class)
     private LocalDate invoiceDate;
+
+    @XmlElement(name = "guestFirstName")
     private String guestFirstName;
+
+    @XmlElement(name = "guestLastName")
     private String guestLastName;
+
+    @XmlElement(name = "streetName")
     private String streetName;
+
+    @XmlElement(name = "streetNumber")
     private String streetNumber;
+
+    @XmlElement(name = "zipCode")
     private String zipCode;
+
+    @XmlElement(name = "city")
     private String city;
+
+    @XmlElement(name = "amountOfAdults")
     private int amountOfAdults;
+
+    @XmlElement(name = "amountOfChildren")
     private int amountOfChildren;
+
+    @XmlElement(name = "service")
     private Map<String, BigDecimal> services;
+
+    @XmlElement(name = "roomCategory)")
     private Map<String, Integer> roomCategories;
+
+    @XmlElement(name = "roomCategoryPrice")
     private List<BigDecimal> roomCategoryPrices;
+
+    @XmlElement(name = "checkInDate")
+    @XmlJavaTypeAdapter(value = LocalDateAdapter.class)
     private LocalDate checkInDate;
+
+    @XmlElement(name = "checkOutDate")
+    @XmlJavaTypeAdapter(value = LocalDateAdapter.class)
     private LocalDate checkOutDate;
+
+    @XmlElement(name = "amountOfNights")
     private int amountOfNights;
+
+    @XmlElement(name = "localTaxPerPerson")
     private BigDecimal localTaxPerPerson;
+
+    @XmlElement(name = "localTaxTotal")
     private BigDecimal localTaxTotal;
+
+    @XmlElement(name = "valueAddedTaxInPercent")
     private BigDecimal valueAddedTaxInPercent;
+
+    @XmlElement(name = "valueAddedTaxInEuro")
     private BigDecimal valueAddedTaxInEuro;
+
+    @XmlElement(name = "totalNetAmount")
     private BigDecimal totalNetAmount;
+
+    @XmlElement(name = "totalGrossAmount")
     private BigDecimal totalGrossAmount;
 
     public static Builder builder() {
