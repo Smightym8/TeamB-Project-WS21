@@ -70,7 +70,7 @@ public class InvoicePDFRepositoryImpl implements InvoicePDFRepository {
 
         // Delete xml file
         File xmlFile = new File(INVOICES_XML_PATH + fileName + XML_SUFFIX);
-        //xmlFile.delete();
+        xmlFile.delete();
     }
 
     /**

@@ -142,21 +142,22 @@
 								</fo:table-header>
 
 								<fo:table-body border-width="1pt" border-style="solid">
-									<xsl:for-each select="invoice/roomCategories">
+									<xsl:for-each select="invoice/roomCategories/entry">
 										<fo:table-row>
 											<fo:table-cell>
 												<fo:block>
-													<xsl:value-of select="entry/value" />
+													<xsl:value-of select="value" />
 												</fo:block>
 											</fo:table-cell>
 											<fo:table-cell>
 												<fo:block>
-													<xsl:value-of select="entry/key" />
+													<xsl:value-of select="key" />
 												</fo:block>
 											</fo:table-cell>
 											<fo:table-cell>
 												<fo:block>
-													<xsl:value-of select="invoice/roomCategoryPrices/entry/key[text() = current()/entry/key]/../value" />
+													<xsl:text>€ </xsl:text>
+													<xsl:value-of select="/invoice/roomCategoryPrices/entry[key = current()/key]/value" />
 												</fo:block>
 											</fo:table-cell>
 										</fo:table-row>
@@ -210,16 +211,17 @@
 								</fo:table-header>
 
 								<fo:table-body border-width="1pt" border-style="solid">
-									<xsl:for-each select="invoice/services">
+									<xsl:for-each select="invoice/services/entry">
 										<fo:table-row>
 											<fo:table-cell>
 												<fo:block>
-													<xsl:value-of select="entry/key" />
+													<xsl:value-of select="key" />
 												</fo:block>
 											</fo:table-cell>
 											<fo:table-cell>
 												<fo:block>
-													<xsl:value-of select="entry/value" />
+													<xsl:text>€ </xsl:text>
+													<xsl:value-of select="value" />
 												</fo:block>
 											</fo:table-cell>
 										</fo:table-row>
@@ -269,11 +271,13 @@
 										</fo:table-cell>
 										<fo:table-cell>
 											<fo:block>
+												<xsl:text>€ </xsl:text>
 												<xsl:value-of select="invoice/localTaxPerPerson" />
 											</fo:block>
 										</fo:table-cell>
 										<fo:table-cell>
 											<fo:block>
+												<xsl:text>€ </xsl:text>
 												<xsl:value-of select="invoice/localTaxTotal" />
 											</fo:block>
 										</fo:table-cell>
@@ -348,7 +352,7 @@
 
 						</fo:block>
 
-						<fo:block margin-top="10mm">
+						<fo:block margin-top="5mm">
 							<xsl:text>Please indicate the invoice number as the purpose of payment.</xsl:text>
 						</fo:block>
 					</fo:block>
