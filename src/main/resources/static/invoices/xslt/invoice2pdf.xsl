@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:fo="http://www.w3.org/1999/XSL/Format">
-    
+				xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+				xmlns:fo="http://www.w3.org/1999/XSL/Format">
+
 	<xsl:template match="/">
 		<fo:root>
-		
+
 			<fo:layout-master-set>
-			
+
 				<fo:simple-page-master master-name="invoice"
-					page-height="297.0mm" page-width="209.9mm"
-                    margin-bottom="8mm" margin-left="25mm" margin-right="10mm" margin-top="10mm">
-                    
-                    <fo:region-body margin-bottom="28mm" margin-left="0mm" margin-right="20mm" margin-top="20mm"/>
+									   page-height="297.0mm" page-width="209.9mm"
+									   margin-bottom="8mm" margin-left="25mm" margin-right="10mm" margin-top="10mm">
+
+					<fo:region-body margin-bottom="28mm" margin-left="0mm" margin-right="20mm" margin-top="20mm"/>
 
 					<!-- region-after is the page footer -->
 					<fo:region-after extent="24pt" region-name="hotel-footer"/>
 				</fo:simple-page-master>
-				
+
 			</fo:layout-master-set>
-			
+
 			<fo:page-sequence master-reference="invoice">
 				<!-- Footer info -->
 				<fo:static-content flow-name="hotel-footer">
@@ -81,7 +81,7 @@
 				<fo:flow flow-name="xsl-region-body" font-family="sans-serif" font-size="12pt">
 
 					<!-- Logo -->
-                    <fo:block text-align="right">
+					<fo:block text-align="right">
 						<fo:external-graphic src="src/main/resources/static/invoices/assets/logo_black.png" content-height="20%"/>
 					</fo:block>
 
@@ -156,13 +156,12 @@
 											</fo:table-cell>
 											<fo:table-cell>
 												<fo:block>
-													<xsl:value-of select="roomCategoryPrice" />
+													<xsl:value-of select="invoice/roomCategoryPrices/entry/key[text() = current()/entry/key]/../value" />
 												</fo:block>
 											</fo:table-cell>
 										</fo:table-row>
 									</xsl:for-each>
 								</fo:table-body>
-
 							</fo:table>
 						</fo:block>
 
@@ -292,61 +291,73 @@
 						</fo:inline>
 
 						<fo:block margin-top="5mm">
+
 							<fo:table>
-								<fo:table-header border-width="1pt" border-style="solid">
-									<fo:table-row font-weight="bold">
+								<fo:table-body>
+
+									<fo:table-row border-width="1pt" border-style="solid">
 										<fo:table-cell>
 											<fo:block>Net Amount</fo:block>
 										</fo:table-cell>
 										<fo:table-cell>
+											<fo:block>
+												<xsl:text>€ </xsl:text>
+												<xsl:value-of select="invoice/totalNetAmount" />
+											</fo:block>
+										</fo:table-cell>
+									</fo:table-row>
+
+									<fo:table-row border-width="1pt" border-style="solid">
+										<fo:table-cell>
 											<fo:block>VAT in €</fo:block>
 										</fo:table-cell>
+										<fo:table-cell>
+											<fo:block>
+												<xsl:text>€ </xsl:text>
+												<xsl:value-of select="invoice/valueAddedTaxInEuro" />
+											</fo:block>
+										</fo:table-cell>
+									</fo:table-row>
+
+									<fo:table-row border-width="1pt" border-style="solid">
 										<fo:table-cell>
 											<fo:block>VAT in %</fo:block>
 										</fo:table-cell>
 										<fo:table-cell>
-											<fo:block>Gross amount</fo:block>
+											<fo:block>
+												<xsl:value-of select="(invoice/valueAddedTaxInPercent) * 100" />
+												<xsl:text>% </xsl:text>
+											</fo:block>
 										</fo:table-cell>
 									</fo:table-row>
-								</fo:table-header>
 
-								<fo:table-body border-width="1pt" border-style="solid">
-									<fo:table-row>
+									<fo:table-row border-width="1pt" border-style="solid" font-weight="bold">
 										<fo:table-cell>
-											<fo:block>
-												<xsl:value-of select="invoice/totalNetAmount" />
-											</fo:block>
+											<fo:block>Gross amount</fo:block>
 										</fo:table-cell>
 										<fo:table-cell>
 											<fo:block>
-												<xsl:value-of select="invoice/valueAddedTaxInEuro" />
-											</fo:block>
-										</fo:table-cell>
-										<fo:table-cell>
-											<fo:block>
-												<xsl:value-of select="invoice/valueAddedTaxInPercent" />
-											</fo:block>
-										</fo:table-cell>
-										<fo:table-cell>
-											<fo:block>
+												<xsl:text>€ </xsl:text>
 												<xsl:value-of select="invoice/totalGrossAmount" />
 											</fo:block>
 										</fo:table-cell>
 									</fo:table-row>
+
 								</fo:table-body>
 							</fo:table>
+
 						</fo:block>
 
 						<fo:block margin-top="10mm">
 							<xsl:text>Please indicate the invoice number as the purpose of payment.</xsl:text>
 						</fo:block>
 					</fo:block>
-                </fo:flow>
+				</fo:flow>
 			</fo:page-sequence>
-			
+
 		</fo:root>
-	
+
 	</xsl:template>
-	
-	
+
+
 </xsl:stylesheet>

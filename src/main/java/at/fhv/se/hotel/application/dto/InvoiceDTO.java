@@ -54,9 +54,8 @@ public class InvoiceDTO {
     @XmlElement(name = "roomCategories")
     private Map<String, Integer> roomCategories;
 
-    @XmlElementWrapper(name = "roomCategories")
-    @XmlElement(name = "roomCategoryPrice")
-    private List<BigDecimal> roomCategoryPrices;
+    @XmlElement(name = "roomCategoryPrices")
+    private Map<String, BigDecimal> roomCategoryPrices;
 
     @XmlElement(name = "checkInDate")
     @XmlJavaTypeAdapter(value = LocalDateAdapter.class)
@@ -143,7 +142,7 @@ public class InvoiceDTO {
         return roomCategories;
     }
 
-    public List<BigDecimal> roomCategoryPrices() {
+    public Map<String, BigDecimal> roomCategoryPrices() {
         return roomCategoryPrices;
     }
 
@@ -255,7 +254,7 @@ public class InvoiceDTO {
             return this;
         }
 
-        public Builder withCategoryPrices(List<BigDecimal> roomCategoryPrices) {
+        public Builder withCategoryPrices(Map<String, BigDecimal> roomCategoryPrices) {
             this.instance.roomCategoryPrices = roomCategoryPrices;
             return this;
         }

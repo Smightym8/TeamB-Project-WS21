@@ -58,9 +58,9 @@ public class CheckOutServiceImpl implements CheckOutService {
             roomCategories.put(brc.getRoomCategory().getRoomCategoryName().name(), brc.getAmount());
         }
 
-        List<BigDecimal> roomCategoryPrices = new ArrayList<>();
+        Map<String, BigDecimal> roomCategoryPrices = new HashMap<>();
         for(RoomCategoryPrice rcp : invoice.getRoomCategoryPriceList()) {
-            roomCategoryPrices.add(rcp.getPrice());
+            roomCategoryPrices.put(rcp.getRoomCategory().getRoomCategoryName().name(), rcp.getPrice());
         }
 
         InvoiceDTO invoiceDTO = InvoiceDTO.builder()
