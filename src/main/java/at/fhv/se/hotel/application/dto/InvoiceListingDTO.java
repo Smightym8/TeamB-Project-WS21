@@ -13,6 +13,7 @@ public class InvoiceListingDTO {
     private String zipCode;
     private String city;
     private String totalGrossAmount;
+    private boolean isPaid;
 
     public static Builder builder() {
         return new Builder();
@@ -52,6 +53,10 @@ public class InvoiceListingDTO {
 
     public String totalGrossAmount() {
         return totalGrossAmount;
+    }
+
+    public boolean isPaid() {
+        return isPaid;
     }
 
     public static class Builder {
@@ -103,6 +108,11 @@ public class InvoiceListingDTO {
 
         public Builder withTotalGrossAmountAmount(String totalGrossAmount) {
             this.instance.totalGrossAmount = totalGrossAmount;
+            return this;
+        }
+
+        public Builder withIsPaid(boolean isPaid) {
+            this.instance.isPaid = isPaid;
             return this;
         }
 

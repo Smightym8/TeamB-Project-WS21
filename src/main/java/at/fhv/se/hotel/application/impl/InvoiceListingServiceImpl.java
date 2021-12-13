@@ -33,6 +33,7 @@ public class InvoiceListingServiceImpl implements InvoiceListingService {
                     .withZipCode(i.getStay().getGuest().getAddress().zipCode())
                     .withCity(i.getStay().getGuest().getAddress().city())
                     .withTotalGrossAmountAmount(i.getTotalGrossAmount().toString())
+                    .withIsPaid(i.isPaid())
                     .build();
 
             invoiceListingDTOs.add(invoiceListingDTO);

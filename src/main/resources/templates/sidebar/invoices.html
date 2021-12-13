@@ -14,7 +14,7 @@
                 <th class="col-1">Guest</th>
                 <th class="col-1">Address</th>
                 <th class="col-1">Amount</th>
-                <th class="col-1">State</th>
+                <th class="col-1">Payment Status</th>
                 <th class="col-1"></th>
             </tr>
             </thead>
@@ -22,10 +22,11 @@
             <tr th:each="invoice : ${invoices}">
                 <td th:text="${invoice.invoiceNumber}"></td>
                 <td th:text="${invoice.guestFirstName} + ' ' + ${invoice.guestLastName}"></td>
-                <td th:text="${invoice.streetName} + ' ' + ${invoice.streetNumber} + ' ' +
+                <td th:text="${invoice.streetName} + ' ' + ${invoice.streetNumber} + ', ' +
                              ${invoice.zipCode} + ' ' + ${invoice.city}"></td>
-                <td th:text="${invoice.totalGrossAmount}"></td>
-                <td>Paid</td>
+                <td th:text="'€' + ${invoice.totalGrossAmount}"></td>
+                <td th:if="${invoice.isPaid}">Paid</td>
+                <td th:unless="${invoice.isPaid}">Pending</td>
                 <td>
                     <a class="btn btn-secondary btn-sm" href="#">View</a>
                 </td>
