@@ -31,10 +31,10 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -52,7 +52,45 @@ public class CheckInServiceTest {
     private StayRepository stayRepository;
 
     @Test
-    void given_
+    void given_booking_when_assignrooms_then_returnexpectedrooms(){
+        //given
+        Guest guestExpected = Guest.create(new GuestId("1"),
+                new FullName("Michael", "Spiegel"),
+                Gender.MALE,
+                new Address("Hochschulstraße",
+                        "1", "Dornbirn",
+                        "6850", "Austria"),
+                LocalDate.of(1999, 3, 20),
+                "+43 660 123 456 789",
+                "michael.spiegel@students.fhv.at",
+                Collections.emptyList()
+        );
+
+        List<Service> servicesExpected = Arrays.asList(
+                Service.create(new ServiceId("1"),
+                        new ServiceName("TV"),
+                        new Price(new BigDecimal("100"))),
+                Service.create(new ServiceId("2"),
+                        new ServiceName("Breakfast"),
+                        new Price(new BigDecimal("100")))
+        );
+        Booking bookingExpected = Booking.create(
+                LocalDate.of(2021, 8, 1),
+                LocalDate.of(2021, 8, 10),
+                new BookingId("1"),
+                guestExpected,
+                servicesExpected,
+                2,
+                1,
+                "Nothing"
+        );
+
+        //when
+        List<RoomDTO> roomsActual = checkInService.assignRooms(bookingExpected.getBookingId().id());
+
+        //then
+        assertEquals(bookingExpected.getRoomCategories(),roomsActual.get(0).categoryName());
+    }
 
     @Test
     void given_bookingDetails_when_checkinbooking_then_returnequaldetails(){
@@ -134,11 +172,14 @@ public class CheckInServiceTest {
                                 .build())
                 .collect(Collectors.toList());
 
-        Mockito.when(bookingRepository.bookingById(bookingIdExpected).get()).thenReturn(bookingExpected);
+        Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
 
-        Mockito.when(roomRepository.roomByName(roomDTOsExpected.get(0).name()).get()).thenReturn(roomsExpected.get(0));
-        Mockito.when(roomRepository.roomByName(roomDTOsExpected.get(1).name()).get()).thenReturn(roomsExpected.get(1));
-        Mockito.when(roomRepository.roomByName(roomDTOsExpected.get(2).name()).get()).thenReturn(roomsExpected.get(2));
+        Mockito.when(bookingRepository.bookingById(bookingIdExpected)).thenReturn(Optional.of(bookingExpected));
+
+        Mockito.when(roomRepository.roomByName(roomDTOsExpected.get(0).name())).thenReturn(Optional.of(roomsExpected.get(0)));
+        Mockito.when(roomRepository.roomByName(roomDTOsExpected.get(1).name())).thenReturn(Optional.of(roomsExpected.get(1)));
+        Mockito.when(roomRepository.roomByName(roomDTOsExpected.get(2).name())).thenReturn(Optional.of(roomsExpected.get(2)));
+        //Mockito.doNothing().when(stayRepository).add(stayExpected);
 
 
         //when
@@ -147,8 +188,8 @@ public class CheckInServiceTest {
         //then
         List<Stay> staysActual = stayRepository.findAllStays();
 
-        assertTrue(staysActual.get(0).isActive());
-        assertFalse(staysActual.get(0).getBooking().isActive());
+        assertEquals(staysActual.get(0).isActive(),stayExpected.isActive());
+        assertEquals(staysActual.get(0).getBooking().isActive(), stayExpected.getBooking().isActive());
 
     }
 }
