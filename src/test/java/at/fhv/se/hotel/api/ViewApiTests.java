@@ -61,6 +61,9 @@ public class ViewApiTests {
     @MockBean
     BookingCreationService bookingCreationService;
 
+    @MockBean
+    InvoiceListingService invoiceListingService;
+
     @Test
     public void when_get_rootUrl_then_statusOk_and_homeView_and_allBookings_and_allStays_called() throws Exception {
         // when ... then
@@ -666,6 +669,19 @@ public class ViewApiTests {
                 .andExpect(content().contentType("text/html;charset=UTF-8"))
                 .andExpect(content().string(containsString(messageExpected)))
                 .andExpect(view().name("errorView"));
+    }
+
+    @Test
+    public void when_get_invoicesUrl_then_statusOk_and_invoicesView_and_allInvoices_called() throws Exception {
+        // when ... then
+        this.mockMvc.perform(get("/invoices").accept(org.springframework.http.MediaType.TEXT_PLAIN))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(view().name("sidebar/invoices"));
+
+        // then
+        Mockito.verify(invoiceListingService, times(1)).allInvoices();
     }
 
     // Helper Function

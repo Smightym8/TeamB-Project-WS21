@@ -24,6 +24,7 @@
         <property name="valueAddedTaxInEuro" column="vat_in_euro" type="java.math.BigDecimal" />
         <property name="totalNetAmount" column="total_net_amount" type="java.math.BigDecimal" />
         <property name="totalGrossAmount" column="total_gross_amount" type="java.math.BigDecimal" />
+        <property name="isPaid" column="is_paid" type="java.lang.Boolean" />
 
 
         <!-- Many to one mapping to stay -->

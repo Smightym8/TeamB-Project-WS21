@@ -2,6 +2,7 @@ package at.fhv.se.hotel.view;
 
 import at.fhv.se.hotel.application.api.*;
 import at.fhv.se.hotel.application.dto.*;
+import at.fhv.se.hotel.application.impl.InvoiceListingServiceImpl;
 import at.fhv.se.hotel.view.forms.BookingForm;
 import at.fhv.se.hotel.view.forms.GuestForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,6 +118,9 @@ public class HotelViewController {
     @Autowired
     private CheckOutService checkOutService;
 
+    @Autowired
+    private InvoiceListingService invoiceListingService;
+
 /*--------------------------------------------------------------------------------------------------------------------*/
 
 /*----- Home -----*/
@@ -179,8 +183,16 @@ public class HotelViewController {
     }
 
 /*----- Invoices -----*/
+    //ToDo: status(isPaid) an die View weitergeben
     @GetMapping(INVOICES_URL)
     public String invoices(Model model) {
+        //Error! HHH000143: Bytecode enhancement failed because no public,
+        //protected or package-private default constructor was found for entity:
+        //at.fhv.se.hotel.domain.model.booking.Booking. Private constructors don't work with runtime proxies!
+        final List<BookingDTO> bookings = bookingListingService.allBookings();
+        final List<InvoiceListingDTO> invoices = invoiceListingService.allInvoices();
+
+        model.addAttribute("invoices", invoices);
 
         return INVOICES_VIEW;
     }
