@@ -12,15 +12,73 @@
 					page-height="297.0mm" page-width="209.9mm"
                     margin-bottom="8mm" margin-left="25mm" margin-right="10mm" margin-top="10mm">
                     
-                    <fo:region-body margin-bottom="28mm" margin-left="0mm" margin-right="44mm" margin-top="20mm"/>
+                    <fo:region-body margin-bottom="28mm" margin-left="0mm" margin-right="20mm" margin-top="20mm"/>
 
+					<!-- region-after is the page footer -->
+					<fo:region-after extent="24pt" region-name="hotel-footer"/>
 				</fo:simple-page-master>
 				
 			</fo:layout-master-set>
 			
 			<fo:page-sequence master-reference="invoice">
+				<!-- Footer info -->
+				<fo:static-content flow-name="hotel-footer">
+					<fo:block font-size="8pt">
+						<xsl:element name="fo:table">
+							<xsl:element name="fo:table-column">
+								<xsl:attribute name="width">50mm</xsl:attribute>
+							</xsl:element>
+							<xsl:element name="fo:table-column">
+								<xsl:attribute name="width">50mm</xsl:attribute>
+							</xsl:element>
+							<xsl:element name="fo:table-column">
+								<xsl:attribute name="width">50mm</xsl:attribute>
+							</xsl:element>
+							<xsl:element name="fo:table-body">
+								<xsl:element name="fo:table-row">
+									<xsl:element name="fo:table-cell">
+										<xsl:element name="fo:block">
+											<xsl:text>Hotel Schwarz</xsl:text>
+										</xsl:element>
 
-				<fo:flow flow-name="xsl-region-body" font-family="sans-serif" font-size="14pt">
+										<xsl:element name="fo:block">
+											<xsl:text>Thomas Schwarz</xsl:text>
+										</xsl:element>
+
+										<xsl:element name="fo:block">
+											<xsl:text>Straße 12</xsl:text>
+										</xsl:element>
+
+										<xsl:element name="fo:block">
+											<xsl:text>6845 Stadt</xsl:text>
+										</xsl:element>
+									</xsl:element>
+									<xsl:element name="fo:table-cell">
+										<xsl:element name="fo:block">
+											<xsl:text>Email: hotel@schwarz.at</xsl:text>
+										</xsl:element>
+										<xsl:element name="fo:block">
+											<xsl:text>Phone: +43 5512 204576</xsl:text>
+										</xsl:element>
+									</xsl:element>
+									<xsl:element name="fo:table-cell">
+										<xsl:element name="fo:block">
+											<xsl:text>BAWAG P.S.K</xsl:text>
+										</xsl:element>
+										<xsl:element name="fo:block">
+											<xsl:text>IBAN: AT02 6000 0000 0134 9870</xsl:text>
+										</xsl:element>
+										<xsl:element name="fo:block">
+											<xsl:text>BIC: OPSKATWW</xsl:text>
+										</xsl:element>
+									</xsl:element>
+								</xsl:element>
+							</xsl:element>
+						</xsl:element>
+					</fo:block>
+				</fo:static-content>
+
+				<fo:flow flow-name="xsl-region-body" font-family="sans-serif" font-size="12pt">
 
 					<!-- Logo -->
                     <fo:block text-align="right">
@@ -28,7 +86,7 @@
 					</fo:block>
 
 					<!-- Guest Information -->
-					<fo:block>
+					<fo:block margin-top="10mm">
 						<fo:block>
 							<xsl:value-of select="invoice/guestFirstName"/>
 							<xsl:text>&#x20;</xsl:text>
@@ -48,8 +106,8 @@
 						</fo:block>
 					</fo:block>
 
-					<fo:block>
-						<xsl:text>Details: </xsl:text>
+					<!-- Invoice Details -->
+					<fo:block text-align="right" margin-top="10pt">
 						<fo:block>
 							<xsl:text>Invoice number: </xsl:text>
 							<xsl:value-of select="invoice/invoiceNumber" />
@@ -62,10 +120,12 @@
 					</fo:block>
 
 					<!-- Rooms and prices -->
-					<fo:block>
-						<xsl:text>Rooms&#xd;</xsl:text>
+					<fo:block margin-top="10mm">
+						<fo:inline font-size="14pt">
+							<xsl:text>Rooms&#xd;</xsl:text>
+						</fo:inline>
 
-						<fo:block>
+						<fo:block margin-top="5mm">
 							<fo:table>
 								<fo:table-header border-width="1pt" border-style="solid">
 									<fo:table-row font-weight="bold">
@@ -106,7 +166,7 @@
 							</fo:table>
 						</fo:block>
 
-						<fo:block>
+						<fo:block margin-top="5mm">
 							<xsl:text>Booking period: From </xsl:text>
 							<xsl:value-of select="invoice/checkInDate" />
 							<xsl:text> to </xsl:text>
@@ -123,17 +183,21 @@
 							<xsl:value-of select="invoice/amountOfAdults" />
 						</fo:block>
 
-						<!--
-						IF Abfrage für amountOfChildren
-						-->
-
+						<xsl:if test="invoice/amountOfChildren > 0">
+							<fo:block>
+								<xsl:text>Children: </xsl:text>
+								<xsl:value-of select="invoice/amountOfChildren" />
+							</fo:block>
+						</xsl:if>
 					</fo:block>
 
 					<!-- Services and prices -->
-					<fo:block>
-						<xsl:text>Services&#xd;</xsl:text>
+					<fo:block margin-top="10mm">
+						<fo:inline font-size="14pt">
+							<xsl:text>Services&#xd;</xsl:text>
+						</fo:inline>
 
-						<fo:block>
+						<fo:block margin-top="5mm">
 							<fo:table>
 								<fo:table-header border-width="1pt" border-style="solid">
 									<fo:table-row font-weight="bold">
@@ -168,9 +232,12 @@
 					</fo:block>
 
 					<!-- Localtax -->
-					<fo:block>
-						<xsl:text>Further Services&#xd;</xsl:text>
-						<fo:block>
+					<fo:block margin-top="10mm">
+						<fo:inline font-size="14pt">
+							<xsl:text>Further Services&#xd;</xsl:text>
+						</fo:inline>
+
+						<fo:block margin-top="5mm">
 							<fo:table>
 								<fo:table-header border-width="1pt" border-style="solid">
 									<fo:table-row font-weight="bold">
@@ -219,14 +286,12 @@
 					</fo:block>
 
 					<!-- VAT and total amount -->
-					<fo:block>
-						<xsl:text>Total</xsl:text>
+					<fo:block margin-top="10mm">
+						<fo:inline font-size="14pt">
+							<xsl:text>Total</xsl:text>
+						</fo:inline>
 
-						<fo:block>
-							<xsl:text>Please indicate the invoice number as the purpose of payment.</xsl:text>
-						</fo:block>
-
-						<fo:block>
+						<fo:block margin-top="5mm">
 							<fo:table>
 								<fo:table-header border-width="1pt" border-style="solid">
 									<fo:table-row font-weight="bold">
@@ -271,51 +336,12 @@
 								</fo:table-body>
 							</fo:table>
 						</fo:block>
-					</fo:block>
 
-					<!-- Footer info -->
-					<fo:block>
-						<fo:block>
-							<xsl:text>Hotel Schwarz</xsl:text>
-						</fo:block>
-
-						<fo:block>
-							<xsl:text>Thomas Schwarz</xsl:text>
-						</fo:block>
-
-						<fo:block>
-							<xsl:text>Straße 12</xsl:text>
-						</fo:block>
-
-						<fo:block>
-							<xsl:text>6845 Stadt</xsl:text>
-						</fo:block>
-
-						<fo:block>
-							<xsl:text>Email: hotel@schwarz.at</xsl:text>
-						</fo:block>
-
-						<fo:block>
-							<xsl:text>Phone: +43 5512 204576</xsl:text>
+						<fo:block margin-top="10mm">
+							<xsl:text>Please indicate the invoice number as the purpose of payment.</xsl:text>
 						</fo:block>
 					</fo:block>
-
-					<fo:block>
-						<fo:block>
-							<xsl:text>BAWAG P.S.K</xsl:text>
-						</fo:block>
-
-						<fo:block>
-							<xsl:text>IBAN: AT02 6000 0000 0134 9870</xsl:text>
-						</fo:block>
-
-						<fo:block>
-							<xsl:text>BIC: OPSKATWW</xsl:text>
-						</fo:block>
-					</fo:block>
-
                 </fo:flow>
-                
 			</fo:page-sequence>
 			
 		</fo:root>
