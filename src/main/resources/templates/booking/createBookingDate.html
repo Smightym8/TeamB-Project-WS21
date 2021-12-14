@@ -46,7 +46,7 @@
                         let checkinMonth = checkinDate.getMonth();
                         let checkinYear = checkinDate.getFullYear();
 
-                        if (checkinDay >= todayDay && checkinMonth >= todayMonth && checkinYear >= todayYear) {
+                        if (checkinDay >= todayDay && checkinMonth >= todayMonth && checkinYear == todayYear  || checkinYear > todayYear) {
                             checkin.setCustomValidity('');
                         } else {
                             checkin.setCustomValidity('Checkin date must be in the future!');
