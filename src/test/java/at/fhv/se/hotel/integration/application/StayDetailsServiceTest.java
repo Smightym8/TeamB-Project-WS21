@@ -1,6 +1,7 @@
 package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.StayDetailsService;
+import at.fhv.se.hotel.application.api.exception.StayNotFoundException;
 import at.fhv.se.hotel.application.dto.StayDetailsDTO;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
@@ -44,7 +45,7 @@ public class StayDetailsServiceTest {
     StayRepository stayRepository;
 
     @Test
-    void given_staydetails_when_fetchingdetails_thenreturnequalsdetails() {
+    void given_staydetails_when_fetchingdetails_thenreturnequalsdetails() throws StayNotFoundException {
         //given
         String idExpected = "1";
         LocalDate checkInExpected = LocalDate.of(2021, 12, 1);

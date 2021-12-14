@@ -1,6 +1,7 @@
 package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.CheckOutService;
+import at.fhv.se.hotel.application.api.exception.StayNotFoundException;
 import at.fhv.se.hotel.application.dto.InvoiceDTO;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
@@ -48,7 +49,7 @@ public class CheckOutServiceTest {
     InvoiceRepository invoiceRepository;
 
     @Test
-    void given_stay_when_createinvoice_then_returnexpectedinvoice() {
+    void given_stay_when_createinvoice_then_returnexpectedinvoice() throws StayNotFoundException {
         // given
         Guest guestExpected = Guest.create(new GuestId("1"),
                 new FullName("Michael", "Spiegel"),

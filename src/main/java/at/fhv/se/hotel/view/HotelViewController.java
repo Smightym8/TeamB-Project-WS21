@@ -1,16 +1,26 @@
 package at.fhv.se.hotel.view;
 
 import at.fhv.se.hotel.application.api.*;
+import at.fhv.se.hotel.application.api.exception.*;
 import at.fhv.se.hotel.application.dto.*;
+import at.fhv.se.hotel.application.impl.InvoiceListingServiceImpl;
 import at.fhv.se.hotel.view.forms.BookingForm;
 import at.fhv.se.hotel.view.forms.GuestForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,6 +88,14 @@ public class HotelViewController {
 
     private static final String CHECK_OUT_URL = "/check-out";
 
+/*----- Invoice Download -----*/
+    private static final String INVOICES_PATH = "src/main/resources/static/invoices/";
+    private static final String INVOICE_DOWNLOAD_URL = "/download-invoice/{invoiceNo}";
+
+/*----- Error -----*/
+    private static final String ERROR_URL = "/displayerror";
+    private static final String ERROR_VIEW = "errorView";
+
 /*--------------------------------------------------------------------------------------------------------------------*/
 
     @Autowired
@@ -112,6 +130,13 @@ public class HotelViewController {
 
     @Autowired
     private CheckOutService checkOutService;
+
+    @Autowired
+    private InvoiceListingService invoiceListingService;
+
+    @Autowired
+    private InvoiceDownloadService invoiceDownloadService;
+
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 
@@ -175,8 +200,16 @@ public class HotelViewController {
     }
 
 /*----- Invoices -----*/
+    //ToDo: status(isPaid) an die View weitergeben
     @GetMapping(INVOICES_URL)
     public String invoices(Model model) {
+        //Error! HHH000143: Bytecode enhancement failed because no public,
+        //protected or package-private default constructor was found for entity:
+        //at.fhv.se.hotel.domain.model.booking.Booking. Private constructors don't work with runtime proxies!
+        final List<BookingDTO> bookings = bookingListingService.allBookings();
+        final List<InvoiceListingDTO> invoices = invoiceListingService.allInvoices();
+
+        model.addAttribute("invoices", invoices);
 
         return INVOICES_VIEW;
     }
@@ -255,55 +288,72 @@ public class HotelViewController {
     }
 
     @PostMapping(CREATE_BOOKING_SUMMARY_URL)
-    public String createBookingSummary(
+    public ModelAndView createBookingSummary(
             @ModelAttribute("bookingForm") BookingForm bookingForm,
             @RequestParam("isCreated") boolean isCreated,
             Model model) {
 
-        BookingSummaryDTO bookingSummaryDTO = bookingSummaryService.createSummary(
-                bookingForm.getGuestId(),
-                bookingForm.getRoomCategoryIds(),
-                bookingForm.getAmountsOfRoomCategories(),
-                bookingForm.getServiceIds(),
-                bookingForm.getCheckInDate(),
-                bookingForm.getCheckOutDate(),
-                bookingForm.getAmountOfAdults(),
-                bookingForm.getAmountOfChildren(),
-                bookingForm.getAdditionalInformation()
-        );
+        BookingSummaryDTO bookingSummaryDTO;
+        try {
+            bookingSummaryDTO = bookingSummaryService.createSummary(
+                    bookingForm.getGuestId(),
+                    bookingForm.getRoomCategoryIds(),
+                    bookingForm.getAmountsOfRoomCategories(),
+                    bookingForm.getServiceIds(),
+                    bookingForm.getCheckInDate(),
+                    bookingForm.getCheckOutDate(),
+                    bookingForm.getAmountOfAdults(),
+                    bookingForm.getAmountOfChildren(),
+                    bookingForm.getAdditionalInformation()
+            );
+        } catch (GuestNotFoundException | ServiceNotFoundException | RoomCategoryNotFoundException e) {
+            return redirectError(e.getMessage());
+        }
 
         model.addAttribute("bookingSummary", bookingSummaryDTO);
         model.addAttribute("bookingForm", bookingForm);
         model.addAttribute("isCreated", isCreated);
 
-        return CREATE_BOOKING_SUMMARY_VIEW;
+        return new ModelAndView(CREATE_BOOKING_SUMMARY_VIEW);
     }
 
     @PostMapping(CREATE_BOOKING_URL)
-    public String createBooking(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model) {
+    public ModelAndView createBooking(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model) {
+        String bookingId;
+        try {
+            bookingId = bookingCreationService.book(bookingForm.getGuestId(),
+                    bookingForm.getRoomCategoryIds(),
+                    bookingForm.getAmountsOfRoomCategories(),
+                    bookingForm.getServiceIds(),
+                    bookingForm.getCheckInDate(),
+                    bookingForm.getCheckOutDate(),
+                    bookingForm.getAmountOfAdults(),
+                    bookingForm.getAmountOfChildren(),
+                    bookingForm.getAdditionalInformation());
+        } catch (GuestNotFoundException | ServiceNotFoundException | RoomCategoryNotFoundException e) {
+            return redirectError(e.getMessage());
+        }
 
-        String bookingId = bookingCreationService.book(
-                bookingForm.getGuestId(),
-                bookingForm.getRoomCategoryIds(),
-                bookingForm.getAmountsOfRoomCategories(),
-                bookingForm.getServiceIds(),
-                bookingForm.getCheckInDate(),
-                bookingForm.getCheckOutDate(),
-                bookingForm.getAmountOfAdults(),
-                bookingForm.getAmountOfChildren(),
-                bookingForm.getAdditionalInformation());
-
-        return "redirect:" + CREATE_BOOKING_SUCCESS_URL
-                + "?bookingId=" + bookingId + "&isCreated=" + true;
+        return new ModelAndView("redirect:" +
+                CREATE_BOOKING_SUCCESS_URL +
+                "?bookingId=" + bookingId +
+                "&isCreated=" + true
+        );
     }
 
     @GetMapping(CREATE_BOOKING_SUCCESS_URL)
-    public String createBookingSuccess(
+    public ModelAndView createBookingSuccess(
             @RequestParam("bookingId") String bookingId,
             @RequestParam("isCreated") boolean isCreated,
             Model model
     ) {
-        BookingSummaryDTO bookingSummaryDTO = bookingSummaryService.summaryByBookingId(bookingId);
+        BookingSummaryDTO bookingSummaryDTO;
+        try {
+            bookingSummaryDTO = bookingSummaryService.summaryByBookingId(bookingId);
+        } catch (BookingNotFoundException | GuestNotFoundException e) {
+            return redirectError(e.getMessage());
+        }
+
         List<String> roomCategoryIds = new ArrayList<>();
 
 
@@ -333,81 +383,153 @@ public class HotelViewController {
         model.addAttribute("bookingForm", bookingForm);
         model.addAttribute("isCreated", isCreated);
 
-        return CREATE_BOOKING_SUMMARY_VIEW;
+        return new ModelAndView(CREATE_BOOKING_SUMMARY_VIEW);
     }
 
     @GetMapping(BOOKING_DETAILS_URL)
-    public String showBooking(@PathVariable String id, Model model) {
+    public ModelAndView showBooking(@PathVariable String id, Model model) {
 
-        BookingDetailsDTO bookingDetailsDTO =  bookingSummaryService.detailsByBookingId(id);
+        BookingDetailsDTO bookingDetailsDTO;
+        try {
+            bookingDetailsDTO = bookingSummaryService.detailsByBookingId(id);
+        } catch (BookingNotFoundException | GuestNotFoundException e) {
+            return redirectError(e.getMessage());
+        }
         model.addAttribute("bookingDetails", bookingDetailsDTO);
 
-        return BOOKING_DETAILS_VIEW;
+        return new ModelAndView(BOOKING_DETAILS_VIEW);
     }
 
 /*----- Check-In -----*/
     // TODO: Test
     @GetMapping(CHECK_IN_URL)
-    public String checkIn(
+    public ModelAndView checkIn(
             @RequestParam("bookingId") String bookingId,
             @RequestParam("isCheckedIn") boolean isCheckedIn,
             Model model) {
 
-        List<RoomDTO> assignedRooms = checkInService.assignRooms(bookingId);
+        List<RoomDTO> assignedRooms;
+        try {
+            assignedRooms = checkInService.assignRooms(bookingId);
+        } catch (BookingNotFoundException e) {
+            return redirectError(e.getMessage());
+        }
 
         if(isCheckedIn) {
-            checkInService.checkIn(bookingId, assignedRooms);
+            try {
+                checkInService.checkIn(bookingId, assignedRooms);
+            } catch (BookingNotFoundException | RoomNotFoundException e) {
+                return redirectError(e.getMessage());
+            }
         }
 
         model.addAttribute("bookingId", bookingId);
         model.addAttribute("assignedRooms", assignedRooms);
         model.addAttribute("isCheckedIn", isCheckedIn);
 
-        return CHECK_IN_VIEW;
+        return new ModelAndView(CHECK_IN_VIEW);
     }
 
 /*----- Check-Out -----*/
     // TODO: Test
     @GetMapping(STAY_DETAILS_URL)
-    public String showStay(@PathVariable String id, Model model) {
+    public ModelAndView showStay(@PathVariable String id, Model model) {
 
         // Error! org.hibernate.HibernateException:
         // HHH000143: Bytecode enhancement failed because no public, protected or package-private default constructor
         // was found for entity: at.fhv.se.hotel.domain.model.booking.Booking.
         // Private constructors don't work with runtime proxies!
-        BookingDetailsDTO bookingDetailsDTO =  bookingSummaryService.detailsByBookingId(id);
-        StayDetailsDTO stayDetailsDTO =  stayDetailsService.detailsById(id);
-        model.addAttribute("stayDetails", stayDetailsDTO);
+        try {
+            BookingDetailsDTO bookingDetailsDTO =  bookingSummaryService.detailsByBookingId(id);
+        } catch (BookingNotFoundException | GuestNotFoundException e) {
+            return redirectError(e.getMessage());
+        }
 
-        return STAY_DETAILS_VIEW;
+        StayDetailsDTO stayDetailsDTO;
+        try {
+            stayDetailsDTO = stayDetailsService.detailsById(id);
+            model.addAttribute("stayDetails", stayDetailsDTO);
+        } catch (StayNotFoundException e) {
+            return redirectError(e.getMessage());
+        }
+
+        return new ModelAndView(STAY_DETAILS_VIEW);
     }
 
     // TODO: Test
     @GetMapping(INVOICE_URL)
-    public String showInvoice(@PathVariable String id, Model model) {
+    public ModelAndView showInvoice(@PathVariable String id, Model model) {
 
         // Error! org.hibernate.HibernateException:
         // HHH000143: Bytecode enhancement failed because no public, protected or package-private default constructor
         // was found for entity: at.fhv.se.hotel.domain.model.booking.Booking.
         // Private constructors don't work with runtime proxies!
-        BookingDetailsDTO bookingDetailsDTO =  bookingSummaryService.detailsByBookingId(id);
-        InvoiceDTO invoiceDTO = checkOutService.createInvoice(id);
+        try {
+            BookingDetailsDTO bookingDetailsDTO =  bookingSummaryService.detailsByBookingId(id);
+        } catch (BookingNotFoundException | GuestNotFoundException e) {
+            return redirectError(e.getMessage());
+        }
+
+        InvoiceDTO invoiceDTO;
+        try {
+            invoiceDTO = checkOutService.createInvoice(id);
+        } catch (StayNotFoundException e) {
+            return redirectError(e.getMessage());
+        }
         model.addAttribute("invoice", invoiceDTO);
 
-        return INVOICE_VIEW;
+        return new ModelAndView(INVOICE_VIEW);
     }
 
     // TODO: Test
     @GetMapping(CHECK_OUT_URL)
-    public String checkOut(@RequestParam("stayId") String stayId) {
+    public ModelAndView checkOut(@RequestParam("stayId") String stayId) {
 
         // Error! org.hibernate.HibernateException:
         // HHH000143: Bytecode enhancement failed because no public, protected or package-private default constructor
         // was found for entity: at.fhv.se.hotel.domain.model.booking.Booking.
         // Private constructors don't work with runtime proxies!
-        BookingDetailsDTO bookingDetailsDTO =  bookingSummaryService.detailsByBookingId(stayId);
+        try {
+            BookingDetailsDTO bookingDetailsDTO =  bookingSummaryService.detailsByBookingId(stayId);
+        } catch (BookingNotFoundException | GuestNotFoundException e) {
+            return redirectError(e.getMessage());
+        }
+
         checkOutService.checkOut(stayId);
 
-        return "redirect:" + HOME_URL;
+        return new ModelAndView("redirect:" + HOME_URL);
+    }
+
+/*----- Invoice Download -----*/
+    @GetMapping(INVOICE_DOWNLOAD_URL)
+    public ResponseEntity<ByteArrayResource> downloadInvoice(@PathVariable("invoiceNo") String invoiceNo) {
+        ByteArrayResource resource = null;
+
+        try {
+            resource = invoiceDownloadService.download(invoiceNo);
+        } catch (InvoiceNotFoundException e) {
+            e.printStackTrace(); // TODO: Return to errorView --> return type mismatch
+        }
+
+        return ResponseEntity.ok()
+                // Content-Disposition
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=Invoice_" + invoiceNo + ".pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                // Content-Length
+                .contentLength(resource.contentLength())
+                .body(resource);
+    }
+
+/*----- Error -----*/
+    @GetMapping(ERROR_URL)
+    public ModelAndView displayError(@RequestParam("message") String message, Model model){
+        model.addAttribute("message", message);
+        return new ModelAndView(ERROR_VIEW);
+    }
+
+    // NOTE: used to redirect to an error page displaying an error message
+    @SuppressWarnings("unused")
+    private static ModelAndView redirectError(String message) {
+        return new ModelAndView("redirect:" + ERROR_URL + "?message=" + message);
     }
 }

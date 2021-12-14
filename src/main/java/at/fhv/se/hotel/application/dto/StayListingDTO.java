@@ -40,7 +40,7 @@ public class StayListingDTO {
         return isActive;
     }
 
-    public static class Builder{
+    public static class Builder {
         private final StayListingDTO instance;
 
         private Builder() {

@@ -27,8 +27,9 @@ public class Invoice {
     private BigDecimal valueAddedTaxInEuro;
     private BigDecimal totalNetAmount;
     private BigDecimal totalGrossAmount;
+    private boolean isPaid;
 
-    // TODO: paymentMethod
+    // TODO: paymentMethod, status (isPaid)
 
     // Required by hibernate
     private Invoice() {
@@ -92,6 +93,7 @@ public class Invoice {
         this.valueAddedTaxInEuro = aValueAddedTaxInEuro;
         this.totalNetAmount = aTotalNetAmount;
         this.totalGrossAmount = aTotalGrossAmount;
+        this.isPaid = false;
     }
 
     public Long getId() {
@@ -150,18 +152,20 @@ public class Invoice {
         return totalGrossAmount;
     }
 
-    @Generated
+    public boolean isPaid() {
+        return isPaid;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Invoice invoice = (Invoice) o;
-        return amountOfNights == invoice.amountOfNights && Objects.equals(id, invoice.id) && Objects.equals(invoiceId, invoice.invoiceId) && Objects.equals(invoiceNumber, invoice.invoiceNumber) && Objects.equals(invoiceDate, invoice.invoiceDate) && Objects.equals(stay, invoice.stay) && Objects.equals(roomCategoryPriceList, invoice.roomCategoryPriceList) && Objects.equals(services, invoice.services) && Objects.equals(localTaxPerPerson, invoice.localTaxPerPerson) && Objects.equals(localTaxTotal, invoice.localTaxTotal) && Objects.equals(valueAddedTaxInPercent, invoice.valueAddedTaxInPercent) && Objects.equals(valueAddedTaxInEuro, invoice.valueAddedTaxInEuro) && Objects.equals(totalNetAmount, invoice.totalNetAmount) && Objects.equals(totalGrossAmount, invoice.totalGrossAmount);
+        return amountOfNights == invoice.amountOfNights && isPaid == invoice.isPaid && Objects.equals(id, invoice.id) && Objects.equals(invoiceId, invoice.invoiceId) && Objects.equals(invoiceNumber, invoice.invoiceNumber) && Objects.equals(invoiceDate, invoice.invoiceDate) && Objects.equals(stay, invoice.stay) && Objects.equals(roomCategoryPriceList, invoice.roomCategoryPriceList) && Objects.equals(services, invoice.services) && Objects.equals(localTaxPerPerson, invoice.localTaxPerPerson) && Objects.equals(localTaxTotal, invoice.localTaxTotal) && Objects.equals(valueAddedTaxInPercent, invoice.valueAddedTaxInPercent) && Objects.equals(valueAddedTaxInEuro, invoice.valueAddedTaxInEuro) && Objects.equals(totalNetAmount, invoice.totalNetAmount) && Objects.equals(totalGrossAmount, invoice.totalGrossAmount);
     }
 
-    @Generated
     @Override
     public int hashCode() {
-        return Objects.hash(id, invoiceId, invoiceNumber, invoiceDate, stay, roomCategoryPriceList, services, amountOfNights, localTaxPerPerson, localTaxTotal, valueAddedTaxInPercent, valueAddedTaxInEuro, totalNetAmount, totalGrossAmount);
+        return Objects.hash(id, invoiceId, invoiceNumber, invoiceDate, stay, roomCategoryPriceList, services, amountOfNights, localTaxPerPerson, localTaxTotal, valueAddedTaxInPercent, valueAddedTaxInEuro, totalNetAmount, totalGrossAmount, isPaid);
     }
 }

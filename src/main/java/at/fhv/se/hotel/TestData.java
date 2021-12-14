@@ -11,6 +11,7 @@ import at.fhv.se.hotel.domain.model.roomcategory.*;
 import at.fhv.se.hotel.domain.model.service.Price;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
+import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -45,6 +46,9 @@ public class TestData implements ApplicationRunner {
 
     @Autowired
     RoomCategoryPriceRepository roomCategoryPriceRepository;
+
+    @Autowired
+    StayRepository stayRepository;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -216,5 +220,10 @@ public class TestData implements ApplicationRunner {
 
         Room room15 = Room.create("206", RoomStatus.FREE, doubleRoom);
         this.roomRepository.add(room15);
+
+        // Insert Fake Stays
+        Stay stay1 = Stay.create(booking1, List.of(room1));
+        booking1.deactivate();
+        this.stayRepository.add(stay1);
     }
 }

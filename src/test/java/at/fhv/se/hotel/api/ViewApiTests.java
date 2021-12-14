@@ -61,6 +61,9 @@ public class ViewApiTests {
     @MockBean
     BookingCreationService bookingCreationService;
 
+    @MockBean
+    InvoiceListingService invoiceListingService;
+
     @Test
     public void when_get_rootUrl_then_statusOk_and_homeView_and_allBookings_and_allStays_called() throws Exception {
         // when ... then
@@ -423,12 +426,7 @@ public class ViewApiTests {
                         "amountsOfRoomCategories", amountsOfRoomCategoriesExpected,
                         "serviceIds", serviceIdsExpected,
                         "additionalInformation", additionalInformationExpected
-                ))
-                .accept(org.springframework.http.MediaType.TEXT_PLAIN))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().contentType("text/html;charset=UTF-8"))
-                .andExpect(view().name("booking/createBookingSummary"));
+                )));
 
         // then
         Mockito.verify(bookingSummaryService, times(1)).createSummary(
@@ -653,19 +651,32 @@ public class ViewApiTests {
     }
 
     @Test
+    public void when_get_invoicesUrl_then_statusOk_and_invoicesView_and_allInvoices_called() throws Exception {
+        // when ... then
+        this.mockMvc.perform(get("/invoices").accept(org.springframework.http.MediaType.TEXT_PLAIN))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(view().name("sidebar/invoices"));
+
+        // then
+        Mockito.verify(invoiceListingService, times(1)).allInvoices();
+    }
+
+    @Test
     public void when_errorUrl_then_statusOk_and_errorView_called_and_message_displayed() throws Exception {
         // given
         String messageExpected = "test message";
 
         // when ... then
-        this.mockMvc.perform(get("/error")
+        this.mockMvc.perform(get("/displayerror")
                 .param("message", messageExpected)
                 .accept(org.springframework.http.MediaType.TEXT_PLAIN))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("text/html;charset=UTF-8"))
                 .andExpect(content().string(containsString(messageExpected)))
-                .andExpect(view().name("error"));
+                .andExpect(view().name("errorView"));
     }
 
     // Helper Function
