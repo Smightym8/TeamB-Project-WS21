@@ -288,9 +288,9 @@ public class HotelViewController {
             @RequestParam("isCreated") boolean isCreated,
             Model model) {
 
-        BookingSummaryDTO bookingSummaryDTO;
+        BookingDetailsDTO bookingDetailsDTO;
         try {
-            bookingSummaryDTO = bookingSummaryService.createSummary(
+            bookingDetailsDTO = bookingSummaryService.createSummary(
                     bookingForm.getGuestId(),
                     bookingForm.getRoomCategoryIds(),
                     bookingForm.getAmountsOfRoomCategories(),
@@ -305,7 +305,7 @@ public class HotelViewController {
             return redirectError(e.getMessage());
         }
 
-        model.addAttribute("bookingSummary", bookingSummaryDTO);
+        model.addAttribute("bookingSummary", bookingDetailsDTO);
         model.addAttribute("bookingForm", bookingForm);
         model.addAttribute("isCreated", isCreated);
 
@@ -342,39 +342,27 @@ public class HotelViewController {
             @RequestParam("isCreated") boolean isCreated,
             Model model
     ) {
-        BookingSummaryDTO bookingSummaryDTO;
+        BookingDetailsDTO bookingDetailsDTO;
         try {
-            bookingSummaryDTO = bookingSummaryService.summaryByBookingId(bookingId);
+            bookingDetailsDTO = bookingSummaryService.detailsByBookingId(bookingId);
         } catch (BookingNotFoundException | GuestNotFoundException e) {
             return redirectError(e.getMessage());
         }
 
-        List<String> roomCategoryIds = new ArrayList<>();
-
-
-        bookingSummaryDTO.categoriesWithAmounts().keySet().forEach(
-                key -> roomCategoryIds.add(key.id())
-        );
-
-        List<Integer> amounts = new ArrayList<>(bookingSummaryDTO.categoriesWithAmounts().values());
-
-        List<String> serviceIds = new ArrayList<>();
-        bookingSummaryDTO.services().forEach(
-                serviceDTO -> serviceIds.add(serviceDTO.id())
-        );
+        List<Integer> amounts = new ArrayList<>(bookingDetailsDTO.categoriesWithAmounts().values());
 
         BookingForm bookingForm = new BookingForm(
-                bookingSummaryDTO.guest().id(),
-                roomCategoryIds,
-                serviceIds,
-                bookingSummaryDTO.checkInDate(),
-                bookingSummaryDTO.checkOutDate(),
+                bookingDetailsDTO.guestId(),
+                bookingDetailsDTO.categoryIds(),
+                bookingDetailsDTO.serviceIds(),
+                bookingDetailsDTO.checkInDate(),
+                bookingDetailsDTO.checkOutDate(),
                 amounts,
-                bookingSummaryDTO.amountOfAdults(),
-                bookingSummaryDTO.amountOfChildren()
+                bookingDetailsDTO.amountOfAdults(),
+                bookingDetailsDTO.amountOfChildren()
         );
 
-        model.addAttribute("bookingSummary", bookingSummaryDTO);
+        model.addAttribute("bookingSummary", bookingDetailsDTO);
         model.addAttribute("bookingForm", bookingForm);
         model.addAttribute("isCreated", isCreated);
 

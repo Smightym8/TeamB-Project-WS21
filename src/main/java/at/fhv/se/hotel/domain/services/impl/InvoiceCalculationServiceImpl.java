@@ -34,6 +34,7 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
 
     @Override
     public Invoice calculateInvoice(Stay stay) {
+        // TODO: Eigene Repo Methode, die Anzahl an Rechnungen zurückgibt
         int todaysInvoicesAmount = invoiceRepository.invoicesByDate(LocalDate.now()).size() + 1;
         List<RoomCategoryPrice> roomCategoryPriceList = new ArrayList<>();
 

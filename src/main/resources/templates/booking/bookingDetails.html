@@ -68,7 +68,7 @@
         </tbody>
     </table>
 
-    <a class="btn btn-primary" th:href="@{'/check-in?bookingId=' + ${bookingDetails.id} + '&isCheckedIn=false'}">
+    <a class="btn btn-primary" th:href="@{'/check-in?bookingId=' + ${bookingDetails.bookingId} + '&isCheckedIn=false'}">
         Assign Rooms
     </a>
     <a href="/" type="button" class="btn btn-primary">Back</a>

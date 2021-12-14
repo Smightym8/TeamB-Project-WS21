@@ -2,15 +2,19 @@ package at.fhv.se.hotel.application.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 public class BookingDetailsDTO {
-    private String id;
+    private String bookingId;
+    private String guestId;
     private String guestFirstName;
     private String guestLastName;
     private Map<String, Integer> categoriesWithAmounts;
+    private List<String> categoryIds;
     private Map<String, BigDecimal> services;
+    private List<String> serviceIds;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
     private int amountOfAdults;
@@ -21,8 +25,12 @@ public class BookingDetailsDTO {
         return new Builder();
     }
 
-    public String id() {
-        return this.id;
+    public String bookingId() {
+        return this.bookingId;
+    }
+
+    public String guestId() {
+        return guestId;
     }
 
     public String guestFirstName() {
@@ -37,8 +45,16 @@ public class BookingDetailsDTO {
         return this.categoriesWithAmounts;
     }
 
+    public List<String> categoryIds() {
+        return categoryIds;
+    }
+
     public Map<String, BigDecimal> services() {
         return this.services;
+    }
+
+    public List<String> serviceIds() {
+        return serviceIds;
     }
 
     public LocalDate checkInDate() {
@@ -66,8 +82,13 @@ public class BookingDetailsDTO {
             this.instance = new BookingDetailsDTO();
         }
 
-        public Builder withId(String id) {
-            this.instance.id = id;
+        public Builder withBookingId(String bookingId) {
+            this.instance.bookingId = bookingId;
+            return this;
+        }
+
+        public Builder withGuestId(String guestId) {
+            this.instance.guestId = guestId;
             return this;
         }
 
@@ -86,8 +107,18 @@ public class BookingDetailsDTO {
             return this;
         }
 
+        public Builder withCategoryIds(List<String> categoryIds) {
+            this.instance.categoryIds = categoryIds;
+            return this;
+        }
+
         public Builder withServices(Map<String, BigDecimal> services) {
             this.instance.services = services;
+            return this;
+        }
+
+        public Builder withServiceIds(List<String> serviceIds) {
+            this.instance.serviceIds = serviceIds;
             return this;
         }
 
@@ -117,7 +148,6 @@ public class BookingDetailsDTO {
         }
 
         public BookingDetailsDTO build() {
-            Objects.requireNonNull(this.instance.id, "id must be set in BookingDetailsDTO");
             Objects.requireNonNull(this.instance.guestFirstName, "guestFirstName must be set in BookingDetailsDTO");
             Objects.requireNonNull(this.instance.guestLastName, "guestLastName must be set in BookingDetailsDTO");
             Objects.requireNonNull(this.instance.categoriesWithAmounts,
