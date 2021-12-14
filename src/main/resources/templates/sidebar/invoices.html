@@ -16,6 +16,7 @@
                 <th class="col-1">Amount</th>
                 <th class="col-1">Payment Status</th>
                 <th class="col-1"></th>
+                <th class="col-1"></th>
             </tr>
             </thead>
             <tbody>
@@ -29,6 +30,9 @@
                 <td th:unless="${invoice.isPaid}">Pending</td>
                 <td>
                     <a class="btn btn-secondary btn-sm" href="#">View</a>
+                </td>
+                <td>
+                    <a th:href="@{/download-invoice/{invoiceNo}(invoiceNo=${invoice.invoiceNumber})}" class="btn btn-sm btn-white m-b-10 p-l-5"><i class="fa fa-file t-plus-1 text-danger fa-fw fa-lg"></i> Export as PDF</a>
                 </td>
             </tr>
             </tbody>
