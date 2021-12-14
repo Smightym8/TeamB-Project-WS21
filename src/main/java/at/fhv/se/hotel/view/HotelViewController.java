@@ -3,7 +3,6 @@ package at.fhv.se.hotel.view;
 import at.fhv.se.hotel.application.api.*;
 import at.fhv.se.hotel.application.api.exception.*;
 import at.fhv.se.hotel.application.dto.*;
-import at.fhv.se.hotel.application.impl.InvoiceListingServiceImpl;
 import at.fhv.se.hotel.view.forms.BookingForm;
 import at.fhv.se.hotel.view.forms.GuestForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +16,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -143,7 +138,7 @@ public class HotelViewController {
 /*----- Home -----*/
     @GetMapping(HOME_URL)
     public String home(Model model) {
-        final List<BookingDTO> bookings = bookingListingService.allBookings();
+        final List<BookingListingDTO> bookings = bookingListingService.allBookings();
         final List<StayListingDTO> stays = stayListingService.allStays();
 
         model.addAttribute("bookings", bookings);
@@ -179,7 +174,7 @@ public class HotelViewController {
 /*----- Bookings -----*/
     @GetMapping(BOOKINGS_URL)
     public String bookings(Model model) {
-        final List<BookingDTO> bookings = bookingListingService.allBookings();
+        final List<BookingListingDTO> bookings = bookingListingService.allBookings();
 
         model.addAttribute("bookings", bookings);
 
@@ -190,7 +185,7 @@ public class HotelViewController {
     @GetMapping(STAYS_URL)
     public String stays(Model model) {
         // Hibernate shows error if there are no bookings?
-        final List<BookingDTO> bookings = bookingListingService.allBookings();
+        final List<BookingListingDTO> bookings = bookingListingService.allBookings();
         final List<StayListingDTO> stays = stayListingService.allStays();
 
         model.addAttribute("bookings", bookings);
@@ -206,7 +201,7 @@ public class HotelViewController {
         //Error! HHH000143: Bytecode enhancement failed because no public,
         //protected or package-private default constructor was found for entity:
         //at.fhv.se.hotel.domain.model.booking.Booking. Private constructors don't work with runtime proxies!
-        final List<BookingDTO> bookings = bookingListingService.allBookings();
+        final List<BookingListingDTO> bookings = bookingListingService.allBookings();
         final List<InvoiceListingDTO> invoices = invoiceListingService.allInvoices();
 
         model.addAttribute("invoices", invoices);
