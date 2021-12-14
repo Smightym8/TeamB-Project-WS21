@@ -24,6 +24,7 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
 
     private static final BigDecimal localTaxInEuro = new BigDecimal("0.76");
     private static final BigDecimal valueAddedTaxPercentage = new BigDecimal("0.1");
+    // TODO: vat 10 anstatt 0.1, Zahlen generell auf 2 Nachkommastellen anpassen
 
     @Autowired
     RoomCategoryPriceService roomCategoryPriceService;

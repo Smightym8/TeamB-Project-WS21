@@ -2,6 +2,7 @@ package at.fhv.se.hotel.domain.model.roomcategory;
 
 import at.fhv.se.hotel.domain.Generated;
 
+import javax.xml.bind.annotation.XmlElement;
 import java.math.BigDecimal;
 import java.util.Objects;
 
