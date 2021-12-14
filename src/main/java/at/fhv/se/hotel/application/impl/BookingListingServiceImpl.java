@@ -1,7 +1,7 @@
 package at.fhv.se.hotel.application.impl;
 
 import at.fhv.se.hotel.application.api.BookingListingService;
-import at.fhv.se.hotel.application.dto.BookingDTO;
+import at.fhv.se.hotel.application.dto.BookingListingDTO;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.repository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +27,19 @@ public class BookingListingServiceImpl implements BookingListingService {
      */
     @Transactional(readOnly=true)
     @Override
-    public List<BookingDTO> allBookings() {
+    public List<BookingListingDTO> allBookings() {
         List<Booking> bookings = bookingRepository.findAllBookings();
-        List<BookingDTO> dtos = new ArrayList<>();
+        List<BookingListingDTO> dtos = new ArrayList<>();
 
         for (Booking b : bookings) {
-            BookingDTO dto = BookingDTO.builder()
+            BookingListingDTO dto = BookingListingDTO.builder()
                     .withId(b.getBookingId().id())
-                    .withGuestName(b.getGuest().getName().firstName() + " " + b.getGuest().getName().lastName())
+                    .withGuestFirstName(b.getGuest().getName().firstName())
+                    .withGuestLastName(b.getGuest().getName().lastName())
+                    .withStreetName(b.getGuest().getAddress().streetName())
+                    .withStreetNumber(b.getGuest().getAddress().streetNumber())
+                    .withZipCode(b.getGuest().getAddress().zipCode())
+                    .withCity(b.getGuest().getAddress().city())
                     .withCheckInDate(b.getCheckInDate())
                     .withStatus(b.isActive())
                     .build();

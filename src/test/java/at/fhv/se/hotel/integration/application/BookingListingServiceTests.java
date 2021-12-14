@@ -1,7 +1,7 @@
 package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.BookingListingService;
-import at.fhv.se.hotel.application.dto.BookingDTO;
+import at.fhv.se.hotel.application.dto.BookingListingDTO;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
 import at.fhv.se.hotel.domain.model.guest.*;
@@ -151,7 +151,7 @@ public class BookingListingServiceTests {
         Mockito.when(bookingRepository.findAllBookings()).thenReturn(bookingsExpected);
 
         // when
-        List<BookingDTO> bookingsActual = bookingListingService.allBookings();
+        List<BookingListingDTO> bookingsActual = bookingListingService.allBookings();
 
         // then
         assertEquals(bookingsExpected.size(), bookingsActual.size());

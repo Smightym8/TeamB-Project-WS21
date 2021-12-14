@@ -22,7 +22,7 @@
   <br>
 
   <h5>Guest information:</h5>
-  <p th:text="${bookingSummary.guest.firstName} + ' '  + ${bookingSummary.guest.lastName}"></p>
+  <p th:text="${bookingSummary.guestFirstName} + ' '  + ${bookingSummary.guestLastName}"></p>
 
   <h5>Additional Information:</h5>
   <div class="mb-3">
@@ -58,9 +58,10 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="category : ${bookingSummary.categoriesWithAmounts}" th:if="${category.value != 0}">
-      <td th:text="${category.key.name}"></td>
-      <td th:text="${category.value}"></td>
+    <tr th:each="category : ${bookingSummary.categoriesWithAmounts}" th:if="${category.value != 0}"
+        th:with="name = ${category.key}, amount = ${category.value}">
+      <td th:text="${name}"></td>
+      <td th:text="${amount}"></td>
     </tr>
     </tbody>
   </table>
@@ -74,9 +75,10 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="service : ${bookingSummary.services}">
-      <td th:text="${service.name}"></td>
-      <td th:text="${service.price} + '€'"></td>
+    <tr th:each="service : ${bookingSummary.services}"
+        th:with="name = ${service.key}, price = ${service.value}">
+      <td th:text="${name}"></td>
+      <td th:text="${price} + '€'"></td>
     </tr>
     </tbody>
   </table>

@@ -1,6 +1,6 @@
 package at.fhv.se.hotel.application.api;
 
-import at.fhv.se.hotel.application.dto.BookingDTO;
+import at.fhv.se.hotel.application.dto.BookingListingDTO;
 import at.fhv.se.hotel.application.impl.BookingListingServiceImpl;
 
 import java.util.List;
@@ -13,5 +13,5 @@ public interface BookingListingService {
     /**
      * See implementation {@link BookingListingServiceImpl#allBookings()}
      */
-    List<BookingDTO> allBookings();
+    List<BookingListingDTO> allBookings();
 }
