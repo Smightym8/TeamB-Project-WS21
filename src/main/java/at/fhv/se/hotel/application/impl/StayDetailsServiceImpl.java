@@ -1,6 +1,7 @@
 package at.fhv.se.hotel.application.impl;
 
 import at.fhv.se.hotel.application.api.StayDetailsService;
+import at.fhv.se.hotel.application.api.exception.StayNotFoundException;
 import at.fhv.se.hotel.application.dto.StayDetailsDTO;
 import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.model.stay.StayId;
@@ -21,8 +22,10 @@ public class StayDetailsServiceImpl implements StayDetailsService {
     StayRepository stayRepository;
 
     @Override
-    public StayDetailsDTO detailsById(String stayId) {
-        Stay stay = stayRepository.stayById(new StayId(stayId)).get();
+    public StayDetailsDTO detailsById(String stayId) throws StayNotFoundException {
+        Stay stay = stayRepository.stayById(new StayId(stayId)).orElseThrow(
+                () -> new StayNotFoundException("Stay with id " + stayId + " not found")
+        );
 
         List<String> rooms = new ArrayList<>();
         stay.getRooms().forEach(room -> rooms.add(room.getName()));

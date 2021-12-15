@@ -1,16 +1,20 @@
 package at.fhv.se.hotel.application.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-// TODO: Remove nestings
 public class BookingDetailsDTO {
-    private String id;
-    private GuestDTO guest;
-    private Map<RoomCategoryDTO, Integer> categoriesWithAmounts;
-    private List<ServiceDTO> services;
+    private String bookingId;
+    private String guestId;
+    private String guestFirstName;
+    private String guestLastName;
+    private Map<String, Integer> categoriesWithAmounts;
+    private List<String> categoryIds;
+    private Map<String, BigDecimal> services;
+    private List<String> serviceIds;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
     private int amountOfAdults;
@@ -21,20 +25,36 @@ public class BookingDetailsDTO {
         return new Builder();
     }
 
-    public String id() {
-        return this.id;
+    public String bookingId() {
+        return this.bookingId;
     }
 
-    public GuestDTO guest() {
-        return this.guest;
+    public String guestId() {
+        return guestId;
     }
 
-    public Map<RoomCategoryDTO, Integer> categoriesWithAmounts() {
+    public String guestFirstName() {
+        return guestFirstName;
+    }
+
+    public String guestLastName() {
+        return guestLastName;
+    }
+
+    public Map<String, Integer> categoriesWithAmounts() {
         return this.categoriesWithAmounts;
     }
 
-    public List<ServiceDTO> services() {
+    public List<String> categoryIds() {
+        return categoryIds;
+    }
+
+    public Map<String, BigDecimal> services() {
         return this.services;
+    }
+
+    public List<String> serviceIds() {
+        return serviceIds;
     }
 
     public LocalDate checkInDate() {
@@ -62,23 +82,43 @@ public class BookingDetailsDTO {
             this.instance = new BookingDetailsDTO();
         }
 
-        public Builder withId(String id) {
-            this.instance.id = id;
+        public Builder withBookingId(String bookingId) {
+            this.instance.bookingId = bookingId;
             return this;
         }
 
-        public Builder withGuest(GuestDTO guest) {
-            this.instance.guest = guest;
+        public Builder withGuestId(String guestId) {
+            this.instance.guestId = guestId;
             return this;
         }
 
-        public Builder withRoomCategoriesAndAmounts(Map<RoomCategoryDTO, Integer> categoriesWithAmounts) {
+        public Builder withGuestFirstName(String firstName) {
+            this.instance.guestFirstName = firstName;
+            return this;
+        }
+
+        public Builder withGuestLastName(String lastName) {
+            this.instance.guestLastName = lastName;
+            return this;
+        }
+
+        public Builder withRoomCategoriesAndAmounts(Map<String, Integer> categoriesWithAmounts) {
             this.instance.categoriesWithAmounts = categoriesWithAmounts;
             return this;
         }
 
-        public Builder withServices(List<ServiceDTO> services) {
+        public Builder withCategoryIds(List<String> categoryIds) {
+            this.instance.categoryIds = categoryIds;
+            return this;
+        }
+
+        public Builder withServices(Map<String, BigDecimal> services) {
             this.instance.services = services;
+            return this;
+        }
+
+        public Builder withServiceIds(List<String> serviceIds) {
+            this.instance.serviceIds = serviceIds;
             return this;
         }
 
@@ -108,8 +148,8 @@ public class BookingDetailsDTO {
         }
 
         public BookingDetailsDTO build() {
-            Objects.requireNonNull(this.instance.id, "id must be set in BookingDetailsDTO");
-            Objects.requireNonNull(this.instance.guest, "guest must be set in BookingDetailsDTO");
+            Objects.requireNonNull(this.instance.guestFirstName, "guestFirstName must be set in BookingDetailsDTO");
+            Objects.requireNonNull(this.instance.guestLastName, "guestLastName must be set in BookingDetailsDTO");
             Objects.requireNonNull(this.instance.categoriesWithAmounts,
                     "categoriesWithAmounts must be set in BookingDetailsDTO");
             Objects.requireNonNull(this.instance.checkInDate, "checkInDate must be set in BookingDetailsDTO");

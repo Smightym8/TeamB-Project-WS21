@@ -1,7 +1,7 @@
 package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.BookingListingService;
-import at.fhv.se.hotel.application.dto.BookingDTO;
+import at.fhv.se.hotel.application.dto.BookingListingDTO;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
 import at.fhv.se.hotel.domain.model.guest.*;
@@ -19,6 +19,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -28,6 +29,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@ActiveProfiles("test")
 @SpringBootTest
 public class BookingListingServiceTests {
     @Autowired
@@ -149,7 +151,7 @@ public class BookingListingServiceTests {
         Mockito.when(bookingRepository.findAllBookings()).thenReturn(bookingsExpected);
 
         // when
-        List<BookingDTO> bookingsActual = bookingListingService.allBookings();
+        List<BookingListingDTO> bookingsActual = bookingListingService.allBookings();
 
         // then
         assertEquals(bookingsExpected.size(), bookingsActual.size());
