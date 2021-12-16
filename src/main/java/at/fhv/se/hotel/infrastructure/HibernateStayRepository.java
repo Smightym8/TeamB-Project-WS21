@@ -20,7 +20,7 @@ public class HibernateStayRepository implements StayRepository {
     @Override
     public List<Stay> findAllStays() {
         TypedQuery<Stay> query = this.em.createQuery("SELECT s FROM Stay s", Stay.class);
-        return query.getResultList();
+        return query.getResultList(); // to knallts
     }
 
     @Override

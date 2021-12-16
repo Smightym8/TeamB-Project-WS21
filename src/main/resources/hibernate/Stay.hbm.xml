@@ -21,9 +21,9 @@
             <many-to-many column="room_id" class="at.fhv.se.hotel.domain.model.room.Room" />
         </bag>
 
-        <!-- One to one with Many to one mapping to the booking -->
-        <many-to-one name="booking" column="booking_id" class="at.fhv.se.hotel.domain.model.booking.Booking"
-                     not-null="true" unique="true"/>
+        <!-- One to one mapping to the booking -->
+        <one-to-one name="booking" foreign-key="booking_id" class="at.fhv.se.hotel.domain.model.booking.Booking" cascade="save-update">
+        </one-to-one>
 
         <!-- Primitive datatypes of class stay -->
         <property name="isActive" column="is_active" type="java.lang.Boolean" />
