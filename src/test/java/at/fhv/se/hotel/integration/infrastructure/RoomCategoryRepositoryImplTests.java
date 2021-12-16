@@ -7,6 +7,7 @@ import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryId;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryName;
 import at.fhv.se.hotel.domain.repository.GuestRepository;
 import at.fhv.se.hotel.domain.repository.RoomCategoryRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,6 +31,12 @@ public class RoomCategoryRepositoryImplTests {
 
     @Autowired
     private EntityManager em;
+
+    @AfterEach
+    void cleanDatabase() {
+        // TODO: Clear Database
+        System.out.println("Clear database");
+    }
 
     @Test
     void given_roomcategory_when_addcategorytorepository_then_returnequalscategory() {

@@ -17,6 +17,7 @@ import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.repository.StayRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,12 @@ public class StayListingServiceTests {
 
     @MockBean
     private StayRepository stayRepository;
+
+    @AfterEach
+    void cleanDatabase() {
+        // TODO: Clear Database
+        System.out.println("Clear database");
+    }
 
     @Test
     void given_3staysinrepository_when_fetchingallstays_then3matchingstayid(){

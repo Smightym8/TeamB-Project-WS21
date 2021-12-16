@@ -7,6 +7,7 @@ import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.repository.ServiceRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -28,6 +29,12 @@ public class ServiceListingServiceTests {
 
     @MockBean
     private ServiceRepository serviceRepository;
+
+    @AfterEach
+    void cleanDatabase() {
+        // TODO: Clear Database
+        System.out.println("Clear database");
+    }
 
     @Test
     void given_2servicesinrepository_when_fetchingallservices_then_2matchingservices(){

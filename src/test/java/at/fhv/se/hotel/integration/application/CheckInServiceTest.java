@@ -19,15 +19,17 @@ import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.model.stay.StayId;
-import at.fhv.se.hotel.domain.repository.BookingRepository;
-import at.fhv.se.hotel.domain.repository.RoomRepository;
-import at.fhv.se.hotel.domain.repository.StayRepository;
+import at.fhv.se.hotel.domain.repository.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -38,25 +40,43 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ActiveProfiles("test")
 @SpringBootTest
+@Transactional
 public class CheckInServiceTest {
     @Autowired
     private CheckInService checkInService;
 
-    @MockBean
-    private BookingRepository bookingRepository;
+    @Autowired
+    GuestRepository guestRepository;
 
-    @MockBean
-    private RoomRepository roomRepository;
+    @Autowired
+    ServiceRepository serviceRepository;
 
-    @MockBean
-    private StayRepository stayRepository;
+    @Autowired
+    RoomCategoryRepository roomCategoryRepository;
+
+    @Autowired
+    BookingRepository bookingRepository;
+
+    @Autowired
+    RoomRepository roomRepository;
+
+    @Autowired
+    StayRepository stayRepository;
+
+    @Autowired
+    EntityManager em;
+
+    @AfterEach
+    void cleanDatabase() {
+        // TODO: Clear Database
+        System.out.println("Clear database");
+    }
 
     @Test
     void given_booking_when_assignrooms_then_returnexpectedrooms(){
         //given
-        BookingId bookingIdExpected = new BookingId("1000");
-
         Guest guestExpected = Guest.create(new GuestId("1"),
                 new FullName("Michael", "Spiegel"),
                 Gender.MALE,
@@ -88,17 +108,11 @@ public class CheckInServiceTest {
                 "Nothing"
         );
 
-        RoomCategory singleRoom = RoomCategory.create(
-                new RoomCategoryId("1"),
-                new RoomCategoryName("Single Room"),
-                new Description("This is a single room")
-        );
-
-        List<String> roomNamesExpected = Arrays.asList("101", "102", "103");
-
         RoomCategory roomCategoryExpected = RoomCategory.create(new RoomCategoryId("1"),
                 new RoomCategoryName("Single Room"),
                 new Description("This is a single room"));
+
+        List<String> roomNamesExpected = Arrays.asList("101", "102", "103");
 
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
@@ -106,24 +120,26 @@ public class CheckInServiceTest {
                 .map(name -> Room.create(name, roomStatusExpected, roomCategoryExpected))
                 .collect(Collectors.toList());
 
-        bookingExpected.addRoomCategory(singleRoom, 2);
-        BookingWithRoomCategory brc = BookingWithRoomCategory.create(new BookingWithRoomCategoryId(bookingExpected, singleRoom),3);
+        bookingExpected.addRoomCategory(roomCategoryExpected, 3);
 
-        Mockito.doNothing().when(bookingRepository).add(bookingExpected);
-        Mockito.when(bookingRepository.bookingById(bookingIdExpected)).thenReturn(Optional.of(bookingExpected));
-        Mockito.when(roomRepository.roomsByCategoryAndStatus(brc.getRoomCategory().getRoomCategoryId(),RoomStatus.FREE)).thenReturn(roomsExpected);
-
-        int amountRoomsActualExpected = 2;
-        int amountRoomsExpectedExpected = 1;
+        guestRepository.add(guestExpected);
+        servicesExpected.forEach(service -> serviceRepository.add(service));
+        roomCategoryRepository.add(roomCategoryExpected);
+        roomsExpected.forEach(room -> roomRepository.add(room));
+        bookingRepository.add(bookingExpected);
+        em.flush();
 
         //when
         List<RoomDTO> roomsActual = checkInService.assignRooms(bookingExpected.getBookingId().id());
 
         //then
-        assertEquals(amountRoomsActualExpected, roomsActual.size());
-        assertEquals(amountRoomsExpectedExpected, roomsExpected.size());
-        assertEquals(roomsExpected.get(0).getRoomCategory().getRoomCategoryName().name(), roomsActual.get(0).categoryName());
+        assertEquals(roomsExpected.size(), roomsActual.size());
 
+        int i = 0;
+        for(RoomDTO roomActual : roomsActual) {
+            assertEquals(roomsExpected.get(i).getRoomCategory().getRoomCategoryName().name(), roomActual.categoryName());
+            i++;
+        }
     }
 
     @Test
@@ -146,22 +162,31 @@ public class CheckInServiceTest {
                 "ali.cinar@students.fhv.at",
                 Collections.emptyList()
         );
-        Service tvServiceExpected = Service.create(
-                new ServiceId("1"),
-                new ServiceName("TV"),
-                new Price(
-                        new BigDecimal("100")
-                )
-        );
-        Service breakfastServiceExpected = Service.create(
-                new ServiceId("2"),
-                new ServiceName("Breakfast"),
-                new Price(
-                        new BigDecimal("100")
+
+        List<Service> servicesExpected = List.of(
+                Service.create(
+                        new ServiceId("1"),
+                        new ServiceName("TV"),
+                        new Price(
+                                new BigDecimal("100")
+                        )
+                ),
+                Service.create(
+                        new ServiceId("2"),
+                        new ServiceName("Breakfast"),
+                        new Price(
+                                new BigDecimal("100")
+                        )
                 )
         );
 
-        List<Service> servicesExpected = List.of(tvServiceExpected, breakfastServiceExpected);
+        RoomCategory roomCategoryExpected = RoomCategory.create(new RoomCategoryId("1"),
+                new RoomCategoryName("Single Room"),
+                new Description("This is a single room")
+        );
+
+        int roomCategoryAmountExpected = 3;
+
         int amountOfAdultsExpected = 2;
         int amountOfChildrenExpected = 0;
         String additionalInformationExpected = "Vegan";
@@ -177,21 +202,9 @@ public class CheckInServiceTest {
                 additionalInformationExpected
         );
 
-        RoomCategory singleRoom = RoomCategory.create(
-                new RoomCategoryId("1"),
-                new RoomCategoryName("Single Room"),
-                new Description("This is a single room")
-        );
-
-        int roomCategoryAmountExpected = 3;
-
-        bookingExpected.addRoomCategory(singleRoom, roomCategoryAmountExpected);
+        bookingExpected.addRoomCategory(roomCategoryExpected, roomCategoryAmountExpected);
 
         List<String> roomNamesExpected = Arrays.asList("101", "102", "103");
-
-        RoomCategory roomCategoryExpected = RoomCategory.create(new RoomCategoryId("1"),
-                new RoomCategoryName("Single Room"),
-                new Description("This is a single room"));
 
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
@@ -209,20 +222,21 @@ public class CheckInServiceTest {
         StayId idExpected = new StayId(bookingExpected.getBookingId().id());
         Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
 
-        Mockito.when(bookingRepository.bookingById(bookingIdExpected)).thenReturn(Optional.of(bookingExpected));
-        Mockito.when(roomRepository.roomByName(roomDTOsExpected.get(0).name())).thenReturn(Optional.of(roomsExpected.get(0)));
-        Mockito.when(roomRepository.roomByName(roomDTOsExpected.get(1).name())).thenReturn(Optional.of(roomsExpected.get(1)));
-        Mockito.when(roomRepository.roomByName(roomDTOsExpected.get(2).name())).thenReturn(Optional.of(roomsExpected.get(2)));
-        Mockito.doNothing().when(stayRepository).add(stayExpected);
-        Mockito.when(stayRepository.stayById(idExpected)).thenReturn(Optional.of(stayExpected));
+        guestRepository.add(guestExpected);
+        servicesExpected.forEach(service -> serviceRepository.add(service));
+        roomCategoryRepository.add(roomCategoryExpected);
+        bookingRepository.add(bookingExpected);
+        roomsExpected.forEach(room -> roomRepository.add(room));
 
         //when
-        this.checkInService.checkIn(bookingIdStrExpected, roomDTOsExpected);
-        Stay stayActual = this.stayRepository.stayById(idExpected).get();
+        checkInService.checkIn(bookingIdStrExpected, roomDTOsExpected);
+        Stay stayActual = stayRepository.stayById(idExpected).get();
 
         //then
         assertEquals(stayExpected.isActive(), stayActual.isActive());
+        assertEquals(stayExpected.getCheckInDate(), stayActual.getCheckInDate());
+        assertEquals(stayExpected.getCheckOutDate(), stayActual.getCheckOutDate());
+        assertEquals(bookingExpected, stayActual.getBooking());
         assertEquals(stayExpected.getBooking().isActive(), stayActual.getBooking().isActive());
-
     }
 }

@@ -14,13 +14,20 @@ import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.repository.BookingRepository;
+import at.fhv.se.hotel.domain.repository.GuestRepository;
+import at.fhv.se.hotel.domain.repository.RoomCategoryRepository;
+import at.fhv.se.hotel.domain.repository.ServiceRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
@@ -29,20 +36,37 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@ActiveProfiles("test")
 @SpringBootTest
+@Transactional
 public class BookingListingServiceTests {
     @Autowired
     BookingListingService bookingListingService;
 
-    @MockBean
+    @Autowired
+    GuestRepository guestRepository;
+
+    @Autowired
+    ServiceRepository serviceRepository;
+
+    @Autowired
+    RoomCategoryRepository roomCategoryRepository;
+
+    @Autowired
     BookingRepository bookingRepository;
 
-    @Test
-    void given_3bookingsinrepository_when_fetchinall_then_returnequalsbookings() {
-        // given
-        Mockito.when(bookingRepository.nextIdentity())
-                .thenReturn(new BookingId(UUID.randomUUID().toString().toUpperCase()));
+    @Autowired
+    private EntityManager em;
 
+    @AfterEach
+    void cleanDatabase() {
+        // TODO: Clear Database
+        System.out.println("Clear database");
+    }
+
+    @Test
+    void given_3bookingsinrepository_when_fetchingall_then_returnequalsbookings() {
+        // given
         Guest guestExpected1 = Guest.create(
                 new GuestId("1"),
                 new FullName("John", "Doe"),
@@ -147,10 +171,18 @@ public class BookingListingServiceTests {
                 bookingExpected3
         );
 
-        Mockito.when(bookingRepository.findAllBookings()).thenReturn(bookingsExpected);
+        guestRepository.add(guestExpected1);
+        guestRepository.add(guestExpected2);
+        guestRepository.add(guestExpected3);
+        serviceRepository.add(serviceExpected1);
+        serviceRepository.add(serviceExpected2);
+        roomCategoryRepository.add(categoryExpected1);
+        roomCategoryRepository.add(categoryExpected2);
+        bookingsExpected.forEach(booking -> bookingRepository.add(booking));
 
         // when
         List<BookingDTO> bookingsActual = bookingListingService.allBookings();
+        em.flush();
 
         // then
         assertEquals(bookingsExpected.size(), bookingsActual.size());

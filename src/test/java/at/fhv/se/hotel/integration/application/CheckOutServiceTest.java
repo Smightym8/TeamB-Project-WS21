@@ -17,6 +17,7 @@ import at.fhv.se.hotel.domain.model.stay.StayId;
 import at.fhv.se.hotel.domain.repository.InvoiceRepository;
 import at.fhv.se.hotel.domain.repository.StayRepository;
 import at.fhv.se.hotel.domain.services.api.RoomCategoryPriceService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,12 @@ public class CheckOutServiceTest {
 
     @MockBean
     InvoiceRepository invoiceRepository;
+
+    @AfterEach
+    void cleanDatabase() {
+        // TODO: Clear Database
+        System.out.println("Clear database");
+    }
 
     @Test
     void given_stay_when_createinvoice_then_returnexpectedinvoice() {

@@ -15,6 +15,7 @@ import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.repository.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -55,6 +56,12 @@ public class StayRepositoryImplTests {
 
     @Autowired
     private EntityManager em;
+
+    @AfterEach
+    void cleanDatabase() {
+        // TODO: Clear Database
+        System.out.println("Clear database");
+    }
 
     @Test
     void given_stay_when_addstayrepository_then_returnequalsstay() {

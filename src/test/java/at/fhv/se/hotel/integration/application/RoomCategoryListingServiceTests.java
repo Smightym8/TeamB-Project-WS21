@@ -7,6 +7,7 @@ import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryId;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryName;
 import at.fhv.se.hotel.domain.repository.RoomCategoryRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,12 @@ public class RoomCategoryListingServiceTests {
 
     @MockBean
     RoomCategoryRepository roomCategoryRepository;
+
+    @AfterEach
+    void cleanDatabase() {
+        // TODO: Clear Database
+        System.out.println("Clear database");
+    }
 
     @Test
     void given_categoryinrepository_when_fetchingbyid_then_returnequalscategory() {

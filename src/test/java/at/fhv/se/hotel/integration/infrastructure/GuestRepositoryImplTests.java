@@ -2,6 +2,7 @@ package at.fhv.se.hotel.integration.infrastructure;
 
 import at.fhv.se.hotel.domain.model.guest.*;
 import at.fhv.se.hotel.domain.repository.GuestRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,6 +26,12 @@ public class GuestRepositoryImplTests {
 
     @Autowired
     private EntityManager em;
+
+    @AfterEach
+    void cleanDatabase() {
+        // TODO: Clear Database
+        System.out.println("Clear database");
+    }
 
     @Test
     void given_guest_when_addguesttorepository_then_returnequalsguest() {

@@ -4,6 +4,7 @@ import at.fhv.se.hotel.application.api.GuestListingService;
 import at.fhv.se.hotel.application.dto.GuestDTO;
 import at.fhv.se.hotel.domain.model.guest.*;
 import at.fhv.se.hotel.domain.repository.GuestRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,12 @@ public class GuestListingServiceTests {
 
     @MockBean
     private GuestRepository guestRepository;
+
+    @AfterEach
+    void cleanDatabase() {
+        // TODO: Clear Database
+        System.out.println("Clear database");
+    }
 
     @Test
     void given_3guests_when_3guestsinrepository_then_expect3namesequals() {
