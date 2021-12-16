@@ -63,6 +63,7 @@ public class InvoiceListingServiceTests {
                         LocalDate.of(1999, 3, 20),
                         "+43 660 123 456 789",
                         "michael.spiegel@students.fhv.at",
+                        0,
                         Collections.emptyList()
                 ),
                 Guest.create(new GuestId("2"),
@@ -74,6 +75,7 @@ public class InvoiceListingServiceTests {
                         LocalDate.of(1997, 8, 27),
                         "+43 676 123 456 789",
                         "ali.cinar@students.fhv.at",
+                        0,
                         Collections.emptyList()
                 )
         );

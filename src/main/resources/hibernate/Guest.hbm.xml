@@ -14,6 +14,7 @@
         <property name="birthDate" column="birth_date" type="java.time.LocalDate" />
         <property name="phoneNumber" column="phone_number" type="java.lang.String" />
         <property name="mailAddress" column="mail_address" type="java.lang.String" />
+        <property name="discountInPercent" column="discount_in_percent" type="java.lang.Double" />
 
         <!-- Enum mapping -->
         <property name="gender">

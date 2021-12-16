@@ -54,6 +54,7 @@ public class BookingListingServiceTests {
                 LocalDate.of(1980, 5, 20),
                 "+43 660 123 456 789",
                 "john.doe@developer.tdd.at",
+                0,
                 Collections.emptyList()
         );
 
@@ -67,6 +68,7 @@ public class BookingListingServiceTests {
                 LocalDate.of(1999, 3, 20),
                 "+43 660 123 456 789",
                 "michael.spiegel@developer.tdd.at",
+                0,
                 Collections.emptyList()
         );
 
@@ -79,6 +81,7 @@ public class BookingListingServiceTests {
                 LocalDate.of(1997, 8, 27),
                 "+43 676 123 456 789",
                 "ali.cinar@developer.tdd.at",
+                0,
                 Collections.emptyList()
         );
 

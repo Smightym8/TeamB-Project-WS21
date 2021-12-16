@@ -40,6 +40,7 @@ public class GuestListingServiceTests {
                         LocalDate.of(1999, 3, 20),
                         "+43 660 123 456 789",
                         "michael.spiegel@students.fhv.at",
+                        0,
                         Collections.emptyList()
                 ),
                 Guest.create(guestRepository.nextIdentity(),
@@ -51,6 +52,7 @@ public class GuestListingServiceTests {
                         LocalDate.of(1997, 8, 27),
                         "+43 676 123 456 789",
                         "ali.cinar@students.fhv.at",
+                        0,
                         Collections.emptyList()
                 )
         );
@@ -82,6 +84,7 @@ public class GuestListingServiceTests {
                 LocalDate.of(1980, 5, 20),
                 "+43 660 123 456 789",
                 "john.doe@developer.tdd.at",
+                0,
                 Collections.emptyList()
         );
 

@@ -21,6 +21,8 @@ import java.util.List;
 
 @Controller
 public class HotelViewController {
+// TODO: change birthday to birth of date
+// TODO: change in html value to th:value, href to to:href
 
 /* ----- Sidebar ----- */
     private static final String HOME_URL = "/";
@@ -236,7 +238,8 @@ public class HotelViewController {
                 guestForm.getStreetNumber(),
                 guestForm.getZipCode(),
                 guestForm.getCity(),
-                guestForm.getCountry()
+                guestForm.getCountry(),
+                guestForm.getDiscountInPercent()
         );
 
         return "redirect:" + GUESTS_URL;

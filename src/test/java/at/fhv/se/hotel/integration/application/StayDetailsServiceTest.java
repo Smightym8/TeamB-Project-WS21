@@ -73,6 +73,7 @@ public class StayDetailsServiceTest {
                 LocalDate.of(1997, 8, 27),
                 "+43 676 123 456 789",
                 "ali.cinar@students.fhv.at",
+                0,
                 Collections.emptyList()
         );
         Booking bookingExpected = Booking.create(

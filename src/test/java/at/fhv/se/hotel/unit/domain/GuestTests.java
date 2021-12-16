@@ -40,6 +40,7 @@ public class GuestTests {
         LocalDate birthDate = LocalDate.of(1997, 8,27);
         String phoneNumber = "+43 676 123 456 789";
         String mailAddress = "ali.cinar@students.fhv.at";
+        int discountInPercent = 0;
         List<Booking> bookings = Collections.emptyList();
 
         // when
@@ -51,6 +52,7 @@ public class GuestTests {
                 birthDate,
                 phoneNumber,
                 mailAddress,
+                discountInPercent,
                 bookings
         );
 
@@ -71,7 +73,7 @@ public class GuestTests {
         assertEquals(phoneNumber, guest.getPhoneNumber());
         assertEquals(mailAddress, guest.getMailAddress());
         assertEquals(bookings.size(), guest.getBookings().size());
-
+        assertEquals(discountInPercent, guest.getDiscountInPercent());
     }
 
 }

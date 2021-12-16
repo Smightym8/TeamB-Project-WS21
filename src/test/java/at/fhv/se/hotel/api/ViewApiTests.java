@@ -18,7 +18,6 @@ import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -172,6 +171,7 @@ public class ViewApiTests {
         String zipCodeExpected = "6850";
         String cityExpected = "Dornbirn";
         String countryExpected = "Austria";
+        int discountInPercentExpected = 0;
 
         GuestForm guestForm = new GuestForm();
         guestForm.setFirstName(firstNameExpected);
@@ -185,6 +185,7 @@ public class ViewApiTests {
         guestForm.setZipCode(zipCodeExpected);
         guestForm.setCity(cityExpected);
         guestForm.setCountry(countryExpected);
+        guestForm.setDiscountInPercent(discountInPercentExpected);
 
         // when ... then
         this.mockMvc.perform(post("/createguest")
@@ -200,7 +201,8 @@ public class ViewApiTests {
                         "streetNumber", streetNumberExpected,
                         "zipCode", zipCodeExpected,
                         "city", cityExpected,
-                        "country", countryExpected
+                        "country", countryExpected,
+                        "discountInPercent", String.valueOf(discountInPercentExpected)
                 ))
                 .accept(org.springframework.http.MediaType.TEXT_PLAIN))
                 .andDo(print())
@@ -221,7 +223,8 @@ public class ViewApiTests {
                         streetNumberExpected,
                         zipCodeExpected,
                         cityExpected,
-                        countryExpected
+                        countryExpected,
+                        discountInPercentExpected
                 );
     }
 
