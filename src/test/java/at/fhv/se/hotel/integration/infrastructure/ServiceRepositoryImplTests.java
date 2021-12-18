@@ -5,8 +5,6 @@ import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.repository.ServiceRepository;
-import at.fhv.se.hotel.infrastructure.HibernateServiceRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -30,12 +27,6 @@ public class ServiceRepositoryImplTests {
 
     @Autowired
     private EntityManager em;
-
-    @AfterEach
-    void cleanDatabase() {
-        // TODO: Clear Database
-        System.out.println("Clear database");
-    }
 
     @Test
     void given_service_when_addservicerepository_then_returnequalsservice() {

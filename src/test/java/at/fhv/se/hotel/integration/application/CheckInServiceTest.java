@@ -1,6 +1,8 @@
 package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.CheckInService;
+import at.fhv.se.hotel.application.api.exception.BookingNotFoundException;
+import at.fhv.se.hotel.application.api.exception.RoomNotFoundException;
 import at.fhv.se.hotel.application.dto.RoomDTO;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
@@ -55,7 +57,7 @@ public class CheckInServiceTest {
     StayRepository stayRepository;
 
     @Test
-    void given_booking_when_assignrooms_then_returnexpectedrooms(){
+    void given_booking_when_assignrooms_then_returnexpectedrooms() throws BookingNotFoundException {
         //given
         Guest guestExpected = Guest.create(new GuestId("1"),
                 new FullName("Michael", "Spiegel"),
@@ -123,7 +125,7 @@ public class CheckInServiceTest {
     }
 
     @Test
-    void given_booking_and_rooms_when_checkinbooking_then_roomsOccupied_and_bookingDeactivated_and_stayCreated(){
+    void given_booking_and_rooms_when_checkinbooking_then_roomsOccupied_and_bookingDeactivated_and_stayCreated() throws BookingNotFoundException, RoomNotFoundException {
         //given
         LocalDate checkInDateExpected = LocalDate.of(2021,12,1);
         LocalDate checkOutDateExpected = LocalDate.of(2021,12,2);

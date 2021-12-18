@@ -1,7 +1,6 @@
 package at.fhv.se.hotel.unit.application;
 
 import at.fhv.se.hotel.application.dto.InvoiceDTO;
-import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -33,9 +32,10 @@ public class InvoiceDTOTest {
                 "Single Room", 1,
                 "Double Room", 2
         );
-        List<BigDecimal> roomCategoryPricesExpected = List.of(
-                new BigDecimal("400"),
-                new BigDecimal("500")
+
+        Map<String, BigDecimal> roomCategoryPricesExpected = Map.of(
+               "Single Room", new BigDecimal("400"),
+                "Double Room", new BigDecimal("500")
         );
         LocalDate checkInDateExpected = LocalDate.of(2021,11,20);
         LocalDate checkOutDateExpected = LocalDate.of(2021,11,23);

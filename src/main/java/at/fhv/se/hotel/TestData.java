@@ -10,23 +10,18 @@ import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.*;
 import at.fhv.se.hotel.domain.model.service.Price;
 import at.fhv.se.hotel.domain.model.service.Service;
-import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
+import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.repository.*;
-import at.fhv.se.hotel.infrastructure.HibernateServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -51,6 +46,9 @@ public class TestData implements ApplicationRunner {
 
     @Autowired
     RoomCategoryPriceRepository roomCategoryPriceRepository;
+
+    @Autowired
+    StayRepository stayRepository;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -222,5 +220,10 @@ public class TestData implements ApplicationRunner {
 
         Room room15 = Room.create("206", RoomStatus.FREE, doubleRoom);
         this.roomRepository.add(room15);
+
+        // Insert Fake Stays
+        Stay stay1 = Stay.create(booking1, List.of(room1));
+        booking1.deactivate();
+        this.stayRepository.add(stay1);
     }
 }

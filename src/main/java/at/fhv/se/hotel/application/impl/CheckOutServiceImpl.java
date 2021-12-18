@@ -1,6 +1,7 @@
 package at.fhv.se.hotel.application.impl;
 
 import at.fhv.se.hotel.application.api.CheckOutService;
+import at.fhv.se.hotel.application.api.exception.StayNotFoundException;
 import at.fhv.se.hotel.application.dto.InvoiceDTO;
 import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
@@ -9,6 +10,7 @@ import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.model.stay.StayId;
+import at.fhv.se.hotel.domain.repository.InvoicePDFRepository;
 import at.fhv.se.hotel.domain.repository.InvoiceRepository;
 import at.fhv.se.hotel.domain.repository.StayRepository;
 import at.fhv.se.hotel.domain.services.api.InvoiceCalculationService;
@@ -34,14 +36,20 @@ public class CheckOutServiceImpl implements CheckOutService {
     @Autowired
     InvoiceRepository invoiceRepository;
 
+    @Autowired
+    InvoicePDFRepository invoicePDFRepository;
+
     @Transactional(readOnly = true)
     @Override
-    public InvoiceDTO createInvoice(String stayId) {
-        Stay stay = stayRepository.stayById(new StayId(stayId)).get();
+    public InvoiceDTO createInvoice(String stayId) throws StayNotFoundException {
+        Stay stay = stayRepository.stayById(new StayId(stayId)).orElseThrow(
+                () -> new StayNotFoundException("Stay with id " + stayId + " not found")
+        );
+
         Invoice invoice = invoiceCalculationService.calculateInvoice(stay);
 
         Map<String, BigDecimal> services = new HashMap<>();
-        for(Service s : invoice.getStay().getServices()) {
+        for(Service s : invoice.getServices()) {
             services.put(s.getServiceName().name(), s.getServicePrice().price());
         }
 
@@ -50,9 +58,9 @@ public class CheckOutServiceImpl implements CheckOutService {
             roomCategories.put(brc.getRoomCategory().getRoomCategoryName().name(), brc.getAmount());
         }
 
-        List<BigDecimal> roomCategoryPrices = new ArrayList<>();
+        Map<String, BigDecimal> roomCategoryPrices = new HashMap<>();
         for(RoomCategoryPrice rcp : invoice.getRoomCategoryPriceList()) {
-            roomCategoryPrices.add(rcp.getPrice());
+            roomCategoryPrices.put(rcp.getRoomCategory().getRoomCategoryName().name(), rcp.getPrice());
         }
 
         InvoiceDTO invoiceDTO = InvoiceDTO.builder()
@@ -81,29 +89,26 @@ public class CheckOutServiceImpl implements CheckOutService {
                 .withTotalGrossAmount(invoice.getTotalGrossAmount())
                 .build();
 
+        invoicePDFRepository.saveAsPDF(invoiceDTO);
+
         return invoiceDTO;
     }
 
     @Transactional
     @Override
-    public boolean checkOut(String stayId) {
-        // TODO: Write test and implement method
-        if (stayRepository.stayById(new StayId(stayId)).isPresent()) {
+    public void checkOut(String stayId) throws StayNotFoundException {
+        Stay stay = stayRepository.stayById(new StayId(stayId)).orElseThrow(
+                () -> new StayNotFoundException("Check out failed! Stay with id " + stayId + " doesn't exist.")
+        );
 
-            Stay stay = stayRepository.stayById(new StayId(stayId)).get();
-            Invoice invoice = invoiceCalculationService.calculateInvoice(stay);
+        Invoice invoice = invoiceCalculationService.calculateInvoice(stay);
 
-            invoiceRepository.add(invoice);
+        invoiceRepository.add(invoice);
 
-            for(Room room : stay.getRooms()) {
-                room.clean();
-            }
-
-            stay.deactivate();
-
-            return true;
-        } else {
-            return false;
+        for(Room room : stay.getRooms()) {
+            room.clean();
         }
+
+        stay.deactivate();
     }
 }

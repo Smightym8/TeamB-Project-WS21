@@ -31,7 +31,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="booking : ${bookings}" th:if="${booking.isActive}">
-                    <td th:text="${booking.guestName}"></td>
+                    <td th:text="${booking.guestFirstName} + ' ' + ${booking.guestLastName}"></td>
                     <td>Hochschulstraße 1, 6850 Dornbirn</td>
                     <td th:text="${booking.checkInDate}"></td>
                     <td><a th:href="@{/bookingdetails/{id}(id=${booking.id})}" type="button" class="btn btn-primary btn-sm">View / Check-in</a></td>

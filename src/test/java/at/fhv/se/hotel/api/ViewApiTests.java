@@ -70,6 +70,10 @@ public class ViewApiTests {
     @MockBean
     CheckOutService checkOutService;
 
+    @MockBean
+    InvoiceListingService invoiceListingService;
+
+
     @Test
     public void when_get_rootUrl_then_statusOk_and_homeView_and_allBookings_and_allStays_called() throws Exception {
         // when ... then
@@ -350,72 +354,51 @@ public class ViewApiTests {
     public void when_post_createBookingSummaryUrl_then_statusOk_and_bookingSummaryView_and_createSummary_called()
             throws Exception {
         // given
-        String guestIdExpected = "1";
-        String amountOfAdultsExpected = "2";
-        String amountOfChildrenExpected = "0";
-        LocalDate checkInDateExpected = LocalDate.of(2021, 8, 1);
-        LocalDate checkOutDateExpected = LocalDate.of(2021, 8, 10);
-        String roomCategoryIdsExoected = "1,2";
-        List<String> roomCategoryIdsExoectedList = List.of("1", "2");
-        String amountsOfRoomCategoriesExpected = "2,0";
-        List<Integer> amountsOfRoomCategoriesExpectedList = List.of(2, 0);
-        String serviceIdsExpected = "1,2";
-        List<String> serviceIdsExpectedList = List.of("1", "2");
-        String additionalInformationExpected = "Vegan";
+        String guestId = "1";
+        String amountOfAdults = "2";
+        String amountOfChildren = "0";
+        LocalDate checkInDate = LocalDate.of(2021, 8, 1);
+        LocalDate checkOutDate = LocalDate.of(2021, 8, 10);
+        String roomCategoryIds = "1,2";
+        List<String> roomCategoryIdsList = List.of("1", "2");
+        String amountsOfRoomCategories = "2,0";
+        List<Integer> amountsOfRoomCategoriesList = List.of(2, 0);
+        String serviceIds = "1,2";
+        List<String> serviceIdsList = List.of("1", "2");
+        String additionalInformation = "Vegan";
 
-        GuestDTO guestExpected = GuestDTO.builder()
-                .withId(guestIdExpected)
-                .withFirstName("John")
-                .withLastName("Doe")
-                .withStreetName("Street")
-                .withStreetNumber("42")
-                .withCity("Dornbirn")
-                .withZipCode("6850")
-                .withCountry("Austria")
-                .build();
-
-        RoomCategoryDTO roomCategoryExpected = RoomCategoryDTO.builder()
-                .withId("1")
-                .withName("Single Room")
-                .build();
-
-        Map<RoomCategoryDTO, Integer> categoriesWithAmountsExpected = new HashMap<>();
-        categoriesWithAmountsExpected.put(roomCategoryExpected, 1);
-
-        List<ServiceDTO> servicesExpected = List.of(
-                ServiceDTO.builder()
-                        .withId("1")
-                        .withName("TV")
-                        .withPrice(new BigDecimal("100"))
-                        .build(),
-                ServiceDTO.builder()
-                        .withId("2")
-                        .withName("BreakFast")
-                        .withPrice(new BigDecimal("100"))
-                        .build()
+        Map<String, Integer> categoriesWithAmounts = Map.of(
+                "Single Room", 1
         );
 
-        BookingSummaryDTO bookingSummaryExpected = BookingSummaryDTO.builder()
-                .withGuest(guestExpected)
-                .withRoomCategoriesAndAmounts(categoriesWithAmountsExpected)
-                .withServices(servicesExpected)
-                .withCheckInDate(checkInDateExpected)
-                .withCheckOutDate(checkOutDateExpected)
-                .withAmountOfAdults(Integer.parseInt(amountOfAdultsExpected))
-                .withAmountOfChildren(Integer.parseInt(amountOfChildrenExpected))
-                .withAdditionalInformation(additionalInformationExpected)
+        Map<String, BigDecimal> services = Map.of(
+                "TV", new BigDecimal("100"),
+                "Breakfast", new BigDecimal("100")
+        );
+
+        BookingDetailsDTO bookingSummaryExpected = BookingDetailsDTO.builder()
+                .withGuestId(guestId)
+                .withGuestFirstName("John")
+                .withGuestLastName("Doe")
+                .withRoomCategoriesAndAmounts(categoriesWithAmounts)
+                .withServices(services)
+                .withCheckInDate(checkInDate)
+                .withCheckOutDate(checkOutDate)
+                .withAdditionalInformation(additionalInformation)
+                .withAmountOfAdults(Integer.parseInt(amountOfAdults))
+                .withAmountOfChildren(Integer.parseInt(amountOfChildren))
                 .build();
 
         Mockito.when(bookingSummaryService.createSummary(
-                guestIdExpected,
-                roomCategoryIdsExoectedList,
-                amountsOfRoomCategoriesExpectedList,
-                serviceIdsExpectedList,
-                checkInDateExpected,
-                checkOutDateExpected,
-                Integer.parseInt(amountOfAdultsExpected),
-                Integer.parseInt(amountOfChildrenExpected),
-                additionalInformationExpected
+                guestId,
+                roomCategoryIdsList,
+                amountsOfRoomCategoriesList,
+                serviceIdsList,
+                checkInDate,
+                checkOutDate,
+                Integer.parseInt(amountOfAdults),
+                Integer.parseInt(amountOfChildren),
+                additionalInformation
         )).thenReturn(bookingSummaryExpected);
 
         // when ... then
@@ -423,33 +406,28 @@ public class ViewApiTests {
                 .param("isCreated", "false")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .content(buildUrlEncodedFormEntity(
-                        "guestId", guestIdExpected,
-                        "amountOfAdults", amountOfAdultsExpected,
-                        "amountOfChildren", amountOfChildrenExpected,
-                        "checkInDate", String.valueOf(checkInDateExpected),
-                        "checkOutDate", String.valueOf(checkOutDateExpected),
-                        "roomCategoryIds", roomCategoryIdsExoected,
-                        "amountsOfRoomCategories", amountsOfRoomCategoriesExpected,
-                        "serviceIds", serviceIdsExpected,
-                        "additionalInformation", additionalInformationExpected
-                ))
-                .accept(org.springframework.http.MediaType.TEXT_PLAIN))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().contentType("text/html;charset=UTF-8"))
-                .andExpect(view().name("booking/createBookingSummary"));
+                        "guestId", guestId,
+                        "amountOfAdults", amountOfAdults,
+                        "amountOfChildren", amountOfChildren,
+                        "checkInDate", String.valueOf(checkInDate),
+                        "checkOutDate", String.valueOf(checkOutDate),
+                        "roomCategoryIds", roomCategoryIds,
+                        "amountsOfRoomCategories", amountsOfRoomCategories,
+                        "serviceIds", serviceIds,
+                        "additionalInformation", additionalInformation
+                )));
 
         // then
         Mockito.verify(bookingSummaryService, times(1)).createSummary(
-                guestIdExpected,
-                roomCategoryIdsExoectedList,
-                amountsOfRoomCategoriesExpectedList,
-                serviceIdsExpectedList,
-                checkInDateExpected,
-                checkOutDateExpected,
-                Integer.parseInt(amountOfAdultsExpected),
-                Integer.parseInt(amountOfChildrenExpected),
-                additionalInformationExpected
+                guestId,
+                roomCategoryIdsList,
+                amountsOfRoomCategoriesList,
+                serviceIdsList,
+                checkInDate,
+                checkOutDate,
+                Integer.parseInt(amountOfAdults),
+                Integer.parseInt(amountOfChildren),
+                additionalInformation
         );
     }
 
@@ -525,61 +503,39 @@ public class ViewApiTests {
     public void when_get_createBookingSuccessUrl_then_statusOk_and_bookingSummaryView_and_bookingSummaryService_called()
             throws Exception {
         // given
-        String bookingIdExpected = "1";
-        String amountOfAdultsExpected = "2";
-        String amountOfChildrenExpected = "0";
-        LocalDate checkInDateExpected = LocalDate.of(2021, 8, 1);
-        LocalDate checkOutDateExpected = LocalDate.of(2021, 8, 10);
-        String additionalInformationExpected = "Vegan";
+        String bookingId = "1";
+        LocalDate checkInDate = LocalDate.of(2021, 8, 1);
+        LocalDate checkOutDate = LocalDate.of(2021, 8, 10);
 
-        GuestDTO guestExpected = GuestDTO.builder()
-                .withId("1")
-                .withFirstName("John")
-                .withLastName("Doe")
-                .withStreetName("Street")
-                .withStreetNumber("42")
-                .withCity("Dornbirn")
-                .withZipCode("6850")
-                .withCountry("Austria")
-                .build();
-
-        RoomCategoryDTO roomCategoryExpected = RoomCategoryDTO.builder()
-                .withId("1")
-                .withName("Single Room")
-                .build();
-
-        Map<RoomCategoryDTO, Integer> categoriesWithAmountsExpected = new HashMap<>();
-        categoriesWithAmountsExpected.put(roomCategoryExpected, 1);
-
-        List<ServiceDTO> servicesExpected = List.of(
-                ServiceDTO.builder()
-                        .withId("1")
-                        .withName("TV")
-                        .withPrice(new BigDecimal("100"))
-                        .build(),
-                ServiceDTO.builder()
-                        .withId("2")
-                        .withName("BreakFast")
-                        .withPrice(new BigDecimal("100"))
-                        .build()
+        Map<String, Integer> categoriesWithAmounts = Map.of(
+                "Single Room", 1
         );
 
-        BookingSummaryDTO bookingSummaryExpected = BookingSummaryDTO.builder()
-                .withGuest(guestExpected)
-                .withRoomCategoriesAndAmounts(categoriesWithAmountsExpected)
-                .withServices(servicesExpected)
-                .withCheckInDate(checkInDateExpected)
-                .withCheckOutDate(checkOutDateExpected)
-                .withAmountOfAdults(Integer.parseInt(amountOfAdultsExpected))
-                .withAmountOfChildren(Integer.parseInt(amountOfChildrenExpected))
-                .withAdditionalInformation(additionalInformationExpected)
+        Map<String, BigDecimal> services = Map.of(
+                "TV", new BigDecimal("100"),
+                "Breakfast", new BigDecimal("100")
+        );
+
+        BookingDetailsDTO bookingDetailsDTO = BookingDetailsDTO.builder()
+                .withBookingId(bookingId)
+                .withGuestFirstName("John")
+                .withGuestLastName("Doe")
+                .withRoomCategoriesAndAmounts(categoriesWithAmounts)
+                .withCategoryIds(List.of("1"))
+                .withServices(services)
+                .withServiceIds(List.of("1", "2"))
+                .withCheckInDate(checkInDate)
+                .withCheckOutDate(checkOutDate)
+                .withAdditionalInformation("Nothing to say")
+                .withAmountOfAdults(2)
+                .withAmountOfChildren(2)
                 .build();
 
-        Mockito.when(bookingSummaryService.summaryByBookingId(bookingIdExpected)).thenReturn(bookingSummaryExpected);
+        Mockito.when(bookingSummaryService.detailsByBookingId(bookingId)).thenReturn(bookingDetailsDTO);
 
         // when ... then
         this.mockMvc.perform(get("/createbookingSuccess")
-                        .param("bookingId", bookingIdExpected)
+                        .param("bookingId", bookingId)
                         .param("isCreated", "true")
                         .accept(org.springframework.http.MediaType.TEXT_PLAIN))
                         .andDo(print())
@@ -588,67 +544,45 @@ public class ViewApiTests {
                         .andExpect(view().name("booking/createBookingSummary"));
 
         // then
-        Mockito.verify(bookingSummaryService, times(1)).summaryByBookingId(bookingIdExpected);
+        Mockito.verify(bookingSummaryService, times(1)).detailsByBookingId(bookingId);
     }
 
     @Test
     public void when_get_bookingDetailsUrl_then_statusOk_and_bookingDetailsView_and_bookingSummaryService_called()
             throws Exception {
         // given
-        String bookingIdExpected = "1";
-        int amountOfAdultsExpected = 2;
-        int amountOfChildrenExpected = 0;
-        LocalDate checkInDateExpected = LocalDate.of(2021, 8, 1);
-        LocalDate checkOutDateExpected = LocalDate.of(2021, 8, 10);
-        String additionalInformationExpected = "Vegan";
-        GuestDTO guestExpected = GuestDTO.builder()
-                .withId("1")
-                .withFirstName("John")
-                .withLastName("Doe")
-                .withStreetName("Street")
-                .withStreetNumber("42")
-                .withCity("Dornbirn")
-                .withZipCode("6850")
-                .withCountry("Austria")
-                .build();
+        String bookingId = "1";
+        LocalDate checkInDate = LocalDate.of(2021, 8, 1);
+        LocalDate checkOutDate = LocalDate.of(2021, 8, 10);
 
-        RoomCategoryDTO roomCategoryExpected = RoomCategoryDTO.builder()
-                .withId("1")
-                .withName("Single Room")
-                .build();
-
-        Map<RoomCategoryDTO, Integer> categoriesWithAmountsExpected = new HashMap<>();
-        categoriesWithAmountsExpected.put(roomCategoryExpected, 1);
-
-        List<ServiceDTO> servicesExpected = List.of(
-                ServiceDTO.builder()
-                        .withId("1")
-                        .withName("TV")
-                        .withPrice(new BigDecimal("100"))
-                        .build(),
-                ServiceDTO.builder()
-                        .withId("2")
-                        .withName("BreakFast")
-                        .withPrice(new BigDecimal("100"))
-                        .build()
+        Map<String, Integer> categoriesWithAmounts = Map.of(
+            "Single Room", 1
         );
 
-        BookingDetailsDTO bookingDetailsExpected = BookingDetailsDTO.builder()
-                .withId(bookingIdExpected)
-                .withGuest(guestExpected)
-                .withRoomCategoriesAndAmounts(categoriesWithAmountsExpected)
-                .withServices(servicesExpected)
-                .withCheckInDate(checkInDateExpected)
-                .withCheckOutDate(checkOutDateExpected)
-                .withAmountOfAdults(amountOfAdultsExpected)
-                .withAmountOfChildren(amountOfChildrenExpected)
-                .withAdditionalInformation(additionalInformationExpected)
+        Map<String, BigDecimal> services = Map.of(
+                "TV", new BigDecimal("100"),
+                "BreakFast", new BigDecimal("100")
+        );
+
+
+        // Create BookingDetailsDTO, to mock service which is used by the view controller method
+        BookingDetailsDTO bookingDetails = BookingDetailsDTO.builder()
+                .withBookingId(bookingId)
+                .withGuestFirstName("John")
+                .withGuestLastName("Doe")
+                .withRoomCategoriesAndAmounts(categoriesWithAmounts)
+                .withServices(services)
+                .withCheckInDate(checkInDate)
+                .withCheckOutDate(checkOutDate)
+                .withAmountOfAdults(2)
+                .withAmountOfChildren(0)
+                .withAdditionalInformation("Vegan")
                 .build();
 
-        Mockito.when(bookingSummaryService.detailsByBookingId(bookingIdExpected)).thenReturn(bookingDetailsExpected);
+        Mockito.when(bookingSummaryService.detailsByBookingId(bookingId)).thenReturn(bookingDetails);
 
         // when ... then
-        this.mockMvc.perform(get("/bookingdetails/" + bookingIdExpected)
+        this.mockMvc.perform(get("/bookingdetails/" + bookingId)
                 .accept(org.springframework.http.MediaType.TEXT_PLAIN))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -656,7 +590,20 @@ public class ViewApiTests {
                 .andExpect(view().name("booking/bookingDetails"));
 
         // then
-        Mockito.verify(bookingSummaryService, times(1)).detailsByBookingId(bookingIdExpected);
+        Mockito.verify(bookingSummaryService, times(1)).detailsByBookingId(bookingId);
+    }
+
+    @Test
+    public void when_get_invoicesUrl_then_statusOk_and_invoicesView_and_allInvoices_called() throws Exception {
+        // when ... then
+        this.mockMvc.perform(get("/invoices").accept(org.springframework.http.MediaType.TEXT_PLAIN))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(view().name("sidebar/invoices"));
+
+        // then
+        Mockito.verify(invoiceListingService, times(1)).allInvoices();
     }
 
     @Test
@@ -717,7 +664,6 @@ public class ViewApiTests {
 
         // then
         Mockito.verify(checkInService, times(1)).assignRooms(bookingIdExpected);
-        Mockito.verify(checkInService, times(1)).checkIn(bookingIdExpected, roomDTOsExpected);
     }
 
     @Test
@@ -769,7 +715,7 @@ public class ViewApiTests {
                 .withAmountOfChildren(1)
                 .withServices(Map.of("Breakfast", new BigDecimal("10")))
                 .withCategories(Map.of("Single Room", 2))
-                .withCategoryPrices(List.of(new BigDecimal("200")))
+                .withCategoryPrices(Map.of("Single Room", new BigDecimal("200")))
                 .withCheckInDate(LocalDate.of(2021, 12, 1))
                 .withCheckOutDate(LocalDate.of(2021, 12, 7))
                 .withAmountOfNights(6)
@@ -800,8 +746,6 @@ public class ViewApiTests {
         // given
         String stayIdExpected = "1";
 
-        Mockito.when(checkOutService.checkOut(stayIdExpected)).thenReturn(true);
-
         // when ... then
         this.mockMvc.perform(get("/check-out")
                 .param("stayId", stayIdExpected)
@@ -821,14 +765,14 @@ public class ViewApiTests {
         String messageExpected = "test message";
 
         // when ... then
-        this.mockMvc.perform(get("/error")
+        this.mockMvc.perform(get("/displayerror")
                 .param("message", messageExpected)
                 .accept(org.springframework.http.MediaType.TEXT_PLAIN))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("text/html;charset=UTF-8"))
                 .andExpect(content().string(containsString(messageExpected)))
-                .andExpect(view().name("error"));
+                .andExpect(view().name("errorView"));
     }
 
     // Helper Function

@@ -1,6 +1,7 @@
 package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.GuestListingService;
+import at.fhv.se.hotel.application.api.exception.GuestNotFoundException;
 import at.fhv.se.hotel.application.dto.GuestDTO;
 import at.fhv.se.hotel.domain.model.guest.*;
 import at.fhv.se.hotel.domain.repository.GuestRepository;
@@ -75,7 +76,7 @@ public class GuestListingServiceTests {
     }
 
     @Test
-    void given_guestinrepository_when_fetchbyid_then_returnequalsguest() {
+    void given_guestinrepository_when_fetchbyid_then_returnequalsguest() throws GuestNotFoundException {
         // given
         GuestId idExpected = new GuestId("42");
         Guest guestExpected = Guest.create(

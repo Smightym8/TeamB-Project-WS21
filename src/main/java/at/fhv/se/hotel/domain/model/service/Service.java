@@ -1,9 +1,9 @@
 package at.fhv.se.hotel.domain.model.service;
 
 import at.fhv.se.hotel.domain.Generated;
-import at.fhv.se.hotel.domain.model.booking.Booking;
 
-import java.util.List;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
 // TODO: Test

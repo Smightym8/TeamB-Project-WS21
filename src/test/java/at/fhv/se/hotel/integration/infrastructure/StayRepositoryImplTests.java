@@ -211,8 +211,7 @@ public class StayRepositoryImplTests {
         this.stayRepository.add(stayExpected);
         this.em.flush();
 
-        List<Stay> staysActual = this.stayRepository.stayByCheckout(LocalDate.of(2022, 5, 10));
-        Stay stayActual = staysActual.get(0); // Inserted only one stay
+        Stay stayActual = stayRepository.stayById(stayExpected.getStayId()).get();
 
         // then
         assertEquals(stayExpected, stayActual);

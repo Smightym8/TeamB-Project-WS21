@@ -1,6 +1,7 @@
 package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.ServiceListingService;
+import at.fhv.se.hotel.application.api.exception.ServiceNotFoundException;
 import at.fhv.se.hotel.application.dto.ServiceDTO;
 import at.fhv.se.hotel.domain.model.service.Price;
 import at.fhv.se.hotel.domain.model.service.Service;
@@ -9,7 +10,6 @@ import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.repository.ServiceRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -66,7 +66,7 @@ public class ServiceListingServiceTests {
     }
 
     @Test
-    void given_serviceinrepository_when_fetchbyid_then_returnequalsservice() {
+    void given_serviceinrepository_when_fetchbyid_then_returnequalsservice() throws ServiceNotFoundException {
         // given
         ServiceId idExpected = new ServiceId("42");
 

@@ -1,5 +1,8 @@
 package at.fhv.se.hotel.application.api;
 
+import at.fhv.se.hotel.application.api.exception.GuestNotFoundException;
+import at.fhv.se.hotel.application.api.exception.RoomCategoryNotFoundException;
+import at.fhv.se.hotel.application.api.exception.ServiceNotFoundException;
 import at.fhv.se.hotel.application.impl.BookingCreationServiceImpl;
 
 import java.time.LocalDate;
@@ -22,5 +25,5 @@ public interface BookingCreationService {
                      LocalDate checkOutDate,
                      int amountOfAdults,
                      int amountOfChildren,
-                     String additionalInformation);
+                     String additionalInformation) throws GuestNotFoundException, ServiceNotFoundException, RoomCategoryNotFoundException;
 }

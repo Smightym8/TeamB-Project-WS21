@@ -1,6 +1,7 @@
 package at.fhv.se.hotel.application.impl;
 
 import at.fhv.se.hotel.application.api.GuestListingService;
+import at.fhv.se.hotel.application.api.exception.GuestNotFoundException;
 import at.fhv.se.hotel.application.dto.GuestDTO;
 import at.fhv.se.hotel.domain.model.guest.Guest;
 import at.fhv.se.hotel.domain.model.guest.GuestId;
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.*;
 
 @Component
@@ -43,8 +43,11 @@ public class GuestListingServiceImpl implements GuestListingService {
     }
 
     @Override
-    public Optional<GuestDTO> findGuestById(String id) {
-        Guest guest = guestRepository.guestById(new GuestId(id)).get();
+    public Optional<GuestDTO> findGuestById(String id) throws GuestNotFoundException {
+        Guest guest = guestRepository.guestById(new GuestId(id)).orElseThrow(
+                () -> new GuestNotFoundException("Guest with id " + id + " not found")
+        );
+
         GuestDTO dto = GuestDTO.builder()
                 .withId(guest.getGuestId().id())
                 .withFirstName(guest.getName().firstName())

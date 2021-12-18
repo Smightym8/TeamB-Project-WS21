@@ -1,6 +1,7 @@
 package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.CheckOutService;
+import at.fhv.se.hotel.application.api.exception.StayNotFoundException;
 import at.fhv.se.hotel.application.dto.InvoiceDTO;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
@@ -49,7 +50,7 @@ public class CheckOutServiceTest {
     InvoiceRepository invoiceRepository;
 
     @Test
-    void given_stay_when_createinvoice_then_returnexpectedinvoice() {
+    void given_stay_when_createinvoice_then_returnexpectedinvoice() throws StayNotFoundException {
         // given
         Guest guestExpected = Guest.create(new GuestId("1"),
                 new FullName("Michael", "Spiegel"),
@@ -151,7 +152,7 @@ public class CheckOutServiceTest {
     }
 
     @Test
-    void given_existingstay_whencheckout_thenreturntrue() {
+    void given_existingstay_whencheckout_then_stayInactive() throws StayNotFoundException {
         // given
         Guest guestExpected = Guest.create(new GuestId("1"),
                 new FullName("Michael", "Spiegel"),
@@ -222,24 +223,9 @@ public class CheckOutServiceTest {
                 .thenReturn(roomCategoryPricesExpected.get(0));
 
         // when
-        boolean statusActual = checkOutService.checkOut(stayExpected.getStayId().id());
+        checkOutService.checkOut(stayExpected.getStayId().id());
 
         // then
-        assertTrue(statusActual);
-    }
-
-
-    @Test
-    void given_nonexistingstay_whencheckout_thenreturnfalse() {
-
-        // given
-        String nonExistingId = "0";
-
-        // when
-        boolean statusActual = checkOutService.checkOut(nonExistingId);
-
-        // then
-        assertFalse(statusActual);
-
+        assertFalse(stayExpected.isActive());
     }
 }

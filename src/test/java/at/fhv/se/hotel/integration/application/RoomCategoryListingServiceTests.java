@@ -1,6 +1,7 @@
 package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.RoomCategoryListingService;
+import at.fhv.se.hotel.application.api.exception.RoomCategoryNotFoundException;
 import at.fhv.se.hotel.application.dto.RoomCategoryDTO;
 import at.fhv.se.hotel.domain.model.roomcategory.Description;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
@@ -35,7 +36,7 @@ public class RoomCategoryListingServiceTests {
     }
 
     @Test
-    void given_categoryinrepository_when_fetchingbyid_then_returnequalscategory() {
+    void given_categoryinrepository_when_fetchingbyid_then_returnequalscategory() throws RoomCategoryNotFoundException {
         // given
         RoomCategoryId idExpected = new RoomCategoryId("42");
         RoomCategory categoryExpected = RoomCategory.create(
@@ -47,7 +48,7 @@ public class RoomCategoryListingServiceTests {
         Mockito.when(roomCategoryRepository.roomCategoryById(idExpected)).thenReturn(Optional.of(categoryExpected));
 
         // when
-        RoomCategoryDTO categoryActual = roomCategoryListingService.findRoomCategoryById(idExpected.id()).get();
+        RoomCategoryDTO categoryActual = roomCategoryListingService.findRoomCategoryById(idExpected.id());
 
         // then
         assertEquals(categoryExpected.getRoomCategoryId().id(), categoryActual.id());

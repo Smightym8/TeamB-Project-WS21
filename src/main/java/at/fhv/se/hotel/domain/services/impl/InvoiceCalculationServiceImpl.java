@@ -2,7 +2,6 @@ package at.fhv.se.hotel.domain.services.impl;
 
 import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
-import at.fhv.se.hotel.domain.model.invoice.InvoiceId;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
 import at.fhv.se.hotel.domain.model.roomcategory.Season;
 import at.fhv.se.hotel.domain.model.service.Service;
@@ -25,6 +24,7 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
 
     private static final BigDecimal localTaxInEuro = new BigDecimal("0.76");
     private static final BigDecimal valueAddedTaxPercentage = new BigDecimal("0.1");
+    // TODO: vat 10 anstatt 0.1, Zahlen generell auf 2 Nachkommastellen anpassen
 
     @Autowired
     RoomCategoryPriceService roomCategoryPriceService;
@@ -34,6 +34,7 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
 
     @Override
     public Invoice calculateInvoice(Stay stay) {
+        // TODO: Eigene Repo Methode, die Anzahl an Rechnungen zurückgibt
         int todaysInvoicesAmount = invoiceRepository.invoicesByDate(LocalDate.now()).size() + 1;
         List<RoomCategoryPrice> roomCategoryPriceList = new ArrayList<>();
 
@@ -53,8 +54,10 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
         BigDecimal totalNetAmount = new BigDecimal("0");
 
         // Calculate Services
+        List<Service> services = new ArrayList<>();
         for (Service s : stay.getServices()) {
             totalNetAmount = totalNetAmount.add(s.getServicePrice().price());
+            services.add(s);
         }
 
         // Calculate RoomCategoryPrices
@@ -103,6 +106,7 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
                 invoiceNumber,
                 stay,
                 roomCategoryPriceList,
+                services,
                 nights,
                 localTaxInEuro,
                 localTaxTotal,

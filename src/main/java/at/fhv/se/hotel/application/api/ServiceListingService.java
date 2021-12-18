@@ -1,6 +1,5 @@
 package at.fhv.se.hotel.application.api;
-
-import at.fhv.se.hotel.application.dto.RoomCategoryDTO;
+import at.fhv.se.hotel.application.api.exception.ServiceNotFoundException;
 import at.fhv.se.hotel.application.dto.ServiceDTO;
 import at.fhv.se.hotel.application.impl.ServiceListingServiceImpl;
 import java.util.List;
@@ -15,5 +14,5 @@ public interface ServiceListingService {
      * See implementation {@link ServiceListingServiceImpl#allServices()}
      */
     List<ServiceDTO> allServices();
-    Optional<ServiceDTO> findServiceById(String id);
+    Optional<ServiceDTO> findServiceById(String id) throws ServiceNotFoundException;
 }

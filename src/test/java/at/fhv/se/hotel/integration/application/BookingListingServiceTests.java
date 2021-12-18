@@ -1,7 +1,7 @@
 package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.BookingListingService;
-import at.fhv.se.hotel.application.dto.BookingDTO;
+import at.fhv.se.hotel.application.dto.BookingListingDTO;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
 import at.fhv.se.hotel.domain.model.guest.*;
@@ -19,7 +19,6 @@ import at.fhv.se.hotel.domain.repository.RoomCategoryRepository;
 import at.fhv.se.hotel.domain.repository.ServiceRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -160,7 +159,7 @@ public class BookingListingServiceTests {
         Mockito.when(bookingRepository.findAllBookings()).thenReturn(bookingsExpected);
 
         // when
-        List<BookingDTO> bookingsActual = bookingListingService.allBookings();
+        List<BookingListingDTO> bookingsActual = bookingListingService.allBookings();
 
         // then
         assertEquals(bookingsExpected.size(), bookingsActual.size());
