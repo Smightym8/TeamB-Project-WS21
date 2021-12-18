@@ -102,6 +102,11 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
         // Calculate total gross amount
         BigDecimal totalGrossAmount = totalNetAmount.add(valueAddedTaxTotal);
 
+        // Calculate discount
+        double discount = 1.0 - (stay.getGuest().getDiscountInPercent() / 100.0); // 1.0 - (10.0 / 100.0)
+        BigDecimal discountInvoice = BigDecimal.valueOf(discount);
+        totalGrossAmount = totalGrossAmount.multiply(discountInvoice);
+
         return Invoice.create(
                 invoiceRepository.nextIdentity(),
                 invoiceNumber,

@@ -86,6 +86,12 @@ public class InvoiceDTO {
     @XmlElement(name = "totalGrossAmount")
     private BigDecimal totalGrossAmount;
 
+    @XmlElement(name = "discountInPercent")
+    private double discountInPercent;
+
+    @XmlElement(name = "discountInEuro")
+    private BigDecimal discountInEuro;
+
     public static Builder builder() {
         return new Builder();
     }
@@ -180,6 +186,14 @@ public class InvoiceDTO {
 
     public BigDecimal totalGrossAmount() {
         return totalGrossAmount;
+    }
+
+    public double discountInPercent() {
+        return discountInPercent;
+    }
+
+    public BigDecimal discountInEuro() {
+        return discountInEuro;
     }
 
     public static class Builder {
@@ -303,6 +317,17 @@ public class InvoiceDTO {
             this.instance.totalGrossAmount = totalGrossAmount;
             return this;
         }
+
+        public Builder withDiscountInPercent(double discountInPercent) {
+            this.instance.discountInPercent = discountInPercent;
+            return this;
+        }
+
+        public Builder withDiscountInEuro(BigDecimal discountInEuro) {
+            this.instance.discountInEuro = discountInEuro;
+            return this;
+        }
+
 
         public InvoiceDTO build() {
             Objects.requireNonNull(this.instance.stayId, "stayId must be set in InvoiceDTO");

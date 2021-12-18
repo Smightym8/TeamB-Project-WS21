@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -83,10 +84,13 @@ public class CheckOutServiceImpl implements CheckOutService {
                 .withAmountOfNights(invoice.getAmountOfNights())
                 .withLocalTaxPerPerson(invoice.getLocalTaxPerPerson())
                 .withLocalTaxTotal(invoice.getLocalTaxTotal())
-                .withValueAddedTaxInPercent(invoice.getValueAddedTaxInPercent())
+                .withValueAddedTaxInPercent(invoice.getValueAddedTaxInPercent().setScale(1, RoundingMode.CEILING))
                 .withValueAddedTaxInEuro(invoice.getValueAddedTaxInEuro())
                 .withTotalNetAmount(invoice.getTotalNetAmount())
                 .withTotalGrossAmount(invoice.getTotalGrossAmount())
+                .withDiscountInPercent(invoice.getStay().getGuest().getDiscountInPercent())
+                .withDiscountInEuro(invoice.getTotalNetAmount().add(invoice.getValueAddedTaxInEuro()).divide
+                        (BigDecimal.valueOf(invoice.getStay().getGuest().getDiscountInPercent())).setScale(2, RoundingMode.CEILING))
                 .build();
 
         invoicePDFRepository.saveAsPDF(invoiceDTO);

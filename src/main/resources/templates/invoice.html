@@ -121,7 +121,7 @@
                         <td th:text="${invoice.amountOfAdults}"></td>
                         <td th:text="'Local Tax'"></td>
                         <td th:text="'€' + ${invoice.localTaxPerPerson}"></td>
-                        <td  th:text="'€' + ${invoice.localTaxTotal}"></td>
+                        <td th:text="'€' + ${invoice.localTaxTotal}"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -134,26 +134,32 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div class="col">Please indicate the invoice number as the purpose of payment.</div>
-                    <div class="col-2">
+                    <div class="col-5">
                         <table class="table table-clear">
                             <tbody>
                             <tr>
-                                <td>
+                                <td class="col-2">
                                     <strong>Net amount</strong>
                                 </td>
-                                <td class="col-1 text-end" th:text="'€' + ${invoice.totalNetAmount}"></td>
+                                <td class="col-3 text-end" th:text="'€' + ${invoice.totalNetAmount}"></td>
                             </tr>
                             <tr>
-                                <td>
+                                <td class="col-2">
                                     <strong>VAT</strong>
                                 </td>
-                                <td class="col-1 text-end" th:text="'€' + ${invoice.valueAddedTaxInEuro}"></td>
+                                <td class="col-3 text-end" th:text="'€' + ${invoice.valueAddedTaxInEuro} + ' (' + ${invoice.valueAddedTaxInPercent() * 100} + '%)'"></td>
+                            </tr>
+                            <tr th:if="${invoice.discountInPercent} > 0">
+                                <td class="col-2">
+                                    <strong>Discount</strong>
+                                </td>
+                                <td class="col-3 text-end" th:text="'- €' + ${invoice.discountInEuro()} + ' (' + ${invoice.discountInPercent} + '%)'" ></td>
                             </tr>
                             <tr>
-                                <td>
+                                <td class="col-2">
                                     <strong>Gross amount</strong>
                                 </td>
-                                <td class="col-1">
+                                <td class="col-3 text-end">
                                     <strong th:text="'€' + ${invoice.totalGrossAmount}"></strong>
                                 </td>
                             </tr>
