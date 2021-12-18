@@ -43,30 +43,16 @@ public class BookingListingServiceTests {
     @Autowired
     BookingListingService bookingListingService;
 
-    @Autowired
-    GuestRepository guestRepository;
-
-    @Autowired
-    ServiceRepository serviceRepository;
-
-    @Autowired
-    RoomCategoryRepository roomCategoryRepository;
-
-    @Autowired
+    @MockBean
     BookingRepository bookingRepository;
-
-    @Autowired
-    private EntityManager em;
-
-    @AfterEach
-    void cleanDatabase() {
-        // TODO: Clear Database
-        System.out.println("Clear database");
-    }
 
     @Test
     void given_3bookingsinrepository_when_fetchingall_then_returnequalsbookings() {
         // given
+        Mockito.when(bookingRepository.nextIdentity()).thenReturn(
+                new BookingId(UUID.randomUUID().toString().toUpperCase())
+        );
+
         Guest guestExpected1 = Guest.create(
                 new GuestId("1"),
                 new FullName("John", "Doe"),
@@ -171,18 +157,10 @@ public class BookingListingServiceTests {
                 bookingExpected3
         );
 
-        guestRepository.add(guestExpected1);
-        guestRepository.add(guestExpected2);
-        guestRepository.add(guestExpected3);
-        serviceRepository.add(serviceExpected1);
-        serviceRepository.add(serviceExpected2);
-        roomCategoryRepository.add(categoryExpected1);
-        roomCategoryRepository.add(categoryExpected2);
-        bookingsExpected.forEach(booking -> bookingRepository.add(booking));
+        Mockito.when(bookingRepository.findAllBookings()).thenReturn(bookingsExpected);
 
         // when
         List<BookingDTO> bookingsActual = bookingListingService.allBookings();
-        em.flush();
 
         // then
         assertEquals(bookingsExpected.size(), bookingsActual.size());

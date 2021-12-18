@@ -48,12 +48,6 @@ public class CheckOutServiceTest {
     @MockBean
     InvoiceRepository invoiceRepository;
 
-    @AfterEach
-    void cleanDatabase() {
-        // TODO: Clear Database
-        System.out.println("Clear database");
-    }
-
     @Test
     void given_stay_when_createinvoice_then_returnexpectedinvoice() {
         // given
@@ -158,7 +152,6 @@ public class CheckOutServiceTest {
 
     @Test
     void given_existingstay_whencheckout_thenreturntrue() {
-
         // given
         Guest guestExpected = Guest.create(new GuestId("1"),
                 new FullName("Michael", "Spiegel"),

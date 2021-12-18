@@ -22,6 +22,7 @@ import at.fhv.se.hotel.domain.model.stay.StayId;
 import at.fhv.se.hotel.domain.repository.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,10 +33,7 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,32 +45,14 @@ public class CheckInServiceTest {
     @Autowired
     private CheckInService checkInService;
 
-    @Autowired
-    GuestRepository guestRepository;
-
-    @Autowired
-    ServiceRepository serviceRepository;
-
-    @Autowired
-    RoomCategoryRepository roomCategoryRepository;
-
-    @Autowired
+    @MockBean
     BookingRepository bookingRepository;
 
-    @Autowired
+    @MockBean
     RoomRepository roomRepository;
 
-    @Autowired
+    @MockBean
     StayRepository stayRepository;
-
-    @Autowired
-    EntityManager em;
-
-    @AfterEach
-    void cleanDatabase() {
-        // TODO: Clear Database
-        System.out.println("Clear database");
-    }
 
     @Test
     void given_booking_when_assignrooms_then_returnexpectedrooms(){
@@ -89,7 +69,7 @@ public class CheckInServiceTest {
                 Collections.emptyList()
         );
 
-        List<Service> servicesExpected = Arrays.asList(
+        List<Service> servicesExpected = List.of(
                 Service.create(new ServiceId("1"),
                         new ServiceName("TV"),
                         new Price(new BigDecimal("100"))),
@@ -97,10 +77,12 @@ public class CheckInServiceTest {
                         new ServiceName("Breakfast"),
                         new Price(new BigDecimal("100")))
         );
+
+        BookingId idExpected = new BookingId("1");
         Booking bookingExpected = Booking.create(
                 LocalDate.of(2021, 8, 1),
                 LocalDate.of(2021, 8, 10),
-                new BookingId("1000"),
+                idExpected,
                 guestExpected,
                 servicesExpected,
                 2,
@@ -122,12 +104,10 @@ public class CheckInServiceTest {
 
         bookingExpected.addRoomCategory(roomCategoryExpected, 3);
 
-        guestRepository.add(guestExpected);
-        servicesExpected.forEach(service -> serviceRepository.add(service));
-        roomCategoryRepository.add(roomCategoryExpected);
-        roomsExpected.forEach(room -> roomRepository.add(room));
-        bookingRepository.add(bookingExpected);
-        em.flush();
+        Mockito.when(bookingRepository.bookingById(idExpected)).thenReturn(Optional.of(bookingExpected));
+        Mockito.when(roomRepository.roomsByCategoryAndStatus(roomCategoryExpected.getRoomCategoryId(), roomStatusExpected)).thenReturn(
+               new ArrayList<>(roomsExpected)
+        );
 
         //when
         List<RoomDTO> roomsActual = checkInService.assignRooms(bookingExpected.getBookingId().id());
@@ -143,12 +123,11 @@ public class CheckInServiceTest {
     }
 
     @Test
-    void given_bookingDetails_when_checkinbooking_then_returnequaldetails(){
+    void given_booking_and_rooms_when_checkinbooking_then_roomsOccupied_and_bookingDeactivated_and_stayCreated(){
         //given
-        String bookingIdStrExpected = "1234";
         LocalDate checkInDateExpected = LocalDate.of(2021,12,1);
         LocalDate checkOutDateExpected = LocalDate.of(2021,12,2);
-        BookingId bookingIdExpected = new BookingId(bookingIdStrExpected);
+        BookingId bookingIdExpected = new BookingId("1");
 
         Guest guestExpected = Guest.create(
                 new GuestId("1"),
@@ -219,24 +198,21 @@ public class CheckInServiceTest {
                                 .build())
                 .collect(Collectors.toList());
 
-        StayId idExpected = new StayId(bookingExpected.getBookingId().id());
-        Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
-
-        guestRepository.add(guestExpected);
-        servicesExpected.forEach(service -> serviceRepository.add(service));
-        roomCategoryRepository.add(roomCategoryExpected);
-        bookingRepository.add(bookingExpected);
-        roomsExpected.forEach(room -> roomRepository.add(room));
+        Mockito.when(bookingRepository.bookingById(bookingIdExpected)).thenReturn(Optional.of(bookingExpected));
+        Mockito.when(roomRepository.roomByName(roomNamesExpected.get(0))).thenReturn(Optional.ofNullable(roomsExpected.get(0)));
+        Mockito.when(roomRepository.roomByName(roomNamesExpected.get(1))).thenReturn(Optional.ofNullable(roomsExpected.get(1)));
+        Mockito.when(roomRepository.roomByName(roomNamesExpected.get(2))).thenReturn(Optional.ofNullable(roomsExpected.get(2)));
 
         //when
-        checkInService.checkIn(bookingIdStrExpected, roomDTOsExpected);
-        Stay stayActual = stayRepository.stayById(idExpected).get();
+        checkInService.checkIn(bookingIdExpected.id(), roomDTOsExpected);
+        ArgumentCaptor<Stay> stayCaptor = ArgumentCaptor.forClass(Stay.class);
+        Mockito.verify(stayRepository).add(stayCaptor.capture());
+        Stay stayActual = stayCaptor.getValue();
 
         //then
-        assertEquals(stayExpected.isActive(), stayActual.isActive());
-        assertEquals(stayExpected.getCheckInDate(), stayActual.getCheckInDate());
-        assertEquals(stayExpected.getCheckOutDate(), stayActual.getCheckOutDate());
-        assertEquals(bookingExpected, stayActual.getBooking());
-        assertEquals(stayExpected.getBooking().isActive(), stayActual.getBooking().isActive());
+        roomsExpected.forEach(room -> assertEquals(RoomStatus.OCCUPIED, room.getStatus()));
+        assertFalse(bookingExpected.isActive());
+        assertNotNull(stayActual);
+        assertEquals(bookingExpected.getBookingId().id(), stayActual.getStayId().id());
     }
 }
