@@ -145,7 +145,7 @@
                             </tr>
                             <tr>
                                 <td class="col-2">
-                                    <strong th:text="VAT + ' (' + ${invoice.valueAddedTaxInPercent() * 100} + '%)'"></strong>
+                                    <strong th:text="VAT + ' (' + ${invoice.valueAddedTaxInPercent * 100} + '%)'"></strong>
                                 </td>
                                 <td class="col-3 text-end" th:text="'€' + ${invoice.valueAddedTaxInEuro}"></td>
                             </tr>
