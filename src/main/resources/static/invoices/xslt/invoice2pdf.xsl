@@ -313,15 +313,16 @@
 
 									<fo:table-row border-width="1pt" border-style="solid">
 										<fo:table-cell>
-											<fo:block>VAT</fo:block>
+											<fo:block>
+												<xsl:text>VAT (</xsl:text>
+												<xsl:value-of select="(invoice/valueAddedTaxInPercent) * 100" />
+												<xsl:text>.0 % )</xsl:text>
+											</fo:block>
 										</fo:table-cell>
 										<fo:table-cell>
 											<fo:block>
 												<xsl:text>€ </xsl:text>
 												<xsl:value-of select="invoice/valueAddedTaxInEuro" />
-												<xsl:text> (</xsl:text>
-												<xsl:value-of select="(invoice/valueAddedTaxInPercent) * 100" />
-												<xsl:text>.0 % )</xsl:text>
 											</fo:block>
 										</fo:table-cell>
 									</fo:table-row>
@@ -329,15 +330,16 @@
 									<xsl:if test="(invoice/discountInPercent) > 0">
 										<fo:table-row border-width="1pt" border-style="solid">
 											<fo:table-cell>
-												<fo:block>Discount</fo:block>
+												<fo:block>
+													<xsl:text>Discount (</xsl:text>
+													<xsl:value-of select="(invoice/discountInPercent)" />
+													<xsl:text>% )</xsl:text>
+												</fo:block>
 											</fo:table-cell>
 											<fo:table-cell>
 												<fo:block>
-													<xsl:text>€  - </xsl:text>
+													<xsl:text>- €  </xsl:text>
 													<xsl:value-of select="(invoice/discountInEuro)" />
-													<xsl:text> (</xsl:text>
-													<xsl:value-of select="(invoice/discountInPercent)" />
-													<xsl:text>% )</xsl:text>
 												</fo:block>
 											</fo:table-cell>
 										</fo:table-row>

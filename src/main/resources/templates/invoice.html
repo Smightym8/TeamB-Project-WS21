@@ -145,15 +145,15 @@
                             </tr>
                             <tr>
                                 <td class="col-2">
-                                    <strong>VAT</strong>
+                                    <strong th:text="VAT + ' (' + ${invoice.valueAddedTaxInPercent() * 100} + '%)'"></strong>
                                 </td>
-                                <td class="col-3 text-end" th:text="'€' + ${invoice.valueAddedTaxInEuro} + ' (' + ${invoice.valueAddedTaxInPercent() * 100} + '%)'"></td>
+                                <td class="col-3 text-end" th:text="'€' + ${invoice.valueAddedTaxInEuro}"></td>
                             </tr>
                             <tr th:if="${invoice.discountInPercent} > 0">
                                 <td class="col-2">
-                                    <strong>Discount</strong>
+                                    <strong th:text="Discount + ' (' + ${invoice.discountInPercent} + '%)'"></strong>
                                 </td>
-                                <td class="col-3 text-end" th:text="'- €' + ${invoice.discountInEuro()} + ' (' + ${invoice.discountInPercent} + '%)'" ></td>
+                                <td class="col-3 text-end" th:text="'- €' + ${invoice.discountInEuro()}" ></td>
                             </tr>
                             <tr>
                                 <td class="col-2">
