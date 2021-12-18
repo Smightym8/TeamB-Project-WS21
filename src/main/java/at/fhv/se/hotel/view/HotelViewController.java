@@ -337,7 +337,7 @@ public class HotelViewController {
         BookingDetailsDTO bookingDetailsDTO;
         try {
             bookingDetailsDTO = bookingSummaryService.detailsByBookingId(bookingId);
-        } catch (BookingNotFoundException | GuestNotFoundException e) {
+        } catch (BookingNotFoundException e) {
             return redirectError(e.getMessage());
         }
 
@@ -367,7 +367,7 @@ public class HotelViewController {
         BookingDetailsDTO bookingDetailsDTO;
         try {
             bookingDetailsDTO = bookingSummaryService.detailsByBookingId(id);
-        } catch (BookingNotFoundException | GuestNotFoundException e) {
+        } catch (BookingNotFoundException e) {
             return redirectError(e.getMessage());
         }
         model.addAttribute("bookingDetails", bookingDetailsDTO);
