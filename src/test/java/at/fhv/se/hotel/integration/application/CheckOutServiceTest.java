@@ -25,6 +25,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
@@ -97,7 +98,7 @@ public class CheckOutServiceTest {
                         new RoomCategoryPriceId("1"),
                         Season.SUMMER,
                         categoriesExpected.get(0),
-                        new BigDecimal("300")
+                        new BigDecimal("300").setScale(2, RoundingMode.CEILING)
                 )
         );
 
@@ -116,12 +117,12 @@ public class CheckOutServiceTest {
         Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
 
         int amountOfNightsExpected = 9;
-        BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76");
-        BigDecimal localTaxTotalExpected = new BigDecimal("1.52");
-        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.1");
-        BigDecimal totalNetAmountExpected = new BigDecimal("2901.52");
-        BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("290.0");
-        BigDecimal totalGrossAmountExpected = new BigDecimal("3191.52");
+        BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76").setScale(2, RoundingMode.CEILING);
+        BigDecimal localTaxTotalExpected = new BigDecimal("1.52").setScale(2, RoundingMode.CEILING);
+        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.10").setScale(2, RoundingMode.CEILING);
+        BigDecimal totalNetAmountExpected = new BigDecimal("2901.52").setScale(2, RoundingMode.CEILING);
+        BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("290.00").setScale(2, RoundingMode.CEILING);
+        BigDecimal totalGrossAmountExpected = new BigDecimal("3191.52").setScale(2, RoundingMode.CEILING);
 
 
         Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
@@ -177,10 +178,10 @@ public class CheckOutServiceTest {
         List<Service> servicesExpected = Arrays.asList(
                 Service.create(new ServiceId("1"),
                         new ServiceName("TV"),
-                        new Price(new BigDecimal("100"))),
+                        new Price(new BigDecimal("100").setScale(2, RoundingMode.CEILING))),
                 Service.create(new ServiceId("2"),
                         new ServiceName("Breakfast"),
-                        new Price(new BigDecimal("100")))
+                        new Price(new BigDecimal("100").setScale(2, RoundingMode.CEILING)))
         );
 
         Booking bookingExpected = Booking.create(
@@ -201,7 +202,7 @@ public class CheckOutServiceTest {
                         new RoomCategoryPriceId("1"),
                         Season.SUMMER,
                         categoriesExpected.get(0),
-                        new BigDecimal("300")
+                        new BigDecimal("300").setScale(2, RoundingMode.CEILING)
                 )
         );
 

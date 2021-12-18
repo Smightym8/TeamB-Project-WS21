@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
@@ -23,7 +24,7 @@ import java.util.List;
 public class InvoiceCalculationServiceImpl implements InvoiceCalculationService {
 
     private static final BigDecimal localTaxInEuro = new BigDecimal("0.76");
-    private static final BigDecimal valueAddedTaxPercentage = new BigDecimal("0.1");
+    private static final BigDecimal valueAddedTaxPercentage = new BigDecimal("0.10");
     // TODO: vat 10 anstatt 0.1, Zahlen generell auf 2 Nachkommastellen anpassen
 
     @Autowired
@@ -109,11 +110,11 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
                 services,
                 nights,
                 localTaxInEuro,
-                localTaxTotal,
+                localTaxTotal.setScale(2, RoundingMode.CEILING),
                 valueAddedTaxPercentage,
-                valueAddedTaxTotal,
-                totalNetAmount,
-                totalGrossAmount
+                valueAddedTaxTotal.setScale(2, RoundingMode.CEILING),
+                totalNetAmount.setScale(2, RoundingMode.CEILING),
+                totalGrossAmount.setScale(2, RoundingMode.CEILING)
         );
     }
 }
