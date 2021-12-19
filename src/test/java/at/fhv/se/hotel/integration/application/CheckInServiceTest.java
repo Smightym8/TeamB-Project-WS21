@@ -57,7 +57,7 @@ public class CheckInServiceTest {
     StayRepository stayRepository;
 
     @Test
-    void given_booking_when_assignrooms_then_returnexpectedrooms() throws BookingNotFoundException {
+    void given_booking_when_assignRooms_then_returnexpectedrooms() throws BookingNotFoundException {
         //given
         Guest guestExpected = Guest.create(new GuestId("1"),
                 new FullName("Michael", "Spiegel"),
@@ -122,6 +122,24 @@ public class CheckInServiceTest {
             assertEquals(roomsExpected.get(i).getRoomCategory().getRoomCategoryName().name(), roomActual.categoryName());
             i++;
         }
+    }
+
+    @Test
+    void given_missingBooking_when_assignRooms_then_BookingNotFoundExceptionisThrown() {
+        //given
+        BookingId bookingIdExpected = new BookingId("1");
+
+        Mockito.when(bookingRepository.bookingById(bookingIdExpected)).thenReturn(Optional.empty());
+
+        //when ... then
+        Exception exception = assertThrows(BookingNotFoundException.class, () -> {
+            checkInService.assignRooms(bookingIdExpected.id());
+        });
+
+        String expectedMessage = "Booking with id " + bookingIdExpected.id() + " not found";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 
     @Test
@@ -216,5 +234,184 @@ public class CheckInServiceTest {
         assertFalse(bookingExpected.isActive());
         assertNotNull(stayActual);
         assertEquals(bookingExpected.getBookingId().id(), stayActual.getStayId().id());
+    }
+
+    @Test
+    void given_missingBooking_when_checkInBooking_then_BookingNotFoundExceptionIsThrown() {
+        //given
+        LocalDate checkInDateExpected = LocalDate.of(2021,12,1);
+        LocalDate checkOutDateExpected = LocalDate.of(2021,12,2);
+        BookingId bookingIdExpected = new BookingId("1");
+
+        Guest guestExpected = Guest.create(
+                new GuestId("1"),
+                new FullName("Ali", "Cinar"),
+                Gender.MALE,
+                new Address("Hochschulstraße",
+                        "1", "Dornbirn",
+                        "6850", "Austria"),
+                LocalDate.of(1997, 8, 27),
+                "+43 676 123 456 789",
+                "ali.cinar@students.fhv.at",
+                Collections.emptyList()
+        );
+
+        List<Service> servicesExpected = List.of(
+                Service.create(
+                        new ServiceId("1"),
+                        new ServiceName("TV"),
+                        new Price(
+                                new BigDecimal("100")
+                        )
+                ),
+                Service.create(
+                        new ServiceId("2"),
+                        new ServiceName("Breakfast"),
+                        new Price(
+                                new BigDecimal("100")
+                        )
+                )
+        );
+
+        RoomCategory roomCategoryExpected = RoomCategory.create(new RoomCategoryId("1"),
+                new RoomCategoryName("Single Room"),
+                new Description("This is a single room")
+        );
+
+        int roomCategoryAmountExpected = 3;
+
+        int amountOfAdultsExpected = 2;
+        int amountOfChildrenExpected = 0;
+        String additionalInformationExpected = "Vegan";
+
+        Booking bookingExpected = Booking.create(
+                checkInDateExpected,
+                checkOutDateExpected,
+                bookingIdExpected,
+                guestExpected,
+                servicesExpected,
+                amountOfAdultsExpected,
+                amountOfChildrenExpected,
+                additionalInformationExpected
+        );
+
+        bookingExpected.addRoomCategory(roomCategoryExpected, roomCategoryAmountExpected);
+
+        List<String> roomNamesExpected = Arrays.asList("101", "102", "103");
+
+        RoomStatus roomStatusExpected = RoomStatus.FREE;
+
+        List<Room> roomsExpected = roomNamesExpected.stream()
+                .map(name -> Room.create(name, roomStatusExpected, roomCategoryExpected))
+                .collect(Collectors.toList());
+
+        List<RoomDTO> roomDTOsExpected = roomsExpected.stream()
+                .map(room -> RoomDTO.builder()
+                        .withName(room.getName())
+                        .withCategory(room.getRoomCategory().getRoomCategoryName().name())
+                        .build())
+                .collect(Collectors.toList());
+
+        Mockito.when(bookingRepository.bookingById(bookingIdExpected)).thenReturn(Optional.empty());
+
+        //when ... then
+        Exception exception = assertThrows(BookingNotFoundException.class, () -> {
+            checkInService.checkIn(bookingIdExpected.id(), roomDTOsExpected);
+        });
+
+        String expectedMessage = "Booking with id " + bookingIdExpected.id() + " not found";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    void given_missingRoom_when_checkInBooking_then_RoomNotFoundExceptionIsThrown() {
+        //given
+        LocalDate checkInDateExpected = LocalDate.of(2021,12,1);
+        LocalDate checkOutDateExpected = LocalDate.of(2021,12,2);
+        BookingId bookingIdExpected = new BookingId("1");
+
+        Guest guestExpected = Guest.create(
+                new GuestId("1"),
+                new FullName("Ali", "Cinar"),
+                Gender.MALE,
+                new Address("Hochschulstraße",
+                        "1", "Dornbirn",
+                        "6850", "Austria"),
+                LocalDate.of(1997, 8, 27),
+                "+43 676 123 456 789",
+                "ali.cinar@students.fhv.at",
+                Collections.emptyList()
+        );
+
+        List<Service> servicesExpected = List.of(
+                Service.create(
+                        new ServiceId("1"),
+                        new ServiceName("TV"),
+                        new Price(
+                                new BigDecimal("100")
+                        )
+                ),
+                Service.create(
+                        new ServiceId("2"),
+                        new ServiceName("Breakfast"),
+                        new Price(
+                                new BigDecimal("100")
+                        )
+                )
+        );
+
+        RoomCategory roomCategoryExpected = RoomCategory.create(new RoomCategoryId("1"),
+                new RoomCategoryName("Single Room"),
+                new Description("This is a single room")
+        );
+
+        int roomCategoryAmountExpected = 3;
+
+        int amountOfAdultsExpected = 2;
+        int amountOfChildrenExpected = 0;
+        String additionalInformationExpected = "Vegan";
+
+        Booking bookingExpected = Booking.create(
+                checkInDateExpected,
+                checkOutDateExpected,
+                bookingIdExpected,
+                guestExpected,
+                servicesExpected,
+                amountOfAdultsExpected,
+                amountOfChildrenExpected,
+                additionalInformationExpected
+        );
+
+        bookingExpected.addRoomCategory(roomCategoryExpected, roomCategoryAmountExpected);
+
+        List<String> roomNamesExpected = Arrays.asList("101", "102", "103");
+
+        RoomStatus roomStatusExpected = RoomStatus.FREE;
+
+        List<Room> roomsExpected = roomNamesExpected.stream()
+                .map(name -> Room.create(name, roomStatusExpected, roomCategoryExpected))
+                .collect(Collectors.toList());
+
+        List<RoomDTO> roomDTOsExpected = roomsExpected.stream()
+                .map(room -> RoomDTO.builder()
+                        .withName(room.getName())
+                        .withCategory(room.getRoomCategory().getRoomCategoryName().name())
+                        .build())
+                .collect(Collectors.toList());
+
+        Mockito.when(bookingRepository.bookingById(bookingIdExpected)).thenReturn(Optional.of(bookingExpected));
+        Mockito.when(roomRepository.roomByName(roomNamesExpected.get(0))).thenReturn(Optional.empty());
+
+        //when ... then
+        Exception exception = assertThrows(RoomNotFoundException.class, () -> {
+            checkInService.checkIn(bookingIdExpected.id(), roomDTOsExpected);
+        });
+
+        String expectedMessage = "Room with name " + roomNamesExpected.get(0) + " not found";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 }

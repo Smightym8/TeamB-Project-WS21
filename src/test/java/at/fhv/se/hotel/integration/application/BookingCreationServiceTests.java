@@ -35,8 +35,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -126,5 +125,156 @@ public class BookingCreationServiceTests {
         assertEquals(checkInDateExpected, bookingActual.getCheckInDate());
         assertEquals(checkOutDateExpected, bookingActual.getCheckOutDate());
         assertTrue(bookingActual.isActive());
+    }
+
+    @Test
+    public void given_missingGuest_when_createBooking_then_GuestNotFoundExceptionIsThrown() {
+        // given
+        BookingId bookingIdExpected = new BookingId("1");
+        GuestId guestIdExpected = new GuestId("1");
+        ServiceId serviceIdExpected = new ServiceId("1");
+        RoomCategoryId roomCategoryIdExpected = new RoomCategoryId("1");
+
+        List<String> roomCategoryIdsExpected = List.of(roomCategoryIdExpected.id());
+        List<Integer> amounts = List.of(1);
+        List<String> serviceIdsExpected = List.of(serviceIdExpected.id());
+        LocalDate checkInDateExpected = LocalDate.of(2022, 1, 10);
+        LocalDate checkOutDateExpected = LocalDate.of(2022, 1, 20);
+        int amountOfAdultsExpected = 2;
+        int amountOfChildrenExpected = 2;
+
+        Mockito.when(bookingRepository.nextIdentity()).thenReturn(bookingIdExpected);
+        Mockito.when(guestRepository.guestById(guestIdExpected)).thenReturn(Optional.empty());
+
+        // when ... then
+        Exception exception = assertThrows(GuestNotFoundException.class, () -> {
+            bookingCreationService.book(
+                    guestIdExpected.id(),
+                    roomCategoryIdsExpected,
+                    amounts,
+                    serviceIdsExpected,
+                    checkInDateExpected,
+                    checkOutDateExpected,
+                    amountOfAdultsExpected,
+                    amountOfChildrenExpected,
+                    "None"
+            );
+        });
+
+        String expectedMessage = "Guest with id " + guestIdExpected.id() + " not found";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void given_missingService_when_createBooking_then_ServiceNotFoundExceptionIsThrown() {
+        // given
+        BookingId bookingIdExpected = new BookingId("1");
+        GuestId guestIdExpected = new GuestId("1");
+        ServiceId serviceIdExpected = new ServiceId("1");
+        RoomCategoryId roomCategoryIdExpected = new RoomCategoryId("1");
+
+        List<String> roomCategoryIdsExpected = List.of(roomCategoryIdExpected.id());
+        List<Integer> amounts = List.of(1);
+        List<String> serviceIdsExpected = List.of(serviceIdExpected.id());
+        LocalDate checkInDateExpected = LocalDate.of(2022, 1, 10);
+        LocalDate checkOutDateExpected = LocalDate.of(2022, 1, 20);
+        int amountOfAdultsExpected = 2;
+        int amountOfChildrenExpected = 2;
+
+        Guest guestExpected = Guest.create(
+                guestIdExpected,
+                new FullName("Maria", "Doe"),
+                Gender.FEMALE,
+                new Address("Street", "1", "Dornbirn", "6850", "Austria"),
+                LocalDate.of(1982, 4, 3),
+                "+43 123456789",
+                "maria.doe@tdd.at",
+                Collections.emptyList()
+        );
+
+        Mockito.when(bookingRepository.nextIdentity()).thenReturn(bookingIdExpected);
+        Mockito.when(guestRepository.guestById(guestIdExpected)).thenReturn(Optional.of(guestExpected));
+        Mockito.when(serviceRepository.serviceById(serviceIdExpected)).thenReturn(Optional.empty());
+
+        // when ... then
+        Exception exception = assertThrows(ServiceNotFoundException.class, () -> {
+            bookingCreationService.book(
+                    guestIdExpected.id(),
+                    roomCategoryIdsExpected,
+                    amounts,
+                    serviceIdsExpected,
+                    checkInDateExpected,
+                    checkOutDateExpected,
+                    amountOfAdultsExpected,
+                    amountOfChildrenExpected,
+                    "None"
+            );
+        });
+
+        String expectedMessage = "Service with id " + serviceIdExpected.id() + " not found";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void given_missingRoomCategory_when_createBooking_then_RoomCategoryNotFoundExceptionIsThrown() {
+        // given
+        BookingId bookingIdExpected = new BookingId("1");
+        GuestId guestIdExpected = new GuestId("1");
+        ServiceId serviceIdExpected = new ServiceId("1");
+        RoomCategoryId roomCategoryIdExpected = new RoomCategoryId("1");
+
+        List<String> roomCategoryIdsExpected = List.of(roomCategoryIdExpected.id());
+        List<Integer> amounts = List.of(1);
+        List<String> serviceIdsExpected = List.of(serviceIdExpected.id());
+        LocalDate checkInDateExpected = LocalDate.of(2022, 1, 10);
+        LocalDate checkOutDateExpected = LocalDate.of(2022, 1, 20);
+        int amountOfAdultsExpected = 2;
+        int amountOfChildrenExpected = 2;
+
+        Guest guestExpected = Guest.create(
+                guestIdExpected,
+                new FullName("Maria", "Doe"),
+                Gender.FEMALE,
+                new Address("Street", "1", "Dornbirn", "6850", "Austria"),
+                LocalDate.of(1982, 4, 3),
+                "+43 123456789",
+                "maria.doe@tdd.at",
+                Collections.emptyList()
+        );
+
+        Service serviceExpected = Service.create(
+                serviceIdExpected,
+                new ServiceName("Breakfast"),
+                new Price(new BigDecimal("100"))
+        );
+
+        Mockito.when(bookingRepository.nextIdentity()).thenReturn(bookingIdExpected);
+        Mockito.when(guestRepository.guestById(guestIdExpected)).thenReturn(Optional.of(guestExpected));
+        Mockito.when(serviceRepository.serviceById(serviceIdExpected)).thenReturn(Optional.of(serviceExpected));
+        Mockito.when(roomCategoryRepository.roomCategoryById(roomCategoryIdExpected)).thenReturn(Optional.empty());
+
+        // when ... then
+        Exception exception = assertThrows(RoomCategoryNotFoundException.class, () -> {
+            bookingCreationService.book(
+                    guestIdExpected.id(),
+                    roomCategoryIdsExpected,
+                    amounts,
+                    serviceIdsExpected,
+                    checkInDateExpected,
+                    checkOutDateExpected,
+                    amountOfAdultsExpected,
+                    amountOfChildrenExpected,
+                    "None"
+            );
+        });
+
+        String expectedMessage = "RoomCategory with id " + roomCategoryIdExpected.id() + " not found";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 }
