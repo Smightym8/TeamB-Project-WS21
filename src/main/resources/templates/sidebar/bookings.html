@@ -25,9 +25,7 @@
                 + ${booking.zipCode} + ' ' + ${booking.city}"></td>
                 <td th:text="${booking.checkInDate}"></td>
                 <td>
-                    <a th:href="@{/bookingdetails/{id}(id=${booking.id})}" type="button" class="btn btn-primary btn-sm">Check-In</a>
-                    <a class="btn btn-primary btn-sm" href="#">View / Modify</a>
-                    <a class="btn btn-danger btn-sm" href="#">Delete</a>
+                    <a th:href="@{/bookingdetails/{id}(id=${booking.id})}" type="button" class="btn btn-primary btn-sm">View / Check-In</a>
                 </td>
             </tr>
             </tbody>
