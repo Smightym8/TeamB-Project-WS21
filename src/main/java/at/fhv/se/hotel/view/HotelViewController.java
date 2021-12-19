@@ -242,19 +242,10 @@ public class HotelViewController {
     }
 
 /*----- Create Booking -----*/
-    @GetMapping(CREATE_BOOKING_GUEST_URL)
-    public String createBookingGuest(Model model) {
-        final List<GuestDTO> guests = guestListingService.allGuests();
+
+    @GetMapping(CREATE_BOOKING_DATE_URL)
+    public String createBookingDate(Model model) {
         BookingForm bookingForm = new BookingForm();
-
-        model.addAttribute("guests", guests);
-        model.addAttribute("bookingForm", bookingForm);
-
-        return CREATE_BOOKING_GUEST_VIEW;
-    }
-
-    @PostMapping(CREATE_BOOKING_DATE_URL)
-    public String createBookingDate(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model) {
 
         model.addAttribute("bookingForm", bookingForm);
 
@@ -279,6 +270,16 @@ public class HotelViewController {
         model.addAttribute("services", services);
 
         return CREATE_BOOKING_SERVICE_VIEW;
+    }
+
+    @PostMapping(CREATE_BOOKING_GUEST_URL)
+    public String createBookingGuest(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model) {
+        final List<GuestDTO> guests = guestListingService.allGuests();
+
+        model.addAttribute("guests", guests);
+        model.addAttribute("bookingForm", bookingForm);
+
+        return CREATE_BOOKING_GUEST_VIEW;
     }
 
     @PostMapping(CREATE_BOOKING_SUMMARY_URL)

@@ -16,7 +16,7 @@
 
         <div class="row">
             <div class="col-12">
-                <form action="/createbooking/date" method="post" th:object="${bookingForm}">
+                <form action="/createbooking/summary?isCreated=false" method="post" th:object="${bookingForm}">
                     <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
                     <input type="hidden" id="amounts" name="amounts" th:field="*{amountsOfRoomCategories}" />
                     <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
