@@ -64,6 +64,16 @@ public class CheckOutServiceImpl implements CheckOutService {
             roomCategoryPrices.put(rcp.getRoomCategory().getRoomCategoryName().name(), rcp.getPrice());
         }
 
+        BigDecimal discountInEuro = new BigDecimal("0");
+
+        if (invoice.getStay().getGuest().getDiscountInPercent() > 0) {
+            discountInEuro = discountInEuro.add(
+                    invoice.getTotalNetAmount()
+                            .add(invoice.getValueAddedTaxInEuro())
+                            .divide(BigDecimal.valueOf(invoice.getStay().getGuest()
+                                    .getDiscountInPercent())).setScale(2, RoundingMode.CEILING));
+        }
+
         InvoiceDTO invoiceDTO = InvoiceDTO.builder()
                 .withStayId(stayId)
                 .withInvoiceNumber(invoice.getInvoiceNumber())
@@ -89,8 +99,7 @@ public class CheckOutServiceImpl implements CheckOutService {
                 .withTotalNetAmount(invoice.getTotalNetAmount())
                 .withTotalGrossAmount(invoice.getTotalGrossAmount())
                 .withDiscountInPercent(invoice.getStay().getGuest().getDiscountInPercent())
-                .withDiscountInEuro(invoice.getTotalNetAmount().add(invoice.getValueAddedTaxInEuro()).divide
-                        (BigDecimal.valueOf(invoice.getStay().getGuest().getDiscountInPercent())).setScale(2, RoundingMode.CEILING))
+                .withDiscountInEuro(discountInEuro)
                 .build();
 
         invoicePDFRepository.saveAsPDF(invoiceDTO);
