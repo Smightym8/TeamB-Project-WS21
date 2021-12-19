@@ -2,16 +2,16 @@
 <html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/normalize.css" rel="stylesheet">
-    <link href="/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/normalize.css" >
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/all.min.css">
+    <link rel="stylesheet" href="/css/fontawesome.min.css">
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-
-    <title>Hotelmanagement Software</title>
+    <title>Hotel Schwarz</title>
 
 </head>
 
@@ -25,42 +25,73 @@
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li>
-                <a href="/" class="nav-link text-white">Home</a>
+                <a href="/" class="nav-link text-white">
+                    <i class="fas fa-home fa-fw me-1"></i>
+                    <span class="nav-value">Home</span>
+                </a>
             </li>
             <li>
-                <a href="/rooms" class="nav-link text-white">Rooms</a>
+                <a href="/rooms" class="nav-link text-white">
+                    <i class="fas fa-door-closed fa-fw me-1"></i>
+                    <span class="nav-value">Rooms</span>
+                </a>
             </li>
             <li>
-                <a href="/pricing" class="nav-link text-white">Pricing</a>
+                <a href="/pricing" class="nav-link text-white">
+                    <i class="fas fa-dollar-sign fa-fw me-1"></i>
+                    <span class="nav-value">Pricing</span>
+
+                </a>
             </li>
             <li>
-                <a href="/guests" class="nav-link text-white">Guests</a>
+                <a href="/guests" class="nav-link text-white">
+                    <i class="fas fa-users fa-fw me-1"></i>
+                    <span class="nav-value">Guests</span>
+
+                </a>
             </li>
             <li>
-                <a href="/bookings" class="nav-link text-white">Bookings</a>
+                <a href="/bookings" class="nav-link text-white">
+                    <i class="fas fa-calendar-alt fa-fw me-1"></i>
+                    <span class="nav-value">Bookings</span>
+
+                </a>
             </li>
             <li>
-                <a href="/stays" class="nav-link text-white">Stays</a>
+                <a href="/stays" class="nav-link text-white">
+                    <i class="fas fa-map-pin fa-fw me-1"></i>
+                    <span class="nav-value">Stays</span>
+
+                </a>
             </li>
             <li>
-                <a href="/invoices" class="nav-link text-white">Invoices</a>
+                <a href="/invoices" class="nav-link text-white">
+                    <i class="fas fa-file-invoice-dollar fa-fw me-1"></i>
+                    <span class="nav-value">Invoices</span>
+
+                </a>
             </li>
             <hr>
             <li>
-                <a href="/createguest" class="nav-link text-white">Create guest</a>
+                <a href="/createguest" class="btn btn-light text-dark d-flex">
+                    <i class="fas fa-user-plus align-self-center ms-1 me-2"></i>
+                    <span class="align-self-center">Create guest</span>
+                </a>
             </li>
+            <span style="height: 10px;"></span>
             <li>
-                <a href="/createbooking/guest" class="nav-link text-white">Create booking</a>
+                <a href="/createbooking/guest" class="btn btn-light text-dark d-flex">
+                    <i class="fas fa-calendar-plus align-self-center ms-1 me-1"></i>
+                    <span class="align-self-center">&nbsp;&nbsp;Create booking</span>
+                </a>
             </li>
         </ul>
     </div>
-
 
     <!-- content -->
     <div class="content px-5 py-4 flex-grow-1" layout:fragment="content">
 
     </div>
-
 
     <!-- scripts -->
     <script>
@@ -68,10 +99,11 @@
         bodyId = bodyId[0].id;
 
         let navElements = document.getElementsByClassName("nav-link");
+        let navElementsText = document.getElementsByClassName("nav-value");
 
-        for(let i = 0; i < navElements.length; i += 1) {
+        for(let i = 0; i < navElementsText.length; i += 1) {
 
-            if(navElements[i].innerHTML == bodyId) {
+            if(navElementsText[i].innerText == bodyId) {
                 navElements[i].classList.add("active");
             }
         }
