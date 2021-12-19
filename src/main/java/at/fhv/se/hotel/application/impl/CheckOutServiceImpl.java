@@ -100,24 +100,19 @@ public class CheckOutServiceImpl implements CheckOutService {
 
     @Transactional
     @Override
-    public boolean checkOut(String stayId) {
-        // TODO: Change return type to void and throw exception if stay is not found
-        if (stayRepository.stayById(new StayId(stayId)).isPresent()) {
+    public void checkOut(String stayId) throws StayNotFoundException {
+        Stay stay = stayRepository.stayById(new StayId(stayId)).orElseThrow(
+                () -> new StayNotFoundException("Check out failed! Stay with id " + stayId + " doesn't exist.")
+        );
 
-            Stay stay = stayRepository.stayById(new StayId(stayId)).get();
-            Invoice invoice = invoiceCalculationService.calculateInvoice(stay);
+        Invoice invoice = invoiceCalculationService.calculateInvoice(stay);
 
-            invoiceRepository.add(invoice);
+        invoiceRepository.add(invoice);
 
-            for(Room room : stay.getRooms()) {
-                room.clean();
-            }
-
-            stay.deactivate();
-
-            return true;
-        } else {
-            return false;
+        for(Room room : stay.getRooms()) {
+            room.clean();
         }
+
+        stay.deactivate();
     }
 }
