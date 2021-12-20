@@ -29,5 +29,5 @@ public interface BookingSummaryService {
                                     int amountOfChildren,
                                     String additionalInformation) throws GuestNotFoundException, ServiceNotFoundException, RoomCategoryNotFoundException;
 
-    BookingDetailsDTO detailsByBookingId(String bookingId) throws BookingNotFoundException, GuestNotFoundException;
+    BookingDetailsDTO detailsByBookingId(String bookingId) throws BookingNotFoundException;
 }

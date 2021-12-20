@@ -5,6 +5,7 @@ import at.fhv.se.hotel.application.api.exception.*;
 import at.fhv.se.hotel.application.dto.*;
 import at.fhv.se.hotel.view.forms.BookingForm;
 import at.fhv.se.hotel.view.forms.GuestForm;
+import at.fhv.se.hotel.view.forms.InvoiceForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -21,6 +22,8 @@ import java.util.List;
 
 @Controller
 public class HotelViewController {
+// TODO: change birthday to birth of date
+// TODO: change in html value to th:value, href to to:href
 
 /* ----- Sidebar ----- */
     private static final String HOME_URL = "/";
@@ -81,7 +84,10 @@ public class HotelViewController {
     private static final String INVOICE_URL = "/invoice/{id}";
     private static final String INVOICE_VIEW = "invoice";
 
-    private static final String CHECK_OUT_URL = "/check-out";
+    private static final String INTERMEDIARY_INVOICE_URL = "/createintermediateinvoice/{id}";
+    private static final String INTERMEDIARY_INVOICE_VIEW = "intermediaryInvoice";
+
+    private static final String CHECK_OUT_URL = "/check-out/{id}";
 
 /*----- Invoice Download -----*/
     private static final String INVOICES_PATH = "src/main/resources/static/invoices/";
@@ -184,24 +190,16 @@ public class HotelViewController {
 /*----- Stays -----*/
     @GetMapping(STAYS_URL)
     public String stays(Model model) {
-        // Hibernate shows error if there are no bookings?
-        final List<BookingListingDTO> bookings = bookingListingService.allBookings();
         final List<StayListingDTO> stays = stayListingService.allStays();
 
-        model.addAttribute("bookings", bookings);
         model.addAttribute("stays", stays);
 
         return STAYS_VIEW;
     }
 
 /*----- Invoices -----*/
-    //ToDo: status(isPaid) an die View weitergeben
     @GetMapping(INVOICES_URL)
     public String invoices(Model model) {
-        //Error! HHH000143: Bytecode enhancement failed because no public,
-        //protected or package-private default constructor was found for entity:
-        //at.fhv.se.hotel.domain.model.booking.Booking. Private constructors don't work with runtime proxies!
-        final List<BookingListingDTO> bookings = bookingListingService.allBookings();
         final List<InvoiceListingDTO> invoices = invoiceListingService.allInvoices();
 
         model.addAttribute("invoices", invoices);
@@ -236,7 +234,8 @@ public class HotelViewController {
                 guestForm.getStreetNumber(),
                 guestForm.getZipCode(),
                 guestForm.getCity(),
-                guestForm.getCountry()
+                guestForm.getCountry(),
+                guestForm.getDiscountInPercent()
         );
 
         return "redirect:" + GUESTS_URL;
@@ -345,7 +344,7 @@ public class HotelViewController {
         BookingDetailsDTO bookingDetailsDTO;
         try {
             bookingDetailsDTO = bookingSummaryService.detailsByBookingId(bookingId);
-        } catch (BookingNotFoundException | GuestNotFoundException e) {
+        } catch (BookingNotFoundException e) {
             return redirectError(e.getMessage());
         }
 
@@ -375,7 +374,7 @@ public class HotelViewController {
         BookingDetailsDTO bookingDetailsDTO;
         try {
             bookingDetailsDTO = bookingSummaryService.detailsByBookingId(id);
-        } catch (BookingNotFoundException | GuestNotFoundException e) {
+        } catch (BookingNotFoundException e) {
             return redirectError(e.getMessage());
         }
         model.addAttribute("bookingDetails", bookingDetailsDTO);
@@ -384,11 +383,10 @@ public class HotelViewController {
     }
 
 /*----- Check-In -----*/
-    // TODO: Test
     @GetMapping(CHECK_IN_URL)
     public ModelAndView checkIn(
             @RequestParam("bookingId") String bookingId,
-            @RequestParam("isCheckedIn") boolean isCheckedIn,
+            @RequestParam("isCheckIn") boolean isCheckIn,
             Model model) {
 
         List<RoomDTO> assignedRooms;
@@ -398,7 +396,7 @@ public class HotelViewController {
             return redirectError(e.getMessage());
         }
 
-        if(isCheckedIn) {
+        if(isCheckIn) {
             try {
                 checkInService.checkIn(bookingId, assignedRooms);
             } catch (BookingNotFoundException | RoomNotFoundException e) {
@@ -408,30 +406,21 @@ public class HotelViewController {
 
         model.addAttribute("bookingId", bookingId);
         model.addAttribute("assignedRooms", assignedRooms);
-        model.addAttribute("isCheckedIn", isCheckedIn);
+        model.addAttribute("isCheckIn", isCheckIn);
 
         return new ModelAndView(CHECK_IN_VIEW);
     }
 
 /*----- Check-Out -----*/
-    // TODO: Test
     @GetMapping(STAY_DETAILS_URL)
     public ModelAndView showStay(@PathVariable String id, Model model) {
-
-        // Error! org.hibernate.HibernateException:
-        // HHH000143: Bytecode enhancement failed because no public, protected or package-private default constructor
-        // was found for entity: at.fhv.se.hotel.domain.model.booking.Booking.
-        // Private constructors don't work with runtime proxies!
-        try {
-            BookingDetailsDTO bookingDetailsDTO =  bookingSummaryService.detailsByBookingId(id);
-        } catch (BookingNotFoundException | GuestNotFoundException e) {
-            return redirectError(e.getMessage());
-        }
-
         StayDetailsDTO stayDetailsDTO;
+        InvoiceForm invoiceForm = new InvoiceForm();
+
         try {
             stayDetailsDTO = stayDetailsService.detailsById(id);
             model.addAttribute("stayDetails", stayDetailsDTO);
+            model.addAttribute("invoiceForm", invoiceForm);
         } catch (StayNotFoundException e) {
             return redirectError(e.getMessage());
         }
@@ -439,46 +428,55 @@ public class HotelViewController {
         return new ModelAndView(STAY_DETAILS_VIEW);
     }
 
-    // TODO: Test
     @GetMapping(INVOICE_URL)
-    public ModelAndView showInvoice(@PathVariable String id, Model model) {
+    public ModelAndView showInvoice(@ModelAttribute("invoiceForm") InvoiceForm invoiceForm,
+                                    @RequestParam(value="action") String action,
+                                    @PathVariable String id,
+                                    Model model) {
 
-        // Error! org.hibernate.HibernateException:
-        // HHH000143: Bytecode enhancement failed because no public, protected or package-private default constructor
-        // was found for entity: at.fhv.se.hotel.domain.model.booking.Booking.
-        // Private constructors don't work with runtime proxies!
-        try {
-            BookingDetailsDTO bookingDetailsDTO =  bookingSummaryService.detailsByBookingId(id);
-        } catch (BookingNotFoundException | GuestNotFoundException e) {
-            return redirectError(e.getMessage());
+        if(action.equals("createInvoice")) {
+            InvoiceDTO invoiceDTO;
+            StayDetailsDTO stayDetailsDTO;
+
+            try {
+                invoiceDTO = checkOutService.createIntermediaryInvoice(id, invoiceForm.getRoomNames());
+                stayDetailsDTO = stayDetailsService.detailsById(id);
+            } catch (StayNotFoundException e) {
+                return redirectError(e.getMessage());
+            }
+            model.addAttribute("invoice", invoiceDTO);
+            model.addAttribute("invoiceForm", invoiceForm);
+            model.addAttribute("stayDetails", stayDetailsDTO);
+
+            return new ModelAndView(INTERMEDIARY_INVOICE_VIEW);
+        } else if(action.equals("checkOut")) {
+            try {
+                checkOutService.checkOut(id);
+            } catch (StayNotFoundException e) {
+                return redirectError(e.getMessage());
+            }
+
+            return new ModelAndView("redirect:" + HOME_URL);
         }
 
-        InvoiceDTO invoiceDTO;
+        return redirectError("There was an error.");
+    }
+
+    @GetMapping("/createpartinvoice/{id}")
+    public String createPartInvoice(@ModelAttribute("invoiceForm") InvoiceForm invoiceForm,
+                                    @PathVariable String id){
+        checkOutService.invoice(id, invoiceForm.getRoomNames());
+        return "redirect:" + STAY_DETAILS_URL;
+    }
+
+    // TODO: Check if this method is used
+    @GetMapping(CHECK_OUT_URL)
+    public ModelAndView checkOut(@PathVariable String id) {
         try {
-            invoiceDTO = checkOutService.createInvoice(id);
+            checkOutService.checkOut(id);
         } catch (StayNotFoundException e) {
             return redirectError(e.getMessage());
         }
-        model.addAttribute("invoice", invoiceDTO);
-
-        return new ModelAndView(INVOICE_VIEW);
-    }
-
-    // TODO: Test
-    @GetMapping(CHECK_OUT_URL)
-    public ModelAndView checkOut(@RequestParam("stayId") String stayId) {
-
-        // Error! org.hibernate.HibernateException:
-        // HHH000143: Bytecode enhancement failed because no public, protected or package-private default constructor
-        // was found for entity: at.fhv.se.hotel.domain.model.booking.Booking.
-        // Private constructors don't work with runtime proxies!
-        try {
-            BookingDetailsDTO bookingDetailsDTO =  bookingSummaryService.detailsByBookingId(stayId);
-        } catch (BookingNotFoundException | GuestNotFoundException e) {
-            return redirectError(e.getMessage());
-        }
-
-        checkOutService.checkOut(stayId);
 
         return new ModelAndView("redirect:" + HOME_URL);
     }

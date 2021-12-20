@@ -1,5 +1,6 @@
 package at.fhv.se.hotel;
 
+import at.fhv.se.hotel.application.api.CheckInService;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.guest.Address;
 import at.fhv.se.hotel.domain.model.guest.FullName;
@@ -24,6 +25,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Profile("!test")
 @Component
@@ -132,6 +134,7 @@ public class TestData implements ApplicationRunner {
                 LocalDate.of(1999, 3, 20),
                 "+43 660 123 456 789",
                 "michael.spiegel@students.fhv.at",
+                10.0,
                 Collections.emptyList()
         );
         this.guestRepository.add(michael);
@@ -145,6 +148,7 @@ public class TestData implements ApplicationRunner {
                 LocalDate.of(1997, 8, 27),
                 "+43 676 123 456 789",
                 "ali.cinar@students.fhv.at",
+                0,
                 Collections.emptyList()
         );
         this.guestRepository.add(ali);
@@ -222,7 +226,7 @@ public class TestData implements ApplicationRunner {
         this.roomRepository.add(room15);
 
         // Insert Fake Stays
-        Stay stay1 = Stay.create(booking1, List.of(room1));
+        Stay stay1 = Stay.create(booking1, Map.of(room1, false));
         booking1.deactivate();
         this.stayRepository.add(stay1);
     }

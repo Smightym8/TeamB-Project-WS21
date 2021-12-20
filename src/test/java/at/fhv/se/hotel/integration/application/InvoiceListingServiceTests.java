@@ -28,6 +28,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -63,6 +64,7 @@ public class InvoiceListingServiceTests {
                         LocalDate.of(1999, 3, 20),
                         "+43 660 123 456 789",
                         "michael.spiegel@students.fhv.at",
+                        0,
                         Collections.emptyList()
                 ),
                 Guest.create(new GuestId("2"),
@@ -74,6 +76,7 @@ public class InvoiceListingServiceTests {
                         LocalDate.of(1997, 8, 27),
                         "+43 676 123 456 789",
                         "ali.cinar@students.fhv.at",
+                        0,
                         Collections.emptyList()
                 )
         );
@@ -117,9 +120,9 @@ public class InvoiceListingServiceTests {
                 new Description("This is a single room")
         );
 
-        List<Room> roomsExpected = Arrays.asList(
-                Room.create("single Room", RoomStatus.FREE,categoryExpected),
-                Room.create("double Room",RoomStatus.FREE,categoryExpected)
+        Map<Room, Boolean> roomsExpected = Map.of(
+                Room.create("single Room", RoomStatus.FREE,categoryExpected), false,
+                Room.create("double Room",RoomStatus.FREE,categoryExpected), false
         );
 
         List<Stay> staysExpected = List.of(

@@ -18,7 +18,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 // TODO: Test
 @Component
@@ -41,6 +43,7 @@ public class CheckInServiceImpl implements CheckInService {
 
         List<RoomDTO> assignedRooms = new ArrayList<>();
 
+        // TODO: How to react if there are not enough rooms
         for(BookingWithRoomCategory brc : booking.getRoomCategories()) {
             // Get free rooms from current category
             List<Room> freeRooms = roomRepository.roomsByCategoryAndStatus(
@@ -72,13 +75,12 @@ public class CheckInServiceImpl implements CheckInService {
                 () -> new BookingNotFoundException("Booking with id " + bookingId + " not found")
         );
 
-        List<Room> assignedRooms = new ArrayList<>();
+        Map<Room, Boolean> assignedRooms = new HashMap<>();
         for(RoomDTO r : rooms) {
             Room room = roomRepository.roomByName(r.name()).orElseThrow(
                     () -> new RoomNotFoundException("Room with name " + r.name() + " not found")
             );
-
-            assignedRooms.add(room);
+            assignedRooms.put(room, false);
 
             // Change room status to occupied
             room.occupy();

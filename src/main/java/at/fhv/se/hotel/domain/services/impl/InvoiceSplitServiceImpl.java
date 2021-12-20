@@ -2,12 +2,17 @@ package at.fhv.se.hotel.domain.services.impl;
 
 import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
+import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
 import at.fhv.se.hotel.domain.model.roomcategory.Season;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.stay.Stay;
+import at.fhv.se.hotel.domain.model.stay.StayId;
 import at.fhv.se.hotel.domain.repository.InvoiceRepository;
-import at.fhv.se.hotel.domain.services.api.InvoiceCalculationService;
+import at.fhv.se.hotel.domain.repository.RoomCategoryRepository;
+import at.fhv.se.hotel.domain.repository.RoomRepository;
+import at.fhv.se.hotel.domain.services.api.InvoiceSplitService;
 import at.fhv.se.hotel.domain.services.api.RoomCategoryPriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,23 +24,37 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Component
-public class InvoiceCalculationServiceImpl implements InvoiceCalculationService {
+public class InvoiceSplitServiceImpl implements InvoiceSplitService {
 
     private static final BigDecimal localTaxInEuro = new BigDecimal("0.76");
     private static final BigDecimal valueAddedTaxPercentage = new BigDecimal("0.10");
-    // TODO: vat 10 anstatt 0.1, Zahlen generell auf 2 Nachkommastellen anpassen
+
+    @Autowired
+    InvoiceRepository invoiceRepository;
 
     @Autowired
     RoomCategoryPriceService roomCategoryPriceService;
 
     @Autowired
-    InvoiceRepository invoiceRepository;
+    RoomRepository roomRepository;
+
+    // TODO: Alle Tests wo List<Room> vorkommt anpassen -> Map<Room, Boolean>
+
+     /*
+        -> split invoice bekommt roomNames von stayDetailsView
+        -> ähnlich wie createBookingService, dass ausgwählte in die Liste kommen
+        -> split invoice, splitInvoice (Stay stay, List<String> roomNames)
+        -> Liste roomNames enthält nur Räume die bezahlt werden sollen
+        -> for each room in roomNames, getPrice -> add to calculation
+        -> roomNames, for each über Map<Room, Boolean> rooms im Stay -> put.value(true)
+     */
 
     @Override
-    public Invoice calculateInvoice(Stay stay) {
-        // TODO: Eigene Repo Methode, die Anzahl an Rechnungen zurückgibt
+    public Invoice splitInvoice(Stay stay, List<String> roomNames) {
+
         int todaysInvoicesAmount = invoiceRepository.invoicesByDate(LocalDate.now()).size() + 1;
         List<RoomCategoryPrice> roomCategoryPriceList = new ArrayList<>();
 
@@ -49,15 +68,15 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
             invoiceSuffix = String.valueOf(todaysInvoicesAmount);
         }
 
+        BigDecimal totalNetAmount = new BigDecimal("0");
+
         String invoiceNumber = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
                 + invoiceSuffix;
-
-        BigDecimal totalNetAmount = new BigDecimal("0");
 
         // Calculate Services
         List<Service> services = new ArrayList<>();
         for (Service s : stay.getServices()) {
-            totalNetAmount = totalNetAmount.add(s.getServicePrice().price());
+            totalNetAmount = totalNetAmount.add(s.getServicePrice().price().multiply(BigDecimal.valueOf(roomNames.size())));
             services.add(s);
         }
 
@@ -67,16 +86,15 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
 
         for(int i = 0; i < nights; i++) {
             Season currentSeason = Season.seasonByDate(tempDate);
-            for(BookingWithRoomCategory brc : stay.getBooking().getRoomCategories()) {
+            for(String name : roomNames) {
+                // TODO: Use RoomNotFoundException
+                Room room = roomRepository.roomByName(name).get();
+
                 RoomCategoryPrice currentCategoryPrice = roomCategoryPriceService.by(
-                        brc.getRoomCategory(), currentSeason
+                        room.getRoomCategory(), currentSeason
                 );
 
-                totalNetAmount = totalNetAmount.add(
-                        (
-                                currentCategoryPrice.getPrice()
-                        ).multiply(new BigDecimal(brc.getAmount()))
-                );
+                totalNetAmount = totalNetAmount.add((currentCategoryPrice.getPrice()));
 
                 if(!roomCategoryPriceList.contains(currentCategoryPrice)) {
                     roomCategoryPriceList.add(currentCategoryPrice);
@@ -114,9 +132,9 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
                 roomCategoryPriceList,
                 services,
                 nights,
-                localTaxInEuro.setScale(2, RoundingMode.CEILING),
+                localTaxInEuro,
                 localTaxTotal.setScale(2, RoundingMode.CEILING),
-                valueAddedTaxPercentage.setScale(2, RoundingMode.CEILING),
+                valueAddedTaxPercentage,
                 valueAddedTaxTotal.setScale(2, RoundingMode.CEILING),
                 totalNetAmount.setScale(2, RoundingMode.CEILING),
                 totalGrossAmount.setScale(2, RoundingMode.CEILING)

@@ -3,7 +3,6 @@ package at.fhv.se.hotel.domain.model.guest;
 import at.fhv.se.hotel.domain.Generated;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 
-import javax.xml.bind.annotation.XmlElement;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -19,18 +18,20 @@ public class Guest {
     private LocalDate birthDate;
     private String phoneNumber;
     private String mailAddress;
+    private double discountInPercent;
     private List<Booking> bookings;
 
     // Required by hibernate
     public Guest() {}
 
     public static Guest create (GuestId aGuestId, FullName aName, Gender aGender, Address aAddress, LocalDate aBirthdate,
-                                String aPhoneNumber, String aMailAddress, List<Booking> aBookings) {
-        return new Guest(aGuestId, aName, aGender, aAddress, aBirthdate, aPhoneNumber, aMailAddress, aBookings);
+                                String aPhoneNumber, String aMailAddress, double aDiscountInPercent, List<Booking> aBookings) {
+        return new Guest(aGuestId, aName, aGender, aAddress, aBirthdate,
+                aPhoneNumber, aMailAddress, aDiscountInPercent, aBookings);
     }
 
     private Guest(GuestId aGuestId, FullName aName, Gender aGender, Address aAddress, LocalDate aBirthdate,
-                  String aPhoneNumber, String aMailAddress, List<Booking> aBookings) {
+                  String aPhoneNumber, String aMailAddress, double aDiscountInPercent, List<Booking> aBookings) {
         this.guestId = aGuestId;
         this.name = aName;
         this.gender = aGender;
@@ -38,6 +39,7 @@ public class Guest {
         this.birthDate = aBirthdate;
         this.phoneNumber = aPhoneNumber;
         this.mailAddress = aMailAddress;
+        this.discountInPercent = aDiscountInPercent;
         this.bookings = aBookings;
     }
 
@@ -67,6 +69,10 @@ public class Guest {
         return mailAddress;
     }
 
+    public double getDiscountInPercent() {
+        return discountInPercent;
+    }
+
     public List<Booking> getBookings() {
         return bookings;
     }
@@ -77,23 +83,13 @@ public class Guest {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Guest guest = (Guest) o;
-        return Objects.equals(id, guest.id)
-                && Objects.equals(guestId, guest.guestId)
-                && Objects.equals(name, guest.name)
-                && gender == guest.gender
-                && Objects.equals(address, guest.address)
-                && Objects.equals(birthDate, guest.birthDate)
-                && Objects.equals(phoneNumber, guest.phoneNumber)
-                && Objects.equals(mailAddress, guest.mailAddress)
-                && Objects.equals(bookings, guest.bookings);
+        return Objects.equals(id, guest.id) && Objects.equals(guestId, guest.guestId) && Objects.equals(name, guest.name) && gender == guest.gender && Objects.equals(address, guest.address) && Objects.equals(birthDate, guest.birthDate) && Objects.equals(phoneNumber, guest.phoneNumber) && Objects.equals(mailAddress, guest.mailAddress) && Objects.equals(discountInPercent, guest.discountInPercent) && Objects.equals(bookings, guest.bookings);
     }
 
     @Generated
     @Override
     public int hashCode() {
-        return Objects.hash(id, guestId, name,
-                gender, address, birthDate,
-                phoneNumber, mailAddress, bookings);
+        return Objects.hash(id, guestId, name, gender, address, birthDate, phoneNumber, mailAddress, discountInPercent, bookings);
     }
 }
 

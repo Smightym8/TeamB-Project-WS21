@@ -2,6 +2,7 @@ package at.fhv.se.hotel.integration.infrastructure;
 
 import at.fhv.se.hotel.domain.model.guest.*;
 import at.fhv.se.hotel.domain.repository.GuestRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -38,6 +39,7 @@ public class GuestRepositoryImplTests {
                 LocalDate.of(1990, 3, 1),
                 "+43 660 123 456 789",
                 "john.doe@gmail.com",
+                0,
                 Collections.emptyList()
         );
 
@@ -63,6 +65,7 @@ public class GuestRepositoryImplTests {
                 LocalDate.of(1990, 3, 1),
                 "+43 660 123 456 789",
                 "john.doe@gmail.com",
+                0,
                 Collections.emptyList()
         );
 
@@ -77,6 +80,7 @@ public class GuestRepositoryImplTests {
                 LocalDate.of(1997, 8, 27),
                 "+43 676 123 456 789",
                 "ali.cinar@students.fhv.at",
+                0,
                 Collections.emptyList()
         );
 
@@ -91,6 +95,7 @@ public class GuestRepositoryImplTests {
                 LocalDate.of(1999, 3, 20),
                 "+43 660 123 456 789",
                 "michael.spiegel@students.fhv.at",
+                0,
                 Collections.emptyList()
         );
 

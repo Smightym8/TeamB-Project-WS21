@@ -25,12 +25,10 @@ import org.springframework.test.context.ActiveProfiles;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -59,6 +57,7 @@ public class InvoiceCalculationServiceTest {
                 LocalDate.of(1999, 3, 20),
                 "+43 660 123 456 789",
                 "michael.spiegel@students.fhv.at",
+                0,
                 Collections.emptyList()
         );
 
@@ -70,10 +69,10 @@ public class InvoiceCalculationServiceTest {
         List<Service> services = Arrays.asList(
                 Service.create(new ServiceId("1"),
                         new ServiceName("TV"),
-                        new Price(new BigDecimal("100"))),
+                        new Price(new BigDecimal("100").setScale(2, RoundingMode.CEILING))),
                 Service.create(new ServiceId("2"),
                         new ServiceName("Breakfast"),
-                        new Price(new BigDecimal("100")))
+                        new Price(new BigDecimal("100").setScale(2, RoundingMode.CEILING)))
         );
 
         Booking booking = Booking.create(
@@ -88,28 +87,27 @@ public class InvoiceCalculationServiceTest {
         );
         booking.addRoomCategory(category, 1);
 
-        List<Room> rooms = List.of(
-                Room.create("101", RoomStatus.FREE, category)
+        Map<Room, Boolean> rooms = Map.of(
+                Room.create("101", RoomStatus.FREE, category), false
         );
-
 
         RoomCategoryPrice price = RoomCategoryPrice.create(
                 new RoomCategoryPriceId("1"),
                 Season.SUMMER,
                 category,
-                new BigDecimal("600")
+                new BigDecimal("600").setScale(2, RoundingMode.CEILING)
         );
 
         Stay stayExpected = Stay.create(booking, rooms);
 
         String invoiceNumberExpected = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001";
         int amountOfNightsExpected = 3;
-        BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76");
-        BigDecimal localTaxTotalExpected = new BigDecimal("1.52");
-        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.1");
-        BigDecimal totalNetAmountExpected = new BigDecimal("2001.52");
-        BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("200.0");
-        BigDecimal totalGrossAmountExpected = new BigDecimal("2201.52");
+        BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76").setScale(2, RoundingMode.CEILING);
+        BigDecimal localTaxTotalExpected = new BigDecimal("1.52").setScale(2, RoundingMode.CEILING);
+        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.10").setScale(2, RoundingMode.CEILING);
+        BigDecimal totalNetAmountExpected = new BigDecimal("2001.52").setScale(2, RoundingMode.CEILING);
+        BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("200.00").setScale(2, RoundingMode.CEILING);
+        BigDecimal totalGrossAmountExpected = new BigDecimal("2201.52").setScale(2, RoundingMode.CEILING);
 
         // when
         Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());

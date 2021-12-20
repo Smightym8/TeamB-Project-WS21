@@ -16,6 +16,7 @@ import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.repository.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,6 +29,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -85,6 +87,7 @@ public class InvoiceRepositoryImplTests {
                 LocalDate.of(1999, 3, 20),
                 "+43 660 123 456 789",
                 "michael.spiegel@students.fhv.at",
+                0,
                 Collections.emptyList()
         );
 
@@ -128,12 +131,12 @@ public class InvoiceRepositoryImplTests {
         String roomNameExpected = "Room 1";
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
-        List<Room> roomsExpected = List.of(
+        Map<Room, Boolean> roomsExpected = Map.of(
                 Room.create(
                         roomNameExpected,
                         roomStatusExpected,
                         categoriesExpected.get(0)
-                )
+                ), false
         );
 
         InvoiceId invoiceIdExpected = new InvoiceId("1337");
@@ -168,7 +171,7 @@ public class InvoiceRepositoryImplTests {
         categoriesExpected.forEach(category -> this.roomCategoryRepository.add(category));
         this.bookingRepository.add(bookingExpected);
         categoryPricesExpected.forEach(roomCategoryPrice -> this.roomCategoryPriceRepository.add(roomCategoryPrice));
-        this.roomRepository.add(roomsExpected.get(0));
+        this.roomRepository.add(roomsExpected.entrySet().iterator().next().getKey());
         this.invoiceRepository.add(invoiceExpected);
         em.flush();
         Invoice invoiceActual = this.invoiceRepository.invoiceById(invoiceIdExpected).get();
@@ -191,6 +194,7 @@ public class InvoiceRepositoryImplTests {
                         LocalDate.of(1999, 3, 20),
                         "+43 660 123 456 789",
                         "michael.spiegel@students.fhv.at",
+                        0,
                         Collections.emptyList()
                 ),
                 Guest.create(guestRepository.nextIdentity(),
@@ -202,6 +206,7 @@ public class InvoiceRepositoryImplTests {
                         LocalDate.of(1997, 8, 27),
                         "+43 676 123 456 789",
                         "ali.cinar@students.fhv.at",
+                        0,
                         Collections.emptyList()
                 ),
                 Guest.create(guestRepository.nextIdentity(),
@@ -213,6 +218,7 @@ public class InvoiceRepositoryImplTests {
                         LocalDate.of(1999, 7, 7),
                         "+43 676 123 456 789",
                         "umut.caglayan@students.fhv.at",
+                        0,
                         Collections.emptyList()
                 )
         );
@@ -279,19 +285,19 @@ public class InvoiceRepositoryImplTests {
         List<String> roomsNameExpected = Arrays.asList("Room1","Room2","Room3");
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
-        List<Room> roomsExpected = List.of(
+        Map<Room, Boolean> roomsExpected = Map.of(
                 Room.create(
                         roomsNameExpected.get(0),
                         roomStatusExpected,
-                        categoriesExpected.get(0)),
+                        categoriesExpected.get(0)), false,
                 Room.create(
                         roomsNameExpected.get(1),
                         roomStatusExpected,
-                        categoriesExpected.get(1)),
+                        categoriesExpected.get(1)), false,
                 Room.create(
                         roomsNameExpected.get(2),
                         roomStatusExpected,
-                        categoriesExpected.get(1))
+                        categoriesExpected.get(1)), false
         );
 
         List<Stay> staysExpected = List.of(
@@ -335,7 +341,11 @@ public class InvoiceRepositoryImplTests {
         servicesExpected.forEach(service -> this.serviceRepository.add(service));
         bookingsExpected.forEach(booking -> this.bookingRepository.add(booking));
         categoryPricesExpected.forEach(roomCategoryPrice -> this.roomCategoryPriceRepository.add(roomCategoryPrice));
-        roomsExpected.forEach(room -> this.roomRepository.add(room));
+
+        for (Map.Entry<Room, Boolean> entry : roomsExpected.entrySet()) {
+            this.roomRepository.add(entry.getKey());
+        }
+
         staysExpected.forEach(stay -> this.stayRepository.add(stay));
         invoicesExpected.forEach(invoice -> this.invoiceRepository.add(invoice));
         em.flush();

@@ -16,6 +16,7 @@ import at.fhv.se.hotel.domain.repository.BookingRepository;
 import at.fhv.se.hotel.domain.repository.GuestRepository;
 import at.fhv.se.hotel.domain.repository.RoomCategoryRepository;
 import at.fhv.se.hotel.domain.repository.ServiceRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -62,6 +63,7 @@ public class BookingRepositoryImplTests {
                 LocalDate.of(1999, 3, 20),
                 "+43 660 123 456 789",
                 "michael.spiegel@students.fhv.at",
+                0,
                 Collections.emptyList()
         );
 
@@ -127,6 +129,7 @@ public class BookingRepositoryImplTests {
                 LocalDate.of(1999, 3, 20),
                 "+43 660 123 456 789",
                 "michael.spiegel@students.fhv.at",
+                0,
                 Collections.emptyList()
         );
 
@@ -139,6 +142,7 @@ public class BookingRepositoryImplTests {
                 LocalDate.of(1997, 8, 27),
                 "+43 676 123 456 789",
                 "ali.cinar@students.fhv.at",
+                0,
                 Collections.emptyList()
         );
 

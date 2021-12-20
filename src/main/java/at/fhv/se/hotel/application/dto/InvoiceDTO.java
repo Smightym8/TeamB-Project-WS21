@@ -86,6 +86,20 @@ public class InvoiceDTO {
     @XmlElement(name = "totalGrossAmount")
     private BigDecimal totalGrossAmount;
 
+    @XmlElement(name = "discountInPercent")
+    private double discountInPercent;
+
+    @XmlElement(name = "discountInEuro")
+    private BigDecimal discountInEuro;
+
+    @XmlElementWrapper(name = "categoryNames")
+    @XmlElement(name = "categoryName")
+    private List<String> categoryNames;
+
+    @XmlElementWrapper(name = "categoryPrices")
+    @XmlElement(name = "categoryPrice")
+    private List<BigDecimal> categoryPrices;
+
     public static Builder builder() {
         return new Builder();
     }
@@ -180,6 +194,22 @@ public class InvoiceDTO {
 
     public BigDecimal totalGrossAmount() {
         return totalGrossAmount;
+    }
+
+    public double discountInPercent() {
+        return discountInPercent;
+    }
+
+    public BigDecimal discountInEuro() {
+        return discountInEuro;
+    }
+
+    public List<String> categoryNames() {
+        return categoryNames;
+    }
+
+    public List<BigDecimal> categoryPrices() {
+        return categoryPrices;
     }
 
     public static class Builder {
@@ -303,6 +333,27 @@ public class InvoiceDTO {
             this.instance.totalGrossAmount = totalGrossAmount;
             return this;
         }
+
+        public Builder withDiscountInPercent(double discountInPercent) {
+            this.instance.discountInPercent = discountInPercent;
+            return this;
+        }
+
+        public Builder withDiscountInEuro(BigDecimal discountInEuro) {
+            this.instance.discountInEuro = discountInEuro;
+            return this;
+        }
+
+        public Builder withCategoryNames(List<String> categoryNames) {
+            this.instance.categoryNames = categoryNames;
+            return this;
+        }
+
+        public Builder withCategoryPrices(List<BigDecimal> categoryPrices) {
+            this.instance.categoryPrices = categoryPrices;
+            return this;
+        }
+
 
         public InvoiceDTO build() {
             Objects.requireNonNull(this.instance.stayId, "stayId must be set in InvoiceDTO");

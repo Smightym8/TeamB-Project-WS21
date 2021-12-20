@@ -18,6 +18,7 @@ import at.fhv.se.hotel.domain.model.stay.StayId;
 import at.fhv.se.hotel.domain.repository.InvoiceRepository;
 import at.fhv.se.hotel.domain.repository.StayRepository;
 import at.fhv.se.hotel.domain.services.api.RoomCategoryPriceService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -60,6 +59,7 @@ public class CheckOutServiceTest {
                 LocalDate.of(1999, 3, 20),
                 "+43 660 123 456 789",
                 "michael.spiegel@students.fhv.at",
+                0,
                 Collections.emptyList()
         );
 
@@ -96,32 +96,32 @@ public class CheckOutServiceTest {
                         new RoomCategoryPriceId("1"),
                         Season.SUMMER,
                         categoriesExpected.get(0),
-                        new BigDecimal("300")
+                        new BigDecimal("300").setScale(2, RoundingMode.CEILING)
                 )
         );
 
         String roomNameExpected = "Room 1";
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
-        List<Room> roomsExpected = List.of(
+        // TODO: Change to map with boolean
+        Map<Room, Boolean> roomsExpected = Map.of(
                 Room.create(
                         roomNameExpected,
                         roomStatusExpected,
                         categoriesExpected.get(0)
-                )
+                ), false
         );
 
         StayId idExpected = new StayId(bookingExpected.getBookingId().id());
         Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
 
         int amountOfNightsExpected = 9;
-        BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76");
-        BigDecimal localTaxTotalExpected = new BigDecimal("1.52");
+        BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76").setScale(2, RoundingMode.CEILING);
+        BigDecimal localTaxTotalExpected = new BigDecimal("1.52").setScale(2, RoundingMode.CEILING);
         BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.1");
-        BigDecimal totalNetAmountExpected = new BigDecimal("2901.52");
-        BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("290.0");
-        BigDecimal totalGrossAmountExpected = new BigDecimal("3191.52");
-
+        BigDecimal totalNetAmountExpected = new BigDecimal("2901.52").setScale(2, RoundingMode.CEILING);
+        BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("290.00").setScale(2, RoundingMode.CEILING);
+        BigDecimal totalGrossAmountExpected = new BigDecimal("3191.52").setScale(2, RoundingMode.CEILING);
 
         Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
         Mockito.when(stayRepository.stayById(idExpected)).thenReturn(Optional.of(stayExpected));
@@ -151,8 +151,7 @@ public class CheckOutServiceTest {
     }
 
     @Test
-    void given_existingstay_whencheckout_thenreturntrue() {
-
+    void given_existingstay_whencheckout_then_stayInactive() throws StayNotFoundException {
         // given
         Guest guestExpected = Guest.create(new GuestId("1"),
                 new FullName("Michael", "Spiegel"),
@@ -163,6 +162,7 @@ public class CheckOutServiceTest {
                 LocalDate.of(1999, 3, 20),
                 "+43 660 123 456 789",
                 "michael.spiegel@students.fhv.at",
+                0,
                 Collections.emptyList()
         );
 
@@ -175,10 +175,10 @@ public class CheckOutServiceTest {
         List<Service> servicesExpected = Arrays.asList(
                 Service.create(new ServiceId("1"),
                         new ServiceName("TV"),
-                        new Price(new BigDecimal("100"))),
+                        new Price(new BigDecimal("100").setScale(2, RoundingMode.CEILING))),
                 Service.create(new ServiceId("2"),
                         new ServiceName("Breakfast"),
-                        new Price(new BigDecimal("100")))
+                        new Price(new BigDecimal("100").setScale(2, RoundingMode.CEILING)))
         );
 
         Booking bookingExpected = Booking.create(
@@ -199,19 +199,19 @@ public class CheckOutServiceTest {
                         new RoomCategoryPriceId("1"),
                         Season.SUMMER,
                         categoriesExpected.get(0),
-                        new BigDecimal("300")
+                        new BigDecimal("300").setScale(2, RoundingMode.CEILING)
                 )
         );
 
         String roomNameExpected = "Room 1";
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
-        List<Room> roomsExpected = List.of(
+        Map<Room, Boolean> roomsExpected = Map.of(
                 Room.create(
                         roomNameExpected,
                         roomStatusExpected,
                         categoriesExpected.get(0)
-                )
+                ), false
         );
 
         StayId idExpected = new StayId(bookingExpected.getBookingId().id());
@@ -223,24 +223,10 @@ public class CheckOutServiceTest {
                 .thenReturn(roomCategoryPricesExpected.get(0));
 
         // when
-        boolean statusActual = checkOutService.checkOut(stayExpected.getStayId().id());
+        // Todo: empty list mit roomNames ersetzen
+        checkOutService.checkOut(stayExpected.getStayId().id());
 
         // then
-        assertTrue(statusActual);
-    }
-
-
-    @Test
-    void given_nonexistingstay_whencheckout_thenreturnfalse() {
-
-        // given
-        String nonExistingId = "0";
-
-        // when
-        boolean statusActual = checkOutService.checkOut(nonExistingId);
-
-        // then
-        assertFalse(statusActual);
-
+        assertFalse(stayExpected.isActive());
     }
 }

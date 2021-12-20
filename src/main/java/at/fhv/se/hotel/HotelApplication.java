@@ -3,6 +3,8 @@ package at.fhv.se.hotel;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+// TODO: Remove unnecessary imports
+// TODO: Write some comments
 @SpringBootApplication
 public class HotelApplication {
 

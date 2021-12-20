@@ -24,6 +24,7 @@ public interface GuestCreationService {
      * @param zipCode contains the zipcode of the guest.
      * @param city contains the city of the guest.
      * @param country contains the country of the guest.
+     * @param discountInPrice contains the discount in percent for special guests.
      */
     void createGuest(
             String firstName,
@@ -36,6 +37,7 @@ public interface GuestCreationService {
             String streetNumber,
             String zipCode,
             String city,
-            String country
+            String country,
+            double discountInPrice
     );
 }

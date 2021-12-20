@@ -44,13 +44,16 @@ public class GuestForm {
 
     @NotNull
     private String country;
+
+    @NotNull
+    private double discountInPercent;
     
     public GuestForm(){
     }
 
     public GuestForm(String firstName, String lastName, String gender, String eMail, 
                      String phoneNumber, LocalDate birthDate, String streetName, 
-                     String streetNumber, String zipCode, String city, String country){
+                     String streetNumber, String zipCode, String city, String country, double discountInPercent){
 
         this.firstName = firstName;
         this.lastName = lastName;
@@ -63,6 +66,7 @@ public class GuestForm {
         this.zipCode = zipCode;
         this.city = city;
         this.country = country;
+        this.discountInPercent = discountInPercent;
     }
 
     public String getFirstName() {
@@ -151,5 +155,13 @@ public class GuestForm {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public double getDiscountInPercent() {
+        return discountInPercent;
+    }
+
+    public void setDiscountInPercent(double discountInPercent) {
+        this.discountInPercent = discountInPercent;
     }
 }

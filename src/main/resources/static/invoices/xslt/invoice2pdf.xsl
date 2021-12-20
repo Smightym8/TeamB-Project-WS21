@@ -133,7 +133,10 @@
 											<fo:block>Quantity</fo:block>
 										</fo:table-cell>
 										<fo:table-cell>
-											<fo:block>Category</fo:block>
+											<fo:block>Room Name</fo:block>
+										</fo:table-cell>
+										<fo:table-cell>
+											<fo:block>Room Category</fo:block>
 										</fo:table-cell>
 										<fo:table-cell>
 											<fo:block>Cost per night</fo:block>
@@ -142,7 +145,8 @@
 								</fo:table-header>
 
 								<fo:table-body border-width="1pt" border-style="solid">
-									<xsl:for-each select="invoice/roomCategories/entry">
+									<xsl:for-each select="/invoice/roomCategories/entry">
+										<xsl:variable name ="pos" select="position()" />
 										<fo:table-row>
 											<fo:table-cell>
 												<fo:block>
@@ -156,8 +160,13 @@
 											</fo:table-cell>
 											<fo:table-cell>
 												<fo:block>
+													<xsl:value-of select="/invoice/categoryNames/categoryName[$pos]" />
+												</fo:block>
+											</fo:table-cell>
+											<fo:table-cell>
+												<fo:block>
 													<xsl:text>€ </xsl:text>
-													<xsl:value-of select="/invoice/roomCategoryPrices/entry[key = current()/key]/value" />
+													<xsl:value-of select="/invoice/categoryPrices/categoryPrice[$pos]" />
 												</fo:block>
 											</fo:table-cell>
 										</fo:table-row>
@@ -313,7 +322,11 @@
 
 									<fo:table-row border-width="1pt" border-style="solid">
 										<fo:table-cell>
-											<fo:block>VAT in €</fo:block>
+											<fo:block>
+												<xsl:text>VAT (</xsl:text>
+												<xsl:value-of select="(invoice/valueAddedTaxInPercent) * 100" />
+												<xsl:text>.0 % )</xsl:text>
+											</fo:block>
 										</fo:table-cell>
 										<fo:table-cell>
 											<fo:block>
@@ -323,17 +336,23 @@
 										</fo:table-cell>
 									</fo:table-row>
 
-									<fo:table-row border-width="1pt" border-style="solid">
-										<fo:table-cell>
-											<fo:block>VAT in %</fo:block>
-										</fo:table-cell>
-										<fo:table-cell>
-											<fo:block>
-												<xsl:value-of select="(invoice/valueAddedTaxInPercent) * 100" />
-												<xsl:text>% </xsl:text>
-											</fo:block>
-										</fo:table-cell>
-									</fo:table-row>
+									<xsl:if test="(invoice/discountInPercent) > 0">
+										<fo:table-row border-width="1pt" border-style="solid">
+											<fo:table-cell>
+												<fo:block>
+													<xsl:text>Discount (</xsl:text>
+													<xsl:value-of select="(invoice/discountInPercent)" />
+													<xsl:text>% )</xsl:text>
+												</fo:block>
+											</fo:table-cell>
+											<fo:table-cell>
+												<fo:block>
+													<xsl:text>- €  </xsl:text>
+													<xsl:value-of select="(invoice/discountInEuro)" />
+												</fo:block>
+											</fo:table-cell>
+										</fo:table-row>
+									</xsl:if>
 
 									<fo:table-row border-width="1pt" border-style="solid" font-weight="bold">
 										<fo:table-cell>

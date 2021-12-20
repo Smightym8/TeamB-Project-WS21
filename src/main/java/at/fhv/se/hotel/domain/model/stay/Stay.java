@@ -9,6 +9,7 @@ import at.fhv.se.hotel.domain.model.service.Service;
 import javax.xml.bind.annotation.XmlElement;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 // TODO: Test
@@ -16,7 +17,7 @@ public class Stay {
     // Required by hibernate
     private Long id;
     private StayId stayId;
-    private List<Room> rooms;
+    private Map<Room, Boolean> rooms;
     private Booking booking;
     private boolean isActive;
 
@@ -24,11 +25,11 @@ public class Stay {
     public Stay() {
     }
 
-    public static Stay create(Booking aBooking, List<Room> aRooms) {
+    public static Stay create(Booking aBooking, Map<Room, Boolean> aRooms) {
         return new Stay(aBooking, aRooms);
     }
 
-    private Stay(Booking aBooking, List<Room> aRooms) {
+    private Stay(Booking aBooking, Map<Room, Boolean> aRooms) {
         this.stayId = new StayId(aBooking.getBookingId().id());
         this.booking = aBooking;
         this.rooms = aRooms;
@@ -39,7 +40,7 @@ public class Stay {
         return stayId;
     }
 
-    public List<Room> getRooms() {
+    public Map<Room, Boolean> getRooms() {
         return rooms;
     }
 
