@@ -11,26 +11,26 @@
             <thead>
             <tr>
                 <th class="col-1">Guest</th>
-                <th class="col-1">Check-out date</th>
                 <th class="col-1">Room(s)</th>
+                <th class="col-1">Check-out date</th>
                 <th class="col-1"></th>
                 <th class="col-1"></th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="stay : ${stays}">
-
+            <tr th:each="stay : ${stays}" th:if="${stay.isActive}">
                 <td th:text="${stay.guestFirstName} + ' ' + ${stay.guestLastName}"></td>
+                <td>
+                    <ul style="list-style: none">
+                        <li th:each="room : ${stay.rooms}" th:text="${room}"></li>
+                    </ul>
+                </td>
                 <td th:text="${stay.checkOutDate}"></td>
-                <td>S101, S103</td>
                 <td></td>
-                <td><a th:href="@{/}" type="button" class="btn btn-primary btn-sm">View / Check-out</a></td>
+                <td><a th:href="@{/staydetails/{id}(id=${stay.id})}" type="button" class="btn btn-primary btn-sm">View / Check-Out</a></td>
             </tr>
             </tbody>
         </table>
-
-        <!-- infos?, button add services / generate bill ...? -->
-
     </div>
 
 </body>
