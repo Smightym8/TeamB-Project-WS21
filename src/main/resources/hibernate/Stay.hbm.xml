@@ -16,10 +16,11 @@
         </component>
 
         <!-- One to many mapping to room class -->
-        <bag name="rooms" cascade="save-update">
-            <key column="stay_id" not-null="true" />
-            <many-to-many column="room_id" class="at.fhv.se.hotel.domain.model.room.Room" />
-        </bag>
+        <map name="rooms" cascade="save-update" >
+            <key column="stay_id" not-null="true"/>
+            <map-key-many-to-many column="room_id" class="at.fhv.se.hotel.domain.model.room.Room"/>
+            <element column="is_paid" type="boolean"/>
+        </map>
 
         <!-- One to one mapping to the booking -->
         <one-to-one name="booking" foreign-key="booking_id" class="at.fhv.se.hotel.domain.model.booking.Booking" cascade="save-update">

@@ -24,6 +24,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Profile("!test")
 @Component
@@ -224,7 +225,7 @@ public class TestData implements ApplicationRunner {
         this.roomRepository.add(room15);
 
         // Insert Fake Stays
-        Stay stay1 = Stay.create(booking1, List.of(room1));
+        Stay stay1 = Stay.create(booking1, Map.of(room1, false));
         booking1.deactivate();
         this.stayRepository.add(stay1);
     }

@@ -23,7 +23,7 @@ public class StayListingServiceImpl implements StayListingService {
 
         for (Stay stay : stays){
             List<String> rooms = new ArrayList<>();
-            stay.getRooms().forEach(room -> rooms.add(room.getName()));
+            stay.getRooms().forEach((k, v) -> rooms.add(k.getName()));
 
             StayListingDTO stayDTO = StayListingDTO.builder()
                     .withId(stay.getStayId().id())

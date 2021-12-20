@@ -5,6 +5,7 @@ import at.fhv.se.hotel.application.api.exception.*;
 import at.fhv.se.hotel.application.dto.*;
 import at.fhv.se.hotel.view.forms.BookingForm;
 import at.fhv.se.hotel.view.forms.GuestForm;
+import at.fhv.se.hotel.view.forms.InvoiceForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -82,6 +83,9 @@ public class HotelViewController {
 
     private static final String INVOICE_URL = "/invoice/{id}";
     private static final String INVOICE_VIEW = "invoice";
+
+    private static final String INTERMEDIATE_INVOICE_URL = "/createintermediateinvoice/{id}";
+    private static final String INTERMEDIATE_INVOICE_VIEW = "intermediaryInvoice";
 
     private static final String CHECK_OUT_URL = "/check-out";
 
@@ -417,10 +421,12 @@ public class HotelViewController {
     @GetMapping(STAY_DETAILS_URL)
     public ModelAndView showStay(@PathVariable String id, Model model) {
         StayDetailsDTO stayDetailsDTO;
+        InvoiceForm invoiceForm = new InvoiceForm();
 
         try {
             stayDetailsDTO = stayDetailsService.detailsById(id);
             model.addAttribute("stayDetails", stayDetailsDTO);
+            model.addAttribute("invoiceForm", invoiceForm);
         } catch (StayNotFoundException e) {
             return redirectError(e.getMessage());
         }
@@ -429,18 +435,31 @@ public class HotelViewController {
     }
 
     // TODO: Test
-    @GetMapping(INVOICE_URL)
-    public ModelAndView showInvoice(@PathVariable String id, Model model) {
+    @GetMapping(INTERMEDIATE_INVOICE_URL)
+    public ModelAndView showInvoice(@ModelAttribute("invoiceForm") InvoiceForm invoiceForm,
+                                    @PathVariable String id,
+                                    Model model) {
         InvoiceDTO invoiceDTO;
+        StayDetailsDTO stayDetailsDTO;
 
         try {
-            invoiceDTO = checkOutService.createInvoice(id);
+            invoiceDTO = checkOutService.createIntermediaryInvoice(id, invoiceForm.getRoomNames());
+            stayDetailsDTO = stayDetailsService.detailsById(id);
         } catch (StayNotFoundException e) {
             return redirectError(e.getMessage());
         }
         model.addAttribute("invoice", invoiceDTO);
+        model.addAttribute("invoiceForm", invoiceForm);
+        model.addAttribute("stayDetails", stayDetailsDTO);
 
-        return new ModelAndView(INVOICE_VIEW);
+        return new ModelAndView(INTERMEDIATE_INVOICE_VIEW);
+    }
+
+    @GetMapping("/createpartinvoice/{id}")
+    public String createPartInvoice(@ModelAttribute("invoiceForm") InvoiceForm invoiceForm,
+                                    @PathVariable String id){
+        checkOutService.invoice(id, invoiceForm.getRoomNames());
+        return "redirect:" + HOME_URL;
     }
 
     // TODO: Test

@@ -10,7 +10,7 @@ public class StayDetailsDTO {
     private String id;
     private String guestFirstName;
     private String guestLastName;
-    private List<String> rooms;
+    private Map<String, String> roomsWithCategories;
     private Map<String, BigDecimal> services;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
@@ -34,8 +34,8 @@ public class StayDetailsDTO {
         return guestLastName;
     }
 
-    public List<String> rooms() {
-        return rooms;
+    public Map<String, String> roomsWithCategories() {
+        return roomsWithCategories;
     }
 
     public Map<String, BigDecimal> services() {
@@ -84,8 +84,8 @@ public class StayDetailsDTO {
             return this;
         }
 
-        public Builder withRooms(List<String> rooms) {
-            this.instance.rooms = rooms;
+        public Builder withRoomsWithCategories(Map<String, String> roomsWithCategories) {
+            this.instance.roomsWithCategories = roomsWithCategories;
             return this;
         }
 
@@ -123,7 +123,7 @@ public class StayDetailsDTO {
             Objects.requireNonNull(this.instance.id, "id must be set in StayDetailsDTO");
             Objects.requireNonNull(this.instance.guestFirstName, "guestFirstName must be set in StayDetailsDTO");
             Objects.requireNonNull(this.instance.guestLastName, "guestLastName must be set in StayDetailsDTO");
-            Objects.requireNonNull(this.instance.rooms, "rooms must be set in StayDetailsDTO");
+            Objects.requireNonNull(this.instance.roomsWithCategories, "roomsWithCategories must be set in StayDetailsDTO");
             Objects.requireNonNull(this.instance.checkInDate, "checkInDate must be set in StayDetailsDTO");
             Objects.requireNonNull(this.instance.checkOutDate, "checkOutDate must be set in StayDetailsDTO");
 
