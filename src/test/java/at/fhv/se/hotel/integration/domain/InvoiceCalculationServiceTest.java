@@ -28,10 +28,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -90,10 +87,9 @@ public class InvoiceCalculationServiceTest {
         );
         booking.addRoomCategory(category, 1);
 
-        List<Room> rooms = List.of(
-                Room.create("101", RoomStatus.FREE, category)
+        Map<Room, Boolean> rooms = Map.of(
+                Room.create("101", RoomStatus.FREE, category), false
         );
-
 
         RoomCategoryPrice price = RoomCategoryPrice.create(
                 new RoomCategoryPriceId("1"),

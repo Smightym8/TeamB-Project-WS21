@@ -27,10 +27,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -106,12 +103,12 @@ public class CheckOutServiceTest {
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
         // TODO: Change to map with boolean
-        List<Room> roomsExpected = List.of(
+        Map<Room, Boolean> roomsExpected = Map.of(
                 Room.create(
                         roomNameExpected,
                         roomStatusExpected,
                         categoriesExpected.get(0)
-                )
+                ), false
         );
 
         StayId idExpected = new StayId(bookingExpected.getBookingId().id());
@@ -120,7 +117,7 @@ public class CheckOutServiceTest {
         int amountOfNightsExpected = 9;
         BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76").setScale(2, RoundingMode.CEILING);
         BigDecimal localTaxTotalExpected = new BigDecimal("1.52").setScale(2, RoundingMode.CEILING);
-        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.10").setScale(2, RoundingMode.CEILING);
+        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.1");
         BigDecimal totalNetAmountExpected = new BigDecimal("2901.52").setScale(2, RoundingMode.CEILING);
         BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("290.00").setScale(2, RoundingMode.CEILING);
         BigDecimal totalGrossAmountExpected = new BigDecimal("3191.52").setScale(2, RoundingMode.CEILING);
@@ -209,12 +206,12 @@ public class CheckOutServiceTest {
         String roomNameExpected = "Room 1";
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
-        List<Room> roomsExpected = List.of(
+        Map<Room, Boolean> roomsExpected = Map.of(
                 Room.create(
                         roomNameExpected,
                         roomStatusExpected,
                         categoriesExpected.get(0)
-                )
+                ), false
         );
 
         StayId idExpected = new StayId(bookingExpected.getBookingId().id());
@@ -227,7 +224,7 @@ public class CheckOutServiceTest {
 
         // when
         // Todo: empty list mit roomNames ersetzen
-        checkOutService.checkOut(stayExpected.getStayId().id(), Collections.emptyList());
+        checkOutService.checkOut(stayExpected.getStayId().id());
 
         // then
         assertFalse(stayExpected.isActive());

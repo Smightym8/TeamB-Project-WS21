@@ -8,7 +8,7 @@ import java.util.List;
 public interface CheckOutService {
     InvoiceDTO createInvoice(String stayId) throws StayNotFoundException;
 
-    void checkOut(String stayId, List<String> roomNames) throws StayNotFoundException;
+    void checkOut(String stayId) throws StayNotFoundException;
 
     InvoiceDTO createIntermediaryInvoice(String stayId, List<String> roomNames);
 

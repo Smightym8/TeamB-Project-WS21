@@ -239,14 +239,10 @@ public class CheckOutServiceImpl implements CheckOutService {
 
     @Transactional
     @Override
-    public void checkOut(String stayId, List<String> roomNames) throws StayNotFoundException {
+    public void checkOut(String stayId) throws StayNotFoundException {
         Stay stay = stayRepository.stayById(new StayId(stayId)).orElseThrow(
                 () -> new StayNotFoundException("Check out failed! Stay with id " + stayId + " doesn't exist.")
         );
-
-        Invoice invoice = invoiceSplitService.splitInvoice(stay, roomNames);
-
-        invoiceRepository.add(invoice);
 
         for (Map.Entry<Room, Boolean> room : stay.getRooms().entrySet()) {
             room.getKey().clean();
