@@ -122,6 +122,55 @@ public class TestData implements ApplicationRunner {
         this.roomCategoryPriceRepository.add(doubleRoomSpringPrice);
         this.roomCategoryPriceRepository.add(doubleRoomSummerPrice);
 
+        {
+            Guest guest = Guest.create(guestRepository.nextIdentity(),
+                new FullName("Herbert", "Steurer"),
+                Gender.MALE,
+                new Address("Schulgasse", "9" , "Meiningen", "6812", "Austria"),
+                LocalDate.of(1980, 3, 10),
+                "+43 664 2540490",
+                "herbert.steurer@gmx.at",
+                0,
+                Collections.emptyList()
+            );
+
+            this.guestRepository.add(guest);
+        }
+
+        {
+            Guest guest = Guest.create(guestRepository.nextIdentity(),
+                    new FullName("Johannes", "Moosbrugger"),
+                    Gender.MALE,
+                    new Address("Schollenstraße", "6" , "Hohenems", "6845", "Austria"),
+                    LocalDate.of(1999, 1, 1),
+                    "+43 660 2648080",
+                    "johannes.moosbrugger@gmx.at",
+                    0,
+                    Collections.emptyList()
+            );
+
+            this.guestRepository.add(guest);
+        }
+
+        {
+            Guest guest = Guest.create(guestRepository.nextIdentity(),
+                    new FullName("Nina", "Mähr"),
+                    Gender.MALE,
+                    new Address("Hofsteigstraße", "68" , "Schwarzach", "6858", "Austria"),
+                    LocalDate.of(2000, 10, 1),
+                    "+43 660 6884520",
+                    "nina.maehr@gmx.at",
+                    0,
+                    Collections.emptyList()
+            );
+
+            this.guestRepository.add(guest);
+        }
+
+
+
+
+
         // Insert fake guests
         Guest michael = Guest.create(guestRepository.nextIdentity(),
                 new FullName("Michael", "Spiegel"),
@@ -152,9 +201,14 @@ public class TestData implements ApplicationRunner {
         this.guestRepository.add(ali);
 
         // Insert fake bookings
+
+
+
+
+
         Booking booking1 = Booking.create(
                 LocalDate.now(),
-                LocalDate.now().plusDays(10),
+                LocalDate.now().plusDays(8),
                 bookingRepository.nextIdentity(),
                 michael,
                 List.of(tvService),
