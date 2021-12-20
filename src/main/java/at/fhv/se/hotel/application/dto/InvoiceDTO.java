@@ -92,10 +92,12 @@ public class InvoiceDTO {
     @XmlElement(name = "discountInEuro")
     private BigDecimal discountInEuro;
 
-    @XmlElement(name = "categoryNames")
+    @XmlElementWrapper(name = "categoryNames")
+    @XmlElement(name = "categoryName")
     private List<String> categoryNames;
 
-    @XmlElement(name = "categoryPrices")
+    @XmlElementWrapper(name = "categoryPrices")
+    @XmlElement(name = "categoryPrice")
     private List<BigDecimal> categoryPrices;
 
     public static Builder builder() {
