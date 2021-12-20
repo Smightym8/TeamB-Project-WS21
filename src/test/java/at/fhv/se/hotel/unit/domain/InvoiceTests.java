@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -76,8 +77,8 @@ public class InvoiceTests {
                 )
         );
 
-        List<Room> rooms = List.of(
-                Room.create("101", RoomStatus.FREE, category)
+        Map<Room, Boolean> rooms = Map.of(
+                Room.create("101", RoomStatus.FREE, category), false
         );
 
         // when

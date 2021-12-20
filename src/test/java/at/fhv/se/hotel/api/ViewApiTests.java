@@ -4,6 +4,7 @@ import at.fhv.se.hotel.application.api.*;
 import at.fhv.se.hotel.application.dto.*;
 import at.fhv.se.hotel.domain.model.guest.Gender;
 import at.fhv.se.hotel.view.forms.GuestForm;
+import at.fhv.se.hotel.view.forms.InvoiceForm;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
@@ -677,7 +679,7 @@ public class ViewApiTests {
                 .withId(stayIdExpected)
                 .withGuestFirstName("John")
                 .withGuestLastName("Doe")
-                .withRooms(List.of("101", "102"))
+                .withRoomsWithCategories(Map.of("101", "Single Room"))
                 .withServices(Map.of("", new BigDecimal("30")))
                 .withCheckInDate(LocalDate.of(2021, 8, 1))
                 .withCheckOutDate(LocalDate.of(2021, 8, 10))
@@ -701,58 +703,132 @@ public class ViewApiTests {
     }
 
     @Test
-    public void when_get_invoiceUrl_then_statusOk_and_invoiceView_and_checkOutService_called() throws Exception {
+    public void when_get_invoiceUrl_and_createInvoice_then_statusOk_and_invoiceView_and_checkOutService_called() throws Exception {
         // given
         String stayIdExpected = "1";
-        InvoiceDTO invoiceDTOExpected = InvoiceDTO.builder()
-                .withStayId(stayIdExpected)
-                .withInvoiceNumber("20211207001")
-                .withInvoiceDate(LocalDate.of(2021, 12, 7))
+        StayDetailsDTO stayDetailsDTOExpected = StayDetailsDTO.builder()
+                .withId(stayIdExpected)
                 .withGuestFirstName("John")
                 .withGuestLastName("Doe")
+                .withRoomsWithCategories(Map.of("101", "Single Room"))
+                .withServices(Map.of("", new BigDecimal("30")))
+                .withCheckInDate(LocalDate.of(2021, 8, 1))
+                .withCheckOutDate(LocalDate.of(2021, 8, 10))
+                .withAmountOfAdults(2)
+                .withAmountOfChildren(1)
+                .withAdditionalInformation("Vegan")
+                .build();
+
+        InvoiceDTO invoiceDTOExpected = InvoiceDTO.builder()
+                .withStayId(stayIdExpected)
+                .withInvoiceNumber("20211220001")
+                .withInvoiceDate(LocalDate.of(2021, 12, 20))
+                .withGuestFirstName(stayDetailsDTOExpected.guestFirstName())
+                .withGuestLastName(stayDetailsDTOExpected.guestLastName())
                 .withStreetName("Street")
                 .withStreetNumber("1")
                 .withZipCode("6850")
                 .withCity("Dornbirn")
                 .withAmountOfAdults(2)
                 .withAmountOfChildren(1)
-                .withServices(Map.of("Breakfast", new BigDecimal("10")))
-                .withCategories(Map.of("Single Room", 2))
-                .withCategoryPrices(Map.of("Single Room", new BigDecimal("200")))
-                .withCheckInDate(LocalDate.of(2021, 12, 1))
-                .withCheckOutDate(LocalDate.of(2021, 12, 7))
-                .withAmountOfNights(6)
-                .withLocalTaxPerPerson(new BigDecimal("0.76"))
-                .withLocalTaxTotal(new BigDecimal("1.52"))
+                .withServices(Map.of("Breakfast", new BigDecimal("100")))
+                .withCategories(Map.of("Single Room", 1))
+                .withCategoryPrices(Map.of("Single Room", new BigDecimal("300")))
+                .withCheckInDate(stayDetailsDTOExpected.checkInDate())
+                .withCheckOutDate(stayDetailsDTOExpected.checkOutDate())
+                .withAmountOfNights(9)
+                .withLocalTaxPerPerson(new BigDecimal("0.52"))
+                .withLocalTaxTotal(new BigDecimal("0.52"))
                 .withValueAddedTaxInPercent(new BigDecimal("0.1"))
-                .withValueAddedTaxInEuro(new BigDecimal("200"))
-                .withTotalNetAmount(new BigDecimal("2000"))
-                .withTotalGrossAmount(new BigDecimal("2500"))
+                .withValueAddedTaxInEuro(new BigDecimal("0.52"))
+                .withTotalNetAmount(new BigDecimal("0.52"))
+                .withTotalGrossAmount(new BigDecimal("0.52"))
+                .withDiscountInPercent(10)
+                .withDiscountInEuro(new BigDecimal("0.52"))
+                .withCategoryNames(List.of("Single Room"))
+                .withCategoryPrices(List.of(new BigDecimal("0.52")))
                 .build();
 
-        Mockito.when(checkOutService.createInvoice(stayIdExpected)).thenReturn(invoiceDTOExpected);
+        List<String> roomNamesExpected = List.of("101");
+
+        Mockito.when(checkOutService.createIntermediaryInvoice(stayIdExpected, roomNamesExpected)).thenReturn(invoiceDTOExpected);
+        Mockito.when(stayDetailsService.detailsById(stayIdExpected)).thenReturn(stayDetailsDTOExpected);
 
         // when ... then
         this.mockMvc.perform(get("/invoice/" + stayIdExpected)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .content(buildUrlEncodedFormEntity(
+                        "roomNames", "101"
+                ))
+                .param("action", "createInvoice")
                 .accept(org.springframework.http.MediaType.TEXT_PLAIN))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("text/html;charset=UTF-8"))
-                .andExpect(view().name("invoice"));
+                .andExpect(view().name("intermediaryInvoice"));
 
         // then
-        Mockito.verify(checkOutService, times(1)).createInvoice(stayIdExpected);
+        Mockito.verify(checkOutService, times(1)).createIntermediaryInvoice(stayIdExpected, roomNamesExpected);
+        Mockito.verify(stayDetailsService, times(1)).detailsById(stayIdExpected);
     }
 
     @Test
-    public void when_get_checkOutUrl_then_statusRedirect_and_redirectToHome_and_checkOut_called() throws Exception {
+    public void when_get_invoiceUrl_and_checkOut_then_statusRedirect_and_redirectToHomeView_and_checkOutService_called() throws Exception {
         // given
         String stayIdExpected = "1";
+        StayDetailsDTO stayDetailsDTOExpected = StayDetailsDTO.builder()
+                .withId(stayIdExpected)
+                .withGuestFirstName("John")
+                .withGuestLastName("Doe")
+                .withRoomsWithCategories(Map.of("101", "Single Room"))
+                .withServices(Map.of("", new BigDecimal("30")))
+                .withCheckInDate(LocalDate.of(2021, 8, 1))
+                .withCheckOutDate(LocalDate.of(2021, 8, 10))
+                .withAmountOfAdults(2)
+                .withAmountOfChildren(1)
+                .withAdditionalInformation("Vegan")
+                .build();
+
+        InvoiceDTO invoiceDTOExpected = InvoiceDTO.builder()
+                .withStayId(stayIdExpected)
+                .withInvoiceNumber("20211220001")
+                .withInvoiceDate(LocalDate.of(2021, 12, 20))
+                .withGuestFirstName(stayDetailsDTOExpected.guestFirstName())
+                .withGuestLastName(stayDetailsDTOExpected.guestLastName())
+                .withStreetName("Street")
+                .withStreetNumber("1")
+                .withZipCode("6850")
+                .withCity("Dornbirn")
+                .withAmountOfAdults(2)
+                .withAmountOfChildren(1)
+                .withServices(Map.of("Breakfast", new BigDecimal("100")))
+                .withCategories(Map.of("Single Room", 1))
+                .withCategoryPrices(Map.of("Single Room", new BigDecimal("300")))
+                .withCheckInDate(stayDetailsDTOExpected.checkInDate())
+                .withCheckOutDate(stayDetailsDTOExpected.checkOutDate())
+                .withAmountOfNights(9)
+                .withLocalTaxPerPerson(new BigDecimal("0.52"))
+                .withLocalTaxTotal(new BigDecimal("0.52"))
+                .withValueAddedTaxInPercent(new BigDecimal("0.1"))
+                .withValueAddedTaxInEuro(new BigDecimal("0.52"))
+                .withTotalNetAmount(new BigDecimal("0.52"))
+                .withTotalGrossAmount(new BigDecimal("0.52"))
+                .withDiscountInPercent(10)
+                .withDiscountInEuro(new BigDecimal("0.52"))
+                .withCategoryNames(List.of("Single Room"))
+                .withCategoryPrices(List.of(new BigDecimal("0.52")))
+                .build();
+
+        Mockito.doNothing().when(checkOutService).checkOut(stayIdExpected);
 
         // when ... then
-        this.mockMvc.perform(get("/check-out")
-                .param("stayId", stayIdExpected)
-                .accept(org.springframework.http.MediaType.TEXT_PLAIN))
+        this.mockMvc.perform(get("/invoice/" + stayIdExpected)
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .content(buildUrlEncodedFormEntity(
+                                "roomNames", "101"
+                        ))
+                        .param("action", "checkOut")
+                        .accept(org.springframework.http.MediaType.TEXT_PLAIN))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"));

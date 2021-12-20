@@ -29,6 +29,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -100,10 +101,11 @@ public class StayListingServiceTests {
                 new RoomCategoryName("Single Room"),
                 new Description("This is a single room")
         );
-        List<Room> roomsExpected = Arrays.asList(
-                Room.create("single Room",RoomStatus.FREE,categoryExpected),
-                Room.create("double Room",RoomStatus.FREE,categoryExpected)
-                );
+
+        Map<Room, Boolean> roomsExpected = Map.of(
+                Room.create("single Room",RoomStatus.FREE,categoryExpected), false,
+                Room.create("double Room",RoomStatus.FREE,categoryExpected), false
+        );
 
         List<Stay> staysExpected = List.of(
                 Stay.create(bookingExpected,roomsExpected),

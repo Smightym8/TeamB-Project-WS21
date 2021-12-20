@@ -14,6 +14,7 @@ import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.model.stay.Stay;
+import at.fhv.se.hotel.domain.model.stay.StayId;
 import at.fhv.se.hotel.domain.repository.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -28,6 +29,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -107,12 +109,12 @@ public class StayRepositoryImplTests {
         String roomNameExpected = "Room 1";
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
-        List<Room> roomsExpected = List.of(
+        Map<Room, Boolean> roomsExpected = Map.of(
                 Room.create(
                         roomNameExpected,
                         roomStatusExpected,
                         categoriesExpected.get(0)
-                )
+                ), false
         );
 
         Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
@@ -124,7 +126,7 @@ public class StayRepositoryImplTests {
         this.serviceRepository.add(servicesExpected.get(0));
         this.serviceRepository.add(servicesExpected.get(1));
         this.bookingRepository.add(bookingExpected);
-        this.roomRepository.add(roomsExpected.get(0));
+        this.roomRepository.add(roomsExpected.entrySet().iterator().next().getKey());
         this.stayRepository.add(stayExpected);
         em.flush();
 
@@ -168,12 +170,13 @@ public class StayRepositoryImplTests {
                         new Price(new BigDecimal("100")))
         );
 
+        BookingId idExpected = new BookingId("1");
         LocalDate checkInDateExpected = LocalDate.of(2022, 5, 1);
         LocalDate checkOutDateExpected = LocalDate.of(2022, 5, 10);
         Booking bookingExpected = Booking.create(
                 checkInDateExpected,
                 checkOutDateExpected,
-                new BookingId("1"),
+                idExpected,
                 guestExpected,
                 servicesExpected,
                 2,
@@ -186,12 +189,12 @@ public class StayRepositoryImplTests {
         String roomNameExpected = "Room 1";
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
-        List<Room> roomsExpected = List.of(
+        Map<Room, Boolean> roomsExpected = Map.of(
                 Room.create(
                         roomNameExpected,
                         roomStatusExpected,
                         categoriesExpected.get(0)
-                )
+                ), false
         );
 
         Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
@@ -203,7 +206,7 @@ public class StayRepositoryImplTests {
         this.serviceRepository.add(servicesExpected.get(0));
         this.serviceRepository.add(servicesExpected.get(1));
         this.bookingRepository.add(bookingExpected);
-        this.roomRepository.add(roomsExpected.get(0));
+        this.roomRepository.add(roomsExpected.entrySet().iterator().next().getKey());
         this.stayRepository.add(stayExpected);
         this.em.flush();
 
@@ -307,29 +310,29 @@ public class StayRepositoryImplTests {
         bookingsExpected.get(1).addRoomCategory(categoriesExpected.get(1), 1);
         bookingsExpected.get(2).addRoomCategory(categoriesExpected.get(0),2);
 
-        List<Room> rooms1 = List.of(
+        Map<Room, Boolean> rooms1 = Map.of(
                 Room.create(
                         "Room1",
                         RoomStatus.FREE,
-                        categoriesExpected.get(0))
+                        categoriesExpected.get(0)), false
         );
 
-        List<Room> rooms2 = List.of(
+        Map<Room, Boolean> rooms2 = Map.of(
                 Room.create(
                         "Room2",
                         RoomStatus.FREE,
-                        categoriesExpected.get(1))
+                        categoriesExpected.get(1)), false
         );
 
-        List<Room> rooms3 = List.of(
+        Map<Room, Boolean> rooms3 = Map.of(
                 Room.create(
                         "Room3",
                         RoomStatus.FREE,
-                        categoriesExpected.get(0)),
+                        categoriesExpected.get(0)), false,
                 Room.create(
                         "Room4",
                         RoomStatus.FREE,
-                        categoriesExpected.get(0))
+                        categoriesExpected.get(0)), false
         );
 
         List<Stay> staysExpected = List.of(
@@ -343,9 +346,9 @@ public class StayRepositoryImplTests {
         categoriesExpected.forEach(category -> this.roomCategoryRepository.add(category));
         servicesExpected.forEach(service -> this.serviceRepository.add(service));
         bookingsExpected.forEach(booking -> this.bookingRepository.add(booking));
-        rooms1.forEach(room -> this.roomRepository.add(room));
-        rooms2.forEach(room -> this.roomRepository.add(room));
-        rooms3.forEach(room -> this.roomRepository.add(room));
+        rooms1.forEach((k, v) -> this.roomRepository.add(k));
+        rooms2.forEach((k, v) -> this.roomRepository.add(k));
+        rooms3.forEach((k, v) -> this.roomRepository.add(k));
         staysExpected.forEach(stay -> this.stayRepository.add(stay));
         this.em.flush();
 

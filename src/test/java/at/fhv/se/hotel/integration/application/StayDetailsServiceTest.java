@@ -28,10 +28,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -92,8 +89,8 @@ public class StayDetailsServiceTest {
                 new RoomCategoryName("Single Room"),
                 new Description("This is a single room")
         );
-        List<Room> roomsExpected = Arrays.asList(
-                Room.create("S101", RoomStatus.FREE,categoryExpected)
+        Map<Room, Boolean> roomsExpected = Map.of(
+                Room.create("S101", RoomStatus.FREE,categoryExpected), false
         );
 
         Stay staysExpected = Stay.create(bookingExpected,roomsExpected);
@@ -106,16 +103,11 @@ public class StayDetailsServiceTest {
         assertEquals(idExpected, stayDetailsDTOActual.id());
         assertEquals(guestExpected.getName().firstName(), stayDetailsDTOActual.guestFirstName());
         assertEquals(guestExpected.getName().lastName(), stayDetailsDTOActual.guestLastName());
-        assertEquals(roomsExpected.size(), stayDetailsDTOActual.rooms().size());
         assertEquals(servicesExpected.size(), stayDetailsDTOActual.services().size());
         assertEquals(checkInExpected, stayDetailsDTOActual.checkInDate());
         assertEquals(checkOutExpected, stayDetailsDTOActual.checkOutDate());
         assertEquals(amountOfAdultsExpected, stayDetailsDTOActual.amountOfAdults());
         assertEquals(amountOfChildrenExpected, stayDetailsDTOActual.amountOfChildren());
         assertEquals(additionalInformationExpected, stayDetailsDTOActual.additionalInformation());
-
-        for(Room r : roomsExpected) {
-            assertTrue(stayDetailsDTOActual.rooms().contains(r.getName()));
-        }
     }
 }

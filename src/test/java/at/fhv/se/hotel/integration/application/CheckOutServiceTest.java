@@ -28,10 +28,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -106,12 +103,13 @@ public class CheckOutServiceTest {
         String roomNameExpected = "Room 1";
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
-        List<Room> roomsExpected = List.of(
+        // TODO: Change to map with boolean
+        Map<Room, Boolean> roomsExpected = Map.of(
                 Room.create(
                         roomNameExpected,
                         roomStatusExpected,
                         categoriesExpected.get(0)
-                )
+                ), false
         );
 
         StayId idExpected = new StayId(bookingExpected.getBookingId().id());
@@ -208,12 +206,12 @@ public class CheckOutServiceTest {
         String roomNameExpected = "Room 1";
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
-        List<Room> roomsExpected = List.of(
+        Map<Room, Boolean> roomsExpected = Map.of(
                 Room.create(
                         roomNameExpected,
                         roomStatusExpected,
                         categoriesExpected.get(0)
-                )
+                ), false
         );
 
         StayId idExpected = new StayId(bookingExpected.getBookingId().id());
@@ -225,6 +223,7 @@ public class CheckOutServiceTest {
                 .thenReturn(roomCategoryPricesExpected.get(0));
 
         // when
+        // Todo: empty list mit roomNames ersetzen
         checkOutService.checkOut(stayExpected.getStayId().id());
 
         // then

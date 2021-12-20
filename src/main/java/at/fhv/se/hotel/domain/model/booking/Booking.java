@@ -27,7 +27,7 @@ public class Booking {
     private String additionalInformation;
 
     // Required by hibernate
-    private Booking() {}
+    protected Booking() {}
 
     public static Booking create(LocalDate aCheckInDate, LocalDate aCheckOutDate,
                                  BookingId aBookingId, Guest aGuest,

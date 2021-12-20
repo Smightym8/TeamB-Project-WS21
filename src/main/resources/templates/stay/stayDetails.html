@@ -34,38 +34,71 @@
         </tr>
         </tbody>
     </table>
+    <form action="#" th:action="@{/invoice/{id}(id=${stayDetails.id})}" method="get" th:object="${invoiceForm}">
+        <h6>Rooms:</h6>
+        <table id="roomsTable" class="table table-striped">
+            <thead>
+            <tr>
+                <th class="col-1"></th>
+                <th class="col">Category</th>
+                <th class="col">Room number</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="room : ${stayDetails.roomsWithCategories()}">
+                <td><input type="checkbox" class="form-check-input" th:field="*{roomNames}" th:value="${room.key}" onclick="test()" /></td>
+                <td th:text="${room.value}"></td>
+                <td th:text="${room.key}"></td>
+            </tr>
+        </table>
 
-    <h6>Rooms:</h6>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Name</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="room : ${stayDetails.rooms}">
-            <td th:text="${room}"></td>
-        </tr>
-        </tbody>
-    </table>
+        <br>
 
-    <h6>Services:</h6>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Price</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="service : ${stayDetails.services}">
-            <td th:text="${service.key}"></td>
-            <td th:text="${service.value} + '€'"></td>
-        </tr>
-        </tbody>
-    </table>
-    <a th:href="@{/invoice/{id}(id=${stayDetails.id})}" type="button" class="btn btn-primary">Check-Out</a>
-    <a href="/" type="button" class="btn btn-primary">Back</a>
+        <h6>Services:</h6>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th class="col">Name</th>
+                <th class="col">Cost per unit</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="service : ${stayDetails.services}">
+                <td th:text="${service.key}"></td>
+                <td th:text="${service.value} + '€'"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <button name="action" value="createInvoice" type="submit" id="invoice" class="btn btn-secondary" disabled>Create Invoice</button>
+        <button name="action" value="checkOut" type="submit" id="checkout" class="btn btn-secondary" disabled>Check-Out</button>
+    </form>
+
+    <script>
+        // Check if table with rooms is empty so that are all billed
+        // Only th should be there
+        let tbl = document.getElementById('roomsTable');
+
+        if (tbl.rows.length === 1) {
+            document.getElementById("checkout").disabled = false;
+            document.getElementById("checkout").setAttribute('class','btn btn-primary');
+        }
+
+         function test() {
+
+             let checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+             let invoiceButton = document.getElementById("invoice");
+
+             if (checkboxes[0] == null) {
+                 invoiceButton.disabled = true;
+                 invoiceButton.setAttribute('class','btn btn-secondary');
+
+             } else {
+                 invoiceButton.disabled = false;
+                 invoiceButton.setAttribute('class','btn btn-primary');
+             }
+        }
+    </script>
 
 </div>
 </body>
