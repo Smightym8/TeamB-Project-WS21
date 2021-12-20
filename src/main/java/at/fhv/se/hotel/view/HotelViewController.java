@@ -84,10 +84,10 @@ public class HotelViewController {
     private static final String INVOICE_URL = "/invoice/{id}";
     private static final String INVOICE_VIEW = "invoice";
 
-    private static final String INTERMEDIATE_INVOICE_URL = "/createintermediateinvoice/{id}";
-    private static final String INTERMEDIATE_INVOICE_VIEW = "intermediaryInvoice";
+    private static final String INTERMEDIARY_INVOICE_URL = "/createintermediateinvoice/{id}";
+    private static final String INTERMEDIARY_INVOICE_VIEW = "intermediaryInvoice";
 
-    private static final String CHECK_OUT_URL = "/check-out";
+    private static final String CHECK_OUT_URL = "/check-out/{id}";
 
 /*----- Invoice Download -----*/
     private static final String INVOICES_PATH = "src/main/resources/static/invoices/";
@@ -435,8 +435,8 @@ public class HotelViewController {
     }
 
     // TODO: Test
-    @GetMapping(INTERMEDIATE_INVOICE_URL)
-    public ModelAndView showInvoice(@ModelAttribute("invoiceForm") InvoiceForm invoiceForm,
+   /* @GetMapping(INTERMEDIARY_INVOICE_URL)
+    public ModelAndView showIntermediateInvoice(@ModelAttribute("invoiceForm") InvoiceForm invoiceForm,
                                     @PathVariable String id,
                                     Model model) {
         InvoiceDTO invoiceDTO;
@@ -452,8 +452,56 @@ public class HotelViewController {
         model.addAttribute("invoiceForm", invoiceForm);
         model.addAttribute("stayDetails", stayDetailsDTO);
 
-        return new ModelAndView(INTERMEDIATE_INVOICE_VIEW);
+        return new ModelAndView(INTERMEDIARY_INVOICE_VIEW);
+    }*/
+
+    @GetMapping(INVOICE_URL)
+    public ModelAndView showInvoice(@ModelAttribute("invoiceForm") InvoiceForm invoiceForm,
+                                    @RequestParam(value="action", required=true) String action,
+                                    @PathVariable String id,
+                                    Model model) {
+        InvoiceDTO invoiceDTO;
+        StayDetailsDTO stayDetailsDTO;
+
+        try {
+            invoiceDTO = checkOutService.createIntermediaryInvoice(id, invoiceForm.getRoomNames());
+            stayDetailsDTO = stayDetailsService.detailsById(id);
+        } catch (StayNotFoundException e) {
+            return redirectError(e.getMessage());
+        }
+        model.addAttribute("invoice", invoiceDTO);
+        model.addAttribute("invoiceForm", invoiceForm);
+        model.addAttribute("stayDetails", stayDetailsDTO);
+
+        return new ModelAndView(action);
     }
+
+    /*
+    @RequestMapping(value = INVOICE_URL, method = RequestMethod.GET)
+    public ModelAndView showInvoice(@ModelAttribute("invoiceForm") InvoiceForm invoiceForm,
+                                    @PathVariable String id,
+                                    @RequestParam(value="action", required=true) String action,
+                                    Model model) {
+        InvoiceDTO invoiceDTO;
+        StayDetailsDTO stayDetailsDTO;
+
+        try {
+            invoiceDTO = checkOutService.createIntermediaryInvoice(id, invoiceForm.getRoomNames());
+            stayDetailsDTO = stayDetailsService.detailsById(id);
+        } catch (StayNotFoundException e) {
+            return redirectError(e.getMessage());
+        }
+
+        model.addAttribute("invoice", invoiceDTO);
+        model.addAttribute("invoiceForm", invoiceForm);
+        model.addAttribute("stayDetails", stayDetailsDTO);
+
+        if (action.equals("checkout")) {
+            return new ModelAndView(INVOICE_VIEW);
+        }
+
+        return new ModelAndView(INTERMEDIATE_INVOICE_VIEW);
+    }*/
 
     @GetMapping("/createpartinvoice/{id}")
     public String createPartInvoice(@ModelAttribute("invoiceForm") InvoiceForm invoiceForm,
@@ -464,9 +512,10 @@ public class HotelViewController {
 
     // TODO: Test
     @GetMapping(CHECK_OUT_URL)
-    public ModelAndView checkOut(@RequestParam("stayId") String stayId) {
+    public ModelAndView checkOut(@ModelAttribute("invoiceForm") InvoiceForm invoiceForm,
+                                 @PathVariable String id) {
         try {
-            checkOutService.checkOut(stayId);
+            checkOutService.checkOut(id, invoiceForm.getRoomNames());
         } catch (StayNotFoundException e) {
             return redirectError(e.getMessage());
         }

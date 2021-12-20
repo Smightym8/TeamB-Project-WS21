@@ -105,6 +105,7 @@ public class CheckOutServiceTest {
         String roomNameExpected = "Room 1";
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
+        // TODO: Change to map with boolean
         List<Room> roomsExpected = List.of(
                 Room.create(
                         roomNameExpected,
@@ -225,7 +226,8 @@ public class CheckOutServiceTest {
                 .thenReturn(roomCategoryPricesExpected.get(0));
 
         // when
-        checkOutService.checkOut(stayExpected.getStayId().id());
+        // Todo: empty list mit roomNames ersetzen
+        checkOutService.checkOut(stayExpected.getStayId().id(), Collections.emptyList());
 
         // then
         assertFalse(stayExpected.isActive());
