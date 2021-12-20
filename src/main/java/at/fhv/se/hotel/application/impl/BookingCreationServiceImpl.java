@@ -40,7 +40,7 @@ public class BookingCreationServiceImpl implements BookingCreationService {
     @Autowired
     ServiceRepository serviceRepository;
 
-    @Transactional(readOnly = false)
+    @Transactional
     @Override
     public String book(String guestId,
                      List<String> roomCategoryIds,
@@ -73,11 +73,11 @@ public class BookingCreationServiceImpl implements BookingCreationService {
 
         int i = 0;
         for (String s : roomCategoryIds) {
-
             if (amounts.get(i) > 0) {
                 RoomCategory category = roomCategoryRepository.roomCategoryById(new RoomCategoryId(s)).orElseThrow(
                         () -> new RoomCategoryNotFoundException("RoomCategory with id " + s + " not found")
                 );
+
                 booking.addRoomCategory(category, amounts.get(i));
             }
 

@@ -41,6 +41,7 @@ public class CheckInServiceImpl implements CheckInService {
 
         List<RoomDTO> assignedRooms = new ArrayList<>();
 
+        // TODO: How to react if there are not enough rooms
         for(BookingWithRoomCategory brc : booking.getRoomCategories()) {
             // Get free rooms from current category
             List<Room> freeRooms = roomRepository.roomsByCategoryAndStatus(

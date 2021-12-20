@@ -114,9 +114,9 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
                 roomCategoryPriceList,
                 services,
                 nights,
-                localTaxInEuro,
+                localTaxInEuro.setScale(2, RoundingMode.CEILING),
                 localTaxTotal.setScale(2, RoundingMode.CEILING),
-                valueAddedTaxPercentage,
+                valueAddedTaxPercentage.setScale(2, RoundingMode.CEILING),
                 valueAddedTaxTotal.setScale(2, RoundingMode.CEILING),
                 totalNetAmount.setScale(2, RoundingMode.CEILING),
                 totalGrossAmount.setScale(2, RoundingMode.CEILING)

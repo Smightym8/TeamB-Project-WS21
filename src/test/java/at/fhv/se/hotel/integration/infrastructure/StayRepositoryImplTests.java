@@ -15,6 +15,7 @@ import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.repository.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -206,8 +207,7 @@ public class StayRepositoryImplTests {
         this.stayRepository.add(stayExpected);
         this.em.flush();
 
-        List<Stay> staysActual = this.stayRepository.stayByCheckout(LocalDate.of(2022, 5, 10));
-        Stay stayActual = staysActual.get(0); // Inserted only one stay
+        Stay stayActual = stayRepository.stayById(stayExpected.getStayId()).get();
 
         // then
         assertEquals(stayExpected, stayActual);
