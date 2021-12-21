@@ -1,10 +1,12 @@
 package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.GuestCreationService;
+import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.guest.*;
 import at.fhv.se.hotel.domain.repository.GuestRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,7 +28,7 @@ public class GuestCreationServiceTests {
     private GuestRepository guestRepository;
 
     @Test
-    void given_guestdetails_when_creating_guest_then_returnnonemptylist(){
+    void given_guestDetails_when_create_then_guestIsCreated(){
         // given
         String firstNameExpectedStr = "Ali";
         String lastNameExpectedStr = "Cinar";
@@ -77,9 +79,9 @@ public class GuestCreationServiceTests {
                 discountExpected
         );
 
-
-        // TODO: nochmal testen wenn findByName implementiert ist
-        Guest guestActual = guestRepository.guestById(guestIdExpected).get();
+        ArgumentCaptor<Guest> guestCaptor = ArgumentCaptor.forClass(Guest.class);
+        Mockito.verify(guestRepository).add(guestCaptor.capture());
+        Guest guestActual = guestCaptor.getValue();
 
         // then
         assertEquals(firstNameExpectedStr, guestActual.getName().firstName());
@@ -93,7 +95,5 @@ public class GuestCreationServiceTests {
         assertEquals(zipCodeExpectedStr, guestActual.getAddress().zipCode());
         assertEquals(cityExpectedStr, guestActual.getAddress().city());
         assertEquals(countryExpectedStr, guestActual.getAddress().country());
-
-
     }
 }

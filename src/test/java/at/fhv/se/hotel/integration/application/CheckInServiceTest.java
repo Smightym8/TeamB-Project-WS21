@@ -126,7 +126,7 @@ public class CheckInServiceTest {
     }
 
     @Test
-    void given_missingBooking_when_assignRooms_then_BookingNotFoundExceptionisThrown() {
+    void given_missingBooking_when_assignRooms_then_BookingNotFoundExceptionIsThrown() {
         //given
         BookingId bookingIdExpected = new BookingId("1");
 

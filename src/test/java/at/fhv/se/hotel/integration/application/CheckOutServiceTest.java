@@ -1,6 +1,7 @@
 package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.CheckOutService;
+import at.fhv.se.hotel.application.api.exception.BookingNotFoundException;
 import at.fhv.se.hotel.application.api.exception.StayNotFoundException;
 import at.fhv.se.hotel.application.dto.InvoiceDTO;
 import at.fhv.se.hotel.domain.model.booking.Booking;
@@ -228,5 +229,23 @@ public class CheckOutServiceTest {
 
         // then
         assertFalse(stayExpected.isActive());
+    }
+
+    @Test
+    public void given_missingStay_when_checkOut_then_StayNotFoundExceptionIsThrown() {
+        // given
+        StayId stayIdExpected = new StayId("1");
+
+        Mockito.when(stayRepository.stayById(stayIdExpected)).thenReturn(Optional.empty());
+
+        // when ... then
+        Exception exception = assertThrows(StayNotFoundException.class, () -> {
+            checkOutService.checkOut(stayIdExpected.id());
+        });
+
+        String expectedMessage = "Check out failed! Stay with id " + stayIdExpected.id() + " doesn't exist.";
+        String actualMessage = exception.getMessage();
+
+        assertEquals(expectedMessage, actualMessage);
     }
 }

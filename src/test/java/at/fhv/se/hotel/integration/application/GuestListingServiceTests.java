@@ -2,8 +2,10 @@ package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.GuestListingService;
 import at.fhv.se.hotel.application.api.exception.GuestNotFoundException;
+import at.fhv.se.hotel.application.api.exception.StayNotFoundException;
 import at.fhv.se.hotel.application.dto.GuestDTO;
 import at.fhv.se.hotel.domain.model.guest.*;
+import at.fhv.se.hotel.domain.model.stay.StayId;
 import at.fhv.se.hotel.domain.repository.GuestRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +18,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 public class GuestListingServiceTests {
@@ -103,5 +106,23 @@ public class GuestListingServiceTests {
         assertEquals(guestExpected.getAddress().streetName(), guestActual.streetName());
         assertEquals(guestExpected.getAddress().streetNumber(), guestActual.streetNumber());
         assertEquals(guestExpected.getAddress().zipCode(), guestActual.zipCode());
+    }
+
+    @Test
+    public void given_missingGuest_when_findById_then_GuestNotFoundExceptionIsThrown() {
+        // given
+        GuestId guestIdExpected = new GuestId("1");
+
+        Mockito.when(guestRepository.guestById(guestIdExpected)).thenReturn(Optional.empty());
+
+        // when ... then
+        Exception exception = assertThrows(GuestNotFoundException.class, () -> {
+            guestListingService.findGuestById(guestIdExpected.id());
+        });
+
+        String expectedMessage = "Guest with id " + guestIdExpected.id() + " not found";
+        String actualMessage = exception.getMessage();
+
+        assertEquals(expectedMessage, actualMessage);
     }
 }
