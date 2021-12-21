@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<invoice>
+    <invoiceNumber>20211221001</invoiceNumber>
+    <invoiceDate>2021-12-21</invoiceDate>
+    <guestFirstName>Michael</guestFirstName>
+    <guestLastName>Spiegel</guestLastName>
+    <streetName>Hochschulstraße</streetName>
+    <streetNumber>1</streetNumber>
+    <zipCode>6850</zipCode>
+    <city>Dornbirn</city>
+    <amountOfAdults>2</amountOfAdults>
+    <amountOfChildren>1</amountOfChildren>
+    <services>
+        <entry>
+            <key>TV</key>
+            <value>100</value>
+        </entry>
+        <entry>
+            <key>Breakfast</key>
+            <value>100</value>
+        </entry>
+    </services>
+    <roomCategories>
+        <entry>
+            <key>Single Room</key>
+            <value>1</value>
+        </entry>
+    </roomCategories>
+    <roomCategoryPrices>
+        <entry>
+            <key>Single Room</key>
+            <value>300.00</value>
+        </entry>
+    </roomCategoryPrices>
+    <checkInDate>2021-08-01</checkInDate>
+    <checkOutDate>2021-08-10</checkOutDate>
+    <amountOfNights>9</amountOfNights>
+    <localTaxPerPerson>0.76</localTaxPerPerson>
+    <localTaxTotal>1.52</localTaxTotal>
+    <valueAddedTaxInPercent>0.1</valueAddedTaxInPercent>
+    <valueAddedTaxInEuro>290.00</valueAddedTaxInEuro>
+    <totalNetAmount>2901.52</totalNetAmount>
+    <totalGrossAmount>3191.52</totalGrossAmount>
+    <discountInPercent>0.0</discountInPercent>
+    <discountInEuro>0</discountInEuro>
+</invoice>

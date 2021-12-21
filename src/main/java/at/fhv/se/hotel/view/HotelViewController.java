@@ -87,6 +87,8 @@ public class HotelViewController {
     private static final String INTERMEDIARY_INVOICE_URL = "/createintermediateinvoice/{id}";
     private static final String INTERMEDIARY_INVOICE_VIEW = "intermediaryInvoice";
 
+    private static final String SAVE_INVOICE_URL = "/saveinvoice/{id}";
+
     private static final String CHECK_OUT_URL = "/check-out/{id}";
 
 /*----- Invoice Download -----*/
@@ -435,26 +437,6 @@ public class HotelViewController {
     }
 
     // TODO: Test
-   /* @GetMapping(INTERMEDIARY_INVOICE_URL)
-    public ModelAndView showIntermediateInvoice(@ModelAttribute("invoiceForm") InvoiceForm invoiceForm,
-                                    @PathVariable String id,
-                                    Model model) {
-        InvoiceDTO invoiceDTO;
-        StayDetailsDTO stayDetailsDTO;
-
-        try {
-            invoiceDTO = checkOutService.createIntermediaryInvoice(id, invoiceForm.getRoomNames());
-            stayDetailsDTO = stayDetailsService.detailsById(id);
-        } catch (StayNotFoundException e) {
-            return redirectError(e.getMessage());
-        }
-        model.addAttribute("invoice", invoiceDTO);
-        model.addAttribute("invoiceForm", invoiceForm);
-        model.addAttribute("stayDetails", stayDetailsDTO);
-
-        return new ModelAndView(INTERMEDIARY_INVOICE_VIEW);
-    }*/
-
     @GetMapping(INVOICE_URL)
     public ModelAndView showInvoice(@ModelAttribute("invoiceForm") InvoiceForm invoiceForm,
                                     @RequestParam(value="action") String action,
@@ -466,7 +448,7 @@ public class HotelViewController {
             StayDetailsDTO stayDetailsDTO;
 
             try {
-                invoiceDTO = checkOutService.createIntermediaryInvoice(id, invoiceForm.getRoomNames());
+                invoiceDTO = checkOutService.createInvoice(id, invoiceForm.getRoomNames());
                 stayDetailsDTO = stayDetailsService.detailsById(id);
             } catch (StayNotFoundException e) {
                 return redirectError(e.getMessage());
@@ -490,38 +472,16 @@ public class HotelViewController {
         return redirectError("There was an error.");
     }
 
-    /*
-    @RequestMapping(value = INVOICE_URL, method = RequestMethod.GET)
-    public ModelAndView showInvoice(@ModelAttribute("invoiceForm") InvoiceForm invoiceForm,
-                                    @PathVariable String id,
-                                    @RequestParam(value="action", required=true) String action,
-                                    Model model) {
-        InvoiceDTO invoiceDTO;
-        StayDetailsDTO stayDetailsDTO;
-
+    @GetMapping(SAVE_INVOICE_URL)
+    public ModelAndView createInvoice(@ModelAttribute("invoiceForm") InvoiceForm invoiceForm,
+                                    @PathVariable String id){
         try {
-            invoiceDTO = checkOutService.createIntermediaryInvoice(id, invoiceForm.getRoomNames());
-            stayDetailsDTO = stayDetailsService.detailsById(id);
+            checkOutService.saveInvoice(id, invoiceForm.getRoomNames());
         } catch (StayNotFoundException e) {
             return redirectError(e.getMessage());
         }
 
-        model.addAttribute("invoice", invoiceDTO);
-        model.addAttribute("invoiceForm", invoiceForm);
-        model.addAttribute("stayDetails", stayDetailsDTO);
-
-        if (action.equals("checkout")) {
-            return new ModelAndView(INVOICE_VIEW);
-        }
-
-        return new ModelAndView(INTERMEDIATE_INVOICE_VIEW);
-    }*/
-
-    @GetMapping("/createpartinvoice/{id}")
-    public String createPartInvoice(@ModelAttribute("invoiceForm") InvoiceForm invoiceForm,
-                                    @PathVariable String id){
-        checkOutService.invoice(id, invoiceForm.getRoomNames());
-        return "redirect:" + STAY_DETAILS_URL;
+        return new ModelAndView("redirect:" + STAY_DETAILS_URL);
     }
 
     // TODO: Test

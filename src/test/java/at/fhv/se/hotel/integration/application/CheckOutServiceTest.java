@@ -111,6 +111,8 @@ public class CheckOutServiceTest {
                 ), false
         );
 
+        List<String> roomNamesExpected = Arrays.asList(roomNameExpected);
+
         StayId idExpected = new StayId(bookingExpected.getBookingId().id());
         Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
 
@@ -129,7 +131,7 @@ public class CheckOutServiceTest {
                 .thenReturn(roomCategoryPricesExpected.get(0));
 
         // when
-        InvoiceDTO invoiceActual = checkOutService.createInvoice(stayExpected.getStayId().id());
+        InvoiceDTO invoiceActual = checkOutService.createInvoice(stayExpected.getStayId().id(), roomNamesExpected);
 
         // then
         assertEquals(stayExpected.getGuest().getName().firstName(), invoiceActual.guestFirstName());

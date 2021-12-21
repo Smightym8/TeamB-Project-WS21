@@ -4,7 +4,7 @@
 
 <div layout:fragment="content">
 
-  <form th:action="@{/createpartinvoice/{id}(id=${stayDetails.id})}" method="get" th:object="${invoiceForm}">
+  <form th:action="@{/saveinvoice/{id}(id=${stayDetails.id})}" method="get" th:object="${invoiceForm}">
     <input type="hidden" id="roomNames" name="roomNames" th:field="*{roomNames}">
     <div class="card" style="margin-top: 10px">
 

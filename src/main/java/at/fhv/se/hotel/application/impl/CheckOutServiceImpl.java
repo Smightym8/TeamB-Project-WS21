@@ -51,9 +51,10 @@ public class CheckOutServiceImpl implements CheckOutService {
 
     @Transactional
     @Override
-    public InvoiceDTO createIntermediaryInvoice(String stayId, List<String> roomNames) {
-
-        Stay stay = stayRepository.stayById(new StayId(stayId)).get();
+    public InvoiceDTO createInvoice(String stayId, List<String> roomNames) throws StayNotFoundException {
+        Stay stay = stayRepository.stayById(new StayId(stayId)).orElseThrow(
+                () -> new StayNotFoundException("Creating invoice failed! Stay with id " + stayId + " not found")
+        );
         Invoice invoice = invoiceSplitService.splitInvoice(stay, roomNames);
 
         Map<String, BigDecimal> services = new HashMap<>();
@@ -84,24 +85,6 @@ public class CheckOutServiceImpl implements CheckOutService {
                 }
             }
         }
-
-//        Map<String, Integer> categories = new HashMap<>();
-//        for(BookingWithRoomCategory brc : invoice.getStay().getBooking().getRoomCategories()) {
-//            categories.put(brc.getRoomCategory().getRoomCategoryName().name(), brc.getAmount());
-//        }
-
-        /*
-        for(String name : roomNames){
-            Room room = roomRepository.roomByName(name).get();
-            for(BookingWithRoomCategory brc : invoice.getStay().getBooking().getRoomCategories()) {
-                roomCategories.put(brc.getRoomCategory().getRoomCategoryName().name(), brc.getAmount());
-            }
-            BookingWithRoomCategory brc = room.getRoomCategory();
-            roomCategories.put(brc.getRoomCategory().getRoomCategoryName().name(), brc.getAmount());
-        }*/
-
-
-
 
         BigDecimal discountInEuro = new BigDecimal("0");
 
@@ -149,78 +132,13 @@ public class CheckOutServiceImpl implements CheckOutService {
 
     }
 
-    @Transactional(readOnly = true)
-    @Override
-    public InvoiceDTO createInvoice(String stayId) throws StayNotFoundException {
-        Stay stay = stayRepository.stayById(new StayId(stayId)).orElseThrow(
-                () -> new StayNotFoundException("Stay with id " + stayId + " not found")
-        );
-
-        Invoice invoice = invoiceCalculationService.calculateInvoice(stay);
-
-        Map<String, BigDecimal> services = new HashMap<>();
-        for(Service s : invoice.getServices()) {
-            services.put(s.getServiceName().name(), s.getServicePrice().price());
-        }
-
-        Map<String, Integer> roomCategories = new HashMap<>();
-        for(BookingWithRoomCategory brc : invoice.getStay().getBooking().getRoomCategories()) {
-            roomCategories.put(brc.getRoomCategory().getRoomCategoryName().name(), brc.getAmount());
-        }
-
-        Map<String, BigDecimal> roomCategoryPrices = new HashMap<>();
-        for(RoomCategoryPrice rcp : invoice.getRoomCategoryPriceList()) {
-            roomCategoryPrices.put(rcp.getRoomCategory().getRoomCategoryName().name(), rcp.getPrice());
-        }
-
-        BigDecimal discountInEuro = new BigDecimal("0");
-
-        if (invoice.getStay().getGuest().getDiscountInPercent() > 0) {
-            discountInEuro = discountInEuro.add(
-                    invoice.getTotalNetAmount()
-                            .add(invoice.getValueAddedTaxInEuro())
-                            .divide(BigDecimal.valueOf(invoice.getStay().getGuest()
-                                    .getDiscountInPercent())).setScale(2, RoundingMode.CEILING));
-        }
-
-        InvoiceDTO invoiceDTO = InvoiceDTO.builder()
-                .withStayId(stayId)
-                .withInvoiceNumber(invoice.getInvoiceNumber())
-                .withInvoiceDate(invoice.getInvoiceDate())
-                .withGuestFirstName(invoice.getStay().getGuest().getName().firstName())
-                .withGuestLastName(invoice.getStay().getGuest().getName().lastName())
-                .withStreetName(invoice.getStay().getGuest().getAddress().streetName())
-                .withStreetNumber(invoice.getStay().getGuest().getAddress().streetNumber())
-                .withZipCode(invoice.getStay().getGuest().getAddress().zipCode())
-                .withCity(invoice.getStay().getGuest().getAddress().city())
-                .withAmountOfAdults(invoice.getStay().getBooking().getAmountOfAdults())
-                .withAmountOfChildren(invoice.getStay().getBooking().getAmountOfChildren())
-                .withServices(services)
-                .withCategories(roomCategories)
-                .withCategoryPrices(roomCategoryPrices)
-                .withCheckInDate(invoice.getStay().getCheckInDate())
-                .withCheckOutDate(invoice.getStay().getCheckOutDate())
-                .withAmountOfNights(invoice.getAmountOfNights())
-                .withLocalTaxPerPerson(invoice.getLocalTaxPerPerson())
-                .withLocalTaxTotal(invoice.getLocalTaxTotal())
-                .withValueAddedTaxInPercent(invoice.getValueAddedTaxInPercent().setScale(1, RoundingMode.CEILING))
-                .withValueAddedTaxInEuro(invoice.getValueAddedTaxInEuro())
-                .withTotalNetAmount(invoice.getTotalNetAmount())
-                .withTotalGrossAmount(invoice.getTotalGrossAmount())
-                .withDiscountInPercent(invoice.getStay().getGuest().getDiscountInPercent())
-                .withDiscountInEuro(discountInEuro)
-                .build();
-
-        invoicePDFRepository.saveAsPDF(invoiceDTO);
-
-        return invoiceDTO;
-    }
-
     @Transactional
     @Override
-    public void invoice(String stayId, List<String> roomNames) {
+    public void saveInvoice(String stayId, List<String> roomNames) throws StayNotFoundException {
         if (stayRepository.stayById(new StayId(stayId)).isPresent()) {
-            Stay stay = stayRepository.stayById(new StayId(stayId)).get();
+            Stay stay = stayRepository.stayById(new StayId(stayId)).orElseThrow(
+                    () -> new StayNotFoundException("Saving invoice failed! Stay with id " + stayId + " not found")
+            );
 
             StayId id = stay.getStayId();
 
