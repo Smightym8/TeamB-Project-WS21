@@ -1,6 +1,5 @@
 package at.fhv.se.hotel;
 
-import at.fhv.se.hotel.application.api.CheckInService;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.guest.Address;
 import at.fhv.se.hotel.domain.model.guest.FullName;
@@ -27,7 +26,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-@Profile("!test")
+@Profile("dev")
 @Component
 @Transactional
 public class TestData implements ApplicationRunner {
