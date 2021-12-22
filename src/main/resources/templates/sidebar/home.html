@@ -2,11 +2,11 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 <head>
 
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/css/dataTables.min.css">
 
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="/js/jquery-3.5.1.js"></script>
+    <script src="/js/dataTables.min.js"></script>
+    <script src="/js/moment.min.js"></script>
 
 </head>
 
@@ -14,9 +14,13 @@
 
     <div layout:fragment="content">
 
+        <input type="hidden" id="min-date">
+        <input type="hidden" id="max-date">
+
         <div class="d-flex justify-content-between ">
-            <p id="h1" class="h3">Upcoming check-ins [Today]</p>
-            <div class="btn-group">
+            <p class="h3">Upcoming check-ins</p>
+            <p class="h3" id="h1"></p>
+            <div class="btn-group" id="b1">
                 <a onclick="filter('1','Today')" class="btn btn-primary">Today</a>
                 <a onclick="filter('1','This week')" class="btn btn-primary">This week</a>
                 <a onclick="filter('1','All')" class="btn btn-primary">All</a>
@@ -25,37 +29,34 @@
 
         <br>
 
-        <div class="overflow-auto" style="min-height: 38vh;">
-            <input type="hidden" id="min-date-t1">
-            <input type="hidden" id="max-date-t1">
+        <table id="t1" class="stripe">
+            <thead>
+                <tr>
+                    <th class="col-1">Guest</th>
+                    <th class="col-1">Address</th>
+                    <th class="col-1">Check-in date</th>
+                    <th class="col-1"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="booking : ${bookings}" th:if="${booking.isActive}">
+                    <td th:text="${booking.guestFirstName} + ' ' + ${booking.guestLastName}"></td>
+                    <td th:text="${booking.streetName} + ' ' + ${booking.streetNumber} + ', ' + ${booking.zipCode} + ' ' +${booking.city}"></td>
+                    <td th:text="${booking.checkInDate}"></td>
+                    <td><a th:href="@{/bookingdetails/{id}(id=${booking.id})}" type="button" class="btn btn-primary btn-sm">View / Check-in</a></td>
+                </tr>
+            </tbody>
+        </table>
 
-            <table id="t1" class="stripe">
-                <thead>
-                    <tr>
-                        <th class="col-1">Guest</th>
-                        <th class="col-1">Address</th>
-                        <th class="col-1">Check-in date</th>
-                        <th class="col-1">Button</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="booking : ${bookings}" th:if="${booking.isActive}">
-                        <td th:text="${booking.guestFirstName} + ' ' + ${booking.guestLastName}"></td>
-                        <td th:text="${booking.streetName} + ' ' + ${booking.streetNumber} + ', ' + ${booking.zipCode} + ' ' +${booking.city}"></td>
-                        <td th:text="${booking.checkInDate}"></td>
-                        <td><a th:href="@{/bookingdetails/{id}(id=${booking.id})}" type="button" class="btn btn-primary btn-sm">View / Check-in</a></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
+        <br>
         <br>
         <br>
         <br>
 
         <div class="d-flex justify-content-between ">
-            <p id="h2" class="h3">Upcoming check-ins [Today]</p>
-            <div class="btn-group">
+            <p class="h3">Upcoming check-outs</p>
+            <p class="h3" id="h2"></p>
+            <div class="btn-group" id="b2">
                 <a onclick="filter('2','Today')" class="btn btn-primary">Today</a>
                 <a onclick="filter('2','This week')" class="btn btn-primary">This week</a>
                 <a onclick="filter('2','All')" class="btn btn-primary">All</a>
@@ -64,42 +65,46 @@
 
         <br>
 
-        <div class="overflow-auto" style="min-height: 38vh;">
-            <input type="hidden" id="min-date-t2">
-            <input type="hidden" id="max-date-t2">
-
-            <table id="t2" class="stripe">
-                <thead>
-                <tr>
-                    <th class="col-1">Guest</th>
-                    <th class="col-1">Room(s)</th>
-                    <th class="col-1">Check-out date</th>
-                    <th class="col-1"></th>
+        <table id="t2" class="stripe">
+            <thead>
+            <tr>
+                <th class="col-1">Guest</th>
+                <th class="col-1">Room(s)</th>
+                <th class="col-1">Check-out date</th>
+                <th class="col-1"></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="stay : ${stays}" th:if="${stay.isActive}">
+                    <td th:text="${stay.guestFirstName} + ' ' + ${stay.guestLastName}"></td>
+                    <td><li style="list-style: none" th:each="room : ${stay.rooms}" th:text="${room}"></li></td>
+                    <td th:text="${stay.checkOutDate}"></td>
+                    <td><a th:href="@{/staydetails/{id}(id=${stay.id})}" type="button" class="btn btn-primary btn-sm">View / Check-Out</a></td>
                 </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="stay : ${stays}" th:if="${stay.isActive}">
-                        <td th:text="${stay.guestFirstName} + ' ' + ${stay.guestLastName}"></td>
-                        <td>
-                            <ul style="list-style: none">
-                                <li th:each="room : ${stay.rooms}" th:text="${room}"></li>
-                            </ul>
-                        </td>
-                        <td th:text="${stay.checkOutDate}"></td>
-                        <td><a th:href="@{/staydetails/{id}(id=${stay.id})}" type="button" class="btn btn-primary btn-sm">View / Check-Out</a></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            </tbody>
+        </table>
 
         <script>
+            // table search
+            $.fn.dataTable.ext.search.push(function(settings, data) {
+                var min  = $('#min-date').val();
+                var max  = $('#max-date').val();
+                var date = moment(data[2]);
 
+                if  ((min === "" || max === "") || (date.isSameOrAfter(min) && date.isSameOrBefore(max))) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+
+            // table initialization
             let table1 = $('#t1').DataTable({
                 "order": [ 2, "asc" ],
                 "paging": false,
                 "info": false,
                 "scrollCollapse": true,
-                "scrollY": "38vh",
+                "scrollY": "33vh",
             });
 
             let table2 = $('#t2').DataTable({
@@ -107,87 +112,78 @@
                 "paging": false,
                 "info": false,
                 "scrollCollapse": true,
-                "scrollY": "38vh",
+                "scrollY": "33vh",
             });
 
-            var labels = document.getElementsByTagName('label');
+            // table initial filtration
+            filter('1','All');
+            filter('2','All');
 
-            for (var i = 0; i < labels.length; i++) {
+            // add icon to searchbars
+            var searchLabels = document.getElementsByTagName('label');
+
+            for (var i = 0; i < searchLabels.length; i++) {
                 var icon = document.createElement('i');
                 icon.setAttribute('class', 'fas fa-search');
-                labels[i].insertBefore(icon, labels[i].firstChild);
-                labels[i].childNodes[1].textContent = " ";
+                searchLabels[i].insertBefore(icon, searchLabels[i].firstChild);
+                searchLabels[i].childNodes[1].textContent = " ";
             }
 
-            function filter(table,day) {
-
-                if(table === '1') {
-                    document.getElementById('h1').innerText = `Upcoming check-ins [${day}]`;
-                } else if (table === '2') {
-                    document.getElementById('h2').innerText = `Upcoming check-ins [${day}]`;
-                }
-
+            // set filter date, trigger table, set buttons on active, change heading
+            function filter(table, day) {
 
                 var minDate = new Date();
+                var maxDate = new Date();
+
                 minDate.setDate(minDate.getDate());
                 minDate = moment(minDate).format('YYYY-MM-DD');
 
-                var maxDate = new Date();
-
                 if(day === 'Today') {
-
                     maxDate.setDate(maxDate.getDate());
                     maxDate = moment(maxDate).format('YYYY-MM-DD');
 
                 } else if(day === 'This week') {
-
                     maxDate.setDate(maxDate.getDate() + 7);
                     maxDate = moment(maxDate).format('YYYY-MM-DD');
 
-                } else if(day === 'All') {
-
+                } else {
                     minDate = "";
                     maxDate = "";
 
-                };
+                }
 
-                $.fn.dataTable.ext.search.push(function(settings, data) {
+                document.getElementById('min-date').setAttribute('value',minDate);
+                document.getElementById('max-date').setAttribute('value',maxDate);
 
-                        var min = "";
-                        var max = "";
-                        var createdAt = data[2];
+                var headingElement, buttonElement;
 
-                        if(table === '1') {
-                            min  = $('#min-date-t1').val();
-                            max  = $('#max-date-t1').val();
-
-                        } else if (table === '2') {
-                            min  = $('#min-date-t2').val();
-                            max  = $('#max-date-t2').val();
-                        }
-
-                        if(( min === "" || max === "" ) || (moment(createdAt).isSameOrAfter(min) && moment(createdAt).isSameOrBefore(max))) {
-                            return true;
-                        }
-                        return false;
-                    }
-                );
-
-
-                if(table === '1') {
-                    document.getElementById('min-date-t1').setAttribute('value',minDate);
-                    document.getElementById('max-date-t1').setAttribute('value',maxDate);
+                if (table === '1') {
+                    headingElement = 'h1';
+                    buttonElement = 'b1';
                     table1.draw();
 
-
-                } else if(table === '2') {
-                    document.getElementById('min-date-t2').setAttribute('value',minDate);
-                    document.getElementById('max-date-t2').setAttribute('value',maxDate);
+                } else if (table === '2') {
+                    headingElement = 'h2';
+                    buttonElement = 'b2';
                     table2.draw();
 
                 }
-            }
 
+                document.getElementById(headingElement).innerText = `--- ${day} ---`;
+
+                var buttons = document.getElementById(buttonElement).children;
+
+                for (let i = 0; i < buttons.length; i++) {
+
+                    if (day === buttons[i].innerText) {
+                        buttons[i].classList.add('active');
+
+                    } else {
+                        buttons[i].classList.remove('active');
+
+                    }
+                }
+            }
         </script>
 
     </div>

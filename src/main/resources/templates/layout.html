@@ -88,20 +88,20 @@
         </ul>
     </div>
 
-    <!-- content -->
-    <div class="content px-5 py-4 flex-grow-1" layout:fragment="content">
 
-    </div>
+    <!-- content -->
+    <div class="content px-5 py-4 flex-grow-1" layout:fragment="content"></div>
+
 
     <!-- scripts -->
     <script>
-        let bodyId = document.getElementsByTagName("body");
+        var bodyId = document.getElementsByTagName("body");
         bodyId = bodyId[0].id;
 
-        let navElements = document.getElementsByClassName("nav-link");
-        let navElementsText = document.getElementsByClassName("nav-value");
+        var navElements = document.getElementsByClassName("nav-link");
+        var navElementsText = document.getElementsByClassName("nav-value");
 
-        for(let i = 0; i < navElementsText.length; i += 1) {
+        for(var i = 0; i < navElementsText.length; i += 1) {
 
             if(navElementsText[i].innerText == bodyId) {
                 navElements[i].classList.add("active");

@@ -122,56 +122,42 @@ public class TestData implements ApplicationRunner {
         this.roomCategoryPriceRepository.add(doubleRoomSpringPrice);
         this.roomCategoryPriceRepository.add(doubleRoomSummerPrice);
 
-        {
-            Guest guest = Guest.create(guestRepository.nextIdentity(),
-                new FullName("Herbert", "Steurer"),
+        Guest herbert = Guest.create(guestRepository.nextIdentity(),
+            new FullName("Herbert", "Steurer"),
+            Gender.MALE,
+            new Address("Schulgasse", "9" , "Meiningen", "6812", "Austria"),
+            LocalDate.of(1980, 3, 10),
+            "+43 664 2540490",
+            "herbert.steurer@gmx.at",
+            0,
+            Collections.emptyList()
+        );
+        this.guestRepository.add(herbert);
+
+        Guest johannes = Guest.create(guestRepository.nextIdentity(),
+                new FullName("Johannes", "Moosbrugger"),
                 Gender.MALE,
-                new Address("Schulgasse", "9" , "Meiningen", "6812", "Austria"),
-                LocalDate.of(1980, 3, 10),
-                "+43 664 2540490",
-                "herbert.steurer@gmx.at",
+                new Address("Schollenstraße", "6" , "Hohenems", "6845", "Austria"),
+                LocalDate.of(1999, 1, 1),
+                "+43 660 2648080",
+                "johannes.moosbrugger@gmx.at",
                 0,
                 Collections.emptyList()
-            );
+        );
+        this.guestRepository.add(johannes);
 
-            this.guestRepository.add(guest);
-        }
+        Guest nina = Guest.create(guestRepository.nextIdentity(),
+                new FullName("Nina", "Mähr"),
+                Gender.MALE,
+                new Address("Hofsteigstraße", "68" , "Schwarzach", "6858", "Austria"),
+                LocalDate.of(2000, 10, 1),
+                "+43 660 6884520",
+                "nina.maehr@gmx.at",
+                0,
+                Collections.emptyList()
+        );
+        this.guestRepository.add(nina);
 
-        {
-            Guest guest = Guest.create(guestRepository.nextIdentity(),
-                    new FullName("Johannes", "Moosbrugger"),
-                    Gender.MALE,
-                    new Address("Schollenstraße", "6" , "Hohenems", "6845", "Austria"),
-                    LocalDate.of(1999, 1, 1),
-                    "+43 660 2648080",
-                    "johannes.moosbrugger@gmx.at",
-                    0,
-                    Collections.emptyList()
-            );
-
-            this.guestRepository.add(guest);
-        }
-
-        {
-            Guest guest = Guest.create(guestRepository.nextIdentity(),
-                    new FullName("Nina", "Mähr"),
-                    Gender.MALE,
-                    new Address("Hofsteigstraße", "68" , "Schwarzach", "6858", "Austria"),
-                    LocalDate.of(2000, 10, 1),
-                    "+43 660 6884520",
-                    "nina.maehr@gmx.at",
-                    0,
-                    Collections.emptyList()
-            );
-
-            this.guestRepository.add(guest);
-        }
-
-
-
-
-
-        // Insert fake guests
         Guest michael = Guest.create(guestRepository.nextIdentity(),
                 new FullName("Michael", "Spiegel"),
                 Gender.MALE,
@@ -200,11 +186,189 @@ public class TestData implements ApplicationRunner {
         );
         this.guestRepository.add(ali);
 
-        // Insert fake bookings
+        Guest dario = Guest.create(guestRepository.nextIdentity(),
+                new FullName("Dario", "Birbarmer"),
+                Gender.MALE,
+                new Address("Hochschulstraße",
+                        "19", "Dornbirn",
+                        "6850", "Austria"),
+                LocalDate.of(1997, 8, 27),
+                "+43 676 123 456 789",
+                "ali.cinar@students.fhv.at",
+                0,
+                Collections.emptyList()
+        );
+        this.guestRepository.add(ali);
+
+        Guest umut = Guest.create(guestRepository.nextIdentity(),
+                new FullName("Umut", "Cinar"),
+                Gender.MALE,
+                new Address("Hochschulstraße",
+                        "91", "Dornbirn",
+                        "6850", "Austria"),
+                LocalDate.of(1997, 8, 27),
+                "+43 676 123 456 789",
+                "ali.cinar@students.fhv.at",
+                0,
+                Collections.emptyList()
+        );
+        this.guestRepository.add(ali);
 
 
-
-
+        {
+            Booking booking = Booking.create(
+                    LocalDate.now().plusDays(-1),
+                    LocalDate.now().plusDays(1),
+                    bookingRepository.nextIdentity(),
+                    johannes,
+                    List.of(tvService),
+                    2,
+                    0,
+                    "Extra pillow"
+            );
+            booking.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking);
+        }
+        {
+            Booking booking = Booking.create(
+                    LocalDate.now().plusDays(0),
+                    LocalDate.now().plusDays(2),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService),
+                    2,
+                    0,
+                    "Extra pillow"
+            );
+            booking.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking);
+        }
+        {
+            Booking booking = Booking.create(
+                    LocalDate.now().plusDays(1),
+                    LocalDate.now().plusDays(3),
+                    bookingRepository.nextIdentity(),
+                    nina,
+                    List.of(tvService),
+                    2,
+                    0,
+                    "Extra pillow"
+            );
+            booking.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking);
+        }
+        {
+            Booking booking = Booking.create(
+                    LocalDate.now().plusDays(7),
+                    LocalDate.now().plusDays(9),
+                    bookingRepository.nextIdentity(),
+                    herbert,
+                    List.of(tvService),
+                    2,
+                    0,
+                    "Extra pillow"
+            );
+            booking.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking);
+        }
+        {
+            Booking booking = Booking.create(
+                    LocalDate.now().plusDays(8),
+                    LocalDate.now().plusDays(10),
+                    bookingRepository.nextIdentity(),
+                    johannes,
+                    List.of(tvService),
+                    2,
+                    0,
+                    "Extra pillow"
+            );
+            booking.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking);
+        }
+        {
+            Booking booking = Booking.create(
+                    LocalDate.now().plusDays(9),
+                    LocalDate.now().plusDays(11),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService),
+                    2,
+                    0,
+                    "Extra pillow"
+            );
+            booking.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking);
+        }
+        {
+            Booking booking = Booking.create(
+                    LocalDate.now().plusDays(10),
+                    LocalDate.now().plusDays(12),
+                    bookingRepository.nextIdentity(),
+                    umut,
+                    List.of(tvService),
+                    2,
+                    0,
+                    "Extra pillow"
+            );
+            booking.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking);
+        }
+        {
+            Booking booking = Booking.create(
+                    LocalDate.now().plusDays(11),
+                    LocalDate.now().plusDays(13),
+                    bookingRepository.nextIdentity(),
+                    ali,
+                    List.of(tvService),
+                    2,
+                    0,
+                    "Extra pillow"
+            );
+            booking.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking);
+        }
+        {
+            Booking booking = Booking.create(
+                    LocalDate.now().plusDays(11),
+                    LocalDate.now().plusDays(13),
+                    bookingRepository.nextIdentity(),
+                    dario,
+                    List.of(tvService),
+                    2,
+                    0,
+                    "Extra pillow"
+            );
+            booking.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking);
+        }
+        {
+            Booking booking = Booking.create(
+                    LocalDate.now().plusDays(11),
+                    LocalDate.now().plusDays(13),
+                    bookingRepository.nextIdentity(),
+                    umut,
+                    List.of(tvService),
+                    2,
+                    0,
+                    "Extra pillow"
+            );
+            booking.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking);
+        }
+        {
+            Booking booking = Booking.create(
+                    LocalDate.now().plusDays(11),
+                    LocalDate.now().plusDays(13),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService),
+                    2,
+                    0,
+                    "Extra pillow"
+            );
+            booking.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking);
+        }
 
         Booking booking1 = Booking.create(
                 LocalDate.now(),
@@ -221,7 +385,7 @@ public class TestData implements ApplicationRunner {
         this.bookingRepository.add(booking1);
 
         Booking booking2 = Booking.create(
-                LocalDate.now().plusDays(30),
+                LocalDate.now().plusDays(35),
                 LocalDate.now().plusDays(40),
                 bookingRepository.nextIdentity(),
                 ali,
@@ -235,6 +399,31 @@ public class TestData implements ApplicationRunner {
         this.bookingRepository.add(booking2);
 
         // Insert fake rooms
+
+        for(int i = 0; i < 10; i += 1) {
+
+            Booking booking = Booking.create(
+                    LocalDate.now().plusDays(11),
+                    LocalDate.now().plusDays(13),
+                    bookingRepository.nextIdentity(),
+                    michael,
+                    List.of(tvService),
+                    2,
+                    0,
+                    "Extra pillow"
+            );
+            booking.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(booking);
+
+            Room room1 = Room.create(Integer.toString(i), RoomStatus.FREE, singleRoom);
+            this.roomRepository.add(room1);
+
+            Stay stay1 = Stay.create(booking, List.of(room1));
+            booking.deactivate();
+            this.stayRepository.add(stay1);
+
+        }
+
         Room room1 = Room.create("101", RoomStatus.FREE, singleRoom);
         this.roomRepository.add(room1);
 
