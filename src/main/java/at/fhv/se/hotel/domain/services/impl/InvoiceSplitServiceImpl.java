@@ -41,8 +41,6 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
     @Autowired
     RoomRepository roomRepository;
 
-    // TODO: Alle Tests wo List<Room> vorkommt anpassen -> Map<Room, Boolean>
-
      /*
         -> split invoice bekommt roomNames von stayDetailsView
         -> ähnlich wie createBookingService, dass ausgwählte in die Liste kommen
@@ -51,7 +49,6 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
         -> for each room in roomNames, getPrice -> add to calculation
         -> roomNames, for each über Map<Room, Boolean> rooms im Stay -> put.value(true)
      */
-
     @Override
     public Invoice splitInvoice(Stay stay, List<String> roomNames) {
 

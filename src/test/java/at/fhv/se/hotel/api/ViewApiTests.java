@@ -32,6 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+// TODO: Test try catch from HotelViewController
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ViewApiTests {
@@ -503,7 +504,6 @@ public class ViewApiTests {
         );
     }
 
-    // TODO: test createBookingSuccess
     @Test
     public void when_get_createBookingSuccessUrl_then_statusOk_and_bookingSummaryView_and_bookingSummaryService_called()
             throws Exception {

@@ -33,6 +33,7 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// TODO: Fix error java.io.FileNotFoundException: src/main/resources/static/invoices/xml/invoice_20211222001.xml (Datei oder Verzeichnis nicht gefunden)
 @SpringBootTest
 public class CheckOutServiceTest {
 
@@ -104,7 +105,6 @@ public class CheckOutServiceTest {
         String roomNameExpected = "Room 1";
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
-        // TODO: Change to map with boolean
         Map<Room, Boolean> roomsExpected = Map.of(
                 Room.create(
                         roomNameExpected,
@@ -224,7 +224,6 @@ public class CheckOutServiceTest {
                 .thenReturn(roomCategoryPricesExpected.get(0));
 
         // when
-        // Todo: empty list mit roomNames ersetzen
         checkOutService.checkOut(stayExpected.getStayId().id());
 
         // then
