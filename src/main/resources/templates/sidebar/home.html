@@ -2,11 +2,12 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 <head>
 
-    <link rel="stylesheet" href="/css/dataTables.min.css">
+    <link rel="stylesheet" href="/css/datatables.min.css">
 
-    <script src="/js/jquery-3.5.1.js"></script>
-    <script src="/js/dataTables.min.js"></script>
-    <script src="/js/moment.min.js"></script>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/moment.js"></script>
+    <script src="/js/datatables.js"></script>
+    <script src="/js/datatables.bootstrap.js"></script>
 
 </head>
 
@@ -17,72 +18,76 @@
         <input type="hidden" id="min-date">
         <input type="hidden" id="max-date">
 
-        <div class="d-flex justify-content-between ">
-            <p class="h3">Upcoming check-ins</p>
-            <p class="h3" id="h1"></p>
-            <div class="btn-group" id="b1">
-                <a onclick="filter('1','Today')" class="btn btn-primary">Today</a>
-                <a onclick="filter('1','This week')" class="btn btn-primary">This week</a>
-                <a onclick="filter('1','All')" class="btn btn-primary">All</a>
+        <div style="width: 50%; float: left" class="pe-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <p class="h4">Upcoming check-ins</p>
+                    <p class="h4" id="h1"></p>
+                    <div class="btn-group" id="b1">
+                        <a onclick="filter('1','Today')" class="btn btn-primary">Today</a>
+                        <a onclick="filter('1','This week')" class="btn btn-primary">This week</a>
+                        <a onclick="filter('1','All')" class="btn btn-primary">All</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table id="t1" class="table stripe">
+                        <thead>
+                            <tr>
+                                <th class="col">Guest</th>
+                                <th class="col">Address</th>
+                                <th class="col">Check-in date</th>
+                                <th class="col-1"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="booking : ${bookings}" th:if="${booking.isActive}">
+                                <td class="align-middle" th:text="${booking.guestFirstName} + ' ' + ${booking.guestLastName}"></td>
+                                <td class="align-middle">
+                                    <span class="text-nowrap" th:text="${booking.streetName} + ' ' + ${booking.streetNumber} + ', '"></span>
+                                    <span class="text-nowrap" th:text="${booking.zipCode} + ' ' + ${booking.city}"></span>
+                                </td>
+                                <td class="align-middle text-nowrap" th:text="${booking.checkInDate}"></td>
+                                <td class="align-middle"><a th:href="@{/bookingdetails/{id}(id=${booking.id})}" class="btn btn-outline-primary btn-sm text-nowrap">View / Check-in</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
-        <br>
-
-        <table id="t1" class="stripe">
-            <thead>
-                <tr>
-                    <th class="col-1">Guest</th>
-                    <th class="col-1">Address</th>
-                    <th class="col-1">Check-in date</th>
-                    <th class="col-1"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="booking : ${bookings}" th:if="${booking.isActive}">
-                    <td th:text="${booking.guestFirstName} + ' ' + ${booking.guestLastName}"></td>
-                    <td th:text="${booking.streetName} + ' ' + ${booking.streetNumber} + ', ' + ${booking.zipCode} + ' ' +${booking.city}"></td>
-                    <td th:text="${booking.checkInDate}"></td>
-                    <td><a th:href="@{/bookingdetails/{id}(id=${booking.id})}" type="button" class="btn btn-primary btn-sm">View / Check-in</a></td>
-                </tr>
-            </tbody>
-        </table>
-
-        <br>
-        <br>
-        <br>
-        <br>
-
-        <div class="d-flex justify-content-between ">
-            <p class="h3">Upcoming check-outs</p>
-            <p class="h3" id="h2"></p>
-            <div class="btn-group" id="b2">
-                <a onclick="filter('2','Today')" class="btn btn-primary">Today</a>
-                <a onclick="filter('2','This week')" class="btn btn-primary">This week</a>
-                <a onclick="filter('2','All')" class="btn btn-primary">All</a>
+        <div style="width: 50%; float: right" class="ps-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <p class="h4">Upcoming check-outs</p>
+                    <p class="h4" id="h2"></p>
+                    <div class="btn-group" id="b2">
+                        <a onclick="filter('2','Today')" class="btn btn-primary">Today</a>
+                        <a onclick="filter('2','This week')" class="btn btn-primary">This week</a>
+                        <a onclick="filter('2','All')" class="btn btn-primary">All</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table id="t2" class="table stripe">
+                        <thead>
+                            <tr>
+                                <th class="col">Guest</th>
+                                <th class="col">Room(s)</th>
+                                <th class="col">Check-out date</th>
+                                <th class="col-1"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="stay : ${stays}" th:if="${stay.isActive}">
+                                <td class="align-middle" th:text="${stay.guestFirstName} + ' ' + ${stay.guestLastName}"></td>
+                                <td class="align-middle"><li style="list-style: none" th:each="room : ${stay.rooms}" th:text="${room}"></li></td>
+                                <td class="align-middle" th:text="${stay.checkOutDate}"></td>
+                                <td class="align-middle"><a th:href="@{/staydetails/{id}(id=${stay.id})}" class="btn btn-outline-primary btn-sm text-nowrap">View / Check-Out</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-
-        <br>
-
-        <table id="t2" class="stripe">
-            <thead>
-            <tr>
-                <th class="col-1">Guest</th>
-                <th class="col-1">Room(s)</th>
-                <th class="col-1">Check-out date</th>
-                <th class="col-1"></th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr th:each="stay : ${stays}" th:if="${stay.isActive}">
-                    <td th:text="${stay.guestFirstName} + ' ' + ${stay.guestLastName}"></td>
-                    <td><li style="list-style: none" th:each="room : ${stay.rooms}" th:text="${room}"></li></td>
-                    <td th:text="${stay.checkOutDate}"></td>
-                    <td><a th:href="@{/staydetails/{id}(id=${stay.id})}" type="button" class="btn btn-primary btn-sm">View / Check-Out</a></td>
-                </tr>
-            </tbody>
-        </table>
 
         <script>
             // table search
@@ -93,26 +98,23 @@
 
                 if  ((min === "" || max === "") || (date.isSameOrAfter(min) && date.isSameOrBefore(max))) {
                     return true;
-                } else {
-                    return false;
                 }
+                return false;
             });
 
             // table initialization
             let table1 = $('#t1').DataTable({
                 "order": [ 2, "asc" ],
-                "paging": false,
-                "info": false,
                 "scrollCollapse": true,
-                "scrollY": "33vh",
+                "scrollY": "78vh",
+                "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ]
             });
 
             let table2 = $('#t2').DataTable({
                 "order": [ 2, "asc" ],
-                "paging": false,
-                "info": false,
                 "scrollCollapse": true,
-                "scrollY": "33vh",
+                "scrollY": "78vh",
+                "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ]
             });
 
             // table initial filtration
@@ -121,6 +123,7 @@
 
             // add icon to searchbars
             var searchLabels = document.getElementsByTagName('label');
+            searchLabels = [searchLabels[1],searchLabels[3]];
 
             for (var i = 0; i < searchLabels.length; i++) {
                 var icon = document.createElement('i');

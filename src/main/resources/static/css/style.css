@@ -7,18 +7,10 @@
 .content {
     margin-left: 235px;
     min-height: 100vh;
-}
-
-.h1, .h2, .h3, .h4, .h5, .h6 {
-    margin: 0 !important;
-}
-
-.h3 {
-    font-size: 28px;
-}
-
-.h4 {
-    font-size: 22px;
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(255,255,255,0.1)), url("/images/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 hr {
@@ -26,21 +18,26 @@ hr {
 }
 
 .card-header {
-    padding-left: 25px;
-    padding-right: 25px;
+    padding: 1rem !important;
+
+}
+
+.card-body {
+    padding-right: 1rem !important;
+    padding-left: 1rem !important;
+    padding-top: 2rem !important;
+
+}
+
+.dataTables_scroll {
+    min-height: 38.5vh;
+    max-height: 82vh;
 }
 
 table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {
     background-color: #f2f2f2 !important;
 }
 
-@media print {
-
-    .sidebar {
-        display: none !important;
-    }
-
-    .content {
-        margin: 0 !important;
-    }
+table.dataTable tbody th, table.dataTable tbody td {
+    padding: 0.4rem !important; /* e.g. change 8x to 4px here */
 }

@@ -36,7 +36,7 @@ public class GuestCreationServiceImpl implements GuestCreationService {
      * @param zipCode contains the zipcode of the guest.
      * @param city contains the city of the guest.
      * @param country contains the country of the guest.
-     * @param discountInPrice contains the discount in percent for special guests.
+     * @param discountInPercent contains the discount in percent for special guests.
      */
     @Transactional
     @Override

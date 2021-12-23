@@ -355,7 +355,10 @@ public class TestData implements ApplicationRunner {
             booking.addRoomCategory(singleRoom, 1);
             this.bookingRepository.add(booking);
         }
-        {
+
+        for (int i = 0; i < 15; i++) {
+
+
             Booking booking = Booking.create(
                     LocalDate.now().plusDays(11),
                     LocalDate.now().plusDays(13),

@@ -2,14 +2,14 @@
 <html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/normalize.css" >
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/all.min.css">
-    <link rel="stylesheet" href="/css/fontawesome.min.css">
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/normalize.css">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/fontawesome.min.css">
 
     <title>Hotel Schwarz</title>
 
@@ -88,13 +88,14 @@
         </ul>
     </div>
 
-
     <!-- content -->
     <div class="content px-5 py-4 flex-grow-1" layout:fragment="content"></div>
 
-
     <!-- scripts -->
+    <script src="/js/bootstrap.bundle.min.js"></script>
+
     <script>
+        <!-- set sidebar element active via id from body tag of current page -->
         var bodyId = document.getElementsByTagName("body");
         bodyId = bodyId[0].id;
 
@@ -108,8 +109,6 @@
             }
         }
     </script>
-
-    <script src="/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
