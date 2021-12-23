@@ -1,99 +1,122 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+
+    <link rel="stylesheet" href="/css/datatables.min.css">
+
+    <script src="/js/jquery.js"></script>
+    <script src="/js/moment.js"></script>
+    <script src="/js/datatables.js"></script>
+    <script src="/js/datatables.bootstrap.js"></script>
+
+</head>
+
 <body id="Rooms">
 
     <div layout:fragment="content">
 
-        <div class="d-flex">
-            <p class="h3">Rooms</p>
-            <a class="btn btn-primary ms-5" id="modify" onclick="enable()">Modify</a>
+        <div style="width:50%; margin: auto">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <p class="h4">Rooms</p>
+                    <div>
+                        <a class="btn btn-primary" id="modify" onclick="changeState()">Modify</a>
+                        <a class="btn btn-outline-danger" id="reset" href="/rooms" hidden>Reset</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table id="t1" class="table stripe">
+                        <thead>
+                            <tr>
+                                <th class="col-2">Room number</th>
+                                <th class="col-2">Room category</th>
+                                <th class="col-1">State</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="align-middle">A404 Fake</td>
+                                <td class="align-middle">Single Room Fake</td>
+                                <td class="align-middle">
+                                    <select class="form-select roomstate" disabled>
+                                        <option value="0" selected hidden disabled>Occupied</option>
+                                        <option value="1">Not available</option>
+                                        <option value="2">Dirty</option>
+                                        <option value="3">Free</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr th:each="i : ${#numbers.sequence(0, 20)}">
+                                <td class="align-middle">S101 Fake</td>
+                                <td class="align-middle">Single Room Fake</td>
+                                <td class="align-middle">
+                                    <select class="form-select roomstate" disabled>
+                                        <option value="3" selected hidden disabled>Free</option>
+                                        <option value="1">Not available</option>
+                                        <option value="2">Dirty</option>
+                                        <option value="3">Free</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-
-        <br>
-
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th class="col-1">Room number</th>
-                <th class="col-1">Room category</th>
-                <th class="col-1"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>S101</td>
-                <td>Single Room</td>
-                <td>
-                    <select class="form-select" aria-label="Default select" disabled>
-                        <option selected="1">Not available</option>
-                        <option value="2">Free</option>
-                        <option value="3">Occupied</option>
-                        <option value="4">Dirty</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>S102</td>
-                <td>Single Room</td>
-                <td>
-                    <select class="form-select" aria-label="Default select" disabled>
-                        <option selected="1">Not available</option>
-                        <option value="2">Free</option>
-                        <option value="3">Occupied</option>
-                        <option value="4">Dirty</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>D201</td>
-                <td>Double Room</td>
-                <td>
-                    <select class="form-select" aria-label="Default select" disabled>
-                        <option selected="1">Not available</option>
-                        <option value="2">Free</option>
-                        <option value="3">Occupied</option>
-                        <option value="4">Dirty</option>
-                    </select>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-
-        <!-- Nur veränderbar wenn aktuell frei und keine Buchung in Zukunft<br>Speicher Warnhinweis -->
 
         <script>
 
-            function enable() {
-                let x = document.getElementsByTagName("select");
+            // table initialization
+            let table = $('#t1').DataTable({
+                "order": [ 0, "asc" ],
+                "scrollCollapse": true,
+                "scrollY": "77vh",
+                "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ],
+                "pageLength": -1
+            });
 
-                for(let i = 0; i <x.length; i += 1) {
+            // activate and deactivate the select fields
+            function changeState() {
+                var selectFields = document.getElementsByClassName('roomstate');
 
-                    if(x[i].getAttribute("disabled") == null) {
+                for (var i = 0; i < selectFields.length; i++) {
 
-                        x[i].setAttribute("disabled","disabled");
+                    if (selectFields[i].value !== '0') {
 
-                    } else {
-
-                        x[i].removeAttribute("disabled");
-
+                        if(selectFields[i].getAttribute("disabled") == null) {
+                            selectFields[i].setAttribute("disabled", "disabled");
+                        } else {
+                            selectFields[i].removeAttribute("disabled");
+                        }
                     }
                 }
 
-                let y = document.getElementById("modify");
+                var buttonModify = document.getElementById('modify');
+                var buttonReset = document.getElementById('reset');
 
-                if(y.innerHTML == "Modify") {
-                    y.innerHTML = "Save";
-                    y.setAttribute("class","btn btn-warning ms-5");
+                if (buttonModify.innerText === 'Modify') {
+
+                    buttonModify.innerText = 'Save';
+                    buttonModify.setAttribute('class', 'btn btn-outline-success');
+                    buttonModify.setAttribute('href', '#');
+
+                    buttonReset.removeAttribute('hidden');
+
                 } else {
-                    y.innerHTML = "Modify"
-                    y.setAttribute("class","btn btn-primary ms-5");
+
+                    alert("Set Href for Save Button");
+
+                    buttonModify.innerText = 'Modify';
+                    buttonModify.setAttribute('class', 'btn btn-primary');
+                    buttonModify.removeAttribute('href');
+
+                    buttonReset.setAttribute('hidden', 'true');
+
                 }
             }
-
         </script>
 
     </div>
 
 </body>
 </html>
-

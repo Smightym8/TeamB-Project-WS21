@@ -30,7 +30,6 @@ hr {
 }
 
 .dataTables_scroll {
-    min-height: 38.5vh;
     max-height: 82vh;
 }
 
