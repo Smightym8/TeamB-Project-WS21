@@ -43,6 +43,7 @@ public class CheckInServiceImpl implements CheckInService {
 
         List<RoomDTO> assignedRooms = new ArrayList<>();
 
+        // TODO: How to react if there are not enough rooms
         for(BookingWithRoomCategory brc : booking.getRoomCategories()) {
             // Get free rooms from current category
             List<Room> freeRooms = roomRepository.roomsByCategoryAndStatus(
@@ -76,7 +77,9 @@ public class CheckInServiceImpl implements CheckInService {
 
         Map<Room, Boolean> assignedRooms = new HashMap<>();
         for(RoomDTO r : rooms) {
-            Room room = roomRepository.roomByName(r.name()).get();
+            Room room = roomRepository.roomByName(r.name()).orElseThrow(
+                    () -> new RoomNotFoundException("Room with name " + r.name() + " not found")
+            );
             assignedRooms.put(room, false);
 
             // Change room status to occupied

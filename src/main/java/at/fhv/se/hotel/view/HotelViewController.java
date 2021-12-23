@@ -84,7 +84,6 @@ public class HotelViewController {
     private static final String INVOICE_URL = "/invoice/{id}";
     private static final String INVOICE_VIEW = "invoice";
 
-    private static final String INTERMEDIARY_INVOICE_URL = "/createintermediateinvoice/{id}";
     private static final String INTERMEDIARY_INVOICE_VIEW = "intermediaryInvoice";
 
     private static final String SAVE_INVOICE_URL = "/saveinvoice/{id}";
@@ -200,12 +199,8 @@ public class HotelViewController {
     }
 
 /*----- Invoices -----*/
-    //ToDo: status(isPaid) an die View weitergeben
     @GetMapping(INVOICES_URL)
     public String invoices(Model model) {
-        //Error! HHH000143: Bytecode enhancement failed because no public,
-        //protected or package-private default constructor was found for entity:
-        //at.fhv.se.hotel.domain.model.booking.Booking. Private constructors don't work with runtime proxies!
         final List<InvoiceListingDTO> invoices = invoiceListingService.allInvoices();
 
         model.addAttribute("invoices", invoices);
@@ -350,7 +345,7 @@ public class HotelViewController {
         BookingDetailsDTO bookingDetailsDTO;
         try {
             bookingDetailsDTO = bookingSummaryService.detailsByBookingId(bookingId);
-        } catch (BookingNotFoundException | GuestNotFoundException e) {
+        } catch (BookingNotFoundException e) {
             return redirectError(e.getMessage());
         }
 
@@ -380,7 +375,7 @@ public class HotelViewController {
         BookingDetailsDTO bookingDetailsDTO;
         try {
             bookingDetailsDTO = bookingSummaryService.detailsByBookingId(id);
-        } catch (BookingNotFoundException | GuestNotFoundException e) {
+        } catch (BookingNotFoundException e) {
             return redirectError(e.getMessage());
         }
         model.addAttribute("bookingDetails", bookingDetailsDTO);
@@ -389,11 +384,10 @@ public class HotelViewController {
     }
 
 /*----- Check-In -----*/
-    // TODO: Test
     @GetMapping(CHECK_IN_URL)
     public ModelAndView checkIn(
             @RequestParam("bookingId") String bookingId,
-            @RequestParam("isCheckedIn") boolean isCheckedIn,
+            @RequestParam("isCheckIn") boolean isCheckIn,
             Model model) {
 
         List<RoomDTO> assignedRooms;
@@ -403,7 +397,7 @@ public class HotelViewController {
             return redirectError(e.getMessage());
         }
 
-        if(isCheckedIn) {
+        if(isCheckIn) {
             try {
                 checkInService.checkIn(bookingId, assignedRooms);
             } catch (BookingNotFoundException | RoomNotFoundException e) {
@@ -413,13 +407,12 @@ public class HotelViewController {
 
         model.addAttribute("bookingId", bookingId);
         model.addAttribute("assignedRooms", assignedRooms);
-        model.addAttribute("isCheckedIn", isCheckedIn);
+        model.addAttribute("isCheckIn", isCheckIn);
 
         return new ModelAndView(CHECK_IN_VIEW);
     }
 
 /*----- Check-Out -----*/
-    // TODO: Test
     @GetMapping(STAY_DETAILS_URL)
     public ModelAndView showStay(@PathVariable String id, Model model) {
         StayDetailsDTO stayDetailsDTO;
@@ -436,16 +429,17 @@ public class HotelViewController {
         return new ModelAndView(STAY_DETAILS_VIEW);
     }
 
-    // TODO: Test
+
     @GetMapping(INVOICE_URL)
     public ModelAndView showInvoice(@ModelAttribute("invoiceForm") InvoiceForm invoiceForm,
                                     @RequestParam(value="action") String action,
                                     @PathVariable String id,
                                     Model model) {
 
+        InvoiceDTO invoiceDTO;
+        StayDetailsDTO stayDetailsDTO;
+
         if(action.equals("createInvoice")) {
-            InvoiceDTO invoiceDTO;
-            StayDetailsDTO stayDetailsDTO;
 
             try {
                 invoiceDTO = checkOutService.createInvoice(id, invoiceForm.getRoomNames());
@@ -459,18 +453,21 @@ public class HotelViewController {
 
             return new ModelAndView(INTERMEDIARY_INVOICE_VIEW);
         } else if(action.equals("checkOut")) {
-
             try {
-                checkOutService.checkOut(id);
+                invoiceDTO = checkOutService.createInvoice(id, invoiceForm.getRoomNames());
+                stayDetailsDTO = stayDetailsService.detailsById(id);
             } catch (StayNotFoundException e) {
                 return redirectError(e.getMessage());
             }
+            model.addAttribute("invoice", invoiceDTO);
+            model.addAttribute("invoiceForm", invoiceForm);
+            model.addAttribute("stayDetails", stayDetailsDTO);
 
-            return new ModelAndView("redirect:" + HOME_URL);
+            return new ModelAndView(INVOICE_VIEW);
+        }
+        return redirectError("There was an error.");
         }
 
-        return redirectError("There was an error.");
-    }
 
     @GetMapping(SAVE_INVOICE_URL)
     public ModelAndView createInvoice(@ModelAttribute("invoiceForm") InvoiceForm invoiceForm,
@@ -484,11 +481,12 @@ public class HotelViewController {
         return new ModelAndView("redirect:" + STAY_DETAILS_URL);
     }
 
-    // TODO: Test
+    // TODO: Check if this method is used
     @GetMapping(CHECK_OUT_URL)
-    public ModelAndView checkOut(@PathVariable String id) {
+    public ModelAndView checkOut(@ModelAttribute("invoiceForm") InvoiceForm invoiceForm,
+                                 @PathVariable String id) {
         try {
-            checkOutService.checkOut(id);
+            checkOutService.checkOut(id, invoiceForm.getRoomNames());
         } catch (StayNotFoundException e) {
             return redirectError(e.getMessage());
         }

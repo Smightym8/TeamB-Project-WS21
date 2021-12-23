@@ -1,16 +1,12 @@
 package at.fhv.se.hotel.domain.services.impl;
 
-import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
 import at.fhv.se.hotel.domain.model.room.Room;
-import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
 import at.fhv.se.hotel.domain.model.roomcategory.Season;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.stay.Stay;
-import at.fhv.se.hotel.domain.model.stay.StayId;
 import at.fhv.se.hotel.domain.repository.InvoiceRepository;
-import at.fhv.se.hotel.domain.repository.RoomCategoryRepository;
 import at.fhv.se.hotel.domain.repository.RoomRepository;
 import at.fhv.se.hotel.domain.services.api.InvoiceSplitService;
 import at.fhv.se.hotel.domain.services.api.RoomCategoryPriceService;
@@ -24,7 +20,6 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Component
 public class InvoiceSplitServiceImpl implements InvoiceSplitService {
@@ -40,8 +35,6 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
 
     @Autowired
     RoomRepository roomRepository;
-
-    // TODO: Alle Tests wo List<Room> vorkommt anpassen -> Map<Room, Boolean>
 
     @Override
     public Invoice splitInvoice(Stay stay, List<String> roomNames) {

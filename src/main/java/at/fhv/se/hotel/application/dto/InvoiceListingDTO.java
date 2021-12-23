@@ -3,7 +3,6 @@ package at.fhv.se.hotel.application.dto;
 import java.util.Objects;
 
 public class InvoiceListingDTO {
-    // TODO: Add status (isPaid) to domain model and then here
     private String id;
     private String invoiceNumber;
     private String guestFirstName;

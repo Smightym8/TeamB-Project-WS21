@@ -103,13 +103,9 @@ public class BookingSummaryServiceImpl implements BookingSummaryService {
     }
 
     @Override
-    public BookingDetailsDTO detailsByBookingId(String bookingId) throws BookingNotFoundException, GuestNotFoundException {
+    public BookingDetailsDTO detailsByBookingId(String bookingId) throws BookingNotFoundException {
         Booking booking = bookingRepository.bookingById(new BookingId(bookingId)).orElseThrow(
                 () -> new BookingNotFoundException("Booking with id " + bookingId + " not found")
-        );
-
-        Guest guest = guestRepository.guestById(booking.getGuest().getGuestId()).orElseThrow(
-                () -> new GuestNotFoundException("Guest for booking with id " + bookingId + " not found")
         );
 
         Map<String, Integer> categoriesWithAmount = new HashMap<>();
@@ -121,7 +117,6 @@ public class BookingSummaryServiceImpl implements BookingSummaryService {
 
             categoryIds.add(brc.getRoomCategory().getRoomCategoryId().id());
         });
-
 
         Map<String, BigDecimal> services = new HashMap<>();
         List<String> serviceIds = new ArrayList<>();
@@ -135,8 +130,8 @@ public class BookingSummaryServiceImpl implements BookingSummaryService {
 
         BookingDetailsDTO bookingDetailsDTO = BookingDetailsDTO.builder()
                 .withBookingId(bookingId)
-                .withGuestFirstName(guest.getName().firstName())
-                .withGuestLastName(guest.getName().lastName())
+                .withGuestFirstName(booking.getGuest().getName().firstName())
+                .withGuestLastName(booking.getGuest().getName().lastName())
                 .withRoomCategoriesAndAmounts(categoriesWithAmount)
                 .withCategoryIds(categoryIds)
                 .withServices(services)

@@ -3,7 +3,6 @@ package at.fhv.se.hotel.application.impl;
 import at.fhv.se.hotel.application.api.CheckOutService;
 import at.fhv.se.hotel.application.api.exception.StayNotFoundException;
 import at.fhv.se.hotel.application.dto.InvoiceDTO;
-import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
 import at.fhv.se.hotel.domain.model.room.Room;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
@@ -13,7 +12,6 @@ import at.fhv.se.hotel.domain.model.stay.StayId;
 import at.fhv.se.hotel.domain.repository.*;
 import at.fhv.se.hotel.domain.services.api.InvoiceCalculationService;
 import at.fhv.se.hotel.domain.services.api.InvoiceSplitService;
-import at.fhv.se.hotel.domain.services.api.RoomCategoryPriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -157,10 +155,14 @@ public class CheckOutServiceImpl implements CheckOutService {
 
     @Transactional
     @Override
-    public void checkOut(String stayId) throws StayNotFoundException {
+    public void checkOut(String stayId, List<String> roomNames) throws StayNotFoundException {
         Stay stay = stayRepository.stayById(new StayId(stayId)).orElseThrow(
                 () -> new StayNotFoundException("Check out failed! Stay with id " + stayId + " doesn't exist.")
         );
+
+        Invoice invoice = invoiceSplitService.splitInvoice(stay, roomNames);
+
+        invoiceRepository.add(invoice);
 
         for (Map.Entry<Room, Boolean> room : stay.getRooms().entrySet()) {
             room.getKey().clean();

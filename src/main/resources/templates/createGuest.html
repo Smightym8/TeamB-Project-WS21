@@ -12,8 +12,8 @@
             <div class="col-6" id="leftForm">
 
                 <div class="mb-3">
-                    <label for="guesttype" class="form-label">Type of guest:</label>
-                    <select onchange="enable()" id="guesttype" class="form-select" aria-label="Default select">
+                    <label for="guesttype" class="form-label">Type of guest*:</label>
+                    <select onchange="enable()" id="guesttype" class="form-select" aria-label="Default select" required>
                         <option value="Private">Private</option>
                         <option value="Travel Agency">Travel Agency</option>
                         <option value="Company Guest">Company Guest</option>
@@ -27,14 +27,14 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="firstname" class="form-label">First Name:</label>
+                    <label for="firstname" class="form-label">First Name*:</label>
                     <input th:field="*{firstName}" type="text" class="form-control" id="firstname" placeholder="John"
                            required>
                     <p th:if="${#fields.hasErrors('firstName')}">Name must be at least 2 and most 20 characters long</p>
                 </div>
 
                 <div class="mb-3">
-                    <label for="lastname" class="form-label">Last Name:</label>
+                    <label for="lastname" class="form-label">Last Name*:</label>
                     <input th:field="*{lastName}" type="text" class="form-control" id="lastname" placeholder="Doe"
                            required>
                     <p th:if="${#fields.hasErrors('lastName')}">Name must be at least 2 and most 20 characters long</p>
@@ -48,14 +48,14 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="phoneNumber" class="form-label">Telephone Number:</label>
+                    <label for="phoneNumber" class="form-label">Telephone Number*:</label>
                     <input th:field="*{phoneNumber}" type="tel" class="form-control" id="phoneNumber"
                            placeholder="+43 699 123 456 789" required>
                     <p th:if="${#fields.hasErrors('phoneNumber')}">Invalid Phonenumber</p>
                 </div>
 
                 <div class="mb-3">
-                    <label for="birthDate" class="form-label">Date of Birth:</label>
+                    <label for="birthDate" class="form-label">Date of Birth*:</label>
                     <input th:field="*{birthDate}" type="date" class="form-control" id="birthDate" required>
                     <p th:if="${#fields.hasErrors('birthDate')}">Invalid Birthdate</p>
                 </div>
@@ -95,29 +95,29 @@
                 <div class="mb-3">
                     <label class="form-label">Address:</label>
                     <div class="input-group mb-3">
-                        <span class="input-group-text">Streetname</span>
+                        <span class="input-group-text">Streetname*</span>
                         <input th:field="*{streetName}" type="text" class="form-control" placeholder="Townhall street"
                                aria-label="Streetname" required>
                         <p th:if="${#fields.hasErrors('streetName')}">Invalid Street name</p>
-                        <span class="input-group-text">Nr.</span>
+                        <span class="input-group-text">Nr.*</span>
                         <input th:field="*{streetNumber}" type="text" class="form-control" placeholder="42"
                                aria-label="Streetnumber" required>
                         <p th:if="${#fields.hasErrors('streetNumber')}">Invalid Street number</p>
                     </div>
 
                     <div class="input-group mb-3">
-                        <span class="input-group-text">Zip Code</span>
+                        <span class="input-group-text">Zip Code*</span>
                         <input th:field="*{zipCode}" type="text" class="form-control" placeholder="6850"
                                aria-label="Zip Code" required>
                         <p th:if="${#fields.hasErrors('zipCode')}">Invalid Zipcode</p>
-                        <span class="input-group-text">City</span>
+                        <span class="input-group-text">City*</span>
                         <input th:field="*{city}" type="text" class="form-control" placeholder="Dornbirn"
                                aria-label="City" required>
                         <p th:if="${#fields.hasErrors('city')}">Invalid City</p>
                     </div>
 
                     <div class="input-group mb-3">
-                        <span class="input-group-text">Country</span>
+                        <span class="input-group-text">Country*</span>
                         <input th:field="*{country}" type="text" class="form-control" placeholder="Austria"
                                aria-label="Country" required>
                         <p th:if="${#fields.hasErrors('country')}">Invalid Country</p>
@@ -125,6 +125,8 @@
 
                     <button type="submit" class="btn btn-primary" onclick="validation()">Submit</button>
                     <button type="reset" class="btn btn-primary">Reset</button>
+
+                    <div id="formHelp" class="form-text">All fields marked with * are required.</div>
                 </div>
             </div>
         </div>

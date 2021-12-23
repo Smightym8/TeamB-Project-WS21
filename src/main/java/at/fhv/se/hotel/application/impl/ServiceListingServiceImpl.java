@@ -42,7 +42,7 @@ public class ServiceListingServiceImpl implements ServiceListingService {
     @Override
     public Optional<ServiceDTO> findServiceById(String id) throws ServiceNotFoundException {
         Service service = serviceRepository.serviceById(new ServiceId(id)).orElseThrow(
-                () -> new ServiceNotFoundException("Service with id " + id + "not found")
+                () -> new ServiceNotFoundException("Service with id " + id + " not found")
         );
 
         ServiceDTO dto = ServiceDTO.builder()
