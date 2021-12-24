@@ -466,7 +466,7 @@ public class HotelViewController {
             return new ModelAndView(INVOICE_VIEW);
         }
         return redirectError("There was an error.");
-        }
+    }
 
 
     @GetMapping(SAVE_INVOICE_URL)

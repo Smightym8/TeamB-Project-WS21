@@ -4,7 +4,6 @@ import at.fhv.se.hotel.application.api.*;
 import at.fhv.se.hotel.application.dto.*;
 import at.fhv.se.hotel.domain.model.guest.Gender;
 import at.fhv.se.hotel.view.forms.GuestForm;
-import at.fhv.se.hotel.view.forms.InvoiceForm;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
@@ -741,7 +739,7 @@ public class ViewApiTests {
                 .withLocalTaxTotal(new BigDecimal("0.52"))
                 .withValueAddedTaxInPercent(new BigDecimal("0.1"))
                 .withValueAddedTaxInEuro(new BigDecimal("0.52"))
-                .withTotalNetAmount(new BigDecimal("0.52"))
+                .withTotalNetAmountBeforeDiscount(new BigDecimal("0.52"))
                 .withTotalGrossAmount(new BigDecimal("0.52"))
                 .withDiscountInPercent(10)
                 .withDiscountInEuro(new BigDecimal("0.52"))
@@ -812,7 +810,7 @@ public class ViewApiTests {
                 .withLocalTaxTotal(new BigDecimal("0.52"))
                 .withValueAddedTaxInPercent(new BigDecimal("0.1"))
                 .withValueAddedTaxInEuro(new BigDecimal("0.52"))
-                .withTotalNetAmount(new BigDecimal("0.52"))
+                .withTotalNetAmountBeforeDiscount(new BigDecimal("0.52"))
                 .withTotalGrossAmount(new BigDecimal("0.52"))
                 .withDiscountInPercent(10)
                 .withDiscountInEuro(new BigDecimal("0.52"))

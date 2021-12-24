@@ -119,7 +119,7 @@ public class InvoiceTests {
         assertEquals(localTaxTotalExpected, invoiceActual.getLocalTaxTotal());
         assertEquals(valueAddedTaxInPercentExpected, invoiceActual.getValueAddedTaxInPercent());
         assertEquals(valueAddedTaxInEuroExpected, invoiceActual.getValueAddedTaxInEuro());
-        assertEquals(totalNetAmountExpected, invoiceActual.getTotalNetAmount());
+        assertEquals(totalNetAmountExpected, invoiceActual.getTotalNetAmountBeforeDiscount());
         assertEquals(totalGrossAmountExpected, invoiceActual.getTotalGrossAmount());
     }
 

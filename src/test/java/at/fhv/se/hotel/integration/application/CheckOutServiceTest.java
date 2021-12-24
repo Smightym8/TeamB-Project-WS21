@@ -1,7 +1,6 @@
 package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.CheckOutService;
-import at.fhv.se.hotel.application.api.exception.BookingNotFoundException;
 import at.fhv.se.hotel.application.api.exception.StayNotFoundException;
 import at.fhv.se.hotel.application.dto.InvoiceDTO;
 import at.fhv.se.hotel.domain.model.booking.Booking;
@@ -20,7 +19,6 @@ import at.fhv.se.hotel.domain.repository.InvoiceRepository;
 import at.fhv.se.hotel.domain.repository.RoomRepository;
 import at.fhv.se.hotel.domain.repository.StayRepository;
 import at.fhv.se.hotel.domain.services.api.RoomCategoryPriceService;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -155,7 +153,7 @@ public class CheckOutServiceTest {
         assertEquals(localTaxPerPersonExpected, invoiceActual.localTaxPerPerson());
         assertEquals(localTaxTotalExpected, invoiceActual.localTaxTotal());
         assertEquals(valueAddedTaxInPercentExpected, invoiceActual.valueAddedTaxInPercent());
-        assertEquals(totalNetAmountExpected, invoiceActual.totalNetAmount());
+        assertEquals(totalNetAmountExpected, invoiceActual.totalNetAmountBeforeDiscount());
         assertEquals(valueAddedTaxInEuroExpected, invoiceActual.valueAddedTaxInEuro());
         assertEquals(totalGrossAmountExpected, invoiceActual.totalGrossAmount());
     }

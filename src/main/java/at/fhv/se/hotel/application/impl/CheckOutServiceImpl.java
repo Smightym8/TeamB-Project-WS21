@@ -88,8 +88,7 @@ public class CheckOutServiceImpl implements CheckOutService {
 
         if (invoice.getStay().getGuest().getDiscountInPercent() > 0) {
             discountInEuro = discountInEuro.add(
-                    invoice.getTotalNetAmount()
-                            .add(invoice.getValueAddedTaxInEuro())
+                    invoice.getTotalNetAmountBeforeDiscount()
                             .divide(BigDecimal.valueOf(invoice.getStay().getGuest()
                                     .getDiscountInPercent())).setScale(2, RoundingMode.CEILING));
         }
@@ -116,7 +115,9 @@ public class CheckOutServiceImpl implements CheckOutService {
                 .withLocalTaxTotal(invoice.getLocalTaxTotal())
                 .withValueAddedTaxInPercent(invoice.getValueAddedTaxInPercent().setScale(1, RoundingMode.CEILING))
                 .withValueAddedTaxInEuro(invoice.getValueAddedTaxInEuro())
-                .withTotalNetAmount(invoice.getTotalNetAmount())
+                .withTotalNetAmountBeforeDiscount(invoice.getTotalNetAmountBeforeDiscount())
+                .withTotalNetAmountAfterDiscount(invoice.getTotalNetAmountAfterDiscount())
+                .withTotalNetAmountAfterLocalTax(invoice.getTotalNetAmountAfterLocalTax())
                 .withTotalGrossAmount(invoice.getTotalGrossAmount())
                 .withDiscountInPercent(invoice.getStay().getGuest().getDiscountInPercent())
                 .withDiscountInEuro(discountInEuro)

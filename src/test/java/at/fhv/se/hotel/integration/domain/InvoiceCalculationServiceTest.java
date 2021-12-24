@@ -127,7 +127,7 @@ public class InvoiceCalculationServiceTest {
         assertEquals(localTaxPerPersonExpected, invoice.getLocalTaxPerPerson());
         assertEquals(localTaxTotalExpected, invoice.getLocalTaxTotal());
         assertEquals(valueAddedTaxInPercentExpected, invoice.getValueAddedTaxInPercent());
-        assertEquals(totalNetAmountExpected, invoice.getTotalNetAmount());
+        assertEquals(totalNetAmountExpected, invoice.getTotalNetAmountBeforeDiscount());
         assertEquals(valueAddedTaxInEuroExpected, invoice.getValueAddedTaxInEuro());
         assertEquals(totalGrossAmountExpected, invoice.getTotalGrossAmount());
     }

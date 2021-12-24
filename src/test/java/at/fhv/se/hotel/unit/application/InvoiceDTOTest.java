@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -68,7 +67,7 @@ public class InvoiceDTOTest {
                 .withLocalTaxTotal(localTaxTotalExpected)
                 .withValueAddedTaxInPercent(valueAddedTaxInPercentExpected)
                 .withValueAddedTaxInEuro(valueAddedTaxInEuroExpected)
-                .withTotalNetAmount(totalNetAmountExpected)
+                .withTotalNetAmountBeforeDiscount(totalNetAmountExpected)
                 .withTotalGrossAmount(totalGrossAmountExpected)
                 .build();
 
@@ -91,7 +90,7 @@ public class InvoiceDTOTest {
         assertEquals(localTaxPerPersonExpected, invoiceDTOExpected.localTaxPerPerson());
         assertEquals(localTaxTotalExpected, invoiceDTOExpected.localTaxTotal());
         assertEquals(valueAddedTaxInPercentExpected, invoiceDTOExpected.valueAddedTaxInPercent());
-        assertEquals(totalNetAmountExpected, invoiceDTOExpected.totalNetAmount());
+        assertEquals(totalNetAmountExpected, invoiceDTOExpected.totalNetAmountBeforeDiscount());
         assertEquals(valueAddedTaxInEuroExpected, invoiceDTOExpected.valueAddedTaxInEuro());
         assertEquals(totalGrossAmountExpected, invoiceDTOExpected.totalGrossAmount());
     }

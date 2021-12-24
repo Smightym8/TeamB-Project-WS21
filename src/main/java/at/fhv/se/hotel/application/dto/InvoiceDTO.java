@@ -80,8 +80,14 @@ public class InvoiceDTO {
     @XmlElement(name = "valueAddedTaxInEuro")
     private BigDecimal valueAddedTaxInEuro;
 
-    @XmlElement(name = "totalNetAmount")
-    private BigDecimal totalNetAmount;
+    @XmlElement(name = "totalNetAmountBeforeDiscount")
+    private BigDecimal totalNetAmountBeforeDiscount;
+
+    @XmlElement(name = "totalNetAmountAfterDiscount")
+    private BigDecimal totalNetAmountAfterDiscount;
+
+    @XmlElement(name = "totalNetAmountAfterLocalTax")
+    private BigDecimal totalNetAmountAfterLocalTax;
 
     @XmlElement(name = "totalGrossAmount")
     private BigDecimal totalGrossAmount;
@@ -188,8 +194,16 @@ public class InvoiceDTO {
         return valueAddedTaxInEuro;
     }
 
-    public BigDecimal totalNetAmount() {
-        return totalNetAmount;
+    public BigDecimal totalNetAmountBeforeDiscount() {
+        return totalNetAmountBeforeDiscount;
+    }
+
+    public BigDecimal totalNetAmountAfterDiscount() {
+        return totalNetAmountAfterDiscount;
+    }
+
+    public BigDecimal totalNetAmountAfterLocalTax() {
+        return totalNetAmountAfterLocalTax;
     }
 
     public BigDecimal totalGrossAmount() {
@@ -324,8 +338,18 @@ public class InvoiceDTO {
             return this;
         }
 
-        public Builder withTotalNetAmount(BigDecimal totalNetAmount) {
-            this.instance.totalNetAmount = totalNetAmount;
+        public Builder withTotalNetAmountBeforeDiscount(BigDecimal totalNetAmountBeforeDiscount) {
+            this.instance.totalNetAmountBeforeDiscount = totalNetAmountBeforeDiscount;
+            return this;
+        }
+
+        public Builder withTotalNetAmountAfterDiscount(BigDecimal totalNetAmountAfterDiscount) {
+            this.instance.totalNetAmountAfterDiscount = totalNetAmountAfterDiscount;
+            return this;
+        }
+
+        public Builder withTotalNetAmountAfterLocalTax(BigDecimal totalNetAmountAfterLocalTax) {
+            this.instance.totalNetAmountAfterLocalTax = totalNetAmountAfterLocalTax;
             return this;
         }
 
@@ -373,7 +397,9 @@ public class InvoiceDTO {
             Objects.requireNonNull(this.instance.localTaxTotal, "localTaxTotal must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.valueAddedTaxInPercent, "valueAddedTaxInPercent must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.valueAddedTaxInEuro, "valueAddedTaxInEuro must be set in InvoiceDTO");
-            Objects.requireNonNull(this.instance.totalNetAmount, "totalNetAmount must be set in InvoiceDTO");
+            Objects.requireNonNull(this.instance.totalNetAmountBeforeDiscount, "totalNetAmountBeforeDiscount must be set in InvoiceDTO");
+            Objects.requireNonNull(this.instance.totalNetAmountAfterDiscount, "totalNetAmountAfterDiscount must be set in InvoiceDTO");
+            Objects.requireNonNull(this.instance.totalNetAmountAfterLocalTax, "totalNetAmountAfterLocalTax must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.totalGrossAmount, "totalGrossAmount must be set in InvoiceDTO");
 
             return this.instance;
