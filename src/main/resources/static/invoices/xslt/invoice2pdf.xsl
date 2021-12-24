@@ -280,65 +280,67 @@
 					</fo:block>
 
 					<!-- Localtax -->
-					<fo:block margin-top="8mm">
-						<fo:inline font-size="12pt" font-weight="bold">
-							<xsl:text>Further Services&#xd;</xsl:text>
-						</fo:inline>
+					<xsl:if test="(invoice/localTaxTotal) > 0">
+						<fo:block margin-top="8mm">
+							<fo:inline font-size="12pt" font-weight="bold">
+								<xsl:text>Further Services&#xd;</xsl:text>
+							</fo:inline>
 
-						<fo:block margin-top="1mm">
-							<fo:table font-size="10pt">
-								<fo:table-column column-width="25%"/>
-								<fo:table-column column-width="25%"/>
-								<fo:table-column column-width="30%"/>
-								<fo:table-column column-width="20%"/>
+							<fo:block margin-top="1mm">
+								<fo:table font-size="10pt">
+									<fo:table-column column-width="25%"/>
+									<fo:table-column column-width="25%"/>
+									<fo:table-column column-width="30%"/>
+									<fo:table-column column-width="20%"/>
 
-								<fo:table-header border-width="1pt" border-style="solid">
-									<fo:table-row font-weight="bold">
-										<fo:table-cell padding="3pt">
-											<fo:block>Quantity</fo:block>
-										</fo:table-cell>
-										<fo:table-cell padding="3pt">
-											<fo:block>Description</fo:block>
-										</fo:table-cell>
-										<fo:table-cell padding="3pt">
-											<fo:block>Cost per Adult</fo:block>
-										</fo:table-cell>
-										<fo:table-cell padding="3pt">
-											<fo:block>Total</fo:block>
-										</fo:table-cell>
-									</fo:table-row>
-								</fo:table-header>
+									<fo:table-header border-width="1pt" border-style="solid">
+										<fo:table-row font-weight="bold">
+											<fo:table-cell padding="3pt">
+												<fo:block>Quantity</fo:block>
+											</fo:table-cell>
+											<fo:table-cell padding="3pt">
+												<fo:block>Description</fo:block>
+											</fo:table-cell>
+											<fo:table-cell padding="3pt">
+												<fo:block>Cost per Adult</fo:block>
+											</fo:table-cell>
+											<fo:table-cell padding="3pt">
+												<fo:block>Total</fo:block>
+											</fo:table-cell>
+										</fo:table-row>
+									</fo:table-header>
 
-								<fo:table-body border-width="1pt" border-style="solid">
-									<fo:table-row>
-										<fo:table-cell padding="3pt">
-											<fo:block>
-												<xsl:value-of select="invoice/amountOfAdults" />
-											</fo:block>
-										</fo:table-cell>
-										<fo:table-cell padding="3pt">
-											<fo:block>
-												<xsl:text>Local Tax</xsl:text>
-											</fo:block>
-										</fo:table-cell>
-										<fo:table-cell padding="3pt">
-											<fo:block>
-												<xsl:text>€ </xsl:text>
-												<xsl:value-of select="invoice/localTaxPerPerson" />
-											</fo:block>
-										</fo:table-cell>
-										<fo:table-cell padding="3pt">
-											<fo:block>
-												<xsl:text>€ </xsl:text>
-												<xsl:value-of select="invoice/localTaxTotal" />
-											</fo:block>
-										</fo:table-cell>
-									</fo:table-row>
-								</fo:table-body>
+									<fo:table-body border-width="1pt" border-style="solid">
+										<fo:table-row>
+											<fo:table-cell padding="3pt">
+												<fo:block>
+													<xsl:value-of select="invoice/amountOfAdults" />
+												</fo:block>
+											</fo:table-cell>
+											<fo:table-cell padding="3pt">
+												<fo:block>
+													<xsl:text>Local Tax</xsl:text>
+												</fo:block>
+											</fo:table-cell>
+											<fo:table-cell padding="3pt">
+												<fo:block>
+													<xsl:text>€ </xsl:text>
+													<xsl:value-of select="invoice/localTaxPerPerson" />
+												</fo:block>
+											</fo:table-cell>
+											<fo:table-cell padding="3pt">
+												<fo:block>
+													<xsl:text>€ </xsl:text>
+													<xsl:value-of select="invoice/localTaxTotal" />
+												</fo:block>
+											</fo:table-cell>
+										</fo:table-row>
+									</fo:table-body>
 
-							</fo:table>
+								</fo:table>
+							</fo:block>
 						</fo:block>
-					</fo:block>
+					</xsl:if>
 
 					<!-- VAT and total amount -->
 					<fo:block margin-top="8mm">
@@ -409,19 +411,21 @@
 										</fo:table-cell>
 									</fo:table-row>
 
-									<fo:table-row border-width="1pt" border-style="solid">
-										<fo:table-cell padding="3pt">
-											<fo:block>
-												<xsl:text>Local Tax</xsl:text>
-											</fo:block>
-										</fo:table-cell>
-										<fo:table-cell text-align="right" padding="3pt">
-											<fo:block>
-												<xsl:text>€ </xsl:text>
-												<xsl:value-of select="invoice/localTaxTotal" />
-											</fo:block>
-										</fo:table-cell>
-									</fo:table-row>
+									<xsl:if test="(invoice/localTaxTotal) > 0">
+										<fo:table-row border-width="1pt" border-style="solid">
+											<fo:table-cell padding="3pt">
+												<fo:block>
+													<xsl:text>Local Tax</xsl:text>
+												</fo:block>
+											</fo:table-cell>
+											<fo:table-cell text-align="right" padding="3pt">
+												<fo:block>
+													<xsl:text>€ </xsl:text>
+													<xsl:value-of select="invoice/localTaxTotal" />
+												</fo:block>
+											</fo:table-cell>
+										</fo:table-row>
+									</xsl:if>
 
 									<fo:table-row border-width="1pt" border-style="solid" font-weight="bold">
 										<fo:table-cell padding="3pt">
