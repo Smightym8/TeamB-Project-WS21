@@ -251,7 +251,7 @@
 										<fo:table-row>
 											<fo:table-cell padding="3pt">
 												<fo:block>
-													<xsl:value-of select="count(/invoice/categoryNames)" />
+													<xsl:value-of select="count(/invoice/roomCategories/entry)"/>
 												</fo:block>
 											</fo:table-cell>
 											<fo:table-cell padding="3pt">
@@ -268,7 +268,7 @@
 											<fo:table-cell padding="3pt">
 												<fo:block>
 													<xsl:text>€ </xsl:text>
-													<xsl:value-of select="format-number((value * count(/invoice/categoryNames) * /invoice/amountOfNights), '#.00')" />
+													<xsl:value-of select="format-number((value * count(/invoice/roomCategories/entry) * number(/invoice/amountOfNights)), '#.00')" />
 												</fo:block>
 											</fo:table-cell>
 										</fo:table-row>
