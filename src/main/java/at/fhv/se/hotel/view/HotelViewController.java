@@ -25,7 +25,7 @@ public class HotelViewController {
 // TODO: change birthday to birth of date
 // TODO: change in html value to th:value, href to to:href
 
-/* ----- Sidebar ----- */
+    /* ----- Sidebar ----- */
     private static final String HOME_URL = "/";
     private static final String HOME_VIEW = "sidebar/home";
 
@@ -47,11 +47,11 @@ public class HotelViewController {
     private static final String INVOICES_URL = "/invoices";
     private static final String INVOICES_VIEW = "sidebar/invoices";
 
-/*----- Create Guest -----*/
+    /*----- Create Guest -----*/
     private static final String CREATE_GUEST_URL = "/createguest";
     private static final String CREATE_GUEST_VIEW = "createGuest";
 
-/*----- Create Booking -----*/
+    /*----- Create Booking -----*/
     private static final String CREATE_BOOKING_GUEST_URL = "/createbooking/guest";
     private static final String CREATE_BOOKING_GUEST_VIEW = "booking/createBookingGuest";
 
@@ -70,35 +70,31 @@ public class HotelViewController {
     private static final String CREATE_BOOKING_URL = "/createbooking";
     private static final String CREATE_BOOKING_SUCCESS_URL = "/createbookingSuccess";
 
-/*----- Check-In -----*/
+    /*----- Check-In -----*/
     private static final String BOOKING_DETAILS_URL = "/bookingdetails/{id}";
     private static final String BOOKING_DETAILS_VIEW = "booking/bookingDetails";
 
     private static final String CHECK_IN_URL = "/check-in";
     private static final String CHECK_IN_VIEW = "checkIn";
 
-/*----- Check-Out -----*/
+    /*----- Check-Out -----*/
     private static final String STAY_DETAILS_URL = "/staydetails/{id}";
     private static final String STAY_DETAILS_VIEW = "stay/stayDetails";
 
     private static final String INVOICE_URL = "/invoice/{id}";
     private static final String INVOICE_VIEW = "invoice";
 
-    private static final String INTERMEDIARY_INVOICE_VIEW = "intermediaryInvoice";
-
     private static final String SAVE_INVOICE_URL = "/saveinvoice/{id}";
 
-    private static final String CHECK_OUT_URL = "/check-out/{id}";
-
-/*----- Invoice Download -----*/
+    /*----- Invoice Download -----*/
     private static final String INVOICES_PATH = "src/main/resources/static/invoices/";
     private static final String INVOICE_DOWNLOAD_URL = "/download-invoice/{invoiceNo}";
 
-/*----- Error -----*/
+    /*----- Error -----*/
     private static final String ERROR_URL = "/displayerror";
     private static final String ERROR_VIEW = "errorView";
 
-/*--------------------------------------------------------------------------------------------------------------------*/
+    /*--------------------------------------------------------------------------------------------------------------------*/
 
     @Autowired
     private BookingListingService bookingListingService;
@@ -140,9 +136,9 @@ public class HotelViewController {
     private InvoiceDownloadService invoiceDownloadService;
 
 
-/*--------------------------------------------------------------------------------------------------------------------*/
+    /*--------------------------------------------------------------------------------------------------------------------*/
 
-/*----- Home -----*/
+    /*----- Home -----*/
     @GetMapping(HOME_URL)
     public String home(Model model) {
         final List<BookingListingDTO> bookings = bookingListingService.allBookings();
@@ -154,21 +150,21 @@ public class HotelViewController {
         return HOME_VIEW;
     }
 
-/*----- Rooms -----*/
+    /*----- Rooms -----*/
     @GetMapping(ROOMS_URL)
     public String rooms(Model model) {
 
         return ROOMS_VIEW;
     }
 
-/*----- Pricing -----*/
+    /*----- Pricing -----*/
     @GetMapping(PRICING_URL)
     public String pricing(Model model) {
 
         return PRICING_VIEW;
     }
 
-/*----- Guests -----*/
+    /*----- Guests -----*/
     @GetMapping(GUESTS_URL)
     public String guests(Model model) {
         final List<GuestDTO> guests = guestListingService.allGuests();
@@ -178,7 +174,7 @@ public class HotelViewController {
         return GUESTS_VIEW;
     }
 
-/*----- Bookings -----*/
+    /*----- Bookings -----*/
     @GetMapping(BOOKINGS_URL)
     public String bookings(Model model) {
         final List<BookingListingDTO> bookings = bookingListingService.allBookings();
@@ -188,7 +184,7 @@ public class HotelViewController {
         return BOOKINGS_VIEW;
     }
 
-/*----- Stays -----*/
+    /*----- Stays -----*/
     @GetMapping(STAYS_URL)
     public String stays(Model model) {
         final List<StayListingDTO> stays = stayListingService.allStays();
@@ -198,7 +194,7 @@ public class HotelViewController {
         return STAYS_VIEW;
     }
 
-/*----- Invoices -----*/
+    /*----- Invoices -----*/
     @GetMapping(INVOICES_URL)
     public String invoices(Model model) {
         final List<InvoiceListingDTO> invoices = invoiceListingService.allInvoices();
@@ -208,7 +204,7 @@ public class HotelViewController {
         return INVOICES_VIEW;
     }
 
-/*----- Create Guest -----*/
+    /*----- Create Guest -----*/
     @GetMapping(CREATE_GUEST_URL)
     public String createGuestGet(Model model) {
         GuestForm guestForm = new GuestForm();
@@ -242,7 +238,7 @@ public class HotelViewController {
         return "redirect:" + GUESTS_URL;
     }
 
-/*----- Create Booking -----*/
+    /*----- Create Booking -----*/
     @GetMapping(CREATE_BOOKING_GUEST_URL)
     public String createBookingGuest(Model model) {
         final List<GuestDTO> guests = guestListingService.allGuests();
@@ -383,7 +379,7 @@ public class HotelViewController {
         return new ModelAndView(BOOKING_DETAILS_VIEW);
     }
 
-/*----- Check-In -----*/
+    /*----- Check-In -----*/
     @GetMapping(CHECK_IN_URL)
     public ModelAndView checkIn(
             @RequestParam("bookingId") String bookingId,
@@ -412,7 +408,7 @@ public class HotelViewController {
         return new ModelAndView(CHECK_IN_VIEW);
     }
 
-/*----- Check-Out -----*/
+    /*----- Check-Out -----*/
     @GetMapping(STAY_DETAILS_URL)
     public ModelAndView showStay(@PathVariable String id, Model model) {
         StayDetailsDTO stayDetailsDTO;
@@ -439,62 +435,49 @@ public class HotelViewController {
         InvoiceDTO invoiceDTO;
         StayDetailsDTO stayDetailsDTO;
 
-        if(action.equals("createInvoice")) {
-
-            try {
-                invoiceDTO = checkOutService.createInvoice(id, invoiceForm.getRoomNames());
-                stayDetailsDTO = stayDetailsService.detailsById(id);
-            } catch (StayNotFoundException e) {
-                return redirectError(e.getMessage());
-            }
-            model.addAttribute("invoice", invoiceDTO);
-            model.addAttribute("invoiceForm", invoiceForm);
-            model.addAttribute("stayDetails", stayDetailsDTO);
-
-            return new ModelAndView(INTERMEDIARY_INVOICE_VIEW);
-        } else if(action.equals("checkOut")) {
-            try {
-                invoiceDTO = checkOutService.createInvoice(id, invoiceForm.getRoomNames());
-                stayDetailsDTO = stayDetailsService.detailsById(id);
-            } catch (StayNotFoundException e) {
-                return redirectError(e.getMessage());
-            }
-            model.addAttribute("invoice", invoiceDTO);
-            model.addAttribute("invoiceForm", invoiceForm);
-            model.addAttribute("stayDetails", stayDetailsDTO);
-
-            return new ModelAndView(INVOICE_VIEW);
+        try {
+            invoiceDTO = checkOutService.createInvoice(id, invoiceForm.getRoomNames());
+            stayDetailsDTO = stayDetailsService.detailsById(id);
+        } catch (StayNotFoundException e) {
+            return redirectError(e.getMessage());
         }
-        return redirectError("There was an error.");
+        model.addAttribute("invoice", invoiceDTO);
+        model.addAttribute("invoiceForm", invoiceForm);
+        model.addAttribute("stayDetails", stayDetailsDTO);
+        model.addAttribute("action", action);
+
+        return new ModelAndView(INVOICE_VIEW);
+
     }
 
 
     @GetMapping(SAVE_INVOICE_URL)
-    public ModelAndView createInvoice(@ModelAttribute("invoiceForm") InvoiceForm invoiceForm,
-                                    @PathVariable String id){
-        try {
-            checkOutService.saveInvoice(id, invoiceForm.getRoomNames());
-        } catch (StayNotFoundException e) {
-            return redirectError(e.getMessage());
+    public ModelAndView createInvoiceOrCheckout(@ModelAttribute("invoiceForm") InvoiceForm invoiceForm,
+                                      @RequestParam(value="action") String action,
+                                      @PathVariable String id){
+
+        if (action.equals("createInvoice")) {
+            try {
+                checkOutService.saveInvoice(id, invoiceForm.getRoomNames());
+            } catch (StayNotFoundException e) {
+                return redirectError(e.getMessage());
+            }
+
+            return new ModelAndView("redirect:" + STAY_DETAILS_URL);
+        } else if(action.equals("checkOut")) {
+            try {
+                checkOutService.checkOut(id, invoiceForm.getRoomNames());
+            } catch (StayNotFoundException e) {
+                return redirectError(e.getMessage());
+            }
+
+            return new ModelAndView("redirect:" + HOME_URL);
         }
 
-        return new ModelAndView("redirect:" + STAY_DETAILS_URL);
+        return redirectError("There was an error.");
     }
 
-    // TODO: Check if this method is used
-    @GetMapping(CHECK_OUT_URL)
-    public ModelAndView checkOut(@ModelAttribute("invoiceForm") InvoiceForm invoiceForm,
-                                 @PathVariable String id) {
-        try {
-            checkOutService.checkOut(id, invoiceForm.getRoomNames());
-        } catch (StayNotFoundException e) {
-            return redirectError(e.getMessage());
-        }
-
-        return new ModelAndView("redirect:" + HOME_URL);
-    }
-
-/*----- Invoice Download -----*/
+    /*----- Invoice Download -----*/
     @GetMapping(INVOICE_DOWNLOAD_URL)
     public ResponseEntity<ByteArrayResource> downloadInvoice(@PathVariable("invoiceNo") String invoiceNo) {
         ByteArrayResource resource = null;
@@ -514,7 +497,7 @@ public class HotelViewController {
                 .body(resource);
     }
 
-/*----- Error -----*/
+    /*----- Error -----*/
     @GetMapping(ERROR_URL)
     public ModelAndView displayError(@RequestParam("message") String message, Model model){
         model.addAttribute("message", message);
