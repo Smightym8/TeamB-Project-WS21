@@ -241,6 +241,90 @@ public class CheckOutServiceTest {
     }
 
     @Test
+    public void given_stayandselectedrooms_when_saveinvoice_then_setroomispaid() throws StayNotFoundException {
+        // given
+        Guest guestExpected = Guest.create(new GuestId("1"),
+                new FullName("Michael", "Spiegel"),
+                Gender.MALE,
+                new Address("Hochschulstraße",
+                        "1", "Dornbirn",
+                        "6850", "Austria"),
+                LocalDate.of(1999, 3, 20),
+                "+43 660 123 456 789",
+                "michael.spiegel@students.fhv.at",
+                0,
+                Collections.emptyList()
+        );
+
+        List<RoomCategory> categoriesExpected = List.of(
+                RoomCategory.create(new RoomCategoryId("1"),
+                        new RoomCategoryName("Single Room"),
+                        new Description("This is a single room"))
+        );
+
+        List<Service> servicesExpected = Arrays.asList(
+                Service.create(new ServiceId("1"),
+                        new ServiceName("TV"),
+                        new Price(new BigDecimal("100"))),
+                Service.create(new ServiceId("2"),
+                        new ServiceName("Breakfast"),
+                        new Price(new BigDecimal("100")))
+        );
+
+        Booking bookingExpectedbooking = Booking.create(
+                LocalDate.of(2021, 8, 1),
+                LocalDate.of(2021, 8, 10),
+                new BookingId("1"),
+                guestExpected,
+                servicesExpected,
+                2,
+                1,
+                "Nothing"
+        );
+
+        categoriesExpected.forEach(roomCategory -> bookingExpectedbooking.addRoomCategory(roomCategory, 1));
+
+        List<RoomCategoryPrice> roomCategoryPricesExpected = List.of(
+                RoomCategoryPrice.create(
+                        new RoomCategoryPriceId("1"),
+                        Season.SUMMER,
+                        categoriesExpected.get(0),
+                        new BigDecimal("300").setScale(2, RoundingMode.CEILING)
+                )
+        );
+
+        String roomNameExpected = "Room 1";
+        RoomStatus roomStatusExpected = RoomStatus.FREE;
+
+        Map<Room, Boolean> roomsExpected = new HashMap<>(Map.of(
+                Room.create(
+                        roomNameExpected,
+                        roomStatusExpected,
+                        categoriesExpected.get(0)
+                ), false
+        ));
+
+        List<Room> roomsExpectedList = new ArrayList<>(roomsExpected.keySet());
+
+        List<String> roomNamesExpected = Arrays.asList(roomNameExpected);
+
+        StayId idExpected = new StayId(bookingExpectedbooking.getBookingId().id());
+        Stay stayExpected = Stay.create(bookingExpectedbooking, roomsExpected);
+
+        Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
+        Mockito.when(stayRepository.stayById(idExpected)).thenReturn(Optional.of(stayExpected));
+        Mockito.when(roomRepository.roomByName(roomNameExpected)).thenReturn(Optional.of(roomsExpectedList.get(0)));
+        Mockito.when(roomCategoryPriceRepository.by(categoriesExpected.get(0), Season.SUMMER))
+                .thenReturn(roomCategoryPricesExpected.get(0));
+
+        //when
+        checkOutService.saveInvoice(idExpected.id(), roomNamesExpected);
+
+        //then
+        assertTrue(stayExpected.getRooms().get(roomsExpectedList.get(0)));
+    }
+
+    @Test
     public void given_missingStay_when_checkOut_then_StayNotFoundExceptionIsThrown() {
         // given
         StayId stayIdExpected = new StayId("1");

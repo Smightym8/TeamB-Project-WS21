@@ -139,9 +139,8 @@ public class CheckOutServiceImpl implements CheckOutService {
                     () -> new StayNotFoundException("Saving invoice failed! Stay with id " + stayId + " not found")
             );
 
-            StayId id = stay.getStayId();
 
-            for (Map.Entry<Room, Boolean> room : stayRepository.stayById(id).get().getRooms().entrySet()) {
+            for (Map.Entry<Room, Boolean> room : stay.getRooms().entrySet()) {
                 for (String roomName : roomNames) {
                     if (room.getKey().getName().equals(roomName)) {
                         room.setValue(true);
