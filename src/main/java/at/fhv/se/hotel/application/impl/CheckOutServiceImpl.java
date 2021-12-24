@@ -49,11 +49,11 @@ public class CheckOutServiceImpl implements CheckOutService {
 
     @Transactional
     @Override
-    public InvoiceDTO createInvoice(String stayId, List<String> roomNames) throws StayNotFoundException {
+    public InvoiceDTO createInvoice(String stayId, List<String> roomNames, String action) throws StayNotFoundException {
         Stay stay = stayRepository.stayById(new StayId(stayId)).orElseThrow(
                 () -> new StayNotFoundException("Creating invoice failed! Stay with id " + stayId + " not found")
         );
-        Invoice invoice = invoiceSplitService.splitInvoice(stay, roomNames);
+        Invoice invoice = invoiceSplitService.splitInvoice(stay, roomNames, action);
 
         Map<String, BigDecimal> services = new HashMap<>();
         for(Service s : invoice.getServices()) {
@@ -133,7 +133,7 @@ public class CheckOutServiceImpl implements CheckOutService {
 
     @Transactional
     @Override
-    public void saveInvoice(String stayId, List<String> roomNames) throws StayNotFoundException {
+    public void saveInvoice(String stayId, List<String> roomNames, String action) throws StayNotFoundException {
         if (stayRepository.stayById(new StayId(stayId)).isPresent()) {
             Stay stay = stayRepository.stayById(new StayId(stayId)).orElseThrow(
                     () -> new StayNotFoundException("Saving invoice failed! Stay with id " + stayId + " not found")
@@ -147,7 +147,7 @@ public class CheckOutServiceImpl implements CheckOutService {
                     }
                 }
             }
-            Invoice invoice = invoiceSplitService.splitInvoice(stay, roomNames);
+            Invoice invoice = invoiceSplitService.splitInvoice(stay, roomNames, action);
 
             invoiceRepository.add(invoice);
         }
@@ -155,12 +155,12 @@ public class CheckOutServiceImpl implements CheckOutService {
 
     @Transactional
     @Override
-    public void checkOut(String stayId, List<String> roomNames) throws StayNotFoundException {
+    public void checkOut(String stayId, List<String> roomNames, String action) throws StayNotFoundException {
         Stay stay = stayRepository.stayById(new StayId(stayId)).orElseThrow(
                 () -> new StayNotFoundException("Check out failed! Stay with id " + stayId + " doesn't exist.")
         );
 
-        Invoice invoice = invoiceSplitService.splitInvoice(stay, roomNames);
+        Invoice invoice = invoiceSplitService.splitInvoice(stay, roomNames, action);
 
         invoiceRepository.add(invoice);
 

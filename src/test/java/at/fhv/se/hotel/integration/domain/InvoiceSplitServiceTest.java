@@ -115,15 +115,17 @@ public class InvoiceSplitServiceTest {
         String invoiceNumberExpected = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001";
         int amountOfNightsExpected = 3;
         BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76").setScale(2, RoundingMode.CEILING);
-        BigDecimal localTaxTotalExpected = new BigDecimal("1.52").setScale(2, RoundingMode.CEILING);
+        BigDecimal localTaxTotalExpected = new BigDecimal("0").setScale(2, RoundingMode.CEILING);
         BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.10").setScale(2, RoundingMode.CEILING);
         BigDecimal totalNetAmountBeforeDiscountExpected = new BigDecimal("2400").setScale(2, RoundingMode.CEILING);
         BigDecimal totalNetAmountAfterDiscountExpected = new BigDecimal("2400").setScale(2, RoundingMode.CEILING);
-        BigDecimal totalNetAmountAfterLocalTaxExpected = new BigDecimal("2401.52").setScale(2, RoundingMode.CEILING);
+        BigDecimal totalNetAmountAfterLocalTaxExpected = new BigDecimal("2400").setScale(2, RoundingMode.CEILING);
         BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("240.00").setScale(2, RoundingMode.CEILING);
-        BigDecimal totalGrossAmountExpected = new BigDecimal("2641.52").setScale(2, RoundingMode.CEILING);
+        BigDecimal totalGrossAmountExpected = new BigDecimal("2640").setScale(2, RoundingMode.CEILING);
 
         InvoiceId invoiceId = new InvoiceId("1");
+
+        String action = "createInvoice";
 
         // when
         Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
@@ -135,7 +137,7 @@ public class InvoiceSplitServiceTest {
 
         Mockito.when(invoiceRepository.nextIdentity()).thenReturn(invoiceId);
 
-        Invoice invoice = invoiceSplitService.splitInvoice(stayExpected, selectedRooms);
+        Invoice invoice = invoiceSplitService.splitInvoice(stayExpected, selectedRooms, action);
 
         // then
         assertEquals(invoiceNumberExpected, invoice.getInvoiceNumber());
@@ -216,13 +218,15 @@ public class InvoiceSplitServiceTest {
         String invoiceNumberExpected = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001";
         int amountOfNightsExpected = 3;
         BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76").setScale(2, RoundingMode.CEILING);
-        BigDecimal localTaxTotalExpected = new BigDecimal("1.52").setScale(2, RoundingMode.CEILING);
+        BigDecimal localTaxTotalExpected = new BigDecimal("0").setScale(2, RoundingMode.CEILING);
         BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.10").setScale(2, RoundingMode.CEILING);
         BigDecimal totalNetAmountBeforeDiscountExpected = new BigDecimal("4800").setScale(2, RoundingMode.CEILING);
         BigDecimal totalNetAmountAfterDiscountExpected = new BigDecimal("4800").setScale(2, RoundingMode.CEILING);
-        BigDecimal totalNetAmountAfterLocalTaxExpected = new BigDecimal("4801.52").setScale(2, RoundingMode.CEILING);
+        BigDecimal totalNetAmountAfterLocalTaxExpected = new BigDecimal("4800").setScale(2, RoundingMode.CEILING);
         BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("480.00").setScale(2, RoundingMode.CEILING);
-        BigDecimal totalGrossAmountExpected = new BigDecimal("5281.52").setScale(2, RoundingMode.CEILING);
+        BigDecimal totalGrossAmountExpected = new BigDecimal("5280").setScale(2, RoundingMode.CEILING);
+
+        String action = "createInvoice";
 
         InvoiceId invoiceId = new InvoiceId("1");
 
@@ -237,7 +241,7 @@ public class InvoiceSplitServiceTest {
 
         Mockito.when(invoiceRepository.nextIdentity()).thenReturn(invoiceId);
 
-        Invoice invoice = invoiceSplitService.splitInvoice(stayExpected, selectedRooms);
+        Invoice invoice = invoiceSplitService.splitInvoice(stayExpected, selectedRooms, action);
 
         // then
         assertEquals(invoiceNumberExpected, invoice.getInvoiceNumber());

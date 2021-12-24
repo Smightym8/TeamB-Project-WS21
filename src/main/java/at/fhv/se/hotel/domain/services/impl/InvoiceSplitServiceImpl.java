@@ -37,7 +37,7 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
     RoomRepository roomRepository;
 
     @Override
-    public Invoice splitInvoice(Stay stay, List<String> roomNames) {
+    public Invoice splitInvoice(Stay stay, List<String> roomNames, String action) {
 
         int todaysInvoicesAmount = invoiceRepository.invoicesByDate(LocalDate.now()).size() + 1;
         List<RoomCategoryPrice> roomCategoryPriceList = new ArrayList<>();
@@ -102,11 +102,12 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
         BigDecimal valueAddedTaxTotal = totalNetAmountAfterDiscount.multiply(valueAddedTaxPercentage);
 
         // Calculate local tax
-        BigDecimal localTaxTotal = localTaxInEuro.multiply(
-                BigDecimal.valueOf(
-                        stay.getBooking().getAmountOfAdults()
-                )
-        );
+        BigDecimal localTaxTotal = new BigDecimal("0");
+
+        if (action.equals("checkOut")) {
+            localTaxTotal = localTaxTotal.add(localTaxInEuro.multiply
+                    (BigDecimal.valueOf(stay.getBooking().getAmountOfAdults())));
+        }
 
         // Calculate total net amount
         BigDecimal totalNetAmountAfterLocalTax = totalNetAmountAfterDiscount.add(localTaxTotal);

@@ -436,7 +436,7 @@ public class HotelViewController {
         StayDetailsDTO stayDetailsDTO;
 
         try {
-            invoiceDTO = checkOutService.createInvoice(id, invoiceForm.getRoomNames());
+            invoiceDTO = checkOutService.createInvoice(id, invoiceForm.getRoomNames(), action);
             stayDetailsDTO = stayDetailsService.detailsById(id);
         } catch (StayNotFoundException e) {
             return redirectError(e.getMessage());
@@ -450,7 +450,6 @@ public class HotelViewController {
 
     }
 
-
     @GetMapping(SAVE_INVOICE_URL)
     public ModelAndView createInvoiceOrCheckout(@ModelAttribute("invoiceForm") InvoiceForm invoiceForm,
                                       @RequestParam(value="action") String action,
@@ -458,7 +457,7 @@ public class HotelViewController {
 
         if (action.equals("createInvoice")) {
             try {
-                checkOutService.saveInvoice(id, invoiceForm.getRoomNames());
+                checkOutService.saveInvoice(id, invoiceForm.getRoomNames(), action);
             } catch (StayNotFoundException e) {
                 return redirectError(e.getMessage());
             }
@@ -466,7 +465,7 @@ public class HotelViewController {
             return new ModelAndView("redirect:" + STAY_DETAILS_URL);
         } else if(action.equals("checkOut")) {
             try {
-                checkOutService.checkOut(id, invoiceForm.getRoomNames());
+                checkOutService.checkOut(id, invoiceForm.getRoomNames(), action);
             } catch (StayNotFoundException e) {
                 return redirectError(e.getMessage());
             }

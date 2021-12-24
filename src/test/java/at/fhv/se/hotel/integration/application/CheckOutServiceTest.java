@@ -131,6 +131,7 @@ public class CheckOutServiceTest {
         BigDecimal totalNetAmountAfterLocalTaxExpected = new BigDecimal("4501.52").setScale(2, RoundingMode.CEILING);
         BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("450.00").setScale(2, RoundingMode.CEILING);
         BigDecimal totalGrossAmountExpected = new BigDecimal("4951.52").setScale(2, RoundingMode.CEILING);
+        String action = "checkOut";
 
         Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
         Mockito.when(stayRepository.stayById(idExpected)).thenReturn(Optional.of(stayExpected));
@@ -139,7 +140,7 @@ public class CheckOutServiceTest {
                 .thenReturn(roomCategoryPricesExpected.get(0));
 
         // when
-        InvoiceDTO invoiceActual = checkOutService.createInvoice(stayExpected.getStayId().id(), roomNamesExpected);
+        InvoiceDTO invoiceActual = checkOutService.createInvoice(stayExpected.getStayId().id(), roomNamesExpected, action);
 
         // then
         assertEquals(stayExpected.getGuest().getName().firstName(), invoiceActual.guestFirstName());
@@ -230,6 +231,7 @@ public class CheckOutServiceTest {
 
         StayId idExpected = new StayId(bookingExpected.getBookingId().id());
         Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
+        String action = "checkOut";
 
         Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
         Mockito.when(stayRepository.stayById(idExpected)).thenReturn(Optional.of(stayExpected));
@@ -238,7 +240,7 @@ public class CheckOutServiceTest {
                 .thenReturn(roomCategoryPricesExpected.get(0));
 
         // when
-        checkOutService.checkOut(stayExpected.getStayId().id(), roomNamesExpected);
+        checkOutService.checkOut(stayExpected.getStayId().id(), roomNamesExpected, action);
 
         // then
         assertFalse(stayExpected.isActive());
@@ -314,6 +316,7 @@ public class CheckOutServiceTest {
 
         StayId idExpected = new StayId(bookingExpectedbooking.getBookingId().id());
         Stay stayExpected = Stay.create(bookingExpectedbooking, roomsExpected);
+        String action = "createInvoice";
 
         Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
         Mockito.when(stayRepository.stayById(idExpected)).thenReturn(Optional.of(stayExpected));
@@ -322,7 +325,7 @@ public class CheckOutServiceTest {
                 .thenReturn(roomCategoryPricesExpected.get(0));
 
         //when
-        checkOutService.saveInvoice(idExpected.id(), roomNamesExpected);
+        checkOutService.saveInvoice(idExpected.id(), roomNamesExpected, action);
 
         //then
         assertTrue(stayExpected.getRooms().get(roomsExpectedList.get(0)));
@@ -334,12 +337,13 @@ public class CheckOutServiceTest {
         StayId stayIdExpected = new StayId("1");
 
         List<String> roomNames = List.of("101");
+        String action = "checkOut";
 
         Mockito.when(stayRepository.stayById(stayIdExpected)).thenReturn(Optional.empty());
 
         // when ... then
         Exception exception = assertThrows(StayNotFoundException.class, () -> {
-            checkOutService.checkOut(stayIdExpected.id(), roomNames);
+            checkOutService.checkOut(stayIdExpected.id(), roomNames, action);
         });
 
         String expectedMessage = "Check out failed! Stay with id " + stayIdExpected.id() + " doesn't exist.";

@@ -119,11 +119,11 @@
                     </table>
                 </div>
 
-                <div class="card-header">
+                <div class="card-header" th:if="${invoice.localTaxTotal > 0}">
                     Further Services
                 </div>
 
-                <div class="card-body">
+                <div class="card-body"  th:if="${invoice.localTaxTotal > 0}">
                     <table class="table">
                         <thead>
                         <tr>
@@ -186,7 +186,7 @@
                                     <td class="col-3 text-end" th:text="'€' + ${invoice.valueAddedTaxInEuro}"></td>
                                 </tr>
 
-                                <tr>
+                                <tr th:if="${invoice.localTaxTotal > 0}">
                                     <td class="col-2">
                                         <strong>Local Tax Total</strong>
                                     </td>

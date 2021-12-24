@@ -751,7 +751,9 @@ public class ViewApiTests {
 
         List<String> roomNamesExpected = List.of("101");
 
-        Mockito.when(checkOutService.createInvoice(stayIdExpected, roomNamesExpected)).thenReturn(invoiceDTOExpected);
+        String action = "createInvoice";
+
+        Mockito.when(checkOutService.createInvoice(stayIdExpected, roomNamesExpected, action)).thenReturn(invoiceDTOExpected);
         Mockito.when(stayDetailsService.detailsById(stayIdExpected)).thenReturn(stayDetailsDTOExpected);
 
         // when ... then
@@ -768,7 +770,7 @@ public class ViewApiTests {
                 .andExpect(view().name("invoice"));
 
         // then
-        Mockito.verify(checkOutService, times(1)).createInvoice(stayIdExpected, roomNamesExpected);
+        Mockito.verify(checkOutService, times(1)).createInvoice(stayIdExpected, roomNamesExpected, action);
         Mockito.verify(stayDetailsService, times(1)).detailsById(stayIdExpected);
     }
 
@@ -778,7 +780,8 @@ public class ViewApiTests {
         String stayIdExpected = "1";
         List<String> roomNamesExpected = List.of("101");
 
-        Mockito.doNothing().when(checkOutService).saveInvoice(stayIdExpected, roomNamesExpected);
+        String action = "createInvoice";
+        Mockito.doNothing().when(checkOutService).saveInvoice(stayIdExpected, roomNamesExpected, action);
 
         // when ... then
         this.mockMvc.perform(get("/saveinvoice/" + stayIdExpected)
@@ -793,7 +796,7 @@ public class ViewApiTests {
                 .andExpect(view().name("redirect:/staydetails/{id}"));
 
         // then
-        Mockito.verify(checkOutService, times(1)).saveInvoice(stayIdExpected, roomNamesExpected);
+        Mockito.verify(checkOutService, times(1)).saveInvoice(stayIdExpected, roomNamesExpected, action);
     }
 
     @Test
@@ -801,8 +804,9 @@ public class ViewApiTests {
         // given
         String stayIdExpected = "1";
         List<String> roomNamesExpected = List.of("101");
+        String action = "checkOut";
 
-        Mockito.doNothing().when(checkOutService).checkOut(stayIdExpected, roomNamesExpected);
+        Mockito.doNothing().when(checkOutService).checkOut(stayIdExpected, roomNamesExpected, action);
 
         // when ... then
         this.mockMvc.perform(get("/saveinvoice/" + stayIdExpected)
@@ -817,7 +821,7 @@ public class ViewApiTests {
                 .andExpect(view().name("redirect:/"));
 
         // then
-        Mockito.verify(checkOutService, times(1)).checkOut(stayIdExpected, roomNamesExpected);
+        Mockito.verify(checkOutService, times(1)).checkOut(stayIdExpected, roomNamesExpected, action);
     }
 
     @Test
