@@ -117,9 +117,11 @@ public class InvoiceSplitServiceTest {
         BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76").setScale(2, RoundingMode.CEILING);
         BigDecimal localTaxTotalExpected = new BigDecimal("1.52").setScale(2, RoundingMode.CEILING);
         BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.10").setScale(2, RoundingMode.CEILING);
-        BigDecimal totalNetAmountExpected = new BigDecimal("2001.52").setScale(2, RoundingMode.CEILING);
-        BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("200.00").setScale(2, RoundingMode.CEILING);
-        BigDecimal totalGrossAmountExpected = new BigDecimal("2201.52").setScale(2, RoundingMode.CEILING);
+        BigDecimal totalNetAmountBeforeDiscountExpected = new BigDecimal("2400").setScale(2, RoundingMode.CEILING);
+        BigDecimal totalNetAmountAfterDiscountExpected = new BigDecimal("2400").setScale(2, RoundingMode.CEILING);
+        BigDecimal totalNetAmountAfterLocalTaxExpected = new BigDecimal("2401.52").setScale(2, RoundingMode.CEILING);
+        BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("240.00").setScale(2, RoundingMode.CEILING);
+        BigDecimal totalGrossAmountExpected = new BigDecimal("2641.52").setScale(2, RoundingMode.CEILING);
 
         InvoiceId invoiceId = new InvoiceId("1");
 
@@ -141,7 +143,9 @@ public class InvoiceSplitServiceTest {
         assertEquals(localTaxPerPersonExpected, invoice.getLocalTaxPerPerson());
         assertEquals(localTaxTotalExpected, invoice.getLocalTaxTotal());
         assertEquals(valueAddedTaxInPercentExpected, invoice.getValueAddedTaxInPercent());
-        assertEquals(totalNetAmountExpected, invoice.getTotalNetAmountBeforeDiscount());
+        assertEquals(totalNetAmountBeforeDiscountExpected, invoice.getTotalNetAmountBeforeDiscount());
+        assertEquals(totalNetAmountAfterDiscountExpected, invoice.getTotalNetAmountAfterDiscount());
+        assertEquals(totalNetAmountAfterLocalTaxExpected, invoice.getTotalNetAmountAfterLocalTax());
         assertEquals(valueAddedTaxInEuroExpected, invoice.getValueAddedTaxInEuro());
         assertEquals(totalGrossAmountExpected, invoice.getTotalGrossAmount());
     }
@@ -214,9 +218,11 @@ public class InvoiceSplitServiceTest {
         BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76").setScale(2, RoundingMode.CEILING);
         BigDecimal localTaxTotalExpected = new BigDecimal("1.52").setScale(2, RoundingMode.CEILING);
         BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.10").setScale(2, RoundingMode.CEILING);
-        BigDecimal totalNetAmountExpected = new BigDecimal("4001.52").setScale(2, RoundingMode.CEILING);
-        BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("400.00").setScale(2, RoundingMode.CEILING);
-        BigDecimal totalGrossAmountExpected = new BigDecimal("4401.52").setScale(2, RoundingMode.CEILING);
+        BigDecimal totalNetAmountBeforeDiscountExpected = new BigDecimal("4800").setScale(2, RoundingMode.CEILING);
+        BigDecimal totalNetAmountAfterDiscountExpected = new BigDecimal("4800").setScale(2, RoundingMode.CEILING);
+        BigDecimal totalNetAmountAfterLocalTaxExpected = new BigDecimal("4801.52").setScale(2, RoundingMode.CEILING);
+        BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("480.00").setScale(2, RoundingMode.CEILING);
+        BigDecimal totalGrossAmountExpected = new BigDecimal("5281.52").setScale(2, RoundingMode.CEILING);
 
         InvoiceId invoiceId = new InvoiceId("1");
 
@@ -239,7 +245,9 @@ public class InvoiceSplitServiceTest {
         assertEquals(localTaxPerPersonExpected, invoice.getLocalTaxPerPerson());
         assertEquals(localTaxTotalExpected, invoice.getLocalTaxTotal());
         assertEquals(valueAddedTaxInPercentExpected, invoice.getValueAddedTaxInPercent());
-        assertEquals(totalNetAmountExpected, invoice.getTotalNetAmountBeforeDiscount());
+        assertEquals(totalNetAmountBeforeDiscountExpected, invoice.getTotalNetAmountBeforeDiscount());
+        assertEquals(totalNetAmountAfterDiscountExpected, invoice.getTotalNetAmountAfterDiscount());
+        assertEquals(totalNetAmountAfterLocalTaxExpected, invoice.getTotalNetAmountAfterLocalTax());
         assertEquals(valueAddedTaxInEuroExpected, invoice.getValueAddedTaxInEuro());
         assertEquals(totalGrossAmountExpected, invoice.getTotalGrossAmount());
     }

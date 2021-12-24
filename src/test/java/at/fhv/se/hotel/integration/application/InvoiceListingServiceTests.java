@@ -150,9 +150,11 @@ public class InvoiceListingServiceTests {
                         10,
                         new BigDecimal("0.76"),
                         new BigDecimal("1.52"),
-                        new BigDecimal("0.1"),
+                        new BigDecimal("0.10"),
+                        new BigDecimal("400"),
                         new BigDecimal("4000"),
-                        new BigDecimal("200"),
+                        new BigDecimal("4000"),
+                        new BigDecimal("4001.52"),
                         new BigDecimal("5001.52")
                 ),
                 Invoice.create(
@@ -164,9 +166,11 @@ public class InvoiceListingServiceTests {
                         12,
                         new BigDecimal("0.76"),
                         new BigDecimal("1.52"),
-                        new BigDecimal("0.1"),
+                        new BigDecimal("0.10"),
+                        new BigDecimal("400"),
                         new BigDecimal("4000"),
-                        new BigDecimal("200"),
+                        new BigDecimal("4000"),
+                        new BigDecimal("4001.52"),
                         new BigDecimal("5001.52")
                 ),
                 Invoice.create(
@@ -178,9 +182,11 @@ public class InvoiceListingServiceTests {
                         12,
                         new BigDecimal("0.76"),
                         new BigDecimal("1.52"),
-                        new BigDecimal("0.1"),
+                        new BigDecimal("0.10"),
+                        new BigDecimal("400"),
                         new BigDecimal("4000"),
-                        new BigDecimal("200"),
+                        new BigDecimal("4000"),
+                        new BigDecimal("4001.52"),
                         new BigDecimal("5001.52")
                 )
         );

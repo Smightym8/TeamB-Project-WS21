@@ -41,8 +41,10 @@ public class InvoiceDTOTest {
         int amountOfNightsExpected = 9;
         BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76");
         BigDecimal localTaxTotalExpected = new BigDecimal("1.52");
-        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.1");
-        BigDecimal totalNetAmountExpected = new BigDecimal("2900");
+        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.10");
+        BigDecimal totalNetAmountBeforeDiscountExpected = new BigDecimal("2900");
+        BigDecimal totalNetAmountAfterDiscountExpected = new BigDecimal("2900");
+        BigDecimal totalNetAmountAfterLocalTaxExpected = new BigDecimal("2901.52");
         BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("290");
         BigDecimal totalGrossAmountExpected = new BigDecimal("3191.52");
 
@@ -67,7 +69,9 @@ public class InvoiceDTOTest {
                 .withLocalTaxTotal(localTaxTotalExpected)
                 .withValueAddedTaxInPercent(valueAddedTaxInPercentExpected)
                 .withValueAddedTaxInEuro(valueAddedTaxInEuroExpected)
-                .withTotalNetAmountBeforeDiscount(totalNetAmountExpected)
+                .withTotalNetAmountBeforeDiscount(totalNetAmountBeforeDiscountExpected)
+                .withTotalNetAmountAfterDiscount(totalNetAmountAfterDiscountExpected)
+                .withTotalNetAmountAfterLocalTax(totalNetAmountAfterLocalTaxExpected)
                 .withTotalGrossAmount(totalGrossAmountExpected)
                 .build();
 
@@ -90,7 +94,9 @@ public class InvoiceDTOTest {
         assertEquals(localTaxPerPersonExpected, invoiceDTOExpected.localTaxPerPerson());
         assertEquals(localTaxTotalExpected, invoiceDTOExpected.localTaxTotal());
         assertEquals(valueAddedTaxInPercentExpected, invoiceDTOExpected.valueAddedTaxInPercent());
-        assertEquals(totalNetAmountExpected, invoiceDTOExpected.totalNetAmountBeforeDiscount());
+        assertEquals(totalNetAmountBeforeDiscountExpected, invoiceDTOExpected.totalNetAmountBeforeDiscount());
+        assertEquals(totalNetAmountAfterDiscountExpected, invoiceDTOExpected.totalNetAmountAfterDiscount());
+        assertEquals(totalNetAmountAfterLocalTaxExpected, invoiceDTOExpected.totalNetAmountAfterLocalTax()  );
         assertEquals(valueAddedTaxInEuroExpected, invoiceDTOExpected.valueAddedTaxInEuro());
         assertEquals(totalGrossAmountExpected, invoiceDTOExpected.totalGrossAmount());
     }

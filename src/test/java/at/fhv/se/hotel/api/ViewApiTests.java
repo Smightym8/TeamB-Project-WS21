@@ -745,6 +745,8 @@ public class ViewApiTests {
                 .withDiscountInEuro(new BigDecimal("0.52"))
                 .withCategoryNames(List.of("Single Room"))
                 .withCategoryPrices(List.of(new BigDecimal("0.52")))
+                .withTotalNetAmountAfterDiscount(new BigDecimal("200"))
+                .withTotalNetAmountAfterLocalTax(new BigDecimal("200"))
                 .build();
 
         List<String> roomNamesExpected = List.of("101");
@@ -816,6 +818,8 @@ public class ViewApiTests {
                 .withDiscountInEuro(new BigDecimal("0.52"))
                 .withCategoryNames(List.of("Single Room"))
                 .withCategoryPrices(List.of(new BigDecimal("0.52")))
+                .withTotalNetAmountAfterDiscount(new BigDecimal("200"))
+                .withTotalNetAmountAfterLocalTax(new BigDecimal("200"))
                 .build();
 
         List<String> roomNamesExpected = List.of("101");
