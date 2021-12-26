@@ -1,116 +1,179 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+
+    <link rel="stylesheet" href="/css/datatables.min.css">
+
+    <script src="/js/jquery.js"></script>
+    <script src="/js/moment.js"></script>
+    <script src="/js/datatables.js"></script>
+    <script src="/js/datatables.bootstrap.js"></script>
+
+</head>
+
 <body id="Pricing">
 
     <div layout:fragment="content">
 
-        <div class="d-flex">
-            <p class="h3">Pricing</p>
-            <a class="btn btn-primary ms-5">Modify</a>
+        <div style="width:50%; margin: auto">
+            <div class="card" style="max-height: 96vh">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <p class="h4">Pricing [€ / night]</p>
+                    <div>
+                        <a class="btn btn-primary" id="modify" onclick="changeState()">Modify</a>
+                        <a class="btn btn-outline-danger" id="reset" href="/pricing" hidden>Reset</a>
+                    </div>
+                </div>
+                <div class="card-body" style="overflow: auto">
+                    <table id="t1" class="table stripe">
+                        <thead>
+                            <tr>
+                                <th class="col-4">Season</th>
+                                <th style="width: auto">Start date</th>
+                                <th style="width: auto">End date</th>
+                                <th class="col-2">Single room</th>
+                                <th class="col-2">Double room</th>
+                                <th class="col-2">Luxury Room</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="align-middle">Default</td>
+                                <td class="align-middle"></td>
+                                <td class="align-middle"></td>
+                                <td class="align-middle">
+                                    <div class="input-group">
+                                        <span class="input-group-text">€</span>
+                                        <input type="number" value="20" min="0" class="form-control roomprice" disabled>
+                                    </div>
+                                </td>
+                                <td class="align-middle">
+                                    <div class="input-group">
+                                        <span class="input-group-text">€</span>
+                                        <input type="number" value="35" min="0" class="form-control roomprice" disabled>
+                                    </div>
+                                </td>
+                                <td class="align-middle">
+                                    <div class="input-group">
+                                        <span class="input-group-text">€</span>
+                                        <input type="number" value="90" min="0" class="form-control roomprice" disabled>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr th:each="i : ${#numbers.sequence(0, 10)}">
+                                <td class="align-middle">Winter</td>
+                                <td class="align-middle">
+                                    <input type="date" value="2021-12-01" class="form-control roomdate" disabled>
+                                </td>
+                                <td class="align-middle">
+                                    <input type="date" value="2021-12-01" class="form-control roomdate" disabled>
+                                </td>
+                                <td class="align-middle">
+                                    <div class="input-group">
+                                        <span class="input-group-text">€</span>
+                                        <input type="number" value="30" min="0" class="form-control roomprice" disabled>
+                                    </div>
+                                </td>
+                                <td class="align-middle">
+                                    <div class="input-group">
+                                        <span class="input-group-text">€</span>
+                                        <input type="number" value="55" min="0" class="form-control roomprice" disabled>
+                                    </div>
+                                </td>
+                                <td class="align-middle">
+                                    <div class="input-group">
+                                        <span class="input-group-text">€</span>
+                                        <input type="number" value="140" min="0" class="form-control roomprice" disabled>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
-        <br>
+        <script>
 
-        <table class="table table-striped">
+            // table initialization
+            let table = $('#t1').DataTable({
+                "order": [ 0, "asc" ],
+                "scrollCollapse": true,
+                "scrollY": "77vh",
+                "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ],
+                "pageLength": -1,
+                columnDefs: [
+                    { orderable: false, targets: [3,4,5]}
+                ]
+            });
 
-            <thead>
-                <tr>
-                    <th class="col-1">Season</th>
-                    <th class="col-1">Start date</th>
-                    <th class="col-1">End date</th>
-                    <th class="col-1"></th>
-                </tr>
-            </thead>
+            var buttons = document.getElementsByClassName('accordion-button');
 
-            <tbody>
-                <tr>
-                    <td>Winter</td>
-                    <td>
-                        <select class="form-select" aria-label="Default select" disabled>
-                            <option selected="1">12-01</option>
-                        </select>
-                    </td>
-                    <td>
-                        <select class="form-select" aria-label="Default select" disabled>
-                            <option selected="1">02-01</option>
-                        </select>
-                    </td>
-                    <td>
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">Expand</button>
-                    </td>
-                </tr>
+            for (var i = 0; i < buttons.length; i++) {
 
-                <tr id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionBasic">
-                    <td>
-                        <label>Single room</label>
-                        <div class="input-group">
-                            <span class="input-group-text">€</span>
-                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                        </div>
-                    </td>
-                    <td>
-                        <label>Double room</label>
-                        <div class="input-group">
-                            <span class="input-group-text">€</span>
-                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                        </div>
-                    </td>
-                    <td>
-                        <label>Luxury room</label>
-                        <div class="input-group">
-                            <span class="input-group-text">€</span>
-                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                        </div>
-                    </td>
-                    <td></td>
-                </tr>
+                buttons[i].innerText = "";
 
-                <tr>
-                    <td>Christmas</td>
-                    <td>
-                        <select class="form-select" aria-label="Default select" disabled>
-                            <option selected="1">12-20</option>
-                        </select>
-                    </td>
-                    <td>
-                        <select class="form-select" aria-label="Default select" disabled>
-                            <option selected="1">01-10</option>
-                        </select>
-                    </td>
-                    <td>
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">Expand</button>
-                    </td>
-                </tr>
+            }
 
-                <tr id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionBasic">
-                    <td>
-                        <label>Single room</label>
-                        <div class="input-group">
-                            <span class="input-group-text">€</span>
-                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                        </div>
-                    </td>
-                    <td>
-                        <label>Double room</label>
-                        <div class="input-group">
-                            <span class="input-group-text">€</span>
-                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                        </div>
-                    </td>
-                    <td>
-                        <label>Luxury room</label>
-                        <div class="input-group">
-                            <span class="input-group-text">€</span>
-                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-                        </div>
-                    </td>
-                    <td></td>
 
-                </tr>
-            </tbody>
-        </table>
 
-        <!-- hierarchie bei überschneidungen und default für lücken -->
+            function changeState() {
+
+                var priceFields = document.getElementsByClassName('roomprice');
+
+                for (var i = 0; i < priceFields.length; i++) {
+
+                    if (priceFields[i].value !== '0') {
+
+                        if(priceFields[i].getAttribute("disabled") == null) {
+                            priceFields[i].setAttribute("disabled", "disabled");
+                        } else {
+                            priceFields[i].removeAttribute("disabled");
+                        }
+                    }
+                }
+
+                var dateFields = document.getElementsByClassName('roomdate');
+
+                for (var i = 0; i < dateFields.length; i++) {
+
+                    if (dateFields[i].value !== '0') {
+
+                        if(dateFields[i].getAttribute("disabled") == null) {
+                            dateFields[i].setAttribute("disabled", "disabled");
+                        } else {
+                            dateFields[i].removeAttribute("disabled");
+                        }
+                    }
+                }
+
+                var buttonModify = document.getElementById('modify');
+                var buttonReset = document.getElementById('reset');
+
+                if (buttonModify.innerText === 'Modify') {
+
+                    buttonModify.innerText = 'Save';
+                    buttonModify.setAttribute('class', 'btn btn-outline-success');
+                    buttonModify.setAttribute('href', '#');
+
+                    buttonReset.removeAttribute('hidden');
+
+                } else {
+
+                    alert("Set Href for Save Button");
+
+                    buttonModify.innerText = 'Modify';
+                    buttonModify.setAttribute('class', 'btn btn-primary');
+                    buttonModify.removeAttribute('href');
+
+                    buttonReset.setAttribute('hidden', 'true');
+
+                }
+            }
+
+
+        </script>
 
     </div>
 
