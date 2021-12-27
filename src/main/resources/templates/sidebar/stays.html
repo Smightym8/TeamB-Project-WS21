@@ -1,35 +1,82 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+
+    <link rel="stylesheet" href="/css/datatables.min.css">
+
+    <script src="/js/jquery.js"></script>
+    <script src="/js/moment.js"></script>
+    <script src="/js/datatables.js"></script>
+    <script src="/js/datatables.bootstrap.js"></script>
+
+</head>
+
 <body id="Stays">
 
     <div layout:fragment="content">
 
-        <p class="h3">Stays</p>
+        <div style="width:50%; margin: auto">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <i class="fas fa-map-pin fa-fw fa-lg me-4 align-middle"></i>
+                        <span class="h4 align-middle">Stays</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table id="t1" class="table stripe">
+                        <thead>
+                            <tr>
+                                <th class="col-4">Guest</th>
+                                <th class="col-3">Check-out date</th>
+                                <th class="col-3">Room(s)</th>
+                                <th class="col-3">Persons</th>
+                                <th class="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="stay : ${stays}">
+                                <td class="align-middle">
+                                    <span class="text-nowrap" th:text="${stay.guestFirstName} + ' '"></span>
+                                    <span class="text-nowrap" th:text="${stay.guestLastName}"></span>
+                                </td>
+                                <td class="align-middle text-nowrap" th:text="${stay.checkOutDate}"></td>
+                                <td class="align-middle">
+                                    <li style="list-style: none" th:each="room : ${stay.rooms}" th:text="${room}"></li>
+                                </td>
+                                <td class="align-middle">Personenanzahl</td>
+                                <td class="align-middle text-nowrap">
+                                    <a th:href="@{/staydetails/{id}(id=${stay.id})}" class="btn btn-outline-primary btn-sm float-end">View / Check-Out</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-        <br>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th class="col-1">Guest</th>
-                <th class="col-1">Check-out date</th>
-                <th class="col-1">Room(s)</th>
-                <th class="col-1"></th>
-                <th class="col-1"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="stay : ${stays}">
+        <script>
+            // table initialization
+            let table1 = $('#t1').DataTable({
+                "order": [ 1, "asc" ],
+                "scrollCollapse": true,
+                "scrollY": "78vh",
+                "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ],
+                columnDefs: [
+                    { orderable: false, targets: [4]}
+                ]
+            });
 
-                <td th:text="${stay.guestFirstName} + ' ' + ${stay.guestLastName}"></td>
-                <td th:text="${stay.checkOutDate}"></td>
-                <td>S101, S103</td>
-                <td></td>
-                <td><a th:href="@{/}" type="button" class="btn btn-primary btn-sm">View / Check-out</a></td>
-            </tr>
-            </tbody>
-        </table>
+            // add icon to searchbars
+            var searchLabel = document.getElementsByTagName('label');
+            searchLabel = searchLabel[1];
 
-        <!-- infos?, button add services / generate bill ...? -->
+            var icon = document.createElement('i');
+            icon.setAttribute('class', 'fas fa-search');
+
+            searchLabel.insertBefore(icon, searchLabel.firstChild);
+            searchLabel.childNodes[1].textContent = " ";
+        </script>
 
     </div>
 

@@ -21,8 +21,8 @@
         <div style="width: 50%; float: left" class="pe-4">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <p class="h4">Upcoming check-ins</p>
-                    <p class="h4" id="h1"></p>
+                    <span class="h4">Upcoming check-ins</span>
+                    <span class="h4" id="h1"></span>
                     <div class="btn-group" id="b1">
                         <a onclick="filter('1','Today')" class="btn btn-primary">Today</a>
                         <a onclick="filter('1','This week')" class="btn btn-primary">This week</a>
@@ -35,19 +35,24 @@
                             <tr>
                                 <th class="col">Guest</th>
                                 <th class="col">Address</th>
-                                <th class="col">Check-in date</th>
-                                <th class="col-1"></th>
+                                <th class="col-2">Check-in date</th>
+                                <th class="col-2"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="booking : ${bookings}" th:if="${booking.isActive}">
-                                <td class="align-middle" th:text="${booking.guestFirstName} + ' ' + ${booking.guestLastName}"></td>
+                                <td class="align-middle">
+                                    <span class="text-nowrap" th:text="${booking.guestFirstName} + ' '"></span>
+                                    <span class="text-nowrap" th:text="${booking.guestLastName}"></span>
+                                </td>
                                 <td class="align-middle">
                                     <span class="text-nowrap" th:text="${booking.streetName} + ' ' + ${booking.streetNumber} + ', '"></span>
                                     <span class="text-nowrap" th:text="${booking.zipCode} + ' ' + ${booking.city}"></span>
                                 </td>
                                 <td class="align-middle text-nowrap" th:text="${booking.checkInDate}"></td>
-                                <td class="align-middle"><a th:href="@{/bookingdetails/{id}(id=${booking.id})}" class="btn btn-outline-primary btn-sm text-nowrap">View / Check-in</a></td>
+                                <td class="align-middle text-nowrap">
+                                    <a th:href="@{/bookingdetails/{id}(id=${booking.id})}" class="btn btn-outline-primary btn-sm float-end">View / Check-in</a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -58,8 +63,8 @@
         <div style="width: 50%; float: right" class="ps-4">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <p class="h4">Upcoming check-outs</p>
-                    <p class="h4" id="h2"></p>
+                    <span class="h4">Upcoming check-outs</span>
+                    <span class="h4" id="h2"></span>
                     <div class="btn-group" id="b2">
                         <a onclick="filter('2','Today')" class="btn btn-primary">Today</a>
                         <a onclick="filter('2','This week')" class="btn btn-primary">This week</a>
@@ -70,18 +75,25 @@
                     <table id="t2" class="table stripe">
                         <thead>
                             <tr>
-                                <th class="col">Guest</th>
                                 <th class="col">Room(s)</th>
-                                <th class="col">Check-out date</th>
-                                <th class="col-1"></th>
+                                <th class="col">Guest</th>
+                                <th class="col-2">Check-out date</th>
+                                <th class="col-2"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="stay : ${stays}" th:if="${stay.isActive}">
-                                <td class="align-middle" th:text="${stay.guestFirstName} + ' ' + ${stay.guestLastName}"></td>
-                                <td class="align-middle"><li style="list-style: none" th:each="room : ${stay.rooms}" th:text="${room}"></li></td>
-                                <td class="align-middle" th:text="${stay.checkOutDate}"></td>
-                                <td class="align-middle"><a th:href="@{/staydetails/{id}(id=${stay.id})}" class="btn btn-outline-primary btn-sm text-nowrap">View / Check-Out</a></td>
+                                <td class="align-middle">
+                                    <li style="list-style: none" th:each="room : ${stay.rooms}" th:text="${room}"></li>
+                                </td>
+                                <td class="align-middle">
+                                    <span class="text-nowrap" th:text="${stay.guestFirstName} + ' '"></span>
+                                    <span class="text-nowrap" th:text="${stay.guestLastName}"></span>
+                                </td>
+                                <td class="align-middle text-nowrap" th:text="${stay.checkOutDate}"></td>
+                                <td class="align-middle text-nowrap">
+                                    <a th:href="@{/staydetails/{id}(id=${stay.id})}" class="btn btn-outline-primary btn-sm float-end">View / Check-Out</a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -90,7 +102,7 @@
         </div>
 
         <script>
-            // table search
+            // table search for date range
             $.fn.dataTable.ext.search.push(function(settings, data) {
                 var min  = $('#min-date').val();
                 var max  = $('#max-date').val();
@@ -107,14 +119,20 @@
                 "order": [ 2, "asc" ],
                 "scrollCollapse": true,
                 "scrollY": "78vh",
-                "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ]
+                "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ],
+                columnDefs: [
+                    { orderable: false, targets: [3]}
+                ]
             });
 
             let table2 = $('#t2').DataTable({
                 "order": [ 2, "asc" ],
                 "scrollCollapse": true,
                 "scrollY": "78vh",
-                "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ]
+                "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ],
+                columnDefs: [
+                    { orderable: false, targets: [3]}
+                ]
             });
 
             // table initial filtration
@@ -128,6 +146,7 @@
             for (var i = 0; i < searchLabels.length; i++) {
                 var icon = document.createElement('i');
                 icon.setAttribute('class', 'fas fa-search');
+
                 searchLabels[i].insertBefore(icon, searchLabels[i].firstChild);
                 searchLabels[i].childNodes[1].textContent = " ";
             }

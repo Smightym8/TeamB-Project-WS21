@@ -18,7 +18,10 @@
         <div style="width:50%; margin: auto">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <p class="h4">Rooms</p>
+                    <div>
+                        <i class="fas fa-door-closed fa-fw fa-lg me-4 align-middle"></i>
+                        <span class="h4 align-middle">Rooms</span>
+                    </div>
                     <div>
                         <a class="btn btn-primary" id="modify" onclick="changeState()">Modify</a>
                         <a class="btn btn-outline-danger" id="reset" href="/rooms" hidden>Reset</a>
@@ -70,31 +73,39 @@
             let table = $('#t1').DataTable({
                 "order": [ 0, "asc" ],
                 "scrollCollapse": true,
-                "scrollY": "77vh",
+                "scrollY": "78vh",
                 "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ],
-                "pageLength": -1
+                "pageLength": -1,
+                columnDefs: [
+                    { orderable: false, targets: [2]}
+                ]
             });
+
+            // add icon to searchbars
+            var searchLabel = document.getElementsByTagName('label');
+            searchLabel = searchLabel[1];
+
+            var icon = document.createElement('i');
+            icon.setAttribute('class', 'fas fa-search');
+
+            searchLabel.insertBefore(icon, searchLabel.firstChild);
+            searchLabel.childNodes[1].textContent = " ";
 
             // activate and deactivate the select fields
             function changeState() {
+
                 var selectFields = document.getElementsByClassName('roomstate');
-
-                for (var i = 0; i < selectFields.length; i++) {
-
-                    if (selectFields[i].value !== '0') {
-
-                        if(selectFields[i].getAttribute("disabled") == null) {
-                            selectFields[i].setAttribute("disabled", "disabled");
-                        } else {
-                            selectFields[i].removeAttribute("disabled");
-                        }
-                    }
-                }
-
                 var buttonModify = document.getElementById('modify');
                 var buttonReset = document.getElementById('reset');
 
                 if (buttonModify.innerText === 'Modify') {
+
+                    for (var i = 0; i < selectFields.length; i++) {
+
+                        if (selectFields[i].value !== '0') {
+                            selectFields[i].removeAttribute("disabled");
+                        }
+                    }
 
                     buttonModify.innerText = 'Save';
                     buttonModify.setAttribute('class', 'btn btn-outline-success');
@@ -104,7 +115,12 @@
 
                 } else {
 
-                    alert("Set Href for Save Button");
+                    for (var i = 0; i < selectFields.length; i++) {
+
+                        if (selectFields[i].value !== '0') {
+                            selectFields[i].setAttribute("disabled", "disabled");
+                        }
+                    }
 
                     buttonModify.innerText = 'Modify';
                     buttonModify.setAttribute('class', 'btn btn-primary');
@@ -112,6 +128,7 @@
 
                     buttonReset.setAttribute('hidden', 'true');
 
+                    alert("Set Href for Save Button");
                 }
             }
         </script>

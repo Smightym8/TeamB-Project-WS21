@@ -403,7 +403,7 @@ public class TestData implements ApplicationRunner {
 
         // Insert fake rooms
 
-        for(int i = 0; i < 10; i += 1) {
+        for(int i = 100; i < 110; i += 1) {
 
             Booking booking = Booking.create(
                     LocalDate.now().plusDays(11),
@@ -418,7 +418,7 @@ public class TestData implements ApplicationRunner {
             booking.addRoomCategory(singleRoom, 1);
             this.bookingRepository.add(booking);
 
-            Room room1 = Room.create(Integer.toString(i), RoomStatus.FREE, singleRoom);
+            Room room1 = Room.create("S" + Integer.toString(i), RoomStatus.FREE, singleRoom);
             this.roomRepository.add(room1);
 
             Stay stay1 = Stay.create(booking, List.of(room1));

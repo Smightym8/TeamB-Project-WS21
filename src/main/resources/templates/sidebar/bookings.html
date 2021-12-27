@@ -1,37 +1,89 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+
+    <link rel="stylesheet" href="/css/datatables.min.css">
+
+    <script src="/js/jquery.js"></script>
+    <script src="/js/moment.js"></script>
+    <script src="/js/datatables.js"></script>
+    <script src="/js/datatables.bootstrap.js"></script>
+
+</head>
+
 <body id="Bookings">
 
     <div layout:fragment="content">
 
-        <div class="d-flex">
-            <p class="h3">Bookings</p>
-            <a class="btn btn-primary ms-5" href="/createbooking/guest">Create booking</a>
+        <div style="width:50%; margin: auto">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <i class="fas fa-calendar-alt fa-fw fa-lg me-4 align-middle"></i>
+                        <span class="h4 align-middle">Bookings</span>
+                    </div>
+                    <a href="/createbooking/date" class="btn btn-primary">
+                        <i class="fas fa-calendar-plus me-1"></i>
+                        <span class="align-self-center">Create booking</span>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <table id="t1" class="table stripe">
+                        <thead>
+                            <tr>
+                                <th class="col-3">Guest</th>
+                                <th class="col-4">Address</th>
+                                <th class="col-2">Check-in date</th>
+                                <th class="col-2">Check-out date</th>
+                                <th class="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="booking : ${bookings}" th:if="${booking.isActive}">
+                                <td class="align-middle">
+                                    <span class="text-nowrap" th:text="${booking.guestFirstName} + ' '"></span>
+                                    <span class="text-nowrap" th:text="${booking.guestLastName}"></span>
+                                </td>
+                                <td class="align-middle">
+                                    <span class="text-nowrap" th:text="${booking.streetName} + ' ' + ${booking.streetNumber} + ', '"></span>
+                                    <span class="text-nowrap" th:text="${booking.zipCode} + ' ' + ${booking.city}"></span>
+                                </td>
+                                <td class="align-middle text-nowrap" th:text="${booking.checkInDate}"></td>
+                                <td class="align-middle text-nowrap">Check-out date</td>
+                                <td class="align-middle text-nowrap">
+                                    <a class="btn btn-outline-primary btn-sm float-end">View / Check-in</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <br>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th class="col-1">Guest</th>
-                <th class="col-1">Address</th>
-                <th class="col-1">Check in date</th>
-                <th class="col-1"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="booking : ${bookings}" th:if="${booking.isActive}">
-                <td th:text="${booking.guestFirstName} + ' ' + ${booking.guestLastName}"></td>
-                <td th:text="${booking.streetName} + ' ' + ${booking.streetNumber} + ', '
-                + ${booking.zipCode} + ' ' + ${booking.city}"></td>
-                <td th:text="${booking.checkInDate}"></td>
-                <td>
-                    <a th:href="@{/bookingdetails/{id}(id=${booking.id})}" type="button" class="btn btn-primary btn-sm">Check-In</a>
-                    <a class="btn btn-primary btn-sm" href="#">View / Modify</a>
-                    <a class="btn btn-danger btn-sm" href="#">Delete</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+
+        <script>
+            // table initialization
+            let table1 = $('#t1').DataTable({
+                "order": [ 2, "asc" ],
+                "scrollCollapse": true,
+                "scrollY": "78vh",
+                "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ],
+                columnDefs: [
+                    { orderable: false, targets: [4]}
+                ]
+            });
+
+            // add icon to searchbars
+            var searchLabel = document.getElementsByTagName('label');
+            searchLabel = searchLabel[1];
+
+            var icon = document.createElement('i');
+            icon.setAttribute('class', 'fas fa-search');
+
+            searchLabel.insertBefore(icon, searchLabel.firstChild);
+            searchLabel.childNodes[1].textContent = " ";
+        </script>
+
     </div>
+
 </body>
 </html>

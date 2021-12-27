@@ -16,24 +16,27 @@
     <div layout:fragment="content">
 
         <div style="width:50%; margin: auto">
-            <div class="card" style="max-height: 96vh">
+            <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <p class="h4">Pricing [€ / night]</p>
+                    <div>
+                        <i class="fas fa-dollar-sign fa-fw fa-lg me-4 align-middle"></i>
+                        <span class="h4 align-middle">Pricing [per night]</span>
+                    </div>
                     <div>
                         <a class="btn btn-primary" id="modify" onclick="changeState()">Modify</a>
                         <a class="btn btn-outline-danger" id="reset" href="/pricing" hidden>Reset</a>
                     </div>
                 </div>
-                <div class="card-body" style="overflow: auto">
+                <div class="card-body">
                     <table id="t1" class="table stripe">
                         <thead>
                             <tr>
-                                <th class="col-4">Season</th>
-                                <th style="width: auto">Start date</th>
-                                <th style="width: auto">End date</th>
-                                <th class="col-2">Single room</th>
-                                <th class="col-2">Double room</th>
-                                <th class="col-2">Luxury Room</th>
+                                <th class="col-5">Season</th>
+                                <th class="col">Start date</th>
+                                <th class="col">End date</th>
+                                <th class="col">Single room</th>
+                                <th class="col">Double room</th>
+                                <th class="col">Luxury room</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -60,14 +63,13 @@
                                     </div>
                                 </td>
                             </tr>
-
-                            <tr th:each="i : ${#numbers.sequence(0, 10)}">
+                            <tr th:each="i : ${#numbers.sequence(0, 5)}">
                                 <td class="align-middle">Winter</td>
                                 <td class="align-middle">
                                     <input type="date" value="2021-12-01" class="form-control roomdate" disabled>
                                 </td>
                                 <td class="align-middle">
-                                    <input type="date" value="2021-12-01" class="form-control roomdate" disabled>
+                                    <input type="date" value="2021-12-31" class="form-control roomdate" disabled>
                                 </td>
                                 <td class="align-middle">
                                     <div class="input-group">
@@ -95,12 +97,11 @@
         </div>
 
         <script>
-
             // table initialization
             let table = $('#t1').DataTable({
-                "order": [ 0, "asc" ],
+                "order": [ 1, "asc" ],
                 "scrollCollapse": true,
-                "scrollY": "77vh",
+                "scrollY": "78vh",
                 "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ],
                 "pageLength": -1,
                 columnDefs: [
@@ -108,50 +109,35 @@
                 ]
             });
 
-            var buttons = document.getElementsByClassName('accordion-button');
+            // add icon to searchbars
+            var searchLabel = document.getElementsByTagName('label');
+            searchLabel = searchLabel[1];
 
-            for (var i = 0; i < buttons.length; i++) {
+            var icon = document.createElement('i');
+            icon.setAttribute('class', 'fas fa-search');
 
-                buttons[i].innerText = "";
+            searchLabel.insertBefore(icon, searchLabel.firstChild);
+            searchLabel.childNodes[1].textContent = " ";
 
-            }
-
-
-
+            // activate and deactivate the select fields
             function changeState() {
-
-                var priceFields = document.getElementsByClassName('roomprice');
-
-                for (var i = 0; i < priceFields.length; i++) {
-
-                    if (priceFields[i].value !== '0') {
-
-                        if(priceFields[i].getAttribute("disabled") == null) {
-                            priceFields[i].setAttribute("disabled", "disabled");
-                        } else {
-                            priceFields[i].removeAttribute("disabled");
-                        }
-                    }
-                }
-
-                var dateFields = document.getElementsByClassName('roomdate');
-
-                for (var i = 0; i < dateFields.length; i++) {
-
-                    if (dateFields[i].value !== '0') {
-
-                        if(dateFields[i].getAttribute("disabled") == null) {
-                            dateFields[i].setAttribute("disabled", "disabled");
-                        } else {
-                            dateFields[i].removeAttribute("disabled");
-                        }
-                    }
-                }
 
                 var buttonModify = document.getElementById('modify');
                 var buttonReset = document.getElementById('reset');
+                var priceFields = document.getElementsByClassName('roomprice');
+                var dateFields = document.getElementsByClassName('roomdate');
 
                 if (buttonModify.innerText === 'Modify') {
+
+                    for (var i = 0; i < priceFields.length; i++) {
+
+                        priceFields[i].removeAttribute("disabled");
+                    }
+
+                    for (var i = 0; i < dateFields.length; i++) {
+
+                        dateFields[i].removeAttribute("disabled");
+                    }
 
                     buttonModify.innerText = 'Save';
                     buttonModify.setAttribute('class', 'btn btn-outline-success');
@@ -161,7 +147,15 @@
 
                 } else {
 
-                    alert("Set Href for Save Button");
+                    for (var i = 0; i < priceFields.length; i++) {
+
+                        priceFields[i].setAttribute("disabled", "disabled");
+                    }
+
+                    for (var i = 0; i < dateFields.length; i++) {
+
+                        dateFields[i].setAttribute("disabled", "disabled");
+                    }
 
                     buttonModify.innerText = 'Modify';
                     buttonModify.setAttribute('class', 'btn btn-primary');
@@ -169,10 +163,9 @@
 
                     buttonReset.setAttribute('hidden', 'true');
 
+                    alert("Set Href for Save Button");
                 }
             }
-
-
         </script>
 
     </div>
