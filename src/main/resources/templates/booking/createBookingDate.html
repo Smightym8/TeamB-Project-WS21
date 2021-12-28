@@ -67,17 +67,11 @@
                     checkin.setCustomValidity('Check-in date must be in the future!');
                 }
 
-                console.log('checkin customError ', document.getElementById('checkin').validity.customError);
-                console.log('checkin validationMessage ', document.getElementById('checkin').validationMessage);
-
                 if (checkin.value < checkout.value) {
                     checkout.setCustomValidity('');
                 } else {
                     checkout.setCustomValidity('Check-out date must be placed after the check-in date!');
                 }
-
-                console.log('checkout customError ', document.getElementById('checkout').validity.customError);
-                console.log('checkout validationMessage ', document.getElementById('checkout').validationMessage);
             }
         </script>
 

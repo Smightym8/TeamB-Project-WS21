@@ -112,26 +112,12 @@
                 </div>
                 <div class="card-footer">
                     <button type="reset" class="btn btn-primary">Reset</button>
-                    <button type="submit" form="myform" class="btn btn-primary float-end" onclick="validation()">Create guest</button>
+                    <button type="submit" form="myform" class="btn btn-primary float-end">Create guest</button>
                 </div>
             </div>
         </div>
 
         <script>
-            function validation() {
-                let maleRadio = document.getElementById('maleRadio');
-                let femaleRadio = document.getElementById('femaleRadio');
-                let diversRadio = document.getElementById('diversRadio');
-
-                if (maleRadio.checked || femaleRadio.checked || diversRadio.checked) {
-                    maleRadio.setCustomValidity('');
-                } else {
-                    maleRadio.setCustomValidity('Please select a Gender');
-                }
-                console.log('maleRadio customError ', document.getElementById('maleRadio').validity.customError);
-                console.log('maleRadio validationMessage ', document.getElementById('maleRadio').validationMessage);
-            }
-
             function enable() {
                 let discount = document.getElementById('discount');
                 let guesttype = document.getElementById("guesttype");
