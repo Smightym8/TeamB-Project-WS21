@@ -104,6 +104,7 @@
                                 <span class="input-group-text col-4">Birthday<span style="color:red;">*</span></span>
                                 <input class="form-control" id="birthDate" type="date" required th:field="*{birthDate}">
                             </div>
+                            <span th:if="${#fields.hasErrors('birthDate')}" style="color: red"><br>Invalid Birthdate</span>
 
                             <br>
 
