@@ -9,11 +9,9 @@ import java.time.LocalDate;
 
 public class GuestForm {
     @NotNull
-    @Size(min = 2, max = 20)
     private String firstName;
 
     @NotNull
-    @Size(min = 2, max = 20)
     private String lastName;
 
     @NotNull

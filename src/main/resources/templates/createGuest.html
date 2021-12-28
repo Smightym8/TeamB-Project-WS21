@@ -1,133 +1,122 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
-<body id="Create guest">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<body id="Guests">
 
-<div layout:fragment="content">
+    <div layout:fragment="content">
 
-    <h3>Create Guest</h3>
-
-    <form th:action="@{/createguest}" method="post" th:object="${guest}">
-        <div class="row">
-            <div class="col-6" id="leftForm">
-
-                <div class="mb-3">
-                    <label for="guesttype" class="form-label">Type of guest:</label>
-                    <select onchange="enable()" id="guesttype" class="form-select" aria-label="Default select">
-                        <option value="Private">Private</option>
-                        <option value="Travel Agency">Travel Agency</option>
-                        <option value="Company Guest">Company Guest</option>
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label for="discount" class="form-label">Discount in percent:</label>
-                    <input disabled th:value="0" th:field="*{discountInPercent}" id="discount" class="form-control"
-                           type="number" min="0" max="100">
-                </div>
-
-                <div class="mb-3">
-                    <label for="firstname" class="form-label">First Name:</label>
-                    <input th:field="*{firstName}" type="text" class="form-control" id="firstname" placeholder="John"
-                           required>
-                    <p th:if="${#fields.hasErrors('firstName')}">Name must be at least 2 and most 20 characters long</p>
-                </div>
-
-                <div class="mb-3">
-                    <label for="lastname" class="form-label">Last Name:</label>
-                    <input th:field="*{lastName}" type="text" class="form-control" id="lastname" placeholder="Doe"
-                           required>
-                    <p th:if="${#fields.hasErrors('lastName')}">Name must be at least 2 and most 20 characters long</p>
-                </div>
-
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email:</label>
-                    <input th:field="*{eMail}" type="email" class="form-control" id="email"
-                           placeholder="john.doe@gmail.com">
-                    <p th:if="${#fields.hasErrors('eMail')}">Invalid E-Mail</p>
-                </div>
-
-                <div class="mb-3">
-                    <label for="phoneNumber" class="form-label">Telephone Number:</label>
-                    <input th:field="*{phoneNumber}" type="tel" class="form-control" id="phoneNumber"
-                           placeholder="+43 699 123 456 789" required>
-                    <p th:if="${#fields.hasErrors('phoneNumber')}">Invalid Phonenumber</p>
-                </div>
-
-                <div class="mb-3">
-                    <label for="birthDate" class="form-label">Date of Birth:</label>
-                    <input th:field="*{birthDate}" type="date" class="form-control" id="birthDate" required>
-                    <p th:if="${#fields.hasErrors('birthDate')}">Invalid Birthdate</p>
-                </div>
-                -
-            </div>
-            <div class="col-6" id="rightForm">
-                <div class="mb-3">
-                    <label class="form-label">Gender</label>
-                    <div class="form-check">
-                        <input th:field="*{gender}" class="form-check-input" type="radio" value="male"
-                               name="genderRadio" id="maleRadio">
-                        <label class="form-check-label" for="maleRadio">
-                            Male
-                        </label>
-                        <p th:if="${#fields.hasErrors('gender')}">Invalid Gender</p>
-                    </div>
-
-                    <div class="form-check">
-                        <input th:field="*{gender}" class="form-check-input" type="radio" value="female"
-                               name="genderRadio" id="femaleRadio">
-                        <label class="form-check-label" for="femaleRadio">
-                            Female
-                        </label>
-                        <p th:if="${#fields.hasErrors('gender')}">Invalid Gender</p>
-                    </div>
-
-                    <div class="form-check">
-                        <input th:field="*{gender}" class="form-check-input" type="radio" value="divers"
-                               name="genderRadio" id="diversRadio">
-                        <label class="form-check-label" for="diversRadio">
-                            Divers
-                        </label>
-                        <p th:if="${#fields.hasErrors('gender')}">Invalid Gender</p>
+        <div style="width:50%; margin: auto">
+            <div class="card" style="min-height: 60vh">
+                <div class="card-header ">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="h4 align-middle">Create guest</span>
+                        </div>
                     </div>
                 </div>
+                <div class="card-body">
+                    <form th:action="@{/createguest}" id="myform" method="post" th:object="${guest}">
 
-                <div class="mb-3">
-                    <label class="form-label">Address:</label>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text">Streetname</span>
-                        <input th:field="*{streetName}" type="text" class="form-control" placeholder="Townhall street"
-                               aria-label="Streetname" required>
-                        <p th:if="${#fields.hasErrors('streetName')}">Invalid Street name</p>
-                        <span class="input-group-text">Nr.</span>
-                        <input th:field="*{streetNumber}" type="text" class="form-control" placeholder="42"
-                               aria-label="Streetnumber" required>
-                        <p th:if="${#fields.hasErrors('streetNumber')}">Invalid Street number</p>
-                    </div>
+                        <div style="width: 80%; margin: auto;">
 
-                    <div class="input-group mb-3">
-                        <span class="input-group-text">Zip Code</span>
-                        <input th:field="*{zipCode}" type="text" class="form-control" placeholder="6850"
-                               aria-label="Zip Code" required>
-                        <p th:if="${#fields.hasErrors('zipCode')}">Invalid Zipcode</p>
-                        <span class="input-group-text">City</span>
-                        <input th:field="*{city}" type="text" class="form-control" placeholder="Dornbirn"
-                               aria-label="City" required>
-                        <p th:if="${#fields.hasErrors('city')}">Invalid City</p>
-                    </div>
+                            <div class="d-flex">
+                                <div class="input-group pe-1" style="width: 50%;">
+                                    <span class="input-group-text col-4">Type<span style="color:red;">*</span></span>
+                                    <select class="form-select" id="guesttype" required onchange="enable()">
+                                        <option value="Private">Private</option>
+                                        <option value="Travel Agency">Travel Agency</option>
+                                    </select>
+                                </div>
+                                <div class="input-group ps-1" style="width: 50%;">
+                                    <span class="input-group-text col-4">Discount [%]</span>
+                                    <input class="form-control" id="discount" type="number" min="0" max="100" disabled th:value="0" th:field="*{discountInPercent}">
+                                </div>
+                            </div>
 
-                    <div class="input-group mb-3">
-                        <span class="input-group-text">Country</span>
-                        <input th:field="*{country}" type="text" class="form-control" placeholder="Austria"
-                               aria-label="Country" required>
-                        <p th:if="${#fields.hasErrors('country')}">Invalid Country</p>
-                    </div>
+                            <br>
+                            <hr class="my-3" style="width: 95%; margin: auto">
+                            <br>
 
-                    <button type="submit" class="btn btn-primary" onclick="validation()">Submit</button>
+                            <div class="input-group pe-1" style="width: 50%;">
+                                <span class="input-group-text col-4">Gender<span style="color:red;">*</span></span>
+                                <select class="form-select" name="gender" required th:value="*{gender}">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="diverse">Divers</option>
+                                </select>
+                            </div>
+
+                            <div class="d-flex mt-1">
+                                <div class="input-group pe-1" style="width: 50%;">
+                                    <span class="input-group-text col-4">Firstname<span style="color:red;">*</span></span>
+                                    <input class="form-control" id="firstname" type="text" placeholder="John" required th:field="*{firstName}" >
+                                </div>
+                                <div class="input-group ps-1" style="width: 50%;">
+                                    <span class="input-group-text col-4">Lastname<span style="color:red;">*</span></span>
+                                    <input class="form-control" id="lastname" type="text" placeholder="Doe" required th:field="*{lastName}">
+                                </div>
+                            </div>
+
+                            <br>
+
+                            <div class="d-flex">
+                                <div class="input-group pe-1" style="width: 50%;">
+                                    <span class="input-group-text col-4">Street name<span style="color:red;">*</span></span>
+                                    <input class="form-control" type="text" placeholder="Townhall street" required th:field="*{streetName}">
+                                </div>
+                                <div class="input-group ps-1" style="width: 50%;">
+                                    <span class="input-group-text col-4">Street number<span style="color:red;">*</span></span>
+                                    <input class="form-control" type="text" placeholder="42" required th:field="*{streetNumber}">
+                                </div>
+                            </div>
+
+                            <div class="d-flex mt-1">
+                                <div class="input-group pe-1" style="width: 50%;">
+                                    <span class="input-group-text col-4">Zip code<span style="color:red;">*</span></span>
+                                    <input class="form-control" type="text" placeholder="6850" required th:field="*{zipCode}">
+                                </div>
+                                <div class="input-group ps-1" style="width: 50%;">
+                                    <span class="input-group-text col-4">City<span style="color:red;">*</span></span>
+                                    <input class="form-control" type="text" placeholder="Dornbirn" required th:field="*{city}">
+                                </div>
+                            </div>
+
+                            <div class="input-group pe-1 mt-1" style="width: 50%;">
+                                <span class="input-group-text col-4">Country<span style="color:red;">*</span></span>
+                                <input class="form-control" type="text" placeholder="Austria" required th:field="*{country}">
+                            </div>
+
+                            <br>
+                            <hr class="my-3" style="width: 95%; margin: auto">
+                            <br>
+
+                            <div class="d-flex">
+                                <div class="input-group pe-1" style="width: 50%;">
+                                    <span class="input-group-text col-4">Email<span style="color:red;">*</span></span>
+                                    <input class="form-control" id="email" type="email" placeholder="john.doe@gmail.com" required th:field="*{eMail}">
+                                </div>
+                                <div class="input-group ps-1" style="width: 50%;">
+                                    <span class="input-group-text col-4">Phone<span style="color:red;">*</span></span>
+                                    <input class="form-control" id="phoneNumber" type="tel" placeholder="+43 699 123 456 789" required th:field="*{phoneNumber}">
+                                </div>
+                            </div>
+
+                            <div class="input-group pe-1 mt-1" style="width: 50%;">
+                                <span class="input-group-text col-4">Birthday<span style="color:red;">*</span></span>
+                                <input class="form-control" id="birthDate" type="date" required th:field="*{birthDate}">
+                            </div>
+
+                            <br>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer">
                     <button type="reset" class="btn btn-primary">Reset</button>
+                    <button type="submit" form="myform" class="btn btn-primary float-end" onclick="validation()">Create guest</button>
                 </div>
             </div>
         </div>
+
         <script>
             function validation() {
                 let maleRadio = document.getElementById('maleRadio');
@@ -142,9 +131,7 @@
                 console.log('maleRadio customError ', document.getElementById('maleRadio').validity.customError);
                 console.log('maleRadio validationMessage ', document.getElementById('maleRadio').validationMessage);
             }
-        </script>
 
-        <script>
             function enable() {
                 let discount = document.getElementById('discount');
                 let guesttype = document.getElementById("guesttype");
@@ -157,8 +144,8 @@
                 }
             }
         </script>
-    </form>
 
-</div>
+    </div>
+
 </body>
 </html>
