@@ -1,111 +1,126 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
-<body id="Create booking">
+<body id="Bookings">
 
-<div layout:fragment="content">
+    <div layout:fragment="content">
 
-  <p class="h3">Create booking - summary</p>
-  <br>
+        <div style="width:50%; margin: auto">
+            <div class="card" style="min-height: 60vh">
+                <div class="card-header ">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="h4 align-middle">Create booking - summary</span>
+                        </div>
+                    </div>
+                    <br>
+                    <div th:if="${!isCreated}">
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 100%">5/5</div>
+                        </div>
+                    </div>
+                    <div th:if="${isCreated}">
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 100%">5/5</div>
+                        </div>
+                    </div>
+                    <div th:if="${isCreated}" class="alert alert-success" role="alert">
+                        Booking successfully created!
+                    </div>
+                </div>
+                <div class="card-body">
 
-  <div th:if="${isCreated}">
-    <div class="progress" style="height: 4px; margin-top: 10px">
-      <div class="progress-bar" role="progressbar" style="width: 100%; background-color: #198754" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                    <form th:if="${!isCreated}" id="myform" action="/createbooking?isCreated=true" method="post" th:object="${bookingForm}">
+                        <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
+                        <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
+                        <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
+                        <input type="hidden" id="amounts" name="amounts" th:field="*{amountsOfRoomCategories}" />
+                        <input type="hidden" id="checkInDate" name="checkInDate" th:field="*{checkInDate}" />
+                        <input type="hidden" id="checkOutDate" name="checkOutDate" th:field="*{checkOutDate}" />
+                        <input type="hidden" id="amountOfAdults" name="amountOfAdults" th:field="*{amountOfAdults}" />
+                        <input type="hidden" id="amountOfChildren" name="amountOfChildren" th:field="*{amountOfChildren}" />
+                        <input type="hidden" id="additionalInformation" name="additionalInformation" th:field="*{additionalInformation}" />
+                    </form>
+
+                    <div style="width:80%; margin: auto">
+
+                        <div class="d-flex">
+                            <div class="pe-4" style="width: 50%; float: left">
+                                <p class="h5">Guest</p>
+                                <span th:text="${bookingSummary.guestFirstName} + ' '  + ${bookingSummary.guestLastName}"></span>
+                                <br>
+                                <span>Straße 123</span>
+                                <br>
+                                <span>1234 Stadt DTO !!!!!!!!!!!!!!!!!!!</span>
+                            </div>
+
+                            <div class="ps-4" style="width: 50%; float: left">
+                                <p class="h5">Booking</p>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>Date:</td>
+                                            <td th:text="${bookingSummary.checkInDate} + ' - ' + ${bookingSummary.checkOutDate}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Adults:</td>
+                                            <td th:text="${bookingSummary.amountOfAdults}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Children:&nbsp;&nbsp;&nbsp;</td>
+                                            <td th:text="${bookingSummary.amountOfChildren}"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="mt-4">
+                            <p class="h5">Room Categories</p>
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr th:each="category : ${bookingSummary.categoriesWithAmounts}" th:if="${category.value != 0}" th:with="name = ${category.key}, amount = ${category.value}">
+                                        <td class="align-middle col" th:text="${name}"></td>
+                                        <td class="align-middle col-3" th:text="${amount}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                        <div class="mt-4">
+                            <p class="h5">Services</p>
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr th:each="service : ${bookingSummary.services}" th:with="name = ${service.key}, price = ${service.value}">
+                                        <td class="align-middle col" th:text="${name}"></td>
+                                        <td class="align-middle col-3" th:text="'€' + ${price} + ' per day/room'"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="mt-4">
+                            <p class="h5">Additional information</p>
+                            <textarea style="min-width: 100%" disabled th:text="${bookingSummary.additionalInformation}"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <div th:if="${!isCreated}">
+                        <button class="btn btn-primary" onclick="history.back()">Back</button>
+                        <button class="btn btn-primary float-end" form="myform" type="submit" onClick="amountValidation()">Create booking</button>
+                    </div>
+                    <div th:if="${isCreated}">
+                        <a class="btn btn-primary float-end" href="/">Back to main menu</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-  </div>
 
-  <div th:if="${!isCreated}">
-    <div class="progress" style="height: 4px; margin-top: 10px">
-      <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
-    </div>
-  </div>
-
-  <br>
-
-  <h5>Guest information:</h5>
-  <p th:text="${bookingSummary.guestFirstName} + ' '  + ${bookingSummary.guestLastName}"></p>
-
-  <h5>Additional Information:</h5>
-  <div class="mb-3">
-    <p th:text="${bookingSummary.additionalInformation}"></p>
-  </div>
-
-  <h5>Booking information:</h5>
-  <p th:text="'Check in date: ' + ${bookingSummary.checkInDate}"></p>
-  <p th:text="'Check out date: ' + ${bookingSummary.checkOutDate}"></p>
-
-  <h6>Amount of guests:</h6>
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th>Adults</th>
-      <th>Children</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td th:text="${bookingSummary.amountOfAdults}"></td>
-      <td th:text="${bookingSummary.amountOfChildren}"></td>
-    </tr>
-    </tbody>
-  </table>
-
-  <h6>Room Categories:</h6>
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th>Name</th>
-      <th>Amount</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="category : ${bookingSummary.categoriesWithAmounts}" th:if="${category.value != 0}"
-        th:with="name = ${category.key}, amount = ${category.value}">
-      <td th:text="${name}"></td>
-      <td th:text="${amount}"></td>
-    </tr>
-    </tbody>
-  </table>
-
-  <h6>Services:</h6>
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th>Name</th>
-      <th>Price</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="service : ${bookingSummary.services}"
-        th:with="name = ${service.key}, price = ${service.value}">
-      <td th:text="${name}"></td>
-      <td th:text="${price} + '€'"></td>
-    </tr>
-    </tbody>
-  </table>
-
-  <div th:if="${isCreated}" class="alert alert-success" role="alert">
-    Booking successfully created!
-  </div>
-
-  <form th:if="${!isCreated}" action="/createbooking?isCreated=true" method="post" th:object="${bookingForm}">
-    <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
-    <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
-    <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
-    <input type="hidden" id="amounts" name="amounts" th:field="*{amountsOfRoomCategories}" />
-    <input type="hidden" id="checkInDate" name="checkInDate" th:field="*{checkInDate}" />
-    <input type="hidden" id="checkOutDate" name="checkOutDate" th:field="*{checkOutDate}" />
-    <input type="hidden" id="amountOfAdults" name="amountOfAdults" th:field="*{amountOfAdults}" />
-    <input type="hidden" id="amountOfChildren" name="amountOfChildren" th:field="*{amountOfChildren}" />
-    <input type="hidden" id="additionalInformation" name="additionalInformation" th:field="*{additionalInformation}" />
-
-    <button id="next-button" type="submit" class="btn btn-primary">Create booking</button>
-  </form>
-  <a class="btn btn-primary" th:if="${isCreated}" href="/">Back to main menu</a>
-
-</div>
-
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </body>
 </html>

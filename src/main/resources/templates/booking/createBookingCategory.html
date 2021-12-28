@@ -1,75 +1,77 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
-<body id="Create booking">
+<body id="Bookings">
 
     <div layout:fragment="content">
-    <p class="h3">Create booking - categories</p>
-    <br>
 
-    <div class="progress" style="height: 4px; margin-top: 10px">
-        <div class="progress-bar" role="progressbar" style="width: 40%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
-    </div>
+        <div style="width:50%; margin: auto">
+            <div class="card" style="min-height: 60vh">
+                <div class="card-header ">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="h4 align-middle">Create booking - room categories</span>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 40%">2/5</div>
+                    </div>
+                </div>
+                <div class="card-body">
 
-    <br>
+                    <form id="myform" action="/createbooking/service" method="post" th:object="${bookingForm}">
+                        <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}"/>
+                        <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}"/>
+                        <input type="hidden" id="checkInDate" name="checkInDate" th:field="*{checkInDate}"/>
+                        <input type="hidden" id="checkOutDate" name="checkOutDate" th:field="*{checkOutDate}"/>
+                        <input type="hidden" id="amountOfAdults" name="amountOfAdults" th:field="*{amountOfAdults}"/>
+                        <input type="hidden" id="amountOfChildren" name="amountOfChildren" th:field="*{amountOfChildren}"/>
+                        <input type="hidden" id="additionalInformation" name="additionalInformation" th:field="*{additionalInformation}"/>
 
-        <form id="myform" action="/createbooking/service" method="post" th:object="${bookingForm}">
-            <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
-            <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
-            <input type="hidden" id="checkInDate" name="checkInDate" th:field="*{checkInDate}" />
-            <input type="hidden" id="checkOutDate" name="checkOutDate" th:field="*{checkOutDate}" />
-            <input type="hidden" id="amountOfAdults" name="amountOfAdults" th:field="*{amountOfAdults}" />
-            <input type="hidden" id="amountOfChildren" name="amountOfChildren" th:field="*{amountOfChildren}" />
-            <input type="hidden" id="additionalInformation" name="additionalInformation" th:field="*{additionalInformation}" />
+                        <div style="width:50%; margin: auto">
+                            <div th:each="category : ${categories}">
+                                <div class="input-group">
+                                    <span class="input-group-text col-3" th:text="${category.name}"></span>
+                                    <input class="form-control" type="number" id="amount" name="amount" min="0" th:name="amountsOfRoomCategories" th:value="${0}" th:placeholder="0">
+                                </div>
+                                <input class="form-control" id="roomCategoryId" hidden th:name="roomCategoryIds" th:value="${category.id}" >
+                                <br>
+                            </div>
+                        </div>
+                    </form>
 
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-primary" onclick="history.back()">Back</button>
+                    <button class="btn btn-primary float-end" form="myform" type="submit" onClick="amountValidation()">Next</button>
+                </div>
+            </div>
+        </div>
 
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th class="row-1">Name</th>
-                    <th class="row-1">Amount</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="category : ${categories}">
-                    <td th:text="${category.name}"></td>
-                    <td>
-                        <input th:name="amountsOfRoomCategories" th:value="${0}" type="number" id="amount" name="amount" th:placeholder="0" min="0">
-                    </td>
-                    <td>
-                        <input th:name="roomCategoryIds" type="hidden" th:value="${category.id}" id="roomCategoryId">
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            <button id="next-button" type="submit" class="btn btn-primary" onClick="amountValidation()">Next</button>
-            <script>
-                function amountValidation() {
-                    let elements = document.getElementById("myform").elements;
-                    let amount = document.getElementById("amount");
-                    let total = 0;
+        <script>
+            function amountValidation() {
+                let elements = document.getElementById("myform").elements;
+                let amount = document.getElementById("amount");
+                let total = 0;
 
-                    for (let i = 0; i < elements.length; i++) {
-                        if (elements[i].type === "number") {
-                            total += elements[i].value;
-                        }
+                for (let i = 0; i < elements.length; i++) {
+                    if (elements[i].type === "number") {
+                        total += elements[i].value;
                     }
-
-                    if (total > 0) {
-                        amount.setCustomValidity('');
-                    } else {
-                        amount.setCustomValidity('Please choose at least 1 room of any category!');
-                    }
-
-                    console.log('amount customError ', document.getElementById('amount').validity.customError);
-                    console.log('amount validationMessage ', document.getElementById('amount').validationMessage);
                 }
-            </script>
-        </form>
 
-    <br>
+                if (total > 0) {
+                    amount.setCustomValidity('');
+                } else {
+                    amount.setCustomValidity('Please choose at least 1 room of any category!');
+                }
 
-        <!-- Preis gesamt? -->
+                console.log('amount customError ', document.getElementById('amount').validity.customError);
+                console.log('amount validationMessage ', document.getElementById('amount').validationMessage);
+            }
+        </script>
 
     </div>
+
 </body>
 </html>

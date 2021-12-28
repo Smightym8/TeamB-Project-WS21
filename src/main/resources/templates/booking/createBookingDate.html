@@ -5,15 +5,11 @@
     <div layout:fragment="content">
 
         <div style="width:50%; margin: auto">
-            <div class="card">
+            <div class="card" style="min-height: 60vh">
                 <div class="card-header ">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <span class="h4 align-middle">Create booking - dates</span>
-                        </div>
-                        <div>
-                            <a class="btn btn-primary" id="modify" onclick="changeState()">Modify</a>
-                            <a class="btn btn-outline-danger" id="reset" href="/rooms" hidden>Reset</a>
                         </div>
                     </div>
                     <br>
@@ -22,37 +18,37 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form id="f1" action="/createbooking/category" method="post" th:object="${bookingForm}">
-                        <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
-                        <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
-                        <input type="hidden" id="amounts" name="amounts" th:field="*{amountsOfRoomCategories}" />
-                        <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
-                        <input type="hidden" id="amountOfAdults" name="amountOfAdults" th:field="*{amountOfAdults}" />
-                        <input type="hidden" id="amountOfChildren" name="amountOfChildren" th:field="*{amountOfChildren}" />
-                        <input type="hidden" id="additionalInformation" name="additionalInformation" th:field="*{additionalInformation}" />
 
-                        <div class="row">
-                            <div class="col-6">
-                                <label for="checkin">Check in date:</label>
-                                <input th:field="*{checkInDate}" data-date-format="DD MMMM YYYY" type="date" id="checkin" name="checkin" th:required="required">
+                    <form id="myform" action="/createbooking/category" method="post" th:object="${bookingForm}">
+                        <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}"/>
+                        <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}"/>
+                        <input type="hidden" id="amounts" name="amounts" th:field="*{amountsOfRoomCategories}"/>
+                        <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}"/>
+                        <input type="hidden" id="amountOfAdults" name="amountOfAdults" th:field="*{amountOfAdults}"/>
+                        <input type="hidden" id="amountOfChildren" name="amountOfChildren" th:field="*{amountOfChildren}"/>
+                        <input type="hidden" id="additionalInformation" name="additionalInformation" th:field="*{additionalInformation}"/>
+
+                        <div style="width:50%; margin: auto">
+                            <div class="input-group">
+                                <span class="input-group-text col-3">Check-in date</span>
+                                <input class="form-control" type="date" id="checkin" name="checkin" th:field="*{checkInDate}" th:required="required">
                             </div>
-                            <div class="col-6">
-                                <label for="checkout">Check out date:</label>
-                                <input th:field="*{checkOutDate}" type="date" id="checkout" name="checkout" th:requred="required">
+                            <br>
+                            <div class="input-group">
+                                <span class="input-group-text col-3">Check-out date</span>
+                                <input class="form-control" type="date" id="checkout" name="checkout" th:field="*{checkOutDate}" th:requred="required">
                             </div>
                         </div>
-
                     </form>
+
                 </div>
                 <div class="card-footer">
-                    <button class="btn btn-primary float-end" form="f1" type="submit" onClick="DateValidation()">Next</button>
+                    <button class="btn btn-primary float-end" form="myform" type="submit" onClick="DateValidation()">Next</button>
                 </div>
             </div>
         </div>
 
         <script>
-
-
             function DateValidation() {
                 let checkin = document.getElementById('checkin');
                 let checkout = document.getElementById('checkout');
@@ -68,7 +64,7 @@
                 if (checkinDay >= todayDay && checkinMonth >= todayMonth && checkinYear == todayYear  || checkinYear > todayYear) {
                     checkin.setCustomValidity('');
                 } else {
-                    checkin.setCustomValidity('Checkin date must be in the future!');
+                    checkin.setCustomValidity('Check-in date must be in the future!');
                 }
 
                 console.log('checkin customError ', document.getElementById('checkin').validity.customError);
@@ -77,7 +73,7 @@
                 if (checkin.value < checkout.value) {
                     checkout.setCustomValidity('');
                 } else {
-                    checkout.setCustomValidity('Checkout date must be placed after the checkin date!');
+                    checkout.setCustomValidity('Check-out date must be placed after the check-in date!');
                 }
 
                 console.log('checkout customError ', document.getElementById('checkout').validity.customError);

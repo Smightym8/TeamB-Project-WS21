@@ -53,11 +53,21 @@ public class TestData implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         // Insert fake services
+
+        for (int i = 0; i < 15; i++) {
+            Service tvService = Service.create(serviceRepository.nextIdentity(), new ServiceName("TV"), new Price(new BigDecimal("100")));
+            Service breakfastService = Service.create(serviceRepository.nextIdentity(), new ServiceName("Breakfast"), new Price(new BigDecimal("100")));
+
+            this.serviceRepository.add(tvService);
+            this.serviceRepository.add(breakfastService);
+        }
+
         Service tvService = Service.create(serviceRepository.nextIdentity(), new ServiceName("TV"), new Price(new BigDecimal("100")));
         Service breakfastService = Service.create(serviceRepository.nextIdentity(), new ServiceName("Breakfast"), new Price(new BigDecimal("100")));
 
         this.serviceRepository.add(tvService);
         this.serviceRepository.add(breakfastService);
+
 
         // Insert fake categories
         RoomCategory singleRoom = RoomCategory.create(roomCategoryRepository.nextIdentity(),
