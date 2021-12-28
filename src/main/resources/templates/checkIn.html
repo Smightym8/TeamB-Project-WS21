@@ -1,44 +1,45 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
-<body>
+<body id="Bookings">
 
     <div layout:fragment="content">
 
-        <h1>Assigned Rooms new</h1>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Room</th>
-                    <th>Category</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="room : ${assignedRooms}">
-                    <td th:text="${room.name}"></td>
-                    <td th:text="${room.categoryName}"></td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div th:if="${isCheckedIn}">
-            <div class="alert alert-success" role="alert">
-                Checked in successfully!
+        <div style="width:50%; margin: auto">
+            <div class="card" style="min-height: 60vh">
+                <div class="card-header ">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="h4 align-middle">Assign Rooms</span>
+                        </div>
+                    </div>
+                    <div th:if="${isCheckedIn}">
+                        <br>
+                        <div class="alert alert-success" role="alert">Checked in successfully!</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div style="width:50%; margin: auto">
+                        <div th:each="room : ${assignedRooms}">
+                            <div class="input-group">
+                                <span class="input-group-text col-3" th:text="${room.categoryName}"></span>
+                                <select class="form-select">
+                                        <option th:value="${room.name}" th:text="${room.name}"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div th:if="${!isCheckedIn}">
+                        <button class="btn btn-primary" onclick="history.back()">Back</button>
+                        <a class="btn btn-primary float-end" th:href="@{'/check-in?bookingId=' + ${bookingId} + '&isCheckedIn=true'}">Check-in</a>
+                    </div>
+                    <div th:if="${isCheckedIn}">
+                        <a class="btn btn-primary float-end" th:href="@{/}">Back to main menu</a>
+                    </div>
+                </div>
             </div>
-            <a class="btn btn-primary" th:href="@{/}">
-                Back to main menu
-            </a>
         </div>
-
-        <div th:if="${!isCheckedIn}">
-            <a class="btn btn-primary" th:href="@{'/check-in?bookingId=' + ${bookingId} + '&isCheckedIn=true'}">
-                Accept
-            </a>
-            <a href="/" type="button" class="btn btn-primary">Back</a>
-        </div>
-
-        <br>
-
-        <!-- acitve sidebarelement?? -->
 
     </div>
 

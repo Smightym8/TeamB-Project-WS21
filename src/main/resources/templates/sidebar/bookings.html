@@ -51,7 +51,7 @@
                                 <td class="align-middle text-nowrap" th:text="${booking.checkInDate}"></td>
                                 <td class="align-middle text-nowrap">Check-out date</td>
                                 <td class="align-middle text-nowrap">
-                                    <a class="btn btn-outline-primary btn-sm float-end">View / Check-in</a>
+                                    <a class="btn btn-outline-primary btn-sm float-end" th:href="@{/bookingdetails/{id}(id=${booking.id})}">View / Check-in</a>
                                 </td>
                             </tr>
                         </tbody>
