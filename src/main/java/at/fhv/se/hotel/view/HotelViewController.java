@@ -387,7 +387,7 @@ public class HotelViewController {
     @GetMapping(CHECK_IN_URL)
     public ModelAndView checkIn(
             @RequestParam("bookingId") String bookingId,
-            @RequestParam("isCheckIn") boolean isCheckIn,
+            @RequestParam("isCheckedIn") boolean isCheckedIn,
             Model model) {
 
         List<RoomDTO> assignedRooms;
@@ -397,7 +397,7 @@ public class HotelViewController {
             return redirectError(e.getMessage());
         }
 
-        if(isCheckIn) {
+        if(isCheckedIn) {
             try {
                 checkInService.checkIn(bookingId, assignedRooms);
             } catch (BookingNotFoundException | RoomNotFoundException e) {
@@ -407,7 +407,7 @@ public class HotelViewController {
 
         model.addAttribute("bookingId", bookingId);
         model.addAttribute("assignedRooms", assignedRooms);
-        model.addAttribute("isCheckIn", isCheckIn);
+        model.addAttribute("isCheckedIn", isCheckedIn);
 
         return new ModelAndView(CHECK_IN_VIEW);
     }

@@ -414,29 +414,29 @@ public class TestData implements ApplicationRunner {
 
         // Insert fake rooms
 
-        for(int i = 100; i < 110; i += 1) {
-
-            Booking booking = Booking.create(
-                    LocalDate.now().plusDays(11),
-                    LocalDate.now().plusDays(13),
-                    bookingRepository.nextIdentity(),
-                    michael,
-                    List.of(tvService),
-                    2,
-                    0,
-                    "Extra pillow"
-            );
-            booking.addRoomCategory(singleRoom, 1);
-            this.bookingRepository.add(booking);
-
-            Room room1 = Room.create("S" + Integer.toString(i), RoomStatus.FREE, singleRoom);
-            this.roomRepository.add(room1);
-
-            Stay stay1 = Stay.create(booking, List.of(room1));
-            booking.deactivate();
-            this.stayRepository.add(stay1);
-
-        }
+//        for(int i = 100; i < 110; i += 1) {
+//
+//            Booking booking = Booking.create(
+//                    LocalDate.now().plusDays(11),
+//                    LocalDate.now().plusDays(13),
+//                    bookingRepository.nextIdentity(),
+//                    michael,
+//                    List.of(tvService),
+//                    2,
+//                    0,
+//                    "Extra pillow"
+//            );
+//            booking.addRoomCategory(singleRoom, 1);
+//            this.bookingRepository.add(booking);
+//
+//            Room room1 = Room.create("S" + Integer.toString(i), RoomStatus.FREE, singleRoom);
+//            this.roomRepository.add(room1);
+//
+//            Stay stay1 = Stay.create(booking, List.of(room1));
+//            booking.deactivate();
+//            this.stayRepository.add(stay1);
+//
+//        }
 
         Room room1 = Room.create("101", RoomStatus.FREE, singleRoom);
         this.roomRepository.add(room1);
