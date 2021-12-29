@@ -38,3 +38,6 @@ out/
 
 ### MacOS ###
 .DS_Store
+
+### PDF Files ###
+resources/static/invoices/pdf/*

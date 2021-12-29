@@ -89,10 +89,12 @@ public class InvoiceTests {
         int amountOfNightsExpected = 9;
         BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76");
         BigDecimal localTaxTotalExpected = new BigDecimal("1.52");
-        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.1");
+        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.10");
         BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("100");
-        BigDecimal totalNetAmountExpected = new BigDecimal("200");
-        BigDecimal totalGrossAmountExpected = new BigDecimal("300");
+        BigDecimal totalNetAmountBeforeDiscountExpected = new BigDecimal("200");
+        BigDecimal totalNetAmountAfterDiscountExpected = new BigDecimal("200");
+        BigDecimal totalNetAmountAfterLocalTaxExpected = new BigDecimal("201.52");
+        BigDecimal totalGrossAmountExpected = new BigDecimal("301.52");
 
         // when
         Invoice invoiceActual = Invoice.create(
@@ -106,7 +108,9 @@ public class InvoiceTests {
                 localTaxTotalExpected,
                 valueAddedTaxInPercentExpected,
                 valueAddedTaxInEuroExpected,
-                totalNetAmountExpected,
+                totalNetAmountBeforeDiscountExpected,
+                totalNetAmountAfterDiscountExpected,
+                totalNetAmountAfterLocalTaxExpected,
                 totalGrossAmountExpected
         );
 
@@ -119,7 +123,7 @@ public class InvoiceTests {
         assertEquals(localTaxTotalExpected, invoiceActual.getLocalTaxTotal());
         assertEquals(valueAddedTaxInPercentExpected, invoiceActual.getValueAddedTaxInPercent());
         assertEquals(valueAddedTaxInEuroExpected, invoiceActual.getValueAddedTaxInEuro());
-        assertEquals(totalNetAmountExpected, invoiceActual.getTotalNetAmount());
+        assertEquals(totalNetAmountBeforeDiscountExpected, invoiceActual.getTotalNetAmountBeforeDiscount());
         assertEquals(totalGrossAmountExpected, invoiceActual.getTotalGrossAmount());
     }
 
