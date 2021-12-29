@@ -1,16 +1,12 @@
 package at.fhv.se.hotel.domain.services.impl;
 
-import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
 import at.fhv.se.hotel.domain.model.room.Room;
-import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
 import at.fhv.se.hotel.domain.model.roomcategory.Season;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.stay.Stay;
-import at.fhv.se.hotel.domain.model.stay.StayId;
 import at.fhv.se.hotel.domain.repository.InvoiceRepository;
-import at.fhv.se.hotel.domain.repository.RoomCategoryRepository;
 import at.fhv.se.hotel.domain.repository.RoomRepository;
 import at.fhv.se.hotel.domain.services.api.InvoiceSplitService;
 import at.fhv.se.hotel.domain.services.api.RoomCategoryPriceService;
@@ -24,7 +20,6 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Component
 public class InvoiceSplitServiceImpl implements InvoiceSplitService {
@@ -41,16 +36,8 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
     @Autowired
     RoomRepository roomRepository;
 
-     /*
-        -> split invoice bekommt roomNames von stayDetailsView
-        -> ähnlich wie createBookingService, dass ausgwählte in die Liste kommen
-        -> split invoice, splitInvoice (Stay stay, List<String> roomNames)
-        -> Liste roomNames enthält nur Räume die bezahlt werden sollen
-        -> for each room in roomNames, getPrice -> add to calculation
-        -> roomNames, for each über Map<Room, Boolean> rooms im Stay -> put.value(true)
-     */
     @Override
-    public Invoice splitInvoice(Stay stay, List<String> roomNames) {
+    public Invoice splitInvoice(Stay stay, List<String> roomNames, String action) {
 
         int todaysInvoicesAmount = invoiceRepository.invoicesByDate(LocalDate.now()).size() + 1;
         List<RoomCategoryPrice> roomCategoryPriceList = new ArrayList<>();
@@ -65,20 +52,25 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
             invoiceSuffix = String.valueOf(todaysInvoicesAmount);
         }
 
-        BigDecimal totalNetAmount = new BigDecimal("0");
-
         String invoiceNumber = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
                 + invoiceSuffix;
 
-        // Calculate Services
+        BigDecimal totalNetAmountBeforeDiscount = new BigDecimal("0");
+
+        // Calculate amount of nights
+        int nights = Period.between(stay.getCheckInDate(), stay.getCheckOutDate()).getDays();
+
+        // Calculate Services per room per night
         List<Service> services = new ArrayList<>();
         for (Service s : stay.getServices()) {
-            totalNetAmount = totalNetAmount.add(s.getServicePrice().price().multiply(BigDecimal.valueOf(roomNames.size())));
+            totalNetAmountBeforeDiscount = totalNetAmountBeforeDiscount
+                    .add(s.getServicePrice().price()
+                            .multiply(BigDecimal.valueOf(roomNames.size()))
+                            .multiply(BigDecimal.valueOf(nights)));
             services.add(s);
         }
 
         // Calculate RoomCategoryPrices
-        int nights = Period.between(stay.getCheckInDate(), stay.getCheckOutDate()).getDays();
         LocalDate tempDate = stay.getCheckInDate();
 
         for(int i = 0; i < nights; i++) {
@@ -91,7 +83,7 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
                         room.getRoomCategory(), currentSeason
                 );
 
-                totalNetAmount = totalNetAmount.add((currentCategoryPrice.getPrice()));
+                totalNetAmountBeforeDiscount = totalNetAmountBeforeDiscount.add((currentCategoryPrice.getPrice()));
 
                 if(!roomCategoryPriceList.contains(currentCategoryPrice)) {
                     roomCategoryPriceList.add(currentCategoryPrice);
@@ -101,26 +93,27 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
             tempDate = tempDate.plusDays(1);
         }
 
-        // Calculate local tax
-        BigDecimal localTaxTotal = localTaxInEuro.multiply(
-                BigDecimal.valueOf(
-                        stay.getBooking().getAmountOfAdults()
-                )
-        );
-
-        // Calculate vat
-        BigDecimal valueAddedTaxTotal = totalNetAmount.multiply(valueAddedTaxPercentage);
-
-        // Calculate total net amount
-        totalNetAmount = totalNetAmount.add(localTaxTotal);
-
-        // Calculate total gross amount
-        BigDecimal totalGrossAmount = totalNetAmount.add(valueAddedTaxTotal);
-
         // Calculate discount
         double discount = 1.0 - (stay.getGuest().getDiscountInPercent() / 100.0); // 1.0 - (10.0 / 100.0)
         BigDecimal discountInvoice = BigDecimal.valueOf(discount);
-        totalGrossAmount = totalGrossAmount.multiply(discountInvoice);
+        BigDecimal totalNetAmountAfterDiscount = totalNetAmountBeforeDiscount.multiply(discountInvoice);
+
+        // Calculate vat
+        BigDecimal valueAddedTaxTotal = totalNetAmountAfterDiscount.multiply(valueAddedTaxPercentage);
+
+        // Calculate local tax
+        BigDecimal localTaxTotal = new BigDecimal("0");
+
+        if (action.equals("checkOut")) {
+            localTaxTotal = localTaxTotal.add(localTaxInEuro.multiply
+                    (BigDecimal.valueOf(stay.getBooking().getAmountOfAdults())));
+        }
+
+        // Calculate total net amount
+        BigDecimal totalNetAmountAfterLocalTax = totalNetAmountAfterDiscount.add(localTaxTotal);
+
+        // Calculate total gross amount
+        BigDecimal totalGrossAmount = totalNetAmountAfterLocalTax.add(valueAddedTaxTotal);
 
         return Invoice.create(
                 invoiceRepository.nextIdentity(),
@@ -133,7 +126,9 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
                 localTaxTotal.setScale(2, RoundingMode.CEILING),
                 valueAddedTaxPercentage,
                 valueAddedTaxTotal.setScale(2, RoundingMode.CEILING),
-                totalNetAmount.setScale(2, RoundingMode.CEILING),
+                totalNetAmountBeforeDiscount.setScale(2, RoundingMode.CEILING),
+                totalNetAmountAfterDiscount.setScale(2, RoundingMode.CEILING),
+                totalNetAmountAfterLocalTax.setScale(2, RoundingMode.CEILING),
                 totalGrossAmount.setScale(2, RoundingMode.CEILING)
         );
     }

@@ -77,26 +77,28 @@
     <script>
         // Check if table with rooms is empty so that are all billed
         // Only th should be there
-        let tbl = document.getElementById('roomsTable');
+        function test() {
 
-        if (tbl.rows.length === 1) {
-            document.getElementById("checkout").disabled = false;
-            document.getElementById("checkout").setAttribute('class','btn btn-primary');
-        }
+            let checkboxes = document.querySelectorAll('input[type=checkbox]');
+            let selectedCheckboxes = document.querySelectorAll('input[type=checkbox]:checked');
 
-         function test() {
+            if (selectedCheckboxes.length === 0) {
+                document.getElementById("checkout").disabled = true;
+                document.getElementById("checkout").setAttribute('class','btn btn-secondary');
+                document.getElementById("invoice").disabled = true;
+                document.getElementById("invoice").setAttribute('class','btn btn-secondary');
 
-             let checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-             let invoiceButton = document.getElementById("invoice");
-
-             if (checkboxes[0] == null) {
-                 invoiceButton.disabled = true;
-                 invoiceButton.setAttribute('class','btn btn-secondary');
-
-             } else {
-                 invoiceButton.disabled = false;
-                 invoiceButton.setAttribute('class','btn btn-primary');
-             }
+            } else if (checkboxes.length === selectedCheckboxes.length) {
+                document.getElementById("checkout").disabled = false;
+                document.getElementById("checkout").setAttribute('class','btn btn-primary');
+                document.getElementById("invoice").disabled = true;
+                document.getElementById("invoice").setAttribute('class','btn btn-secondary');
+            } else {
+                document.getElementById("checkout").disabled = true;
+                document.getElementById("checkout").setAttribute('class','btn btn-secondary');
+                document.getElementById("invoice").disabled = false;
+                document.getElementById("invoice").setAttribute('class','btn btn-primary');
+            }
         }
     </script>
 

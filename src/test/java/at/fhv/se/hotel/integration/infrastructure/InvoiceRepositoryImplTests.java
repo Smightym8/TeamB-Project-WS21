@@ -145,10 +145,12 @@ public class InvoiceRepositoryImplTests {
         int amountOfNightsExpected = 9;
         BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76");
         BigDecimal localTaxTotalExpected = new BigDecimal("1.52");
-        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.1");
+        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.10");
         BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("100");
-        BigDecimal totalNetAmountExpected = new BigDecimal("200");
-        BigDecimal totalGrossAmountExpected = new BigDecimal("300");
+        BigDecimal totalNetAmountBeforeDiscountExpected = new BigDecimal("200");
+        BigDecimal totalNetAmountAfterDiscountExpected = new BigDecimal("200");
+        BigDecimal totalNetAmountAfterLocalTaxExpected = new BigDecimal("201.52");
+        BigDecimal totalGrossAmountExpected = new BigDecimal("301.52");
 
         Invoice invoiceExpected = Invoice.create(
                 invoiceIdExpected,
@@ -161,7 +163,9 @@ public class InvoiceRepositoryImplTests {
                 localTaxTotalExpected,
                 valueAddedTaxInPercentExpected,
                 valueAddedTaxInEuroExpected,
-                totalNetAmountExpected,
+                totalNetAmountBeforeDiscountExpected,
+                totalNetAmountAfterDiscountExpected,
+                totalNetAmountAfterLocalTaxExpected,
                 totalGrossAmountExpected
         );
 
@@ -315,10 +319,12 @@ public class InvoiceRepositoryImplTests {
         int amountOfNightsExpected = 9;
         BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76");
         BigDecimal localTaxTotalExpected = new BigDecimal("1.52");
-        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.1");
+        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.10");
         BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("100");
-        BigDecimal totalNetAmountExpected = new BigDecimal("200");
-        BigDecimal totalGrossAmountExpected = new BigDecimal("300");
+        BigDecimal totalNetAmountBeforeDiscountExpected = new BigDecimal("200");
+        BigDecimal totalNetAmountAfterDiscountExpected = new BigDecimal("200");
+        BigDecimal totalNetAmountAfterLocalTaxExpected = new BigDecimal("201.52");
+        BigDecimal totalGrossAmountExpected = new BigDecimal("301.52");
 
         List<Invoice> invoicesExpected = invoiceIdsExpected.stream()
                 .map(id -> Invoice.create(
@@ -332,7 +338,9 @@ public class InvoiceRepositoryImplTests {
                         localTaxTotalExpected,
                         valueAddedTaxInPercentExpected,
                         valueAddedTaxInEuroExpected,
-                        totalNetAmountExpected,
+                        totalNetAmountBeforeDiscountExpected,
+                        totalNetAmountAfterDiscountExpected,
+                        totalNetAmountAfterLocalTaxExpected,
                         totalGrossAmountExpected
                 )).collect(Collectors.toList());
         //when
@@ -492,10 +500,12 @@ public class InvoiceRepositoryImplTests {
         int amountOfNightsExpected = 9;
         BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76");
         BigDecimal localTaxTotalExpected = new BigDecimal("1.52");
-        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.1");
+        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.10");
         BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("100");
-        BigDecimal totalNetAmountExpected = new BigDecimal("200");
-        BigDecimal totalGrossAmountExpected = new BigDecimal("300");
+        BigDecimal totalNetAmountBeforeDiscountExpected = new BigDecimal("200");
+        BigDecimal totalNetAmountAfterDiscountExpected = new BigDecimal("200");
+        BigDecimal totalNetAmountAfterLocalTaxExpected = new BigDecimal("201.52");
+        BigDecimal totalGrossAmountExpected = new BigDecimal("301.52");
 
         // Invoice date is set in create method to current date
         LocalDate invoiceDateExpected = LocalDate.now();
@@ -511,7 +521,9 @@ public class InvoiceRepositoryImplTests {
                         localTaxTotalExpected,
                         valueAddedTaxInPercentExpected,
                         valueAddedTaxInEuroExpected,
-                        totalNetAmountExpected,
+                        totalNetAmountBeforeDiscountExpected,
+                        totalNetAmountAfterDiscountExpected,
+                        totalNetAmountAfterLocalTaxExpected,
                         totalGrossAmountExpected
                 )).collect(Collectors.toList());
         //when
