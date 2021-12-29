@@ -34,6 +34,8 @@ public class GuestListingServiceImpl implements GuestListingService {
                     .withCity(guest.getAddress().city())
                     .withZipCode(guest.getAddress().zipCode())
                     .withCountry(guest.getAddress().country())
+                    .withMailAddress(guest.getMailAddress())
+                    .withPhoneNumber(guest.getPhoneNumber())
                     .build();
 
             dtos.add(dto);
@@ -57,6 +59,8 @@ public class GuestListingServiceImpl implements GuestListingService {
                 .withCity(guest.getAddress().city())
                 .withZipCode(guest.getAddress().zipCode())
                 .withCountry(guest.getAddress().country())
+                .withMailAddress(guest.getMailAddress())
+                .withPhoneNumber(guest.getPhoneNumber())
                 .build();
 
         return Optional.of(dto);
