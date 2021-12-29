@@ -11,6 +11,8 @@ public class GuestDTO {
     private String city;
     private String zipCode;
     private String country;
+    private String mailAddress;
+    private String phoneNumber;
 
     public static Builder builder() {
         return new Builder();
@@ -37,6 +39,14 @@ public class GuestDTO {
     public String zipCode() {return this.zipCode;}
 
     public String country() {return this.country;}
+
+    public String mailAddress() {
+        return mailAddress;
+    }
+
+    public String phoneNumber() {
+        return phoneNumber;
+    }
 
     public static class Builder {
         private final GuestDTO instance;
@@ -85,6 +95,15 @@ public class GuestDTO {
             return this;
         }
 
+        public Builder withMailAddress(String mailAddress) {
+            this.instance.mailAddress = mailAddress;
+            return this;
+        }
+
+        public Builder withPhoneNumber(String phoneNumber) {
+            this.instance.phoneNumber = phoneNumber;
+            return this;
+        }
 
         public GuestDTO build() {
             Objects.requireNonNull(this.instance.id, "id must be set in GuestDTO");
@@ -95,6 +114,8 @@ public class GuestDTO {
             Objects.requireNonNull(this.instance.city, "city must be set in GuestDTO");
             Objects.requireNonNull(this.instance.zipCode, "zipCode must be set in GuestDTO");
             Objects.requireNonNull(this.instance.country, "country must be set in GuestDTO");
+            Objects.requireNonNull(this.instance.mailAddress, "mailAddress must be set in GuestDTO");
+            Objects.requireNonNull(this.instance.phoneNumber, "phoneNumber must be set in GuestDTO");
 
             return this.instance;
         }
