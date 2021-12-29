@@ -14,6 +14,10 @@ import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.repository.BookingRepository;
+import at.fhv.se.hotel.domain.repository.GuestRepository;
+import at.fhv.se.hotel.domain.repository.RoomCategoryRepository;
+import at.fhv.se.hotel.domain.repository.ServiceRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +25,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
@@ -31,6 +37,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ActiveProfiles("test")
 @SpringBootTest
+@Transactional
 public class BookingListingServiceTests {
     @Autowired
     BookingListingService bookingListingService;
@@ -39,10 +46,11 @@ public class BookingListingServiceTests {
     BookingRepository bookingRepository;
 
     @Test
-    void given_3bookingsinrepository_when_fetchinall_then_returnequalsbookings() {
+    void given_3bookingsinrepository_when_fetchingall_then_returnequalsbookings() {
         // given
-        Mockito.when(bookingRepository.nextIdentity())
-                .thenReturn(new BookingId(UUID.randomUUID().toString().toUpperCase()));
+        Mockito.when(bookingRepository.nextIdentity()).thenReturn(
+                new BookingId(UUID.randomUUID().toString().toUpperCase())
+        );
 
         Guest guestExpected1 = Guest.create(
                 new GuestId("1"),

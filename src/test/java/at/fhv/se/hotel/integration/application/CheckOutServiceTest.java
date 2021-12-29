@@ -1,6 +1,7 @@
 package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.CheckOutService;
+import at.fhv.se.hotel.application.api.exception.BookingNotFoundException;
 import at.fhv.se.hotel.application.api.exception.StayNotFoundException;
 import at.fhv.se.hotel.application.dto.InvoiceDTO;
 import at.fhv.se.hotel.domain.model.booking.Booking;
@@ -18,6 +19,7 @@ import at.fhv.se.hotel.domain.model.stay.StayId;
 import at.fhv.se.hotel.domain.repository.InvoiceRepository;
 import at.fhv.se.hotel.domain.repository.StayRepository;
 import at.fhv.se.hotel.domain.services.api.RoomCategoryPriceService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +29,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// TODO: Fix error java.io.FileNotFoundException: src/main/resources/static/invoices/xml/invoice_20211222001.xml (Datei oder Verzeichnis nicht gefunden)
 @SpringBootTest
 public class CheckOutServiceTest {
 
@@ -105,12 +105,12 @@ public class CheckOutServiceTest {
         String roomNameExpected = "Room 1";
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
-        List<Room> roomsExpected = List.of(
+        Map<Room, Boolean> roomsExpected = Map.of(
                 Room.create(
                         roomNameExpected,
                         roomStatusExpected,
                         categoriesExpected.get(0)
-                )
+                ), false
         );
 
         StayId idExpected = new StayId(bookingExpected.getBookingId().id());
@@ -119,11 +119,10 @@ public class CheckOutServiceTest {
         int amountOfNightsExpected = 9;
         BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76").setScale(2, RoundingMode.CEILING);
         BigDecimal localTaxTotalExpected = new BigDecimal("1.52").setScale(2, RoundingMode.CEILING);
-        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.10").setScale(2, RoundingMode.CEILING);
+        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.1");
         BigDecimal totalNetAmountExpected = new BigDecimal("2901.52").setScale(2, RoundingMode.CEILING);
         BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("290.00").setScale(2, RoundingMode.CEILING);
         BigDecimal totalGrossAmountExpected = new BigDecimal("3191.52").setScale(2, RoundingMode.CEILING);
-
 
         Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
         Mockito.when(stayRepository.stayById(idExpected)).thenReturn(Optional.of(stayExpected));
@@ -153,7 +152,7 @@ public class CheckOutServiceTest {
     }
 
     @Test
-    void given_existingstay_whencheckout_thenreturntrue() throws StayNotFoundException {
+    void given_existingstay_whencheckout_then_stayInactive() throws StayNotFoundException {
         // given
         Guest guestExpected = Guest.create(new GuestId("1"),
                 new FullName("Michael", "Spiegel"),
@@ -208,12 +207,12 @@ public class CheckOutServiceTest {
         String roomNameExpected = "Room 1";
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
-        List<Room> roomsExpected = List.of(
+        Map<Room, Boolean> roomsExpected = Map.of(
                 Room.create(
                         roomNameExpected,
                         roomStatusExpected,
                         categoriesExpected.get(0)
-                )
+                ), false
         );
 
         StayId idExpected = new StayId(bookingExpected.getBookingId().id());
@@ -229,5 +228,23 @@ public class CheckOutServiceTest {
 
         // then
         assertFalse(stayExpected.isActive());
+    }
+
+    @Test
+    public void given_missingStay_when_checkOut_then_StayNotFoundExceptionIsThrown() {
+        // given
+        StayId stayIdExpected = new StayId("1");
+
+        Mockito.when(stayRepository.stayById(stayIdExpected)).thenReturn(Optional.empty());
+
+        // when ... then
+        Exception exception = assertThrows(StayNotFoundException.class, () -> {
+            checkOutService.checkOut(stayIdExpected.id());
+        });
+
+        String expectedMessage = "Check out failed! Stay with id " + stayIdExpected.id() + " doesn't exist.";
+        String actualMessage = exception.getMessage();
+
+        assertEquals(expectedMessage, actualMessage);
     }
 }

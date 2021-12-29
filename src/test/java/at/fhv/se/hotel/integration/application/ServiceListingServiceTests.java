@@ -1,13 +1,16 @@
 package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.ServiceListingService;
+import at.fhv.se.hotel.application.api.exception.RoomCategoryNotFoundException;
 import at.fhv.se.hotel.application.api.exception.ServiceNotFoundException;
 import at.fhv.se.hotel.application.dto.ServiceDTO;
+import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryId;
 import at.fhv.se.hotel.domain.model.service.Price;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.repository.ServiceRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 public class ServiceListingServiceTests {
@@ -78,5 +82,23 @@ public class ServiceListingServiceTests {
         assertEquals(idExpected.id(), serviceActual.id());
         assertEquals(serviceExpected.getServiceName().name(), serviceActual.name());
         assertEquals(serviceExpected.getServicePrice().price(), serviceActual.price());
+    }
+
+    @Test
+    public void given_missingService_when_findById_then_ServiceNotFoundExceptionIsThrown() {
+        // given
+        ServiceId serviceIdExpected = new ServiceId("1");
+
+        Mockito.when(serviceRepository.serviceById(serviceIdExpected)).thenReturn(Optional.empty());
+
+        // when ... then
+        Exception exception = assertThrows(ServiceNotFoundException.class, () -> {
+            serviceListingService.findServiceById(serviceIdExpected.id());
+        });
+
+        String expectedMessage = "Service with id " + serviceIdExpected.id() + " not found";
+        String actualMessage = exception.getMessage();
+
+        assertEquals(expectedMessage, actualMessage);
     }
 }

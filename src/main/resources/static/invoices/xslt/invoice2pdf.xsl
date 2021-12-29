@@ -133,7 +133,10 @@
 											<fo:block>Quantity</fo:block>
 										</fo:table-cell>
 										<fo:table-cell>
-											<fo:block>Category</fo:block>
+											<fo:block>Room Name</fo:block>
+										</fo:table-cell>
+										<fo:table-cell>
+											<fo:block>Room Category</fo:block>
 										</fo:table-cell>
 										<fo:table-cell>
 											<fo:block>Cost per night</fo:block>
@@ -142,7 +145,8 @@
 								</fo:table-header>
 
 								<fo:table-body border-width="1pt" border-style="solid">
-									<xsl:for-each select="invoice/roomCategories/entry">
+									<xsl:for-each select="/invoice/roomCategories/entry">
+										<xsl:variable name ="pos" select="position()" />
 										<fo:table-row>
 											<fo:table-cell>
 												<fo:block>
@@ -156,8 +160,13 @@
 											</fo:table-cell>
 											<fo:table-cell>
 												<fo:block>
+													<xsl:value-of select="/invoice/categoryNames/categoryName[$pos]" />
+												</fo:block>
+											</fo:table-cell>
+											<fo:table-cell>
+												<fo:block>
 													<xsl:text>€ </xsl:text>
-													<xsl:value-of select="/invoice/roomCategoryPrices/entry[key = current()/key]/value" />
+													<xsl:value-of select="/invoice/categoryPrices/categoryPrice[$pos]" />
 												</fo:block>
 											</fo:table-cell>
 										</fo:table-row>

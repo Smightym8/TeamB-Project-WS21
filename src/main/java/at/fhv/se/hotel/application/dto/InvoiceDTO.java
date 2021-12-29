@@ -92,6 +92,14 @@ public class InvoiceDTO {
     @XmlElement(name = "discountInEuro")
     private BigDecimal discountInEuro;
 
+    @XmlElementWrapper(name = "categoryNames")
+    @XmlElement(name = "categoryName")
+    private List<String> categoryNames;
+
+    @XmlElementWrapper(name = "categoryPrices")
+    @XmlElement(name = "categoryPrice")
+    private List<BigDecimal> categoryPrices;
+
     public static Builder builder() {
         return new Builder();
     }
@@ -194,6 +202,14 @@ public class InvoiceDTO {
 
     public BigDecimal discountInEuro() {
         return discountInEuro;
+    }
+
+    public List<String> categoryNames() {
+        return categoryNames;
+    }
+
+    public List<BigDecimal> categoryPrices() {
+        return categoryPrices;
     }
 
     public static class Builder {
@@ -325,6 +341,16 @@ public class InvoiceDTO {
 
         public Builder withDiscountInEuro(BigDecimal discountInEuro) {
             this.instance.discountInEuro = discountInEuro;
+            return this;
+        }
+
+        public Builder withCategoryNames(List<String> categoryNames) {
+            this.instance.categoryNames = categoryNames;
+            return this;
+        }
+
+        public Builder withCategoryPrices(List<BigDecimal> categoryPrices) {
+            this.instance.categoryPrices = categoryPrices;
             return this;
         }
 

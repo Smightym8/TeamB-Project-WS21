@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
+//Todo: only unpaid rooms
 public class StayListingDTO {
     private String id;
     private String guestFirstName;

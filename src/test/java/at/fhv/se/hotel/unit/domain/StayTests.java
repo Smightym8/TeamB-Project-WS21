@@ -15,12 +15,14 @@ import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.model.stay.StayId;
+import org.apache.xpath.operations.Bool;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -98,10 +100,10 @@ public class StayTests {
         String stayIdStr = "1";
         StayId stayId = new StayId(stayIdStr);
 
-        List<Room> rooms = List.of(
-                room1,
-                room2,
-                room3
+        Map<Room, Boolean> rooms = Map.of(
+                room1, false,
+                room2, false,
+                room3, false
         );
 
         // when
@@ -120,10 +122,6 @@ public class StayTests {
         assertEquals(checkOutDate, stay.getCheckOutDate());
         assertEquals(services, stay.getServices());
         assertTrue(stay.isActive());
-
-        for (Room r : rooms) {
-            assertTrue(stay.getRooms().contains(r));
-        }
 
         for (Service s : services) {
             assertTrue(stay.getServices().contains(s));
@@ -202,10 +200,10 @@ public class StayTests {
         String stayIdStr = "1";
         StayId stayId = new StayId(stayIdStr);
 
-        List<Room> rooms = List.of(
-                room1,
-                room2,
-                room3
+        Map<Room, Boolean> rooms = Map.of(
+                room1, false,
+                room2, false,
+                room3, false
         );
 
         Stay stay = Stay.create(

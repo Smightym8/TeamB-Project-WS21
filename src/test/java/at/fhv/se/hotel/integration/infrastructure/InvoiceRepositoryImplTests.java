@@ -16,6 +16,7 @@ import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.repository.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,6 +29,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -129,12 +131,12 @@ public class InvoiceRepositoryImplTests {
         String roomNameExpected = "Room 1";
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
-        List<Room> roomsExpected = List.of(
+        Map<Room, Boolean> roomsExpected = Map.of(
                 Room.create(
                         roomNameExpected,
                         roomStatusExpected,
                         categoriesExpected.get(0)
-                )
+                ), false
         );
 
         InvoiceId invoiceIdExpected = new InvoiceId("1337");
@@ -169,7 +171,7 @@ public class InvoiceRepositoryImplTests {
         categoriesExpected.forEach(category -> this.roomCategoryRepository.add(category));
         this.bookingRepository.add(bookingExpected);
         categoryPricesExpected.forEach(roomCategoryPrice -> this.roomCategoryPriceRepository.add(roomCategoryPrice));
-        this.roomRepository.add(roomsExpected.get(0));
+        this.roomRepository.add(roomsExpected.entrySet().iterator().next().getKey());
         this.invoiceRepository.add(invoiceExpected);
         em.flush();
         Invoice invoiceActual = this.invoiceRepository.invoiceById(invoiceIdExpected).get();
@@ -283,19 +285,19 @@ public class InvoiceRepositoryImplTests {
         List<String> roomsNameExpected = Arrays.asList("Room1","Room2","Room3");
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
-        List<Room> roomsExpected = List.of(
+        Map<Room, Boolean> roomsExpected = Map.of(
                 Room.create(
                         roomsNameExpected.get(0),
                         roomStatusExpected,
-                        categoriesExpected.get(0)),
+                        categoriesExpected.get(0)), false,
                 Room.create(
                         roomsNameExpected.get(1),
                         roomStatusExpected,
-                        categoriesExpected.get(1)),
+                        categoriesExpected.get(1)), false,
                 Room.create(
                         roomsNameExpected.get(2),
                         roomStatusExpected,
-                        categoriesExpected.get(1))
+                        categoriesExpected.get(1)), false
         );
 
         List<Stay> staysExpected = List.of(
@@ -339,7 +341,11 @@ public class InvoiceRepositoryImplTests {
         servicesExpected.forEach(service -> this.serviceRepository.add(service));
         bookingsExpected.forEach(booking -> this.bookingRepository.add(booking));
         categoryPricesExpected.forEach(roomCategoryPrice -> this.roomCategoryPriceRepository.add(roomCategoryPrice));
-        roomsExpected.forEach(room -> this.roomRepository.add(room));
+
+        for (Map.Entry<Room, Boolean> entry : roomsExpected.entrySet()) {
+            this.roomRepository.add(entry.getKey());
+        }
+
         staysExpected.forEach(stay -> this.stayRepository.add(stay));
         invoicesExpected.forEach(invoice -> this.invoiceRepository.add(invoice));
         em.flush();
@@ -349,6 +355,186 @@ public class InvoiceRepositoryImplTests {
         assertEquals(invoicesExpected.size(), invoicesActual.size());
         for (Invoice i : invoicesActual) {
             assertTrue(invoicesExpected.contains(i));
+        }
+    }
+
+    @Test
+    public void given_3invoicesWithCreationDate_when_invoicesByDate_then_return3Invoices() {
+        // given
+        List<Guest> guestsExpected = List.of(
+                Guest.create(guestRepository.nextIdentity(),
+                        new FullName("Michael", "Spiegel"),
+                        Gender.MALE,
+                        new Address("Hochschulstraße",
+                                "1", "Dornbirn",
+                                "6850", "Austria"),
+                        LocalDate.of(1999, 3, 20),
+                        "+43 660 123 456 789",
+                        "michael.spiegel@students.fhv.at",
+                        0,
+                        Collections.emptyList()
+                ),
+                Guest.create(guestRepository.nextIdentity(),
+                        new FullName("Ali", "Cinar"),
+                        Gender.MALE,
+                        new Address("Hochschulstraße",
+                                "1", "Dornbirn",
+                                "6850", "Austria"),
+                        LocalDate.of(1997, 8, 27),
+                        "+43 676 123 456 789",
+                        "ali.cinar@students.fhv.at",
+                        0,
+                        Collections.emptyList()
+                ),
+                Guest.create(guestRepository.nextIdentity(),
+                        new FullName("Umut", "Caglayan"),
+                        Gender.MALE,
+                        new Address("Hochschulstraße",
+                                "1", "Dornbirn",
+                                "6850", "Austria"),
+                        LocalDate.of(1999, 7, 7),
+                        "+43 676 123 456 789",
+                        "umut.caglayan@students.fhv.at",
+                        0,
+                        Collections.emptyList()
+                )
+        );
+
+        List<RoomCategory> categoriesExpected = Arrays.asList(
+                RoomCategory.create(roomCategoryRepository.nextIdentity(),
+                        new RoomCategoryName("Single Room"),
+                        new Description("This is a single room")),
+                RoomCategory.create(roomCategoryRepository.nextIdentity(),
+                        new RoomCategoryName("Double Room"),
+                        new Description("This is a double room"))
+        );
+
+        List<Service> servicesExpected = Arrays.asList(
+                Service.create(serviceRepository.nextIdentity(),
+                        new ServiceName("TV"),
+                        new Price(new BigDecimal("100"))),
+                Service.create(serviceRepository.nextIdentity(),
+                        new ServiceName("Breakfast"),
+                        new Price(new BigDecimal("100")))
+        );
+        List<Booking> bookingsExpected = List.of(
+                Booking.create(
+                        LocalDate.now(),
+                        LocalDate.now().plusDays(10),
+                        bookingRepository.nextIdentity(),
+                        guestsExpected.get(0),
+                        servicesExpected,  2, 1,
+                        "Nothing"),
+                Booking.create(
+                        LocalDate.now(),
+                        LocalDate.now().plusDays(10),
+                        bookingRepository.nextIdentity(),
+                        guestsExpected.get(1),
+                        servicesExpected, 2, 1,
+                        "Nothing"),
+                Booking.create(
+                        LocalDate.now(),
+                        LocalDate.now().plusDays(10),
+                        bookingRepository.nextIdentity(),
+                        guestsExpected.get(2),
+                        servicesExpected, 2, 1,
+                        "Nothing")
+        );
+        bookingsExpected.get(0).addRoomCategory(categoriesExpected.get(0), 1);
+        bookingsExpected.get(1).addRoomCategory(categoriesExpected.get(1), 1);
+        bookingsExpected.get(2).addRoomCategory(categoriesExpected.get(0),2);
+
+        List<RoomCategoryPrice> categoryPricesExpected = List.of(
+                RoomCategoryPrice.create(
+                        roomCategoryPriceRepository.nextIdentity(),
+                        Season.WINTER,
+                        categoriesExpected.get(0),
+                        new BigDecimal("300")
+                ),
+                RoomCategoryPrice.create(
+                        roomCategoryPriceRepository.nextIdentity(),
+                        Season.WINTER,
+                        categoriesExpected.get(1),
+                        new BigDecimal("500")
+                )
+        );
+
+        List<String> roomsNameExpected = Arrays.asList("Room1","Room2","Room3");
+        RoomStatus roomStatusExpected = RoomStatus.FREE;
+
+        Map<Room, Boolean> roomsExpected = Map.of(
+                Room.create(
+                        roomsNameExpected.get(0),
+                        roomStatusExpected,
+                        categoriesExpected.get(0)), false,
+                Room.create(
+                        roomsNameExpected.get(1),
+                        roomStatusExpected,
+                        categoriesExpected.get(1)), false,
+                Room.create(
+                        roomsNameExpected.get(2),
+                        roomStatusExpected,
+                        categoriesExpected.get(1)), false
+        );
+
+        List<Stay> staysExpected = List.of(
+                Stay.create(bookingsExpected.get(0), roomsExpected),
+                Stay.create(bookingsExpected.get(1), roomsExpected),
+                Stay.create(bookingsExpected.get(2), roomsExpected)
+        );
+
+        List<InvoiceId> invoiceIdsExpected = List.of(
+                new InvoiceId("1337"),
+                new InvoiceId("1338"),
+                new InvoiceId("1339")
+        );
+        String invoiceNumberExpected = "30112021001";
+        int amountOfNightsExpected = 9;
+        BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76");
+        BigDecimal localTaxTotalExpected = new BigDecimal("1.52");
+        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.1");
+        BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("100");
+        BigDecimal totalNetAmountExpected = new BigDecimal("200");
+        BigDecimal totalGrossAmountExpected = new BigDecimal("300");
+
+        // Invoice date is set in create method to current date
+        LocalDate invoiceDateExpected = LocalDate.now();
+        List<Invoice> invoicesExpected = invoiceIdsExpected.stream()
+                .map(id -> Invoice.create(
+                        id,
+                        invoiceNumberExpected,
+                        staysExpected.listIterator().next(),
+                        categoryPricesExpected,
+                        servicesExpected,
+                        amountOfNightsExpected,
+                        localTaxPerPersonExpected,
+                        localTaxTotalExpected,
+                        valueAddedTaxInPercentExpected,
+                        valueAddedTaxInEuroExpected,
+                        totalNetAmountExpected,
+                        totalGrossAmountExpected
+                )).collect(Collectors.toList());
+        //when
+        guestsExpected.forEach(guest -> this.guestRepository.add(guest));
+        categoriesExpected.forEach(category -> this.roomCategoryRepository.add(category));
+        servicesExpected.forEach(service -> this.serviceRepository.add(service));
+        bookingsExpected.forEach(booking -> this.bookingRepository.add(booking));
+        categoryPricesExpected.forEach(roomCategoryPrice -> this.roomCategoryPriceRepository.add(roomCategoryPrice));
+
+        for (Map.Entry<Room, Boolean> entry : roomsExpected.entrySet()) {
+            this.roomRepository.add(entry.getKey());
+        }
+
+        staysExpected.forEach(stay -> this.stayRepository.add(stay));
+        invoicesExpected.forEach(invoice -> this.invoiceRepository.add(invoice));
+        em.flush();
+
+        List<Invoice> invoicesActual = this.invoiceRepository.invoicesByDate(invoiceDateExpected);
+
+        //then
+        assertEquals(invoicesExpected.size(), invoicesActual.size());
+        for(Invoice i : invoicesExpected) {
+            assertTrue(invoicesActual.contains(i));
         }
     }
 }
