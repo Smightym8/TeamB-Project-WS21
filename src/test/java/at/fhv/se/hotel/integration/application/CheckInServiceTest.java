@@ -217,6 +217,7 @@ public class CheckInServiceTest {
                 .map(room -> RoomDTO.builder()
                                 .withName(room.getName())
                                 .withCategory(room.getRoomCategory().getRoomCategoryName().name())
+                                .withStatus(RoomStatus.FREE.name())
                                 .build())
                 .collect(Collectors.toList());
 
@@ -312,6 +313,7 @@ public class CheckInServiceTest {
                 .map(room -> RoomDTO.builder()
                         .withName(room.getName())
                         .withCategory(room.getRoomCategory().getRoomCategoryName().name())
+                        .withStatus(RoomStatus.FREE.name())
                         .build())
                 .collect(Collectors.toList());
 
@@ -402,6 +404,7 @@ public class CheckInServiceTest {
                 .map(room -> RoomDTO.builder()
                         .withName(room.getName())
                         .withCategory(room.getRoomCategory().getRoomCategoryName().name())
+                        .withStatus(RoomStatus.FREE.name())
                         .build())
                 .collect(Collectors.toList());
 
