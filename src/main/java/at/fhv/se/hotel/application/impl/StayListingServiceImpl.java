@@ -31,6 +31,7 @@ public class StayListingServiceImpl implements StayListingService {
                     .withGuestLastName(stay.getGuest().getName().lastName())
                     .withCheckOutDate(stay.getCheckOutDate())
                     .withRooms(rooms)
+                    .withAmountOfPersons(stay.getBooking().getAmountOfAdults() + stay.getBooking().getAmountOfChildren())
                     .withIsActive(stay.isActive())
                     .build();
 
