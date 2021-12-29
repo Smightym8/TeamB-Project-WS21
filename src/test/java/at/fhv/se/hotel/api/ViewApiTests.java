@@ -3,6 +3,7 @@ package at.fhv.se.hotel.api;
 import at.fhv.se.hotel.application.api.*;
 import at.fhv.se.hotel.application.dto.*;
 import at.fhv.se.hotel.domain.model.guest.Gender;
+import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.view.forms.GuestForm;
 import at.fhv.se.hotel.view.forms.InvoiceForm;
 import org.junit.jupiter.api.Test;
@@ -621,6 +622,7 @@ public class ViewApiTests {
                 RoomDTO.builder()
                         .withName("101")
                         .withCategory("Single Room")
+                        .withStatus(RoomStatus.FREE.name())
                         .build()
         );
 
@@ -651,6 +653,7 @@ public class ViewApiTests {
                 RoomDTO.builder()
                         .withName("101")
                         .withCategory("Single Room")
+                        .withStatus(RoomStatus.FREE.name())
                         .build()
         );
 

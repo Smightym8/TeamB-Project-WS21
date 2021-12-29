@@ -4,6 +4,7 @@ import at.fhv.se.hotel.domain.model.room.Room;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.Description;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
+import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryId;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryName;
 import at.fhv.se.hotel.domain.repository.RoomCategoryRepository;
 import at.fhv.se.hotel.domain.repository.RoomRepository;
@@ -18,6 +19,7 @@ import javax.transaction.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -87,5 +89,46 @@ public class RoomRepositoryImplTests {
         assertEquals(roomExpected.getRoomCategory(), roomActual.getRoomCategory());
         assertEquals(roomExpected.getName(), roomActual.getName());
         assertEquals(roomExpected.getStatus(), roomActual.getStatus());
+    }
+
+    @Test
+    void given_3rooms_when_addRoomsToRepository_then_return3EqualsRooms() {
+        // given
+        RoomCategory roomCategoryExpected = RoomCategory.create(
+                new RoomCategoryId(UUID.randomUUID().toString().toUpperCase()),
+                new RoomCategoryName("Single Room"),
+                new Description("This is a single room")
+        );
+
+        List<Room> roomsExpected = List.of(
+                Room.create(
+                        "101",
+                        RoomStatus.FREE,
+                        roomCategoryExpected
+                ),
+                Room.create(
+                        "102",
+                        RoomStatus.FREE,
+                        roomCategoryExpected
+                ),
+                Room.create(
+                        "103",
+                        RoomStatus.FREE,
+                        roomCategoryExpected
+                )
+        );
+        roomCategoryRepository.add(roomCategoryExpected);
+        roomsExpected.forEach(room -> roomRepository.add(room));
+        em.flush();
+
+        // when
+        List<Room> roomsActual = roomRepository.findAllRooms();
+
+        // then
+        assertEquals(roomsExpected.size(), roomsActual.size());
+
+        for(Room r : roomsActual) {
+            assertTrue(roomsExpected.contains(r));
+        }
     }
 }
