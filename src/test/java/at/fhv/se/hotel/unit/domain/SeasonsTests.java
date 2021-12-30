@@ -1,7 +1,7 @@
 package at.fhv.se.hotel.unit.domain;
 
-import at.fhv.se.hotel.domain.model.Season.SeasonId;
-import at.fhv.se.hotel.domain.model.Season.SeasonName;
+import at.fhv.se.hotel.domain.model.season.SeasonId;
+import at.fhv.se.hotel.domain.model.season.SeasonName;
 import at.fhv.se.hotel.domain.model.roomcategory.Season;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +23,7 @@ public class SeasonsTests {
 
         // when
         // TODO: at.fhv.se.hotel.domain.model.Season.Season -> Season after replacing enum with class
-        at.fhv.se.hotel.domain.model.Season.Season seasonActual = at.fhv.se.hotel.domain.model.Season.Season.create(
+        at.fhv.se.hotel.domain.model.season.Season seasonActual = at.fhv.se.hotel.domain.model.season.Season.create(
                 seasonIdExpected,
                 seasonNameExpected,
                 startDateExpected,

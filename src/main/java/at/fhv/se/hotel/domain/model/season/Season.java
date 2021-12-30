@@ -1,4 +1,4 @@
-package at.fhv.se.hotel.domain.model.Season;
+package at.fhv.se.hotel.domain.model.season;
 
 import at.fhv.se.hotel.domain.Generated;
 
