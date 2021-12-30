@@ -9,6 +9,9 @@ import at.fhv.se.hotel.domain.model.guest.*;
 import at.fhv.se.hotel.domain.model.room.Room;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.*;
+import at.fhv.se.hotel.domain.model.season.Season;
+import at.fhv.se.hotel.domain.model.season.SeasonId;
+import at.fhv.se.hotel.domain.model.season.SeasonName;
 import at.fhv.se.hotel.domain.model.service.Price;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
@@ -17,6 +20,7 @@ import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.model.stay.StayId;
 import at.fhv.se.hotel.domain.repository.InvoiceRepository;
 import at.fhv.se.hotel.domain.repository.RoomRepository;
+import at.fhv.se.hotel.domain.repository.SeasonRepository;
 import at.fhv.se.hotel.domain.repository.StayRepository;
 import at.fhv.se.hotel.domain.services.api.RoomCategoryPriceService;
 import org.junit.jupiter.api.Test;
@@ -41,6 +45,9 @@ public class CheckOutServiceTest {
 
     @MockBean
     StayRepository stayRepository;
+
+    @MockBean
+    SeasonRepository seasonRepository;
 
     @MockBean
     RoomCategoryPriceService roomCategoryPriceRepository;
@@ -95,10 +102,17 @@ public class CheckOutServiceTest {
 
         categoriesExpected.forEach(roomCategory -> bookingExpected.addRoomCategory(roomCategory, 1));
 
+        Season summerSeason = Season.create(
+                new SeasonId("1"),
+                new SeasonName("Winter "),
+                LocalDate.of(2021, 6, 1),
+                LocalDate.of(2021, 11, 30)
+        );
+
         List<RoomCategoryPrice> roomCategoryPricesExpected = List.of(
                 RoomCategoryPrice.create(
                         new RoomCategoryPriceId("1"),
-                        Season.SUMMER,
+                        summerSeason,
                         categoriesExpected.get(0),
                         new BigDecimal("300").setScale(2, RoundingMode.CEILING)
                 )
@@ -136,7 +150,29 @@ public class CheckOutServiceTest {
         Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
         Mockito.when(stayRepository.stayById(idExpected)).thenReturn(Optional.of(stayExpected));
         Mockito.when(roomRepository.roomByName(roomNameExpected)).thenReturn(Optional.of(roomsExpectedList.get(0)));
-        Mockito.when(roomCategoryPriceRepository.by(categoriesExpected.get(0), Season.SUMMER))
+
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 1)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 2)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 3)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 4)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 5)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 6)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 7)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 8)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 9)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 10)))
+                .thenReturn(Optional.of(summerSeason));
+
+        Mockito.when(roomCategoryPriceRepository.by(categoriesExpected.get(0), summerSeason.getSeasonId()))
                 .thenReturn(roomCategoryPricesExpected.get(0));
 
         // when
@@ -207,10 +243,17 @@ public class CheckOutServiceTest {
 
         categoriesExpected.forEach(roomCategory -> bookingExpected.addRoomCategory(roomCategory, 1));
 
+        Season summerSeason = Season.create(
+                new SeasonId("1"),
+                new SeasonName("Winter "),
+                LocalDate.of(2021, 6, 1),
+                LocalDate.of(2021, 11, 30)
+        );
+
         List<RoomCategoryPrice> roomCategoryPricesExpected = List.of(
                 RoomCategoryPrice.create(
                         new RoomCategoryPriceId("1"),
-                        Season.SUMMER,
+                        summerSeason,
                         categoriesExpected.get(0),
                         new BigDecimal("300").setScale(2, RoundingMode.CEILING)
                 )
@@ -236,7 +279,29 @@ public class CheckOutServiceTest {
         Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
         Mockito.when(stayRepository.stayById(idExpected)).thenReturn(Optional.of(stayExpected));
         Mockito.when(roomRepository.roomByName(roomNamesExpected.get(0))).thenReturn(Optional.of(roomsExpectedList.get(0)));
-        Mockito.when(roomCategoryPriceRepository.by(categoriesExpected.get(0), Season.SUMMER))
+
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 1)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 2)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 3)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 4)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 5)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 6)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 7)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 8)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 9)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 10)))
+                .thenReturn(Optional.of(summerSeason));
+
+        Mockito.when(roomCategoryPriceRepository.by(categoriesExpected.get(0), summerSeason.getSeasonId()))
                 .thenReturn(roomCategoryPricesExpected.get(0));
 
         // when
@@ -290,10 +355,17 @@ public class CheckOutServiceTest {
 
         categoriesExpected.forEach(roomCategory -> bookingExpectedbooking.addRoomCategory(roomCategory, 1));
 
+        Season summerSeason = Season.create(
+                new SeasonId("1"),
+                new SeasonName("Winter "),
+                LocalDate.of(2021, 6, 1),
+                LocalDate.of(2021, 11, 30)
+        );
+
         List<RoomCategoryPrice> roomCategoryPricesExpected = List.of(
                 RoomCategoryPrice.create(
                         new RoomCategoryPriceId("1"),
-                        Season.SUMMER,
+                        summerSeason,
                         categoriesExpected.get(0),
                         new BigDecimal("300").setScale(2, RoundingMode.CEILING)
                 )
@@ -321,13 +393,36 @@ public class CheckOutServiceTest {
         Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
         Mockito.when(stayRepository.stayById(idExpected)).thenReturn(Optional.of(stayExpected));
         Mockito.when(roomRepository.roomByName(roomNameExpected)).thenReturn(Optional.of(roomsExpectedList.get(0)));
-        Mockito.when(roomCategoryPriceRepository.by(categoriesExpected.get(0), Season.SUMMER))
+
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 1)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 2)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 3)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 4)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 5)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 6)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 7)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 8)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 9)))
+                .thenReturn(Optional.of(summerSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 10)))
+                .thenReturn(Optional.of(summerSeason));
+
+        Mockito.when(roomCategoryPriceRepository.by(categoriesExpected.get(0), summerSeason.getSeasonId()))
                 .thenReturn(roomCategoryPricesExpected.get(0));
 
         //when
         checkOutService.saveInvoice(idExpected.id(), roomNamesExpected, action);
 
         //then
+        // TODO: Use a better assert statement
         assertTrue(stayExpected.getRooms().get(roomsExpectedList.get(0)));
     }
 

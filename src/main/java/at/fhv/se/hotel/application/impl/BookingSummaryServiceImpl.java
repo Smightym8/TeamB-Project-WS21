@@ -84,8 +84,6 @@ public class BookingSummaryServiceImpl implements BookingSummaryService {
             services.put(service.getServiceName().name(), service.getServicePrice().price());
         }
 
-
-
         BookingDetailsDTO bookingDetailsDTO = BookingDetailsDTO.builder()
                 .withGuestId(guestId)
                 .withGuestFirstName(guest.getName().firstName())

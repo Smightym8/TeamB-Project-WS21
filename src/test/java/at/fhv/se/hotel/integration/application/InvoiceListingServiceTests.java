@@ -1,7 +1,6 @@
 package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.InvoiceListingService;
-import at.fhv.se.hotel.application.dto.InvoiceDTO;
 import at.fhv.se.hotel.application.dto.InvoiceListingDTO;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
@@ -11,6 +10,9 @@ import at.fhv.se.hotel.domain.model.invoice.InvoiceId;
 import at.fhv.se.hotel.domain.model.room.Room;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.*;
+import at.fhv.se.hotel.domain.model.season.Season;
+import at.fhv.se.hotel.domain.model.season.SeasonId;
+import at.fhv.se.hotel.domain.model.season.SeasonName;
 import at.fhv.se.hotel.domain.model.service.Price;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
@@ -131,10 +133,17 @@ public class InvoiceListingServiceTests {
                 Stay.create(bookingsExpected.get(2), roomsExpected)
         );
 
+        Season winterSeason = Season.create(
+                new SeasonId("1"),
+                new SeasonName("Winter "),
+                LocalDate.of(2021, 12, 1),
+                LocalDate.of(2022, 1, 31)
+        );
+
         List<RoomCategoryPrice> roomCategoryPricesExpected = List.of(
                 RoomCategoryPrice.create(
                         new RoomCategoryPriceId("1"),
-                        Season.WINTER,
+                        winterSeason,
                         categoryExpected,
                         new BigDecimal("300")
                 )

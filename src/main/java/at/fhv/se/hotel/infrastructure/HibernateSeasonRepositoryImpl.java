@@ -8,11 +8,13 @@ import org.springframework.stereotype.Component;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class SeasonRepositoryImpl implements SeasonRepository {
+public class HibernateSeasonRepositoryImpl implements SeasonRepository {
     @PersistenceContext
     private EntityManager em;
 
@@ -30,5 +32,16 @@ public class SeasonRepositoryImpl implements SeasonRepository {
     @Override
     public void add(Season s) {
         this.em.persist(s);
+    }
+
+    @Override
+    public Optional<Season> seasonByDate(LocalDate date) {
+        TypedQuery<Season> query = this.em.createQuery(
+                "FROM Season AS s WHERE :date BETWEEN s.startDate AND s.endDate", Season.class
+        );
+
+        query.setParameter("date", date);
+
+        return query.getResultList().stream().findFirst();
     }
 }

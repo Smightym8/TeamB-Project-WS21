@@ -8,6 +8,8 @@ import at.fhv.se.hotel.domain.model.guest.Guest;
 import at.fhv.se.hotel.domain.model.room.Room;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.*;
+import at.fhv.se.hotel.domain.model.season.Season;
+import at.fhv.se.hotel.domain.model.season.SeasonName;
 import at.fhv.se.hotel.domain.model.service.Price;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
@@ -35,6 +37,9 @@ public class TestData implements ApplicationRunner {
 
     @Autowired
     RoomCategoryRepository roomCategoryRepository;
+
+    @Autowired
+    SeasonRepository seasonRepository;
 
     @Autowired
     GuestRepository guestRepository;
@@ -74,54 +79,162 @@ public class TestData implements ApplicationRunner {
         this.roomCategoryRepository.add(singleRoom);
         this.roomCategoryRepository.add(doubleRoom);
 
-        RoomCategoryPrice singleRoomSummerPrice = RoomCategoryPrice.create(
-                roomCategoryPriceRepository.nextIdentity(),
-                Season.SUMMER,
-                singleRoom,
-                new BigDecimal("600")
+        // Insert fake seasons
+        Season winterSeason1 = Season.create(
+                seasonRepository.nextIdentity(),
+                new SeasonName("Winter 2021/2022"),
+                LocalDate.of(2021, 12, 1),
+                LocalDate.of(2022, 1, 31)
         );
 
-        RoomCategoryPrice singleRoomWinterPrice = RoomCategoryPrice.create(
+        Season springSeason1 = Season.create(
+                seasonRepository.nextIdentity(),
+                new SeasonName("Spring 2022"),
+                LocalDate.of(2022, 2, 1),
+                LocalDate.of(2022, 5, 31)
+        );
+
+        Season summerSeason1 = Season.create(
+                seasonRepository.nextIdentity(),
+                new SeasonName("Summer 2022"),
+                LocalDate.of(2022, 6, 1),
+                LocalDate.of(2022, 11, 30)
+        );
+
+        Season winterSeason2 = Season.create(
+                seasonRepository.nextIdentity(),
+                new SeasonName("Winter 2022/2023"),
+                LocalDate.of(2022, 12, 1),
+                LocalDate.of(2023, 1, 31)
+        );
+
+        Season springSeason2 = Season.create(
+                seasonRepository.nextIdentity(),
+                new SeasonName("Spring 2023"),
+                LocalDate.of(2023, 2, 1),
+                LocalDate.of(2023, 5, 31)
+        );
+
+        Season summerSeason2 = Season.create(
+                seasonRepository.nextIdentity(),
+                new SeasonName("Summer 2023"),
+                LocalDate.of(2023, 6, 1),
+                LocalDate.of(2023, 11, 30)
+        );
+
+        Season winterSeason3 = Season.create(
+                seasonRepository.nextIdentity(),
+                new SeasonName("Winter 2023/2024"),
+                LocalDate.of(2023, 12, 1),
+                LocalDate.of(2024, 1, 31)
+        );
+
+        seasonRepository.add(winterSeason1);
+        seasonRepository.add(springSeason1);
+        seasonRepository.add(summerSeason1);
+        seasonRepository.add(winterSeason2);
+        seasonRepository.add(springSeason2);
+        seasonRepository.add(summerSeason2);
+        seasonRepository.add(winterSeason3);
+
+        // Insert fake prices
+        RoomCategoryPrice singleRoomWinterPrice1 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
-                Season.WINTER,
+                winterSeason1,
                 singleRoom,
                 new BigDecimal("300")
         );
 
-        RoomCategoryPrice singleRoomSpringPrice = RoomCategoryPrice.create(
+        RoomCategoryPrice singleRoomSpringPrice1 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
-                Season.SPRING,
+                springSeason1,
                 singleRoom,
                 new BigDecimal("200")
         );
 
-        RoomCategoryPrice doubleRoomSummerPrice = RoomCategoryPrice.create(
+        RoomCategoryPrice singleRoomSummerPrice1 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
-                Season.SUMMER,
-                doubleRoom,
-                new BigDecimal("900")
+                summerSeason1,
+                singleRoom,
+                new BigDecimal("600")
         );
 
-        RoomCategoryPrice doubleRoomWinterPrice = RoomCategoryPrice.create(
+        RoomCategoryPrice singleRoomWinterPrice2 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
-                Season.WINTER,
+                winterSeason2,
+                singleRoom,
+                new BigDecimal("300")
+        );
+
+        RoomCategoryPrice singleRoomSpringPrice2 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                springSeason2,
+                singleRoom,
+                new BigDecimal("200")
+        );
+
+        RoomCategoryPrice singleRoomSummerPrice2 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                summerSeason2,
+                singleRoom,
+                new BigDecimal("600")
+        );
+
+        RoomCategoryPrice doubleRoomWinterPrice1 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                winterSeason1,
                 doubleRoom,
                 new BigDecimal("500")
         );
 
-        RoomCategoryPrice doubleRoomSpringPrice = RoomCategoryPrice.create(
+        RoomCategoryPrice doubleRoomSpringPrice1 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
-                Season.SPRING,
+                springSeason1,
                 doubleRoom,
                 new BigDecimal("400")
         );
 
-        this.roomCategoryPriceRepository.add(singleRoomWinterPrice);
-        this.roomCategoryPriceRepository.add(singleRoomSpringPrice);
-        this.roomCategoryPriceRepository.add(singleRoomSummerPrice);
-        this.roomCategoryPriceRepository.add(doubleRoomWinterPrice);
-        this.roomCategoryPriceRepository.add(doubleRoomSpringPrice);
-        this.roomCategoryPriceRepository.add(doubleRoomSummerPrice);
+        RoomCategoryPrice doubleRoomSummerPrice1 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                summerSeason1,
+                doubleRoom,
+                new BigDecimal("900")
+        );
+
+        RoomCategoryPrice doubleRoomWinterPrice2 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                winterSeason2,
+                doubleRoom,
+                new BigDecimal("500")
+        );
+
+        RoomCategoryPrice doubleRoomSpringPrice2 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                springSeason2,
+                doubleRoom,
+                new BigDecimal("400")
+        );
+
+        RoomCategoryPrice doubleRoomSummerPrice2 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                summerSeason2,
+                doubleRoom,
+                new BigDecimal("900")
+        );
+
+        this.roomCategoryPriceRepository.add(singleRoomWinterPrice1);
+        this.roomCategoryPriceRepository.add(singleRoomSpringPrice1);
+        this.roomCategoryPriceRepository.add(singleRoomSummerPrice1);
+        this.roomCategoryPriceRepository.add(singleRoomWinterPrice2);
+        this.roomCategoryPriceRepository.add(singleRoomSpringPrice2);
+        this.roomCategoryPriceRepository.add(singleRoomSummerPrice2);
+
+        this.roomCategoryPriceRepository.add(doubleRoomWinterPrice1);
+        this.roomCategoryPriceRepository.add(doubleRoomSpringPrice1);
+        this.roomCategoryPriceRepository.add(doubleRoomSummerPrice1);
+        this.roomCategoryPriceRepository.add(doubleRoomWinterPrice2);
+        this.roomCategoryPriceRepository.add(doubleRoomSpringPrice2);
+        this.roomCategoryPriceRepository.add(doubleRoomSummerPrice2);
 
         // Insert fake guests
         Guest michael = Guest.create(guestRepository.nextIdentity(),

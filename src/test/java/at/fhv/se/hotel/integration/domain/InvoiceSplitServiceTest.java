@@ -8,6 +8,9 @@ import at.fhv.se.hotel.domain.model.invoice.InvoiceId;
 import at.fhv.se.hotel.domain.model.room.Room;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.*;
+import at.fhv.se.hotel.domain.model.season.Season;
+import at.fhv.se.hotel.domain.model.season.SeasonId;
+import at.fhv.se.hotel.domain.model.season.SeasonName;
 import at.fhv.se.hotel.domain.model.service.Price;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
@@ -16,6 +19,7 @@ import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.repository.InvoiceRepository;
 import at.fhv.se.hotel.domain.repository.RoomCategoryPriceRepository;
 import at.fhv.se.hotel.domain.repository.RoomRepository;
+import at.fhv.se.hotel.domain.repository.SeasonRepository;
 import at.fhv.se.hotel.domain.services.api.InvoiceSplitService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -48,6 +52,9 @@ public class InvoiceSplitServiceTest {
 
     @MockBean
     InvoiceRepository invoiceRepository;
+
+    @MockBean
+    SeasonRepository seasonRepository;
 
     @Test
     void given_invoicedetails_when_splitInvoice_then_returnexpectedamount() {
@@ -99,9 +106,16 @@ public class InvoiceSplitServiceTest {
                 Room.create("103", RoomStatus.FREE, category), false
         );
 
+        Season winterSeason = Season.create(
+                new SeasonId("1"),
+                new SeasonName("Winter "),
+                LocalDate.of(2021, 12, 1),
+                LocalDate.of(2022, 1, 31)
+        );
+
         RoomCategoryPrice price = RoomCategoryPrice.create(
                 new RoomCategoryPriceId("1"),
-                Season.WINTER,
+                winterSeason,
                 category,
                 new BigDecimal("600").setScale(2, RoundingMode.CEILING)
         );
@@ -132,7 +146,16 @@ public class InvoiceSplitServiceTest {
 
         Mockito.when(roomRepository.roomByName("101")).thenReturn(java.util.Optional.of(roomsExpected.get(0)));
 
-        Mockito.when(roomCategoryPriceRepository.priceBySeasonAndCategory(Season.WINTER, roomsExpected.get(0).getRoomCategory().getRoomCategoryId()))
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 12, 26)))
+                .thenReturn(Optional.of(winterSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 12, 27)))
+                .thenReturn(Optional.of(winterSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 12, 28)))
+                .thenReturn(Optional.of(winterSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 12, 29)))
+                .thenReturn(Optional.of(winterSeason));
+
+        Mockito.when(roomCategoryPriceRepository.priceBySeasonAndCategory(winterSeason.getSeasonId(), roomsExpected.get(0).getRoomCategory().getRoomCategoryId()))
                 .thenReturn(java.util.Optional.of(price));
 
         Mockito.when(invoiceRepository.nextIdentity()).thenReturn(invoiceId);
@@ -202,9 +225,16 @@ public class InvoiceSplitServiceTest {
                 Room.create("103", RoomStatus.FREE, category), false
         );
 
+        Season winterSeason = Season.create(
+                new SeasonId("1"),
+                new SeasonName("Winter "),
+                LocalDate.of(2021, 12, 1),
+                LocalDate.of(2022, 1, 31)
+        );
+
         RoomCategoryPrice price = RoomCategoryPrice.create(
                 new RoomCategoryPriceId("1"),
-                Season.WINTER,
+                winterSeason,
                 category,
                 new BigDecimal("600").setScale(2, RoundingMode.CEILING)
         );
@@ -236,7 +266,16 @@ public class InvoiceSplitServiceTest {
         Mockito.when(roomRepository.roomByName("101")).thenReturn(java.util.Optional.of(roomsExpected.get(0)));
         Mockito.when(roomRepository.roomByName("102")).thenReturn(java.util.Optional.of(roomsExpected.get(1)));
 
-        Mockito.when(roomCategoryPriceRepository.priceBySeasonAndCategory(Season.WINTER, roomsExpected.get(0).getRoomCategory().getRoomCategoryId()))
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 12, 26)))
+                .thenReturn(Optional.of(winterSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 12, 27)))
+                .thenReturn(Optional.of(winterSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 12, 28)))
+                .thenReturn(Optional.of(winterSeason));
+        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 12, 29)))
+                .thenReturn(Optional.of(winterSeason));
+
+        Mockito.when(roomCategoryPriceRepository.priceBySeasonAndCategory(winterSeason.getSeasonId(), roomsExpected.get(0).getRoomCategory().getRoomCategoryId()))
                 .thenReturn(java.util.Optional.of(price));
 
         Mockito.when(invoiceRepository.nextIdentity()).thenReturn(invoiceId);

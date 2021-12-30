@@ -40,13 +40,13 @@ public class SeasonRepositoryImplTests {
                 Season.create(
                         new SeasonId("2"),
                         new SeasonName("Spring"),
-                        LocalDate.of(2021, 2, 1),
+                        LocalDate.of(2022, 2, 1),
                         LocalDate.of(2022, 5, 31)
                 ),
                 Season.create(
                         new SeasonId("3"),
                         new SeasonName("Fall"),
-                        LocalDate.of(2021, 6, 1),
+                        LocalDate.of(2022, 6, 1),
                         LocalDate.of(2022, 11, 30)
                 )
         );
@@ -63,5 +63,47 @@ public class SeasonRepositoryImplTests {
         for(Season s : seasonsActual) {
             assertTrue(seasonsExpected.contains(s));
         }
+    }
+
+    @Test
+    void given_date_when_getSeasonByDate_then_returnMatchingSeason() {
+        // given
+        LocalDate date = LocalDate.of(2022, 3, 20);
+
+        Season seasonExpected =  Season.create(
+                new SeasonId("2"),
+                new SeasonName("Spring"),
+                LocalDate.of(2022, 2, 1),
+                LocalDate.of(2022, 5, 31)
+        );
+
+        List<Season> seasons = List.of(
+                Season.create(
+                        new SeasonId("1"),
+                        new SeasonName("Winter"),
+                        LocalDate.of(2021, 12, 1),
+                        LocalDate.of(2022, 1, 31)
+                ),
+                seasonExpected,
+                Season.create(
+                        new SeasonId("3"),
+                        new SeasonName("Fall"),
+                        LocalDate.of(2022, 6, 1),
+                        LocalDate.of(2022, 11, 30)
+                )
+        );
+
+        seasons.forEach(season -> seasonRepository.add(season));
+        this.em.flush();
+
+        // when
+        Season seasonActual = seasonRepository.seasonByDate(date).get();
+
+        // then
+        assertEquals(seasonExpected, seasonActual);
+        assertEquals(seasonExpected.getSeasonId(), seasonActual.getSeasonId());
+        assertEquals(seasonExpected.getSeasonName(), seasonActual.getSeasonName());
+        assertEquals(seasonExpected.getStartDate(), seasonActual.getStartDate());
+        assertEquals(seasonExpected.getEndDate(), seasonActual.getEndDate());
     }
 }
