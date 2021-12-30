@@ -7,13 +7,15 @@ import java.util.Objects;
 
 // TODO: Test
 public class Room {
-    // eventually required by Hibernate
+    // Required by hibernate
+    @SuppressWarnings("unused")
     private Long id;
     private String name;
     private RoomStatus status;
     private RoomCategory roomCategory;
 
-    // eventually required by Hibernate
+    // Required by hibernate
+    @SuppressWarnings("unused")
     private Room(){}
 
     public static Room create (String aName, RoomStatus aStatus, RoomCategory aRoomCategory){

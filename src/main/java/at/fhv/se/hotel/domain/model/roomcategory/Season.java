@@ -4,6 +4,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: Replace with SeasonNew
+// Identify usages of this season class and use SeasonNew instead
+// After everything is replaced delete this class and use only SeasonNew
+@Deprecated
 public enum Season {
     WINTER (LocalDate.of(2000, 12, 1), LocalDate.of(2000, 1, 31)),
     SPRING (LocalDate.of(2000, 2, 1), LocalDate.of(2000, 5, 31)),

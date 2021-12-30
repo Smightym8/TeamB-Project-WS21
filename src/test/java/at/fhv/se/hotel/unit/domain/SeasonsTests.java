@@ -1,5 +1,7 @@
 package at.fhv.se.hotel.unit.domain;
 
+import at.fhv.se.hotel.domain.model.Season.SeasonId;
+import at.fhv.se.hotel.domain.model.Season.SeasonName;
 import at.fhv.se.hotel.domain.model.roomcategory.Season;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +10,34 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// TODO: Replace Enum Season with class Season
 public class SeasonsTests {
+
+    @Test
+    public void given_seasonDetails_when_createSeason_then_detailsequals() {
+        // given
+        SeasonId seasonIdExpected = new SeasonId("1");
+        SeasonName seasonNameExpected = new SeasonName("Winter");
+        LocalDate startDateExpected = LocalDate.of(2021, 12, 1);
+        LocalDate endDateExpected = LocalDate.of(2022, 1, 31);
+
+        // when
+        // TODO: at.fhv.se.hotel.domain.model.Season.Season -> Season after replacing enum with class
+        at.fhv.se.hotel.domain.model.Season.Season seasonActual = at.fhv.se.hotel.domain.model.Season.Season.create(
+                seasonIdExpected,
+                seasonNameExpected,
+                startDateExpected,
+                endDateExpected
+        );
+
+        // then
+        assertEquals(seasonIdExpected, seasonActual.getSeasonId());
+        assertEquals(seasonIdExpected.id(), seasonActual.getSeasonId().id());
+        assertEquals(seasonNameExpected, seasonActual.getSeasonName());
+        assertEquals(seasonNameExpected.name(), seasonActual.getSeasonName().name());
+        assertEquals(startDateExpected, seasonActual.getStartDate());
+        assertEquals(endDateExpected, seasonActual.getEndDate());
+    }
 
     @Test
     void given_checkincheckoutdate_when_booking_then_returnmatchingseason() {

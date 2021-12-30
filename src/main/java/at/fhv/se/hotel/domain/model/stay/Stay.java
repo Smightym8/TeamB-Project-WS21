@@ -15,6 +15,7 @@ import java.util.Objects;
 // TODO: Test
 public class Stay {
     // Required by hibernate
+    @SuppressWarnings("unused")
     private Long id;
     private StayId stayId;
     private Map<Room, Boolean> rooms;
@@ -22,6 +23,7 @@ public class Stay {
     private boolean isActive;
 
     // Required by hibernate
+    @SuppressWarnings("unused")
     public Stay() {
     }
 

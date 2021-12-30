@@ -10,6 +10,7 @@ import java.util.Objects;
 // TODO: Test
 public class Guest {
     // Required by hibernate
+    @SuppressWarnings("unused")
     private Long id;
     private GuestId guestId;
     private FullName name;
@@ -22,6 +23,7 @@ public class Guest {
     private List<Booking> bookings;
 
     // Required by hibernate
+    @SuppressWarnings("unused")
     public Guest() {}
 
     public static Guest create (GuestId aGuestId, FullName aName, Gender aGender, Address aAddress, LocalDate aBirthdate,

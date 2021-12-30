@@ -13,6 +13,7 @@ import java.util.Objects;
 // TODO: Test
 public class Invoice {
     // Required by hibernate
+    @SuppressWarnings("unused")
     private Long id;
     private InvoiceId invoiceId;
     private String invoiceNumber;
@@ -31,9 +32,10 @@ public class Invoice {
     private BigDecimal totalGrossAmount;
     private boolean isPaid;
 
-    // TODO: paymentMethod, status (isPaid)
+    // TODO: paymentMethod
 
     // Required by hibernate
+    @SuppressWarnings("unused")
     private Invoice() {
     }
 

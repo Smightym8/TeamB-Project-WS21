@@ -9,6 +9,7 @@ public class StayId {
     private String id;
 
     // Required by hibernate
+    @SuppressWarnings("unused")
     public StayId() {
     }
 

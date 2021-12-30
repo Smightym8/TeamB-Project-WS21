@@ -1,25 +1,21 @@
-package at.fhv.se.hotel.domain.model.roomcategory;
+package at.fhv.se.hotel.domain.model.Season;
 
 import at.fhv.se.hotel.domain.Generated;
 
-import javax.xml.bind.annotation.XmlElement;
 import java.util.Objects;
 
-// TODO: Test
-public class RoomCategoryName {
+public class SeasonName {
     private String name;
 
-    // Required by hibernate
-    @SuppressWarnings("unused")
-    private RoomCategoryName() {
+    private SeasonName() {
     }
 
-    public RoomCategoryName(String aName){
-        this.name = aName;
+    public SeasonName(String name) {
+        this.name = name;
     }
 
     public String name() {
-        return this.name;
+        return name;
     }
 
     @Generated
@@ -27,7 +23,7 @@ public class RoomCategoryName {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RoomCategoryName that = (RoomCategoryName) o;
+        SeasonName that = (SeasonName) o;
         return Objects.equals(name, that.name);
     }
 

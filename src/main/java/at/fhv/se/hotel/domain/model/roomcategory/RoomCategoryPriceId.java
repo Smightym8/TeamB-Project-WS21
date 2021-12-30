@@ -12,7 +12,8 @@ public class RoomCategoryPriceId {
         this.id = id;
     }
 
-    // Required by Hibernate
+    // Required by hibernate
+    @SuppressWarnings("unused")
     private RoomCategoryPriceId (){}
 
     public String id() {

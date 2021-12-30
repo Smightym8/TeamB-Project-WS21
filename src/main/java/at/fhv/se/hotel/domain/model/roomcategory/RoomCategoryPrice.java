@@ -9,18 +9,20 @@ import java.util.Objects;
 // TODO: Test
 public class RoomCategoryPrice {
     // Required by hibernate
+    @SuppressWarnings("unused")
     private Long id;
     private RoomCategoryPriceId roomCategoryPriceId;
     private Season season;
     private RoomCategory roomCategory;
     private BigDecimal price;
 
+    // Required by hibernate
+    @SuppressWarnings("unused")
+    private RoomCategoryPrice(){}
+
     public static RoomCategoryPrice create(RoomCategoryPriceId aRoomCategoryPriceId, Season aSeason, RoomCategory aRoomCategory, BigDecimal aPrice) {
         return new RoomCategoryPrice(aRoomCategoryPriceId, aSeason, aRoomCategory, aPrice);
     }
-
-    // Required by Hibernate
-    private RoomCategoryPrice(){}
 
     private RoomCategoryPrice(RoomCategoryPriceId aRoomCategoryPriceId, Season aSeason, RoomCategory aRoomCategory, BigDecimal aPrice){
         this.roomCategoryPriceId = aRoomCategoryPriceId;

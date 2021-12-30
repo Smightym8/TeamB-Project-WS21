@@ -1,24 +1,23 @@
-package at.fhv.se.hotel.domain.model.guest;
+package at.fhv.se.hotel.domain.model.Season;
 
 import at.fhv.se.hotel.domain.Generated;
 
 import java.util.Objects;
 
-// TODO: Test
-public class GuestId {
+public class SeasonId {
     private String id;
 
     // Required by hibernate
     @SuppressWarnings("unused")
-    private GuestId() {
+    private SeasonId() {
     }
 
-    public GuestId(String id){
+    public SeasonId(String id) {
         this.id = id;
     }
 
-    public String id(){
-        return this.id;
+    public String id() {
+        return id;
     }
 
     @Generated
@@ -26,8 +25,8 @@ public class GuestId {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        GuestId guestId = (GuestId) o;
-        return Objects.equals(id, guestId.id);
+        SeasonId seasonId = (SeasonId) o;
+        return Objects.equals(id, seasonId.id);
     }
 
     @Generated
