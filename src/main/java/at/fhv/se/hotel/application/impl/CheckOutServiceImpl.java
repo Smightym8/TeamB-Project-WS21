@@ -142,7 +142,7 @@ public class CheckOutServiceImpl implements CheckOutService {
 
             for (Map.Entry<Room, Boolean> room : stay.getRooms().entrySet()) {
                 for (String roomName : roomNames) {
-                    if (room.getKey().getName().equals(roomName)) {
+                    if (room.getKey().getName().name().equals(roomName)) {
                         room.setValue(true);
                     }
                 }

@@ -6,6 +6,7 @@ import at.fhv.se.hotel.domain.model.guest.FullName;
 import at.fhv.se.hotel.domain.model.guest.Gender;
 import at.fhv.se.hotel.domain.model.guest.Guest;
 import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.*;
 import at.fhv.se.hotel.domain.model.season.Season;
@@ -295,46 +296,46 @@ public class TestData implements ApplicationRunner {
         this.bookingRepository.add(booking2);
 
         // Insert fake rooms
-        Room room1 = Room.create("101", RoomStatus.FREE, singleRoom);
+        Room room1 = Room.create(new RoomName("101"), RoomStatus.FREE, singleRoom);
         this.roomRepository.add(room1);
 
-        Room room2 = Room.create("102", RoomStatus.OCCUPIED, singleRoom);
+        Room room2 = Room.create(new RoomName("102"), RoomStatus.OCCUPIED, singleRoom);
         this.roomRepository.add(room2);
 
-        Room room3 = Room.create("103", RoomStatus.FREE, singleRoom);
+        Room room3 = Room.create(new RoomName("103"), RoomStatus.FREE, singleRoom);
         this.roomRepository.add(room3);
 
-        Room room4 = Room.create("104", RoomStatus.FREE, singleRoom);
+        Room room4 = Room.create(new RoomName("104"), RoomStatus.FREE, singleRoom);
         this.roomRepository.add(room4);
 
-        Room room5 = Room.create("105", RoomStatus.FREE, singleRoom);
+        Room room5 = Room.create(new RoomName("105"), RoomStatus.FREE, singleRoom);
         this.roomRepository.add(room5);
 
-        Room room6 = Room.create("106", RoomStatus.FREE, singleRoom);
+        Room room6 = Room.create(new RoomName("106"), RoomStatus.FREE, singleRoom);
         this.roomRepository.add(room6);
 
-        Room room7 = Room.create("107", RoomStatus.FREE, singleRoom);
+        Room room7 = Room.create(new RoomName("107"), RoomStatus.FREE, singleRoom);
         this.roomRepository.add(room7);
 
-        Room room8 = Room.create("108", RoomStatus.FREE, singleRoom);
+        Room room8 = Room.create(new RoomName("108"), RoomStatus.FREE, singleRoom);
         this.roomRepository.add(room8);
 
-        Room room10 = Room.create("201", RoomStatus.FREE, doubleRoom);
+        Room room10 = Room.create(new RoomName("201"), RoomStatus.FREE, doubleRoom);
         this.roomRepository.add(room10);
 
-        Room room11 = Room.create("202", RoomStatus.FREE, doubleRoom);
+        Room room11 = Room.create(new RoomName("202"), RoomStatus.FREE, doubleRoom);
         this.roomRepository.add(room11);
 
-        Room room12 = Room.create("203", RoomStatus.FREE, doubleRoom);
+        Room room12 = Room.create(new RoomName("203"), RoomStatus.FREE, doubleRoom);
         this.roomRepository.add(room12);
 
-        Room room13 = Room.create("204", RoomStatus.FREE, doubleRoom);
+        Room room13 = Room.create(new RoomName("204"), RoomStatus.FREE, doubleRoom);
         this.roomRepository.add(room13);
 
-        Room room14 = Room.create("205", RoomStatus.FREE, doubleRoom);
+        Room room14 = Room.create(new RoomName("205"), RoomStatus.FREE, doubleRoom);
         this.roomRepository.add(room14);
 
-        Room room15 = Room.create("206", RoomStatus.FREE, doubleRoom);
+        Room room15 = Room.create(new RoomName("206"), RoomStatus.FREE, doubleRoom);
         this.roomRepository.add(room15);
 
         // Insert Fake Stays

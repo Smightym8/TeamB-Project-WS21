@@ -8,6 +8,7 @@ import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
 import at.fhv.se.hotel.domain.model.guest.*;
 import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.Description;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
@@ -90,7 +91,7 @@ public class StayDetailsServiceTest {
                 new Description("This is a single room")
         );
         Map<Room, Boolean> roomsExpected = Map.of(
-                Room.create("S101", RoomStatus.FREE,categoryExpected), false
+                Room.create(new RoomName("S101"), RoomStatus.FREE,categoryExpected), false
         );
 
         Stay staysExpected = Stay.create(bookingExpected,roomsExpected);

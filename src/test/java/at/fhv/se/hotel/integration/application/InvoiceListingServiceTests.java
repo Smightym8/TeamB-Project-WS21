@@ -8,6 +8,7 @@ import at.fhv.se.hotel.domain.model.guest.*;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
 import at.fhv.se.hotel.domain.model.invoice.InvoiceId;
 import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.*;
 import at.fhv.se.hotel.domain.model.season.Season;
@@ -123,8 +124,8 @@ public class InvoiceListingServiceTests {
         );
 
         Map<Room, Boolean> roomsExpected = Map.of(
-                Room.create("single Room", RoomStatus.FREE,categoryExpected), false,
-                Room.create("double Room",RoomStatus.FREE,categoryExpected), false
+                Room.create(new RoomName("single Room"), RoomStatus.FREE,categoryExpected), false,
+                Room.create(new RoomName("double Room"),RoomStatus.FREE,categoryExpected), false
         );
 
         List<Stay> staysExpected = List.of(

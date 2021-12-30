@@ -9,6 +9,7 @@ import at.fhv.se.hotel.domain.model.guest.Guest;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
 import at.fhv.se.hotel.domain.model.invoice.InvoiceId;
 import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.*;
 import at.fhv.se.hotel.domain.model.season.Season;
@@ -145,7 +146,7 @@ public class InvoiceRepositoryImplTests {
 
         Map<Room, Boolean> roomsExpected = Map.of(
                 Room.create(
-                        roomNameExpected,
+                        new RoomName(roomNameExpected),
                         roomStatusExpected,
                         categoriesExpected.get(0)
                 ), false
@@ -312,15 +313,15 @@ public class InvoiceRepositoryImplTests {
 
         Map<Room, Boolean> roomsExpected = Map.of(
                 Room.create(
-                        roomsNameExpected.get(0),
+                        new RoomName(roomsNameExpected.get(0)),
                         roomStatusExpected,
                         categoriesExpected.get(0)), false,
                 Room.create(
-                        roomsNameExpected.get(1),
+                        new RoomName(roomsNameExpected.get(1)),
                         roomStatusExpected,
                         categoriesExpected.get(1)), false,
                 Room.create(
-                        roomsNameExpected.get(2),
+                        new RoomName(roomsNameExpected.get(2)),
                         roomStatusExpected,
                         categoriesExpected.get(1)), false
         );
@@ -501,15 +502,15 @@ public class InvoiceRepositoryImplTests {
 
         Map<Room, Boolean> roomsExpected = Map.of(
                 Room.create(
-                        roomsNameExpected.get(0),
+                        new RoomName(roomsNameExpected.get(0)),
                         roomStatusExpected,
                         categoriesExpected.get(0)), false,
                 Room.create(
-                        roomsNameExpected.get(1),
+                        new RoomName(roomsNameExpected.get(1)),
                         roomStatusExpected,
                         categoriesExpected.get(1)), false,
                 Room.create(
-                        roomsNameExpected.get(2),
+                        new RoomName(roomsNameExpected.get(2)),
                         roomStatusExpected,
                         categoriesExpected.get(1)), false
         );

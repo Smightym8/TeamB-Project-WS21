@@ -6,6 +6,7 @@ import at.fhv.se.hotel.domain.model.guest.*;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
 import at.fhv.se.hotel.domain.model.invoice.InvoiceId;
 import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.*;
 import at.fhv.se.hotel.domain.model.season.Season;
@@ -95,7 +96,7 @@ public class InvoiceCalculationServiceTest {
         booking.addRoomCategory(category, 1);
 
         Map<Room, Boolean> rooms = Map.of(
-                Room.create("101", RoomStatus.FREE, category), false
+                Room.create(new RoomName("101"), RoomStatus.FREE, category), false
         );
 
         Season summerSeason = Season.create(

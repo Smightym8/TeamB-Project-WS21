@@ -3,6 +3,7 @@ package at.fhv.se.hotel.integration.application;
 import at.fhv.se.hotel.application.api.RoomListingService;
 import at.fhv.se.hotel.application.dto.RoomDTO;
 import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.Description;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
@@ -39,17 +40,17 @@ public class RoomListingServiceTests {
 
         List<Room> roomsExpected = List.of(
                 Room.create(
-                        "101",
+                        new RoomName("101"),
                         RoomStatus.FREE,
                         roomCategoryExpected
                 ),
                 Room.create(
-                        "102",
+                        new RoomName("102"),
                         RoomStatus.FREE,
                         roomCategoryExpected
                 ),
                 Room.create(
-                        "103",
+                        new RoomName("103"),
                         RoomStatus.FREE,
                         roomCategoryExpected
                 )
@@ -64,7 +65,7 @@ public class RoomListingServiceTests {
         assertEquals(roomsExpected.size(), roomDTOs.size());
 
         for(int i = 0; i < roomsExpected.size(); i++) {
-            assertEquals(roomsExpected.get(i).getName(), roomDTOs.get(i).name());
+            assertEquals(roomsExpected.get(i).getName().name(), roomDTOs.get(i).name());
             assertEquals(
                     roomsExpected.get(i).getRoomCategory().getRoomCategoryName().name(),
                     roomDTOs.get(i).categoryName()

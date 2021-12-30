@@ -25,7 +25,7 @@ public class HibernateRoomRepository implements RoomRepository {
 
     @Override
     public Optional<Room> roomByName(String name) {
-        TypedQuery<Room> query = this.em.createQuery("FROM Room AS r WHERE r.name = :name", Room.class);
+        TypedQuery<Room> query = this.em.createQuery("FROM Room AS r WHERE r.roomName.name = :name", Room.class);
         query.setParameter("name", name);
         return query.getResultStream().findFirst();
     }

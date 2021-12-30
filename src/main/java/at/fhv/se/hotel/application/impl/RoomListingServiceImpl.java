@@ -25,7 +25,7 @@ public class RoomListingServiceImpl implements RoomListingService {
 
         for(Room room : rooms) {
             RoomDTO dto = RoomDTO.builder()
-                    .withName(room.getName())
+                    .withName(room.getName().name())
                     .withCategory(room.getRoomCategory().getRoomCategoryName().name())
                     .withStatus(room.getStatus().name())
                     .build();

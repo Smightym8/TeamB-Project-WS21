@@ -7,6 +7,7 @@ import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
 import at.fhv.se.hotel.domain.model.guest.*;
 import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.*;
 import at.fhv.se.hotel.domain.model.season.Season;
@@ -23,6 +24,7 @@ import at.fhv.se.hotel.domain.repository.RoomRepository;
 import at.fhv.se.hotel.domain.repository.SeasonRepository;
 import at.fhv.se.hotel.domain.repository.StayRepository;
 import at.fhv.se.hotel.domain.services.api.RoomCategoryPriceService;
+import org.apache.xpath.operations.Bool;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,7 +125,7 @@ public class CheckOutServiceTest {
 
         Map<Room, Boolean> roomsExpected = Map.of(
                 Room.create(
-                        roomNameExpected,
+                        new RoomName(roomNameExpected),
                         roomStatusExpected,
                         categoriesExpected.get(0)
                 ), false
@@ -264,7 +266,7 @@ public class CheckOutServiceTest {
 
         Map<Room, Boolean> roomsExpected = Map.of(
                 Room.create(
-                        roomNamesExpected.get(0),
+                        new RoomName(roomNamesExpected.get(0)),
                         roomStatusExpected,
                         categoriesExpected.get(0)
                 ), false
@@ -376,7 +378,7 @@ public class CheckOutServiceTest {
 
         Map<Room, Boolean> roomsExpected = new HashMap<>(Map.of(
                 Room.create(
-                        roomNameExpected,
+                        new RoomName(roomNameExpected),
                         roomStatusExpected,
                         categoriesExpected.get(0)
                 ), false
@@ -422,8 +424,9 @@ public class CheckOutServiceTest {
         checkOutService.saveInvoice(idExpected.id(), roomNamesExpected, action);
 
         //then
-        // TODO: Use a better assert statement
-        assertTrue(stayExpected.getRooms().get(roomsExpectedList.get(0)));
+        for (Map.Entry<Room, Boolean> entry : roomsExpected.entrySet()) {
+            assertTrue(entry.getValue());
+        }
     }
 
     @Test

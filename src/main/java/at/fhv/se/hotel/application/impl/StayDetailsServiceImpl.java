@@ -33,7 +33,7 @@ public class StayDetailsServiceImpl implements StayDetailsService {
         stay.getRooms().forEach((room, isPaid) -> {
             if (!isPaid) {
                 roomsWithCategories.put(
-                        room.getName(),
+                        room.getName().name(),
                         room.getRoomCategory().getRoomCategoryName().name()
                 );
             }
