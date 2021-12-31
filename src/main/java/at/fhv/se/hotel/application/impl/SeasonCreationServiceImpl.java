@@ -15,6 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+/**
+ * This class contains the functionality to create and to save a new season.
+ */
 @Component
 public class SeasonCreationServiceImpl implements SeasonCreationService {
     @Autowired
@@ -26,6 +29,16 @@ public class SeasonCreationServiceImpl implements SeasonCreationService {
     @Autowired
     RoomCategoryPriceRepository roomCategoryPriceRepository;
 
+    /**
+     * This method creates a new season and saves the season and the seasonal prices into the database.
+     * @param name contains the name of the season.
+     * @param startDate contains the start date of the season.
+     * @param endDate contains the end date of the season.
+     * @param singleRoomPrice contains the Single Room price of the season.
+     * @param doubleRoomPrice contains the Double Room price of the season.
+     * @param juniorSuitePrice contains the Junior Suite price of the season.
+     * @param suitePrice contains the Suite price of the season.
+     */
     @Transactional
     @Override
     public void createSeason(String name, LocalDate startDate, LocalDate endDate,
