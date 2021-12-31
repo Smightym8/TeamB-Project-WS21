@@ -181,5 +181,26 @@ public class SeasonCreationServiceTests {
         assertEquals(doubleRoomPriceExpected.getRoomCategory().getDescription().description(), doubleRoomPriceActual.getRoomCategory().getDescription().description());
         assertEquals(doubleRoomPriceExpected.getRoomCategory()., doubleRoomPriceActual.getRoomCategory().getRoomCategoryName().name());
 
+        assertEquals(juniorSuitePriceExpected.getPrice(), juniorSuitePriceActual.getPrice());
+        assertEquals(juniorSuitePriceExpected.getRoomCategoryPriceId().id(), juniorSuitePriceActual.getRoomCategoryPriceId().id());
+        assertEquals(juniorSuitePriceExpected.getSeason().getSeasonName(), juniorSuitePriceActual.getSeason().getSeasonName());
+        assertEquals(juniorSuitePriceExpected.getSeason().getStartDate(), juniorSuitePriceActual.getSeason().getStartDate());
+        assertEquals(juniorSuitePriceExpected.getSeason().getEndDate(), juniorSuitePriceActual.getSeason().getEndDate());
+        assertEquals(juniorSuitePriceExpected.getRoomCategory().getRoomCategoryId().id(), juniorSuitePriceActual.getRoomCategory().getRoomCategoryId().id());
+        assertEquals(juniorSuitePriceExpected.getRoomCategory().getRoomCategoryName().name(), juniorSuitePriceActual.getRoomCategory().getRoomCategoryName().name());
+        assertEquals(juniorSuitePriceExpected.getRoomCategory().getDescription().description(), juniorSuitePriceActual.getRoomCategory().getDescription().description());
+        assertEquals(juniorSuitePriceExpected.getRoomCategory()., juniorSuitePriceActual.getRoomCategory().getRoomCategoryName().name());
+
+        assertEquals(suitePriceExpected.getPrice(), suitePriceActual.getPrice());
+        assertEquals(suitePriceExpected.getRoomCategoryPriceId().id(), suitePriceActual.getRoomCategoryPriceId().id());
+        assertEquals(suitePriceExpected.getSeason().getSeasonName(), suitePriceActual.getSeason().getSeasonName());
+        assertEquals(suitePriceExpected.getSeason().getStartDate(), suitePriceActual.getSeason().getStartDate());
+        assertEquals(suitePriceExpected.getSeason().getEndDate(), suitePriceActual.getSeason().getEndDate());
+        assertEquals(suitePriceExpected.getRoomCategory().getRoomCategoryId().id(), suitePriceActual.getRoomCategory().getRoomCategoryId().id());
+        assertEquals(suitePriceExpected.getRoomCategory().getRoomCategoryName().name(), suitePriceActual.getRoomCategory().getRoomCategoryName().name());
+        assertEquals(suitePriceExpected.getRoomCategory().getDescription().description(), suitePriceActual.getRoomCategory().getDescription().description());
+        assertEquals(suitePriceExpected.getRoomCategory()., suitePriceActual.getRoomCategory().getRoomCategoryName().name());
+
+
     }
 }
