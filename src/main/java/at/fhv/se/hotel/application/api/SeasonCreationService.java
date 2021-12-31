@@ -1,5 +1,6 @@
 package at.fhv.se.hotel.application.api;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -12,7 +13,9 @@ import at.fhv.se.hotel.application.impl.SeasonCreationServiceImpl;
 public interface SeasonCreationService {
     /**
      * See implementation
-     * {@link SeasonCreationServiceImpl#createSeason(String, LocalDate, LocalDate)}.
+     * {@link SeasonCreationServiceImpl#createSeason(String, LocalDate, LocalDate, BigDecimal, BigDecimal, BigDecimal, BigDecimal)}.
      */
-    void createSeason(String name, LocalDate startDate, LocalDate endDate);
+    void createSeason(String name, LocalDate startDate, LocalDate endDate,
+                      BigDecimal singleRoomPrice, BigDecimal doubleRoomPrice,
+                      BigDecimal juniorSuitePrice, BigDecimal suitePrice);
 }
