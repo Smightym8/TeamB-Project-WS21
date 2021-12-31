@@ -332,12 +332,12 @@ public class InvoiceRepositoryImplTests {
                 Stay.create(bookingsExpected.get(2), roomsExpected)
         );
 
-        List<InvoiceId> invoiceIdsExpected = List.of(
-                new InvoiceId("1337"),
-                new InvoiceId("1338"),
-                new InvoiceId("1339")
+        List<String> invoiceNumbersExpected = List.of(
+                "30112021001",
+                "30112021002",
+                "30112021003"
         );
-        String invoiceNumberExpected = "30112021001";
+
         int amountOfNightsExpected = 9;
         BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76");
         BigDecimal localTaxTotalExpected = new BigDecimal("1.52");
@@ -348,10 +348,10 @@ public class InvoiceRepositoryImplTests {
         BigDecimal totalNetAmountAfterLocalTaxExpected = new BigDecimal("201.52");
         BigDecimal totalGrossAmountExpected = new BigDecimal("301.52");
 
-        List<Invoice> invoicesExpected = invoiceIdsExpected.stream()
-                .map(id -> Invoice.create(
-                        id,
-                        invoiceNumberExpected,
+        List<Invoice> invoicesExpected = invoiceNumbersExpected.stream()
+                .map(invoiceNo -> Invoice.create(
+                        invoiceRepository.nextIdentity(),
+                        invoiceNo,
                         staysExpected.listIterator().next(),
                         categoryPricesExpected,
                         servicesExpected,
@@ -521,12 +521,12 @@ public class InvoiceRepositoryImplTests {
                 Stay.create(bookingsExpected.get(2), roomsExpected)
         );
 
-        List<InvoiceId> invoiceIdsExpected = List.of(
-                new InvoiceId("1337"),
-                new InvoiceId("1338"),
-                new InvoiceId("1339")
+        List<String> invoiceNumbersExpected = List.of(
+                "30112021001",
+                "30112021002",
+                "30112021003"
         );
-        String invoiceNumberExpected = "30112021001";
+
         int amountOfNightsExpected = 9;
         BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76");
         BigDecimal localTaxTotalExpected = new BigDecimal("1.52");
@@ -539,10 +539,10 @@ public class InvoiceRepositoryImplTests {
 
         // Invoice date is set in create method to current date
         LocalDate invoiceDateExpected = LocalDate.now();
-        List<Invoice> invoicesExpected = invoiceIdsExpected.stream()
-                .map(id -> Invoice.create(
-                        id,
-                        invoiceNumberExpected,
+        List<Invoice> invoicesExpected = invoiceNumbersExpected.stream()
+                .map(invoiceNo -> Invoice.create(
+                        invoiceRepository.nextIdentity(),
+                        invoiceNo,
                         staysExpected.listIterator().next(),
                         categoryPricesExpected,
                         servicesExpected,

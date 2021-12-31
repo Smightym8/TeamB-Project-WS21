@@ -95,5 +95,7 @@ public class GuestCreationServiceTests {
         assertEquals(zipCodeExpectedStr, guestActual.getAddress().zipCode());
         assertEquals(cityExpectedStr, guestActual.getAddress().city());
         assertEquals(countryExpectedStr, guestActual.getAddress().country());
+        assertEquals(phoneNumberExpected, guestActual.getPhoneNumber());
+        assertEquals(mailAddressExpected, guestActual.getMailAddress());
     }
 }

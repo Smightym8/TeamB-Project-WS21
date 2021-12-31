@@ -1,9 +1,12 @@
 package at.fhv.se.hotel.api;
 
 import at.fhv.se.hotel.application.api.*;
+import at.fhv.se.hotel.application.api.exception.BookingNotFoundException;
 import at.fhv.se.hotel.application.dto.*;
+import at.fhv.se.hotel.domain.model.booking.BookingId;
 import at.fhv.se.hotel.domain.model.guest.Gender;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
+import at.fhv.se.hotel.domain.repository.BookingRepository;
 import at.fhv.se.hotel.view.forms.GuestForm;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -11,9 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import javax.swing.text.html.Option;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
@@ -21,8 +27,10 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -74,6 +82,8 @@ public class ViewApiTests {
     @MockBean
     InvoiceListingService invoiceListingService;
 
+    @MockBean
+    InvoiceDownloadService invoiceDownloadService;
 
     @Test
     public void when_get_rootUrl_then_statusOk_and_homeView_and_allBookings_and_allStays_called() throws Exception {
@@ -825,6 +835,24 @@ public class ViewApiTests {
 
         // then
         Mockito.verify(checkOutService, times(1)).checkOut(stayIdExpected, roomNamesExpected, action);
+    }
+
+    @Test
+    public void when_invoiceDownloadUrl_then_statusOk_and_invoiceDownloadService_called() throws Exception {
+        // given
+        String invoiceNo = "20211220";
+        // Use String as fake byte array
+        ByteArrayResource byteArrayResource = new ByteArrayResource(invoiceNo.getBytes(StandardCharsets.UTF_8));
+
+        Mockito.when(invoiceDownloadService.download(invoiceNo)).thenReturn(byteArrayResource);
+
+        // when
+        this.mockMvc.perform(get("/download-invoice/" + invoiceNo)
+                .accept(org.springframework.http.MediaType.APPLICATION_PDF))
+                .andExpect(status().isOk());
+
+        // then
+        Mockito.verify(invoiceDownloadService, times(1)).download(invoiceNo);
     }
 
     @Test

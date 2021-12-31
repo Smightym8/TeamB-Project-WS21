@@ -32,19 +32,19 @@ public class SeasonRepositoryImplTests {
         // given
         List<Season> seasonsExpected = List.of(
                 Season.create(
-                        new SeasonId("1"),
+                        seasonRepository.nextIdentity(),
                         new SeasonName("Winter"),
                         LocalDate.of(2021, 12, 1),
                         LocalDate.of(2022, 1, 31)
                 ),
                 Season.create(
-                        new SeasonId("2"),
+                        seasonRepository.nextIdentity(),
                         new SeasonName("Spring"),
                         LocalDate.of(2022, 2, 1),
                         LocalDate.of(2022, 5, 31)
                 ),
                 Season.create(
-                        new SeasonId("3"),
+                        seasonRepository.nextIdentity(),
                         new SeasonName("Fall"),
                         LocalDate.of(2022, 6, 1),
                         LocalDate.of(2022, 11, 30)

@@ -1,6 +1,7 @@
 package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.InvoiceListingService;
+import at.fhv.se.hotel.application.dto.InvoiceDTO;
 import at.fhv.se.hotel.application.dto.InvoiceListingDTO;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
@@ -34,6 +35,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public class InvoiceListingServiceTests {
@@ -209,5 +211,18 @@ public class InvoiceListingServiceTests {
 
         // then
         assertEquals(invoicesExpected.size(), invoicesActual.size());
+
+        for(int i = 0; i < invoicesExpected.size(); i++) {
+            assertEquals(invoicesExpected.get(i).getInvoiceId().id(), invoicesActual.get(i).id());
+            assertEquals(invoicesExpected.get(i).getInvoiceNumber(), invoicesActual.get(i).invoiceNumber());
+            assertEquals(invoicesExpected.get(i).getStay().getGuest().getName().firstName(), invoicesActual.get(i).guestFirstName());
+            assertEquals(invoicesExpected.get(i).getStay().getGuest().getName().lastName(), invoicesActual.get(i).guestLastName());
+            assertEquals(invoicesExpected.get(i).getStay().getGuest().getAddress().streetName(), invoicesActual.get(i).streetName());
+            assertEquals(invoicesExpected.get(i).getStay().getGuest().getAddress().streetNumber(), invoicesActual.get(i).streetNumber());
+            assertEquals(invoicesExpected.get(i).getStay().getGuest().getAddress().zipCode(), invoicesActual.get(i).zipCode());
+            assertEquals(invoicesExpected.get(i).getStay().getGuest().getAddress().city(), invoicesActual.get(i).city());
+            assertEquals(invoicesExpected.get(i).getTotalGrossAmount(), new BigDecimal(invoicesActual.get(i).totalGrossAmount()));
+            assertEquals(invoicesExpected.get(i).isPaid(), invoicesActual.get(i).isPaid());
+        }
     }
 }

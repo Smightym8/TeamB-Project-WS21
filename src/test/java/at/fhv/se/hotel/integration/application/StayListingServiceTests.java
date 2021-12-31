@@ -121,10 +121,17 @@ public class StayListingServiceTests {
 
         // then
         assertEquals(staysExpected.size(),staysActual.size());
-        for (int i = 0; i < staysActual.size(); i++){
+        for (int i = 0; i < staysExpected.size(); i++){
+            assertEquals(staysExpected.get(i).getStayId().id(), staysActual.get(i).id());
             assertEquals(staysExpected.get(i).getBooking().getGuest().getName().firstName(), staysActual.get(i).guestFirstName());
             assertEquals(staysExpected.get(i).getBooking().getGuest().getName().lastName(), staysActual.get(i).guestLastName());
             assertEquals(staysExpected.get(i).getBooking().getCheckOutDate(), staysActual.get(i).checkOutDate());
+            assertEquals(staysExpected.get(i).isActive(), staysActual.get(i).isActive());
+            assertEquals(
+                    staysExpected.get(i).getBooking().getAmountOfAdults() + staysExpected.get(i).getBooking().getAmountOfChildren(),
+                    staysActual.get(i).amountOfPersons()
+            );
+            assertEquals(staysExpected.get(i).getRooms().size(), staysActual.get(i).rooms().size());
         }
     }
 }

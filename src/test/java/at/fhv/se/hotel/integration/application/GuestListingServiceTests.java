@@ -106,6 +106,8 @@ public class GuestListingServiceTests {
         assertEquals(guestExpected.getAddress().streetName(), guestActual.streetName());
         assertEquals(guestExpected.getAddress().streetNumber(), guestActual.streetNumber());
         assertEquals(guestExpected.getAddress().zipCode(), guestActual.zipCode());
+        assertEquals(guestExpected.getPhoneNumber(), guestActual.phoneNumber());
+        assertEquals(guestExpected.getMailAddress(), guestActual.mailAddress());
     }
 
     @Test

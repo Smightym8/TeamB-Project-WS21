@@ -35,11 +35,4 @@ public class HibernateStayRepository implements StayRepository {
         query.setParameter("stayId", stayId);
         return query.getResultList().stream().findFirst();
     }
-
-    @Override
-    public List<Stay> stayByCheckout(LocalDate checkOutDate) {
-        TypedQuery<Stay> query = this.em.createQuery("FROM Stay AS s WHERE s.booking.checkOutDate = :checkOutDate", Stay.class);
-        query.setParameter("checkOutDate", checkOutDate);
-        return query.getResultList();
-    }
 }
