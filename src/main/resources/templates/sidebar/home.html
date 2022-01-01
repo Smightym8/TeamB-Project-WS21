@@ -18,7 +18,7 @@
         <input type="hidden" id="min-date">
         <input type="hidden" id="max-date">
 
-        <div style="width: 50%; float: left" class="pe-4">
+        <div id="checkInTable" class="pe-4">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span class="h4">Upcoming check-ins</span>
@@ -60,7 +60,7 @@
             </div>
         </div>
 
-        <div style="width: 50%; float: right" class="ps-4">
+        <div class="pe-4">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span class="h4">Upcoming check-outs</span>
@@ -136,8 +136,8 @@
             });
 
             // table initial filtration
-            filter('1','All');
-            filter('2','All');
+            filter('1','Today');
+            filter('2','Today');
 
             // add icon to searchbars
             var searchLabels = document.getElementsByTagName('label');
