@@ -40,4 +40,4 @@ out/
 .DS_Store
 
 ### PDF Files ###
-resources/static/invoices/pdf/*
+src/main/resources/static/invoices/pdf/*
