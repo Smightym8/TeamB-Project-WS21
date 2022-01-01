@@ -8,6 +8,7 @@ import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
 import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory;
 import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.repository.BookingRepository;
@@ -78,7 +79,7 @@ public class CheckInServiceImpl implements CheckInService {
 
         Map<Room, Boolean> assignedRooms = new HashMap<>();
         for(RoomDTO r : rooms) {
-            Room room = roomRepository.roomByName(r.name()).orElseThrow(
+            Room room = roomRepository.roomByName(new RoomName(r.name())).orElseThrow(
                     () -> new RoomNotFoundException("Room with name " + r.name() + " not found")
             );
             assignedRooms.put(room, false);

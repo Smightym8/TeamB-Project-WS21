@@ -47,6 +47,10 @@ public class Room {
         this.status = RoomStatus.CLEANING;
     }
 
+    public void changeStatus(RoomStatus aStatus) {
+        this.status = aStatus;
+    }
+
     @Generated
     @Override
     public boolean equals(Object o) {

@@ -223,9 +223,9 @@ public class CheckInServiceTest {
                 .collect(Collectors.toList());
 
         Mockito.when(bookingRepository.bookingById(bookingIdExpected)).thenReturn(Optional.of(bookingExpected));
-        Mockito.when(roomRepository.roomByName(roomNamesExpected.get(0))).thenReturn(Optional.ofNullable(roomsExpected.get(0)));
-        Mockito.when(roomRepository.roomByName(roomNamesExpected.get(1))).thenReturn(Optional.ofNullable(roomsExpected.get(1)));
-        Mockito.when(roomRepository.roomByName(roomNamesExpected.get(2))).thenReturn(Optional.ofNullable(roomsExpected.get(2)));
+        Mockito.when(roomRepository.roomByName(new RoomName(roomNamesExpected.get(0)))).thenReturn(Optional.ofNullable(roomsExpected.get(0)));
+        Mockito.when(roomRepository.roomByName(new RoomName(roomNamesExpected.get(1)))).thenReturn(Optional.ofNullable(roomsExpected.get(1)));
+        Mockito.when(roomRepository.roomByName(new RoomName(roomNamesExpected.get(2)))).thenReturn(Optional.ofNullable(roomsExpected.get(2)));
 
         //when
         checkInService.checkIn(bookingIdExpected.id(), roomDTOsExpected);
@@ -410,7 +410,7 @@ public class CheckInServiceTest {
                 .collect(Collectors.toList());
 
         Mockito.when(bookingRepository.bookingById(bookingIdExpected)).thenReturn(Optional.of(bookingExpected));
-        Mockito.when(roomRepository.roomByName(roomNamesExpected.get(0))).thenReturn(Optional.empty());
+        Mockito.when(roomRepository.roomByName(new RoomName(roomNamesExpected.get(0)))).thenReturn(Optional.empty());
 
         //when ... then
         Exception exception = assertThrows(RoomNotFoundException.class, () -> {

@@ -22,10 +22,6 @@
                         <i class="fas fa-door-closed fa-fw fa-lg me-4 align-middle"></i>
                         <span class="h4 align-middle">Rooms</span>
                     </div>
-                    <div>
-                        <a class="btn btn-primary" id="modify" onclick="changeState()">Modify</a>
-                        <a class="btn btn-outline-danger" id="reset" href="/rooms" hidden>Reset</a>
-                    </div>
                 </div>
                 <div class="card-body">
                     <table id="t1" class="table stripe">
@@ -43,7 +39,7 @@
                                 <td class="align-middle" th:text="${room.categoryName}"></td>
                                 <td class="align-middle" th:text="${room.roomStatus}"></td>
                                 <td class="align-middle text-nowrap">
-                                    <a class="btn btn-outline-primary btn-sm float-end">Modify</a>
+                                    <a class="btn btn-outline-primary btn-sm float-end" th:href="@{/room/{name}(name=${room.name})}">View / Modify</a>
                                 </td>
                             </tr>
                         </tbody>

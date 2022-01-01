@@ -145,7 +145,7 @@ public class InvoiceSplitServiceTest {
         // when
         Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
 
-        Mockito.when(roomRepository.roomByName("101")).thenReturn(java.util.Optional.of(roomsExpected.get(0)));
+        Mockito.when(roomRepository.roomByName(new RoomName("101"))).thenReturn(java.util.Optional.of(roomsExpected.get(0)));
 
         Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 12, 26)))
                 .thenReturn(Optional.of(winterSeason));
@@ -264,8 +264,8 @@ public class InvoiceSplitServiceTest {
         // when
         Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
 
-        Mockito.when(roomRepository.roomByName("101")).thenReturn(java.util.Optional.of(roomsExpected.get(0)));
-        Mockito.when(roomRepository.roomByName("102")).thenReturn(java.util.Optional.of(roomsExpected.get(1)));
+        Mockito.when(roomRepository.roomByName(new RoomName("101"))).thenReturn(java.util.Optional.of(roomsExpected.get(0)));
+        Mockito.when(roomRepository.roomByName(new RoomName("102"))).thenReturn(java.util.Optional.of(roomsExpected.get(1)));
 
         Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 12, 26)))
                 .thenReturn(Optional.of(winterSeason));

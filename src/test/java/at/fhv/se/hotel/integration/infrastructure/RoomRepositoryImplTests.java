@@ -83,7 +83,7 @@ public class RoomRepositoryImplTests {
         this.em.flush();
 
         // when
-        Room roomActual = roomRepository.roomByName("101").get();
+        Room roomActual = roomRepository.roomByName(new RoomName("101")).get();
 
         // then
         assertEquals(roomExpected, roomActual);

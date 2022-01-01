@@ -5,6 +5,7 @@ import at.fhv.se.hotel.application.api.exception.StayNotFoundException;
 import at.fhv.se.hotel.application.dto.InvoiceDTO;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
 import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.stay.Stay;
@@ -67,7 +68,8 @@ public class CheckOutServiceImpl implements CheckOutService {
 
         List<String> categoryNames = new ArrayList<>();
         for (String name : roomNames) {
-            categoryNames.add(roomRepository.roomByName(name).get().getRoomCategory().getRoomCategoryName().name());
+            // TODO: EXCEPTION!!!!!!
+            categoryNames.add(roomRepository.roomByName(new RoomName(name)).get().getRoomCategory().getRoomCategoryName().name());
         }
 
         Map<String, BigDecimal> roomCategoryPrices = new HashMap<>();

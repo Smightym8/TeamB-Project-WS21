@@ -2,6 +2,7 @@ package at.fhv.se.hotel.domain.services.impl;
 
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
 import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
 import at.fhv.se.hotel.domain.model.season.Season;
 import at.fhv.se.hotel.domain.model.service.Service;
@@ -83,7 +84,7 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
 
             for(String name : roomNames) {
                 // TODO: Use RoomNotFoundException
-                Room room = roomRepository.roomByName(name).get();
+                Room room = roomRepository.roomByName(new RoomName(name)).get();
 
                 RoomCategoryPrice currentCategoryPrice = roomCategoryPriceService.by(
                         room.getRoomCategory(), currentSeason.getSeasonId()

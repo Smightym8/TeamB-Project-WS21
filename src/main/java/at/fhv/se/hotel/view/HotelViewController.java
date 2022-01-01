@@ -3,9 +3,12 @@ package at.fhv.se.hotel.view;
 import at.fhv.se.hotel.application.api.*;
 import at.fhv.se.hotel.application.api.exception.*;
 import at.fhv.se.hotel.application.dto.*;
+import at.fhv.se.hotel.domain.model.room.RoomName;
+import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.view.forms.BookingForm;
 import at.fhv.se.hotel.view.forms.GuestForm;
 import at.fhv.se.hotel.view.forms.InvoiceForm;
+import at.fhv.se.hotel.view.forms.RoomForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -46,6 +50,11 @@ public class HotelViewController {
 
     private static final String INVOICES_URL = "/invoices";
     private static final String INVOICES_VIEW = "sidebar/invoices";
+
+    /*----- Modify Room -----*/
+    private static final String ROOM_URL = "/room/{name}";
+    private static final String MODIFY_ROOM_URL = "/modifyRoom";
+    private static final String MODIFY_ROOM_VIEW = "modifyRoom";
 
     /*----- Create Guest -----*/
     private static final String CREATE_GUEST_URL = "/createguest";
@@ -138,6 +147,9 @@ public class HotelViewController {
     @Autowired
     RoomListingService roomListingService;
 
+    @Autowired
+    RoomModifyService roomModifyService;
+
 
     /*--------------------------------------------------------------------------------------------------------------------*/
 
@@ -161,6 +173,38 @@ public class HotelViewController {
         model.addAttribute("rooms", rooms);
 
         return new ModelAndView(ROOMS_VIEW);
+    }
+
+    @GetMapping(ROOM_URL)
+    public ModelAndView room(@PathVariable String name, Model model) {
+        RoomDTO roomDTO;
+        try {
+            roomDTO = roomListingService.roomByName(name);
+        } catch (RoomNotFoundException e) {
+            return redirectError(e.getMessage());
+        }
+
+        RoomForm roomForm = new RoomForm(roomDTO.name(), roomDTO.categoryName(), roomDTO.roomStatus());
+        List<String> roomStates = new ArrayList<>();
+        Arrays.stream(RoomStatus.values()).forEach(status -> roomStates.add(status.name()));
+
+        model.addAttribute("roomForm", roomForm);
+        model.addAttribute("states", roomStates);
+
+        return new ModelAndView(MODIFY_ROOM_VIEW);
+    }
+
+    // TODO: Test
+    @PostMapping(MODIFY_ROOM_URL)
+    public ModelAndView modifyRoom(@ModelAttribute("roomForm") RoomForm roomForm) {
+
+        try {
+            roomModifyService.modifyStatus(roomForm.getRoomName(), roomForm.getRoomStatus());
+        } catch (RoomNotFoundException e) {
+            return redirectError(e.getMessage());
+        }
+
+        return new ModelAndView("redirect:" + ROOMS_URL);
     }
 
     /*----- Pricing -----*/

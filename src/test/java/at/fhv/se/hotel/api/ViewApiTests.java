@@ -2,6 +2,7 @@ package at.fhv.se.hotel.api;
 
 import at.fhv.se.hotel.application.api.*;
 import at.fhv.se.hotel.application.api.exception.BookingNotFoundException;
+import at.fhv.se.hotel.application.api.exception.RoomNotFoundException;
 import at.fhv.se.hotel.application.dto.*;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
 import at.fhv.se.hotel.domain.model.guest.Gender;
@@ -85,6 +86,12 @@ public class ViewApiTests {
     @MockBean
     InvoiceDownloadService invoiceDownloadService;
 
+    @MockBean
+    RoomListingService roomListingService;
+
+    @MockBean
+    RoomModifyService roomModifyService;
+
     @Test
     public void when_get_rootUrl_then_statusOk_and_homeView_and_allBookings_and_allStays_called() throws Exception {
         // when ... then
@@ -100,13 +107,65 @@ public class ViewApiTests {
     }
 
     @Test
-    public void when_get_roomsUrl_then_statusOk_and_roomsView_called() throws Exception {
+    public void when_get_roomsUrl_then_statusOk_and_roomsView_and_roomListingService_called() throws Exception {
         // when ... then
         this.mockMvc.perform(get("/rooms").accept(org.springframework.http.MediaType.TEXT_PLAIN))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("text/html;charset=UTF-8"))
                 .andExpect(view().name("sidebar/rooms"));
+
+        // then
+        Mockito.verify(roomListingService, times(1)).allRooms();
+    }
+
+    @Test
+    public void when_get_roomUrl_then_statusOk_and_modifyRoomView_and_roomListingService_called() throws Exception {
+        // given
+        String roomName = "100";
+        RoomDTO roomDTO = RoomDTO.builder()
+                .withName(roomName)
+                .withStatus("Free")
+                .withCategory("Single Room")
+                .build();
+
+        Mockito.when(roomListingService.roomByName(roomName)).thenReturn(roomDTO);
+
+        // when
+        this.mockMvc.perform(get("/room/" + roomName).accept(org.springframework.http.MediaType.TEXT_PLAIN))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(view().name("modifyRoom"));
+
+        // then
+        Mockito.verify(roomListingService, times(1)).roomByName(roomName);
+    }
+
+    @Test
+    public void when_post_modifyRoomUrl_then_statusRedirect_and_redirectToRoomsView_and_roomModifyService_called() throws Exception {
+        // given
+        String roomName = "100";
+        String roomStatus = "Free";
+        String roomCategory = "Single Room";
+
+        Mockito.doNothing().when(roomModifyService).modifyStatus(roomName, roomStatus);
+
+        // when
+        this.mockMvc.perform(post("/modifyRoom")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .content(buildUrlEncodedFormEntity(
+                                "roomName", roomName,
+                                "roomStatus", roomStatus,
+                                "roomCategory", roomCategory
+                        ))
+                        .accept(org.springframework.http.MediaType.TEXT_PLAIN))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/rooms"));
+
+        // then
+        Mockito.verify(roomModifyService, times(1)).modifyStatus(roomName, roomStatus);
     }
 
     @Test
@@ -195,20 +254,6 @@ public class ViewApiTests {
         String countryExpected = "Austria";
         int discountInPercentExpected = 0;
 
-        GuestForm guestForm = new GuestForm();
-        guestForm.setFirstName(firstNameExpected);
-        guestForm.setLastName(lastNameExpected);
-        guestForm.setGender(genderExpected.name());
-        guestForm.seteMail(emailExpected);
-        guestForm.setPhoneNumber(phoneNumberExpected);
-        guestForm.setBirthDate(birthDateExpected);
-        guestForm.setStreetName(streetNameExpected);
-        guestForm.setStreetNumber(streetNumberExpected);
-        guestForm.setZipCode(zipCodeExpected);
-        guestForm.setCity(cityExpected);
-        guestForm.setCountry(countryExpected);
-        guestForm.setDiscountInPercent(discountInPercentExpected);
-
         // when ... then
         this.mockMvc.perform(post("/createguest")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -266,39 +311,15 @@ public class ViewApiTests {
                         ))
                         .accept(org.springframework.http.MediaType.TEXT_PLAIN))
                 .andDo(print())
-                //.andExpect(content().contentType("text/html;charset=UTF-8"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("createGuest"));
     }
 
     @Test
-    public void when_get_createBookingGuestUrl_then_statusOk_and_createBookingGuestView_and_allGuests_called()
-            throws Exception {
+    public void when_get_createBookingDateUrl_then_statusOk_and_createBookingDateView_called() throws Exception {
         // when ... then
-        this.mockMvc.perform(get("/createbooking/guest").accept(org.springframework.http.MediaType.TEXT_PLAIN))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().contentType("text/html;charset=UTF-8"))
-                .andExpect(view().name("booking/createBookingGuest"));
-
-        // then
-        Mockito.verify(guestListingService, times(1)).allGuests();
-    }
-
-    @Test
-    public void when_post_createBookingDateUrl_then_statusOk_and_createBookingDateView_called() throws Exception {
-        // given
-        String guestIdExpected = "1";
-        String amountOfAdultsExpected = "2";
-
-        // when ... then
-        this.mockMvc.perform(post("/createbooking/date")
-                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                        .content(buildUrlEncodedFormEntity(
-                                "guestId", guestIdExpected,
-                                "amountOfAdults", amountOfAdultsExpected
-                        ))
-                        .accept(org.springframework.http.MediaType.TEXT_PLAIN))
+        this.mockMvc.perform(get("/createbooking/date")
+                .accept(org.springframework.http.MediaType.TEXT_PLAIN))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("text/html;charset=UTF-8"))
@@ -309,8 +330,6 @@ public class ViewApiTests {
     public void when_post_createBookingCategoryUrl_then_statusOk_and_createBookingCategoryView_and_allRoomCategories_called()
             throws Exception {
         // given
-        String guestIdExpected = "1";
-        String amountOfAdultsExpected = "2";
         LocalDate checkInDateExpected = LocalDate.of(2021, 8, 1);
         LocalDate checkOutDateExpected = LocalDate.of(2021, 8, 10);
 
@@ -318,8 +337,6 @@ public class ViewApiTests {
         this.mockMvc.perform(post("/createbooking/category")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .content(buildUrlEncodedFormEntity(
-                                "guestId", guestIdExpected,
-                                "amountOfAdults", amountOfAdultsExpected,
                                 "checkInDate", String.valueOf(checkInDateExpected),
                                 "checkOutDate", String.valueOf(checkOutDateExpected)
                         ))
@@ -337,22 +354,18 @@ public class ViewApiTests {
     public void when_post_createBookingServiceUrl_then_statusOk_and_createBookingServiceView_and_allServices_called()
             throws Exception {
         // given
-        String guestIdExpected = "1";
-        String amountOfAdultsExpected = "2";
         LocalDate checkInDateExpected = LocalDate.of(2021, 8, 1);
         LocalDate checkOutDateExpected = LocalDate.of(2021, 8, 10);
-        String roomCategoryIdsExoected = "1,2";
+        String roomCategoryIdsExpected = "1,2";
         String amountsOfRoomCategoriesExpected = "2,0";
 
         // when ... then
         this.mockMvc.perform(post("/createbooking/service")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .content(buildUrlEncodedFormEntity(
-                                "guestId", guestIdExpected,
-                                "amountOfAdults", amountOfAdultsExpected,
                                 "checkInDate", String.valueOf(checkInDateExpected),
                                 "checkOutDate", String.valueOf(checkOutDateExpected),
-                                "roomCategoryIds", roomCategoryIdsExoected,
+                                "roomCategoryIds", roomCategoryIdsExpected,
                                 "amountsOfRoomCategories", amountsOfRoomCategoriesExpected
                         ))
                         .accept(org.springframework.http.MediaType.TEXT_PLAIN))
@@ -363,6 +376,38 @@ public class ViewApiTests {
 
         // then
         Mockito.verify(serviceListingService, times(1)).allServices();
+    }
+
+    @Test
+    public void when_post_createBookingGuestUrl_then_statusOk_and_createBookingGuestView_and_allGuests_called()
+            throws Exception {
+        // given
+        LocalDate checkInDateExpected = LocalDate.of(2021, 8, 1);
+        LocalDate checkOutDateExpected = LocalDate.of(2021, 8, 10);
+        String roomCategoryIds = "1,2";
+        String amountsOfRoomCategories = "2,0";
+        String serviceIds = "1,2";
+        String additionalInformation = "Vegan";
+
+        // when ... then
+        this.mockMvc.perform(post("/createbooking/guest")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .content(buildUrlEncodedFormEntity(
+                                "checkInDate", String.valueOf(checkInDateExpected),
+                                "checkOutDate", String.valueOf(checkOutDateExpected),
+                                "roomCategoryIds", roomCategoryIds,
+                                "amountsOfRoomCategories", amountsOfRoomCategories,
+                                "serviceIds", serviceIds,
+                                "additionalInformation", additionalInformation
+                        ))
+                        .accept(org.springframework.http.MediaType.TEXT_PLAIN))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("text/html;charset=UTF-8"))
+                .andExpect(view().name("booking/createBookingGuest"));
+
+        // then
+        Mockito.verify(guestListingService, times(1)).allGuests();
     }
 
     @Test
@@ -395,6 +440,11 @@ public class ViewApiTests {
                 .withGuestId(guestId)
                 .withGuestFirstName("John")
                 .withGuestLastName("Doe")
+                .withStreetName("Street")
+                .withStreetNumber("42")
+                .withZipCode("6850")
+                .withCity("Dornbirn")
+                .withCountry("Austria")
                 .withRoomCategoriesAndAmounts(categoriesWithAmounts)
                 .withServices(services)
                 .withCheckInDate(checkInDate)
@@ -534,6 +584,11 @@ public class ViewApiTests {
                 .withBookingId(bookingId)
                 .withGuestFirstName("John")
                 .withGuestLastName("Doe")
+                .withStreetName("Street")
+                .withStreetNumber("42")
+                .withZipCode("6850")
+                .withCity("Dornbirn")
+                .withCountry("Austria")
                 .withRoomCategoriesAndAmounts(categoriesWithAmounts)
                 .withCategoryIds(List.of("1"))
                 .withServices(services)
@@ -584,6 +639,11 @@ public class ViewApiTests {
                 .withBookingId(bookingId)
                 .withGuestFirstName("John")
                 .withGuestLastName("Doe")
+                .withStreetName("Street")
+                .withStreetNumber("42")
+                .withZipCode("6850")
+                .withCity("Dornbirn")
+                .withCountry("Austria")
                 .withRoomCategoriesAndAmounts(categoriesWithAmounts)
                 .withServices(services)
                 .withCheckInDate(checkInDate)
@@ -621,10 +681,10 @@ public class ViewApiTests {
     }
 
     @Test
-    public void when_get_checkInUrl_with_isCheckInFalse_then_statusOk_and_checkInView_and_checkInService_called() throws Exception {
+    public void when_get_checkInUrl_with_isCheckedInFalse_then_statusOk_and_checkInView_and_checkInService_called() throws Exception {
         // given
         String bookingIdExpected = "1";
-        String isCheckInExpected = "false";
+        String isCheckedInExpected = "false";
 
         List<RoomDTO> roomDTOsExpected = List.of(
                 RoomDTO.builder()
@@ -639,7 +699,7 @@ public class ViewApiTests {
         // when ... then
         this.mockMvc.perform(get("/check-in")
                 .param("bookingId", bookingIdExpected)
-                .param("isCheckIn", isCheckInExpected)
+                .param("isCheckedIn", isCheckedInExpected)
                 .accept(org.springframework.http.MediaType.TEXT_PLAIN))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -652,10 +712,10 @@ public class ViewApiTests {
     }
 
     @Test
-    public void when_get_checkInUrl_with_isCheckInTrue_then_statusOk_and_checkInView_and_checkInService_called() throws Exception {
+    public void when_get_checkInUrl_with_isCheckedInTrue_then_statusOk_and_checkInView_and_checkInService_called() throws Exception {
         // given
         String bookingIdExpected = "1";
-        String isCheckInExpected = "true";
+        String isCheckedInExpected = "true";
 
         List<RoomDTO> roomDTOsExpected = List.of(
                 RoomDTO.builder()
@@ -671,7 +731,7 @@ public class ViewApiTests {
         // when ... then
         this.mockMvc.perform(get("/check-in")
                         .param("bookingId", bookingIdExpected)
-                        .param("isCheckIn", isCheckInExpected)
+                        .param("isCheckedIn", isCheckedInExpected)
                         .accept(org.springframework.http.MediaType.TEXT_PLAIN))
                 .andDo(print())
                 .andExpect(status().isOk())

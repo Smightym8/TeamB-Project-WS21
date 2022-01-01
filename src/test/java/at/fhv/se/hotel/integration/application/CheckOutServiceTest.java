@@ -151,7 +151,7 @@ public class CheckOutServiceTest {
 
         Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
         Mockito.when(stayRepository.stayById(idExpected)).thenReturn(Optional.of(stayExpected));
-        Mockito.when(roomRepository.roomByName(roomNameExpected)).thenReturn(Optional.of(roomsExpectedList.get(0)));
+        Mockito.when(roomRepository.roomByName(new RoomName(roomNameExpected))).thenReturn(Optional.of(roomsExpectedList.get(0)));
 
         Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 1)))
                 .thenReturn(Optional.of(summerSeason));
@@ -280,7 +280,7 @@ public class CheckOutServiceTest {
 
         Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
         Mockito.when(stayRepository.stayById(idExpected)).thenReturn(Optional.of(stayExpected));
-        Mockito.when(roomRepository.roomByName(roomNamesExpected.get(0))).thenReturn(Optional.of(roomsExpectedList.get(0)));
+        Mockito.when(roomRepository.roomByName(new RoomName(roomNamesExpected.get(0)))).thenReturn(Optional.of(roomsExpectedList.get(0)));
 
         Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 1)))
                 .thenReturn(Optional.of(summerSeason));
@@ -394,7 +394,7 @@ public class CheckOutServiceTest {
 
         Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
         Mockito.when(stayRepository.stayById(idExpected)).thenReturn(Optional.of(stayExpected));
-        Mockito.when(roomRepository.roomByName(roomNameExpected)).thenReturn(Optional.of(roomsExpectedList.get(0)));
+        Mockito.when(roomRepository.roomByName(new RoomName(roomNameExpected))).thenReturn(Optional.of(roomsExpectedList.get(0)));
 
         Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 1)))
                 .thenReturn(Optional.of(summerSeason));
