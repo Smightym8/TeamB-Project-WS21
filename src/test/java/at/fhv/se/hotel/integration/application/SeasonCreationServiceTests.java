@@ -95,7 +95,7 @@ public class SeasonCreationServiceTests {
         RoomCategoryPrice singleRoomPriceExpected = RoomCategoryPrice.create(
                 singleRoomPriceIdExpected,
                 seasonExpected,
-                roomCategoryRepository.roomCategoryByName(new RoomCategoryName("Single Room")).get(),
+                singleRoomExpected,
                 singleRoomPriceExpectedBigDecimal
         );
 
@@ -103,7 +103,7 @@ public class SeasonCreationServiceTests {
         RoomCategoryPrice doubleRoomPriceExpected = RoomCategoryPrice.create(
                 doubleRoomPriceIdExpected,
                 seasonExpected,
-                roomCategoryRepository.roomCategoryByName(new RoomCategoryName("Double Room")).get(),
+                doubleRoomExpected,
                 doubleRoomPriceExpectedBigDecimal
         );
 
@@ -111,7 +111,7 @@ public class SeasonCreationServiceTests {
         RoomCategoryPrice juniorSuitePriceExpected = RoomCategoryPrice.create(
                 juniorSuitePriceIdExpected,
                 seasonExpected,
-                roomCategoryRepository.roomCategoryByName(new RoomCategoryName("Junior Suite")).get(),
+               juniorSuiteExpected,
                 juniorSuitePriceExpectedBigDecimal
         );
 
@@ -119,17 +119,11 @@ public class SeasonCreationServiceTests {
         RoomCategoryPrice suitePriceExpected = RoomCategoryPrice.create(
                 suitePriceIdExpected,
                 seasonExpected,
-                roomCategoryRepository.roomCategoryByName(new RoomCategoryName("Suite")).get(),
+                suiteExpected,
                 suitePriceExpectedBigDecimal
         );
 
         Mockito.when(seasonRepository.nextIdentity()).thenReturn(seasonIdExpected);
-
-        Mockito.doNothing().when(seasonRepository).add(seasonExpected);
-        Mockito.doNothing().when(roomCategoryPriceRepository).add(singleRoomPriceExpected);
-        Mockito.doNothing().when(roomCategoryPriceRepository).add(doubleRoomPriceExpected);
-        Mockito.doNothing().when(roomCategoryPriceRepository).add(juniorSuitePriceExpected);
-        Mockito.doNothing().when(roomCategoryPriceRepository).add(suitePriceExpected);
 
         Mockito.when(roomCategoryPriceRepository.priceBySeasonAndCategory(seasonIdExpected, singleRoomExpected.getRoomCategoryId()))
                 .thenReturn(Optional.of(singleRoomPriceExpected));
@@ -150,6 +144,7 @@ public class SeasonCreationServiceTests {
                 juniorSuitePriceExpectedBigDecimal,
                 suitePriceExpectedBigDecimal
         );
+
         ArgumentCaptor<Season> seasonCaptor = ArgumentCaptor.forClass(Season.class);
         Mockito.verify(seasonRepository).add(seasonCaptor.capture());
         Season seasonActual = seasonCaptor.getValue();
@@ -204,7 +199,5 @@ public class SeasonCreationServiceTests {
         assertEquals(suitePriceExpected.getRoomCategory().getRoomCategoryName().name(), suitePriceActual.getRoomCategory().getRoomCategoryName().name());
         assertEquals(suitePriceExpected.getRoomCategory().getDescription().description(), suitePriceActual.getRoomCategory().getDescription().description());
         assertEquals(suitePriceExpected.getRoomCategory().getRoomCategoryName().name(), suitePriceActual.getRoomCategory().getRoomCategoryName().name());
-
-
     }
 }
