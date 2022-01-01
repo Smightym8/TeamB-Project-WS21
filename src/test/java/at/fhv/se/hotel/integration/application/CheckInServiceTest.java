@@ -10,6 +10,7 @@ import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory;
 import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategoryId;
 import at.fhv.se.hotel.domain.model.guest.*;
 import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.Description;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
@@ -102,7 +103,7 @@ public class CheckInServiceTest {
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
         List<Room> roomsExpected = roomNamesExpected.stream()
-                .map(name -> Room.create(name, roomStatusExpected, roomCategoryExpected))
+                .map(name -> Room.create(new RoomName(name), roomStatusExpected, roomCategoryExpected))
                 .collect(Collectors.toList());
 
         bookingExpected.addRoomCategory(roomCategoryExpected, 3);
@@ -210,13 +211,14 @@ public class CheckInServiceTest {
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
         List<Room> roomsExpected = roomNamesExpected.stream()
-                .map(name -> Room.create(name, roomStatusExpected, roomCategoryExpected))
+                .map(name -> Room.create(new RoomName(name), roomStatusExpected, roomCategoryExpected))
                 .collect(Collectors.toList());
 
         List<RoomDTO> roomDTOsExpected = roomsExpected.stream()
                 .map(room -> RoomDTO.builder()
-                                .withName(room.getName())
+                                .withName(room.getName().name())
                                 .withCategory(room.getRoomCategory().getRoomCategoryName().name())
+                                .withStatus(RoomStatus.FREE.name())
                                 .build())
                 .collect(Collectors.toList());
 
@@ -305,13 +307,14 @@ public class CheckInServiceTest {
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
         List<Room> roomsExpected = roomNamesExpected.stream()
-                .map(name -> Room.create(name, roomStatusExpected, roomCategoryExpected))
+                .map(name -> Room.create(new RoomName(name), roomStatusExpected, roomCategoryExpected))
                 .collect(Collectors.toList());
 
         List<RoomDTO> roomDTOsExpected = roomsExpected.stream()
                 .map(room -> RoomDTO.builder()
-                        .withName(room.getName())
+                        .withName(room.getName().name())
                         .withCategory(room.getRoomCategory().getRoomCategoryName().name())
+                        .withStatus(RoomStatus.FREE.name())
                         .build())
                 .collect(Collectors.toList());
 
@@ -395,13 +398,14 @@ public class CheckInServiceTest {
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
         List<Room> roomsExpected = roomNamesExpected.stream()
-                .map(name -> Room.create(name, roomStatusExpected, roomCategoryExpected))
+                .map(name -> Room.create(new RoomName(name), roomStatusExpected, roomCategoryExpected))
                 .collect(Collectors.toList());
 
         List<RoomDTO> roomDTOsExpected = roomsExpected.stream()
                 .map(room -> RoomDTO.builder()
-                        .withName(room.getName())
+                        .withName(room.getName().name())
                         .withCategory(room.getRoomCategory().getRoomCategoryName().name())
+                        .withStatus(RoomStatus.FREE.name())
                         .build())
                 .collect(Collectors.toList());
 

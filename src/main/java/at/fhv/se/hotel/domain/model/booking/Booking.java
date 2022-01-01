@@ -14,6 +14,7 @@ import java.util.Objects;
 // TODO: Test
 public class Booking {
     // Required by hibernate
+    @SuppressWarnings("unused")
     private Long id;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
@@ -27,6 +28,7 @@ public class Booking {
     private String additionalInformation;
 
     // Required by hibernate
+    @SuppressWarnings("unused")
     protected Booking() {}
 
     public static Booking create(LocalDate aCheckInDate, LocalDate aCheckOutDate,

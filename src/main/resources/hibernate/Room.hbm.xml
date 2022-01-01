@@ -11,7 +11,9 @@
         </id>
 
         <!-- Primitive datatypes of class room -->
-        <property name="name" column="name" unique-key="name" type="java.lang.String" />
+        <component name="roomName" class="at.fhv.se.hotel.domain.model.room.RoomName">
+            <property name="name" column="room_name" type="java.lang.String" />
+        </component>
 
         <!-- Enum mapping -->
         <property name="status">

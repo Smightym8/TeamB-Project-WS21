@@ -6,8 +6,12 @@ import at.fhv.se.hotel.domain.model.guest.*;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
 import at.fhv.se.hotel.domain.model.invoice.InvoiceId;
 import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.*;
+import at.fhv.se.hotel.domain.model.season.Season;
+import at.fhv.se.hotel.domain.model.season.SeasonId;
+import at.fhv.se.hotel.domain.model.season.SeasonName;
 import at.fhv.se.hotel.domain.model.service.Price;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
@@ -68,17 +72,24 @@ public class InvoiceTests {
         );
         booking.addRoomCategory(category, 1);
 
+        Season summerSeason = Season.create(
+                new SeasonId("1"),
+                new SeasonName("Summer"),
+                LocalDate.of(2021, 6, 1),
+                LocalDate.of(2021, 11, 30)
+        );
+
         List<RoomCategoryPrice> categoryPricesExpected = List.of(
                 RoomCategoryPrice.create(
                         new RoomCategoryPriceId("1"),
-                        Season.SUMMER,
+                        summerSeason,
                         category,
                         new BigDecimal("300")
                 )
         );
 
         Map<Room, Boolean> rooms = Map.of(
-                Room.create("101", RoomStatus.FREE, category), false
+                Room.create(new RoomName("101"), RoomStatus.FREE, category), false
         );
 
         // when
@@ -89,10 +100,12 @@ public class InvoiceTests {
         int amountOfNightsExpected = 9;
         BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76");
         BigDecimal localTaxTotalExpected = new BigDecimal("1.52");
-        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.1");
+        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.10");
         BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("100");
-        BigDecimal totalNetAmountExpected = new BigDecimal("200");
-        BigDecimal totalGrossAmountExpected = new BigDecimal("300");
+        BigDecimal totalNetAmountBeforeDiscountExpected = new BigDecimal("200");
+        BigDecimal totalNetAmountAfterDiscountExpected = new BigDecimal("200");
+        BigDecimal totalNetAmountAfterLocalTaxExpected = new BigDecimal("201.52");
+        BigDecimal totalGrossAmountExpected = new BigDecimal("301.52");
 
         // when
         Invoice invoiceActual = Invoice.create(
@@ -106,7 +119,9 @@ public class InvoiceTests {
                 localTaxTotalExpected,
                 valueAddedTaxInPercentExpected,
                 valueAddedTaxInEuroExpected,
-                totalNetAmountExpected,
+                totalNetAmountBeforeDiscountExpected,
+                totalNetAmountAfterDiscountExpected,
+                totalNetAmountAfterLocalTaxExpected,
                 totalGrossAmountExpected
         );
 
@@ -119,7 +134,7 @@ public class InvoiceTests {
         assertEquals(localTaxTotalExpected, invoiceActual.getLocalTaxTotal());
         assertEquals(valueAddedTaxInPercentExpected, invoiceActual.getValueAddedTaxInPercent());
         assertEquals(valueAddedTaxInEuroExpected, invoiceActual.getValueAddedTaxInEuro());
-        assertEquals(totalNetAmountExpected, invoiceActual.getTotalNetAmount());
+        assertEquals(totalNetAmountBeforeDiscountExpected, invoiceActual.getTotalNetAmountBeforeDiscount());
         assertEquals(totalGrossAmountExpected, invoiceActual.getTotalGrossAmount());
     }
 

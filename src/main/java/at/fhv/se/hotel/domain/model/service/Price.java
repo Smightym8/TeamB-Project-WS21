@@ -11,6 +11,7 @@ public class Price {
     private BigDecimal price;
 
     // Required by hibernate
+    @SuppressWarnings("unused")
     private Price() {
     }
 

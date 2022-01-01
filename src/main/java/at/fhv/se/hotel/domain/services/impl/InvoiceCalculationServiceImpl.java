@@ -3,10 +3,11 @@ package at.fhv.se.hotel.domain.services.impl;
 import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
-import at.fhv.se.hotel.domain.model.roomcategory.Season;
+import at.fhv.se.hotel.domain.model.season.Season;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.repository.InvoiceRepository;
+import at.fhv.se.hotel.domain.repository.SeasonRepository;
 import at.fhv.se.hotel.domain.services.api.InvoiceCalculationService;
 import at.fhv.se.hotel.domain.services.api.RoomCategoryPriceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
     RoomCategoryPriceService roomCategoryPriceService;
 
     @Autowired
+    SeasonRepository seasonRepository;
+
+    @Autowired
     InvoiceRepository invoiceRepository;
 
     @Override
@@ -52,27 +56,34 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
         String invoiceNumber = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
                 + invoiceSuffix;
 
-        BigDecimal totalNetAmount = new BigDecimal("0");
+        BigDecimal totalNetAmountBeforeDiscount = new BigDecimal("0");
 
-        // Calculate Services
+        // Calculate amount of nights
+        int nights = Period.between(stay.getCheckInDate(), stay.getCheckOutDate()).getDays();
+
+        // Calculate Services per room per night
         List<Service> services = new ArrayList<>();
         for (Service s : stay.getServices()) {
-            totalNetAmount = totalNetAmount.add(s.getServicePrice().price());
+            totalNetAmountBeforeDiscount = totalNetAmountBeforeDiscount
+                    .add(s.getServicePrice().price()
+                            .multiply(BigDecimal.valueOf(stay.getRooms().size()))
+                            .multiply(BigDecimal.valueOf(nights)));
             services.add(s);
         }
 
         // Calculate RoomCategoryPrices
-        int nights = Period.between(stay.getCheckInDate(), stay.getCheckOutDate()).getDays();
         LocalDate tempDate = stay.getCheckInDate();
 
         for(int i = 0; i < nights; i++) {
-            Season currentSeason = Season.seasonByDate(tempDate);
+            // TODO: Throw exception if season isn't present
+            Season currentSeason = seasonRepository.seasonByDate(tempDate).get();
+
             for(BookingWithRoomCategory brc : stay.getBooking().getRoomCategories()) {
                 RoomCategoryPrice currentCategoryPrice = roomCategoryPriceService.by(
-                        brc.getRoomCategory(), currentSeason
+                        brc.getRoomCategory(), currentSeason.getSeasonId()
                 );
 
-                totalNetAmount = totalNetAmount.add(
+                totalNetAmountBeforeDiscount = totalNetAmountBeforeDiscount.add(
                         (
                                 currentCategoryPrice.getPrice()
                         ).multiply(new BigDecimal(brc.getAmount()))
@@ -86,6 +97,14 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
             tempDate = tempDate.plusDays(1);
         }
 
+        // Calculate discount
+        double discount = 1.0 - (stay.getGuest().getDiscountInPercent() / 100.0); // 1.0 - (10.0 / 100.0)
+        BigDecimal discountInvoice = BigDecimal.valueOf(discount);
+        BigDecimal totalNetAmountAfterDiscount = totalNetAmountBeforeDiscount.multiply(discountInvoice);
+
+        // Calculate vat
+        BigDecimal valueAddedTaxTotal = totalNetAmountAfterDiscount.multiply(valueAddedTaxPercentage);
+
         // Calculate local tax
         BigDecimal localTaxTotal = localTaxInEuro.multiply(
                 BigDecimal.valueOf(
@@ -93,19 +112,11 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
                 )
         );
 
-        // Calculate vat
-        BigDecimal valueAddedTaxTotal = totalNetAmount.multiply(valueAddedTaxPercentage);
-
         // Calculate total net amount
-        totalNetAmount = totalNetAmount.add(localTaxTotal);
+        BigDecimal totalNetAmountAfterLocalTax = totalNetAmountAfterDiscount.add(localTaxTotal);
 
         // Calculate total gross amount
-        BigDecimal totalGrossAmount = totalNetAmount.add(valueAddedTaxTotal);
-
-        // Calculate discount
-        double discount = 1.0 - (stay.getGuest().getDiscountInPercent() / 100.0); // 1.0 - (10.0 / 100.0)
-        BigDecimal discountInvoice = BigDecimal.valueOf(discount);
-        totalGrossAmount = totalGrossAmount.multiply(discountInvoice);
+        BigDecimal totalGrossAmount = totalNetAmountAfterLocalTax.add(valueAddedTaxTotal);
 
         return Invoice.create(
                 invoiceRepository.nextIdentity(),
@@ -114,11 +125,13 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
                 roomCategoryPriceList,
                 services,
                 nights,
-                localTaxInEuro.setScale(2, RoundingMode.CEILING),
+                localTaxInEuro,
                 localTaxTotal.setScale(2, RoundingMode.CEILING),
-                valueAddedTaxPercentage.setScale(2, RoundingMode.CEILING),
+                valueAddedTaxPercentage,
                 valueAddedTaxTotal.setScale(2, RoundingMode.CEILING),
-                totalNetAmount.setScale(2, RoundingMode.CEILING),
+                totalNetAmountBeforeDiscount.setScale(2, RoundingMode.CEILING),
+                totalNetAmountAfterDiscount.setScale(2, RoundingMode.CEILING),
+                totalNetAmountAfterLocalTax.setScale(2, RoundingMode.CEILING),
                 totalGrossAmount.setScale(2, RoundingMode.CEILING)
         );
     }

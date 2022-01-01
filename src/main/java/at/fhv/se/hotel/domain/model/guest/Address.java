@@ -14,6 +14,7 @@ public class Address {
     private String country;
 
     // Required by hibernate
+    @SuppressWarnings("unused")
     private Address(){}
 
     public Address(String aStreetName, String aStreetNumber, String aCity, String aZipCode, String aCountry) {

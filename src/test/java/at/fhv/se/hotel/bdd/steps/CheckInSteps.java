@@ -8,6 +8,7 @@ import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
 import at.fhv.se.hotel.domain.model.guest.*;
 import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.Description;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
@@ -121,7 +122,7 @@ public class CheckInSteps {
         bookingExpected.addRoomCategory(roomCategoryExpected, 1);
 
         Room roomExpected = Room.create(
-                "101",
+                new RoomName("101"),
                 RoomStatus.FREE,
                 roomCategoryExpected
         );
@@ -194,7 +195,7 @@ public class CheckInSteps {
         bookingExpected.addRoomCategory(roomCategoryExpected, 1);
 
         Room roomExpected = Room.create(
-                roomName,
+                new RoomName(roomName),
                 RoomStatus.FREE,
                 roomCategoryExpected
         );
@@ -210,7 +211,7 @@ public class CheckInSteps {
     public void iDoTheCheckIn(String bookingId, String roomName) throws BookingNotFoundException, RoomNotFoundException {
         Room room = roomRepository.roomByName(roomName).get();
         RoomDTO roomDTO = RoomDTO.builder()
-                        .withName(room.getName())
+                        .withName(room.getName().name())
                         .withCategory(room.getRoomCategory().getRoomCategoryName().name())
                         .build();
 

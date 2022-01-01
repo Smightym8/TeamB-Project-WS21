@@ -55,8 +55,9 @@ public class CheckInServiceImpl implements CheckInService {
             for(int i = 0; i < brc.getAmount(); i++) {
                 // Build dto and add it to assignedRooms
                 RoomDTO dto = RoomDTO.builder()
-                        .withName(freeRooms.get(0).getName())
+                        .withName(freeRooms.get(0).getName().name())
                         .withCategory(freeRooms.get(0).getRoomCategory().getRoomCategoryName().name())
+                        .withStatus(freeRooms.get(0).getStatus().name())
                         .build();
 
                 freeRooms.remove(0);

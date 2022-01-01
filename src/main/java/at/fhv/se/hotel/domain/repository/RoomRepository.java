@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RoomRepository {
+    List<Room> findAllRooms();
+
     Optional<Room> roomByName(String name);
 
     List<Room> roomsByCategoryAndStatus(RoomCategoryId categoryId, RoomStatus status);

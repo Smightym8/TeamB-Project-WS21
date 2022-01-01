@@ -1,6 +1,8 @@
 package at.fhv.se.hotel.infrastructure;
 
 import at.fhv.se.hotel.domain.model.roomcategory.*;
+import at.fhv.se.hotel.domain.model.season.Season;
+import at.fhv.se.hotel.domain.model.season.SeasonId;
 import at.fhv.se.hotel.domain.repository.RoomCategoryPriceRepository;
 import org.springframework.stereotype.Component;
 
@@ -26,14 +28,14 @@ public class HibernateRoomCategoryPriceRepository implements RoomCategoryPriceRe
     }
 
     @Override
-    public Optional<RoomCategoryPrice> priceBySeasonAndCategory(Season season, RoomCategoryId roomCategoryId) {
+    public Optional<RoomCategoryPrice> priceBySeasonAndCategory(SeasonId seasonId, RoomCategoryId roomCategoryId) {
         TypedQuery<RoomCategoryPrice> query = this.em.createQuery(
-                "FROM RoomCategoryPrice AS rcp WHERE rcp.season = :season " +
+                "FROM RoomCategoryPrice AS rcp WHERE rcp.season.seasonId = :seasonId " +
                         "AND rcp.roomCategory.roomCategoryId = :roomCategoryId",
                 RoomCategoryPrice.class
         );
 
-        query.setParameter("season", season);
+        query.setParameter("seasonId", seasonId);
         query.setParameter("roomCategoryId", roomCategoryId);
 
         return query.getResultStream().findFirst();

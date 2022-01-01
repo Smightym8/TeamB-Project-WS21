@@ -9,6 +9,7 @@ public class ServiceId {
     private String id;
 
     // Required by hibernate
+    @SuppressWarnings("unused")
     private ServiceId() {
     }
 

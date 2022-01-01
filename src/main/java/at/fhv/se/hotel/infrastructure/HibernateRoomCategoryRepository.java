@@ -2,6 +2,7 @@ package at.fhv.se.hotel.infrastructure;
 
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryId;
+import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryName;
 import at.fhv.se.hotel.domain.repository.RoomCategoryRepository;
 import org.springframework.stereotype.Component;
 
@@ -38,6 +39,14 @@ public class HibernateRoomCategoryRepository implements RoomCategoryRepository {
         TypedQuery<RoomCategory> query = this.em.createQuery(
                 "FROM RoomCategory AS rc WHERE rc.roomCategoryId = :roomCategoryId", RoomCategory.class);
         query.setParameter("roomCategoryId", roomCategoryId);
+        return query.getResultStream().findFirst();
+    }
+
+    @Override
+    public Optional<RoomCategory> roomCategoryByName(RoomCategoryName roomCategoryName) {
+        TypedQuery<RoomCategory> query = this.em.createQuery(
+                "FROM RoomCategory AS rc WHERE rc.roomCategoryName = :roomCategoryName", RoomCategory.class);
+        query.setParameter("roomCategoryName", roomCategoryName);
         return query.getResultStream().findFirst();
     }
 

@@ -1,6 +1,9 @@
 package at.fhv.se.hotel.integration.domain;
 
 import at.fhv.se.hotel.domain.model.roomcategory.*;
+import at.fhv.se.hotel.domain.model.season.Season;
+import at.fhv.se.hotel.domain.model.season.SeasonId;
+import at.fhv.se.hotel.domain.model.season.SeasonName;
 import at.fhv.se.hotel.domain.repository.RoomCategoryPriceRepository;
 import at.fhv.se.hotel.domain.services.api.RoomCategoryPriceService;
 import org.junit.jupiter.api.Test;
@@ -10,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -35,7 +39,12 @@ public class CategoryPriceServiceTests {
                 new Description("This is a single room")
         );
 
-        Season season = Season.WINTER;
+        Season season = Season.create(
+                new SeasonId("1"),
+                new SeasonName("Winter"),
+                LocalDate.of(2021, 12, 1),
+                LocalDate.of(2022, 1, 31)
+        );
 
         RoomCategoryPrice priceExpected = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
@@ -44,11 +53,11 @@ public class CategoryPriceServiceTests {
                 new BigDecimal("300")
         );
 
-        Mockito.when(roomCategoryPriceRepository.priceBySeasonAndCategory(season, singleRoom.getRoomCategoryId()))
+        Mockito.when(roomCategoryPriceRepository.priceBySeasonAndCategory(season.getSeasonId(), singleRoom.getRoomCategoryId()))
                 .thenReturn(Optional.of(priceExpected));
 
         // when
-        RoomCategoryPrice priceActual = roomCategoryPriceService.by(singleRoom, season);
+        RoomCategoryPrice priceActual = roomCategoryPriceService.by(singleRoom, season.getSeasonId());
 
         // then
         assertEquals(priceExpected, priceActual);

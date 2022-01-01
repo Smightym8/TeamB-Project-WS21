@@ -4,6 +4,7 @@ import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
 import at.fhv.se.hotel.domain.model.guest.*;
 import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.Description;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
@@ -111,7 +112,7 @@ public class StayRepositoryImplTests {
 
         Map<Room, Boolean> roomsExpected = Map.of(
                 Room.create(
-                        roomNameExpected,
+                        new RoomName(roomNameExpected),
                         roomStatusExpected,
                         categoriesExpected.get(0)
                 ), false
@@ -191,7 +192,7 @@ public class StayRepositoryImplTests {
 
         Map<Room, Boolean> roomsExpected = Map.of(
                 Room.create(
-                        roomNameExpected,
+                        new RoomName(roomNameExpected),
                         roomStatusExpected,
                         categoriesExpected.get(0)
                 ), false
@@ -312,25 +313,25 @@ public class StayRepositoryImplTests {
 
         Map<Room, Boolean> rooms1 = Map.of(
                 Room.create(
-                        "Room1",
+                        new RoomName("Room1"),
                         RoomStatus.FREE,
                         categoriesExpected.get(0)), false
         );
 
         Map<Room, Boolean> rooms2 = Map.of(
                 Room.create(
-                        "Room2",
+                        new RoomName("Room2"),
                         RoomStatus.FREE,
                         categoriesExpected.get(1)), false
         );
 
         Map<Room, Boolean> rooms3 = Map.of(
                 Room.create(
-                        "Room3",
+                        new RoomName("Room3"),
                         RoomStatus.FREE,
                         categoriesExpected.get(0)), false,
                 Room.create(
-                        "Room4",
+                        new RoomName("Room4"),
                         RoomStatus.FREE,
                         categoriesExpected.get(0)), false
         );

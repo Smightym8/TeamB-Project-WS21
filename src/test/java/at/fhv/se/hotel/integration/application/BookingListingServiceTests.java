@@ -169,7 +169,14 @@ public class BookingListingServiceTests {
         for(int i = 0; i < bookingsExpected.size(); i++) {
             assertEquals(bookingsExpected.get(i).getBookingId().id(), bookingsActual.get(i).id());
             assertEquals(bookingsExpected.get(i).getCheckInDate(), bookingsActual.get(i).checkInDate());
+            assertEquals(bookingsExpected.get(i).getCheckOutDate(), bookingsActual.get(i).checkOutDate());
             assertEquals(bookingsExpected.get(i).isActive(), bookingsActual.get(i).isActive());
+            assertEquals(bookingsExpected.get(i).getGuest().getAddress().city(), bookingsActual.get(i).city());
+            assertEquals(bookingsExpected.get(i).getGuest().getAddress().zipCode(), bookingsActual.get(i).zipCode());
+            assertEquals(bookingsExpected.get(i).getGuest().getAddress().streetNumber(), bookingsActual.get(i).streetNumber());
+            assertEquals(bookingsExpected.get(i).getGuest().getAddress().streetName(), bookingsActual.get(i).streetName());
+            assertEquals(bookingsExpected.get(i).getGuest().getName().firstName(), bookingsActual.get(i).guestFirstName());
+            assertEquals(bookingsExpected.get(i).getGuest().getName().lastName(), bookingsActual.get(i).guestLastName());
         }
     }
 }
