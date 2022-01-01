@@ -47,8 +47,8 @@
                                     <span class="text-nowrap" th:text="${guest.streetName} + ' ' + ${guest.streetNumber} + ', '"></span>
                                     <span class="text-nowrap" th:text="${guest.zipCode} + ' ' + ${guest.city}"></span>
                                 </td>
-                                <td class="align-middle"></td>
-                                <td class="align-middle"></td>
+                                <td class="align-middle" th:text="${guest.mailAddress}"></td>
+                                <td class="align-middle" th:text="${guest.phoneNumber}"></td>
                                 <td class="align-middle text-nowrap">
                                     <a class="btn btn-outline-primary btn-sm float-end">View / Modify</a>
                                 </td>

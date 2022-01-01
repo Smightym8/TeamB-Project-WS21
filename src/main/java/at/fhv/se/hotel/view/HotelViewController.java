@@ -135,43 +135,49 @@ public class HotelViewController {
     @Autowired
     private InvoiceDownloadService invoiceDownloadService;
 
+    @Autowired
+    RoomListingService roomListingService;
+
 
     /*--------------------------------------------------------------------------------------------------------------------*/
 
     /*----- Home -----*/
     @GetMapping(HOME_URL)
-    public String home(Model model) {
+    public ModelAndView home(Model model) {
         final List<BookingListingDTO> bookings = bookingListingService.allBookings();
         final List<StayListingDTO> stays = stayListingService.allStays();
 
         model.addAttribute("bookings", bookings);
         model.addAttribute("stays", stays);
 
-        return HOME_VIEW;
+        return new ModelAndView(HOME_VIEW);
     }
 
     /*----- Rooms -----*/
     @GetMapping(ROOMS_URL)
-    public String rooms(Model model) {
+    public ModelAndView rooms(Model model) {
+        List<RoomDTO> rooms = roomListingService.allRooms();
 
-        return ROOMS_VIEW;
+        model.addAttribute("rooms", rooms);
+
+        return new ModelAndView(ROOMS_VIEW);
     }
 
     /*----- Pricing -----*/
     @GetMapping(PRICING_URL)
-    public String pricing(Model model) {
+    public ModelAndView pricing(Model model) {
 
-        return PRICING_VIEW;
+        return new ModelAndView(PRICING_VIEW);
     }
 
     /*----- Guests -----*/
     @GetMapping(GUESTS_URL)
-    public String guests(Model model) {
+    public ModelAndView guests(Model model) {
         final List<GuestDTO> guests = guestListingService.allGuests();
 
         model.addAttribute("guests", guests);
 
-        return GUESTS_VIEW;
+        return new ModelAndView(GUESTS_VIEW);
     }
 
     /*----- Bookings -----*/

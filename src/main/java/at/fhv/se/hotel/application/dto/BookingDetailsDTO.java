@@ -11,6 +11,11 @@ public class BookingDetailsDTO {
     private String guestId;
     private String guestFirstName;
     private String guestLastName;
+    private String streetName;
+    private String streetNumber;
+    private String zipCode;
+    private String city;
+    private String country;
     private Map<String, Integer> categoriesWithAmounts;
     private List<String> categoryIds;
     private Map<String, BigDecimal> services;
@@ -39,6 +44,26 @@ public class BookingDetailsDTO {
 
     public String guestLastName() {
         return guestLastName;
+    }
+
+    public String streetName() {
+        return streetName;
+    }
+
+    public String streetNumber() {
+        return streetNumber;
+    }
+
+    public String zipCode() {
+        return zipCode;
+    }
+
+    public String city() {
+        return city;
+    }
+
+    public String country() {
+        return country;
     }
 
     public Map<String, Integer> categoriesWithAmounts() {
@@ -102,6 +127,31 @@ public class BookingDetailsDTO {
             return this;
         }
 
+        public Builder withStreetName(String streetName) {
+            this.instance.streetName = streetName;
+            return this;
+        }
+
+        public Builder withStreetNumber(String streetNumber) {
+            this.instance.streetNumber = streetNumber;
+            return this;
+        }
+
+        public Builder withZipCode(String zipCode) {
+            this.instance.zipCode = zipCode;
+            return this;
+        }
+
+        public Builder withCity(String city) {
+            this.instance.city = city;
+            return this;
+        }
+
+        public Builder withCountry(String country) {
+            this.instance.country = country;
+            return this;
+        }
+
         public Builder withRoomCategoriesAndAmounts(Map<String, Integer> categoriesWithAmounts) {
             this.instance.categoriesWithAmounts = categoriesWithAmounts;
             return this;
@@ -150,6 +200,11 @@ public class BookingDetailsDTO {
         public BookingDetailsDTO build() {
             Objects.requireNonNull(this.instance.guestFirstName, "guestFirstName must be set in BookingDetailsDTO");
             Objects.requireNonNull(this.instance.guestLastName, "guestLastName must be set in BookingDetailsDTO");
+            Objects.requireNonNull(this.instance.streetName, "streetName must be set in BookingDetailsDTO");
+            Objects.requireNonNull(this.instance.streetNumber, "streetNumber must be set in BookingDetailsDTO");
+            Objects.requireNonNull(this.instance.zipCode, "zipCode must be set in BookingDetailsDTO");
+            Objects.requireNonNull(this.instance.city, "city must be set in BookingDetailsDTO");
+            Objects.requireNonNull(this.instance.country, "country must be set in BookingDetailsDTO");
             Objects.requireNonNull(this.instance.categoriesWithAmounts,
                     "categoriesWithAmounts must be set in BookingDetailsDTO");
             Objects.requireNonNull(this.instance.checkInDate, "checkInDate must be set in BookingDetailsDTO");

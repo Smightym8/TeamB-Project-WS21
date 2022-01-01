@@ -33,32 +33,17 @@
                             <tr>
                                 <th class="col-2">Room number</th>
                                 <th class="col-2">Room category</th>
-                                <th class="col-1">State</th>
+                                <th class="col-2">State</th>
+                                <th class="col-2"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="align-middle">A404 Fake</td>
-                                <td class="align-middle">Single Room Fake</td>
-                                <td class="align-middle">
-                                    <select class="form-select roomstate" disabled>
-                                        <option value="0" selected hidden disabled>Occupied</option>
-                                        <option value="1">Not available</option>
-                                        <option value="2">Dirty</option>
-                                        <option value="3">Free</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr th:each="i : ${#numbers.sequence(0, 20)}">
-                                <td class="align-middle">S101 Fake</td>
-                                <td class="align-middle">Single Room Fake</td>
-                                <td class="align-middle">
-                                    <select class="form-select roomstate" disabled>
-                                        <option value="3" selected hidden disabled>Free</option>
-                                        <option value="1">Not available</option>
-                                        <option value="2">Dirty</option>
-                                        <option value="3">Free</option>
-                                    </select>
+                            <tr th:each="room : ${rooms}">
+                                <td class="align-middle" th:text="${room.name}"></td>
+                                <td class="align-middle" th:text="${room.categoryName}"></td>
+                                <td class="align-middle" th:text="${room.roomStatus}"></td>
+                                <td class="align-middle text-nowrap">
+                                    <a class="btn btn-outline-primary btn-sm float-end">Modify</a>
                                 </td>
                             </tr>
                         </tbody>

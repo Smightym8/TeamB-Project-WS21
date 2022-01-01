@@ -44,7 +44,7 @@
                                 <td class="align-middle">
                                     <li style="list-style: none" th:each="room : ${stay.rooms}" th:text="${room}"></li>
                                 </td>
-                                <td class="align-middle">Personenanzahl</td>
+                                <td class="align-middle" th:text="${stay.amountOfPersons}"></td>
                                 <td class="align-middle text-nowrap">
                                     <a th:href="@{/staydetails/{id}(id=${stay.id})}" class="btn btn-outline-primary btn-sm float-end">View / Check-Out</a>
                                 </td>
