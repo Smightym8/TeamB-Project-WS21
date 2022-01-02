@@ -17,6 +17,16 @@ body {
 
 }
 
+.div-width-l {
+    width: 80%;
+    margin: auto;
+}
+
+.div-width-s {
+    width: 60%;
+    margin: auto;
+}
+
 hr {
     opacity: 50%;
 }

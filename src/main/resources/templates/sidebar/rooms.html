@@ -15,45 +15,31 @@
 
     <div layout:fragment="content">
 
-        <div style="width:50%; margin: auto">
+        <div class="div-width-s">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <div>
                         <i class="fas fa-door-closed fa-fw fa-lg me-4 align-middle"></i>
                         <span class="h4 align-middle">Rooms</span>
                     </div>
-                    <div>
-                        <a class="btn btn-primary" id="modify" onclick="changeState()">Modify</a>
-                        <a class="btn btn-outline-danger" id="reset" href="/rooms" hidden>Reset</a>
-                    </div>
                 </div>
                 <div class="card-body">
                     <table id="t1" class="table stripe">
                         <thead>
                             <tr>
-                                <th class="col-2">Room number</th>
-                                <th class="col-2">Room category</th>
-                                <th class="col-2">State</th>
-                                <th class="col-2"></th>
+                                <th class="col">Number</th>
+                                <th class="col">Category</th>
+                                <th class="col">State</th>
+                                <th class="col-1"></th>
                             </tr>
                         </thead>
                         <tbody>
-<!--                            <tr th:each="room : ${rooms}">-->
-<!--                                <td class="align-middle" th:text="${room.name}"></td>-->
-<!--                                <td class="align-middle" th:text="${room.categoryName}">Single Room Fake</td>-->
-<!--                                <td class="align-middle">-->
-<!--                                    <select class="form-select roomstate" onchange="changeColor(this)" disabled>-->
-<!--                                        <option selected hidden disabled th:value="${room.roomStatus}" th:text="${room.roomStatus}"></option>-->
-<!--                                        <option style="font-weight: bold; color: #930000" value="UNAVAILABLE">UNAVAILABLE</option>-->
-<!--                                        <option style="font-weight: bold; color: #E49800" value="CLEANING">CLEANING</option>-->
-<!--                                        <option style="font-weight: bold; color: #0AA900" value="FREE">FREE</option>-->
-<!--                                    </select>-->
                             <tr th:each="room : ${rooms}">
                                 <td class="align-middle" th:text="${room.name}"></td>
                                 <td class="align-middle" th:text="${room.categoryName}"></td>
-                                <td class="align-middle" th:text="${room.roomStatus}"></td>
+                                <td class="align-middle roomstate" th:text="${room.roomStatus}"></td>
                                 <td class="align-middle text-nowrap">
-                                    <a class="btn btn-outline-primary btn-sm float-end" th:href="@{/room/{name}(name=${room.name})}">View / Modify</a>
+                                    <a class="btn btn-outline-primary btn-sm float-end" th:if="${room.roomStatus != 'OCCUPIED'}" th:href="@{/room/{name}(name=${room.name})}">Change state</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -66,11 +52,14 @@
 
             // table initialization
             let table = $('#t1').DataTable({
-                "order": [ 0, "asc" ],
+                "order": [ 2, "asc" ],
                 "scrollCollapse": true,
-                "scrollY": "78vh",
+                "scrollY": "73.5vh",
                 "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ],
                 "pageLength": -1,
+                columnDefs: [
+                    { orderable: false, targets: [3]}
+                ]
             });
 
             // add icon to searchbars
@@ -83,86 +72,22 @@
             searchLabel.insertBefore(icon, searchLabel.firstChild);
             searchLabel.childNodes[1].textContent = " ";
 
-
+            // change roomstate color
             var fields = document.getElementsByClassName('roomstate');
 
             for (var i = 0; i < fields.length; i++) {
 
-                if (fields[i].value === 'FREE') {
-
+                if (fields[i].innerText === 'FREE') {
                     fields[i].setAttribute('style', 'color: #0AA900; font-weight: bold');
 
-                } else if (fields[i].value === 'OCCUPIED') {
-
-                    fields[i].setAttribute('style', 'color: #6A6A6A; font-weight: bold');
-
-                } else if (fields[i].value === 'UNAVAILABLE') {
-
+                } else if (fields[i].innerText === 'OCCUPIED') {
                     fields[i].setAttribute('style', 'color: #930000; font-weight: bold');
 
-                } else if (fields[i].value === 'CLEANING') {
+                } else if (fields[i].innerText === 'UNAVAILABLE') {
+                    fields[i].setAttribute('style', 'color: #6A6A6A; font-weight: bold');
 
+                } else if (fields[i].innerText === 'CLEANING') {
                     fields[i].setAttribute('style', 'color: #E49800; font-weight: bold');
-
-                }
-            }
-
-
-            function changeColor(selectField) {
-
-                var optionIndex = selectField.options.selectedIndex;
-
-                if (optionIndex === 1) {
-                    selectField.setAttribute('style', 'color: #930000; font-weight: bold');
-
-                } else if (optionIndex === 2) {
-                    selectField.setAttribute('style', 'color: #E49800; font-weight: bold');
-
-                } else if (optionIndex === 3) {
-                    selectField.setAttribute('style', 'color: #0AA900; font-weight: bold');
-
-                }
-            }
-
-
-            // activate and deactivate the select fields
-            function changeState() {
-
-                var selectFields = document.getElementsByClassName('roomstate');
-                var buttonModify = document.getElementById('modify');
-                var buttonReset = document.getElementById('reset');
-
-                if (buttonModify.innerText === 'Modify') {
-
-                    for (var i = 0; i < selectFields.length; i++) {
-
-                        if (selectFields[i].value !== 'OCCUPIED') {
-                            selectFields[i].removeAttribute("disabled");
-                        }
-                    }
-
-                    buttonModify.innerText = 'Save';
-                    buttonModify.setAttribute('class', 'btn btn-outline-success');
-                    buttonModify.setAttribute('href', '#');
-
-                    buttonReset.removeAttribute('hidden');
-
-                } else {
-
-                    for (var i = 0; i < selectFields.length; i++) {
-
-                        if (selectFields[i].value !== 'OCCUPIED') {
-                            selectFields[i].setAttribute("disabled", "disabled");
-                        }
-                    }
-
-                    buttonModify.innerText = 'Modify';
-                    buttonModify.setAttribute('class', 'btn btn-primary');
-                    buttonModify.removeAttribute('href');
-
-                    buttonReset.setAttribute('hidden', 'true');
-
-                    alert("Set Href for Save Button");
                 }
             }
         </script>
