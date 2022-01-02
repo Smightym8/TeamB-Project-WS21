@@ -35,8 +35,8 @@
                             <tr>
                                 <th class="col">Guest</th>
                                 <th class="col">Address</th>
-                                <th class="col-2">Check-in</th>
-                                <th class="col-2"></th>
+                                <th class="col">Check-in</th>
+                                <th class="col"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -77,8 +77,8 @@
                             <tr>
                                 <th class="col">Room(s)</th>
                                 <th class="col">Guest</th>
-                                <th class="col-2">Check-out</th>
-                                <th class="col-2"></th>
+                                <th class="col">Check-out</th>
+                                <th class="col"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -117,10 +117,10 @@
             // table initialization
             let table1 = $('#t1').DataTable({
                 "order": [ 2, "asc" ],
-                "pageLength": -1,
                 "scrollCollapse": true,
-                "scrollY": "94vh",
+                "scrollY": "73.5vh",
                 "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ],
+                "pageLength": -1,
                 columnDefs: [
                     { orderable: false, targets: [3]}
                 ]
@@ -128,10 +128,10 @@
 
             let table2 = $('#t2').DataTable({
                 "order": [ 2, "asc" ],
-                "pageLength": -1,
                 "scrollCollapse": true,
-                "scrollY": "71vh",
+                "scrollY": "73.5vh",
                 "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ],
+                "pageLength": -1,
                 columnDefs: [
                     { orderable: false, targets: [3]}
                 ]
