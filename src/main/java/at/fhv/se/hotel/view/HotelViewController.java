@@ -3,7 +3,6 @@ package at.fhv.se.hotel.view;
 import at.fhv.se.hotel.application.api.*;
 import at.fhv.se.hotel.application.api.exception.*;
 import at.fhv.se.hotel.application.dto.*;
-import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.view.forms.BookingForm;
 import at.fhv.se.hotel.view.forms.GuestForm;
@@ -60,6 +59,11 @@ public class HotelViewController {
     private static final String CREATE_GUEST_URL = "/createguest";
     private static final String CREATE_GUEST_VIEW = "createGuest";
 
+    /*----- Modify Guest -----*/
+    private static final String GUEST_URL = "/guest/{id}";
+    private static final String MODIFY_GUEST_URL = "/modifyGuest";
+    private static final String MODIFY_GUEST_VIEW = "modifyGuest";
+
     /*----- Create Booking -----*/
     private static final String CREATE_BOOKING_GUEST_URL = "/createbooking/guest";
     private static final String CREATE_BOOKING_GUEST_VIEW = "booking/createBookingGuest";
@@ -96,7 +100,6 @@ public class HotelViewController {
     private static final String SAVE_INVOICE_URL = "/saveinvoice/{id}";
 
     /*----- Invoice Download -----*/
-    private static final String INVOICES_PATH = "src/main/resources/static/invoices/";
     private static final String INVOICE_DOWNLOAD_URL = "/download-invoice/{invoiceNo}";
 
     /*----- Error -----*/
@@ -150,6 +153,9 @@ public class HotelViewController {
     @Autowired
     RoomModifyService roomModifyService;
 
+    @Autowired
+    GuestModifyService guestModifyService;
+
 
     /*--------------------------------------------------------------------------------------------------------------------*/
 
@@ -180,24 +186,22 @@ public class HotelViewController {
         RoomDTO roomDTO;
         try {
             roomDTO = roomListingService.roomByName(name);
+
+            RoomForm roomForm = new RoomForm(roomDTO.name(), roomDTO.categoryName(), roomDTO.roomStatus());
+            List<String> roomStates = new ArrayList<>();
+            Arrays.stream(RoomStatus.values()).forEach(status -> roomStates.add(status.name()));
+
+            model.addAttribute("roomForm", roomForm);
+            model.addAttribute("states", roomStates);
         } catch (RoomNotFoundException e) {
             return redirectError(e.getMessage());
         }
 
-        RoomForm roomForm = new RoomForm(roomDTO.name(), roomDTO.categoryName(), roomDTO.roomStatus());
-        List<String> roomStates = new ArrayList<>();
-        Arrays.stream(RoomStatus.values()).forEach(status -> roomStates.add(status.name()));
-
-        model.addAttribute("roomForm", roomForm);
-        model.addAttribute("states", roomStates);
-
         return new ModelAndView(MODIFY_ROOM_VIEW);
     }
 
-    // TODO: Test
     @PostMapping(MODIFY_ROOM_URL)
     public ModelAndView modifyRoom(@ModelAttribute("roomForm") RoomForm roomForm) {
-
         try {
             roomModifyService.modifyStatus(roomForm.getRoomName(), roomForm.getRoomStatus());
         } catch (RoomNotFoundException e) {
@@ -217,7 +221,7 @@ public class HotelViewController {
     /*----- Guests -----*/
     @GetMapping(GUESTS_URL)
     public ModelAndView guests(Model model) {
-        final List<GuestDTO> guests = guestListingService.allGuests();
+        final List<GuestListingDTO> guests = guestListingService.allGuests();
 
         model.addAttribute("guests", guests);
 
@@ -262,6 +266,65 @@ public class HotelViewController {
         model.addAttribute("guest", guestForm);
 
         return CREATE_GUEST_VIEW;
+    }
+
+    /*----- Modify Guest -----*/
+    // TODO: Test
+    @GetMapping(GUEST_URL)
+    public ModelAndView guest(@PathVariable("id") String id, Model model) {
+        // Get GuestDetailsDTO and fill GuestForm with it
+        GuestDetailsDTO guest;
+        try {
+            guest = guestListingService.findGuestById(id);
+
+            GuestForm guestForm = new GuestForm(
+                    guest.id(),
+                    guest.firstName(),
+                    guest.lastName(),
+                    guest.gender(),
+                    guest.mailAddress(),
+                    guest.phoneNumber(),
+                    guest.birthDate(),
+                    guest.streetName(),
+                    guest.streetNumber(),
+                    guest.zipCode(),
+                    guest.city(),
+                    guest.country(),
+                    guest.discountInPercent()
+            );
+
+            model.addAttribute("guest", guestForm);
+        } catch (GuestNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return new ModelAndView(MODIFY_GUEST_VIEW);
+    }
+
+    // TODO: Test
+    @PostMapping(MODIFY_GUEST_URL)
+    public ModelAndView modifyGuest(@ModelAttribute("guest") GuestForm guestForm) {
+        try {
+            guestModifyService.modifyGuest(
+                    guestForm.getGuestId(),
+                    guestForm.getFirstName(),
+                    guestForm.getLastName(),
+                    guestForm.getGender(),
+                    guestForm.getStreetName(),
+                    guestForm.getStreetNumber(),
+                    guestForm.getCity(),
+                    guestForm.getZipCode(),
+                    guestForm.getCountry(),
+                    guestForm.getBirthDate(),
+                    guestForm.getPhoneNumber(),
+                    guestForm.geteMail(),
+                    guestForm.getDiscountInPercent()
+            );
+        } catch (GuestNotFoundException e) {
+            return redirectError(e.getMessage());
+        }
+
+        return new ModelAndView("redirect:" + GUESTS_URL);
     }
 
     @PostMapping(CREATE_GUEST_URL)
@@ -321,7 +384,7 @@ public class HotelViewController {
 
     @PostMapping(CREATE_BOOKING_GUEST_URL)
     public String createBookingGuest(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model) {
-        final List<GuestDTO> guests = guestListingService.allGuests();
+        final List<GuestListingDTO> guests = guestListingService.allGuests();
 
         model.addAttribute("guests", guests);
         model.addAttribute("bookingForm", bookingForm);

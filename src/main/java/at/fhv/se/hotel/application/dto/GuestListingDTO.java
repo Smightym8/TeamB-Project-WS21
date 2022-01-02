@@ -2,7 +2,7 @@ package at.fhv.se.hotel.application.dto;
 
 import java.util.Objects;
 
-public class GuestDTO {
+public class GuestListingDTO {
     private String id;
     private String firstName;
     private String lastName;
@@ -49,10 +49,10 @@ public class GuestDTO {
     }
 
     public static class Builder {
-        private final GuestDTO instance;
+        private final GuestListingDTO instance;
 
         private Builder() {
-            this.instance = new GuestDTO();
+            this.instance = new GuestListingDTO();
         }
 
         public Builder withId(String id) {
@@ -105,17 +105,17 @@ public class GuestDTO {
             return this;
         }
 
-        public GuestDTO build() {
-            Objects.requireNonNull(this.instance.id, "id must be set in GuestDTO");
-            Objects.requireNonNull(this.instance.firstName, "firstName must be set in GuestDTO");
-            Objects.requireNonNull(this.instance.lastName, "lastName must be set in GuestDTO");
-            Objects.requireNonNull(this.instance.streetName, "streetName must be set in GuestDTO");
-            Objects.requireNonNull(this.instance.streetNumber, "streetNumber must be set in GuestDTO");
-            Objects.requireNonNull(this.instance.city, "city must be set in GuestDTO");
-            Objects.requireNonNull(this.instance.zipCode, "zipCode must be set in GuestDTO");
-            Objects.requireNonNull(this.instance.country, "country must be set in GuestDTO");
-            Objects.requireNonNull(this.instance.mailAddress, "mailAddress must be set in GuestDTO");
-            Objects.requireNonNull(this.instance.phoneNumber, "phoneNumber must be set in GuestDTO");
+        public GuestListingDTO build() {
+            Objects.requireNonNull(this.instance.id, "id must be set in GuestListingDTO");
+            Objects.requireNonNull(this.instance.firstName, "firstName must be set in GuestListingDTO");
+            Objects.requireNonNull(this.instance.lastName, "lastName must be set in GuestListingDTO");
+            Objects.requireNonNull(this.instance.streetName, "streetName must be set in GuestListingDTO");
+            Objects.requireNonNull(this.instance.streetNumber, "streetNumber must be set in GuestListingDTO");
+            Objects.requireNonNull(this.instance.city, "city must be set in GuestListingDTO");
+            Objects.requireNonNull(this.instance.zipCode, "zipCode must be set in GuestListingDTO");
+            Objects.requireNonNull(this.instance.country, "country must be set in GuestListingDTO");
+            Objects.requireNonNull(this.instance.mailAddress, "mailAddress must be set in GuestListingDTO");
+            Objects.requireNonNull(this.instance.phoneNumber, "phoneNumber must be set in GuestListingDTO");
 
             return this.instance;
         }

@@ -79,6 +79,18 @@ public class Guest {
         return bookings;
     }
 
+    public void modify(FullName aName, Gender aGender, Address aAddress, LocalDate aBirthdate,
+                       String aPhoneNumber, String aMailAddress, double aDiscountInPercent
+    ) {
+        this.name = aName;
+        this.gender = aGender;
+        this.address = aAddress;
+        this.birthDate = aBirthdate;
+        this.phoneNumber = aPhoneNumber;
+        this.mailAddress = aMailAddress;
+        this.discountInPercent = aDiscountInPercent;
+    }
+
     @Generated
     @Override
     public boolean equals(Object o) {

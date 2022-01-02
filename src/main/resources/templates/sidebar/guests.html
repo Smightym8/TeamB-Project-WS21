@@ -50,7 +50,7 @@
                                 <td class="align-middle" th:text="${guest.mailAddress}"></td>
                                 <td class="align-middle" th:text="${guest.phoneNumber}"></td>
                                 <td class="align-middle text-nowrap">
-                                    <a class="btn btn-outline-primary btn-sm float-end">View / Modify</a>
+                                    <a class="btn btn-outline-primary btn-sm float-end" th:href="@{/guest/{id}(id=${guest.id})}">View / Modify</a>
                                 </td>
                             </tr>
                         </tbody>
