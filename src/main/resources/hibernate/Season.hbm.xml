@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-access="field" default-cascade="all">
+    <class name="at.fhv.se.hotel.domain.model.season.Season" table="season" lazy="true">
+        <cache usage="read-write"/>
+
+        <!-- Hibernate id -->
+        <id name="id" type="long" column="id" unsaved-value="-1">
+            <generator class="native"/>
+        </id>
+
+        <!-- Primitive datatypes of class booking -->
+        <property name="startDate" column="start_date" type="java.time.LocalDate" />
+        <property name="endDate" column="end_date" type="java.time.LocalDate" />
+
+        <!-- Mapping to season id class -->
+        <component name="seasonId" class="at.fhv.se.hotel.domain.model.season.SeasonId">
+            <property name="id" column="domain_id" type="java.lang.String" />
+        </component>
+
+        <!-- Mapping to season name class -->
+        <component name="seasonName" class="at.fhv.se.hotel.domain.model.season.SeasonName">
+            <property name="name" column="name" type="java.lang.String" />
+        </component>
+    </class>
+</hibernate-mapping>

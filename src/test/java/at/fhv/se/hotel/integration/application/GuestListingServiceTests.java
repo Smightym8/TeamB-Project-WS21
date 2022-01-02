@@ -2,12 +2,10 @@ package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.GuestListingService;
 import at.fhv.se.hotel.application.api.exception.GuestNotFoundException;
-import at.fhv.se.hotel.application.api.exception.StayNotFoundException;
-import at.fhv.se.hotel.application.dto.GuestDTO;
+import at.fhv.se.hotel.application.dto.GuestDetailsDTO;
+import at.fhv.se.hotel.application.dto.GuestListingDTO;
 import at.fhv.se.hotel.domain.model.guest.*;
-import at.fhv.se.hotel.domain.model.stay.StayId;
 import at.fhv.se.hotel.domain.repository.GuestRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +62,7 @@ public class GuestListingServiceTests {
         Mockito.when(guestRepository.findAllGuests()).thenReturn(guestsExpected);
 
         // when
-        List<GuestDTO> guestsActual = guestListingService.allGuests();
+        List<GuestListingDTO> guestsActual = guestListingService.allGuests();
 
         // then
         assertEquals(guestsExpected.size(), guestsActual.size());
@@ -95,17 +93,22 @@ public class GuestListingServiceTests {
         Mockito.when(guestRepository.guestById(idExpected)).thenReturn(Optional.of(guestExpected));
 
         // when
-        GuestDTO guestActual = guestListingService.findGuestById(idExpected.id()).get();
+        GuestDetailsDTO guestActual = guestListingService.findGuestById(idExpected.id());
 
         // then
+        // TODO: Assert remaining fields
         assertEquals(guestExpected.getGuestId().id(), guestActual.id());
         assertEquals(guestExpected.getName().firstName(), guestActual.firstName());
         assertEquals(guestExpected.getName().lastName(), guestActual.lastName());
+        assertEquals(guestExpected.getGender().name(), guestActual.gender().toUpperCase());
         assertEquals(guestExpected.getAddress().city(), guestActual.city());
         assertEquals(guestExpected.getAddress().country(), guestActual.country());
         assertEquals(guestExpected.getAddress().streetName(), guestActual.streetName());
         assertEquals(guestExpected.getAddress().streetNumber(), guestActual.streetNumber());
         assertEquals(guestExpected.getAddress().zipCode(), guestActual.zipCode());
+        assertEquals(guestExpected.getPhoneNumber(), guestActual.phoneNumber());
+        assertEquals(guestExpected.getMailAddress(), guestActual.mailAddress());
+        assertEquals(guestExpected.getDiscountInPercent(), guestActual.discountInPercent());
     }
 
     @Test

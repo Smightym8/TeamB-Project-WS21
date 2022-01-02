@@ -33,7 +33,8 @@
                             <tr>
                                 <th class="col-2">Room number</th>
                                 <th class="col-2">Room category</th>
-                                <th class="col-1">State</th>
+                                <th class="col-2">State</th>
+                                <th class="col-2"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -47,6 +48,12 @@
                                         <option style="font-weight: bold; color: #E49800" value="CLEANING">CLEANING</option>
                                         <option style="font-weight: bold; color: #0AA900" value="FREE">FREE</option>
                                     </select>
+                            <tr th:each="room : ${rooms}">
+                                <td class="align-middle" th:text="${room.name}"></td>
+                                <td class="align-middle" th:text="${room.categoryName}"></td>
+                                <td class="align-middle" th:text="${room.roomStatus}"></td>
+                                <td class="align-middle text-nowrap">
+                                    <a class="btn btn-outline-primary btn-sm float-end" th:href="@{/room/{name}(name=${room.name})}">View / Modify</a>
                                 </td>
                             </tr>
                         </tbody>

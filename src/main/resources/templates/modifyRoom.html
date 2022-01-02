@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<body id="Guests">
+
+<div layout:fragment="content">
+
+    <div style="margin: auto">
+        <div class="card" style="min-height: 60vh">
+            <div class="card-header ">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="h4 align-middle">Modify Room</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <form id="myform" th:action="@{/modifyRoom}" method="post" th:object="${roomForm}">
+                    <div style="margin: auto;">
+                        <div style="width:50%; margin: auto auto 2em;">
+                            <div class="input-group">
+                                <span class="input-group-text col-4">Room Name</span>
+                                <input id="roomName" name="roomName" class="form-control" type="text" th:field="*{roomName}" readonly>
+                            </div>
+                        </div>
+
+                        <div style="width:50%; margin: auto auto 2em;">
+                            <div class="input-group">
+                                <span class="input-group-text col-4">Category</span>
+                                <input id="categoryName" name="categoryName" class="form-control" type="text" th:field="*{categoryName}" readonly>
+                            </div>
+                        </div>
+
+                        <div style="width:50%; margin: auto auto 2em;">
+                            <div class="input-group">
+                                <span class="input-group-text col-4">Status</span>
+                                <select class="form-select" name="gender" th:field="*{roomStatus}">
+                                    <option th:each="status : ${states}" th:text="${status}" th:value="${status}"
+                                    th:selected="${status == roomStatus}"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <a th:href="@{/rooms}" class="btn btn-danger">Cancel</a>
+                <button type="submit" form="myform" class="btn btn-success float-end">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

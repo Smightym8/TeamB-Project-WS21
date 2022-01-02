@@ -1,6 +1,7 @@
 package at.fhv.se.hotel.integration.infrastructure;
 
 import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.Description;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
@@ -50,7 +51,7 @@ public class RoomRepositoryImplTests {
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
         List<Room> roomsExpected = roomNamesExpected.stream()
-                .map(name -> Room.create(name, roomStatusExpected, roomCategoryExpected))
+                .map(name -> Room.create(new RoomName(name), roomStatusExpected, roomCategoryExpected))
                 .collect(Collectors.toList());
 
         // when
@@ -75,14 +76,14 @@ public class RoomRepositoryImplTests {
                 new Description("This is a single room")
         );
 
-        Room roomExpected = Room.create("101 Test", RoomStatus.FREE, singleRoom);
+        Room roomExpected = Room.create(new RoomName("101"), RoomStatus.FREE, singleRoom);
 
         this.roomCategoryRepository.add(singleRoom);
         this.roomRepository.add(roomExpected);
         this.em.flush();
 
         // when
-        Room roomActual = roomRepository.roomByName("101 Test").get();
+        Room roomActual = roomRepository.roomByName(new RoomName("101")).get();
 
         // then
         assertEquals(roomExpected, roomActual);
@@ -102,17 +103,17 @@ public class RoomRepositoryImplTests {
 
         List<Room> roomsExpected = List.of(
                 Room.create(
-                        "101",
+                        new RoomName("101"),
                         RoomStatus.FREE,
                         roomCategoryExpected
                 ),
                 Room.create(
-                        "102",
+                        new RoomName("102"),
                         RoomStatus.FREE,
                         roomCategoryExpected
                 ),
                 Room.create(
-                        "103",
+                        new RoomName("103"),
                         RoomStatus.FREE,
                         roomCategoryExpected
                 )

@@ -10,6 +10,7 @@ public class RoomCategoryName {
     private String name;
 
     // Required by hibernate
+    @SuppressWarnings("unused")
     private RoomCategoryName() {
     }
 

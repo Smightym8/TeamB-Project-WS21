@@ -2,7 +2,8 @@ package at.fhv.se.hotel.application.impl;
 
 import at.fhv.se.hotel.application.api.GuestListingService;
 import at.fhv.se.hotel.application.api.exception.GuestNotFoundException;
-import at.fhv.se.hotel.application.dto.GuestDTO;
+import at.fhv.se.hotel.application.dto.GuestDetailsDTO;
+import at.fhv.se.hotel.application.dto.GuestListingDTO;
 import at.fhv.se.hotel.domain.model.guest.Guest;
 import at.fhv.se.hotel.domain.model.guest.GuestId;
 import at.fhv.se.hotel.domain.repository.GuestRepository;
@@ -20,12 +21,12 @@ public class GuestListingServiceImpl implements GuestListingService {
 
     @Transactional(readOnly=true)
     @Override
-    public List<GuestDTO> allGuests() {
+    public List<GuestListingDTO> allGuests() {
         List<Guest> guests = guestRepository.findAllGuests();
-        List<GuestDTO> dtos = new ArrayList<>();
+        List<GuestListingDTO> dtos = new ArrayList<>();
 
         for(Guest guest : guests) {
-            GuestDTO dto = GuestDTO.builder()
+            GuestListingDTO dto = GuestListingDTO.builder()
                     .withId(guest.getGuestId().id())
                     .withFirstName(guest.getName().firstName())
                     .withLastName(guest.getName().lastName())
@@ -45,15 +46,16 @@ public class GuestListingServiceImpl implements GuestListingService {
     }
 
     @Override
-    public Optional<GuestDTO> findGuestById(String id) throws GuestNotFoundException {
+    public GuestDetailsDTO findGuestById(String id) throws GuestNotFoundException {
         Guest guest = guestRepository.guestById(new GuestId(id)).orElseThrow(
                 () -> new GuestNotFoundException("Guest with id " + id + " not found")
         );
 
-        GuestDTO dto = GuestDTO.builder()
+        GuestDetailsDTO guestDetailsDTO = GuestDetailsDTO.builder()
                 .withId(guest.getGuestId().id())
                 .withFirstName(guest.getName().firstName())
                 .withLastName(guest.getName().lastName())
+                .withGender(guest.getGender().name())
                 .withStreetName(guest.getAddress().streetName())
                 .withStreetNumber(guest.getAddress().streetNumber())
                 .withCity(guest.getAddress().city())
@@ -61,8 +63,10 @@ public class GuestListingServiceImpl implements GuestListingService {
                 .withCountry(guest.getAddress().country())
                 .withMailAddress(guest.getMailAddress())
                 .withPhoneNumber(guest.getPhoneNumber())
+                .withBirthDate(guest.getBirthDate())
+                .withDiscount(guest.getDiscountInPercent())
                 .build();
 
-        return Optional.of(dto);
+        return guestDetailsDTO;
     }
 }

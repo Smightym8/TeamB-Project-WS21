@@ -2,12 +2,14 @@ package at.fhv.se.hotel.domain.services.impl;
 
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
 import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
-import at.fhv.se.hotel.domain.model.roomcategory.Season;
+import at.fhv.se.hotel.domain.model.season.Season;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.repository.InvoiceRepository;
 import at.fhv.se.hotel.domain.repository.RoomRepository;
+import at.fhv.se.hotel.domain.repository.SeasonRepository;
 import at.fhv.se.hotel.domain.services.api.InvoiceSplitService;
 import at.fhv.se.hotel.domain.services.api.RoomCategoryPriceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
 
     @Autowired
     RoomCategoryPriceService roomCategoryPriceService;
+
+    @Autowired
+    SeasonRepository seasonRepository;
 
     @Autowired
     RoomRepository roomRepository;
@@ -74,13 +79,15 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
         LocalDate tempDate = stay.getCheckInDate();
 
         for(int i = 0; i < nights; i++) {
-            Season currentSeason = Season.seasonByDate(tempDate);
+            // TODO: Throw exception if season isn't present
+            Season currentSeason = seasonRepository.seasonByDate(tempDate).get();
+
             for(String name : roomNames) {
                 // TODO: Use RoomNotFoundException
-                Room room = roomRepository.roomByName(name).get();
+                Room room = roomRepository.roomByName(new RoomName(name)).get();
 
                 RoomCategoryPrice currentCategoryPrice = roomCategoryPriceService.by(
-                        room.getRoomCategory(), currentSeason
+                        room.getRoomCategory(), currentSeason.getSeasonId()
                 );
 
                 totalNetAmountBeforeDiscount = totalNetAmountBeforeDiscount.add((currentCategoryPrice.getPrice()));

@@ -3,10 +3,11 @@ package at.fhv.se.hotel.domain.services.impl;
 import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
-import at.fhv.se.hotel.domain.model.roomcategory.Season;
+import at.fhv.se.hotel.domain.model.season.Season;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.repository.InvoiceRepository;
+import at.fhv.se.hotel.domain.repository.SeasonRepository;
 import at.fhv.se.hotel.domain.services.api.InvoiceCalculationService;
 import at.fhv.se.hotel.domain.services.api.RoomCategoryPriceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
 
     @Autowired
     RoomCategoryPriceService roomCategoryPriceService;
+
+    @Autowired
+    SeasonRepository seasonRepository;
 
     @Autowired
     InvoiceRepository invoiceRepository;
@@ -71,10 +75,12 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
         LocalDate tempDate = stay.getCheckInDate();
 
         for(int i = 0; i < nights; i++) {
-            Season currentSeason = Season.seasonByDate(tempDate);
+            // TODO: Throw exception if season isn't present
+            Season currentSeason = seasonRepository.seasonByDate(tempDate).get();
+
             for(BookingWithRoomCategory brc : stay.getBooking().getRoomCategories()) {
                 RoomCategoryPrice currentCategoryPrice = roomCategoryPriceService.by(
-                        brc.getRoomCategory(), currentSeason
+                        brc.getRoomCategory(), currentSeason.getSeasonId()
                 );
 
                 totalNetAmountBeforeDiscount = totalNetAmountBeforeDiscount.add(

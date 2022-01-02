@@ -6,8 +6,12 @@ import at.fhv.se.hotel.domain.model.guest.*;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
 import at.fhv.se.hotel.domain.model.invoice.InvoiceId;
 import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.*;
+import at.fhv.se.hotel.domain.model.season.Season;
+import at.fhv.se.hotel.domain.model.season.SeasonId;
+import at.fhv.se.hotel.domain.model.season.SeasonName;
 import at.fhv.se.hotel.domain.model.service.Price;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
@@ -68,17 +72,24 @@ public class InvoiceTests {
         );
         booking.addRoomCategory(category, 1);
 
+        Season summerSeason = Season.create(
+                new SeasonId("1"),
+                new SeasonName("Summer"),
+                LocalDate.of(2021, 6, 1),
+                LocalDate.of(2021, 11, 30)
+        );
+
         List<RoomCategoryPrice> categoryPricesExpected = List.of(
                 RoomCategoryPrice.create(
                         new RoomCategoryPriceId("1"),
-                        Season.SUMMER,
+                        summerSeason,
                         category,
                         new BigDecimal("300")
                 )
         );
 
         Map<Room, Boolean> rooms = Map.of(
-                Room.create("101", RoomStatus.FREE, category), false
+                Room.create(new RoomName("101"), RoomStatus.FREE, category), false
         );
 
         // when

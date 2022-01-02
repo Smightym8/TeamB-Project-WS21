@@ -10,6 +10,7 @@ public class ServiceName {
     private String name;
 
     // Required by hibernate
+    @SuppressWarnings("unused")
     private ServiceName() {
     }
 

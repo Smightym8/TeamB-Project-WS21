@@ -40,3 +40,7 @@ table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {
 table.dataTable tbody th, table.dataTable tbody td {
     padding: 0.5rem !important;
 }
+
+#checkInTable {
+    margin-bottom: 4em
+}

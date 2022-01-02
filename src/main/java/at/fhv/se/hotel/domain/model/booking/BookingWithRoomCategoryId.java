@@ -17,6 +17,7 @@ public class BookingWithRoomCategoryId implements Serializable {
     }
 
     // Required by hibernate
+    @SuppressWarnings("unused")
     private BookingWithRoomCategoryId() {}
 
     protected Booking getBooking() {

@@ -4,7 +4,7 @@
 
     <div layout:fragment="content">
 
-        <div style="width:50%; margin: auto">
+        <div style="margin: auto">
             <div class="card" style="min-height: 60vh">
                 <div class="card-header ">
                     <div class="d-flex justify-content-between align-items-center">
@@ -21,9 +21,11 @@
                                 <p class="h5">Guest</p>
                                 <span th:text="${bookingDetails.guestFirstName} + ' '  + ${bookingDetails.guestLastName}"></span>
                                 <br>
-                                <span>Straße 123</span>
+                                <span th:text="${bookingDetails.streetName} + ' '  + ${bookingDetails.streetNumber}"></span>
                                 <br>
-                                <span>1234 Stadt DTO !!!!!!!!!!!!!!!!!!!</span>
+                                <span th:text="${bookingDetails.zipCode} + ' '  + ${bookingDetails.city}"></span>
+                                <br>
+                                <span th:text="${bookingDetails.country}"></span>
                             </div>
 
                             <div class="ps-4" style="width: 50%; float: left">

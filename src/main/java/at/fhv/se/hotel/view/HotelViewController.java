@@ -3,9 +3,11 @@ package at.fhv.se.hotel.view;
 import at.fhv.se.hotel.application.api.*;
 import at.fhv.se.hotel.application.api.exception.*;
 import at.fhv.se.hotel.application.dto.*;
+import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.view.forms.BookingForm;
 import at.fhv.se.hotel.view.forms.GuestForm;
 import at.fhv.se.hotel.view.forms.InvoiceForm;
+import at.fhv.se.hotel.view.forms.RoomForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -47,9 +50,19 @@ public class HotelViewController {
     private static final String INVOICES_URL = "/invoices";
     private static final String INVOICES_VIEW = "sidebar/invoices";
 
+    /*----- Modify Room -----*/
+    private static final String ROOM_URL = "/room/{name}";
+    private static final String MODIFY_ROOM_URL = "/modifyRoom";
+    private static final String MODIFY_ROOM_VIEW = "modifyRoom";
+
     /*----- Create Guest -----*/
     private static final String CREATE_GUEST_URL = "/createguest";
     private static final String CREATE_GUEST_VIEW = "createGuest";
+
+    /*----- Modify Guest -----*/
+    private static final String GUEST_URL = "/guest/{id}";
+    private static final String MODIFY_GUEST_URL = "/modifyGuest";
+    private static final String MODIFY_GUEST_VIEW = "modifyGuest";
 
     /*----- Create Booking -----*/
     private static final String CREATE_BOOKING_GUEST_URL = "/createbooking/guest";
@@ -87,7 +100,6 @@ public class HotelViewController {
     private static final String SAVE_INVOICE_URL = "/saveinvoice/{id}";
 
     /*----- Invoice Download -----*/
-    private static final String INVOICES_PATH = "src/main/resources/static/invoices/";
     private static final String INVOICE_DOWNLOAD_URL = "/download-invoice/{invoiceNo}";
 
     /*----- Error -----*/
@@ -136,48 +148,84 @@ public class HotelViewController {
     private InvoiceDownloadService invoiceDownloadService;
 
     @Autowired
-    private RoomListingService roomListingService;
+    RoomListingService roomListingService;
+
+    @Autowired
+    RoomModifyService roomModifyService;
+
+    @Autowired
+    GuestModifyService guestModifyService;
 
 
     /*--------------------------------------------------------------------------------------------------------------------*/
 
     /*----- Home -----*/
     @GetMapping(HOME_URL)
-    public String home(Model model) {
+    public ModelAndView home(Model model) {
         final List<BookingListingDTO> bookings = bookingListingService.allBookings();
         final List<StayListingDTO> stays = stayListingService.allStays();
 
         model.addAttribute("bookings", bookings);
         model.addAttribute("stays", stays);
 
-        return HOME_VIEW;
+        return new ModelAndView(HOME_VIEW);
     }
 
     /*----- Rooms -----*/
     @GetMapping(ROOMS_URL)
-    public String rooms(Model model) {
-        final List<RoomDTO> rooms = roomListingService.allRooms();
+    public ModelAndView rooms(Model model) {
+        List<RoomDTO> rooms = roomListingService.allRooms();
 
         model.addAttribute("rooms", rooms);
 
-        return ROOMS_VIEW;
+        return new ModelAndView(ROOMS_VIEW);
+    }
+
+    @GetMapping(ROOM_URL)
+    public ModelAndView room(@PathVariable String name, Model model) {
+        RoomDTO roomDTO;
+        try {
+            roomDTO = roomListingService.roomByName(name);
+
+            RoomForm roomForm = new RoomForm(roomDTO.name(), roomDTO.categoryName(), roomDTO.roomStatus());
+            List<String> roomStates = new ArrayList<>();
+            Arrays.stream(RoomStatus.values()).forEach(status -> roomStates.add(status.name()));
+
+            model.addAttribute("roomForm", roomForm);
+            model.addAttribute("states", roomStates);
+        } catch (RoomNotFoundException e) {
+            return redirectError(e.getMessage());
+        }
+
+        return new ModelAndView(MODIFY_ROOM_VIEW);
+    }
+
+    @PostMapping(MODIFY_ROOM_URL)
+    public ModelAndView modifyRoom(@ModelAttribute("roomForm") RoomForm roomForm) {
+        try {
+            roomModifyService.modifyStatus(roomForm.getRoomName(), roomForm.getRoomStatus());
+        } catch (RoomNotFoundException e) {
+            return redirectError(e.getMessage());
+        }
+
+        return new ModelAndView("redirect:" + ROOMS_URL);
     }
 
     /*----- Pricing -----*/
     @GetMapping(PRICING_URL)
-    public String pricing(Model model) {
+    public ModelAndView pricing(Model model) {
 
-        return PRICING_VIEW;
+        return new ModelAndView(PRICING_VIEW);
     }
 
     /*----- Guests -----*/
     @GetMapping(GUESTS_URL)
-    public String guests(Model model) {
-        final List<GuestDTO> guests = guestListingService.allGuests();
+    public ModelAndView guests(Model model) {
+        final List<GuestListingDTO> guests = guestListingService.allGuests();
 
         model.addAttribute("guests", guests);
 
-        return GUESTS_VIEW;
+        return new ModelAndView(GUESTS_VIEW);
     }
 
     /*----- Bookings -----*/
@@ -220,6 +268,65 @@ public class HotelViewController {
         return CREATE_GUEST_VIEW;
     }
 
+    /*----- Modify Guest -----*/
+    // TODO: Test
+    @GetMapping(GUEST_URL)
+    public ModelAndView guest(@PathVariable("id") String id, Model model) {
+        // Get GuestDetailsDTO and fill GuestForm with it
+        GuestDetailsDTO guest;
+        try {
+            guest = guestListingService.findGuestById(id);
+
+            GuestForm guestForm = new GuestForm(
+                    guest.id(),
+                    guest.firstName(),
+                    guest.lastName(),
+                    guest.gender(),
+                    guest.mailAddress(),
+                    guest.phoneNumber(),
+                    guest.birthDate(),
+                    guest.streetName(),
+                    guest.streetNumber(),
+                    guest.zipCode(),
+                    guest.city(),
+                    guest.country(),
+                    guest.discountInPercent()
+            );
+
+            model.addAttribute("guest", guestForm);
+        } catch (GuestNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return new ModelAndView(MODIFY_GUEST_VIEW);
+    }
+
+    // TODO: Test
+    @PostMapping(MODIFY_GUEST_URL)
+    public ModelAndView modifyGuest(@ModelAttribute("guest") GuestForm guestForm) {
+        try {
+            guestModifyService.modifyGuest(
+                    guestForm.getGuestId(),
+                    guestForm.getFirstName(),
+                    guestForm.getLastName(),
+                    guestForm.getGender(),
+                    guestForm.getStreetName(),
+                    guestForm.getStreetNumber(),
+                    guestForm.getCity(),
+                    guestForm.getZipCode(),
+                    guestForm.getCountry(),
+                    guestForm.getBirthDate(),
+                    guestForm.getPhoneNumber(),
+                    guestForm.geteMail(),
+                    guestForm.getDiscountInPercent()
+            );
+        } catch (GuestNotFoundException e) {
+            return redirectError(e.getMessage());
+        }
+
+        return new ModelAndView("redirect:" + GUESTS_URL);
+    }
+
     @PostMapping(CREATE_GUEST_URL)
     public String createGuestPost(@ModelAttribute("guest") @Valid GuestForm guestForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -246,7 +353,8 @@ public class HotelViewController {
 
     /*----- Create Booking -----*/
     @GetMapping(CREATE_BOOKING_DATE_URL)
-    public String createBookingDate(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model) {
+    public String createBookingDate(Model model) {
+        BookingForm bookingForm = new BookingForm();
 
         model.addAttribute("bookingForm", bookingForm);
 
@@ -275,7 +383,7 @@ public class HotelViewController {
 
     @PostMapping(CREATE_BOOKING_GUEST_URL)
     public String createBookingGuest(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model) {
-        final List<GuestDTO> guests = guestListingService.allGuests();
+        final List<GuestListingDTO> guests = guestListingService.allGuests();
 
         model.addAttribute("guests", guests);
         model.addAttribute("bookingForm", bookingForm);
@@ -489,7 +597,9 @@ public class HotelViewController {
         try {
             resource = invoiceDownloadService.download(invoiceNo);
         } catch (InvoiceNotFoundException e) {
-            e.printStackTrace(); // TODO: Return to errorView --> return type mismatch
+            // Don't redirect to errorView because user will only see a window from the browser
+            // where it asks to open or to download the pdf file.
+            e.printStackTrace();
         }
 
         return ResponseEntity.ok()

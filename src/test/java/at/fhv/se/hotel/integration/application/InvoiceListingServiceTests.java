@@ -9,8 +9,12 @@ import at.fhv.se.hotel.domain.model.guest.*;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
 import at.fhv.se.hotel.domain.model.invoice.InvoiceId;
 import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.*;
+import at.fhv.se.hotel.domain.model.season.Season;
+import at.fhv.se.hotel.domain.model.season.SeasonId;
+import at.fhv.se.hotel.domain.model.season.SeasonName;
 import at.fhv.se.hotel.domain.model.service.Price;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
@@ -31,6 +35,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public class InvoiceListingServiceTests {
@@ -121,8 +126,8 @@ public class InvoiceListingServiceTests {
         );
 
         Map<Room, Boolean> roomsExpected = Map.of(
-                Room.create("single Room", RoomStatus.FREE,categoryExpected), false,
-                Room.create("double Room",RoomStatus.FREE,categoryExpected), false
+                Room.create(new RoomName("single Room"), RoomStatus.FREE,categoryExpected), false,
+                Room.create(new RoomName("double Room"),RoomStatus.FREE,categoryExpected), false
         );
 
         List<Stay> staysExpected = List.of(
@@ -131,10 +136,17 @@ public class InvoiceListingServiceTests {
                 Stay.create(bookingsExpected.get(2), roomsExpected)
         );
 
+        Season winterSeason = Season.create(
+                new SeasonId("1"),
+                new SeasonName("Winter "),
+                LocalDate.of(2021, 12, 1),
+                LocalDate.of(2022, 1, 31)
+        );
+
         List<RoomCategoryPrice> roomCategoryPricesExpected = List.of(
                 RoomCategoryPrice.create(
                         new RoomCategoryPriceId("1"),
-                        Season.WINTER,
+                        winterSeason,
                         categoryExpected,
                         new BigDecimal("300")
                 )
@@ -199,5 +211,18 @@ public class InvoiceListingServiceTests {
 
         // then
         assertEquals(invoicesExpected.size(), invoicesActual.size());
+
+        for(int i = 0; i < invoicesExpected.size(); i++) {
+            assertEquals(invoicesExpected.get(i).getInvoiceId().id(), invoicesActual.get(i).id());
+            assertEquals(invoicesExpected.get(i).getInvoiceNumber(), invoicesActual.get(i).invoiceNumber());
+            assertEquals(invoicesExpected.get(i).getStay().getGuest().getName().firstName(), invoicesActual.get(i).guestFirstName());
+            assertEquals(invoicesExpected.get(i).getStay().getGuest().getName().lastName(), invoicesActual.get(i).guestLastName());
+            assertEquals(invoicesExpected.get(i).getStay().getGuest().getAddress().streetName(), invoicesActual.get(i).streetName());
+            assertEquals(invoicesExpected.get(i).getStay().getGuest().getAddress().streetNumber(), invoicesActual.get(i).streetNumber());
+            assertEquals(invoicesExpected.get(i).getStay().getGuest().getAddress().zipCode(), invoicesActual.get(i).zipCode());
+            assertEquals(invoicesExpected.get(i).getStay().getGuest().getAddress().city(), invoicesActual.get(i).city());
+            assertEquals(invoicesExpected.get(i).getTotalGrossAmount(), new BigDecimal(invoicesActual.get(i).totalGrossAmount()));
+            assertEquals(invoicesExpected.get(i).isPaid(), invoicesActual.get(i).isPaid());
+        }
     }
 }

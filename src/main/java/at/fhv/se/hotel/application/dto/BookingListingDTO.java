@@ -120,11 +120,15 @@ public class BookingListingDTO {
         }
 
         public BookingListingDTO build() {
-            Objects.requireNonNull(this.instance.id, "id must be set in BookingDTO");
-            Objects.requireNonNull(this.instance.guestFirstName, "guestFirstName must be set in BookingDTO");
-            Objects.requireNonNull(this.instance.guestLastName, "guestLastName must be set in BookingDTO");
-            Objects.requireNonNull(this.instance.checkInDate, "checkInDate must be set in BookingDTO");
-            Objects.requireNonNull(this.instance.checkOutDate, "checkOutDate must be set in BookingDTO");
+            Objects.requireNonNull(this.instance.id, "id must be set in BookingListingDTO");
+            Objects.requireNonNull(this.instance.guestFirstName, "guestFirstName must be set in BookingListingDTO");
+            Objects.requireNonNull(this.instance.guestLastName, "guestLastName must be set in BookingListingDTO");
+            Objects.requireNonNull(this.instance.streetName, "streetName must be set in BookingListingDTO");
+            Objects.requireNonNull(this.instance.streetNumber, "streetNumber must be set in BookingListingDTO");
+            Objects.requireNonNull(this.instance.zipCode, "zipCode must be set in BookingListingDTO");
+            Objects.requireNonNull(this.instance.city, "city must be set in BookingListingDTO");
+            Objects.requireNonNull(this.instance.checkInDate, "checkInDate must be set in BookingListingDTO");
+            Objects.requireNonNull(this.instance.checkOutDate, "checkOutDate must be set in BookingListingDTO");
 
             return this.instance;
         }

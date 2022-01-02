@@ -15,7 +15,7 @@
 
     <div layout:fragment="content">
 
-        <div style="width:50%; margin: auto">
+        <div style="margin: auto">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <div>
@@ -49,7 +49,7 @@
                                     <span class="text-nowrap" th:text="${booking.zipCode} + ' ' + ${booking.city}"></span>
                                 </td>
                                 <td class="align-middle text-nowrap" th:text="${booking.checkInDate}"></td>
-                                <td class="align-middle text-nowrap">Check-out date</td>
+                                <td class="align-middle text-nowrap" th:text="${booking.checkOutDate}"></td>
                                 <td class="align-middle text-nowrap">
                                     <a class="btn btn-outline-primary btn-sm float-end" th:href="@{/bookingdetails/{id}(id=${booking.id})}">View / Check-in</a>
                                 </td>

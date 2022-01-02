@@ -4,6 +4,7 @@ import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
 import at.fhv.se.hotel.domain.model.guest.*;
 import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.Description;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
@@ -83,17 +84,17 @@ public class StayTests {
         booking.addRoomCategory(singleRoom, amount);
 
         Room room1 = Room.create(
-                "101",
+                new RoomName("101"),
                 RoomStatus.FREE,
                 singleRoom);
 
         Room room2 = Room.create(
-                "102",
+                new RoomName("102"),
                 RoomStatus.FREE,
                 singleRoom);
 
         Room room3 = Room.create(
-                "103",
+                new RoomName("103"),
                 RoomStatus.FREE,
                 singleRoom);
 
@@ -183,17 +184,17 @@ public class StayTests {
         booking.addRoomCategory(singleRoom, amount);
 
         Room room1 = Room.create(
-                "101",
+                new RoomName("101"),
                 RoomStatus.FREE,
                 singleRoom);
 
         Room room2 = Room.create(
-                "102",
+                new RoomName("102"),
                 RoomStatus.FREE,
                 singleRoom);
 
         Room room3 = Room.create(
-                "103",
+                new RoomName("103"),
                 RoomStatus.FREE,
                 singleRoom);
 
