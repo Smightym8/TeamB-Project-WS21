@@ -18,10 +18,12 @@
 <body>
 
     <!-- sidebar -->
-    <div class="sidebar bg-dark text-white p-4">
-        <a href="/" >
-            <img src="/images/logo.png" alt="logo" width="190px" height="auto" class="mb-2">
-        </a>
+    <div class="sidebar p-4 bg-dark text-white">
+        <div>
+            <a href="/" >
+                <img src="/images/logo.png" style="width: 100%; height: auto" alt="logo" class="mb-2">
+            </a>
+        </div>
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li>
@@ -84,10 +86,11 @@
     </div>
 
     <!-- content -->
-    <div class="content px-5 py-4 flex-grow-1" layout:fragment="content"></div>
+    <div class="content px-5 py-4">
+        <div layout:fragment="content" style="overflow: hidden; height: 100%;">
 
-    <!-- scripts -->
-    <script src="/js/bootstrap.bundle.min.js"></script>
+        </div>
+    </div>
 
     <script>
         <!-- set sidebar element active via id from body tag of current page -->
@@ -99,11 +102,13 @@
 
         for(var i = 0; i < navElementsText.length; i += 1) {
 
-            if(navElementsText[i].innerText == bodyId) {
+            if(navElementsText[i].innerText === bodyId) {
                 navElements[i].classList.add("active");
             }
         }
     </script>
+
+    <script src="/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

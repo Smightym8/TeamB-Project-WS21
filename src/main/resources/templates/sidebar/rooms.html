@@ -37,27 +37,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="align-middle">A404 Fake</td>
-                                <td class="align-middle">Single Room Fake</td>
+                            <tr th:each="room : ${rooms}">
+                                <td class="align-middle" th:text="${room.name}"></td>
+                                <td class="align-middle" th:text="${room.categoryName}">Single Room Fake</td>
                                 <td class="align-middle">
-                                    <select class="form-select roomstate" disabled>
-                                        <option value="0" selected hidden disabled>Occupied</option>
-                                        <option value="1">Not available</option>
-                                        <option value="2">Dirty</option>
-                                        <option value="3">Free</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr th:each="i : ${#numbers.sequence(0, 20)}">
-                                <td class="align-middle">S101 Fake</td>
-                                <td class="align-middle">Single Room Fake</td>
-                                <td class="align-middle">
-                                    <select class="form-select roomstate" disabled>
-                                        <option value="3" selected hidden disabled>Free</option>
-                                        <option value="1">Not available</option>
-                                        <option value="2">Dirty</option>
-                                        <option value="3">Free</option>
+                                    <select class="form-select roomstate" onchange="changeColor(this)" disabled>
+                                        <option selected hidden disabled th:value="${room.roomStatus}" th:text="${room.roomStatus}"></option>
+                                        <option style="font-weight: bold; color: #930000" value="UNAVAILABLE">UNAVAILABLE</option>
+                                        <option style="font-weight: bold; color: #E49800" value="CLEANING">CLEANING</option>
+                                        <option style="font-weight: bold; color: #0AA900" value="FREE">FREE</option>
                                     </select>
                                 </td>
                             </tr>
@@ -76,9 +64,6 @@
                 "scrollY": "78vh",
                 "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ],
                 "pageLength": -1,
-                columnDefs: [
-                    { orderable: false, targets: [2]}
-                ]
             });
 
             // add icon to searchbars
@@ -91,6 +76,48 @@
             searchLabel.insertBefore(icon, searchLabel.firstChild);
             searchLabel.childNodes[1].textContent = " ";
 
+
+            var fields = document.getElementsByClassName('roomstate');
+
+            for (var i = 0; i < fields.length; i++) {
+
+                if (fields[i].value === 'FREE') {
+
+                    fields[i].setAttribute('style', 'color: #0AA900; font-weight: bold');
+
+                } else if (fields[i].value === 'OCCUPIED') {
+
+                    fields[i].setAttribute('style', 'color: #6A6A6A; font-weight: bold');
+
+                } else if (fields[i].value === 'UNAVAILABLE') {
+
+                    fields[i].setAttribute('style', 'color: #930000; font-weight: bold');
+
+                } else if (fields[i].value === 'CLEANING') {
+
+                    fields[i].setAttribute('style', 'color: #E49800; font-weight: bold');
+
+                }
+            }
+
+
+            function changeColor(selectField) {
+
+                var optionIndex = selectField.options.selectedIndex;
+
+                if (optionIndex === 1) {
+                    selectField.setAttribute('style', 'color: #930000; font-weight: bold');
+
+                } else if (optionIndex === 2) {
+                    selectField.setAttribute('style', 'color: #E49800; font-weight: bold');
+
+                } else if (optionIndex === 3) {
+                    selectField.setAttribute('style', 'color: #0AA900; font-weight: bold');
+
+                }
+            }
+
+
             // activate and deactivate the select fields
             function changeState() {
 
@@ -102,7 +129,7 @@
 
                     for (var i = 0; i < selectFields.length; i++) {
 
-                        if (selectFields[i].value !== '0') {
+                        if (selectFields[i].value !== 'OCCUPIED') {
                             selectFields[i].removeAttribute("disabled");
                         }
                     }
@@ -117,7 +144,7 @@
 
                     for (var i = 0; i < selectFields.length; i++) {
 
-                        if (selectFields[i].value !== '0') {
+                        if (selectFields[i].value !== 'OCCUPIED') {
                             selectFields[i].setAttribute("disabled", "disabled");
                         }
                     }
