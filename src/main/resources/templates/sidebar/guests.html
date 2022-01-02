@@ -15,7 +15,7 @@
 
     <div layout:fragment="content">
 
-        <div style="margin: auto">
+        <div class="div-width-l">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <div>
@@ -31,12 +31,12 @@
                     <table id="t1" class="table stripe">
                         <thead>
                             <tr>
-                                <th class="col-1">Firstname</th>
-                                <th class="col-1">Lastname</th>
-                                <th class="col-4">Address</th>
-                                <th class="col-3">Email</th>
-                                <th class="col-2">Phone number</th>
-                                <th class="col"></th>
+                                <th class="col">Firstname</th>
+                                <th class="col">Lastname</th>
+                                <th class="col">Address</th>
+                                <th class="col">Email</th>
+                                <th class="col">Phone number</th>
+                                <th class="col-1"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -47,8 +47,8 @@
                                     <span class="text-nowrap" th:text="${guest.streetName} + ' ' + ${guest.streetNumber} + ', '"></span>
                                     <span class="text-nowrap" th:text="${guest.zipCode} + ' ' + ${guest.city}"></span>
                                 </td>
-                                <td class="align-middle" th:text="${guest.mailAddress}"></td>
-                                <td class="align-middle" th:text="${guest.phoneNumber}"></td>
+                                <td class="align-middle text-nowrap" th:text="${guest.mailAddress}"></td>
+                                <td class="align-middle text-nowrap" th:text="${guest.phoneNumber}"></td>
                                 <td class="align-middle text-nowrap">
                                     <a class="btn btn-outline-primary btn-sm float-end" th:href="@{/guest/{id}(id=${guest.id})}">View / Modify</a>
                                 </td>
@@ -64,8 +64,9 @@
             let table1 = $('#t1').DataTable({
                 "order": [ [0, "asc"],[1, "asc"] ],
                 "scrollCollapse": true,
-                "scrollY": "78vh",
+                "scrollY": "73.5vh",
                 "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ],
+                "pageLength": -1,
                 columnDefs: [
                     { orderable: false, targets: [5]},
                 ]
