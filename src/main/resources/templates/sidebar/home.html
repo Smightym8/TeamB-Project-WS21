@@ -18,7 +18,7 @@
         <input type="hidden" id="min-date">
         <input type="hidden" id="max-date">
 
-        <div id="checkInTable" class="pe-4">
+        <div style="width: 50%; float:left" class="pe-4">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span class="h4">Upcoming check-ins</span>
@@ -35,7 +35,7 @@
                             <tr>
                                 <th class="col">Guest</th>
                                 <th class="col">Address</th>
-                                <th class="col-2">Check-in date</th>
+                                <th class="col-2">Check-in</th>
                                 <th class="col-2"></th>
                             </tr>
                         </thead>
@@ -60,7 +60,7 @@
             </div>
         </div>
 
-        <div class="pe-4">
+        <div style="width: 50%; float:right;" class="ps-4">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <span class="h4">Upcoming check-outs</span>
@@ -77,7 +77,7 @@
                             <tr>
                                 <th class="col">Room(s)</th>
                                 <th class="col">Guest</th>
-                                <th class="col-2">Check-out date</th>
+                                <th class="col-2">Check-out</th>
                                 <th class="col-2"></th>
                             </tr>
                         </thead>
@@ -108,7 +108,7 @@
                 var max  = $('#max-date').val();
                 var date = moment(data[2]);
 
-                if  ((min === "" || max === "") || (date.isSameOrAfter(min) && date.isSameOrBefore(max))) {
+                if ((min === "" || max === "") || (date.isSameOrAfter(min) && date.isSameOrBefore(max))) {
                     return true;
                 }
                 return false;
@@ -117,8 +117,9 @@
             // table initialization
             let table1 = $('#t1').DataTable({
                 "order": [ 2, "asc" ],
+                "pageLength": -1,
                 "scrollCollapse": true,
-                "scrollY": "78vh",
+                "scrollY": "94vh",
                 "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ],
                 columnDefs: [
                     { orderable: false, targets: [3]}
@@ -127,8 +128,9 @@
 
             let table2 = $('#t2').DataTable({
                 "order": [ 2, "asc" ],
+                "pageLength": -1,
                 "scrollCollapse": true,
-                "scrollY": "78vh",
+                "scrollY": "71vh",
                 "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ],
                 columnDefs: [
                     { orderable: false, targets: [3]}
@@ -136,7 +138,7 @@
             });
 
             // table initial filtration
-            filter('1','Today');
+            filter('1','All');
             filter('2','Today');
 
             // add icon to searchbars

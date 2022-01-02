@@ -38,16 +38,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="room : ${rooms}">
-                                <td class="align-middle" th:text="${room.name}"></td>
-                                <td class="align-middle" th:text="${room.categoryName}">Single Room Fake</td>
-                                <td class="align-middle">
-                                    <select class="form-select roomstate" onchange="changeColor(this)" disabled>
-                                        <option selected hidden disabled th:value="${room.roomStatus}" th:text="${room.roomStatus}"></option>
-                                        <option style="font-weight: bold; color: #930000" value="UNAVAILABLE">UNAVAILABLE</option>
-                                        <option style="font-weight: bold; color: #E49800" value="CLEANING">CLEANING</option>
-                                        <option style="font-weight: bold; color: #0AA900" value="FREE">FREE</option>
-                                    </select>
+<!--                            <tr th:each="room : ${rooms}">-->
+<!--                                <td class="align-middle" th:text="${room.name}"></td>-->
+<!--                                <td class="align-middle" th:text="${room.categoryName}">Single Room Fake</td>-->
+<!--                                <td class="align-middle">-->
+<!--                                    <select class="form-select roomstate" onchange="changeColor(this)" disabled>-->
+<!--                                        <option selected hidden disabled th:value="${room.roomStatus}" th:text="${room.roomStatus}"></option>-->
+<!--                                        <option style="font-weight: bold; color: #930000" value="UNAVAILABLE">UNAVAILABLE</option>-->
+<!--                                        <option style="font-weight: bold; color: #E49800" value="CLEANING">CLEANING</option>-->
+<!--                                        <option style="font-weight: bold; color: #0AA900" value="FREE">FREE</option>-->
+<!--                                    </select>-->
                             <tr th:each="room : ${rooms}">
                                 <td class="align-middle" th:text="${room.name}"></td>
                                 <td class="align-middle" th:text="${room.categoryName}"></td>
