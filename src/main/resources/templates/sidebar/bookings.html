@@ -15,7 +15,7 @@
 
     <div layout:fragment="content">
 
-        <div style="margin: auto">
+        <div class="div-width-l">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <div>
@@ -31,11 +31,11 @@
                     <table id="t1" class="table stripe">
                         <thead>
                             <tr>
-                                <th class="col-3">Guest</th>
-                                <th class="col-4">Address</th>
-                                <th class="col-2">Check-in date</th>
-                                <th class="col-2">Check-out date</th>
-                                <th class="col"></th>
+                                <th class="col">Guest</th>
+                                <th class="col">Address</th>
+                                <th class="col">Check-in</th>
+                                <th class="col">Check-out</th>
+                                <th class="col-1"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -65,8 +65,9 @@
             let table1 = $('#t1').DataTable({
                 "order": [ 2, "asc" ],
                 "scrollCollapse": true,
-                "scrollY": "78vh",
+                "scrollY": "73.5vh",
                 "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ],
+                "pageLength": -1,
                 columnDefs: [
                     { orderable: false, targets: [4]}
                 ]
