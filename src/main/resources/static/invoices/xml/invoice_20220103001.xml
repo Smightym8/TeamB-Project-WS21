@@ -4,11 +4,11 @@
     <invoiceDate>2022-01-03</invoiceDate>
     <guestFirstName>Johannes</guestFirstName>
     <guestLastName>Moosbrugger</guestLastName>
-    <streetName>Schollenstraße</streetName>
-    <streetNumber>6</streetNumber>
-    <zipCode>6845</zipCode>
-    <city>Hohenems</city>
-    <amountOfAdults>2</amountOfAdults>
+    <streetName>Birkenweg</streetName>
+    <streetNumber>9</streetNumber>
+    <zipCode>5550</zipCode>
+    <city>Radstadt</city>
+    <amountOfAdults>1</amountOfAdults>
     <amountOfChildren>0</amountOfChildren>
     <services>
         <entry>
@@ -28,27 +28,27 @@
     </roomCategories>
     <roomCategoryPrices>
         <entry>
-            <key>Single Room</key>
-            <value>300.00</value>
+            <key>Single room</key>
+            <value>50.00</value>
         </entry>
     </roomCategoryPrices>
-    <checkInDate>2022-01-02</checkInDate>
-    <checkOutDate>2022-01-04</checkOutDate>
+    <checkInDate>2022-01-03</checkInDate>
+    <checkOutDate>2022-01-05</checkOutDate>
     <amountOfNights>2</amountOfNights>
     <localTaxPerPerson>0.76</localTaxPerPerson>
-    <localTaxTotal>1.52</localTaxTotal>
+    <localTaxTotal>0.76</localTaxTotal>
     <valueAddedTaxInPercent>0.1</valueAddedTaxInPercent>
-    <valueAddedTaxInEuro>63.20</valueAddedTaxInEuro>
-    <totalNetAmountBeforeDiscount>632.00</totalNetAmountBeforeDiscount>
-    <totalNetAmountAfterDiscount>632.00</totalNetAmountAfterDiscount>
-    <totalNetAmountAfterLocalTax>633.52</totalNetAmountAfterLocalTax>
-    <totalGrossAmount>696.72</totalGrossAmount>
+    <valueAddedTaxInEuro>13.20</valueAddedTaxInEuro>
+    <totalNetAmountBeforeDiscount>132.00</totalNetAmountBeforeDiscount>
+    <totalNetAmountAfterDiscount>132.00</totalNetAmountAfterDiscount>
+    <totalNetAmountAfterLocalTax>132.76</totalNetAmountAfterLocalTax>
+    <totalGrossAmount>145.96</totalGrossAmount>
     <discountInPercent>0.0</discountInPercent>
     <discountInEuro>0</discountInEuro>
     <categoryNames>
-        <categoryName>Single Room</categoryName>
+        <categoryName>Single room</categoryName>
     </categoryNames>
     <categoryPrices>
-        <categoryPrice>300.00</categoryPrice>
+        <categoryPrice>50.00</categoryPrice>
     </categoryPrices>
 </invoice>

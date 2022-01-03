@@ -210,7 +210,7 @@
                 </div>
                 <div class="card-footer">
                     <a th:href="@{/staydetails/{id}(id=${invoice.stayId})}" class="btn btn-primary">Back</a>
-                    <a class="btn btn-success float-end" type="submit" form="myform" th:value="${action}">Accept</a>
+                    <a href="/invoices" type="submit" form="myform" class="btn btn-success float-end">Accept</a>
                 </div>
             </div>
         </div>
