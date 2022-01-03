@@ -453,7 +453,7 @@ public class TestData implements ApplicationRunner {
                 0,
                 Collections.emptyList()
         );
-        this.guestRepository.add(ali);
+        this.guestRepository.add(dario);
 
         Guest umut = Guest.create(guestRepository.nextIdentity(),
                 new FullName("Umut", "Caglayan"),
@@ -467,7 +467,7 @@ public class TestData implements ApplicationRunner {
                 0,
                 Collections.emptyList()
         );
-        this.guestRepository.add(ali);
+        this.guestRepository.add(umut);
 
 
         {

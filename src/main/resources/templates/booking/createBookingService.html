@@ -40,13 +40,13 @@
                         <input type="hidden" id="amountOfChildren" name="amountOfChildren" th:field="*{amountOfChildren}"/>
 
                         <div style="width:80%; margin: auto">
-                            <div style="min-height: 32vh">
+                            <div style="min-height: 34vh">
                                 <table id="t1" class="table stripe">
                                     <thead>
                                         <tr>
                                             <th class="col"></th>
-                                            <th class="col">Name</th>
-                                            <th class="col">Price per day</th>
+                                            <th class="col-6">Name</th>
+                                            <th class="col-6">Price per day</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -62,7 +62,6 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <br>
                             <span>Additional information:</span>
                             <textarea style="min-width: 100%" rows="3" id="additionalInformation" name="additionalInformation" th:field="*{additionalInformation}"></textarea>
                         </div>
