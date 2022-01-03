@@ -165,6 +165,8 @@ public class InvoiceListingServiceTests {
                         new BigDecimal("0.10"),
                         new BigDecimal("400"),
                         new BigDecimal("4000"),
+                        new BigDecimal("0"),
+                        new BigDecimal("0"),
                         new BigDecimal("4000"),
                         new BigDecimal("4001.52"),
                         new BigDecimal("5001.52")
@@ -181,6 +183,8 @@ public class InvoiceListingServiceTests {
                         new BigDecimal("0.10"),
                         new BigDecimal("400"),
                         new BigDecimal("4000"),
+                        new BigDecimal("0"),
+                        new BigDecimal("0"),
                         new BigDecimal("4000"),
                         new BigDecimal("4001.52"),
                         new BigDecimal("5001.52")
@@ -197,6 +201,8 @@ public class InvoiceListingServiceTests {
                         new BigDecimal("0.10"),
                         new BigDecimal("400"),
                         new BigDecimal("4000"),
+                        new BigDecimal("0"),
+                        new BigDecimal("0"),
                         new BigDecimal("4000"),
                         new BigDecimal("4001.52"),
                         new BigDecimal("5001.52")

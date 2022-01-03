@@ -103,6 +103,8 @@ public class InvoiceTests {
         BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.10");
         BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("100");
         BigDecimal totalNetAmountBeforeDiscountExpected = new BigDecimal("200");
+        BigDecimal discountInPercentExpected = new BigDecimal("0");
+        BigDecimal discountInEuroExpected = new BigDecimal("0");
         BigDecimal totalNetAmountAfterDiscountExpected = new BigDecimal("200");
         BigDecimal totalNetAmountAfterLocalTaxExpected = new BigDecimal("201.52");
         BigDecimal totalGrossAmountExpected = new BigDecimal("301.52");
@@ -120,6 +122,8 @@ public class InvoiceTests {
                 valueAddedTaxInPercentExpected,
                 valueAddedTaxInEuroExpected,
                 totalNetAmountBeforeDiscountExpected,
+                discountInPercentExpected,
+                discountInEuroExpected,
                 totalNetAmountAfterDiscountExpected,
                 totalNetAmountAfterLocalTaxExpected,
                 totalGrossAmountExpected

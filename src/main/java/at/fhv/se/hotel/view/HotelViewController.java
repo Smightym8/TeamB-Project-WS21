@@ -102,6 +102,10 @@ public class HotelViewController {
     /*----- Invoice Download -----*/
     private static final String INVOICE_DOWNLOAD_URL = "/download-invoice/{invoiceNo}";
 
+    /*----- Invoice View -----*/
+    private static final String INVOICE_DETAILS_URL = "/invoice-details/{id}";
+    private static final String INVOICE_DETAILS_VIEW = "invoiceDetails";
+
     /*----- Error -----*/
     private static final String ERROR_URL = "/displayerror";
     private static final String ERROR_VIEW = "errorView";
@@ -609,6 +613,23 @@ public class HotelViewController {
                 // Content-Length
                 .contentLength(resource.contentLength())
                 .body(resource);
+    }
+
+    /*----- Invoice Details -----*/
+    // TODO: Test
+    @GetMapping(INVOICE_DETAILS_URL)
+    public ModelAndView invoiceDetails(@PathVariable("id") String id, Model model) {
+        // Get InvoiceDTO and fill InvoiceForm with it
+        InvoiceDTO invoice;
+        try {
+            invoice = invoiceListingService.findInvoiceById(id);
+
+            model.addAttribute("invoice", invoice);
+        } catch (InvoiceNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return new ModelAndView(INVOICE_DETAILS_VIEW);
     }
 
     /*----- Error -----*/

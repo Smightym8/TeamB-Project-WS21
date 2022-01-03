@@ -19,7 +19,10 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+// TODO: delete this and rename InvoiceSplitService and everything to do with split to InvoiceCalucationService and calculation
 
 @Component
 public class InvoiceCalculationServiceImpl implements InvoiceCalculationService {
@@ -130,6 +133,8 @@ public class InvoiceCalculationServiceImpl implements InvoiceCalculationService 
                 valueAddedTaxPercentage,
                 valueAddedTaxTotal.setScale(2, RoundingMode.CEILING),
                 totalNetAmountBeforeDiscount.setScale(2, RoundingMode.CEILING),
+                new BigDecimal("0"),
+                new BigDecimal("0"),
                 totalNetAmountAfterDiscount.setScale(2, RoundingMode.CEILING),
                 totalNetAmountAfterLocalTax.setScale(2, RoundingMode.CEILING),
                 totalGrossAmount.setScale(2, RoundingMode.CEILING)
