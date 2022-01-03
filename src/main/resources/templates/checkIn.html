@@ -20,7 +20,7 @@
                 <div class="card-body">
                     <div style="width:40%; margin: auto">
                         <div th:each="room : ${assignedRooms}">
-                            <div style="margin-bottom: 2em" class="input-group">
+                            <div class="input-group mb-3">
                                 <span class="input-group-text col-5" th:text="${room.categoryName}"></span>
                                 <select class="form-select">
                                         <option th:value="${room.name}" th:text="${room.name}"></option>
