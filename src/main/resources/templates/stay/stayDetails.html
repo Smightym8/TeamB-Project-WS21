@@ -21,16 +21,11 @@
                                 <p class="h5">Guest</p>
                                 <span th:text="${stayDetails.guestFirstName} + ' '  + ${stayDetails.guestLastName}"></span>
                                 <br>
-                                <span>Straße 123</span>
+                                <span th:text="${stayDetails.streetName} + ' '  + ${stayDetails.streetNumber}"></span>
                                 <br>
-                                <span>1234 Stadt</span>
+                                <span th:text="${stayDetails.zipCode} + ' '  + ${stayDetails.city}"></span>
                                 <br>
-                                <span>Land DTO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span>
-<!--                                <span th:text="${stayDetails.streetName} + ' '  + ${stayDetails.streetNumber}"></span>-->
-<!--                                <br>-->
-<!--                                <span th:text="${stayDetails.zipCode} + ' '  + ${stayDetails.city}"></span>-->
-<!--                                <br>-->
-<!--                                <span th:text="${stayDetails.country}"></span>-->
+                                <span th:text="${stayDetails.country}"></span>
                             </div>
 
                             <div class="ps-4" style="width: 50%; float: left">
