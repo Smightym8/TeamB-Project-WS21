@@ -100,50 +100,45 @@
         </div>
 
 
+        <script>
+            // Check if table with rooms is empty so that are all billed
+            // Only th should be there
 
+            var checkbox = document.querySelectorAll('input[type=checkbox]');
 
-
-
-    </form>
-
-    <script>
-        // Check if table with rooms is empty so that are all billed
-        // Only th should be there
-
-        var checkbox = document.querySelectorAll('input[type=checkbox]');
-
-        for (var i = 0; i < checkbox.length; i++) {
-            checkbox[i].setAttribute('checked','checked');
-        }
-
-        document.getElementById('checkout').setAttribute('class','btn btn-success');
-        document.getElementById('checkout').disabled = false;
-
-        function test() {
-
-            let checkboxes = document.querySelectorAll('input[type=checkbox]');
-            let selectedCheckboxes = document.querySelectorAll('input[type=checkbox]:checked');
-
-            if (selectedCheckboxes.length === 0) {
-                document.getElementById("checkout").disabled = true;
-                document.getElementById("checkout").setAttribute('class','btn btn-secondary');
-                document.getElementById("invoice").disabled = true;
-                document.getElementById("invoice").setAttribute('class','btn btn-secondary');
-
-            } else if (checkboxes.length === selectedCheckboxes.length) {
-                document.getElementById("checkout").disabled = false;
-                document.getElementById("checkout").setAttribute('class','btn btn-success');
-                document.getElementById("invoice").disabled = true;
-                document.getElementById("invoice").setAttribute('class','btn btn-secondary');
-            } else {
-                document.getElementById("checkout").disabled = true;
-                document.getElementById("checkout").setAttribute('class','btn btn-secondary');
-                document.getElementById("invoice").disabled = false;
-                document.getElementById("invoice").setAttribute('class','btn btn-success');
+            for (var i = 0; i < checkbox.length; i++) {
+                checkbox[i].setAttribute('checked','checked');
             }
-        }
-    </script>
 
-</div>
+            document.getElementById('checkout').setAttribute('class','btn btn-success');
+            document.getElementById('checkout').disabled = false;
+
+            function test() {
+
+                let checkboxes = document.querySelectorAll('input[type=checkbox]');
+                let selectedCheckboxes = document.querySelectorAll('input[type=checkbox]:checked');
+
+                if (selectedCheckboxes.length === 0) {
+                    document.getElementById("checkout").disabled = true;
+                    document.getElementById("checkout").setAttribute('class','btn btn-secondary');
+                    document.getElementById("invoice").disabled = true;
+                    document.getElementById("invoice").setAttribute('class','btn btn-secondary');
+
+                } else if (checkboxes.length === selectedCheckboxes.length) {
+                    document.getElementById("checkout").disabled = false;
+                    document.getElementById("checkout").setAttribute('class','btn btn-success');
+                    document.getElementById("invoice").disabled = true;
+                    document.getElementById("invoice").setAttribute('class','btn btn-secondary');
+                } else {
+                    document.getElementById("checkout").disabled = true;
+                    document.getElementById("checkout").setAttribute('class','btn btn-secondary');
+                    document.getElementById("invoice").disabled = false;
+                    document.getElementById("invoice").setAttribute('class','btn btn-success');
+                }
+            }
+        </script>
+
+    </div>
+
 </body>
 </html>
