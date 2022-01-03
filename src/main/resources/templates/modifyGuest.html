@@ -29,7 +29,7 @@
                                 </div>
                                 <div class="input-group ps-1" style="width: 50%;">
                                     <span class="input-group-text col-4">Discount [%]</span>
-                                    <input class="form-control" id="discount" type="number" min="0" max="100" disabled th:value="0" th:field="*{discountInPercent}">
+                                    <input class="form-control" id="discount" type="number" min="0" max="100" readonly th:value="0" th:field="*{discountInPercent}">
                                 </div>
                             </div>
 
@@ -124,11 +124,11 @@
                 let discount = document.getElementById('discount');
                 let guesttype = document.getElementById("guesttype");
 
-                if (guesttype.options[guesttype.selectedIndex].value == 'Private') {
-                    discount.setAttribute("disabled", "disabled");
+                if (guesttype.options[guesttype.selectedIndex].value === 'Private') {
+                    discount.setAttribute("readonly", "readonly");
                     discount.value = 0;
                 } else {
-                    discount.removeAttribute("disabled");
+                    discount.removeAttribute("readonly");
                 }
             }
         </script>

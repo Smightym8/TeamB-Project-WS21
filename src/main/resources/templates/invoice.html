@@ -16,8 +16,9 @@
                 </div>
                 <div class="card-body">
                     <div style="width: 90%; margin: auto">
-                        <form action="#" id="myform" th:action="@{/saveinvoice/{id}(id=${stayDetails.id})}" method="get" th:object="${invoiceForm}">
+                        <form id="myform" th:action="@{/saveinvoice/{id}(id=${stayDetails.id})}" method="get" th:object="${invoiceForm}">
                             <input type="hidden" id="roomNames" name="roomNames" th:field="*{roomNames}">
+
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <p class="h5"><strong>From:</strong></p>
@@ -210,7 +211,7 @@
                 </div>
                 <div class="card-footer">
                     <a th:href="@{/staydetails/{id}(id=${invoice.stayId})}" class="btn btn-primary">Back</a>
-                    <a class="btn btn-success float-end" type="submit" form="myform" th:value="${action}">Accept</a>
+                    <button type="submit" form="myform" th:value="${action}" name="action" class="btn btn-success float-end">Accept</button>
                 </div>
             </div>
         </div>
