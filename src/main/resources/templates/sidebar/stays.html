@@ -35,7 +35,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="stay : ${stays}">
+                            <tr th:each="stay : ${stays}" th:if="${stay.isActive}">
                                 <td class="align-middle">
                                     <span class="text-nowrap" th:text="${stay.guestFirstName} + ' '"></span>
                                     <span class="text-nowrap" th:text="${stay.guestLastName}"></span>

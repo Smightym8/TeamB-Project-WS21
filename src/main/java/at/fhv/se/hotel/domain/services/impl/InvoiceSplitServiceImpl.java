@@ -101,9 +101,11 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
         }
 
         // Calculate discount
-        double discount = 1.0 - (stay.getGuest().getDiscountInPercent() / 100.0); // 1.0 - (10.0 / 100.0)
-        BigDecimal discountInvoice = BigDecimal.valueOf(discount);
-        BigDecimal totalNetAmountAfterDiscount = totalNetAmountBeforeDiscount.multiply(discountInvoice);
+        BigDecimal discountInPercent = BigDecimal.valueOf(stay.getGuest().getDiscountInPercent());
+        BigDecimal discountInEuro = discountInPercent.compareTo(new BigDecimal("0")) == 0
+                ? new BigDecimal("0")
+                : totalNetAmountBeforeDiscount.multiply(discountInPercent.divide(new BigDecimal("100"), RoundingMode.CEILING));
+        BigDecimal totalNetAmountAfterDiscount = totalNetAmountBeforeDiscount.subtract(discountInEuro);
 
         // Calculate vat
         BigDecimal valueAddedTaxTotal = totalNetAmountAfterDiscount.multiply(valueAddedTaxPercentage);
@@ -134,6 +136,8 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
                 valueAddedTaxPercentage,
                 valueAddedTaxTotal.setScale(2, RoundingMode.CEILING),
                 totalNetAmountBeforeDiscount.setScale(2, RoundingMode.CEILING),
+                discountInPercent,
+                discountInEuro,
                 totalNetAmountAfterDiscount.setScale(2, RoundingMode.CEILING),
                 totalNetAmountAfterLocalTax.setScale(2, RoundingMode.CEILING),
                 totalGrossAmount.setScale(2, RoundingMode.CEILING)

@@ -153,26 +153,12 @@ public class CheckOutServiceTest {
         Mockito.when(stayRepository.stayById(idExpected)).thenReturn(Optional.of(stayExpected));
         Mockito.when(roomRepository.roomByName(new RoomName(roomNameExpected))).thenReturn(Optional.of(roomsExpectedList.get(0)));
 
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 1)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 2)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 3)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 4)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 5)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 6)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 7)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 8)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 9)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 10)))
-                .thenReturn(Optional.of(summerSeason));
+        // Mock each date which occurs in the loop of the calculation to return the proper season
+        // TODO: replace all similar mockings with a loop like this
+        for (int i = 1; i <= 10; i++) {
+            Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, i)))
+                    .thenReturn(Optional.of(summerSeason));
+        }
 
         Mockito.when(roomCategoryPriceRepository.by(categoriesExpected.get(0), summerSeason.getSeasonId()))
                 .thenReturn(roomCategoryPricesExpected.get(0));

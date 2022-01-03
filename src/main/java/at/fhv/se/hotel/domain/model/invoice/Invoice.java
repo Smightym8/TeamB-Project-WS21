@@ -27,6 +27,8 @@ public class Invoice {
     private BigDecimal valueAddedTaxInPercent;
     private BigDecimal valueAddedTaxInEuro;
     private BigDecimal totalNetAmountBeforeDiscount;
+    private BigDecimal discountInPercent;
+    private BigDecimal discountInEuro;
     private BigDecimal totalNetAmountAfterDiscount;
     private BigDecimal totalNetAmountAfterLocalTax;
     private BigDecimal totalGrossAmount;
@@ -51,6 +53,8 @@ public class Invoice {
             BigDecimal aValueAddedTaxInPercent,
             BigDecimal aValueAddedTaxInEuro,
             BigDecimal aTotalNetAmountBeforeDiscount,
+            BigDecimal aDiscountInPercent,
+            BigDecimal aDiscountInEuro,
             BigDecimal aTotalNetAmountAfterDiscount,
             BigDecimal aTotalNetAmountAfterLocalTax,
             BigDecimal aTotalGrossAmount
@@ -68,6 +72,8 @@ public class Invoice {
                 aValueAddedTaxInPercent,
                 aValueAddedTaxInEuro,
                 aTotalNetAmountBeforeDiscount,
+                aDiscountInPercent,
+                aDiscountInEuro,
                 aTotalNetAmountAfterDiscount,
                 aTotalNetAmountAfterLocalTax,
                 aTotalGrossAmount
@@ -87,6 +93,8 @@ public class Invoice {
             BigDecimal aValueAddedTaxInPercent,
             BigDecimal aValueAddedTaxInEuro,
             BigDecimal aTotalNetAmountBeforeDiscount,
+            BigDecimal aDiscountInPercent,
+            BigDecimal aDiscountInEuro,
             BigDecimal aTotalNetAmountAfterDiscount,
             BigDecimal aTotalNetAmountAfterLocalTax,
             BigDecimal aTotalGrossAmount
@@ -103,6 +111,8 @@ public class Invoice {
         this.valueAddedTaxInPercent = aValueAddedTaxInPercent;
         this.valueAddedTaxInEuro = aValueAddedTaxInEuro;
         this.totalNetAmountBeforeDiscount = aTotalNetAmountBeforeDiscount;
+        this.discountInPercent = aDiscountInPercent;
+        this.discountInEuro = aDiscountInEuro;
         this.totalNetAmountAfterDiscount = aTotalNetAmountAfterDiscount;
         this.totalNetAmountAfterLocalTax = aTotalNetAmountAfterLocalTax;
         this.totalGrossAmount = aTotalGrossAmount;
@@ -161,6 +171,14 @@ public class Invoice {
         return totalNetAmountBeforeDiscount;
     }
 
+    public BigDecimal getDiscountInPercent() {
+        return discountInPercent;
+    }
+
+    public BigDecimal getDiscountInEuro() {
+        return discountInEuro;
+    }
+
     public BigDecimal getTotalNetAmountAfterDiscount() {
         return totalNetAmountAfterDiscount;
     }
@@ -178,16 +196,17 @@ public class Invoice {
     }
 
     @Generated
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Invoice invoice = (Invoice) o;
-        return amountOfNights == invoice.amountOfNights && isPaid == invoice.isPaid && Objects.equals(id, invoice.id) && Objects.equals(invoiceId, invoice.invoiceId) && Objects.equals(invoiceNumber, invoice.invoiceNumber) && Objects.equals(invoiceDate, invoice.invoiceDate) && Objects.equals(stay, invoice.stay) && Objects.equals(roomCategoryPriceList, invoice.roomCategoryPriceList) && Objects.equals(services, invoice.services) && Objects.equals(localTaxPerPerson, invoice.localTaxPerPerson) && Objects.equals(localTaxTotal, invoice.localTaxTotal) && Objects.equals(valueAddedTaxInPercent, invoice.valueAddedTaxInPercent) && Objects.equals(valueAddedTaxInEuro, invoice.valueAddedTaxInEuro) && Objects.equals(totalNetAmountBeforeDiscount, invoice.totalNetAmountBeforeDiscount) && Objects.equals(totalNetAmountAfterDiscount, invoice.totalNetAmountAfterDiscount) && Objects.equals(totalNetAmountAfterLocalTax, invoice.totalNetAmountAfterLocalTax) && Objects.equals(totalGrossAmount, invoice.totalGrossAmount);
+        return amountOfNights == invoice.amountOfNights && isPaid == invoice.isPaid && Objects.equals(id, invoice.id) && Objects.equals(invoiceId, invoice.invoiceId) && Objects.equals(invoiceNumber, invoice.invoiceNumber) && Objects.equals(invoiceDate, invoice.invoiceDate) && Objects.equals(stay, invoice.stay) && Objects.equals(roomCategoryPriceList, invoice.roomCategoryPriceList) && Objects.equals(services, invoice.services) && Objects.equals(localTaxPerPerson, invoice.localTaxPerPerson) && Objects.equals(localTaxTotal, invoice.localTaxTotal) && Objects.equals(valueAddedTaxInPercent, invoice.valueAddedTaxInPercent) && Objects.equals(valueAddedTaxInEuro, invoice.valueAddedTaxInEuro) && Objects.equals(totalNetAmountBeforeDiscount, invoice.totalNetAmountBeforeDiscount) && Objects.equals(discountInPercent, invoice.discountInPercent) && Objects.equals(discountInEuro, invoice.discountInEuro) && Objects.equals(totalNetAmountAfterDiscount, invoice.totalNetAmountAfterDiscount) && Objects.equals(totalNetAmountAfterLocalTax, invoice.totalNetAmountAfterLocalTax) && Objects.equals(totalGrossAmount, invoice.totalGrossAmount);
     }
 
     @Generated
     @Override
     public int hashCode() {
-        return Objects.hash(id, invoiceId, invoiceNumber, invoiceDate, stay, roomCategoryPriceList, services, amountOfNights, localTaxPerPerson, localTaxTotal, valueAddedTaxInPercent, valueAddedTaxInEuro, totalNetAmountBeforeDiscount, totalNetAmountAfterDiscount, totalNetAmountAfterLocalTax, totalGrossAmount, isPaid);
+        return Objects.hash(id, invoiceId, invoiceNumber, invoiceDate, stay, roomCategoryPriceList, services, amountOfNights, localTaxPerPerson, localTaxTotal, valueAddedTaxInPercent, valueAddedTaxInEuro, totalNetAmountBeforeDiscount, discountInPercent, discountInEuro, totalNetAmountAfterDiscount, totalNetAmountAfterLocalTax, totalGrossAmount, isPaid);
     }
 }

@@ -10,6 +10,11 @@ public class StayDetailsDTO {
     private String id;
     private String guestFirstName;
     private String guestLastName;
+    private String streetName;
+    private String streetNumber;
+    private String zipCode;
+    private String city;
+    private String country;
     private Map<String, String> roomsWithCategories;
     private Map<String, BigDecimal> services;
     private LocalDate checkInDate;
@@ -32,6 +37,26 @@ public class StayDetailsDTO {
 
     public String guestLastName() {
         return guestLastName;
+    }
+
+    public String streetName() {
+        return streetName;
+    }
+
+    public String streetNumber() {
+        return streetNumber;
+    }
+
+    public String zipCode() {
+        return zipCode;
+    }
+
+    public String city() {
+        return city;
+    }
+
+    public String country() {
+        return country;
     }
 
     public Map<String, String> roomsWithCategories() {
@@ -84,6 +109,31 @@ public class StayDetailsDTO {
             return this;
         }
 
+        public Builder withStreetName(String streetName) {
+            this.instance.streetName = streetName;
+            return this;
+        }
+
+        public Builder withStreetNumber(String streetNumber) {
+            this.instance.streetNumber = streetNumber;
+            return this;
+        }
+
+        public Builder withZipCode(String zipCode) {
+            this.instance.zipCode = zipCode;
+            return this;
+        }
+
+        public Builder withCity(String city) {
+            this.instance.city = city;
+            return this;
+        }
+
+        public Builder withCountry(String country) {
+            this.instance.country = country;
+            return this;
+        }
+
         public Builder withRoomsWithCategories(Map<String, String> roomsWithCategories) {
             this.instance.roomsWithCategories = roomsWithCategories;
             return this;
@@ -123,6 +173,11 @@ public class StayDetailsDTO {
             Objects.requireNonNull(this.instance.id, "id must be set in StayDetailsDTO");
             Objects.requireNonNull(this.instance.guestFirstName, "guestFirstName must be set in StayDetailsDTO");
             Objects.requireNonNull(this.instance.guestLastName, "guestLastName must be set in StayDetailsDTO");
+            Objects.requireNonNull(this.instance.streetName, "streetName must be set in StayDetailsDTO");
+            Objects.requireNonNull(this.instance.streetNumber, "streetNumber must be set in StayDetailsDTO");
+            Objects.requireNonNull(this.instance.zipCode, "zipCode must be set in StayDetailsDTO");
+            Objects.requireNonNull(this.instance.city, "city must be set in StayDetailsDTO");
+            Objects.requireNonNull(this.instance.country, "country must be set in StayDetailsDTO");
             Objects.requireNonNull(this.instance.roomsWithCategories, "roomsWithCategories must be set in StayDetailsDTO");
             Objects.requireNonNull(this.instance.checkInDate, "checkInDate must be set in StayDetailsDTO");
             Objects.requireNonNull(this.instance.checkOutDate, "checkOutDate must be set in StayDetailsDTO");

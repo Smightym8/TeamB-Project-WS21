@@ -1,20 +1,35 @@
 package at.fhv.se.hotel.application.impl;
 
 import at.fhv.se.hotel.application.api.InvoiceListingService;
+import at.fhv.se.hotel.application.api.exception.InvoiceNotFoundException;
+import at.fhv.se.hotel.application.dto.InvoiceDTO;
 import at.fhv.se.hotel.application.dto.InvoiceListingDTO;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
+import at.fhv.se.hotel.domain.model.invoice.InvoiceId;
+import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomName;
+import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
+import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.repository.InvoiceRepository;
+import at.fhv.se.hotel.domain.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class InvoiceListingServiceImpl implements InvoiceListingService {
     @Autowired
     InvoiceRepository invoiceRepository;
+
+    @Autowired
+    RoomRepository roomRepository;
 
     @Transactional(readOnly = true)
     @Override
@@ -40,5 +55,72 @@ public class InvoiceListingServiceImpl implements InvoiceListingService {
         }
 
         return invoiceListingDTOs;
+    }
+
+    @Override
+    public InvoiceDTO findInvoiceById(String id) throws InvoiceNotFoundException {
+        Invoice invoice = invoiceRepository.invoiceById(new InvoiceId(id)).orElseThrow(
+                () -> new InvoiceNotFoundException("Invoice with id " + id + " not found")
+        );
+
+        Map<String, BigDecimal> services = new HashMap<>();
+        invoice.getServices().forEach(service -> services.put(service.getServiceName().name(), service.getServicePrice().price()));
+
+        // TODO: BITTE RICHTIG UND SAUBER IMPLEMENTIEREN
+        // TODO: DIESES DTO ANPASSEN (roomCategories -> roomNames, Map -> List)
+        Map<String, Integer> roomCategories = new HashMap<>();
+        List<String> categoryNames = new ArrayList<>();
+        for (Room room : invoice.getStay().getRooms().keySet()) {
+            roomCategories.put(room.getName().name(), 1);
+            categoryNames.add(room.getName().name());
+        }
+
+        Map<String, BigDecimal> roomCategoryPrices = new HashMap<>();
+        for(RoomCategoryPrice rcp : invoice.getRoomCategoryPriceList()) {
+            roomCategoryPrices.put(rcp.getRoomCategory().getRoomCategoryName().name(), rcp.getPrice());
+        }
+
+        List<BigDecimal> categoryPrices = new ArrayList<>();
+        for (String name : categoryNames) {
+            for (Map.Entry<String, BigDecimal> rcp : roomCategoryPrices.entrySet()) {
+                if (name.equals(rcp.getKey())) {
+                    categoryPrices.add(rcp.getValue());
+                }
+            }
+        }
+
+        InvoiceDTO invoiceDTO = InvoiceDTO.builder()
+                .withStayId(invoice.getStay().getStayId().id())
+                .withInvoiceNumber(invoice.getInvoiceNumber())
+                .withInvoiceDate(invoice.getInvoiceDate())
+                .withGuestFirstName(invoice.getStay().getGuest().getName().firstName())
+                .withGuestLastName(invoice.getStay().getGuest().getName().lastName())
+                .withStreetName(invoice.getStay().getGuest().getAddress().streetName())
+                .withStreetNumber(invoice.getStay().getGuest().getAddress().streetNumber())
+                .withZipCode(invoice.getStay().getGuest().getAddress().zipCode())
+                .withCity(invoice.getStay().getGuest().getAddress().city())
+                .withAmountOfAdults(invoice.getStay().getBooking().getAmountOfAdults())
+                .withAmountOfChildren(invoice.getStay().getBooking().getAmountOfChildren())
+                .withServices(services)
+                .withCategories(roomCategories)
+                .withCategoryPrices(roomCategoryPrices)
+                .withCheckInDate(invoice.getStay().getCheckInDate())
+                .withCheckOutDate(invoice.getStay().getCheckOutDate())
+                .withAmountOfNights(invoice.getAmountOfNights())
+                .withLocalTaxPerPerson(invoice.getLocalTaxPerPerson())
+                .withLocalTaxTotal(invoice.getLocalTaxTotal())
+                .withValueAddedTaxInPercent(invoice.getValueAddedTaxInPercent().setScale(1, RoundingMode.CEILING))
+                .withValueAddedTaxInEuro(invoice.getValueAddedTaxInEuro())
+                .withTotalNetAmountBeforeDiscount(invoice.getTotalNetAmountBeforeDiscount())
+                .withTotalNetAmountAfterDiscount(invoice.getTotalNetAmountAfterDiscount())
+                .withTotalNetAmountAfterLocalTax(invoice.getTotalNetAmountAfterLocalTax())
+                .withTotalGrossAmount(invoice.getTotalGrossAmount())
+                .withDiscountInPercent(invoice.getStay().getGuest().getDiscountInPercent())
+                .withDiscountInEuro(invoice.getDiscountInEuro())
+                .withCategoryNames(categoryNames)
+                .withCategoryPrices(categoryPrices)
+                .build();
+
+        return null;
     }
 }

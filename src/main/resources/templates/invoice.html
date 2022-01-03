@@ -16,8 +16,9 @@
                 </div>
                 <div class="card-body">
                     <div style="width: 90%; margin: auto">
-                        <form action="#" id="myform" th:action="@{/saveinvoice/{id}(id=${stayDetails.id})}" method="get" th:object="${invoiceForm}">
+                        <form id="myform" th:action="@{/saveinvoice/{id}(id=${stayDetails.id})}" method="get" th:object="${invoiceForm}">
                             <input type="hidden" id="roomNames" name="roomNames" th:field="*{roomNames}">
+
                             <div class="d-flex justify-content-between">
                                 <div>
                                     <p class="h5"><strong>From:</strong></p>
