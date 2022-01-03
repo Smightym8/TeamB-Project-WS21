@@ -104,6 +104,11 @@ public class StayDetailsServiceTest {
         assertEquals(idExpected, stayDetailsDTOActual.id());
         assertEquals(guestExpected.getName().firstName(), stayDetailsDTOActual.guestFirstName());
         assertEquals(guestExpected.getName().lastName(), stayDetailsDTOActual.guestLastName());
+        assertEquals(guestExpected.getAddress().streetName(), stayDetailsDTOActual.streetName());
+        assertEquals(guestExpected.getAddress().streetNumber(), stayDetailsDTOActual.streetNumber());
+        assertEquals(guestExpected.getAddress().zipCode(), stayDetailsDTOActual.zipCode());
+        assertEquals(guestExpected.getAddress().city(), stayDetailsDTOActual.city());
+        assertEquals(guestExpected.getAddress().country(), stayDetailsDTOActual.country());
         assertEquals(servicesExpected.size(), stayDetailsDTOActual.services().size());
         assertEquals(checkInExpected, stayDetailsDTOActual.checkInDate());
         assertEquals(checkOutExpected, stayDetailsDTOActual.checkOutDate());

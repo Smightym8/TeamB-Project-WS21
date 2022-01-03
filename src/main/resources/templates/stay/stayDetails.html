@@ -21,16 +21,11 @@
                                 <p class="h5">Guest</p>
                                 <span th:text="${stayDetails.guestFirstName} + ' '  + ${stayDetails.guestLastName}"></span>
                                 <br>
-                                <span>Straße 123</span>
+                                <span th:text="${stayDetails.streetName} + ' '  + ${stayDetails.streetNumber}"></span>
                                 <br>
-                                <span>1234 Stadt</span>
+                                <span th:text="${stayDetails.zipCode} + ' '  + ${stayDetails.city}"></span>
                                 <br>
-                                <span>Land DTO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span>
-<!--                                <span th:text="${stayDetails.streetName} + ' '  + ${stayDetails.streetNumber}"></span>-->
-<!--                                <br>-->
-<!--                                <span th:text="${stayDetails.zipCode} + ' '  + ${stayDetails.city}"></span>-->
-<!--                                <br>-->
-<!--                                <span th:text="${stayDetails.country}"></span>-->
+                                <span th:text="${stayDetails.country}"></span>
                             </div>
 
                             <div class="ps-4" style="width: 50%; float: left">
@@ -56,7 +51,7 @@
 
                         <br>
 
-                        <form action="#" id="myform" th:action="@{/invoice/{id}(id=${stayDetails.id})}" method="get" th:object="${invoiceForm}">
+                        <form id="myform" th:action="@{/invoice/{id}(id=${stayDetails.id})}" method="get" th:object="${invoiceForm}">
                             <div class="mt-4">
                                 <p class="h5">Rooms</p>
                                 <table class="table table-striped">
@@ -89,7 +84,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button class="btn btn-primary" onclick="history.back()">Back</button>
+                    <a class="btn btn-primary" th:href="@{/}">Back</a>
                     <div class="float-end">
                         <button name="action" value="createInvoice" type="submit" form="myform" id="invoice" class="btn btn-secondary" disabled>Create Invoice</button>
                         <button name="action" value="checkOut" type="submit" form="myform" id="checkout" class="btn btn-secondary" disabled>Check-Out</button>
@@ -100,50 +95,45 @@
         </div>
 
 
+        <script>
+            // Check if table with rooms is empty so that are all billed
+            // Only th should be there
 
+            var checkbox = document.querySelectorAll('input[type=checkbox]');
 
-
-
-    </form>
-
-    <script>
-        // Check if table with rooms is empty so that are all billed
-        // Only th should be there
-
-        var checkbox = document.querySelectorAll('input[type=checkbox]');
-
-        for (var i = 0; i < checkbox.length; i++) {
-            checkbox[i].setAttribute('checked','checked');
-        }
-
-        document.getElementById('checkout').setAttribute('class','btn btn-success');
-        document.getElementById('checkout').disabled = false;
-
-        function test() {
-
-            let checkboxes = document.querySelectorAll('input[type=checkbox]');
-            let selectedCheckboxes = document.querySelectorAll('input[type=checkbox]:checked');
-
-            if (selectedCheckboxes.length === 0) {
-                document.getElementById("checkout").disabled = true;
-                document.getElementById("checkout").setAttribute('class','btn btn-secondary');
-                document.getElementById("invoice").disabled = true;
-                document.getElementById("invoice").setAttribute('class','btn btn-secondary');
-
-            } else if (checkboxes.length === selectedCheckboxes.length) {
-                document.getElementById("checkout").disabled = false;
-                document.getElementById("checkout").setAttribute('class','btn btn-success');
-                document.getElementById("invoice").disabled = true;
-                document.getElementById("invoice").setAttribute('class','btn btn-secondary');
-            } else {
-                document.getElementById("checkout").disabled = true;
-                document.getElementById("checkout").setAttribute('class','btn btn-secondary');
-                document.getElementById("invoice").disabled = false;
-                document.getElementById("invoice").setAttribute('class','btn btn-success');
+            for (var i = 0; i < checkbox.length; i++) {
+                checkbox[i].setAttribute('checked','checked');
             }
-        }
-    </script>
 
-</div>
+            document.getElementById('checkout').setAttribute('class','btn btn-success');
+            document.getElementById('checkout').disabled = false;
+
+            function test() {
+
+                let checkboxes = document.querySelectorAll('input[type=checkbox]');
+                let selectedCheckboxes = document.querySelectorAll('input[type=checkbox]:checked');
+
+                if (selectedCheckboxes.length === 0) {
+                    document.getElementById("checkout").disabled = true;
+                    document.getElementById("checkout").setAttribute('class','btn btn-secondary');
+                    document.getElementById("invoice").disabled = true;
+                    document.getElementById("invoice").setAttribute('class','btn btn-secondary');
+
+                } else if (checkboxes.length === selectedCheckboxes.length) {
+                    document.getElementById("checkout").disabled = false;
+                    document.getElementById("checkout").setAttribute('class','btn btn-success');
+                    document.getElementById("invoice").disabled = true;
+                    document.getElementById("invoice").setAttribute('class','btn btn-secondary');
+                } else {
+                    document.getElementById("checkout").disabled = true;
+                    document.getElementById("checkout").setAttribute('class','btn btn-secondary');
+                    document.getElementById("invoice").disabled = false;
+                    document.getElementById("invoice").setAttribute('class','btn btn-success');
+                }
+            }
+        </script>
+
+    </div>
+
 </body>
 </html>
