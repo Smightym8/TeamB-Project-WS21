@@ -15,9 +15,9 @@
 
     <div layout:fragment="content">
 
-        <div style="margin: auto">
-            <div class="card" style="min-height: 60vh">
-                <div class="card-header ">
+        <div class="div-width-s">
+            <div class="card card-height">
+                <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <span class="h4 align-middle">Create booking - services</span>
@@ -45,8 +45,8 @@
                                     <thead>
                                         <tr>
                                             <th class="col"></th>
-                                            <th class="col-8">Name</th>
-                                            <th class="col-4">Price per day</th>
+                                            <th class="col">Name</th>
+                                            <th class="col">Price per day</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -62,8 +62,9 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <br>
                             <span>Additional information:</span>
-                            <textarea style="min-width: 100%" rows="4" id="additionalInformation" name="additionalInformation" th:field="*{additionalInformation}"></textarea>
+                            <textarea style="min-width: 100%" rows="3" id="additionalInformation" name="additionalInformation" th:field="*{additionalInformation}"></textarea>
                         </div>
                     </form>
 
@@ -80,7 +81,7 @@
             let table1 = $('#t1').DataTable({
                 "order": [ 1, "asc" ],
                 "scrollCollapse": true,
-                "scrollY": "22vh",
+                "scrollY": "24vh",
                 "paging":   false,
                 "info":     false,
                 columnDefs: [

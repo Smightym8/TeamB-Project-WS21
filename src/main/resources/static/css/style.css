@@ -27,6 +27,10 @@ body {
     margin: auto;
 }
 
+.card-height {
+    min-height: 65vh;
+}
+
 hr {
     opacity: 50%;
 }
