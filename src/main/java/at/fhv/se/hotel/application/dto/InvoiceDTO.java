@@ -51,13 +51,8 @@ public class InvoiceDTO {
     @XmlElement(name = "service")
     private Map<String, BigDecimal> services;
 
-    // TODO: Change to List<String> roomNames
-    @XmlElement(name = "roomCategories")
-    private Map<String, Integer> roomCategories;
-
-    // TODO: Check why this exists twice
-    @XmlElement(name = "roomCategoryPrices")
-    private Map<String, BigDecimal> roomCategoryPrices;
+    @XmlElement(name = "roomNames")
+    private List<String> roomNames;
 
     @XmlElement(name = "checkInDate")
     @XmlJavaTypeAdapter(value = LocalDateAdapter.class)
@@ -160,12 +155,8 @@ public class InvoiceDTO {
         return services;
     }
 
-    public Map<String, Integer> roomCategories() {
-        return roomCategories;
-    }
-
-    public Map<String, BigDecimal> roomCategoryPrices() {
-        return roomCategoryPrices;
+    public List<String> roomNames() {
+        return roomNames;
     }
 
     public LocalDate checkInDate() {
@@ -295,13 +286,8 @@ public class InvoiceDTO {
             return this;
         }
 
-        public Builder withCategories(Map<String, Integer> roomCategories) {
-            this.instance.roomCategories = roomCategories;
-            return this;
-        }
-
-        public Builder withCategoryPrices(Map<String, BigDecimal> roomCategoryPrices) {
-            this.instance.roomCategoryPrices = roomCategoryPrices;
+        public Builder withRoomNames(List<String> roomNames) {
+            this.instance.roomNames = roomNames;
             return this;
         }
 
@@ -390,8 +376,7 @@ public class InvoiceDTO {
             Objects.requireNonNull(this.instance.streetNumber, "streetNumber must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.zipCode, "zipCode must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.city, "city must be set in InvoiceDTO");
-            Objects.requireNonNull(this.instance.roomCategories, "roomCategories must be set in InvoiceDTO");
-            Objects.requireNonNull(this.instance.roomCategoryPrices, "roomCategoryPrices must be set in InvoiceDTO");
+            Objects.requireNonNull(this.instance.roomNames, "roomNames must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.checkInDate, "checkInDate must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.checkOutDate, "checkOutDate must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.localTaxPerPerson, "localTaxPerPerson must be set in InvoiceDTO");

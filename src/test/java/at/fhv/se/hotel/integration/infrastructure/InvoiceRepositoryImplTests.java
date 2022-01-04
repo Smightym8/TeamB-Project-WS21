@@ -29,10 +29,7 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -152,6 +149,8 @@ public class InvoiceRepositoryImplTests {
                 ), false
         );
 
+        List<Room> roomsForInvoice = new ArrayList<>(roomsExpected.keySet());
+
         InvoiceId invoiceIdExpected = new InvoiceId("1337");
         String invoiceNumberExpected = "30112021001";
         Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
@@ -173,6 +172,7 @@ public class InvoiceRepositoryImplTests {
                 stayExpected,
                 categoryPricesExpected,
                 servicesExpected,
+                roomsForInvoice,
                 amountOfNightsExpected,
                 localTaxPerPersonExpected,
                 localTaxTotalExpected,
@@ -344,6 +344,8 @@ public class InvoiceRepositoryImplTests {
                         categoriesExpected.get(1)), false
         );
 
+        List<Room> roomsForInvoice = new ArrayList<>(roomsExpected.keySet());
+
         List<Stay> staysExpected = List.of(
                 Stay.create(bookingsExpected.get(0), roomsExpected),
                 Stay.create(bookingsExpected.get(1), roomsExpected),
@@ -375,6 +377,7 @@ public class InvoiceRepositoryImplTests {
                         staysExpected.listIterator().next(),
                         categoryPricesExpected,
                         servicesExpected,
+                        roomsForInvoice,
                         amountOfNightsExpected,
                         localTaxPerPersonExpected,
                         localTaxTotalExpected,
@@ -537,6 +540,8 @@ public class InvoiceRepositoryImplTests {
                         categoriesExpected.get(1)), false
         );
 
+        List<Room> roomsForInvoice = new ArrayList<>(roomsExpected.keySet());
+
         List<Stay> staysExpected = List.of(
                 Stay.create(bookingsExpected.get(0), roomsExpected),
                 Stay.create(bookingsExpected.get(1), roomsExpected),
@@ -570,6 +575,7 @@ public class InvoiceRepositoryImplTests {
                         staysExpected.listIterator().next(),
                         categoryPricesExpected,
                         servicesExpected,
+                        roomsForInvoice,
                         amountOfNightsExpected,
                         localTaxPerPersonExpected,
                         localTaxTotalExpected,

@@ -21,10 +21,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -92,6 +89,8 @@ public class InvoiceTests {
                 Room.create(new RoomName("101"), RoomStatus.FREE, category), false
         );
 
+        List<Room> roomsForInvoice = new ArrayList<>(rooms.keySet());
+
         // when
         Stay stayExpected = Stay.create(booking, rooms);
 
@@ -116,6 +115,7 @@ public class InvoiceTests {
                 stayExpected,
                 categoryPricesExpected,
                 services,
+                roomsForInvoice,
                 amountOfNightsExpected,
                 localTaxPerPersonExpected,
                 localTaxTotalExpected,

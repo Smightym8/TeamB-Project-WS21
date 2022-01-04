@@ -137,9 +137,6 @@
 								<fo:table-header border-width="1pt" border-style="solid">
 									<fo:table-row font-weight="bold">
 										<fo:table-cell padding="3pt">
-											<fo:block>Quantity</fo:block>
-										</fo:table-cell>
-										<fo:table-cell padding="3pt">
 											<fo:block>Name</fo:block>
 										</fo:table-cell>
 										<fo:table-cell padding="3pt">
@@ -155,17 +152,12 @@
 								</fo:table-header>
 
 								<fo:table-body border-width="1pt" border-style="solid">
-									<xsl:for-each select="/invoice/roomCategories/entry">
+									<xsl:for-each select="/invoice/roomNames">
 										<xsl:variable name ="pos" select="position()" />
 										<fo:table-row>
 											<fo:table-cell padding="3pt">
 												<fo:block>
-													<xsl:value-of select="value" />
-												</fo:block>
-											</fo:table-cell>
-											<fo:table-cell padding="3pt">
-												<fo:block>
-													<xsl:value-of select="key" />
+													<xsl:value-of select="/invoice/roomNames[$pos]" />
 												</fo:block>
 											</fo:table-cell>
 											<fo:table-cell padding="3pt">
@@ -182,7 +174,7 @@
 											<fo:table-cell padding="3pt">
 												<fo:block>
 													<xsl:text>€ </xsl:text>
-													<xsl:value-of select="format-number((/invoice/categoryPrices/categoryPrice[$pos] * /invoice/amountOfNights), '#.00')" />
+													<xsl:value-of select="format-number((/invoice/categoryPrices/categoryPrice[$pos] * number(/invoice/amountOfNights)), '#.00')" />
 												</fo:block>
 											</fo:table-cell>
 										</fo:table-row>
@@ -251,7 +243,7 @@
 										<fo:table-row>
 											<fo:table-cell padding="3pt">
 												<fo:block>
-													<xsl:value-of select="count(/invoice/roomCategories/entry)"/>
+													<xsl:value-of select="count(/invoice/roomNames)"/>
 												</fo:block>
 											</fo:table-cell>
 											<fo:table-cell padding="3pt">
@@ -268,13 +260,12 @@
 											<fo:table-cell padding="3pt">
 												<fo:block>
 													<xsl:text>€ </xsl:text>
-													<xsl:value-of select="format-number((value * count(/invoice/roomCategories/entry) * number(/invoice/amountOfNights)), '#.00')" />
+													<xsl:value-of select="format-number((value * count(/invoice/roomNames) * number(/invoice/amountOfNights)), '#.00')" />
 												</fo:block>
 											</fo:table-cell>
 										</fo:table-row>
 									</xsl:for-each>
 								</fo:table-body>
-
 							</fo:table>
 						</fo:block>
 					</fo:block>

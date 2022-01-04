@@ -40,8 +40,7 @@ public class InvoicePDFRepositoryTests {
                 .withAmountOfAdults(2)
                 .withAmountOfChildren(1)
                 .withServices(Map.of("Breakfast", new BigDecimal("100")))
-                .withCategories(Map.of("Single Room", 1))
-                .withCategoryPrices(Map.of("Single Room", new BigDecimal("300")))
+                .withRoomNames(List.of("101"))
                 .withCheckInDate(LocalDate.of(2021, 8, 1))
                 .withCheckOutDate(LocalDate.of(2021, 8, 10))
                 .withAmountOfNights(9)
@@ -58,6 +57,7 @@ public class InvoicePDFRepositoryTests {
                 .withTotalNetAmountAfterDiscount(new BigDecimal("200"))
                 .withTotalNetAmountAfterLocalTax(new BigDecimal("200"))
                 .build();
+
         // when
         invoicePDFRepository.saveAsPDF(invoiceDTOExpected);
         ByteArrayResource byteArrayResource = invoicePDFRepository.findInvoiceByNo(invoiceNo).get();

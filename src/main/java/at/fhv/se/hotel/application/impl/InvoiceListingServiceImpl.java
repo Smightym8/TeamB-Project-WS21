@@ -68,26 +68,19 @@ public class InvoiceListingServiceImpl implements InvoiceListingService {
                 services.put(service.getServiceName().name(), service.getServicePrice().price())
         );
 
-        Map<String, Integer> roomCategories = new HashMap<>();
         List<String> categoryNames = new ArrayList<>();
-        invoice.getStay().getBooking().getRoomCategories().forEach(roomCategory -> {
-                roomCategories.put(
-                        roomCategory.getRoomCategory().getRoomCategoryName().name(),
-                        roomCategory.getAmount()
-                );
-                categoryNames.add(roomCategory.getRoomCategory().getRoomCategoryName().name());
-            }
+        invoice.getStay().getBooking().getRoomCategories().forEach(roomCategory ->
+                categoryNames.add(
+                        roomCategory.getRoomCategory().getRoomCategoryName().name()
+                )
         );
 
-        Map<String, BigDecimal> roomCategoryPrices = new HashMap<>();
+        List<String> roomNames = new ArrayList<>();
+        invoice.getRooms().forEach(room -> roomNames.add(room.getName().name()));
+
         List<BigDecimal> categoryPrices = new ArrayList<>();
-        invoice.getRoomCategoryPriceList().forEach(roomCategoryPrice -> {
-                roomCategoryPrices.put(
-                        roomCategoryPrice.getRoomCategory().getRoomCategoryName().name(),
-                        roomCategoryPrice.getPrice()
-                );
-                categoryPrices.add(roomCategoryPrice.getPrice());
-            }
+        invoice.getRoomCategoryPriceList().forEach(roomCategoryPrice ->
+                categoryPrices.add(roomCategoryPrice.getPrice())
         );
 
         InvoiceDTO invoiceDTO = InvoiceDTO.builder()
@@ -102,8 +95,7 @@ public class InvoiceListingServiceImpl implements InvoiceListingService {
                 .withAmountOfAdults(invoice.getStay().getBooking().getAmountOfAdults())
                 .withAmountOfChildren(invoice.getStay().getBooking().getAmountOfChildren())
                 .withServices(services)
-                .withCategories(roomCategories)
-                .withCategoryPrices(roomCategoryPrices)
+                .withRoomNames(roomNames)
                 .withCheckInDate(invoice.getStay().getBooking().getCheckInDate())
                 .withCheckOutDate(invoice.getStay().getBooking().getCheckOutDate())
                 .withAmountOfNights(invoice.getAmountOfNights())

@@ -45,5 +45,11 @@
             <key column="invoice_id" not-null="false"/> <!-- It's possible that no services were booked -->
             <many-to-many column="service_id" class="at.fhv.se.hotel.domain.model.service.Service"/>
         </bag>
+
+        <!-- Many to Many mapping to Room -->
+        <bag name="rooms" cascade="all" lazy="true">
+            <key column="invoice_id" not-null="true"/> <!-- It's possible that no services were booked -->
+            <many-to-many column="room_id" class="at.fhv.se.hotel.domain.model.room.Room"/>
+        </bag>
     </class>
 </hibernate-mapping>

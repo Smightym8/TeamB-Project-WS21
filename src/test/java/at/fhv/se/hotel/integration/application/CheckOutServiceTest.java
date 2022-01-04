@@ -173,7 +173,6 @@ public class CheckOutServiceTest {
         assertEquals(stayExpected.getGuest().getAddress().streetNumber(), invoiceActual.streetNumber());
         assertEquals(stayExpected.getGuest().getAddress().zipCode(), invoiceActual.zipCode());
         assertEquals(stayExpected.getGuest().getAddress().city(), invoiceActual.city());
-        assertEquals(roomCategoryPricesExpected.size(), invoiceActual.roomCategoryPrices().size());
         assertEquals(stayExpected.getCheckInDate(), invoiceActual.checkInDate());
         assertEquals(stayExpected.getCheckOutDate(), invoiceActual.checkOutDate());
         assertEquals(amountOfNightsExpected, invoiceActual.amountOfNights());

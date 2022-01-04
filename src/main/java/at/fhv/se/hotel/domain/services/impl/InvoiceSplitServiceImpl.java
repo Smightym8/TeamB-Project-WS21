@@ -78,6 +78,7 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
         // Calculate RoomCategoryPrices
         LocalDate tempDate = stay.getCheckInDate();
 
+        List<Room> rooms = new ArrayList<>();
         for(int i = 0; i < nights; i++) {
             // TODO: Throw exception if season isn't present
             Season currentSeason = seasonRepository.seasonByDate(tempDate).get();
@@ -85,6 +86,10 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
             for(String name : roomNames) {
                 // TODO: Use RoomNotFoundException
                 Room room = roomRepository.roomByName(new RoomName(name)).get();
+
+                if(!rooms.contains(room)) {
+                    rooms.add(room);
+                }
 
                 RoomCategoryPrice currentCategoryPrice = roomCategoryPriceService.by(
                         room.getRoomCategory(), currentSeason.getSeasonId()
@@ -130,6 +135,7 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
                 stay,
                 roomCategoryPriceList,
                 services,
+                rooms,
                 nights,
                 localTaxInEuro,
                 localTaxTotal.setScale(2, RoundingMode.CEILING),

@@ -128,6 +128,8 @@ public class InvoiceListingServiceTests {
                 Room.create(new RoomName("double Room"),RoomStatus.FREE,categoryExpected), false
         );
 
+        List<Room> roomsForInvoice = new ArrayList<>(roomsExpected.keySet());
+
         List<Stay> staysExpected = List.of(
                 Stay.create(bookingsExpected.get(0), roomsExpected),
                 Stay.create(bookingsExpected.get(1), roomsExpected),
@@ -157,6 +159,7 @@ public class InvoiceListingServiceTests {
                         staysExpected.get(0),
                         roomCategoryPricesExpected,
                         servicesExpected,
+                        roomsForInvoice,
                         10,
                         new BigDecimal("0.76"),
                         new BigDecimal("1.52"),
@@ -175,6 +178,7 @@ public class InvoiceListingServiceTests {
                         staysExpected.get(1),
                         roomCategoryPricesExpected,
                         servicesExpected,
+                        roomsForInvoice,
                         12,
                         new BigDecimal("0.76"),
                         new BigDecimal("1.52"),
@@ -193,6 +197,7 @@ public class InvoiceListingServiceTests {
                         staysExpected.get(2),
                         roomCategoryPricesExpected,
                         servicesExpected,
+                        roomsForInvoice,
                         12,
                         new BigDecimal("0.76"),
                         new BigDecimal("1.52"),
@@ -283,6 +288,8 @@ public class InvoiceListingServiceTests {
                 Room.create(new RoomName("102"),RoomStatus.FREE, categoryExpected), false
         );
 
+        List<Room> roomsForInvoice = new ArrayList<>(roomsExpected.keySet());
+
         Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
 
         Season winterSeason = Season.create(
@@ -307,6 +314,7 @@ public class InvoiceListingServiceTests {
                 stayExpected,
                 roomCategoryPricesExpected,
                 servicesExpected,
+                roomsForInvoice,
                 10,
                 new BigDecimal("0.76"),
                 new BigDecimal("1.52"),
@@ -337,7 +345,7 @@ public class InvoiceListingServiceTests {
         assertEquals(bookingExpected.getAmountOfAdults(), invoiceActual.amountOfAdults());
         assertEquals(bookingExpected.getAmountOfChildren(), invoiceActual.amountOfChildren());
         assertEquals(invoiceExpected.getServices().size(), invoiceActual.services().size());
-        assertEquals(bookingExpected.getRoomCategories().size(), invoiceActual.roomCategories().size());
+        assertEquals(invoiceExpected.getRooms().size(), invoiceActual.roomNames().size());
         assertEquals(invoiceExpected.getRoomCategoryPriceList().size(), invoiceActual.categoryPrices().size());
         assertEquals(bookingExpected.getCheckInDate(), invoiceActual.checkInDate());
         assertEquals(bookingExpected.getCheckOutDate(), invoiceActual.checkOutDate());

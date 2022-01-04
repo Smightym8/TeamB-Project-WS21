@@ -62,27 +62,17 @@ public class CheckOutServiceImpl implements CheckOutService {
             services.put(s.getServiceName().name(), s.getServicePrice().price());
         }
 
-        Map<String, Integer> roomCategories = new HashMap<>();
-        for (String name : roomNames) {
-            roomCategories.put(name, 1);
-        }
-
         List<String> categoryNames = new ArrayList<>();
         for (String name : roomNames) {
             // TODO: EXCEPTION!!!!!!
             categoryNames.add(roomRepository.roomByName(new RoomName(name)).get().getRoomCategory().getRoomCategoryName().name());
         }
 
-        Map<String, BigDecimal> roomCategoryPrices = new HashMap<>();
-        for(RoomCategoryPrice rcp : invoice.getRoomCategoryPriceList()) {
-            roomCategoryPrices.put(rcp.getRoomCategory().getRoomCategoryName().name(), rcp.getPrice());
-        }
-
         List<BigDecimal> categoryPrices = new ArrayList<>();
         for (String name : categoryNames) {
-            for (Map.Entry<String, BigDecimal> rcp : roomCategoryPrices.entrySet()) {
-                if (name.equals(rcp.getKey())) {
-                    categoryPrices.add(rcp.getValue());
+            for (RoomCategoryPrice rcp : invoice.getRoomCategoryPriceList()) {
+                if (name.equals(rcp.getRoomCategory().getRoomCategoryName().name())) {
+                    categoryPrices.add(rcp.getPrice());
                 }
             }
         }
@@ -109,8 +99,7 @@ public class CheckOutServiceImpl implements CheckOutService {
                 .withAmountOfAdults(invoice.getStay().getBooking().getAmountOfAdults())
                 .withAmountOfChildren(invoice.getStay().getBooking().getAmountOfChildren())
                 .withServices(services)
-                .withCategories(roomCategories)
-                .withCategoryPrices(roomCategoryPrices)
+                .withRoomNames(roomNames)
                 .withCheckInDate(invoice.getStay().getCheckInDate())
                 .withCheckOutDate(invoice.getStay().getCheckOutDate())
                 .withAmountOfNights(invoice.getAmountOfNights())
