@@ -15,6 +15,7 @@ public class BookingWithRoomCategory {
 
     // Required by hibernate
     @SuppressWarnings("unused")
+    @Generated
     private BookingWithRoomCategory() {}
 
     public static BookingWithRoomCategory create(BookingWithRoomCategoryId aBookingWithRoomCategoryId,

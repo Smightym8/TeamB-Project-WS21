@@ -7,6 +7,9 @@ import java.util.Objects;
 public class SeasonName {
     private String name;
 
+    // Required by hibernate
+    @SuppressWarnings("unused")
+    @Generated
     private SeasonName() {
     }
 

@@ -24,6 +24,7 @@ public class Stay {
 
     // Required by hibernate
     @SuppressWarnings("unused")
+    @Generated
     protected Stay() {
     }
 

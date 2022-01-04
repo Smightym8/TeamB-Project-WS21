@@ -10,6 +10,7 @@ public class InvoiceId {
 
     // Required by hibernate
     @SuppressWarnings("unused")
+    @Generated
     private InvoiceId() {
     }
 

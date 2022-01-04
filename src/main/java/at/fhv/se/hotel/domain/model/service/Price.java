@@ -12,6 +12,7 @@ public class Price {
 
     // Required by hibernate
     @SuppressWarnings("unused")
+    @Generated
     private Price() {
     }
 

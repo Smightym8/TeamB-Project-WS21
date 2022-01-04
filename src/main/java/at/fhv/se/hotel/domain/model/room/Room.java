@@ -15,6 +15,7 @@ public class Room {
 
     // Required by hibernate
     @SuppressWarnings("unused")
+    @Generated
     protected Room(){}
 
     public static Room create (RoomName aName, RoomStatus aStatus, RoomCategory aRoomCategory){

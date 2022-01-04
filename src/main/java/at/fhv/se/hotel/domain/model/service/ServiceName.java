@@ -11,6 +11,7 @@ public class ServiceName {
 
     // Required by hibernate
     @SuppressWarnings("unused")
+    @Generated
     private ServiceName() {
     }
 

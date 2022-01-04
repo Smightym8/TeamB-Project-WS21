@@ -128,10 +128,9 @@
 
 						<fo:block margin-top="1mm">
 							<fo:table font-size="10pt">
-								<fo:table-column column-width="15%"/>
-								<fo:table-column column-width="15%"/>
 								<fo:table-column column-width="25%"/>
 								<fo:table-column column-width="25%"/>
+								<fo:table-column column-width="30%"/>
 								<fo:table-column column-width="20%"/>
 
 								<fo:table-header border-width="1pt" border-style="solid">

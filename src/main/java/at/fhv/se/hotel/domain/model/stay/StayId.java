@@ -10,6 +10,7 @@ public class StayId {
 
     // Required by hibernate
     @SuppressWarnings("unused")
+    @Generated
     public StayId() {
     }
 

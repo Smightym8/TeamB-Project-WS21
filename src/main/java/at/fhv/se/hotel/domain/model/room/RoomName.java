@@ -9,6 +9,7 @@ public class RoomName {
 
     // Required by hibernate
     @SuppressWarnings("unused")
+    @Generated
     private RoomName() {
     }
 

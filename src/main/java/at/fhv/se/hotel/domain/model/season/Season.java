@@ -15,6 +15,7 @@ public class Season {
 
     // Required by hibernate
     @SuppressWarnings("unused")
+    @Generated
     protected Season() {
     }
 

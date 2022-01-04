@@ -18,6 +18,7 @@ public class RoomCategoryPrice {
 
     // Required by hibernate
     @SuppressWarnings("unused")
+    @Generated
     private RoomCategoryPrice(){}
 
     public static RoomCategoryPrice create(RoomCategoryPriceId aRoomCategoryPriceId, Season aSeason, RoomCategory aRoomCategory, BigDecimal aPrice) {

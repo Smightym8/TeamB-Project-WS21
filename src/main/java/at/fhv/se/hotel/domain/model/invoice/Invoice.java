@@ -40,6 +40,7 @@ public class Invoice {
 
     // Required by hibernate
     @SuppressWarnings("unused")
+    @Generated
     protected Invoice() {
     }
 

@@ -10,6 +10,7 @@ public class GuestId {
 
     // Required by hibernate
     @SuppressWarnings("unused")
+    @Generated
     private GuestId() {
     }
 

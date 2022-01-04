@@ -14,6 +14,7 @@ public class RoomCategoryPriceId {
 
     // Required by hibernate
     @SuppressWarnings("unused")
+    @Generated
     private RoomCategoryPriceId (){}
 
     public String id() {

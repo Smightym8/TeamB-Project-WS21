@@ -29,6 +29,7 @@ public class Booking {
 
     // Required by hibernate
     @SuppressWarnings("unused")
+    @Generated
     protected Booking() {}
 
     public static Booking create(LocalDate aCheckInDate, LocalDate aCheckOutDate,

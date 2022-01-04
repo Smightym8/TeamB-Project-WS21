@@ -17,6 +17,7 @@ public class Service {
 
     // Required by hibernate
     @SuppressWarnings("unused")
+    @Generated
     protected Service() {
     }
 

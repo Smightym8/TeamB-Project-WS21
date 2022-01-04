@@ -10,6 +10,7 @@ public class BookingId {
 
     // Required by hibernate
     @SuppressWarnings("unused")
+    @Generated
     private BookingId() {}
 
     public BookingId(String id){

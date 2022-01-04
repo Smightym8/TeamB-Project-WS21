@@ -16,6 +16,7 @@ public class RoomCategory {
 
     // Required by hibernate
     @SuppressWarnings("unused")
+    @Generated
     protected RoomCategory() {
     }
 

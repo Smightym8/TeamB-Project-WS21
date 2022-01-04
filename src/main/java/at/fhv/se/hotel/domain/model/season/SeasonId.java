@@ -9,6 +9,7 @@ public class SeasonId {
 
     // Required by hibernate
     @SuppressWarnings("unused")
+    @Generated
     private SeasonId() {
     }
 

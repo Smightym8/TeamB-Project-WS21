@@ -10,6 +10,7 @@ public class RoomCategoryId {
 
     // Required by hibernate
     @SuppressWarnings("unused")
+    @Generated
     private RoomCategoryId() {
     }
 

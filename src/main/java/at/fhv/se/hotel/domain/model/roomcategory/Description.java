@@ -9,6 +9,7 @@ public class Description {
 
     // Required by hibernate
     @SuppressWarnings("unused")
+    @Generated
     private Description() {
     }
 
