@@ -30,15 +30,28 @@
                 <div class="card-body">
 
                     <form th:if="${!isCreated}" id="myform" action="/createbooking?isCreated=true" method="post" th:object="${bookingForm}">
-                        <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}" />
-                        <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}" />
-                        <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}" />
-                        <input type="hidden" id="amounts" name="amounts" th:field="*{amountsOfRoomCategories}" />
-                        <input type="hidden" id="checkInDate" name="checkInDate" th:field="*{checkInDate}" />
-                        <input type="hidden" id="checkOutDate" name="checkOutDate" th:field="*{checkOutDate}" />
-                        <input type="hidden" id="amountOfAdults" name="amountOfAdults" th:field="*{amountOfAdults}" />
-                        <input type="hidden" id="amountOfChildren" name="amountOfChildren" th:field="*{amountOfChildren}" />
-                        <input type="hidden" id="additionalInformation" name="additionalInformation" th:field="*{additionalInformation}" />
+                        <input type="hidden" id="guestId" name="guestId" th:field="${bookingForm.guestId}" />
+                        <input type="hidden" id="serviceId" name="serviceId" th:field="${bookingForm.serviceIds}" />
+                        <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="${bookingForm.roomCategoryIds}" />
+                        <input type="hidden" id="amounts" name="amounts" th:field="${bookingForm.amountsOfRoomCategories}" />
+                        <input type="hidden" id="checkInDate" name="checkInDate" th:field="${bookingForm.checkInDate}" />
+                        <input type="hidden" id="checkOutDate" name="checkOutDate" th:field="${bookingForm.checkOutDate}" />
+                        <input type="hidden" id="amountOfAdults" name="amountOfAdults" th:field="${bookingForm.amountOfAdults}" />
+                        <input type="hidden" id="amountOfChildren" name="amountOfChildren" th:field="${bookingForm.amountOfChildren}" />
+                        <input type="hidden" id="additionalInformation" name="additionalInformation" th:field="${bookingForm.additionalInformation}" />
+
+                        <input type="hidden" id="firstName" name="firstName" th:field="${guestForm.firstName}" />
+                        <input type="hidden" id="lastName" name="lastName" th:field="${guestForm.lastName}" />
+                        <input type="hidden" id="gender" name="gender" th:field="${guestForm.gender}" />
+                        <input type="hidden" id="eMail" name="eMail" th:field="${guestForm.eMail}" />
+                        <input type="hidden" id="phoneNumber" name="phoneNumber" th:field="${guestForm.phoneNumber}" />
+                        <input type="hidden" id="birthDate" name="birthDate" th:field="${guestForm.birthDate}" />
+                        <input type="hidden" id="streetName" name="streetName" th:field="${guestForm.streetName}" />
+                        <input type="hidden" id="streetNumber" name="streetNumber" th:field="${guestForm.streetNumber}" />
+                        <input type="hidden" id="zipCode" name="zipCode" th:field="${guestForm.zipCode}" />
+                        <input type="hidden" id="city" name="city" th:field="${guestForm.city}" />
+                        <input type="hidden" id="country" name="country" th:field="${guestForm.country}" />
+                        <input type="hidden" id="discountInPercent" name="discountInPercent" th:field="${guestForm.discountInPercent}" />
                     </form>
 
                     <div style="width:80%; margin: auto">

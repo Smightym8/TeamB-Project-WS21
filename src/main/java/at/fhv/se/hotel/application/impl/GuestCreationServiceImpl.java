@@ -1,10 +1,7 @@
 package at.fhv.se.hotel.application.impl;
 
 import at.fhv.se.hotel.application.api.GuestCreationService;
-import at.fhv.se.hotel.domain.model.guest.Address;
-import at.fhv.se.hotel.domain.model.guest.FullName;
-import at.fhv.se.hotel.domain.model.guest.Gender;
-import at.fhv.se.hotel.domain.model.guest.Guest;
+import at.fhv.se.hotel.domain.model.guest.*;
 import at.fhv.se.hotel.domain.repository.GuestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -40,7 +37,7 @@ public class GuestCreationServiceImpl implements GuestCreationService {
      */
     @Transactional
     @Override
-    public void createGuest(
+    public String createGuest(
             String firstName,
             String lastName,
             String gender,
@@ -54,8 +51,10 @@ public class GuestCreationServiceImpl implements GuestCreationService {
             String country,
             double discountInPercent
     ) {
+        GuestId guestId = guestRepository.nextIdentity();
+
         Guest guest = Guest.create(
-                guestRepository.nextIdentity(),
+                guestId,
                 new FullName(firstName, lastName),
                 Gender.valueOf(gender.toUpperCase(Locale.ROOT)),
                 new Address(streetName, streetNumber, city, zipCode, country),
@@ -67,5 +66,7 @@ public class GuestCreationServiceImpl implements GuestCreationService {
         );
 
         guestRepository.add(guest);
+
+        return guestId.id();
     }
 }

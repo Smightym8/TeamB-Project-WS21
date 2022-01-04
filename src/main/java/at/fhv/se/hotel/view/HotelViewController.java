@@ -387,10 +387,10 @@ public class HotelViewController {
 
     @PostMapping(CREATE_BOOKING_GUEST_URL)
     public String createBookingGuest(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model) {
-        final List<GuestListingDTO> guests = guestListingService.allGuests();
+        GuestForm guestForm = new GuestForm();
 
-        model.addAttribute("guests", guests);
         model.addAttribute("bookingForm", bookingForm);
+        model.addAttribute("guestForm", guestForm);
 
         return CREATE_BOOKING_GUEST_VIEW;
     }
@@ -398,13 +398,20 @@ public class HotelViewController {
     @PostMapping(CREATE_BOOKING_SUMMARY_URL)
     public ModelAndView createBookingSummary(
             @ModelAttribute("bookingForm") BookingForm bookingForm,
+            @ModelAttribute("guestForm") GuestForm guestForm,
             @RequestParam("isCreated") boolean isCreated,
             Model model) {
 
         BookingDetailsDTO bookingDetailsDTO;
         try {
             bookingDetailsDTO = bookingSummaryService.createSummary(
-                    bookingForm.getGuestId(),
+                    guestForm.getFirstName(),
+                    guestForm.getLastName(),
+                    guestForm.getStreetName(),
+                    guestForm.getStreetNumber(),
+                    guestForm.getZipCode(),
+                    guestForm.getCity(),
+                    guestForm.getCountry(),
                     bookingForm.getRoomCategoryIds(),
                     bookingForm.getAmountsOfRoomCategories(),
                     bookingForm.getServiceIds(),
@@ -414,7 +421,7 @@ public class HotelViewController {
                     bookingForm.getAmountOfChildren(),
                     bookingForm.getAdditionalInformation()
             );
-        } catch (GuestNotFoundException | ServiceNotFoundException | RoomCategoryNotFoundException e) {
+        } catch (ServiceNotFoundException | RoomCategoryNotFoundException e) {
             return redirectError(e.getMessage());
         }
 
@@ -426,10 +433,32 @@ public class HotelViewController {
     }
 
     @PostMapping(CREATE_BOOKING_URL)
-    public ModelAndView createBooking(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model) {
+    public ModelAndView createBooking(
+            @ModelAttribute("bookingForm") BookingForm bookingForm,
+            @ModelAttribute("guestForm") GuestForm guestForm,
+            Model model) {
+
         String bookingId;
         try {
-            bookingId = bookingCreationService.book(bookingForm.getGuestId(),
+            String guestId = bookingForm.getGuestId() == null || bookingForm.getGuestId().isEmpty()
+                    ?   guestCreationService.createGuest(
+                            guestForm.getFirstName(),
+                            guestForm.getLastName(),
+                            guestForm.getGender(),
+                            guestForm.geteMail(),
+                            guestForm.getPhoneNumber(),
+                            guestForm.getBirthDate(),
+                            guestForm.getStreetName(),
+                            guestForm.getStreetNumber(),
+                            guestForm.getZipCode(),
+                            guestForm.getCity(),
+                            guestForm.getCountry(),
+                            guestForm.getDiscountInPercent()
+                        )
+                    :   bookingForm.getGuestId();
+
+            bookingId = bookingCreationService.book(
+                    guestId,
                     bookingForm.getRoomCategoryIds(),
                     bookingForm.getAmountsOfRoomCategories(),
                     bookingForm.getServiceIds(),
