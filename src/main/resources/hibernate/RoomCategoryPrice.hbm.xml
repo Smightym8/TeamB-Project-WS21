@@ -15,7 +15,7 @@
             <property name="id" column="domain_id" type="java.lang.String" />
         </component>
 
-        <!-- One to one mapping to the season -->
+        <!-- Many to one mapping to the season -->
         <many-to-one name="season" column="season_id"
                      class="at.fhv.se.hotel.domain.model.season.Season" not-null="true"/>
 

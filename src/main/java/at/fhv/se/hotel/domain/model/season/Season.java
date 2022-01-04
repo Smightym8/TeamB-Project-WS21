@@ -13,9 +13,10 @@ public class Season {
     private LocalDate startDate;
     private LocalDate endDate;
 
+    // TODO: Solve problem why Season constructor can't be private on InvoiceView
     // Required by hibernate
     @SuppressWarnings("unused")
-    private Season() {
+    protected Season() {
     }
 
     public static Season create(SeasonId aSeasonId, SeasonName aSeasonName, LocalDate aStartDate, LocalDate aEndDate) {

@@ -619,7 +619,7 @@ public class HotelViewController {
     // TODO: Test
     @GetMapping(INVOICE_DETAILS_URL)
     public ModelAndView invoiceDetails(@PathVariable("id") String id, Model model) {
-        // Get InvoiceDTO and fill InvoiceForm with it
+        // Get InvoiceDTO
         InvoiceDTO invoice;
         try {
             invoice = invoiceListingService.findInvoiceById(id);

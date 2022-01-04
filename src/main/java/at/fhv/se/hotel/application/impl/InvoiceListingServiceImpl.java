@@ -64,33 +64,33 @@ public class InvoiceListingServiceImpl implements InvoiceListingService {
         );
 
         Map<String, BigDecimal> services = new HashMap<>();
-        invoice.getServices().forEach(service -> services.put(service.getServiceName().name(), service.getServicePrice().price()));
+        invoice.getServices().forEach(service ->
+                services.put(service.getServiceName().name(), service.getServicePrice().price())
+        );
 
-        // TODO: BITTE RICHTIG UND SAUBER IMPLEMENTIEREN
-        // TODO: DIESES DTO ANPASSEN (roomCategories -> roomNames, Map -> List)
         Map<String, Integer> roomCategories = new HashMap<>();
         List<String> categoryNames = new ArrayList<>();
-        for (Room room : invoice.getStay().getRooms().keySet()) {
-            roomCategories.put(room.getName().name(), 1);
-            categoryNames.add(room.getName().name());
-        }
+        invoice.getStay().getBooking().getRoomCategories().forEach(roomCategory -> {
+                roomCategories.put(
+                        roomCategory.getRoomCategory().getRoomCategoryName().name(),
+                        roomCategory.getAmount()
+                );
+                categoryNames.add(roomCategory.getRoomCategory().getRoomCategoryName().name());
+            }
+        );
 
         Map<String, BigDecimal> roomCategoryPrices = new HashMap<>();
-        for(RoomCategoryPrice rcp : invoice.getRoomCategoryPriceList()) {
-            roomCategoryPrices.put(rcp.getRoomCategory().getRoomCategoryName().name(), rcp.getPrice());
-        }
-
         List<BigDecimal> categoryPrices = new ArrayList<>();
-        for (String name : categoryNames) {
-            for (Map.Entry<String, BigDecimal> rcp : roomCategoryPrices.entrySet()) {
-                if (name.equals(rcp.getKey())) {
-                    categoryPrices.add(rcp.getValue());
-                }
+        invoice.getRoomCategoryPriceList().forEach(roomCategoryPrice -> {
+                roomCategoryPrices.put(
+                        roomCategoryPrice.getRoomCategory().getRoomCategoryName().name(),
+                        roomCategoryPrice.getPrice()
+                );
+                categoryPrices.add(roomCategoryPrice.getPrice());
             }
-        }
+        );
 
         InvoiceDTO invoiceDTO = InvoiceDTO.builder()
-                .withStayId(invoice.getStay().getStayId().id())
                 .withInvoiceNumber(invoice.getInvoiceNumber())
                 .withInvoiceDate(invoice.getInvoiceDate())
                 .withGuestFirstName(invoice.getStay().getGuest().getName().firstName())
@@ -104,23 +104,23 @@ public class InvoiceListingServiceImpl implements InvoiceListingService {
                 .withServices(services)
                 .withCategories(roomCategories)
                 .withCategoryPrices(roomCategoryPrices)
-                .withCheckInDate(invoice.getStay().getCheckInDate())
-                .withCheckOutDate(invoice.getStay().getCheckOutDate())
+                .withCheckInDate(invoice.getStay().getBooking().getCheckInDate())
+                .withCheckOutDate(invoice.getStay().getBooking().getCheckOutDate())
                 .withAmountOfNights(invoice.getAmountOfNights())
                 .withLocalTaxPerPerson(invoice.getLocalTaxPerPerson())
                 .withLocalTaxTotal(invoice.getLocalTaxTotal())
-                .withValueAddedTaxInPercent(invoice.getValueAddedTaxInPercent().setScale(1, RoundingMode.CEILING))
+                .withValueAddedTaxInPercent(invoice.getValueAddedTaxInPercent())
                 .withValueAddedTaxInEuro(invoice.getValueAddedTaxInEuro())
                 .withTotalNetAmountBeforeDiscount(invoice.getTotalNetAmountBeforeDiscount())
                 .withTotalNetAmountAfterDiscount(invoice.getTotalNetAmountAfterDiscount())
                 .withTotalNetAmountAfterLocalTax(invoice.getTotalNetAmountAfterLocalTax())
                 .withTotalGrossAmount(invoice.getTotalGrossAmount())
-                .withDiscountInPercent(invoice.getStay().getGuest().getDiscountInPercent())
+                .withDiscountInPercent(invoice.getDiscountInPercent().doubleValue())
                 .withDiscountInEuro(invoice.getDiscountInEuro())
                 .withCategoryNames(categoryNames)
                 .withCategoryPrices(categoryPrices)
                 .build();
 
-        return null;
+        return invoiceDTO;
     }
 }

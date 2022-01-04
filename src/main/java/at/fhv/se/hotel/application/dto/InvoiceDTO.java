@@ -51,9 +51,11 @@ public class InvoiceDTO {
     @XmlElement(name = "service")
     private Map<String, BigDecimal> services;
 
+    // TODO: Change to List<String> roomNames
     @XmlElement(name = "roomCategories")
     private Map<String, Integer> roomCategories;
 
+    // TODO: Check why this exists twice
     @XmlElement(name = "roomCategoryPrices")
     private Map<String, BigDecimal> roomCategoryPrices;
 
@@ -380,7 +382,6 @@ public class InvoiceDTO {
 
 
         public InvoiceDTO build() {
-            Objects.requireNonNull(this.instance.stayId, "stayId must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.invoiceNumber, "invoiceNumber must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.invoiceDate, "invoiceDate must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.guestFirstName, "guestFirstName must be set in InvoiceDTO");

@@ -202,6 +202,20 @@ public class InvoiceRepositoryImplTests {
         //then
         assertEquals(invoiceExpected, invoiceActual);
         assertEquals(invoiceIdExpected, invoiceActual.getInvoiceId());
+        assertEquals(stayExpected, invoiceActual.getStay());
+        assertEquals(categoryPricesExpected.size(), invoiceActual.getRoomCategoryPriceList().size());
+        assertEquals(servicesExpected.size(), invoiceActual.getServices().size());
+        assertEquals(amountOfNightsExpected, invoiceActual.getAmountOfNights());
+        assertEquals(localTaxPerPersonExpected, invoiceActual.getLocalTaxPerPerson());
+        assertEquals(localTaxTotalExpected, invoiceActual.getLocalTaxTotal());
+        assertEquals(valueAddedTaxInPercentExpected, invoiceActual.getValueAddedTaxInPercent());
+        assertEquals(valueAddedTaxInEuroExpected, invoiceActual.getValueAddedTaxInEuro());
+        assertEquals(totalNetAmountBeforeDiscountExpected, invoiceActual.getTotalNetAmountBeforeDiscount());
+        assertEquals(discountInPercentExpected, invoiceActual.getDiscountInPercent());
+        assertEquals(discountInEuroExpected, invoiceActual.getDiscountInEuro());
+        assertEquals(totalNetAmountAfterDiscountExpected, invoiceActual.getTotalNetAmountAfterDiscount());
+        assertEquals(totalNetAmountAfterLocalTaxExpected, invoiceActual.getTotalNetAmountAfterLocalTax());
+        assertEquals(totalGrossAmountExpected, invoiceActual.getTotalGrossAmount());
     }
 
     @Test

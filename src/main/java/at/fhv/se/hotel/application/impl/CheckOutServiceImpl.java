@@ -54,6 +54,7 @@ public class CheckOutServiceImpl implements CheckOutService {
         Stay stay = stayRepository.stayById(new StayId(stayId)).orElseThrow(
                 () -> new StayNotFoundException("Creating invoice failed! Stay with id " + stayId + " not found")
         );
+
         Invoice invoice = invoiceSplitService.splitInvoice(stay, roomNames, action);
 
         Map<String, BigDecimal> services = new HashMap<>();
