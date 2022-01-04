@@ -17,7 +17,7 @@ public class Service {
 
     // Required by hibernate
     @SuppressWarnings("unused")
-    private Service() {
+    protected Service() {
     }
 
     public static Service create (ServiceId aServiceId, ServiceName aServiceName,

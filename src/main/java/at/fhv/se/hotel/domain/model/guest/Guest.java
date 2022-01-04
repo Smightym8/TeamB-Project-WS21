@@ -24,7 +24,7 @@ public class Guest {
 
     // Required by hibernate
     @SuppressWarnings("unused")
-    public Guest() {}
+    protected Guest() {}
 
     public static Guest create (GuestId aGuestId, FullName aName, Gender aGender, Address aAddress, LocalDate aBirthdate,
                                 String aPhoneNumber, String aMailAddress, double aDiscountInPercent, List<Booking> aBookings) {

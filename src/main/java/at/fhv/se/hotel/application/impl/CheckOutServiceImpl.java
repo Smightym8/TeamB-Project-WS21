@@ -11,7 +11,6 @@ import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.model.stay.StayId;
 import at.fhv.se.hotel.domain.repository.*;
-import at.fhv.se.hotel.domain.services.api.InvoiceCalculationService;
 import at.fhv.se.hotel.domain.services.api.InvoiceSplitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,9 +28,6 @@ public class CheckOutServiceImpl implements CheckOutService {
 
     @Autowired
     StayRepository stayRepository;
-
-    @Autowired
-    InvoiceCalculationService invoiceCalculationService;
 
     @Autowired
     InvoiceRepository invoiceRepository;

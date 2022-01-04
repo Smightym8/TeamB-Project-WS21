@@ -67,8 +67,16 @@ public class GuestListingServiceTests {
         // then
         assertEquals(guestsExpected.size(), guestsActual.size());
         for(int i = 0; i < guestsActual.size(); i++) {
+            assertEquals(guestsExpected.get(i).getGuestId().id(), guestsActual.get(i).id());
             assertEquals(guestsExpected.get(i).getName().firstName(), guestsActual.get(i).firstName());
             assertEquals(guestsExpected.get(i).getName().lastName(), guestsActual.get(i).lastName());
+            assertEquals(guestsExpected.get(i).getAddress().streetName(), guestsActual.get(i).streetName());
+            assertEquals(guestsExpected.get(i).getAddress().streetNumber(), guestsActual.get(i).streetNumber());
+            assertEquals(guestsExpected.get(i).getAddress().city(), guestsActual.get(i).city());
+            assertEquals(guestsExpected.get(i).getAddress().zipCode(), guestsActual.get(i).zipCode());
+            assertEquals(guestsExpected.get(i).getAddress().country(), guestsActual.get(i).country());
+            assertEquals(guestsExpected.get(i).getMailAddress(), guestsActual.get(i).mailAddress());
+            assertEquals(guestsExpected.get(i).getPhoneNumber(), guestsActual.get(i).phoneNumber());
         }
     }
 
@@ -109,6 +117,7 @@ public class GuestListingServiceTests {
         assertEquals(guestExpected.getPhoneNumber(), guestActual.phoneNumber());
         assertEquals(guestExpected.getMailAddress(), guestActual.mailAddress());
         assertEquals(guestExpected.getDiscountInPercent(), guestActual.discountInPercent());
+        assertEquals(guestExpected.getBirthDate(), guestActual.birthDate());
     }
 
     @Test

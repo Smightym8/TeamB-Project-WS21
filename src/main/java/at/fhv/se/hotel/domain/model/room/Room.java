@@ -15,7 +15,7 @@ public class Room {
 
     // Required by hibernate
     @SuppressWarnings("unused")
-    private Room(){}
+    protected Room(){}
 
     public static Room create (RoomName aName, RoomStatus aStatus, RoomCategory aRoomCategory){
         return new Room(aName, aStatus, aRoomCategory);

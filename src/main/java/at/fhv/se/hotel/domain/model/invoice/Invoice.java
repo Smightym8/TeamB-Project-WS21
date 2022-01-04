@@ -40,7 +40,7 @@ public class Invoice {
 
     // Required by hibernate
     @SuppressWarnings("unused")
-    private Invoice() {
+    protected Invoice() {
     }
 
     public static Invoice create(
@@ -125,10 +125,6 @@ public class Invoice {
         this.isPaid = false;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public InvoiceId getInvoiceId() {
         return invoiceId;
     }
@@ -205,6 +201,7 @@ public class Invoice {
         return isPaid;
     }
 
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -213,6 +210,7 @@ public class Invoice {
         return amountOfNights == invoice.amountOfNights && isPaid == invoice.isPaid && Objects.equals(id, invoice.id) && Objects.equals(invoiceId, invoice.invoiceId) && Objects.equals(invoiceNumber, invoice.invoiceNumber) && Objects.equals(invoiceDate, invoice.invoiceDate) && Objects.equals(stay, invoice.stay) && Objects.equals(roomCategoryPriceList, invoice.roomCategoryPriceList) && Objects.equals(services, invoice.services) && Objects.equals(rooms, invoice.rooms) && Objects.equals(localTaxPerPerson, invoice.localTaxPerPerson) && Objects.equals(localTaxTotal, invoice.localTaxTotal) && Objects.equals(valueAddedTaxInPercent, invoice.valueAddedTaxInPercent) && Objects.equals(valueAddedTaxInEuro, invoice.valueAddedTaxInEuro) && Objects.equals(totalNetAmountBeforeDiscount, invoice.totalNetAmountBeforeDiscount) && Objects.equals(discountInPercent, invoice.discountInPercent) && Objects.equals(discountInEuro, invoice.discountInEuro) && Objects.equals(totalNetAmountAfterDiscount, invoice.totalNetAmountAfterDiscount) && Objects.equals(totalNetAmountAfterLocalTax, invoice.totalNetAmountAfterLocalTax) && Objects.equals(totalGrossAmount, invoice.totalGrossAmount);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(id, invoiceId, invoiceNumber, invoiceDate, stay, roomCategoryPriceList, services, rooms, amountOfNights, localTaxPerPerson, localTaxTotal, valueAddedTaxInPercent, valueAddedTaxInEuro, totalNetAmountBeforeDiscount, discountInPercent, discountInEuro, totalNetAmountAfterDiscount, totalNetAmountAfterLocalTax, totalGrossAmount, isPaid);

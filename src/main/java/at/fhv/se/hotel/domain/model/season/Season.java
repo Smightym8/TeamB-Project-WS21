@@ -13,7 +13,6 @@ public class Season {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    // TODO: Solve problem why Season constructor can't be private on InvoiceView
     // Required by hibernate
     @SuppressWarnings("unused")
     protected Season() {
@@ -23,7 +22,7 @@ public class Season {
         return new Season(aSeasonId, aSeasonName, aStartDate, aEndDate);
     }
 
-    public Season(SeasonId aSeasonId, SeasonName aSeasonName, LocalDate aStartDate, LocalDate aEndDate) {
+    private Season(SeasonId aSeasonId, SeasonName aSeasonName, LocalDate aStartDate, LocalDate aEndDate) {
         this.seasonId = aSeasonId;
         this.seasonName = aSeasonName;
         this.startDate = aStartDate;

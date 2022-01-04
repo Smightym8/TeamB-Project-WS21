@@ -37,7 +37,8 @@
         <!-- Many to Many mapping to RoomCategoryPrice -->
         <bag name="roomCategoryPriceList" cascade="all" lazy="true">
             <key column="invoice_id" not-null="true" />
-            <many-to-many column="roomcategory_price_id" class="at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice"/>
+            <many-to-many column="roomcategory_price_id" class="at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice">
+            </many-to-many>
         </bag>
 
         <!-- Many to Many mapping to Service -->
@@ -48,8 +49,8 @@
 
         <!-- Many to Many mapping to Room -->
         <bag name="rooms" cascade="all" lazy="true">
-            <key column="invoice_id" not-null="true"/> <!-- It's possible that no services were booked -->
-            <many-to-many column="room_id" class="at.fhv.se.hotel.domain.model.room.Room"/>
+            <key column="invoice_id" not-null="true"/>
+            <many-to-many column="room_name" class="at.fhv.se.hotel.domain.model.room.Room"/>
         </bag>
     </class>
 </hibernate-mapping>

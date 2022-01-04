@@ -24,7 +24,7 @@ public class Stay {
 
     // Required by hibernate
     @SuppressWarnings("unused")
-    public Stay() {
+    protected Stay() {
     }
 
     public static Stay create(Booking aBooking, Map<Room, Boolean> aRooms) {
