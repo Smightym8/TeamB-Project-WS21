@@ -1,7 +1,6 @@
 package at.fhv.se.hotel.infrastructure;
 
 import at.fhv.se.hotel.domain.model.roomcategory.*;
-import at.fhv.se.hotel.domain.model.season.Season;
 import at.fhv.se.hotel.domain.model.season.SeasonId;
 import at.fhv.se.hotel.domain.repository.RoomCategoryPriceRepository;
 import org.springframework.stereotype.Component;
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -39,5 +39,12 @@ public class HibernateRoomCategoryPriceRepository implements RoomCategoryPriceRe
         query.setParameter("roomCategoryId", roomCategoryId);
 
         return query.getResultStream().findFirst();
+    }
+
+    // TODO: Test!
+    @Override
+    public List<RoomCategoryPrice> allPrices() {
+        TypedQuery<RoomCategoryPrice> query = this.em.createQuery("SELECT rcp FROM RoomCategoryPrice rcp", RoomCategoryPrice.class);
+        return query.getResultList();
     }
 }
