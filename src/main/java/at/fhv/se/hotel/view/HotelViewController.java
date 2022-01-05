@@ -3,6 +3,7 @@ package at.fhv.se.hotel.view;
 import at.fhv.se.hotel.application.api.*;
 import at.fhv.se.hotel.application.api.exception.*;
 import at.fhv.se.hotel.application.dto.*;
+import at.fhv.se.hotel.domain.model.guest.Gender;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.view.forms.BookingForm;
 import at.fhv.se.hotel.view.forms.GuestForm;
@@ -272,6 +273,30 @@ public class HotelViewController {
         return CREATE_GUEST_VIEW;
     }
 
+    @PostMapping(CREATE_GUEST_URL)
+    public String createGuestPost(@ModelAttribute("guest") @Valid GuestForm guestForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return CREATE_GUEST_VIEW;
+        }
+
+        guestCreationService.createGuest(
+                guestForm.getFirstName(),
+                guestForm.getLastName(),
+                guestForm.getGender(),
+                guestForm.geteMail(),
+                guestForm.getPhoneNumber(),
+                guestForm.getBirthDate(),
+                guestForm.getStreetName(),
+                guestForm.getStreetNumber(),
+                guestForm.getZipCode(),
+                guestForm.getCity(),
+                guestForm.getCountry(),
+                guestForm.getDiscountInPercent()
+        );
+
+        return "redirect:" + GUESTS_URL;
+    }
+
     /*----- Modify Guest -----*/
     // TODO: Test
     @GetMapping(GUEST_URL)
@@ -307,7 +332,11 @@ public class HotelViewController {
 
     // TODO: Test
     @PostMapping(MODIFY_GUEST_URL)
-    public ModelAndView modifyGuest(@ModelAttribute("guest") GuestForm guestForm) {
+    public ModelAndView modifyGuest(@Valid @ModelAttribute("guest") GuestForm guestForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return new ModelAndView(MODIFY_GUEST_VIEW);
+        }
+
         try {
             guestModifyService.modifyGuest(
                     guestForm.getGuestId(),
@@ -329,30 +358,6 @@ public class HotelViewController {
         }
 
         return new ModelAndView("redirect:" + GUESTS_URL);
-    }
-
-    @PostMapping(CREATE_GUEST_URL)
-    public String createGuestPost(@ModelAttribute("guest") @Valid GuestForm guestForm, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return CREATE_GUEST_VIEW;
-        }
-
-        guestCreationService.createGuest(
-                guestForm.getFirstName(),
-                guestForm.getLastName(),
-                guestForm.getGender(),
-                guestForm.geteMail(),
-                guestForm.getPhoneNumber(),
-                guestForm.getBirthDate(),
-                guestForm.getStreetName(),
-                guestForm.getStreetNumber(),
-                guestForm.getZipCode(),
-                guestForm.getCity(),
-                guestForm.getCountry(),
-                guestForm.getDiscountInPercent()
-        );
-
-        return "redirect:" + GUESTS_URL;
     }
 
     /*----- Create Booking -----*/
@@ -386,7 +391,7 @@ public class HotelViewController {
     }
 
     @PostMapping(CREATE_BOOKING_GUEST_URL)
-    public String createBookingGuest(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model) {
+    public ModelAndView createBookingGuest(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model) {
         GuestForm guestForm = new GuestForm();
         List<GuestListingDTO> guests = guestListingService.allGuests();
 
@@ -394,15 +399,20 @@ public class HotelViewController {
         model.addAttribute("guestForm", guestForm);
         model.addAttribute("guests", guests);
 
-        return CREATE_BOOKING_GUEST_VIEW;
+        return new ModelAndView(CREATE_BOOKING_GUEST_VIEW);
     }
 
     @PostMapping(CREATE_BOOKING_SUMMARY_URL)
     public ModelAndView createBookingSummary(
             @ModelAttribute("bookingForm") BookingForm bookingForm,
-            @ModelAttribute("guestForm") GuestForm guestForm,
+            @Valid @ModelAttribute("guestForm") GuestForm guestForm,
+            BindingResult guestFormResult,
             @RequestParam("isCreated") boolean isCreated,
             Model model) {
+
+        if((bookingForm.getGuestId() == null) && (guestFormResult.hasErrors())) {
+            return new ModelAndView(CREATE_BOOKING_GUEST_VIEW);
+        }
 
         BookingDetailsDTO bookingDetailsDTO;
         try {

@@ -30,7 +30,7 @@
                 </div>
                 <div class="card-body">
 
-                    <form id="myform" action="/createbooking/summary?isCreated=false" method="post" th:object="${bookingForm}">
+                    <form id="myform" action="/createbooking/summary?isCreated=false" method="post" th:object="${guestForm}">
                         <input type="hidden" id="roomCategoryIds" name="roomCategoryIds" th:field="${bookingForm.roomCategoryIds}"/>
                         <input type="hidden" id="amountsOfRoomCategories" name="amountsOfRoomCategories" th:field="${bookingForm.amountsOfRoomCategories}"/>
                         <input type="hidden" id="serviceIds" name="serviceIds" th:field="${bookingForm.serviceIds}"/>
@@ -40,7 +40,7 @@
 
                         <div style="width: 80%; margin: auto;">
 
-                        <div id="createGuestForm" style="display: none">
+                        <div id="createGuestForm">
                             <div class="d-flex">
                                 <div class="input-group ps-1" style="width: 50%;">
                                     <span class="input-group-text col-4">Discount [%]</span>
@@ -57,21 +57,23 @@
 
                             <div class="input-group pe-1" style="width: 50%;">
                                 <span class="input-group-text col-4">Gender<span style="color:red;">*</span></span>
-                                <select class="form-select" id="gender" name="gender" th:field="${guestForm.gender}">
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                    <option value="diverse">Diverse</option>
+                                <select class="form-select" name="roomStatus" th:field="*{gender}">
+                                    <option th:each="genderValue : ${T(at.fhv.se.hotel.domain.model.guest.Gender).values()}"
+                                            th:text="${genderValue.friendlyName}" th:value="${genderValue}"></option>
                                 </select>
+                                <div class="alert alert-warning" th:if="${#fields.hasErrors('gender')}" th:errors="${guestForm.gender}"></div>
                             </div>
 
                             <div class="d-flex mt-1">
                                 <div class="input-group pe-1" style="width: 50%;">
                                     <span class="input-group-text col-4">Firstname<span style="color:red;">*</span></span>
-                                    <input class="form-control" id="firstname" type="text" placeholder="John" th:field="${guestForm.firstName}" >
+                                    <input class="form-control" id="firstname" type="text" placeholder="John" th:field="${guestForm.firstName}" th:required="required">
+                                    <div class="alert alert-warning" th:if="${#fields.hasErrors('firstName')}" th:errors="${guestForm.firstName}"></div>
                                 </div>
                                 <div class="input-group ps-1" style="width: 50%;">
                                     <span class="input-group-text col-4">Lastname<span style="color:red;">*</span></span>
-                                    <input class="form-control" id="lastname" type="text" placeholder="Doe" th:field="${guestForm.lastName}">
+                                    <input class="form-control" id="lastname" type="text" placeholder="Doe" th:field="${guestForm.lastName}" th:required="required">
+                                    <div class="alert alert-warning" th:if="${#fields.hasErrors('lastName')}" th:errors="${guestForm.lastName}"></div>
                                 </div>
                             </div>
 
@@ -80,28 +82,33 @@
                             <div class="d-flex">
                                 <div class="input-group pe-1" style="width: 50%;">
                                     <span class="input-group-text col-4">Street name<span style="color:red;">*</span></span>
-                                    <input class="form-control" id="streetName" type="text" placeholder="Townhall street" th:field="${guestForm.streetName}">
+                                    <input class="form-control" id="streetName" type="text" placeholder="Townhall street" th:field="${guestForm.streetName}" th:required="required">
+                                    <div class="alert alert-warning" th:if="${#fields.hasErrors('streetName')}" th:errors="${guestForm.streetName}"></div>
                                 </div>
                                 <div class="input-group ps-1" style="width: 50%;">
                                     <span class="input-group-text col-4">Street number<span style="color:red;">*</span></span>
-                                    <input class="form-control" id="streetNumber" type="text" placeholder="42" th:field="${guestForm.streetNumber}">
+                                    <input class="form-control" id="streetNumber" type="text" placeholder="42" th:field="${guestForm.streetNumber}" th:required="required">
+                                    <div class="alert alert-warning" th:if="${#fields.hasErrors('streetNumber')}" th:errors="${guestForm.streetNumber}"></div>
                                 </div>
                             </div>
 
                             <div class="d-flex mt-1">
                                 <div class="input-group pe-1" style="width: 50%;">
                                     <span class="input-group-text col-4">Zip code<span style="color:red;">*</span></span>
-                                    <input class="form-control" id="zipCode" type="text" placeholder="6850" th:field="${guestForm.zipCode}">
+                                    <input class="form-control" id="zipCode" type="text" placeholder="6850" th:field="${guestForm.zipCode}" th:required="required">
+                                    <div class="alert alert-warning" th:if="${#fields.hasErrors('zipCode')}" th:errors="${guestForm.zipCode}"></div>
                                 </div>
                                 <div class="input-group ps-1" style="width: 50%;">
                                     <span class="input-group-text col-4">City<span style="color:red;">*</span></span>
-                                    <input class="form-control" id="city" type="text" placeholder="Dornbirn" th:field="${guestForm.city}">
+                                    <input class="form-control" id="city" type="text" placeholder="Dornbirn" th:field="${guestForm.city}" th:required="required">
+                                    <div class="alert alert-warning" th:if="${#fields.hasErrors('city')}" th:errors="${guestForm.city}"></div>
                                 </div>
                             </div>
 
                             <div class="input-group pe-1 mt-1" style="width: 50%;">
                                 <span class="input-group-text col-4">Country<span style="color:red;">*</span></span>
-                                <input class="form-control" id="country" type="text" placeholder="Austria" th:field="${guestForm.country}">
+                                <input class="form-control" id="country" type="text" placeholder="Austria" th:field="${guestForm.country}" th:required="required">
+                                <div class="alert alert-warning" th:if="${#fields.hasErrors('country')}" th:errors="${guestForm.country}"></div>
                             </div>
 
                             <br>
@@ -111,23 +118,26 @@
                             <div class="d-flex">
                                 <div class="input-group pe-1" style="width: 50%;">
                                     <span class="input-group-text col-4">Email<span style="color:red;">*</span></span>
-                                    <input class="form-control" id="email" type="email" placeholder="john.doe@gmail.com" th:field="${guestForm.eMail}">
+                                    <input class="form-control" id="email" type="email" placeholder="john.doe@gmail.com" th:field="${guestForm.eMail}" th:required="required">
+                                    <div class="alert alert-warning" th:if="${#fields.hasErrors('eMail')}" th:errors="${guestForm.eMail}"></div>
                                 </div>
                                 <div class="input-group ps-1" style="width: 50%;">
                                     <span class="input-group-text col-4">Phone<span style="color:red;">*</span></span>
-                                    <input class="form-control" id="phoneNumber" type="tel" placeholder="+43 699 123 456 789" th:field="${guestForm.phoneNumber}">
+                                    <input class="form-control" id="phoneNumber" type="tel" placeholder="+43 699 123 456 789" th:field="${guestForm.phoneNumber}" th:required="required">
+                                    <div class="alert alert-warning" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="${guestForm.phoneNumber}"></div>
                                 </div>
                             </div>
 
                             <div class="input-group pe-1 mt-1" style="width: 50%;">
                                 <span class="input-group-text col-4">Date of birth<span style="color:red;">*</span></span>
-                                <input class="form-control" id="birthDate" type="date" th:field="${guestForm.birthDate}">
+                                <input class="form-control" id="birthDate" type="date" th:field="${guestForm.birthDate}" th:required="required">
+                                <div class="alert alert-warning" th:if="${#fields.hasErrors('birthDate')}" th:errors="${guestForm.birthDate}"></div>
                             </div>
                             <br>
                             </div>
                         </div>
 
-                        <div id="chooseGuest">
+                        <div id="chooseGuest" style="display: none">
                             <button class="btn btn-primary" onclick="switchToCreateGuest()">Create Guest</button>
 
                             <div style="min-height: 36vh">
@@ -143,7 +153,7 @@
                                     <tr th:each="guest : ${guests}">
                                         <td class="align-middle">
                                             <div class="form-check">
-                                                <input class="form-check-input" name="guestId" type="radio" th:field="${bookingForm.guestId}" th:value="${guest.id}" required="required">
+                                                <input class="form-check-input" name="guestId" type="radio" th:field="${bookingForm.guestId}" th:value="${guest.id}">
                                             </div>
                                         </td>
                                         <td class="align-middle">
