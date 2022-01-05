@@ -22,6 +22,7 @@ public interface BookingSummaryService {
      * List, List, List, LocalDate, LocalDate, int, int, String)}
      */
     BookingDetailsDTO createSummary(
+            String guestId,
             String firstName,
             String lastName,
             String streetName,
@@ -37,7 +38,7 @@ public interface BookingSummaryService {
             int amountOfAdults,
             int amountOfChildren,
             String additionalInformation
-    ) throws ServiceNotFoundException, RoomCategoryNotFoundException;
+    ) throws ServiceNotFoundException, RoomCategoryNotFoundException, GuestNotFoundException;
 
     BookingDetailsDTO detailsByBookingId(String bookingId) throws BookingNotFoundException;
 }

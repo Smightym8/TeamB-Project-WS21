@@ -388,9 +388,11 @@ public class HotelViewController {
     @PostMapping(CREATE_BOOKING_GUEST_URL)
     public String createBookingGuest(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model) {
         GuestForm guestForm = new GuestForm();
+        List<GuestListingDTO> guests = guestListingService.allGuests();
 
         model.addAttribute("bookingForm", bookingForm);
         model.addAttribute("guestForm", guestForm);
+        model.addAttribute("guests", guests);
 
         return CREATE_BOOKING_GUEST_VIEW;
     }
@@ -405,6 +407,7 @@ public class HotelViewController {
         BookingDetailsDTO bookingDetailsDTO;
         try {
             bookingDetailsDTO = bookingSummaryService.createSummary(
+                    bookingForm.getGuestId(),
                     guestForm.getFirstName(),
                     guestForm.getLastName(),
                     guestForm.getStreetName(),
@@ -421,7 +424,7 @@ public class HotelViewController {
                     bookingForm.getAmountOfChildren(),
                     bookingForm.getAdditionalInformation()
             );
-        } catch (ServiceNotFoundException | RoomCategoryNotFoundException e) {
+        } catch (ServiceNotFoundException | RoomCategoryNotFoundException | GuestNotFoundException e) {
             return redirectError(e.getMessage());
         }
 
