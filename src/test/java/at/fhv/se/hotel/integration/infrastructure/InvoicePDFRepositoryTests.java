@@ -1,7 +1,6 @@
 package at.fhv.se.hotel.integration.infrastructure;
 
 import at.fhv.se.hotel.application.dto.InvoiceDTO;
-import at.fhv.se.hotel.application.dto.StayDetailsDTO;
 import at.fhv.se.hotel.domain.repository.InvoicePDFRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +58,7 @@ public class InvoicePDFRepositoryTests {
                 .build();
 
         // when
-        invoicePDFRepository.saveAsPDF(invoiceDTOExpected);
+        invoicePDFRepository.generatePDF(invoiceDTOExpected);
         ByteArrayResource byteArrayResource = invoicePDFRepository.findInvoiceByNo(invoiceNo).get();
 
         // then

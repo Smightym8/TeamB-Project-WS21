@@ -100,7 +100,7 @@ public class HotelViewController {
     private static final String SAVE_INVOICE_URL = "/saveinvoice/{id}";
 
     /*----- Invoice Download -----*/
-    private static final String INVOICE_DOWNLOAD_URL = "/download-invoice/{invoiceNo}";
+    private static final String INVOICE_DOWNLOAD_URL = "/download-invoice/{id}";
 
     /*----- Invoice View -----*/
     private static final String INVOICE_DETAILS_URL = "/invoice-details/{id}";
@@ -593,13 +593,16 @@ public class HotelViewController {
         return redirectError("There was an error.");
     }
 
+    // TODO: implement invoiceByNo in Repo
     /*----- Invoice Download -----*/
     @GetMapping(INVOICE_DOWNLOAD_URL)
-    public ResponseEntity<ByteArrayResource> downloadInvoice(@PathVariable("invoiceNo") String invoiceNo) {
+    public ResponseEntity<ByteArrayResource> downloadInvoice(@PathVariable("id") String id) {
         ByteArrayResource resource = null;
+        InvoiceDTO invoice = null;
 
         try {
-            resource = invoiceDownloadService.download(invoiceNo);
+            invoice = invoiceListingService.findInvoiceById(id);
+            resource = invoiceDownloadService.download(id);
         } catch (InvoiceNotFoundException e) {
             // Don't redirect to errorView because user will only see a window from the browser
             // where it asks to open or to download the pdf file.
@@ -608,7 +611,7 @@ public class HotelViewController {
 
         return ResponseEntity.ok()
                 // Content-Disposition
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=Invoice_" + invoiceNo + ".pdf")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=Invoice_" + invoice.invoiceNumber() + ".pdf")
                 .contentType(MediaType.APPLICATION_PDF)
                 // Content-Length
                 .contentLength(resource.contentLength())

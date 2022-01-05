@@ -6,7 +6,5 @@ import org.springframework.core.io.ByteArrayResource;
 import java.util.Optional;
 
 public interface InvoicePDFRepository {
-    Optional<ByteArrayResource> findInvoiceByNo(String invoiceNo);
-
-    void saveAsPDF(InvoiceDTO invoiceDTO);
+    Optional<ByteArrayResource> generatePDF(InvoiceDTO invoiceDTO);
 }

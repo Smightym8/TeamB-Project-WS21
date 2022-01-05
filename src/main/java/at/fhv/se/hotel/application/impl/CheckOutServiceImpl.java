@@ -113,8 +113,6 @@ public class CheckOutServiceImpl implements CheckOutService {
                 .withCategoryPrices(categoryPrices)
                 .build();
 
-        invoicePDFRepository.saveAsPDF(invoiceDTO);
-
         return invoiceDTO;
 
     }
