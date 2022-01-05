@@ -80,6 +80,51 @@ public class RoomListingServiceTests {
     }
 
     @Test
+    public void given_3roomsInRepository_when_fetchingAllFreeRooms_then_return3FreeRooms() {
+        // given
+        RoomCategory roomCategoryExpected = RoomCategory.create(
+                new RoomCategoryId(UUID.randomUUID().toString().toUpperCase()),
+                new RoomCategoryName("Single Room"),
+                new Description("This is a single room")
+        );
+
+        List<Room> freeRoomsExpected = List.of(
+                Room.create(
+                        new RoomName("101"),
+                        RoomStatus.FREE,
+                        roomCategoryExpected
+                ),
+                Room.create(
+                        new RoomName("102"),
+                        RoomStatus.FREE,
+                        roomCategoryExpected
+                ),
+                Room.create(
+                        new RoomName("103"),
+                        RoomStatus.FREE,
+                        roomCategoryExpected
+                )
+        );
+
+        Mockito.when(roomRepository.findAllFreeRooms()).thenReturn(freeRoomsExpected);
+
+        // when
+        List<RoomDTO> roomDTOs = roomListingService.allFreeRooms();
+
+        // then
+        assertEquals(freeRoomsExpected.size(), roomDTOs.size());
+
+        for(int i = 0; i < freeRoomsExpected.size(); i++) {
+            assertEquals(freeRoomsExpected.get(i).getName().name(), roomDTOs.get(i).name());
+            assertEquals(
+                    freeRoomsExpected.get(i).getRoomCategory().getRoomCategoryName().name(),
+                    roomDTOs.get(i).categoryName()
+            );
+            assertEquals(freeRoomsExpected.get(i).getStatus().name(), roomDTOs.get(i).roomStatus());
+        }
+    }
+
+    @Test
     public void given_roomInRepository_when_fetchRoomByName_then_detailsEquals() throws RoomNotFoundException {
         // given
         RoomCategory roomCategory = RoomCategory.create(

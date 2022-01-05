@@ -11,6 +11,8 @@ import java.util.Optional;
 public interface RoomRepository {
     List<Room> findAllRooms();
 
+    List<Room> findAllFreeRooms();
+
     Optional<Room> roomByName(RoomName name);
 
     List<Room> roomsByCategoryAndStatus(RoomCategoryId categoryId, RoomStatus status);

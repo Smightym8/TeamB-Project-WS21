@@ -25,6 +25,15 @@ public class HibernateRoomRepository implements RoomRepository {
     }
 
     @Override
+    public List<Room> findAllFreeRooms() {
+        TypedQuery<Room> query = this.em.createQuery(
+                "FROM Room AS r WHERE r.status = :status", Room.class);
+        query.setParameter("status", RoomStatus.FREE);
+
+        return query.getResultList();
+    }
+
+    @Override
     public Optional<Room> roomByName(RoomName name) {
         TypedQuery<Room> query = this.em.createQuery("FROM Room AS r WHERE r.roomName = :name", Room.class);
         query.setParameter("name", name);

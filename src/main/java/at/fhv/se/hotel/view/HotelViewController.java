@@ -509,6 +509,7 @@ public class HotelViewController {
             @RequestParam("isCheckedIn") boolean isCheckedIn,
             Model model) {
 
+        List<RoomDTO> freeRooms = roomListingService.allFreeRooms();
         List<RoomDTO> assignedRooms;
         try {
             assignedRooms = checkInService.assignRooms(bookingId);
@@ -526,6 +527,7 @@ public class HotelViewController {
 
         model.addAttribute("bookingId", bookingId);
         model.addAttribute("assignedRooms", assignedRooms);
+        model.addAttribute("freeRooms", freeRooms);
         model.addAttribute("isCheckedIn", isCheckedIn);
 
         return new ModelAndView(CHECK_IN_VIEW);

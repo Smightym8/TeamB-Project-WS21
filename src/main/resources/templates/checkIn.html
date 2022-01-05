@@ -19,11 +19,11 @@
                 </div>
                 <div class="card-body">
                     <div style="width:40%; margin: auto">
-                        <div th:each="room : ${assignedRooms}">
+                        <div th:each="assignedRoom : ${assignedRooms}">
                             <div class="input-group mb-3">
-                                <span class="input-group-text col-5" th:text="${room.categoryName}"></span>
+                                <span class="input-group-text col-5" th:text="${assignedRoom.categoryName}"></span>
                                 <select class="form-select">
-                                        <option th:value="${room.name}" th:text="${room.name}"></option>
+                                    <option th:each="freeRoom : ${freeRooms}" th:value="${freeRoom.name}" th:text="${freeRoom.name}" th:selected="${freeRoom.name == assignedRoom.name}"></option>
                                 </select>
                             </div>
                         </div>
