@@ -19,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -191,6 +192,11 @@ public class HotelViewController {
         try {
             roomDTO = roomListingService.roomByName(name);
 
+            // Don't allow to reach room view with an occupied room
+            if(roomDTO.roomStatus().equals("OCCUPIED")) {
+                return redirectError("A room with status occupied can't be changed.");
+            }
+
             RoomForm roomForm = new RoomForm(roomDTO.name(), roomDTO.categoryName(), roomDTO.roomStatus());
             List<String> roomStates = new ArrayList<>();
             Arrays.stream(RoomStatus.values()).forEach(status -> roomStates.add(status.name()));
@@ -208,7 +214,7 @@ public class HotelViewController {
     public ModelAndView modifyRoom(@ModelAttribute("roomForm") RoomForm roomForm) {
         try {
             roomModifyService.modifyStatus(roomForm.getRoomName(), roomForm.getRoomStatus());
-        } catch (RoomNotFoundException e) {
+        } catch (RoomNotFoundException | InvalidParameterException e) {
             return redirectError(e.getMessage());
         }
 

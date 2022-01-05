@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.security.InvalidParameterException;
 
 @Component
 public class RoomModifyServiceImpl implements RoomModifyService {
@@ -24,10 +25,15 @@ public class RoomModifyServiceImpl implements RoomModifyService {
      */
     @Transactional
     @Override
-    public void modifyStatus(String roomName, String roomStatus) throws RoomNotFoundException {
+    public void modifyStatus(String roomName, String roomStatus) throws RoomNotFoundException, InvalidParameterException {
         Room room = roomRepository.roomByName(new RoomName(roomName)).orElseThrow(
                 () -> new RoomNotFoundException("Room " + roomName + " not found")
         );
+
+        // It is not allowed to change a room with status occupied or to change the status manually to occupied.
+        if(room.getStatus().name().equals("OCCUPIED") || roomStatus.equalsIgnoreCase("OCCUPIED")) {
+            throw new InvalidParameterException("A room with status occupied can't be changed and it is not allowed to manually set the status to occupied.");
+        }
 
         room.changeStatus(RoomStatus.valueOf(roomStatus.toUpperCase()));
     }
