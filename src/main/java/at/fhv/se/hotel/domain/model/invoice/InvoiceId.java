@@ -8,7 +8,9 @@ import java.util.Objects;
 public class InvoiceId {
     private String id;
 
-    // required by hibernate
+    // Required by hibernate
+    @SuppressWarnings("unused")
+    @Generated
     private InvoiceId() {
     }
 

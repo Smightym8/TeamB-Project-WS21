@@ -8,12 +8,15 @@ import java.util.Objects;
 // TODO: Test
 public class RoomCategory {
     // Required by hibernate
+    @SuppressWarnings("unused")
     private Long id;
     private RoomCategoryId roomCategoryId;
     private RoomCategoryName roomCategoryName;
     private Description description;
 
     // Required by hibernate
+    @SuppressWarnings("unused")
+    @Generated
     protected RoomCategory() {
     }
 

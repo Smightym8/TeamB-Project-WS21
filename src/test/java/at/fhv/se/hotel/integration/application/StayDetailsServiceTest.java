@@ -1,12 +1,14 @@
 package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.StayDetailsService;
+import at.fhv.se.hotel.application.api.exception.ServiceNotFoundException;
 import at.fhv.se.hotel.application.api.exception.StayNotFoundException;
 import at.fhv.se.hotel.application.dto.StayDetailsDTO;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
 import at.fhv.se.hotel.domain.model.guest.*;
 import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.Description;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
@@ -30,8 +32,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class StayDetailsServiceTest {
@@ -90,7 +91,7 @@ public class StayDetailsServiceTest {
                 new Description("This is a single room")
         );
         Map<Room, Boolean> roomsExpected = Map.of(
-                Room.create("S101", RoomStatus.FREE,categoryExpected), false
+                Room.create(new RoomName("S101"), RoomStatus.FREE,categoryExpected), false
         );
 
         Stay staysExpected = Stay.create(bookingExpected,roomsExpected);
@@ -103,11 +104,34 @@ public class StayDetailsServiceTest {
         assertEquals(idExpected, stayDetailsDTOActual.id());
         assertEquals(guestExpected.getName().firstName(), stayDetailsDTOActual.guestFirstName());
         assertEquals(guestExpected.getName().lastName(), stayDetailsDTOActual.guestLastName());
+        assertEquals(guestExpected.getAddress().streetName(), stayDetailsDTOActual.streetName());
+        assertEquals(guestExpected.getAddress().streetNumber(), stayDetailsDTOActual.streetNumber());
+        assertEquals(guestExpected.getAddress().zipCode(), stayDetailsDTOActual.zipCode());
+        assertEquals(guestExpected.getAddress().city(), stayDetailsDTOActual.city());
+        assertEquals(guestExpected.getAddress().country(), stayDetailsDTOActual.country());
         assertEquals(servicesExpected.size(), stayDetailsDTOActual.services().size());
         assertEquals(checkInExpected, stayDetailsDTOActual.checkInDate());
         assertEquals(checkOutExpected, stayDetailsDTOActual.checkOutDate());
         assertEquals(amountOfAdultsExpected, stayDetailsDTOActual.amountOfAdults());
         assertEquals(amountOfChildrenExpected, stayDetailsDTOActual.amountOfChildren());
         assertEquals(additionalInformationExpected, stayDetailsDTOActual.additionalInformation());
+    }
+
+    @Test
+    public void given_missingStay_when_fetchingDetails_then_StayNotFoundExceptionIsThrown() {
+        // given
+        StayId stayIdExpected = new StayId("1");
+
+        Mockito.when(stayRepository.stayById(stayIdExpected)).thenReturn(Optional.empty());
+
+        // when ... then
+        Exception exception = assertThrows(StayNotFoundException.class, () -> {
+            stayDetailsService.detailsById(stayIdExpected.id());
+        });
+
+        String expectedMessage = "Stay with id " + stayIdExpected.id() + " not found";
+        String actualMessage = exception.getMessage();
+
+        assertEquals(expectedMessage, actualMessage);
     }
 }

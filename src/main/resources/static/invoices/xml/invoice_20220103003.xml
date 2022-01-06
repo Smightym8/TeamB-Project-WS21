@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<invoice>
+    <invoiceNumber>20220103003</invoiceNumber>
+    <invoiceDate>2022-01-03</invoiceDate>
+    <guestFirstName>Johannes</guestFirstName>
+    <guestLastName>Moosbrugger</guestLastName>
+    <streetName>Schollenstraße</streetName>
+    <streetNumber>6</streetNumber>
+    <zipCode>6845</zipCode>
+    <city>Hohenems</city>
+    <amountOfAdults>2</amountOfAdults>
+    <amountOfChildren>0</amountOfChildren>
+    <services>
+        <entry>
+            <key>TV</key>
+            <value>10.00</value>
+        </entry>
+        <entry>
+            <key>Bike</key>
+            <value>6.00</value>
+        </entry>
+    </services>
+    <roomCategories>
+        <entry>
+            <key>S101</key>
+            <value>1</value>
+        </entry>
+    </roomCategories>
+    <roomCategoryPrices>
+        <entry>
+            <key>Single Room</key>
+            <value>300.00</value>
+        </entry>
+    </roomCategoryPrices>
+    <checkInDate>2022-01-02</checkInDate>
+    <checkOutDate>2022-01-04</checkOutDate>
+    <amountOfNights>2</amountOfNights>
+    <localTaxPerPerson>0.76</localTaxPerPerson>
+    <localTaxTotal>1.52</localTaxTotal>
+    <valueAddedTaxInPercent>0.1</valueAddedTaxInPercent>
+    <valueAddedTaxInEuro>63.20</valueAddedTaxInEuro>
+    <totalNetAmountBeforeDiscount>632.00</totalNetAmountBeforeDiscount>
+    <totalNetAmountAfterDiscount>632.00</totalNetAmountAfterDiscount>
+    <totalNetAmountAfterLocalTax>633.52</totalNetAmountAfterLocalTax>
+    <totalGrossAmount>696.72</totalGrossAmount>
+    <discountInPercent>0.0</discountInPercent>
+    <discountInEuro>0</discountInEuro>
+    <categoryNames>
+        <categoryName>Single Room</categoryName>
+    </categoryNames>
+    <categoryPrices>
+        <categoryPrice>300.00</categoryPrice>
+    </categoryPrices>
+</invoice>

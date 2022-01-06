@@ -11,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Component
@@ -35,7 +33,7 @@ public class StayDetailsServiceImpl implements StayDetailsService {
         stay.getRooms().forEach((room, isPaid) -> {
             if (!isPaid) {
                 roomsWithCategories.put(
-                        room.getName(),
+                        room.getName().name(),
                         room.getRoomCategory().getRoomCategoryName().name()
                 );
             }
@@ -53,6 +51,11 @@ public class StayDetailsServiceImpl implements StayDetailsService {
                 .withId(stay.getStayId().id())
                 .withGuestFirstName(stay.getGuest().getName().firstName())
                 .withGuestLastName(stay.getGuest().getName().lastName())
+                .withStreetName(stay.getGuest().getAddress().streetName())
+                .withStreetNumber(stay.getGuest().getAddress().streetNumber())
+                .withZipCode(stay.getGuest().getAddress().zipCode())
+                .withCity(stay.getGuest().getAddress().city())
+                .withCountry(stay.getGuest().getAddress().country())
                 .withRoomsWithCategories(roomsWithCategories)
                 .withServices(services)
                 .withCheckInDate(stay.getCheckInDate())

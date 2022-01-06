@@ -41,6 +41,7 @@ public class BookingListingServiceImpl implements BookingListingService {
                     .withZipCode(b.getGuest().getAddress().zipCode())
                     .withCity(b.getGuest().getAddress().city())
                     .withCheckInDate(b.getCheckInDate())
+                    .withCheckOutDate(b.getCheckOutDate())
                     .withStatus(b.isActive())
                     .build();
 

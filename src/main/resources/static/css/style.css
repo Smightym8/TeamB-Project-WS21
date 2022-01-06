@@ -1,24 +1,33 @@
+body {
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(255,255,255,0)), url("/images/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
 .sidebar {
-    width: 235px;
+    width: 230px;
     height: 100vh;
     position: fixed;
 }
 
 .content {
-    margin-left: 235px;
+    margin-left: 230px;
     min-height: 100vh;
 }
 
-.h1, .h2, .h3, .h4, .h5, .h6 {
-    margin: 0 !important;
+.div-width-l {
+    width: 80%;
+    margin: auto;
 }
 
-.h3 {
-    font-size: 28px;
+.div-width-s {
+    width: 60%;
+    margin: auto;
 }
 
-.h4 {
-    font-size: 22px;
+.card-height {
+    min-height: 65vh;
 }
 
 hr {
@@ -26,17 +35,19 @@ hr {
 }
 
 .card-header {
-    padding-left: 25px;
-    padding-right: 25px;
+    padding: 1rem !important;
 }
 
-@media print {
+.card-body {
+    padding-right: 1rem !important;
+    padding-left: 1rem !important;
+    padding-top: 2rem !important;
+}
 
-    .sidebar {
-        display: none !important;
-    }
+table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {
+    background-color: #f2f2f2 !important;
+}
 
-    .content {
-        margin: 0 !important;
-    }
+table.dataTable tbody th, table.dataTable tbody td {
+    padding: 0.5rem !important;
 }

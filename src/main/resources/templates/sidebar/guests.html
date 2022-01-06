@@ -1,37 +1,87 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+
+    <link rel="stylesheet" href="/css/datatables.min.css">
+
+    <script src="/js/jquery.js"></script>
+    <script src="/js/moment.js"></script>
+    <script src="/js/datatables.js"></script>
+    <script src="/js/datatables.bootstrap.js"></script>
+
+</head>
+
 <body id="Guests">
 
     <div layout:fragment="content">
 
-        <div class="d-flex">
-            <p class="h3">Guests</p>
-            <a class="btn btn-primary ms-5" href="createguest">Create guest</a>
+        <div class="div-width-l">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <i class="fas fa-users fa-fw fa-lg me-4 align-middle"></i>
+                        <span class="h4 align-middle">Guests</span>
+                    </div>
+                    <a href="/createguest" class="btn btn-primary">
+                        <i class="fas fa-user-plus me-1"></i>
+                        <span class="align-self-center">Create guest</span>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <table id="t1" class="table stripe">
+                        <thead>
+                            <tr>
+                                <th class="col">Firstname</th>
+                                <th class="col">Lastname</th>
+                                <th class="col">Address</th>
+                                <th class="col">Email</th>
+                                <th class="col">Phone number</th>
+                                <th class="col-1"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="guest : ${guests}">
+                                <td class="align-middle" th:text="${guest.firstName}"></td>
+                                <td class="align-middle" th:text="${guest.lastName}"></td>
+                                <td class="align-middle">
+                                    <span class="text-nowrap" th:text="${guest.streetName} + ' ' + ${guest.streetNumber} + ', '"></span>
+                                    <span class="text-nowrap" th:text="${guest.zipCode} + ' ' + ${guest.city}"></span>
+                                </td>
+                                <td class="align-middle text-nowrap" th:text="${guest.mailAddress}"></td>
+                                <td class="align-middle text-nowrap" th:text="${guest.phoneNumber}"></td>
+                                <td class="align-middle text-nowrap">
+                                    <a class="btn btn-outline-primary btn-sm float-end" th:href="@{/guest/{id}(id=${guest.id})}">View / Modify</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <br>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th class="col-1">Firstname</th>
-                <th class="col-1">Lastname</th>
-                <th class="col-1">Address</th>
-                <th class="col-1"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="guest : ${guests}">
-                <td th:text="${guest.firstName}"></td>
-                <td th:text="${guest.lastName}"></td>
-                <td>Hochschulstraße 1, 6850 Dornbirn</td>
-                <td>
-                    <a class="btn btn-primary btn-sm" href="#">View / Modify</a>
-                    <a class="btn btn-danger btn-sm" href="#">Delete</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
 
-        <!-- mail, number, ...? guestview -->
+        <script>
+            // table initialization
+            let table1 = $('#t1').DataTable({
+                "order": [ [0, "asc"],[1, "asc"] ],
+                "scrollCollapse": true,
+                "scrollY": "73.5vh",
+                "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ],
+                "pageLength": -1,
+                columnDefs: [
+                    { orderable: false, targets: [5]},
+                ]
+            });
+
+            // add icon to searchbars
+            var searchLabel = document.getElementsByTagName('label');
+            searchLabel = searchLabel[1];
+
+            var icon = document.createElement('i');
+            icon.setAttribute('class', 'fas fa-search');
+
+            searchLabel.insertBefore(icon, searchLabel.firstChild);
+            searchLabel.childNodes[1].textContent = " ";
+        </script>
 
     </div>
 

@@ -15,6 +15,7 @@ public class BookingListingDTO {
     private String zipCode;
     private String city;
     private LocalDate checkInDate;
+    private LocalDate checkOutDate;
     private boolean isActive;
 
     public static Builder builder() {
@@ -51,6 +52,10 @@ public class BookingListingDTO {
 
     public LocalDate checkInDate() {
         return this.checkInDate;
+    }
+
+    public LocalDate checkOutDate() {
+        return this.checkOutDate;
     }
 
     public boolean isActive() {
@@ -104,16 +109,26 @@ public class BookingListingDTO {
             return this;
         }
 
+        public Builder withCheckOutDate(LocalDate checkOutDate) {
+            this.instance.checkOutDate = checkOutDate;
+            return this;
+        }
+
         public Builder withStatus(boolean isActive) {
             this.instance.isActive = isActive;
             return this;
         }
 
         public BookingListingDTO build() {
-            Objects.requireNonNull(this.instance.id, "id must be set in BookingDTO");
-            Objects.requireNonNull(this.instance.guestFirstName, "guestFirstName must be set in BookingDTO");
-            Objects.requireNonNull(this.instance.guestLastName, "guestLastName must be set in BookingDTO");
-            Objects.requireNonNull(this.instance.checkInDate, "checkInDate must be set in BookingDTO");
+            Objects.requireNonNull(this.instance.id, "id must be set in BookingListingDTO");
+            Objects.requireNonNull(this.instance.guestFirstName, "guestFirstName must be set in BookingListingDTO");
+            Objects.requireNonNull(this.instance.guestLastName, "guestLastName must be set in BookingListingDTO");
+            Objects.requireNonNull(this.instance.streetName, "streetName must be set in BookingListingDTO");
+            Objects.requireNonNull(this.instance.streetNumber, "streetNumber must be set in BookingListingDTO");
+            Objects.requireNonNull(this.instance.zipCode, "zipCode must be set in BookingListingDTO");
+            Objects.requireNonNull(this.instance.city, "city must be set in BookingListingDTO");
+            Objects.requireNonNull(this.instance.checkInDate, "checkInDate must be set in BookingListingDTO");
+            Objects.requireNonNull(this.instance.checkOutDate, "checkOutDate must be set in BookingListingDTO");
 
             return this.instance;
         }

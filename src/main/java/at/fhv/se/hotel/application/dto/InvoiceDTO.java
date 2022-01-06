@@ -51,11 +51,8 @@ public class InvoiceDTO {
     @XmlElement(name = "service")
     private Map<String, BigDecimal> services;
 
-    @XmlElement(name = "roomCategories")
-    private Map<String, Integer> roomCategories;
-
-    @XmlElement(name = "roomCategoryPrices")
-    private Map<String, BigDecimal> roomCategoryPrices;
+    @XmlElement(name = "roomNames")
+    private List<String> roomNames;
 
     @XmlElement(name = "checkInDate")
     @XmlJavaTypeAdapter(value = LocalDateAdapter.class)
@@ -80,8 +77,14 @@ public class InvoiceDTO {
     @XmlElement(name = "valueAddedTaxInEuro")
     private BigDecimal valueAddedTaxInEuro;
 
-    @XmlElement(name = "totalNetAmount")
-    private BigDecimal totalNetAmount;
+    @XmlElement(name = "totalNetAmountBeforeDiscount")
+    private BigDecimal totalNetAmountBeforeDiscount;
+
+    @XmlElement(name = "totalNetAmountAfterDiscount")
+    private BigDecimal totalNetAmountAfterDiscount;
+
+    @XmlElement(name = "totalNetAmountAfterLocalTax")
+    private BigDecimal totalNetAmountAfterLocalTax;
 
     @XmlElement(name = "totalGrossAmount")
     private BigDecimal totalGrossAmount;
@@ -152,12 +155,8 @@ public class InvoiceDTO {
         return services;
     }
 
-    public Map<String, Integer> roomCategories() {
-        return roomCategories;
-    }
-
-    public Map<String, BigDecimal> roomCategoryPrices() {
-        return roomCategoryPrices;
+    public List<String> roomNames() {
+        return roomNames;
     }
 
     public LocalDate checkInDate() {
@@ -188,8 +187,16 @@ public class InvoiceDTO {
         return valueAddedTaxInEuro;
     }
 
-    public BigDecimal totalNetAmount() {
-        return totalNetAmount;
+    public BigDecimal totalNetAmountBeforeDiscount() {
+        return totalNetAmountBeforeDiscount;
+    }
+
+    public BigDecimal totalNetAmountAfterDiscount() {
+        return totalNetAmountAfterDiscount;
+    }
+
+    public BigDecimal totalNetAmountAfterLocalTax() {
+        return totalNetAmountAfterLocalTax;
     }
 
     public BigDecimal totalGrossAmount() {
@@ -279,13 +286,8 @@ public class InvoiceDTO {
             return this;
         }
 
-        public Builder withCategories(Map<String, Integer> roomCategories) {
-            this.instance.roomCategories = roomCategories;
-            return this;
-        }
-
-        public Builder withCategoryPrices(Map<String, BigDecimal> roomCategoryPrices) {
-            this.instance.roomCategoryPrices = roomCategoryPrices;
+        public Builder withRoomNames(List<String> roomNames) {
+            this.instance.roomNames = roomNames;
             return this;
         }
 
@@ -324,8 +326,18 @@ public class InvoiceDTO {
             return this;
         }
 
-        public Builder withTotalNetAmount(BigDecimal totalNetAmount) {
-            this.instance.totalNetAmount = totalNetAmount;
+        public Builder withTotalNetAmountBeforeDiscount(BigDecimal totalNetAmountBeforeDiscount) {
+            this.instance.totalNetAmountBeforeDiscount = totalNetAmountBeforeDiscount;
+            return this;
+        }
+
+        public Builder withTotalNetAmountAfterDiscount(BigDecimal totalNetAmountAfterDiscount) {
+            this.instance.totalNetAmountAfterDiscount = totalNetAmountAfterDiscount;
+            return this;
+        }
+
+        public Builder withTotalNetAmountAfterLocalTax(BigDecimal totalNetAmountAfterLocalTax) {
+            this.instance.totalNetAmountAfterLocalTax = totalNetAmountAfterLocalTax;
             return this;
         }
 
@@ -356,7 +368,6 @@ public class InvoiceDTO {
 
 
         public InvoiceDTO build() {
-            Objects.requireNonNull(this.instance.stayId, "stayId must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.invoiceNumber, "invoiceNumber must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.invoiceDate, "invoiceDate must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.guestFirstName, "guestFirstName must be set in InvoiceDTO");
@@ -365,15 +376,16 @@ public class InvoiceDTO {
             Objects.requireNonNull(this.instance.streetNumber, "streetNumber must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.zipCode, "zipCode must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.city, "city must be set in InvoiceDTO");
-            Objects.requireNonNull(this.instance.roomCategories, "roomCategories must be set in InvoiceDTO");
-            Objects.requireNonNull(this.instance.roomCategoryPrices, "roomCategoryPrices must be set in InvoiceDTO");
+            Objects.requireNonNull(this.instance.roomNames, "roomNames must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.checkInDate, "checkInDate must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.checkOutDate, "checkOutDate must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.localTaxPerPerson, "localTaxPerPerson must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.localTaxTotal, "localTaxTotal must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.valueAddedTaxInPercent, "valueAddedTaxInPercent must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.valueAddedTaxInEuro, "valueAddedTaxInEuro must be set in InvoiceDTO");
-            Objects.requireNonNull(this.instance.totalNetAmount, "totalNetAmount must be set in InvoiceDTO");
+            Objects.requireNonNull(this.instance.totalNetAmountBeforeDiscount, "totalNetAmountBeforeDiscount must be set in InvoiceDTO");
+            Objects.requireNonNull(this.instance.totalNetAmountAfterDiscount, "totalNetAmountAfterDiscount must be set in InvoiceDTO");
+            Objects.requireNonNull(this.instance.totalNetAmountAfterLocalTax, "totalNetAmountAfterLocalTax must be set in InvoiceDTO");
             Objects.requireNonNull(this.instance.totalGrossAmount, "totalGrossAmount must be set in InvoiceDTO");
 
             return this.instance;

@@ -11,13 +11,15 @@ public class BookingWithRoomCategoryId implements Serializable {
     private Booking booking;
     private RoomCategory roomCategory;
 
+    // Required by hibernate
+    @SuppressWarnings("unused")
+    @Generated
+    private BookingWithRoomCategoryId() {}
+
     public BookingWithRoomCategoryId(Booking aBooking, RoomCategory aRoomCategory) {
         this.booking = aBooking;
         this.roomCategory = aRoomCategory;
     }
-
-    // Required by hibernate
-    private BookingWithRoomCategoryId() {}
 
     protected Booking getBooking() {
         return booking;

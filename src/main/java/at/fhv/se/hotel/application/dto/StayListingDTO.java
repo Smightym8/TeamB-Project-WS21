@@ -11,6 +11,7 @@ public class StayListingDTO {
     private String guestLastName;
     private LocalDate checkOutDate;
     private List<String> rooms;
+    private int amountOfPersons;
     private boolean isActive;
 
     public static Builder builder(){
@@ -35,6 +36,10 @@ public class StayListingDTO {
 
     public List<String> rooms() {
         return rooms;
+    }
+
+    public int amountOfPersons() {
+        return amountOfPersons;
     }
 
     public boolean isActive() {
@@ -71,6 +76,11 @@ public class StayListingDTO {
 
         public Builder withRooms(List<String> rooms) {
             this.instance.rooms = rooms;
+            return this;
+        }
+
+        public Builder withAmountOfPersons(int amountOfPersons) {
+            this.instance.amountOfPersons = amountOfPersons;
             return this;
         }
 

@@ -8,12 +8,14 @@ import java.util.Objects;
 public class GuestId {
     private String id;
 
-    public GuestId(String id){
-        this.id = id;
+    // Required by hibernate
+    @SuppressWarnings("unused")
+    @Generated
+    private GuestId() {
     }
 
-    //Required by hibernate
-    private GuestId() {
+    public GuestId(String id){
+        this.id = id;
     }
 
     public String id(){

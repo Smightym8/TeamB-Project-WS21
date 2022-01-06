@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<body id="Guests">
+
+    <div layout:fragment="content">
+
+        <div class="div-width-s">
+            <div class="card card-height">
+                <div class="card-header ">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="h4 align-middle">Modify guest</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/modifyGuest}" id="myform" method="post" th:object="${guest}">
+                        <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}"/>
+
+                        <div style="width: 80%; margin: auto;">
+
+                            <div class="d-flex">
+                                <div class="input-group pe-1" style="width: 50%;">
+                                    <span class="input-group-text col-4">Type<span style="color:red;">*</span></span>
+                                    <select class="form-select" id="guesttype" required onchange="enable()">
+                                        <option value="Private">Private</option>
+                                        <option value="Travel Agency">Travel Agency</option>
+                                    </select>
+                                </div>
+                                <div class="input-group ps-1" style="width: 50%;">
+                                    <span class="input-group-text col-4">Discount [%]</span>
+                                    <input class="form-control" id="discount" type="number" min="0" max="100" readonly th:value="0" th:field="*{discountInPercent}">
+                                </div>
+                            </div>
+
+                            <br>
+                            <hr class="my-3" style="width: 95%; margin: auto">
+                            <br>
+
+                            <div class="input-group pe-1" style="width: 50%;">
+                                <span class="input-group-text col-4">Gender<span style="color:red;">*</span></span>
+                                <select class="form-select" name="gender" required th:value="*{gender}" th:selected="${gender}">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="diverse">Diverse</option>
+                                </select>
+                            </div>
+
+                            <div class="d-flex mt-1">
+                                <div class="input-group pe-1" style="width: 50%;">
+                                    <span class="input-group-text col-4">Firstname<span style="color:red;">*</span></span>
+                                    <input class="form-control" id="firstname" type="text" placeholder="John" required  th:field="*{firstName}" >
+                                </div>
+                                <div class="input-group ps-1" style="width: 50%;">
+                                    <span class="input-group-text col-4">Lastname<span style="color:red;">*</span></span>
+                                    <input class="form-control" id="lastname" type="text" placeholder="Doe" required th:field="*{lastName}">
+                                </div>
+                            </div>
+
+                            <br>
+
+                            <div class="d-flex">
+                                <div class="input-group pe-1" style="width: 50%;">
+                                    <span class="input-group-text col-4">Street name<span style="color:red;">*</span></span>
+                                    <input class="form-control" type="text" placeholder="Townhall street" required th:field="*{streetName}">
+                                </div>
+                                <div class="input-group ps-1" style="width: 50%;">
+                                    <span class="input-group-text col-4">Street number<span style="color:red;">*</span></span>
+                                    <input class="form-control" type="text" placeholder="42" required th:field="*{streetNumber}">
+                                </div>
+                            </div>
+
+                            <div class="d-flex mt-1">
+                                <div class="input-group pe-1" style="width: 50%;">
+                                    <span class="input-group-text col-4">Zip code<span style="color:red;">*</span></span>
+                                    <input class="form-control" type="text" placeholder="6850" required th:field="*{zipCode}">
+                                </div>
+                                <div class="input-group ps-1" style="width: 50%;">
+                                    <span class="input-group-text col-4">City<span style="color:red;">*</span></span>
+                                    <input class="form-control" type="text" placeholder="Dornbirn" required th:field="*{city}">
+                                </div>
+                            </div>
+
+                            <div class="input-group pe-1 mt-1" style="width: 50%;">
+                                <span class="input-group-text col-4">Country<span style="color:red;">*</span></span>
+                                <input class="form-control" type="text" placeholder="Austria" required th:field="*{country}">
+                            </div>
+
+                            <br>
+                            <hr class="my-3" style="width: 95%; margin: auto">
+                            <br>
+
+                            <div class="d-flex">
+                                <div class="input-group pe-1" style="width: 50%;">
+                                    <span class="input-group-text col-4">Email<span style="color:red;">*</span></span>
+                                    <input class="form-control" id="email" type="email" placeholder="john.doe@gmail.com" required th:field="*{eMail}">
+                                </div>
+                                <div class="input-group ps-1" style="width: 50%;">
+                                    <span class="input-group-text col-4">Phone<span style="color:red;">*</span></span>
+                                    <input class="form-control" id="phoneNumber" type="tel" placeholder="+43 699 123 456 789" required th:field="*{phoneNumber}">
+                                </div>
+                            </div>
+
+                            <div class="input-group pe-1 mt-1" style="width: 50%;">
+                                <span class="input-group-text col-4">Birthday<span style="color:red;">*</span></span>
+                                <input class="form-control" id="birthDate" type="date" required  th:field="*{birthDate}">
+                            </div>
+                            <span th:if="${#fields.hasErrors('birthDate')}" style="color: red"><br>Invalid Birthdate</span>
+
+                            <br>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <a th:href="@{/guests}" class="btn btn-danger">Cancel</a>
+                    <button type="submit" form="myform" class="btn btn-success float-end">Save</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function enable() {
+                let discount = document.getElementById('discount');
+                let guesttype = document.getElementById("guesttype");
+
+                if (guesttype.options[guesttype.selectedIndex].value === 'Private') {
+                    discount.setAttribute("readonly", "readonly");
+                    discount.value = 0;
+                } else {
+                    discount.removeAttribute("readonly");
+                }
+            }
+        </script>
+
+    </div>
+
+</body>
+</html>

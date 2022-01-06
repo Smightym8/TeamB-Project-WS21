@@ -6,8 +6,11 @@ import at.fhv.se.hotel.domain.model.guest.FullName;
 import at.fhv.se.hotel.domain.model.guest.Gender;
 import at.fhv.se.hotel.domain.model.guest.Guest;
 import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.*;
+import at.fhv.se.hotel.domain.model.season.Season;
+import at.fhv.se.hotel.domain.model.season.SeasonName;
 import at.fhv.se.hotel.domain.model.service.Price;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
@@ -21,6 +24,7 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.sql.Array;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -35,6 +39,9 @@ public class TestData implements ApplicationRunner {
 
     @Autowired
     RoomCategoryRepository roomCategoryRepository;
+
+    @Autowired
+    SeasonRepository seasonRepository;
 
     @Autowired
     GuestRepository guestRepository;
@@ -53,180 +60,366 @@ public class TestData implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        // Insert fake services
-        Service tvService = Service.create(serviceRepository.nextIdentity(), new ServiceName("TV"), new Price(new BigDecimal("100")));
-        Service breakfastService = Service.create(serviceRepository.nextIdentity(), new ServiceName("Breakfast"), new Price(new BigDecimal("100")));
 
-        this.serviceRepository.add(tvService);
-        this.serviceRepository.add(breakfastService);
-
-        // Insert fake categories
+/*----- Room Categories -----*/
         RoomCategory singleRoom = RoomCategory.create(roomCategoryRepository.nextIdentity(),
-                new RoomCategoryName("Single Room"),
-                new Description("This is a single room")
+                new RoomCategoryName("Single room"),
+                new Description("Single room")
         );
+        this.roomCategoryRepository.add(singleRoom);
 
         RoomCategory doubleRoom = RoomCategory.create(roomCategoryRepository.nextIdentity(),
-                new RoomCategoryName("Double Room"),
-                new Description("This is a double room")
+                new RoomCategoryName("Double room"),
+                new Description("Double room")
         );
-
-        this.roomCategoryRepository.add(singleRoom);
         this.roomCategoryRepository.add(doubleRoom);
 
-        RoomCategoryPrice singleRoomSummerPrice = RoomCategoryPrice.create(
+        RoomCategory luxuryRoom = RoomCategory.create(roomCategoryRepository.nextIdentity(),
+                new RoomCategoryName("Luxury room"),
+                new Description("Luxury room")
+        );
+        this.roomCategoryRepository.add(luxuryRoom);
+
+
+
+/*----- Seasons -----*/
+        Season winterSeason1 = Season.create(
+                seasonRepository.nextIdentity(),
+                new SeasonName("Winter 2021/2022"),
+                LocalDate.of(2021, 12, 1),
+                LocalDate.of(2022, 1, 31)
+        );
+        seasonRepository.add(winterSeason1);
+
+        Season springSeason1 = Season.create(
+                seasonRepository.nextIdentity(),
+                new SeasonName("Spring 2022"),
+                LocalDate.of(2022, 2, 1),
+                LocalDate.of(2022, 5, 31)
+        );
+        seasonRepository.add(springSeason1);
+
+        Season summerSeason1 = Season.create(
+                seasonRepository.nextIdentity(),
+                new SeasonName("Summer 2022"),
+                LocalDate.of(2022, 6, 1),
+                LocalDate.of(2022, 11, 30)
+        );
+        seasonRepository.add(summerSeason1);
+
+        Season winterSeason2 = Season.create(
+                seasonRepository.nextIdentity(),
+                new SeasonName("Winter 2022/2023"),
+                LocalDate.of(2022, 12, 1),
+                LocalDate.of(2023, 1, 31)
+        );
+        seasonRepository.add(winterSeason2);
+
+        Season springSeason2 = Season.create(
+                seasonRepository.nextIdentity(),
+                new SeasonName("Spring 2023"),
+                LocalDate.of(2023, 2, 1),
+                LocalDate.of(2023, 5, 31)
+        );
+        seasonRepository.add(springSeason2);
+
+        Season summerSeason2 = Season.create(
+                seasonRepository.nextIdentity(),
+                new SeasonName("Summer 2023"),
+                LocalDate.of(2023, 6, 1),
+                LocalDate.of(2023, 11, 30)
+        );
+        seasonRepository.add(summerSeason2);
+
+
+
+/*----- Category Prices -----*/
+    // single
+        RoomCategoryPrice singleRoomWinterPrice1 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
-                Season.SUMMER,
+                winterSeason1,
                 singleRoom,
-                new BigDecimal("600")
+                new BigDecimal("50")
         );
 
-        RoomCategoryPrice singleRoomWinterPrice = RoomCategoryPrice.create(
+        RoomCategoryPrice singleRoomSpringPrice1 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
-                Season.WINTER,
+                springSeason1,
                 singleRoom,
-                new BigDecimal("300")
+                new BigDecimal("30")
         );
 
-        RoomCategoryPrice singleRoomSpringPrice = RoomCategoryPrice.create(
+        RoomCategoryPrice singleRoomSummerPrice1 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
-                Season.SPRING,
+                summerSeason1,
                 singleRoom,
-                new BigDecimal("200")
+                new BigDecimal("40")
         );
 
-        RoomCategoryPrice doubleRoomSummerPrice = RoomCategoryPrice.create(
+        this.roomCategoryPriceRepository.add(singleRoomWinterPrice1);
+        this.roomCategoryPriceRepository.add(singleRoomSpringPrice1);
+        this.roomCategoryPriceRepository.add(singleRoomSummerPrice1);
+
+    // double
+        RoomCategoryPrice doubleRoomWinterPrice1 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
-                Season.SUMMER,
+                winterSeason1,
                 doubleRoom,
-                new BigDecimal("900")
+                new BigDecimal("90")
         );
 
-        RoomCategoryPrice doubleRoomWinterPrice = RoomCategoryPrice.create(
+        RoomCategoryPrice doubleRoomSpringPrice1 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
-                Season.WINTER,
+                springSeason1,
                 doubleRoom,
-                new BigDecimal("500")
+                new BigDecimal("60")
         );
 
-        RoomCategoryPrice doubleRoomSpringPrice = RoomCategoryPrice.create(
+        RoomCategoryPrice doubleRoomSummerPrice1 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
-                Season.SPRING,
+                summerSeason1,
                 doubleRoom,
-                new BigDecimal("400")
+                new BigDecimal("80")
         );
 
-        this.roomCategoryPriceRepository.add(singleRoomWinterPrice);
-        this.roomCategoryPriceRepository.add(singleRoomSpringPrice);
-        this.roomCategoryPriceRepository.add(singleRoomSummerPrice);
-        this.roomCategoryPriceRepository.add(doubleRoomWinterPrice);
-        this.roomCategoryPriceRepository.add(doubleRoomSpringPrice);
-        this.roomCategoryPriceRepository.add(doubleRoomSummerPrice);
+        this.roomCategoryPriceRepository.add(doubleRoomWinterPrice1);
+        this.roomCategoryPriceRepository.add(doubleRoomSpringPrice1);
+        this.roomCategoryPriceRepository.add(doubleRoomSummerPrice1);
 
-        // Insert fake guests
-        Guest michael = Guest.create(guestRepository.nextIdentity(),
-                new FullName("Michael", "Spiegel"),
-                Gender.MALE,
-                new Address("Hochschulstraße",
-                        "1", "Dornbirn",
-                        "6850", "Austria"),
-                LocalDate.of(1999, 3, 20),
-                "+43 660 123 456 789",
-                "michael.spiegel@students.fhv.at",
-                10.0,
-                Collections.emptyList()
+
+    // luxury
+        RoomCategoryPrice luxuryRoomWinterPrice1 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                winterSeason1,
+                luxuryRoom,
+                new BigDecimal("250")
         );
-        this.guestRepository.add(michael);
 
+        RoomCategoryPrice luxuryRoomSpringPrice1 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                springSeason1,
+                luxuryRoom,
+                new BigDecimal("175")
+        );
+
+        RoomCategoryPrice luxuryRoomSummerPrice1 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                summerSeason1,
+                luxuryRoom,
+                new BigDecimal("225")
+        );
+
+        this.roomCategoryPriceRepository.add(luxuryRoomWinterPrice1);
+        this.roomCategoryPriceRepository.add(luxuryRoomSpringPrice1);
+        this.roomCategoryPriceRepository.add(luxuryRoomSummerPrice1);
+
+
+
+/*----- Rooms -----*/
+        Room roomS0 = Room.create(new RoomName("S100"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS0);
+
+        Room roomS1 = Room.create(new RoomName("S101"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS1);
+
+        Room roomS2 = Room.create(new RoomName("S102"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS2);
+
+        Room roomS3 = Room.create(new RoomName("S103"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS3);
+
+        Room roomS4 = Room.create(new RoomName("S104"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS4);
+
+        Room roomS5 = Room.create(new RoomName("S105"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS5);
+
+        Room roomS6 = Room.create(new RoomName("S106"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS6);
+
+        Room roomS7 = Room.create(new RoomName("S107"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS7);
+
+        Room roomS8 = Room.create(new RoomName("S108"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS8);
+
+        Room roomS9 = Room.create(new RoomName("S109"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS9);
+
+
+        Room roomD0 = Room.create(new RoomName("D100"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD0);
+
+        Room roomD1 = Room.create(new RoomName("D101"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD1);
+
+        Room roomD2 = Room.create(new RoomName("D102"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD2);
+
+        Room roomD3 = Room.create(new RoomName("D103"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD3);
+
+        Room roomD4 = Room.create(new RoomName("D104"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD4);
+
+        Room roomD5 = Room.create(new RoomName("D105"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD5);
+
+        Room roomD6 = Room.create(new RoomName("D106"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD6);
+
+        Room roomD7 = Room.create(new RoomName("D107"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD7);
+
+        Room roomD8 = Room.create(new RoomName("D108"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD8);
+
+        Room roomD9 = Room.create(new RoomName("D109"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD9);
+
+
+        Room roomL0 = Room.create(new RoomName("L200"), RoomStatus.FREE, luxuryRoom);
+        this.roomRepository.add(roomL0);
+
+        Room roomL1 = Room.create(new RoomName("L201"), RoomStatus.FREE, luxuryRoom);
+        this.roomRepository.add(roomL1);
+
+        Room roomL2 = Room.create(new RoomName("L202"), RoomStatus.FREE, luxuryRoom);
+        this.roomRepository.add(roomL2);
+
+        Room roomL3 = Room.create(new RoomName("L203"), RoomStatus.FREE, luxuryRoom);
+        this.roomRepository.add(roomL3);
+
+        Room roomL4 = Room.create(new RoomName("L204"), RoomStatus.FREE, luxuryRoom);
+        this.roomRepository.add(roomL4);
+
+
+
+
+/*----- Services -----*/
+        Service tv = Service.create(serviceRepository.nextIdentity(), new ServiceName("TV"), new Price(new BigDecimal("10")));
+        this.serviceRepository.add(tv);
+
+        Service wlan = Service.create(serviceRepository.nextIdentity(), new ServiceName("WLAN"), new Price(new BigDecimal("5")));
+        this.serviceRepository.add(wlan);
+
+        Service swimmingPool = Service.create(serviceRepository.nextIdentity(), new ServiceName("Swimming pool"), new Price(new BigDecimal("12")));
+        this.serviceRepository.add(swimmingPool);
+
+        Service sauna = Service.create(serviceRepository.nextIdentity(), new ServiceName("Sauna"), new Price(new BigDecimal("7")));
+        this.serviceRepository.add(sauna);
+
+        Service bike = Service.create(serviceRepository.nextIdentity(), new ServiceName("Bike"), new Price(new BigDecimal("6")));
+        this.serviceRepository.add(bike);
+
+        Service eBike = Service.create(serviceRepository.nextIdentity(), new ServiceName("E-Bike"), new Price(new BigDecimal("10")));
+        this.serviceRepository.add(eBike);
+
+        Service fitnessRoom = Service.create(serviceRepository.nextIdentity(), new ServiceName("Fitness Room"), new Price(new BigDecimal("8")));
+        this.serviceRepository.add(fitnessRoom);
+
+        Service newsPaper = Service.create(serviceRepository.nextIdentity(), new ServiceName("Newspaper"), new Price(new BigDecimal("2")));
+        this.serviceRepository.add(newsPaper);
+
+        Service parkingPlace = Service.create(serviceRepository.nextIdentity(), new ServiceName("Parking place"), new Price(new BigDecimal("10")));
+        this.serviceRepository.add(parkingPlace);
+
+        Service miniBar = Service.create(serviceRepository.nextIdentity(), new ServiceName("Minibar"), new Price(new BigDecimal("25")));
+        this.serviceRepository.add(miniBar);
+
+
+
+/*----- Guests -----*/
         Guest ali = Guest.create(guestRepository.nextIdentity(),
                 new FullName("Ali", "Cinar"),
                 Gender.MALE,
-                new Address("Hochschulstraße",
-                        "1", "Dornbirn",
-                        "6850", "Austria"),
+                new Address("Hauptplatz", "73", "Oberkulm", "4210", "Austria"),
                 LocalDate.of(1997, 8, 27),
-                "+43 676 123 456 789",
-                "ali.cinar@students.fhv.at",
+                "+43 680 7994750",
+                "ali.cinar@gmail.at",
                 0,
                 Collections.emptyList()
         );
         this.guestRepository.add(ali);
 
-        // Insert fake bookings
-        Booking booking1 = Booking.create(
-                LocalDate.now(),
-                LocalDate.now().plusDays(10),
-                bookingRepository.nextIdentity(),
-                michael,
-                List.of(tvService),
-                2,
+        Guest michael = Guest.create(guestRepository.nextIdentity(),
+                new FullName("Michael", "Spiegel"),
+                Gender.MALE,
+                new Address("Polletstraße", "26", "Oberkulm", "1220", "Wien"),
+                LocalDate.of(1995, 9, 24),
+                "+43 650 7131945",
+                "michael.spiegel@gmx.at",
                 0,
-                "Extra pillow"
+                Collections.emptyList()
         );
+        this.guestRepository.add(michael);
 
-        booking1.addRoomCategory(singleRoom, 1);
-        this.bookingRepository.add(booking1);
-
-        Booking booking2 = Booking.create(
-                LocalDate.now().plusDays(30),
-                LocalDate.now().plusDays(40),
-                bookingRepository.nextIdentity(),
-                ali,
-                List.of(tvService, breakfastService),
-                2,
+        Guest johannes = Guest.create(guestRepository.nextIdentity(),
+                new FullName("Johannes", "Moosbrugger"),
+                Gender.MALE,
+                new Address("Birkenweg", "9" , "Radstadt", "5550", "Austria"),
+                LocalDate.of(1999, 1, 1),
+                "+43 660 2648080",
+                "johannes.moosbrugger@gmx.at",
                 0,
-                "Vegetarian"
+                Collections.emptyList()
         );
-        booking2.addRoomCategory(singleRoom, 2);
-        booking2.addRoomCategory(doubleRoom, 1);
-        this.bookingRepository.add(booking2);
+        this.guestRepository.add(johannes);
 
-        // Insert fake rooms
-        Room room1 = Room.create("101", RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(room1);
+        Guest herbert = Guest.create(guestRepository.nextIdentity(),
+                new FullName("Herbert", "Steurer"),
+                Gender.MALE,
+                new Address("Kielmanseggasse", "29" , "Radstadt", "2340", "Austria"),
+                LocalDate.of(1979, 10, 1),
+                "+43 660 2649080",
+                "herbert.steurer@yahoo.at",
+                0,
+                Collections.emptyList()
+        );
+        this.guestRepository.add(herbert);
 
-        Room room2 = Room.create("102", RoomStatus.OCCUPIED, singleRoom);
-        this.roomRepository.add(room2);
+        Guest dario = Guest.create(guestRepository.nextIdentity(),
+                new FullName("Dario", "Birbarmer"),
+                Gender.MALE,
+                new Address("Forststraße", "8", "Kirchbichl", "6322", "Austria"),
+                LocalDate.of(1998, 8, 27),
+                "+43 676 4679464",
+                "dario.birbarmer@students.fhv.at",
+                0,
+                Collections.emptyList()
+        );
+        this.guestRepository.add(dario);
 
-        Room room3 = Room.create("103", RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(room3);
+        Guest umut = Guest.create(guestRepository.nextIdentity(),
+                new FullName("Umut", "Caglayan"),
+                Gender.MALE,
+                new Address("Maternaweg", "18", "Wien", "1160", "Austria"),
+                LocalDate.of(1995, 6, 27),
+                "+43 680 4589452",
+                "umut.caglayan@students.fhv.at",
+                0,
+                Collections.emptyList()
+        );
+        this.guestRepository.add(umut);
 
-        Room room4 = Room.create("104", RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(room4);
 
-        Room room5 = Room.create("105", RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(room5);
 
-        Room room6 = Room.create("106", RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(room6);
+/*----- Bookings -----*/
+        Booking b1 = Booking.create(
+                LocalDate.now().plusDays(0),
+                LocalDate.now().plusDays(2),
+                bookingRepository.nextIdentity(),
+                johannes,
+                List.of(tv,bike),
+                1,
+                0,
+                ""
+        );
+        b1.addRoomCategory(singleRoom, 1);
+        this.bookingRepository.add(b1);
 
-        Room room7 = Room.create("107", RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(room7);
-
-        Room room8 = Room.create("108", RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(room8);
-
-        Room room10 = Room.create("201", RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(room10);
-
-        Room room11 = Room.create("202", RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(room11);
-
-        Room room12 = Room.create("203", RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(room12);
-
-        Room room13 = Room.create("204", RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(room13);
-
-        Room room14 = Room.create("205", RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(room14);
-
-        Room room15 = Room.create("206", RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(room15);
-
-        // Insert Fake Stays
-        Stay stay1 = Stay.create(booking1, Map.of(room1, false));
-        booking1.deactivate();
+        Stay stay1 = Stay.create(b1, Map.of(roomS1, false));
+        b1.deactivate();
         this.stayRepository.add(stay1);
     }
 }

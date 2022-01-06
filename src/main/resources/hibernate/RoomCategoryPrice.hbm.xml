@@ -15,13 +15,9 @@
             <property name="id" column="domain_id" type="java.lang.String" />
         </component>
 
-        <!-- Enum mapping -->
-        <property name="season">
-            <column name="season" />
-            <type name="org.hibernate.type.EnumType">
-                <param name="enumClass">at.fhv.se.hotel.domain.model.roomcategory.Season</param>
-            </type>
-        </property>
+        <!-- Many to one mapping to the season -->
+        <many-to-one name="season" column="season_id"
+                     class="at.fhv.se.hotel.domain.model.season.Season" not-null="true"/>
 
         <!-- Many to one mapping to the roomCategory -->
         <many-to-one name="roomCategory" column="roomcategory_id"

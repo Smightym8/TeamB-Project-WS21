@@ -2,10 +2,10 @@ package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.GuestListingService;
 import at.fhv.se.hotel.application.api.exception.GuestNotFoundException;
-import at.fhv.se.hotel.application.dto.GuestDTO;
+import at.fhv.se.hotel.application.dto.GuestDetailsDTO;
+import at.fhv.se.hotel.application.dto.GuestListingDTO;
 import at.fhv.se.hotel.domain.model.guest.*;
 import at.fhv.se.hotel.domain.repository.GuestRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 public class GuestListingServiceTests {
@@ -61,13 +62,21 @@ public class GuestListingServiceTests {
         Mockito.when(guestRepository.findAllGuests()).thenReturn(guestsExpected);
 
         // when
-        List<GuestDTO> guestsActual = guestListingService.allGuests();
+        List<GuestListingDTO> guestsActual = guestListingService.allGuests();
 
         // then
         assertEquals(guestsExpected.size(), guestsActual.size());
         for(int i = 0; i < guestsActual.size(); i++) {
+            assertEquals(guestsExpected.get(i).getGuestId().id(), guestsActual.get(i).id());
             assertEquals(guestsExpected.get(i).getName().firstName(), guestsActual.get(i).firstName());
             assertEquals(guestsExpected.get(i).getName().lastName(), guestsActual.get(i).lastName());
+            assertEquals(guestsExpected.get(i).getAddress().streetName(), guestsActual.get(i).streetName());
+            assertEquals(guestsExpected.get(i).getAddress().streetNumber(), guestsActual.get(i).streetNumber());
+            assertEquals(guestsExpected.get(i).getAddress().city(), guestsActual.get(i).city());
+            assertEquals(guestsExpected.get(i).getAddress().zipCode(), guestsActual.get(i).zipCode());
+            assertEquals(guestsExpected.get(i).getAddress().country(), guestsActual.get(i).country());
+            assertEquals(guestsExpected.get(i).getMailAddress(), guestsActual.get(i).mailAddress());
+            assertEquals(guestsExpected.get(i).getPhoneNumber(), guestsActual.get(i).phoneNumber());
         }
     }
 
@@ -92,16 +101,40 @@ public class GuestListingServiceTests {
         Mockito.when(guestRepository.guestById(idExpected)).thenReturn(Optional.of(guestExpected));
 
         // when
-        GuestDTO guestActual = guestListingService.findGuestById(idExpected.id()).get();
+        GuestDetailsDTO guestActual = guestListingService.findGuestById(idExpected.id());
 
         // then
+        // TODO: Assert remaining fields
         assertEquals(guestExpected.getGuestId().id(), guestActual.id());
         assertEquals(guestExpected.getName().firstName(), guestActual.firstName());
         assertEquals(guestExpected.getName().lastName(), guestActual.lastName());
+        assertEquals(guestExpected.getGender().name(), guestActual.gender().toUpperCase());
         assertEquals(guestExpected.getAddress().city(), guestActual.city());
         assertEquals(guestExpected.getAddress().country(), guestActual.country());
         assertEquals(guestExpected.getAddress().streetName(), guestActual.streetName());
         assertEquals(guestExpected.getAddress().streetNumber(), guestActual.streetNumber());
         assertEquals(guestExpected.getAddress().zipCode(), guestActual.zipCode());
+        assertEquals(guestExpected.getPhoneNumber(), guestActual.phoneNumber());
+        assertEquals(guestExpected.getMailAddress(), guestActual.mailAddress());
+        assertEquals(guestExpected.getDiscountInPercent(), guestActual.discountInPercent());
+        assertEquals(guestExpected.getBirthDate(), guestActual.birthDate());
+    }
+
+    @Test
+    public void given_missingGuest_when_findById_then_GuestNotFoundExceptionIsThrown() {
+        // given
+        GuestId guestIdExpected = new GuestId("1");
+
+        Mockito.when(guestRepository.guestById(guestIdExpected)).thenReturn(Optional.empty());
+
+        // when ... then
+        Exception exception = assertThrows(GuestNotFoundException.class, () -> {
+            guestListingService.findGuestById(guestIdExpected.id());
+        });
+
+        String expectedMessage = "Guest with id " + guestIdExpected.id() + " not found";
+        String actualMessage = exception.getMessage();
+
+        assertEquals(expectedMessage, actualMessage);
     }
 }

@@ -45,7 +45,29 @@ public class RoomCategoryRepositoryImplTests {
 
         // then
         assertEquals(categoryExpected, categoryActual);
-        assertEquals(idExpected, categoryExpected.getRoomCategoryId());
+        assertEquals(idExpected, categoryActual.getRoomCategoryId());
+    }
+
+    @Test
+    void given_roomcategory_when_findbyname_then_returnequalscategory() {
+        // given
+        RoomCategoryId idExpected = new RoomCategoryId("1337");
+        RoomCategoryName roomCategoryName = new RoomCategoryName("Single Room");
+        RoomCategory categoryExpected = RoomCategory.create(
+                idExpected,
+                roomCategoryName,
+                new Description("This is a single room")
+        );
+
+        // when
+        roomCategoryRepository.add(categoryExpected);
+        em.flush();
+        RoomCategory categoryActual = roomCategoryRepository.roomCategoryByName(roomCategoryName).get();
+
+        // then
+        assertEquals(categoryExpected, categoryActual);
+        assertEquals(idExpected, categoryActual.getRoomCategoryId());
+        assertEquals(roomCategoryName, categoryActual.getRoomCategoryName());
     }
 
     @Test

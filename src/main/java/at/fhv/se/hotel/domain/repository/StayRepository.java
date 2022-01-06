@@ -14,6 +14,4 @@ public interface StayRepository {
     void add(Stay stay);
 
     Optional<Stay> stayById(StayId stayId);
-
-    List<Stay> stayByCheckout(LocalDate checkOutDate);
 }

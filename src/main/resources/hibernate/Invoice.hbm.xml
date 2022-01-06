@@ -22,7 +22,11 @@
         <property name="localTaxTotal" column="local_tax_total" type="java.math.BigDecimal" />
         <property name="valueAddedTaxInPercent" column="vat_in_percent" type="java.math.BigDecimal" />
         <property name="valueAddedTaxInEuro" column="vat_in_euro" type="java.math.BigDecimal" />
-        <property name="totalNetAmount" column="total_net_amount" type="java.math.BigDecimal" />
+        <property name="totalNetAmountBeforeDiscount" column="total_net_amount_before_discount" type="java.math.BigDecimal" />
+        <property name="discountInPercent" column="discount_in_percent" type="java.math.BigDecimal" />
+        <property name="discountInEuro" column="discount_in_euro" type="java.math.BigDecimal" />
+        <property name="totalNetAmountAfterLocalTax" column="total_net_amount_after_local_tax"/>
+        <property name="totalNetAmountAfterDiscount" column="total_net_amount_after_discount" type="java.math.BigDecimal" />
         <property name="totalGrossAmount" column="total_gross_amount" type="java.math.BigDecimal" />
         <property name="isPaid" column="is_paid" type="java.lang.Boolean" />
 
@@ -31,9 +35,22 @@
         <many-to-one name="stay" column="stay_id" class="at.fhv.se.hotel.domain.model.stay.Stay" not-null="true"/>
 
         <!-- Many to Many mapping to RoomCategoryPrice -->
-        <bag name="roomCategoryPriceList" cascade="save-update">
+        <bag name="roomCategoryPriceList" cascade="all" lazy="true">
             <key column="invoice_id" not-null="true" />
-            <many-to-many column="roomcategory_price_id" class="at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice"/>
+            <many-to-many column="roomcategory_price_id" class="at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice">
+            </many-to-many>
+        </bag>
+
+        <!-- Many to Many mapping to Service -->
+        <bag name="services" cascade="all" lazy="true">
+            <key column="invoice_id" not-null="false"/> <!-- It's possible that no services were booked -->
+            <many-to-many column="service_id" class="at.fhv.se.hotel.domain.model.service.Service"/>
+        </bag>
+
+        <!-- Many to Many mapping to Room -->
+        <bag name="rooms" cascade="all" lazy="true">
+            <key column="invoice_id" not-null="true"/>
+            <many-to-many column="room_name" class="at.fhv.se.hotel.domain.model.room.Room"/>
         </bag>
     </class>
 </hibernate-mapping>

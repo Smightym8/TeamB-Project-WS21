@@ -8,11 +8,14 @@ import java.util.Objects;
 // TODO: Test
 public class BookingWithRoomCategory {
     // Required by hibernate
+    @SuppressWarnings("unused")
     private Long id;
     private BookingWithRoomCategoryId bookingWithRoomCategoryId;
     private int amount;
 
     // Required by hibernate
+    @SuppressWarnings("unused")
+    @Generated
     private BookingWithRoomCategory() {}
 
     public static BookingWithRoomCategory create(BookingWithRoomCategoryId aBookingWithRoomCategoryId,

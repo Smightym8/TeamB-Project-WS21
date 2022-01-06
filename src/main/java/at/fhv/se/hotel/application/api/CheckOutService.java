@@ -6,11 +6,10 @@ import at.fhv.se.hotel.application.dto.InvoiceDTO;
 import java.util.List;
 
 public interface CheckOutService {
-    InvoiceDTO createInvoice(String stayId) throws StayNotFoundException;
 
-    void checkOut(String stayId) throws StayNotFoundException;
+    void checkOut(String stayId, List<String> roomNames, String action) throws StayNotFoundException;
 
-    InvoiceDTO createIntermediaryInvoice(String stayId, List<String> roomNames);
+    InvoiceDTO createInvoice(String stayId, List<String> roomNames, String action) throws StayNotFoundException;
 
-    void invoice(String stayId, List<String> roomNames);
+    void saveInvoice(String stayId, List<String> roomNames, String action) throws StayNotFoundException;
 }

@@ -1,8 +1,10 @@
 package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.RoomCategoryListingService;
+import at.fhv.se.hotel.application.api.exception.GuestNotFoundException;
 import at.fhv.se.hotel.application.api.exception.RoomCategoryNotFoundException;
 import at.fhv.se.hotel.application.dto.RoomCategoryDTO;
+import at.fhv.se.hotel.domain.model.guest.GuestId;
 import at.fhv.se.hotel.domain.model.roomcategory.Description;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryId;
@@ -20,6 +22,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 public class RoomCategoryListingServiceTests {
@@ -85,5 +88,23 @@ public class RoomCategoryListingServiceTests {
             assertEquals(categoriesExpected.get(i).getRoomCategoryId().id(), categoriesActual.get(i).id());
             assertEquals(categoriesExpected.get(i).getRoomCategoryName().name(), categoriesActual.get(i).name());
         }
+    }
+
+    @Test
+    public void given_missingRoomCategory_when_findById_then_RoomCategoryNotFoundExceptionIsThrown() {
+        // given
+        RoomCategoryId categoryIdExpected = new RoomCategoryId("1");
+
+        Mockito.when(roomCategoryRepository.roomCategoryById(categoryIdExpected)).thenReturn(Optional.empty());
+
+        // when ... then
+        Exception exception = assertThrows(RoomCategoryNotFoundException.class, () -> {
+            roomCategoryListingService.findRoomCategoryById(categoryIdExpected.id());
+        });
+
+        String expectedMessage = "Room Category with id " + categoryIdExpected.id() + " not found";
+        String actualMessage = exception.getMessage();
+
+        assertEquals(expectedMessage, actualMessage);
     }
 }

@@ -8,12 +8,12 @@ import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 public class GuestForm {
+    private String guestId;
+
     @NotNull
-    @Size(min = 2, max = 20)
     private String firstName;
 
     @NotNull
-    @Size(min = 2, max = 20)
     private String lastName;
 
     @NotNull
@@ -51,10 +51,10 @@ public class GuestForm {
     public GuestForm(){
     }
 
-    public GuestForm(String firstName, String lastName, String gender, String eMail, 
-                     String phoneNumber, LocalDate birthDate, String streetName, 
-                     String streetNumber, String zipCode, String city, String country, double discountInPercent){
-
+    public GuestForm(String guestId, String firstName, String lastName, String gender, String eMail,
+                     String phoneNumber, LocalDate birthDate, String streetName, String streetNumber,
+                     String zipCode, String city, String country, double discountInPercent) {
+        this.guestId = guestId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -67,6 +67,14 @@ public class GuestForm {
         this.city = city;
         this.country = country;
         this.discountInPercent = discountInPercent;
+    }
+
+    public String getGuestId() {
+        return guestId;
+    }
+
+    public void setGuestId(String guestId) {
+        this.guestId = guestId;
     }
 
     public String getFirstName() {

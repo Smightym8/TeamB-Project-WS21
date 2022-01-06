@@ -10,6 +10,7 @@ import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory;
 import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategoryId;
 import at.fhv.se.hotel.domain.model.guest.*;
 import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.Description;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
@@ -102,7 +103,7 @@ public class CheckInServiceTest {
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
         List<Room> roomsExpected = roomNamesExpected.stream()
-                .map(name -> Room.create(name, roomStatusExpected, roomCategoryExpected))
+                .map(name -> Room.create(new RoomName(name), roomStatusExpected, roomCategoryExpected))
                 .collect(Collectors.toList());
 
         bookingExpected.addRoomCategory(roomCategoryExpected, 3);
@@ -126,7 +127,7 @@ public class CheckInServiceTest {
     }
 
     @Test
-    void given_missingBooking_when_assignRooms_then_BookingNotFoundExceptionisThrown() {
+    void given_missingBooking_when_assignRooms_then_BookingNotFoundExceptionIsThrown() {
         //given
         BookingId bookingIdExpected = new BookingId("1");
 
@@ -210,20 +211,21 @@ public class CheckInServiceTest {
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
         List<Room> roomsExpected = roomNamesExpected.stream()
-                .map(name -> Room.create(name, roomStatusExpected, roomCategoryExpected))
+                .map(name -> Room.create(new RoomName(name), roomStatusExpected, roomCategoryExpected))
                 .collect(Collectors.toList());
 
         List<RoomDTO> roomDTOsExpected = roomsExpected.stream()
                 .map(room -> RoomDTO.builder()
-                                .withName(room.getName())
+                                .withName(room.getName().name())
                                 .withCategory(room.getRoomCategory().getRoomCategoryName().name())
+                                .withStatus(RoomStatus.FREE.name())
                                 .build())
                 .collect(Collectors.toList());
 
         Mockito.when(bookingRepository.bookingById(bookingIdExpected)).thenReturn(Optional.of(bookingExpected));
-        Mockito.when(roomRepository.roomByName(roomNamesExpected.get(0))).thenReturn(Optional.ofNullable(roomsExpected.get(0)));
-        Mockito.when(roomRepository.roomByName(roomNamesExpected.get(1))).thenReturn(Optional.ofNullable(roomsExpected.get(1)));
-        Mockito.when(roomRepository.roomByName(roomNamesExpected.get(2))).thenReturn(Optional.ofNullable(roomsExpected.get(2)));
+        Mockito.when(roomRepository.roomByName(new RoomName(roomNamesExpected.get(0)))).thenReturn(Optional.ofNullable(roomsExpected.get(0)));
+        Mockito.when(roomRepository.roomByName(new RoomName(roomNamesExpected.get(1)))).thenReturn(Optional.ofNullable(roomsExpected.get(1)));
+        Mockito.when(roomRepository.roomByName(new RoomName(roomNamesExpected.get(2)))).thenReturn(Optional.ofNullable(roomsExpected.get(2)));
 
         //when
         checkInService.checkIn(bookingIdExpected.id(), roomDTOsExpected);
@@ -305,13 +307,14 @@ public class CheckInServiceTest {
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
         List<Room> roomsExpected = roomNamesExpected.stream()
-                .map(name -> Room.create(name, roomStatusExpected, roomCategoryExpected))
+                .map(name -> Room.create(new RoomName(name), roomStatusExpected, roomCategoryExpected))
                 .collect(Collectors.toList());
 
         List<RoomDTO> roomDTOsExpected = roomsExpected.stream()
                 .map(room -> RoomDTO.builder()
-                        .withName(room.getName())
+                        .withName(room.getName().name())
                         .withCategory(room.getRoomCategory().getRoomCategoryName().name())
+                        .withStatus(RoomStatus.FREE.name())
                         .build())
                 .collect(Collectors.toList());
 
@@ -395,18 +398,19 @@ public class CheckInServiceTest {
         RoomStatus roomStatusExpected = RoomStatus.FREE;
 
         List<Room> roomsExpected = roomNamesExpected.stream()
-                .map(name -> Room.create(name, roomStatusExpected, roomCategoryExpected))
+                .map(name -> Room.create(new RoomName(name), roomStatusExpected, roomCategoryExpected))
                 .collect(Collectors.toList());
 
         List<RoomDTO> roomDTOsExpected = roomsExpected.stream()
                 .map(room -> RoomDTO.builder()
-                        .withName(room.getName())
+                        .withName(room.getName().name())
                         .withCategory(room.getRoomCategory().getRoomCategoryName().name())
+                        .withStatus(RoomStatus.FREE.name())
                         .build())
                 .collect(Collectors.toList());
 
         Mockito.when(bookingRepository.bookingById(bookingIdExpected)).thenReturn(Optional.of(bookingExpected));
-        Mockito.when(roomRepository.roomByName(roomNamesExpected.get(0))).thenReturn(Optional.empty());
+        Mockito.when(roomRepository.roomByName(new RoomName(roomNamesExpected.get(0)))).thenReturn(Optional.empty());
 
         //when ... then
         Exception exception = assertThrows(RoomNotFoundException.class, () -> {

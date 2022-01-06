@@ -9,6 +9,8 @@ public class RoomCategoryId {
     private String id;
 
     // Required by hibernate
+    @SuppressWarnings("unused")
+    @Generated
     private RoomCategoryId() {
     }
 

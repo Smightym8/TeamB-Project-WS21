@@ -9,13 +9,16 @@ import java.util.Objects;
 // TODO: Test
 public class Service {
     // Required by hibernate
+    @SuppressWarnings("unused")
     private Long id;
     private ServiceId serviceId;
     private ServiceName serviceName;
     private Price servicePrice;
 
     // Required by hibernate
-    private Service() {
+    @SuppressWarnings("unused")
+    @Generated
+    protected Service() {
     }
 
     public static Service create (ServiceId aServiceId, ServiceName aServiceName,

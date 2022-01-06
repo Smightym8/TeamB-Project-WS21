@@ -11,6 +11,8 @@ public class FullName {
     private String lastName;
 
     // Required by hibernate
+    @SuppressWarnings("unused")
+    @Generated
     private FullName(){}
 
     public FullName(String aFirstName, String aLastName){

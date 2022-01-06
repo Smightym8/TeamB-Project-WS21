@@ -1,42 +1,105 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+
+    <link rel="stylesheet" href="/css/datatables.min.css">
+
+    <script src="/js/jquery.js"></script>
+    <script src="/js/moment.js"></script>
+    <script src="/js/datatables.js"></script>
+    <script src="/js/datatables.bootstrap.js"></script>
+
+</head>
+
 <body id="Invoices">
 
     <div layout:fragment="content">
 
-        <p class="h3">Invoices</p>
+        <div style="margin: auto">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <i class="fas fa-file-invoice-dollar fa-fw fa-lg me-4 align-middle"></i>
+                        <span class="h4 align-middle">Invoices</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table id="t1" class="table stripe">
+                        <thead>
+                            <tr>
+                                <th class="col-2">Invoice Number</th>
+                                <th class="col-2">Guest</th>
+                                <th class="col-2">Address</th>
+                                <th class="col-2">Amount</th>
+                                <th class="col-2">Payment Status</th>
+                                <th class="col-1"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="align-middle">01201205480</td>
+                                <td class="align-middle">Fake Guest</td>
+                                <td class="align-middle">Fake Address</td>
+                                <td class="align-middle">€ 405.00</td>
+                                <td class="align-middle">Paid</td>
+                                <td class="align-middle text-nowrap">
+                                    <a class="btn btn-outline-primary btn-sm" href="#">View</a>
+                                    <a href="/" class="btn btn-outline-danger btn-sm">
+                                        <i class="fas fa-file-pdf me-1"></i>
+                                        <span class="align-self-center">PDF</span>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr th:each="invoice : ${invoices}">
+                                <td class="align-middle" th:text="${invoice.invoiceNumber}"></td>
+                                <td class="align-middle">
+                                    <span class="text-nowrap" th:text="${invoice.guestFirstName} + ' '"></span>
+                                    <span class="text-nowrap" th:text="${invoice.guestLastName}"></span>
+                                </td>
+                                <td class="align-middle">
+                                    <span class="text-nowrap" th:text="${invoice.streetName} + ' ' + ${invoice.streetNumber} + ', '"></span>
+                                    <span class="text-nowrap" th:text="${invoice.zipCode} + ' ' + ${invoice.city}"></span>
+                                </td>
+                                <td class="align-middle" th:text="'€ ' + ${invoice.totalGrossAmount}"></td>
+                                <td class="align-middle" th:if="${invoice.isPaid}">Paid</td>
+                                <td class="align-middle" th:unless="${invoice.isPaid}">Pending</td>
+                                <td class="align-middle text-nowrap">
+                                    <a class="btn btn-outline-primary btn-sm" th:href="@{/invoice-details/{id}(id=${invoice.id})}">View</a>
+                                    <a class="btn btn-outline-danger btn-sm" th:href="@{/download-invoice/{invoiceNo}(invoiceNo=${invoice.invoiceNumber})}">
+                                        <i class="fas fa-file-pdf me-1"></i>
+                                        <span class="align-self-center">PDF</span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-        <br>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th class="col-1">Invoice Number</th>
-                <th class="col-1">Guest</th>
-                <th class="col-1">Address</th>
-                <th class="col-1">Amount</th>
-                <th class="col-1">Payment Status</th>
-                <th class="col-1"></th>
-                <th class="col-1"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="invoice : ${invoices}">
-                <td th:text="${invoice.invoiceNumber}"></td>
-                <td th:text="${invoice.guestFirstName} + ' ' + ${invoice.guestLastName}"></td>
-                <td th:text="${invoice.streetName} + ' ' + ${invoice.streetNumber} + ', ' +
-                             ${invoice.zipCode} + ' ' + ${invoice.city}"></td>
-                <td th:text="'€' + ${invoice.totalGrossAmount}"></td>
-                <td th:if="${invoice.isPaid}">Paid</td>
-                <td th:unless="${invoice.isPaid}">Pending</td>
-                <td>
-                    <a class="btn btn-secondary btn-sm" href="#">View</a>
-                </td>
-                <td>
-                    <a th:href="@{/download-invoice/{invoiceNo}(invoiceNo=${invoice.invoiceNumber})}" class="btn btn-sm btn-white m-b-10 p-l-5"><i class="fa fa-file t-plus-1 text-danger fa-fw fa-lg"></i> Export as PDF</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <script>
+            // table initialization
+            let table1 = $('#t1').DataTable({
+                "order": [ 0, "desc" ],
+                "scrollCollapse": true,
+                "scrollY": "78vh",
+                "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ],
+                columnDefs: [
+                    { orderable: false, targets: [5]}
+                ]
+            });
+
+            // add icon to searchbars
+            var searchLabel = document.getElementsByTagName('label');
+            searchLabel = searchLabel[1];
+
+            var icon = document.createElement('i');
+            icon.setAttribute('class', 'fas fa-search');
+
+            searchLabel.insertBefore(icon, searchLabel.firstChild);
+            searchLabel.childNodes[1].textContent = " ";
+        </script>
+
     </div>
 
 </body>

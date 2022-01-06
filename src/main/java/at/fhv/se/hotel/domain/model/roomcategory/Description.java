@@ -8,6 +8,8 @@ public class Description {
     private String description;
 
     // Required by hibernate
+    @SuppressWarnings("unused")
+    @Generated
     private Description() {
     }
 

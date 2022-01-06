@@ -1,6 +1,7 @@
 package at.fhv.se.hotel.infrastructure;
 
 import at.fhv.se.hotel.domain.model.room.Room;
+import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryId;
 import at.fhv.se.hotel.domain.repository.RoomRepository;
@@ -18,8 +19,14 @@ public class HibernateRoomRepository implements RoomRepository {
     private EntityManager em;
 
     @Override
-    public Optional<Room> roomByName(String name) {
-        TypedQuery<Room> query = this.em.createQuery("FROM Room AS r WHERE r.name = :name", Room.class);
+    public List<Room> findAllRooms() {
+        TypedQuery<Room> query = this.em.createQuery("SELECT r FROM Room r", Room.class);
+        return query.getResultList();
+    }
+
+    @Override
+    public Optional<Room> roomByName(RoomName name) {
+        TypedQuery<Room> query = this.em.createQuery("FROM Room AS r WHERE r.roomName = :name", Room.class);
         query.setParameter("name", name);
         return query.getResultStream().findFirst();
     }

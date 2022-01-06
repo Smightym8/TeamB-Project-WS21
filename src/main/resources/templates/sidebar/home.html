@@ -1,86 +1,216 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+
+    <link rel="stylesheet" href="/css/datatables.min.css">
+
+    <script src="/js/jquery.js"></script>
+    <script src="/js/moment.js"></script>
+    <script src="/js/datatables.js"></script>
+    <script src="/js/datatables.bootstrap.js"></script>
+
+</head>
+
 <body id="Home">
 
     <div layout:fragment="content">
 
-        <div class="d-flex justify-content-between ">
-            <p class="h3">Upcoming check-ins [Today]</p>
-            <div class="btn-group">
-                <a href="#" class="btn btn-primary active">Today</a>
-                <a href="#" class="btn btn-primary">Next week</a>
-                <a href="#" class="btn btn-primary">All</a>
+        <input type="hidden" id="min-date">
+        <input type="hidden" id="max-date">
+
+        <div style="width: 50%; float:left" class="pe-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span class="h4">Upcoming check-ins</span>
+                    <span class="h4" id="h1"></span>
+                    <div class="btn-group" id="b1">
+                        <a onclick="filter('1','Today')" class="btn btn-primary">Today</a>
+                        <a onclick="filter('1','This week')" class="btn btn-primary">This week</a>
+                        <a onclick="filter('1','All')" class="btn btn-primary">All</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table id="t1" class="table stripe">
+                        <thead>
+                            <tr>
+                                <th class="col">Guest</th>
+                                <th class="col">Address</th>
+                                <th class="col">Check-in</th>
+                                <th class="col-1"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="booking : ${bookings}" th:if="${booking.isActive}">
+                                <td class="align-middle">
+                                    <span class="text-nowrap" th:text="${booking.guestFirstName} + ' '"></span>
+                                    <span class="text-nowrap" th:text="${booking.guestLastName}"></span>
+                                </td>
+                                <td class="align-middle">
+                                    <span class="text-nowrap" th:text="${booking.streetName} + ' ' + ${booking.streetNumber} + ', '"></span>
+                                    <span class="text-nowrap" th:text="${booking.zipCode} + ' ' + ${booking.city}"></span>
+                                </td>
+                                <td class="align-middle text-nowrap" th:text="${booking.checkInDate}"></td>
+                                <td class="align-middle text-nowrap">
+                                    <a th:href="@{/bookingdetails/{id}(id=${booking.id})}" class="btn btn-outline-primary btn-sm float-end">View / Check-in</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
-        <br>
-
-        <!-- Delete & Modify? -->
-
-        <br>
-
-        <div class="overflow-auto" style="height: 40vh">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th class="col-1">Guest</th>
-                    <th class="col-1">Address</th>
-                    <th class="col-1">Check-in date</th>
-                    <th class="col-1"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="booking : ${bookings}" th:if="${booking.isActive}">
-                    <td th:text="${booking.guestFirstName} + ' ' + ${booking.guestLastName}"></td>
-                    <td>Hochschulstraße 1, 6850 Dornbirn</td>
-                    <td th:text="${booking.checkInDate}"></td>
-                    <td><a th:href="@{/bookingdetails/{id}(id=${booking.id})}" type="button" class="btn btn-primary btn-sm">View / Check-in</a></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <br>
-        <br>
-        <br>
-
-        <div class="d-flex justify-content-between ">
-            <p class="h3">Upcoming check-outs [Today]</p>
-            <div class="btn-group">
-                <a href="#" class="btn btn-primary active">Today</a>
-                <a href="#" class="btn btn-primary">Next week</a>
-                <a href="#" class="btn btn-primary">All</a>
+        <div style="width: 50%; float:right;" class="ps-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span class="h4">Upcoming check-outs</span>
+                    <span class="h4" id="h2"></span>
+                    <div class="btn-group" id="b2">
+                        <a onclick="filter('2','Today')" class="btn btn-primary">Today</a>
+                        <a onclick="filter('2','This week')" class="btn btn-primary">This week</a>
+                        <a onclick="filter('2','All')" class="btn btn-primary">All</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table id="t2" class="table stripe">
+                        <thead>
+                            <tr>
+                                <th class="col">Room(s)</th>
+                                <th class="col">Guest</th>
+                                <th class="col">Check-out</th>
+                                <th class="col-1"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="stay : ${stays}" th:if="${stay.isActive}">
+                                <td class="align-middle">
+                                    <li style="list-style: none" th:each="room : ${stay.rooms}" th:text="${room}"></li>
+                                </td>
+                                <td class="align-middle">
+                                    <span class="text-nowrap" th:text="${stay.guestFirstName} + ' '"></span>
+                                    <span class="text-nowrap" th:text="${stay.guestLastName}"></span>
+                                </td>
+                                <td class="align-middle text-nowrap" th:text="${stay.checkOutDate}"></td>
+                                <td class="align-middle text-nowrap">
+                                    <a th:href="@{/staydetails/{id}(id=${stay.id})}" class="btn btn-outline-primary btn-sm float-end">View / Check-Out</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
-        <br>
+        <script>
+            // table search for date range
+            $.fn.dataTable.ext.search.push(function(settings, data) {
+                var min  = $('#min-date').val();
+                var max  = $('#max-date').val();
+                var date = moment(data[2]);
 
-        <div class="overflow-auto" style="height: 40vh">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th class="col-1">Guest</th>
-                    <th class="col-1">Room(s)</th>
-                    <th class="col-1">Check-out date</th>
-                    <th class="col-1"></th>
-                    <th class="col-1"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="stay : ${stays}" th:if="${stay.isActive}">
-                    <td th:text="${stay.guestFirstName} + ' ' + ${stay.guestLastName}"></td>
-                    <td>
-                        <ul style="list-style: none">
-                            <li th:each="room : ${stay.rooms}" th:text="${room}"></li>
-                        </ul>
-                    </td>
-                    <td th:text="${stay.checkOutDate}"></td>
-                    <td></td>
-                    <td><a th:href="@{/staydetails/{id}(id=${stay.id})}" type="button" class="btn btn-primary btn-sm">View / Check-Out</a></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+                if ((min === "" || max === "") || (date.isSameOrAfter(min) && date.isSameOrBefore(max))) {
+                    return true;
+                }
+                return false;
+            });
+
+            // table initialization
+            let table1 = $('#t1').DataTable({
+                "order": [ 2, "asc" ],
+                "scrollCollapse": true,
+                "scrollY": "73.5vh",
+                "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ],
+                "pageLength": -1,
+                columnDefs: [
+                    { orderable: false, targets: [3]}
+                ]
+            });
+
+            let table2 = $('#t2').DataTable({
+                "order": [ 2, "asc" ],
+                "scrollCollapse": true,
+                "scrollY": "73.5vh",
+                "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ],
+                "pageLength": -1,
+                columnDefs: [
+                    { orderable: false, targets: [3]}
+                ]
+            });
+
+            // table initial filtration
+            filter('1','Today');
+            filter('2','Today');
+
+            // add icon to searchbars
+            var searchLabels = document.getElementsByTagName('label');
+            searchLabels = [searchLabels[1],searchLabels[3]];
+
+            for (var i = 0; i < searchLabels.length; i++) {
+                var icon = document.createElement('i');
+                icon.setAttribute('class', 'fas fa-search');
+
+                searchLabels[i].insertBefore(icon, searchLabels[i].firstChild);
+                searchLabels[i].childNodes[1].textContent = " ";
+            }
+
+            // set filter date, trigger table, set buttons on active, change heading
+            function filter(table, day) {
+
+                var minDate = new Date();
+                var maxDate = new Date();
+
+                minDate.setDate(minDate.getDate());
+                minDate = moment(minDate).format('YYYY-MM-DD');
+
+                if(day === 'Today') {
+                    maxDate.setDate(maxDate.getDate());
+                    maxDate = moment(maxDate).format('YYYY-MM-DD');
+
+                } else if(day === 'This week') {
+                    maxDate.setDate(maxDate.getDate() + 7);
+                    maxDate = moment(maxDate).format('YYYY-MM-DD');
+
+                } else {
+                    minDate = "";
+                    maxDate = "";
+
+                }
+
+                document.getElementById('min-date').setAttribute('value',minDate);
+                document.getElementById('max-date').setAttribute('value',maxDate);
+
+                var headingElement, buttonElement;
+
+                if (table === '1') {
+                    headingElement = 'h1';
+                    buttonElement = 'b1';
+                    table1.draw();
+
+                } else if (table === '2') {
+                    headingElement = 'h2';
+                    buttonElement = 'b2';
+                    table2.draw();
+
+                }
+
+                document.getElementById(headingElement).innerText = `--- ${day} ---`;
+
+                var buttons = document.getElementById(buttonElement).children;
+
+                for (let i = 0; i < buttons.length; i++) {
+
+                    if (day === buttons[i].innerText) {
+                        buttons[i].classList.add('active');
+
+                    } else {
+                        buttons[i].classList.remove('active');
+
+                    }
+                }
+            }
+        </script>
+
     </div>
+
 </body>
 </html>

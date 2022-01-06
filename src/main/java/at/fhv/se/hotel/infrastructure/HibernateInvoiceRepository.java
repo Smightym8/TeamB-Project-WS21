@@ -41,7 +41,6 @@ public class HibernateInvoiceRepository implements InvoiceRepository {
         return query.getResultStream().findFirst();
     }
 
-    // TODO: Test
     @Override
     public List<Invoice> invoicesByDate(LocalDate invoiceDate) {
         TypedQuery<Invoice> query = this.em.createQuery("FROM Invoice AS i WHERE i.invoiceDate = :invoiceDate", Invoice.class);

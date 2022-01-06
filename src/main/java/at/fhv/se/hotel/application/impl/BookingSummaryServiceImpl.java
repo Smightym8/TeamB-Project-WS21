@@ -84,12 +84,15 @@ public class BookingSummaryServiceImpl implements BookingSummaryService {
             services.put(service.getServiceName().name(), service.getServicePrice().price());
         }
 
-
-
         BookingDetailsDTO bookingDetailsDTO = BookingDetailsDTO.builder()
                 .withGuestId(guestId)
                 .withGuestFirstName(guest.getName().firstName())
                 .withGuestLastName(guest.getName().lastName())
+                .withStreetName(guest.getAddress().streetName())
+                .withStreetNumber(guest.getAddress().streetNumber())
+                .withZipCode(guest.getAddress().zipCode())
+                .withCity(guest.getAddress().city())
+                .withCountry(guest.getAddress().country())
                 .withRoomCategoriesAndAmounts(categoriesWithAmount)
                 .withServices(services)
                 .withCheckInDate(checkInDate)
@@ -132,6 +135,11 @@ public class BookingSummaryServiceImpl implements BookingSummaryService {
                 .withBookingId(bookingId)
                 .withGuestFirstName(booking.getGuest().getName().firstName())
                 .withGuestLastName(booking.getGuest().getName().lastName())
+                .withStreetName(booking.getGuest().getAddress().streetName())
+                .withStreetNumber(booking.getGuest().getAddress().streetNumber())
+                .withZipCode(booking.getGuest().getAddress().zipCode())
+                .withCity(booking.getGuest().getAddress().city())
+                .withCountry(booking.getGuest().getAddress().country())
                 .withRoomCategoriesAndAmounts(categoriesWithAmount)
                 .withCategoryIds(categoryIds)
                 .withServices(services)

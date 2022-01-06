@@ -10,6 +10,7 @@ import java.util.Objects;
 // TODO: Test
 public class Guest {
     // Required by hibernate
+    @SuppressWarnings("unused")
     private Long id;
     private GuestId guestId;
     private FullName name;
@@ -22,7 +23,9 @@ public class Guest {
     private List<Booking> bookings;
 
     // Required by hibernate
-    public Guest() {}
+    @SuppressWarnings("unused")
+    @Generated
+    protected Guest() {}
 
     public static Guest create (GuestId aGuestId, FullName aName, Gender aGender, Address aAddress, LocalDate aBirthdate,
                                 String aPhoneNumber, String aMailAddress, double aDiscountInPercent, List<Booking> aBookings) {
@@ -75,6 +78,18 @@ public class Guest {
 
     public List<Booking> getBookings() {
         return bookings;
+    }
+
+    public void modify(FullName aName, Gender aGender, Address aAddress, LocalDate aBirthdate,
+                       String aPhoneNumber, String aMailAddress, double aDiscountInPercent
+    ) {
+        this.name = aName;
+        this.gender = aGender;
+        this.address = aAddress;
+        this.birthDate = aBirthdate;
+        this.phoneNumber = aPhoneNumber;
+        this.mailAddress = aMailAddress;
+        this.discountInPercent = aDiscountInPercent;
     }
 
     @Generated

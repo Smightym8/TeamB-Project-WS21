@@ -12,7 +12,9 @@ public class RoomCategoryPriceId {
         this.id = id;
     }
 
-    // Required by Hibernate
+    // Required by hibernate
+    @SuppressWarnings("unused")
+    @Generated
     private RoomCategoryPriceId (){}
 
     public String id() {
