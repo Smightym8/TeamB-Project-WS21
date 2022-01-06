@@ -420,6 +420,7 @@ public class TestData implements ApplicationRunner {
 
         Stay stay1 = Stay.create(b1, Map.of(roomS1, false));
         b1.deactivate();
+        roomS1.occupy();
         this.stayRepository.add(stay1);
     }
 }

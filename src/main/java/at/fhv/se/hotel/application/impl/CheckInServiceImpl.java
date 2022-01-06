@@ -71,16 +71,16 @@ public class CheckInServiceImpl implements CheckInService {
 
     @Transactional
     @Override
-    public void checkIn(String bookingId, List<RoomDTO> rooms) throws BookingNotFoundException, RoomNotFoundException {
+    public void checkIn(String bookingId, List<String> roomNames) throws BookingNotFoundException, RoomNotFoundException {
         //TODO: Check if rooms are occupied
         Booking booking = bookingRepository.bookingById(new BookingId(bookingId)).orElseThrow(
                 () -> new BookingNotFoundException("Booking with id " + bookingId + " not found")
         );
 
         Map<Room, Boolean> assignedRooms = new HashMap<>();
-        for(RoomDTO r : rooms) {
-            Room room = roomRepository.roomByName(new RoomName(r.name())).orElseThrow(
-                    () -> new RoomNotFoundException("Room with name " + r.name() + " not found")
+        for(String roomName : roomNames) {
+            Room room = roomRepository.roomByName(new RoomName(roomName)).orElseThrow(
+                    () -> new RoomNotFoundException("Room with name " + roomName + " not found")
             );
             assignedRooms.put(room, false);
 

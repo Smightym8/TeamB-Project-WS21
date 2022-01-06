@@ -21,5 +21,5 @@ public interface CheckInService {
     /**
      * See implementation {@link CheckInServiceImpl#checkIn(String, List)}
      */
-    void checkIn(String bookingId, List<RoomDTO> rooms) throws BookingNotFoundException, RoomNotFoundException;
+    void checkIn(String bookingId, List<String> roomNames) throws BookingNotFoundException, RoomNotFoundException;
 }

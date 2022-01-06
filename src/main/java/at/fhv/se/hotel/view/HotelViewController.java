@@ -4,10 +4,7 @@ import at.fhv.se.hotel.application.api.*;
 import at.fhv.se.hotel.application.api.exception.*;
 import at.fhv.se.hotel.application.dto.*;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
-import at.fhv.se.hotel.view.forms.BookingForm;
-import at.fhv.se.hotel.view.forms.GuestForm;
-import at.fhv.se.hotel.view.forms.InvoiceForm;
-import at.fhv.se.hotel.view.forms.RoomForm;
+import at.fhv.se.hotel.view.forms.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -504,34 +501,50 @@ public class HotelViewController {
 
     /*----- Check-In -----*/
     @GetMapping(CHECK_IN_URL)
-    public ModelAndView checkIn(
+    public ModelAndView showAssignedRooms(
             @RequestParam("bookingId") String bookingId,
-            @RequestParam("isCheckedIn") boolean isCheckedIn,
             Model model) {
 
         List<RoomDTO> freeRooms = roomListingService.allFreeRooms();
         List<RoomDTO> assignedRooms;
+        CheckInForm checkInForm;
         try {
+            List<String> roomNames = new ArrayList<>();
             assignedRooms = checkInService.assignRooms(bookingId);
+            assignedRooms.forEach(room -> roomNames.add(room.name()));
+
+            checkInForm = new CheckInForm(bookingId, roomNames);
+
         } catch (BookingNotFoundException e) {
             return redirectError(e.getMessage());
         }
 
-        if(isCheckedIn) {
-            try {
-                checkInService.checkIn(bookingId, assignedRooms);
-            } catch (BookingNotFoundException | RoomNotFoundException e) {
-                return redirectError(e.getMessage());
-            }
-        }
-
         model.addAttribute("bookingId", bookingId);
+        model.addAttribute("checkInForm", checkInForm);
         model.addAttribute("assignedRooms", assignedRooms);
         model.addAttribute("freeRooms", freeRooms);
-        model.addAttribute("isCheckedIn", isCheckedIn);
 
         return new ModelAndView(CHECK_IN_VIEW);
     }
+
+    @PostMapping(CHECK_IN_URL)
+    public ModelAndView checkIn(@Valid @ModelAttribute("checkInForm") CheckInForm checkInForm, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            return new ModelAndView(CHECK_IN_VIEW);
+        }
+
+        try {
+            checkInService.checkIn(
+                    checkInForm.getBookingId(),
+                    checkInForm.getRoomNames()
+            );
+        } catch (BookingNotFoundException | RoomNotFoundException e) {
+            return redirectError(e.getMessage());
+        }
+
+        return new ModelAndView("redirect:" + STAYS_URL);
+    }
+
 
     /*----- Check-Out -----*/
     @GetMapping(STAY_DETAILS_URL)
