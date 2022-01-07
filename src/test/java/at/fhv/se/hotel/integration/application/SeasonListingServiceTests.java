@@ -7,6 +7,7 @@ import at.fhv.se.hotel.domain.model.season.Season;
 import at.fhv.se.hotel.domain.model.season.SeasonId;
 import at.fhv.se.hotel.domain.model.season.SeasonName;
 import at.fhv.se.hotel.domain.repository.RoomCategoryPriceRepository;
+import at.fhv.se.hotel.domain.repository.RoomCategoryRepository;
 import at.fhv.se.hotel.domain.repository.SeasonRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,6 +33,9 @@ public class SeasonListingServiceTests {
 
     @MockBean
     SeasonRepository seasonRepository;
+
+    @MockBean
+    RoomCategoryRepository roomCategoryRepository;
 
     @MockBean
     RoomCategoryPriceRepository roomCategoryPriceRepository;
@@ -60,6 +65,13 @@ public class SeasonListingServiceTests {
                 new RoomCategoryId("4"),
                 new RoomCategoryName("Suite"),
                 new Description("This is a Suite")
+        );
+
+        List<RoomCategory> categoriesExpected = List.of(
+                singleRoomExpected,
+                doubleRoomExpected,
+                juniorSuiteExpected,
+                suiteExpected
         );
 
         /* -- Spring Season -- */
@@ -215,20 +227,104 @@ public class SeasonListingServiceTests {
                 fallSeasonSuitePriceExpected
         );
 
-        Mockito.when(roomCategoryPriceRepository.allPrices()).thenReturn(seasonsWithPricesExpected);
+        List<Season> seasonsExpected = List.of(
+                summerSeasonExpected,
+                fallSeasonExpected,
+                springSeasonExpected
+        );
+
+        Mockito.when(seasonRepository.findAllSeasons()).thenReturn(seasonsExpected);
+        Mockito.when(roomCategoryRepository.findAllRoomCategories()).thenReturn(categoriesExpected);
+
+        // Mock all possibilities of season and category
+
+        // Single Rooms
+        Mockito.when(
+                roomCategoryPriceRepository.priceBySeasonAndCategory(
+                        springSeasonIdExpected, singleRoomExpected.getRoomCategoryId()
+                )
+        ).thenReturn(Optional.of(springSeasonSingleRoomPriceExpected));
+
+        Mockito.when(
+                roomCategoryPriceRepository.priceBySeasonAndCategory(
+                        fallSeasonIdExpected, singleRoomExpected.getRoomCategoryId()
+                )
+        ).thenReturn(Optional.of(fallSeasonSingleRoomPriceExpected));
+
+        Mockito.when(
+                roomCategoryPriceRepository.priceBySeasonAndCategory(
+                        summerSeasonIdExpected, singleRoomExpected.getRoomCategoryId()
+                )
+        ).thenReturn(Optional.of(summerSeasonSingleRoomPriceExpected));
+
+        // Double Room
+        Mockito.when(
+                roomCategoryPriceRepository.priceBySeasonAndCategory(
+                        springSeasonIdExpected, doubleRoomExpected.getRoomCategoryId()
+                )
+        ).thenReturn(Optional.of(springSeasonDoubleRoomPriceExpected));
+
+        Mockito.when(
+                roomCategoryPriceRepository.priceBySeasonAndCategory(
+                        fallSeasonIdExpected, doubleRoomExpected.getRoomCategoryId()
+                )
+        ).thenReturn(Optional.of(fallSeasonDoubleRoomPriceExpected));
+
+        Mockito.when(
+                roomCategoryPriceRepository.priceBySeasonAndCategory(
+                        summerSeasonIdExpected, doubleRoomExpected.getRoomCategoryId()
+                )
+        ).thenReturn(Optional.of(summerSeasonDoubleRoomPriceExpected));
+
+        // Junior Suite
+        Mockito.when(
+                roomCategoryPriceRepository.priceBySeasonAndCategory(
+                        springSeasonIdExpected, juniorSuiteExpected.getRoomCategoryId()
+                )
+        ).thenReturn(Optional.of(springSeasonJuniorSuitePriceExpected));
+
+        Mockito.when(
+                roomCategoryPriceRepository.priceBySeasonAndCategory(
+                        fallSeasonIdExpected, juniorSuiteExpected.getRoomCategoryId()
+                )
+        ).thenReturn(Optional.of(fallSeasonJuniorSuitePriceExpected));
+
+        Mockito.when(
+                roomCategoryPriceRepository.priceBySeasonAndCategory(
+                        summerSeasonIdExpected, juniorSuiteExpected.getRoomCategoryId()
+                )
+        ).thenReturn(Optional.of(summerSeasonJuniorSuitePriceExpected));
+
+        // Suite
+        Mockito.when(
+                roomCategoryPriceRepository.priceBySeasonAndCategory(
+                        springSeasonIdExpected, suiteExpected.getRoomCategoryId()
+                )
+        ).thenReturn(Optional.of(springSeasonSuitePriceExpected));
+
+        Mockito.when(
+                roomCategoryPriceRepository.priceBySeasonAndCategory(
+                        fallSeasonIdExpected, suiteExpected.getRoomCategoryId()
+                )
+        ).thenReturn(Optional.of(fallSeasonSuitePriceExpected));
+
+        Mockito.when(
+                roomCategoryPriceRepository.priceBySeasonAndCategory(
+                        summerSeasonIdExpected, suiteExpected.getRoomCategoryId()
+                )
+        ).thenReturn(Optional.of(summerSeasonSuitePriceExpected));
 
         // when
         List<SeasonWithPricesDTO> seasonsWithPricesActual = seasonListingService.allSeasonsWithPrices();
 
         // then
-        for (SeasonWithPricesDTO swp : seasonsWithPricesActual) {
-            for (RoomCategoryPrice rcp : seasonsWithPricesExpected) {
-                assertEquals(rcp.getSeason().getSeasonName().name(), swp.season());
-                assertEquals(rcp.getSeason().getStartDate(), swp.startDate());
-                assertEquals(rcp.getSeason().getEndDate(), swp.endDate());
-                assertEquals(rcp.getRoomCategory().getRoomCategoryName().name(), swp.roomCategory());
-                assertEquals(rcp.getPrice(), swp.price());
-            }
+        assertEquals(seasonsExpected.size(), seasonsWithPricesActual.size());
+
+        for(int i = 0; i < seasonsExpected.size(); i++) {
+            assertEquals(seasonsExpected.get(i).getSeasonName().name(), seasonsWithPricesActual.get(i).seasonName());
+            assertEquals(seasonsExpected.get(i).getStartDate(), seasonsWithPricesActual.get(i).startDate());
+            assertEquals(seasonsExpected.get(i).getEndDate(), seasonsWithPricesActual.get(i).endDate());
+            assertEquals(categoriesExpected.size(), seasonsWithPricesActual.get(i).prices().size());
         }
     }
 }
