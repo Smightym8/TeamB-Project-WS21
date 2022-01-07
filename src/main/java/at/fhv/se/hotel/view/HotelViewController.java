@@ -9,6 +9,7 @@ import at.fhv.se.hotel.view.forms.GuestForm;
 import at.fhv.se.hotel.view.forms.InvoiceForm;
 import at.fhv.se.hotel.view.forms.RoomForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
