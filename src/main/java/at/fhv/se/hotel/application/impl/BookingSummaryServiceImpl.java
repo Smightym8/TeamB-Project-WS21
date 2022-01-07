@@ -22,6 +22,7 @@ import at.fhv.se.hotel.domain.repository.BookingRepository;
 import at.fhv.se.hotel.domain.repository.GuestRepository;
 import at.fhv.se.hotel.domain.repository.RoomCategoryRepository;
 import at.fhv.se.hotel.domain.repository.ServiceRepository;
+import at.fhv.se.hotel.view.forms.GuestForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -50,19 +51,24 @@ public class BookingSummaryServiceImpl implements BookingSummaryService {
     ServiceRepository serviceRepository;
 
     @Override
-    public BookingDetailsDTO createSummary(String guestId,
-                                           List<String> roomCategoryIds,
-                                           List<Integer> amounts,
-                                           List<String> serviceIds,
-                                           LocalDate checkInDate,
-                                           LocalDate checkOutDate,
-                                           int amountOfAdults,
-                                           int amountOfChildren,
-                                           String additionalInformation) throws GuestNotFoundException, ServiceNotFoundException, RoomCategoryNotFoundException {
-
-        Guest guest = guestRepository.guestById(new GuestId(guestId)).orElseThrow(
-                () -> new GuestNotFoundException("Guest with id " + guestId + " not found")
-        );
+    public BookingDetailsDTO createSummary(
+            String guestId,
+            String firstName,
+            String lastName,
+            String streetName,
+            String streetNumber,
+            String zipCode,
+            String city,
+            String country,
+            List<String> roomCategoryIds,
+            List<Integer> amounts,
+            List<String> serviceIds,
+            LocalDate checkInDate,
+            LocalDate checkOutDate,
+            int amountOfAdults,
+            int amountOfChildren,
+            String additionalInformation
+    ) throws ServiceNotFoundException, RoomCategoryNotFoundException, GuestNotFoundException {
 
         Map<String, Integer> categoriesWithAmount = new HashMap<>();
         int i = 0;
@@ -84,25 +90,45 @@ public class BookingSummaryServiceImpl implements BookingSummaryService {
             services.put(service.getServiceName().name(), service.getServicePrice().price());
         }
 
-        BookingDetailsDTO bookingDetailsDTO = BookingDetailsDTO.builder()
-                .withGuestId(guestId)
-                .withGuestFirstName(guest.getName().firstName())
-                .withGuestLastName(guest.getName().lastName())
-                .withStreetName(guest.getAddress().streetName())
-                .withStreetNumber(guest.getAddress().streetNumber())
-                .withZipCode(guest.getAddress().zipCode())
-                .withCity(guest.getAddress().city())
-                .withCountry(guest.getAddress().country())
-                .withRoomCategoriesAndAmounts(categoriesWithAmount)
-                .withServices(services)
-                .withCheckInDate(checkInDate)
-                .withCheckOutDate(checkOutDate)
-                .withAdditionalInformation(additionalInformation)
-                .withAmountOfAdults(amountOfAdults)
-                .withAmountOfChildren(amountOfChildren)
-                .build();
+        if(guestId == null || guestId.isEmpty()) {
+            return BookingDetailsDTO.builder()
+                    .withGuestFirstName(firstName)
+                    .withGuestLastName(lastName)
+                    .withStreetName(streetName)
+                    .withStreetNumber(streetNumber)
+                    .withZipCode(zipCode)
+                    .withCity(city)
+                    .withCountry(country)
+                    .withRoomCategoriesAndAmounts(categoriesWithAmount)
+                    .withServices(services)
+                    .withCheckInDate(checkInDate)
+                    .withCheckOutDate(checkOutDate)
+                    .withAdditionalInformation(additionalInformation)
+                    .withAmountOfAdults(amountOfAdults)
+                    .withAmountOfChildren(amountOfChildren)
+                    .build();
+        } else {
+            Guest guest = guestRepository.guestById(new GuestId(guestId)).orElseThrow(
+                    () -> new GuestNotFoundException("Guest with id " + guestId + " not found")
+            );
 
-        return bookingDetailsDTO;
+            return BookingDetailsDTO.builder()
+                    .withGuestFirstName(guest.getName().firstName())
+                    .withGuestLastName(guest.getName().lastName())
+                    .withStreetName(guest.getAddress().streetName())
+                    .withStreetNumber(guest.getAddress().streetNumber())
+                    .withZipCode(guest.getAddress().zipCode())
+                    .withCity(guest.getAddress().city())
+                    .withCountry(guest.getAddress().country())
+                    .withRoomCategoriesAndAmounts(categoriesWithAmount)
+                    .withServices(services)
+                    .withCheckInDate(checkInDate)
+                    .withCheckOutDate(checkOutDate)
+                    .withAdditionalInformation(additionalInformation)
+                    .withAmountOfAdults(amountOfAdults)
+                    .withAmountOfChildren(amountOfChildren)
+                    .build();
+        }
     }
 
     @Override
