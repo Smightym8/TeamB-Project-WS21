@@ -1,6 +1,7 @@
 package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.CheckOutService;
+import at.fhv.se.hotel.application.api.exception.RoomNotFoundException;
 import at.fhv.se.hotel.application.api.exception.StayNotFoundException;
 import at.fhv.se.hotel.application.dto.InvoiceDTO;
 import at.fhv.se.hotel.domain.model.booking.Booking;
@@ -38,7 +39,6 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-// TODO: Fix error java.io.FileNotFoundException: src/main/resources/static/invoices/xml/invoice_20211222001.xml (Datei oder Verzeichnis nicht gefunden)
 @SpringBootTest
 public class CheckOutServiceTest {
 
@@ -60,8 +60,9 @@ public class CheckOutServiceTest {
     @MockBean
     RoomRepository roomRepository;
 
+    // TODO: Implement createInvoice test with a guest which has a discount
     @Test
-    void given_stay_when_createinvoice_then_returnexpectedinvoice() throws StayNotFoundException {
+    void given_stay_when_createinvoice_then_returnexpectedinvoice() throws StayNotFoundException, RoomNotFoundException {
         // given
         Guest guestExpected = Guest.create(new GuestId("1"),
                 new FullName("Michael", "Spiegel"),
@@ -154,7 +155,6 @@ public class CheckOutServiceTest {
         Mockito.when(roomRepository.roomByName(new RoomName(roomNameExpected))).thenReturn(Optional.of(roomsExpectedList.get(0)));
 
         // Mock each date which occurs in the loop of the calculation to return the proper season
-        // TODO: replace all similar mockings with a loop like this
         for (int i = 1; i <= 10; i++) {
             Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, i)))
                     .thenReturn(Optional.of(summerSeason));
@@ -267,26 +267,10 @@ public class CheckOutServiceTest {
         Mockito.when(stayRepository.stayById(idExpected)).thenReturn(Optional.of(stayExpected));
         Mockito.when(roomRepository.roomByName(new RoomName(roomNamesExpected.get(0)))).thenReturn(Optional.of(roomsExpectedList.get(0)));
 
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 1)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 2)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 3)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 4)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 5)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 6)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 7)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 8)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 9)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 10)))
-                .thenReturn(Optional.of(summerSeason));
+        for(int i = 1; i <= 10 ; i++) {
+            Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, i)))
+                    .thenReturn(Optional.of(summerSeason));
+        }
 
         Mockito.when(roomCategoryPriceRepository.by(categoriesExpected.get(0), summerSeason.getSeasonId()))
                 .thenReturn(roomCategoryPricesExpected.get(0));
@@ -381,26 +365,10 @@ public class CheckOutServiceTest {
         Mockito.when(stayRepository.stayById(idExpected)).thenReturn(Optional.of(stayExpected));
         Mockito.when(roomRepository.roomByName(new RoomName(roomNameExpected))).thenReturn(Optional.of(roomsExpectedList.get(0)));
 
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 1)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 2)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 3)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 4)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 5)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 6)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 7)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 8)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 9)))
-                .thenReturn(Optional.of(summerSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, 10)))
-                .thenReturn(Optional.of(summerSeason));
+        for(int i = 1; i <= 10 ; i++) {
+            Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, i)))
+                    .thenReturn(Optional.of(summerSeason));
+        }
 
         Mockito.when(roomCategoryPriceRepository.by(categoriesExpected.get(0), summerSeason.getSeasonId()))
                 .thenReturn(roomCategoryPricesExpected.get(0));
@@ -430,6 +398,47 @@ public class CheckOutServiceTest {
         });
 
         String expectedMessage = "Check out failed! Stay with id " + stayIdExpected.id() + " doesn't exist.";
+        String actualMessage = exception.getMessage();
+
+        assertEquals(expectedMessage, actualMessage);
+    }
+
+    @Test
+    public void given_missingStay_when_createInvoice_then_StayNotFoundExceptionIsThrown() {
+        // given
+        StayId stayIdExpected = new StayId("1");
+
+        List<String> roomNames = List.of("101");
+        String action = "checkOut";
+
+        Mockito.when(stayRepository.stayById(stayIdExpected)).thenReturn(Optional.empty());
+
+        // when ... then
+        Exception exception = assertThrows(StayNotFoundException.class,
+                () -> checkOutService.createInvoice(stayIdExpected.id(), roomNames, action));
+
+        String expectedMessage = "Creating invoice failed! Stay with id " + stayIdExpected.id() + " not found";
+        String actualMessage = exception.getMessage();
+
+        assertEquals(expectedMessage, actualMessage);
+    }
+
+    @Test
+    public void given_missingStay_when_saveInvoice_then_StayNotFoundExceptionIsThrown() {
+        // given
+        StayId stayIdExpected = new StayId("1");
+
+        List<String> roomNames = List.of("101");
+        String action = "checkOut";
+
+        Mockito.when(stayRepository.stayById(stayIdExpected)).thenReturn(Optional.empty());
+
+        // when ... then
+        Exception exception = assertThrows(StayNotFoundException.class,
+                () -> checkOutService.saveInvoice(stayIdExpected.id(), roomNames, action)
+        );
+
+        String expectedMessage = "Saving invoice failed! Stay with id " + stayIdExpected.id() + " not found";
         String actualMessage = exception.getMessage();
 
         assertEquals(expectedMessage, actualMessage);

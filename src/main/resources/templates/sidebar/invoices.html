@@ -65,7 +65,7 @@
                                 <td class="align-middle" th:unless="${invoice.isPaid}">Pending</td>
                                 <td class="align-middle text-nowrap">
                                     <a class="btn btn-outline-primary btn-sm" th:href="@{/invoice-details/{id}(id=${invoice.id})}">View</a>
-                                    <a class="btn btn-outline-danger btn-sm" th:href="@{/download-invoice/{id}(id=${invoice.id})}">
+                                    <a class="btn btn-outline-danger btn-sm" th:href="@{/download-invoice/{invoiceNo}(invoiceNo=${invoice.invoiceNumber})}">
                                         <i class="fas fa-file-pdf me-1"></i>
                                         <span class="align-self-center">PDF</span>
                                     </a>
