@@ -13,32 +13,32 @@
 
 <body id="Bookings">
 
-    <div layout:fragment="content">
+<div layout:fragment="content">
 
-        <div class="div-width-s">
-            <div class="card card-height">
-                <div class="card-header ">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <span class="h4 align-middle">Create booking - guest details</span>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 80%">4/5</div>
+    <div class="div-width-s">
+        <div class="card card-height">
+            <div class="card-header ">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="h4 align-middle">Create booking - guest details</span>
                     </div>
                 </div>
-                <div class="card-body">
+                <br>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 80%">4/5</div>
+                </div>
+            </div>
+            <div class="card-body">
 
-                    <form id="myform" action="/createbooking/summary?isCreated=false" method="post" th:object="${guestForm}">
-                        <input type="hidden" id="roomCategoryIds" name="roomCategoryIds" th:field="${bookingForm.roomCategoryIds}"/>
-                        <input type="hidden" id="amountsOfRoomCategories" name="amountsOfRoomCategories" th:field="${bookingForm.amountsOfRoomCategories}"/>
-                        <input type="hidden" id="serviceIds" name="serviceIds" th:field="${bookingForm.serviceIds}"/>
-                        <input type="hidden" id="checkInDate" name="checkInDate" th:field="${bookingForm.checkInDate}"/>
-                        <input type="hidden" id="checkOutDate" name="checkOutDate" th:field="${bookingForm.checkOutDate}"/>
-                        <input type="hidden" id="additionalInformation" name="additionalInformation" th:field="${bookingForm.additionalInformation}"/>
+                <form id="myform" action="/createbooking/summary?isCreated=false" method="post" th:object="${guestForm}">
+                    <input type="hidden" id="roomCategoryIds" name="roomCategoryIds" th:field="${bookingForm.roomCategoryIds}"/>
+                    <input type="hidden" id="amountsOfRoomCategories" name="amountsOfRoomCategories" th:field="${bookingForm.amountsOfRoomCategories}"/>
+                    <input type="hidden" id="serviceIds" name="serviceIds" th:field="${bookingForm.serviceIds}"/>
+                    <input type="hidden" id="checkInDate" name="checkInDate" th:field="${bookingForm.checkInDate}"/>
+                    <input type="hidden" id="checkOutDate" name="checkOutDate" th:field="${bookingForm.checkOutDate}"/>
+                    <input type="hidden" id="additionalInformation" name="additionalInformation" th:field="${bookingForm.additionalInformation}"/>
 
-                        <div style="width: 80%; margin: auto;">
+                    <div style="width: 80%; margin: auto;">
 
                         <div id="createGuestForm">
                             <div class="d-flex">
@@ -134,127 +134,139 @@
                                 <div class="alert alert-warning" th:if="${#fields.hasErrors('birthDate')}" th:errors="${guestForm.birthDate}"></div>
                             </div>
                             <br>
-                            </div>
                         </div>
+                    </div>
 
-                        <div id="chooseGuest" style="display: none">
-                            <button class="btn btn-primary" onclick="switchToCreateGuest()">Create Guest</button>
+                    <div id="chooseGuest" style="display: none">
+                        <button class="btn btn-primary" onclick="switchToCreateGuest()">Create Guest</button>
 
-                            <div style="min-height: 36vh">
-                                <table id="t1" class="table stripe">
-                                    <thead>
-                                    <tr>
-                                        <th class="col"></th>
-                                        <th class="col-6">Guest</th>
-                                        <th class="col-6">Address</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr th:each="guest : ${guests}">
-                                        <td class="align-middle">
-                                            <div class="form-check">
-                                                <input class="form-check-input" name="guestId" type="radio" th:field="${bookingForm.guestId}" th:value="${guest.id}">
-                                            </div>
-                                        </td>
-                                        <td class="align-middle">
-                                            <span class="text-nowrap" th:text="${guest.firstName} + ' '"></span>
-                                            <span class="text-nowrap" th:text="${guest.lastName}"></span>
-                                        </td>
-                                        <td class="align-middle">
-                                            <span class="text-nowrap" th:text="${guest.streetName} + ' ' + ${guest.streetNumber} + ', '"></span>
-                                            <span class="text-nowrap" th:text="${guest.zipCode} + ' ' + ${guest.city}"></span>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                        <div style="min-height: 36vh">
+                            <table id="t1" class="table stripe">
+                                <thead>
+                                <tr>
+                                    <th class="col"></th>
+                                    <th class="col-6">Guest</th>
+                                    <th class="col-6">Address</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="guest : ${guests}">
+                                    <td class="align-middle">
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="guestId" type="radio" th:field="${bookingForm.guestId}" th:value="${guest.id}">
+                                        </div>
+                                    </td>
+                                    <td class="align-middle">
+                                        <span class="text-nowrap" th:text="${guest.firstName} + ' '"></span>
+                                        <span class="text-nowrap" th:text="${guest.lastName}"></span>
+                                    </td>
+                                    <td class="align-middle">
+                                        <span class="text-nowrap" th:text="${guest.streetName} + ' ' + ${guest.streetNumber} + ', '"></span>
+                                        <span class="text-nowrap" th:text="${guest.zipCode} + ' ' + ${guest.city}"></span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
+                    </div>
 
-                        <br>
-                        <hr class="my-3" style="width: 95%; margin: auto">
-                        <br>
+                    <br>
+                    <hr class="my-3" style="width: 95%; margin: auto">
+                    <br>
 
-                        <div class="row">
-                            <div class="input-group col">
-                                <span class="input-group-text col-3">Adults</span>
-                                <input class="form-control" type="number" id="amountOfAdults" name="amountOfAdults" th:field="${bookingForm.amountOfAdults}" value="1" th:min="1" th:required="required">
-                            </div>
-                            <div class="input-group col">
-                                <span class="input-group-text col-3">Children</span>
-                                <input class="form-control" type="number" id="amountOfChildren" name="amountOfChildren" th:field="${bookingForm.amountOfChildren}" value="0" th:min="0" th:required="required">
-                            </div>
+                    <div class="row">
+                        <div class="input-group col">
+                            <span class="input-group-text col-3">Adults</span>
+                            <input class="form-control" type="number" id="amountOfAdults" name="amountOfAdults" th:field="${bookingForm.amountOfAdults}" value="1" th:min="1" th:required="required">
                         </div>
+                        <div class="input-group col">
+                            <span class="input-group-text col-3">Children</span>
+                            <input class="form-control" type="number" id="amountOfChildren" name="amountOfChildren" th:field="${bookingForm.amountOfChildren}" value="0" th:min="0" th:required="required">
+                        </div>
+                    </div>
 
-                    </form>
-                </div>
-                <div class="card-footer">
-                    <button class="btn btn-primary" onclick="history.back()">Back</button>
-                    <button class="btn btn-primary float-end" form="myform" type="submit">Next</button>
-                </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <button name="action" value="back" class="btn btn-primary" form="myform" type="submit" onclick="notRequired()">Back</button>
+                <button name="action" value="next" class="btn btn-primary float-end" form="myform" type="submit" onclick="required()">Next</button>
             </div>
         </div>
-
-        <script>
-            // table initialization
-            $('#t1').DataTable({
-                "order": [ 1, "asc" ],
-                "scrollCollapse": true,
-                "scrollY": "24vh",
-                "paging":   false,
-                "info":     false,
-                columnDefs: [
-                    { orderable: false, targets: [0]}
-                ]
-            });
-
-            // add icon to searchbars
-            var searchLabel = document.getElementsByTagName('label');
-            searchLabel = searchLabel[0];
-
-            var icon = document.createElement('i');
-            icon.setAttribute('class', 'fas fa-search');
-
-            searchLabel.insertBefore(icon, searchLabel.firstChild);
-            searchLabel.childNodes[1].textContent = " ";
-
-            function switchToCreateGuest() {
-                $('#chooseGuest').toggle();
-                $(":radio").prop("required", false).prop("checked", false);
-
-                $('#createGuestForm').toggle();
-                $("#gender").prop("required", true);
-                $("#firstname").prop("required", true);
-                $("#lastname").prop("required", true);
-                $("#streetName").prop("required", true);
-                $("#streetNumber").prop("required", true);
-                $("#zipCode").prop("required", true);
-                $("#city").prop("required", true);
-                $("#country").prop("required", true);
-                $("#email").prop("required", true);
-                $("#phoneNumber").prop("required", true);
-                $("#birthDate").prop("required", true);
-            }
-
-            function switchToChooseGuest() {
-                $('#createGuestForm').toggle();
-                $("#gender").prop("required", false);
-                $("#firstname").prop("required", false).val('');
-                $("#lastname").prop("required", false).val('');
-                $("#streetName").prop("required", false).val('');
-                $("#streetNumber").prop("required", false).val('');
-                $("#zipCode").prop("required", false).val('');
-                $("#city").prop("required", false).val('');
-                $("#country").prop("required", false).val('');
-                $("#email").prop("required", false).val('');
-                $("#phoneNumber").prop("required", false).val('');
-                $("#birthDate").prop("required", false).val('');
-
-                $('#chooseGuest').toggle();
-                $(":radio").prop("required", true);
-            }
-        </script>
-
     </div>
+
+    <script>
+        function required(){
+            document.getElementById("guest").required = true;
+            document.getElementById("amountOfAdults").required = true;
+            document.getElementById("amountOfAdults").min = "1";
+        }
+
+        function notRequired(){
+            document.getElementById("guest").required = false;
+            document.getElementById("amountOfAdults").required = false;
+            document.getElementById("amountOfAdults").min = "0";
+        }
+
+        // table initialization
+        $('#t1').DataTable({
+            "order": [ 1, "asc" ],
+            "scrollCollapse": true,
+            "scrollY": "24vh",
+            "paging":   false,
+            "info":     false,
+            columnDefs: [
+                { orderable: false, targets: [0]}
+            ]
+        });
+
+        // add icon to searchbars
+        var searchLabel = document.getElementsByTagName('label');
+        searchLabel = searchLabel[0];
+
+        var icon = document.createElement('i');
+        icon.setAttribute('class', 'fas fa-search');
+
+        searchLabel.insertBefore(icon, searchLabel.firstChild);
+        searchLabel.childNodes[1].textContent = " ";
+
+        function switchToCreateGuest() {
+            $('#chooseGuest').toggle();
+            $(":radio").prop("required", false).prop("checked", false);
+
+            $('#createGuestForm').toggle();
+            $("#gender").prop("required", true);
+            $("#firstname").prop("required", true);
+            $("#lastname").prop("required", true);
+            $("#streetName").prop("required", true);
+            $("#streetNumber").prop("required", true);
+            $("#zipCode").prop("required", true);
+            $("#city").prop("required", true);
+            $("#country").prop("required", true);
+            $("#email").prop("required", true);
+            $("#phoneNumber").prop("required", true);
+            $("#birthDate").prop("required", true);
+        }
+
+        function switchToChooseGuest() {
+            $('#createGuestForm').toggle();
+            $("#gender").prop("required", false);
+            $("#firstname").prop("required", false).val('');
+            $("#lastname").prop("required", false).val('');
+            $("#streetName").prop("required", false).val('');
+            $("#streetNumber").prop("required", false).val('');
+            $("#zipCode").prop("required", false).val('');
+            $("#city").prop("required", false).val('');
+            $("#country").prop("required", false).val('');
+            $("#email").prop("required", false).val('');
+            $("#phoneNumber").prop("required", false).val('');
+            $("#birthDate").prop("required", false).val('');
+
+            $('#chooseGuest').toggle();
+            $(":radio").prop("required", true);
+        }
+    </script>
+
+</div>
 
 </body>
 </html>

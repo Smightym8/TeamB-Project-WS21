@@ -124,11 +124,11 @@
                 </div>
                 <div class="card-footer">
                     <div th:if="${!isCreated}">
-                        <button class="btn btn-primary" onclick="history.back()">Back</button>
-                        <button class="btn btn-primary float-end" form="myform" type="submit" onClick="amountValidation()">Create booking</button>
+                        <button name="action" value="back" class="btn btn-primary" form="myform" type="submit">Back</button>
+                        <button name="action" value="create" class="btn btn-primary float-end" form="myform" type="submit" onClick="amountValidation()">Create booking</button>
                     </div>
                     <div th:if="${isCreated}">
-                        <a class="btn btn-primary float-end" href="/">Back to main menu</a>
+                        <a class="btn btn-primary float-end" th:href="@{/}">Back to main menu</a>
                     </div>
                 </div>
             </div>
