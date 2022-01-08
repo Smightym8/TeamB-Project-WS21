@@ -2,6 +2,7 @@ package at.fhv.se.hotel.integration.application;
 
 import at.fhv.se.hotel.application.api.CheckOutService;
 import at.fhv.se.hotel.application.api.exception.RoomNotFoundException;
+import at.fhv.se.hotel.application.api.exception.SeasonNotFoundException;
 import at.fhv.se.hotel.application.api.exception.StayNotFoundException;
 import at.fhv.se.hotel.application.dto.InvoiceDTO;
 import at.fhv.se.hotel.domain.model.booking.Booking;
@@ -60,9 +61,8 @@ public class CheckOutServiceTest {
     @MockBean
     RoomRepository roomRepository;
 
-    // TODO: Implement createInvoice test with a guest which has a discount
     @Test
-    void given_stay_when_createinvoice_then_returnexpectedinvoice() throws StayNotFoundException, RoomNotFoundException {
+    void given_stay_and_guest_without_discount_when_createinvoice_then_returnexpectedinvoice() throws StayNotFoundException, RoomNotFoundException, SeasonNotFoundException {
         // given
         Guest guestExpected = Guest.create(new GuestId("1"),
                 new FullName("Michael", "Spiegel"),
@@ -187,7 +187,136 @@ public class CheckOutServiceTest {
     }
 
     @Test
-    void given_existingstay_whencheckout_then_stayInactive() throws StayNotFoundException {
+    void given_stay_and_guest_with_discount_when_createinvoice_then_returnexpectedinvoice() throws StayNotFoundException, RoomNotFoundException, SeasonNotFoundException {
+        // given
+        double discountInPercentExpected = 10.0;
+        Guest guestExpected = Guest.create(new GuestId("1"),
+                new FullName("Michael", "Spiegel"),
+                Gender.MALE,
+                new Address("Hochschulstraße",
+                        "1", "Dornbirn",
+                        "6850", "Austria"),
+                LocalDate.of(1999, 3, 20),
+                "+43 660 123 456 789",
+                "michael.spiegel@students.fhv.at",
+                discountInPercentExpected,
+                Collections.emptyList()
+        );
+
+        List<RoomCategory> categoriesExpected = List.of(
+                RoomCategory.create(new RoomCategoryId("1"),
+                        new RoomCategoryName("Single Room"),
+                        new Description("This is a single room"))
+        );
+
+        List<Service> servicesExpected = Arrays.asList(
+                Service.create(new ServiceId("1"),
+                        new ServiceName("TV"),
+                        new Price(new BigDecimal("100"))),
+                Service.create(new ServiceId("2"),
+                        new ServiceName("Breakfast"),
+                        new Price(new BigDecimal("100")))
+        );
+
+        Booking bookingExpected = Booking.create(
+                LocalDate.of(2021, 8, 1),
+                LocalDate.of(2021, 8, 10),
+                new BookingId("1"),
+                guestExpected,
+                servicesExpected,
+                2,
+                1,
+                "Nothing"
+        );
+
+        categoriesExpected.forEach(roomCategory -> bookingExpected.addRoomCategory(roomCategory, 1));
+
+        Season summerSeason = Season.create(
+                new SeasonId("1"),
+                new SeasonName("Winter "),
+                LocalDate.of(2021, 6, 1),
+                LocalDate.of(2021, 11, 30)
+        );
+
+        List<RoomCategoryPrice> roomCategoryPricesExpected = List.of(
+                RoomCategoryPrice.create(
+                        new RoomCategoryPriceId("1"),
+                        summerSeason,
+                        categoriesExpected.get(0),
+                        new BigDecimal("300").setScale(2, RoundingMode.CEILING)
+                )
+        );
+
+        String roomNameExpected = "Room 1";
+        RoomStatus roomStatusExpected = RoomStatus.FREE;
+
+        Map<Room, Boolean> roomsExpected = Map.of(
+                Room.create(
+                        new RoomName(roomNameExpected),
+                        roomStatusExpected,
+                        categoriesExpected.get(0)
+                ), false
+        );
+
+        List<Room> roomsExpectedList = new ArrayList<>(roomsExpected.keySet());
+
+        List<String> roomNamesExpected = Arrays.asList(roomNameExpected);
+
+        StayId idExpected = new StayId(bookingExpected.getBookingId().id());
+        Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
+
+        int amountOfNightsExpected = 9;
+        BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76").setScale(2, RoundingMode.CEILING);
+        BigDecimal localTaxTotalExpected = new BigDecimal("1.52").setScale(2, RoundingMode.CEILING);
+        BigDecimal valueAddedTaxInPercentExpected = new BigDecimal("0.1");
+        BigDecimal totalNetAmountBeforeDiscountExpected = new BigDecimal("4500").setScale(2, RoundingMode.CEILING);
+        BigDecimal discountInEuroExpected = new BigDecimal("450").setScale(2, RoundingMode.CEILING);
+        BigDecimal totalNetAmountAfterDiscountExpected = new BigDecimal("4050").setScale(2, RoundingMode.CEILING);
+        BigDecimal totalNetAmountAfterLocalTaxExpected = new BigDecimal("4051.52").setScale(2, RoundingMode.CEILING);
+        BigDecimal valueAddedTaxInEuroExpected = new BigDecimal("405.00").setScale(2, RoundingMode.CEILING);
+        BigDecimal totalGrossAmountExpected = new BigDecimal("4456.52").setScale(2, RoundingMode.CEILING);
+        String action = "checkOut";
+
+        Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
+        Mockito.when(stayRepository.stayById(idExpected)).thenReturn(Optional.of(stayExpected));
+        Mockito.when(roomRepository.roomByName(new RoomName(roomNameExpected))).thenReturn(Optional.of(roomsExpectedList.get(0)));
+
+        // Mock each date which occurs in the loop of the calculation to return the proper season
+        for (int i = 1; i <= 10; i++) {
+            Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 8, i)))
+                    .thenReturn(Optional.of(summerSeason));
+        }
+
+        Mockito.when(roomCategoryPriceRepository.by(categoriesExpected.get(0), summerSeason.getSeasonId()))
+                .thenReturn(roomCategoryPricesExpected.get(0));
+
+        // when
+        InvoiceDTO invoiceActual = checkOutService.createInvoice(stayExpected.getStayId().id(), roomNamesExpected, action);
+
+        // then
+        assertEquals(stayExpected.getGuest().getName().firstName(), invoiceActual.guestFirstName());
+        assertEquals(stayExpected.getGuest().getName().lastName(), invoiceActual.guestLastName());
+        assertEquals(stayExpected.getGuest().getAddress().streetName(), invoiceActual.streetName());
+        assertEquals(stayExpected.getGuest().getAddress().streetNumber(), invoiceActual.streetNumber());
+        assertEquals(stayExpected.getGuest().getAddress().zipCode(), invoiceActual.zipCode());
+        assertEquals(stayExpected.getGuest().getAddress().city(), invoiceActual.city());
+        assertEquals(stayExpected.getCheckInDate(), invoiceActual.checkInDate());
+        assertEquals(stayExpected.getCheckOutDate(), invoiceActual.checkOutDate());
+        assertEquals(amountOfNightsExpected, invoiceActual.amountOfNights());
+        assertEquals(localTaxPerPersonExpected, invoiceActual.localTaxPerPerson());
+        assertEquals(localTaxTotalExpected, invoiceActual.localTaxTotal());
+        assertEquals(valueAddedTaxInPercentExpected, invoiceActual.valueAddedTaxInPercent());
+        assertEquals(totalNetAmountBeforeDiscountExpected, invoiceActual.totalNetAmountBeforeDiscount());
+        assertEquals(discountInPercentExpected, invoiceActual.discountInPercent());
+        assertEquals(discountInEuroExpected, invoiceActual.discountInEuro());
+        assertEquals(totalNetAmountAfterDiscountExpected, invoiceActual.totalNetAmountAfterDiscount());
+        assertEquals(totalNetAmountAfterLocalTaxExpected, invoiceActual.totalNetAmountAfterLocalTax());
+        assertEquals(valueAddedTaxInEuroExpected, invoiceActual.valueAddedTaxInEuro());
+        assertEquals(totalGrossAmountExpected, invoiceActual.totalGrossAmount());
+    }
+
+    @Test
+    void given_existingstay_whencheckout_then_stayInactive() throws StayNotFoundException, RoomNotFoundException, SeasonNotFoundException {
         // given
         Guest guestExpected = Guest.create(new GuestId("1"),
                 new FullName("Michael", "Spiegel"),
@@ -283,7 +412,7 @@ public class CheckOutServiceTest {
     }
 
     @Test
-    public void given_stayandselectedrooms_when_saveinvoice_then_setroomispaid() throws StayNotFoundException {
+    public void given_stayandselectedrooms_when_saveinvoice_then_setroomispaid() throws StayNotFoundException, RoomNotFoundException, SeasonNotFoundException {
         // given
         Guest guestExpected = Guest.create(new GuestId("1"),
                 new FullName("Michael", "Spiegel"),

@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-// TODO: Test
 public class Stay {
     // Required by hibernate
     @SuppressWarnings("unused")

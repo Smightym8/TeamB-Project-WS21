@@ -161,19 +161,19 @@
 											</fo:table-cell>
 											<fo:table-cell padding="3pt">
 												<fo:block>
-													<xsl:value-of select="/invoice/categoryNames/categoryName[$pos]" />
+													<xsl:value-of select="/invoice/categoryNames[$pos]" />
 												</fo:block>
 											</fo:table-cell>
 											<fo:table-cell padding="3pt">
 												<fo:block>
 													<xsl:text>€ </xsl:text>
-													<xsl:value-of select="/invoice/categoryPrices/categoryPrice[$pos]" />
+													<xsl:value-of select="/invoice/categoryPrices[$pos]" />
 												</fo:block>
 											</fo:table-cell>
 											<fo:table-cell text-align="right" padding="3pt">
 												<fo:block>
 													<xsl:text>€ </xsl:text>
-													<xsl:value-of select="format-number((/invoice/categoryPrices/categoryPrice[$pos] * number(/invoice/amountOfNights)), '#.00')" />
+													<xsl:value-of select="format-number((/invoice/categoryPrices[$pos] * number(/invoice/amountOfNights)), '#.00')" />
 												</fo:block>
 											</fo:table-cell>
 										</fo:table-row>

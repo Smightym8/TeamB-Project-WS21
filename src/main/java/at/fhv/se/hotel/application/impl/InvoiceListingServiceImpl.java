@@ -70,16 +70,23 @@ public class InvoiceListingServiceImpl implements InvoiceListingService {
 
         List<String> categoryNames = new ArrayList<>();
         List<String> roomNames = new ArrayList<>();
+        List<BigDecimal> categoryPrices = new ArrayList<>();
         invoice.getRooms().forEach(room -> {
                 categoryNames.add(room.getRoomCategory().getRoomCategoryName().name());
                 roomNames.add(room.getName().name());
+
+                invoice.getRoomCategoryPriceList().forEach(roomCategoryPrice -> {
+                        if(roomCategoryPrice.getRoomCategory().getRoomCategoryName().name().equals(room.getRoomCategory().getRoomCategoryName().name())) {
+                            categoryPrices.add(roomCategoryPrice.getPrice());
+                        }
+                    }
+                );
+
             }
         );
 
-        List<BigDecimal> categoryPrices = new ArrayList<>();
-        invoice.getRoomCategoryPriceList().forEach(roomCategoryPrice ->
-                categoryPrices.add(roomCategoryPrice.getPrice())
-        );
+
+
 
         InvoiceDTO invoiceDTO = InvoiceDTO.builder()
                 .withInvoiceNumber(invoice.getInvoiceNumber())

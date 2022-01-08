@@ -6,7 +6,6 @@ import at.fhv.se.hotel.domain.model.season.Season;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-// TODO: Test
 public class RoomCategoryPrice {
     // Required by hibernate
     @SuppressWarnings("unused")

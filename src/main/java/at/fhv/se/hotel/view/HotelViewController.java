@@ -31,7 +31,6 @@ import java.util.List;
 
 @Controller
 public class HotelViewController {
-// TODO: change birthday to birth of date
 // TODO: change in html value to th:value, href to to:href
 
     /* ----- Sidebar ----- */
@@ -340,7 +339,7 @@ public class HotelViewController {
 
             model.addAttribute("guest", guestForm);
         } catch (GuestNotFoundException e) {
-            e.printStackTrace();
+            return redirectError(e.getMessage());
         }
 
         return new ModelAndView(MODIFY_GUEST_VIEW);
@@ -631,9 +630,10 @@ public class HotelViewController {
         try {
             invoiceDTO = checkOutService.createInvoice(id, invoiceForm.getRoomNames(), action);
             stayDetailsDTO = stayDetailsService.detailsById(id);
-        } catch (StayNotFoundException | RoomNotFoundException e) {
+        } catch (StayNotFoundException | RoomNotFoundException | SeasonNotFoundException e) {
             return redirectError(e.getMessage());
         }
+
         model.addAttribute("invoice", invoiceDTO);
         model.addAttribute("invoiceForm", invoiceForm);
         model.addAttribute("stayDetails", stayDetailsDTO);
@@ -651,7 +651,7 @@ public class HotelViewController {
         if (action.equals("createInvoice")) {
             try {
                 checkOutService.saveInvoice(id, invoiceForm.getRoomNames(), action);
-            } catch (StayNotFoundException e) {
+            } catch (StayNotFoundException | RoomNotFoundException | SeasonNotFoundException e) {
                 return redirectError(e.getMessage());
             }
 
@@ -659,7 +659,7 @@ public class HotelViewController {
         } else if(action.equals("checkOut")) {
             try {
                 checkOutService.checkOut(id, invoiceForm.getRoomNames(), action);
-            } catch (StayNotFoundException e) {
+            } catch (StayNotFoundException | RoomNotFoundException | SeasonNotFoundException e) {
                 return redirectError(e.getMessage());
             }
 
