@@ -28,14 +28,12 @@
                         <input type="hidden" id="amountOfChildren" name="amountOfChildren" th:field="*{amountOfChildren}"/>
                         <input type="hidden" id="additionalInformation" name="additionalInformation" th:field="*{additionalInformation}"/>
 
-                        <div style="width:40%; margin: auto">
-                            <div th:each="category : ${categories}">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text col-5" th:text="${category.name}"></span>
-                                    <input class="form-control" type="number" id="amount" name="amount" min="0" th:name="amountsOfRoomCategories" th:value="${0}" th:placeholder="0">
-                                </div>
-                                <input class="form-control" id="roomCategoryId" hidden th:name="roomCategoryIds" th:value="${category.id}" >
+                        <div th:each="category : ${categories}">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text col-5" th:text="${category.name}"></span>
+                                <input class="form-control" type="number" id="amount" name="amount" min="0" th:name="amountsOfRoomCategories" th:value="${0}" th:placeholder="0">
                             </div>
+                            <input class="form-control" id="roomCategoryId" hidden th:name="roomCategoryIds" th:value="${category.id}" >
                         </div>
                     </form>
 

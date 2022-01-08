@@ -39,32 +39,28 @@
                         <input type="hidden" id="amountOfAdults" name="amountOfAdults" th:field="*{amountOfAdults}"/>
                         <input type="hidden" id="amountOfChildren" name="amountOfChildren" th:field="*{amountOfChildren}"/>
 
-                        <div style="min-height: 58vh">
-                            <div style="min-height: 34vh">
-                                <table id="t1" class="table stripe">
-                                    <thead>
-                                        <tr>
-                                            <th class="col"></th>
-                                            <th class="col-6">Name</th>
-                                            <th class="col-6">Price per day</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr th:each="service : ${services}">
-                                            <td class="align-middle">
-                                                <div class="form-check">
-                                                    <input th:field="*{serviceIds}" class="form-check-input" type="checkbox" th:value="${service.id}">
-                                                </div>
-                                            </td>
-                                            <td class="align-middle" th:text="${service.name}"></td>
-                                            <td class="align-middle" th:text="${service.price} + '€'"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <span>Additional information:</span>
-                            <textarea style="min-width: 100%" rows="3" id="additionalInformation" name="additionalInformation" th:field="*{additionalInformation}"></textarea>
-                        </div>
+                        <table id="t1" class="table stripe">
+                            <thead>
+                                <tr>
+                                    <th class="col"></th>
+                                    <th class="col-6">Name</th>
+                                    <th class="col-6">Price per day</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="service : ${services}">
+                                    <td class="align-middle">
+                                        <div class="form-check">
+                                            <input th:field="*{serviceIds}" class="form-check-input" type="checkbox" th:value="${service.id}">
+                                        </div>
+                                    </td>
+                                    <td class="align-middle" th:text="${service.name}"></td>
+                                    <td class="align-middle" th:text="${service.price} + '€'"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <span>Additional information:</span>
+                        <textarea style="min-width: 100%" rows="3" id="additionalInformation" name="additionalInformation" th:field="*{additionalInformation}"></textarea>
                     </form>
 
                 </div>

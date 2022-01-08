@@ -16,8 +16,7 @@
                 <div class="card-body">
                     <form th:action="@{/createguest}" id="myform" method="post" th:object="${guest}">
 
-                        <div style="width: 80%; margin: auto; background-color: #f7f7f7" class="p-3">
-
+                        <div class="p-3" style="background-color: #f7f7f7">
                             <div class="d-flex justify-content-between">
                                 <div class="form-floating" style="width: 25%;">
                                     <select class="form-select" id="gender" th:field="*{gender}">
@@ -101,12 +100,12 @@
                                     <input class="form-control" id="email" type="email" placeholder=" " required th:field="*{eMail}">
                                     <label for="email">Email</label>
                                     <div class="form-text">Email or Phone number is required</div>
-                                    <div class="form-text">Backendimplementierung fehlt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</div>
                                     <div class="alert alert-warning" th:if="${#fields.hasErrors('eMail')}" th:errors="*{eMail}"></div>
                                 </div>
                                 <div class="form-floating ms-1" style="width: 50%;">
                                     <input class="form-control" id="phone" type="tel" placeholder=" " required th:field="*{phoneNumber}">
                                     <label for="phone">Phone number</label>
+                                    <div class="form-text">Backendimplementierung fehlt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</div>
                                     <div class="alert alert-warning" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></div>
                                 </div>
                             </div>

@@ -28,15 +28,13 @@
                         <input type="hidden" id="amountOfChildren" name="amountOfChildren" th:field="*{amountOfChildren}"/>
                         <input type="hidden" id="additionalInformation" name="additionalInformation" th:field="*{additionalInformation}"/>
 
-                        <div style="width:40%; margin: auto">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text col-5">Check-in date</span>
-                                <input class="form-control" type="date" id="checkin" name="checkin" th:field="*{checkInDate}" th:required="required">
-                            </div>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text col-5">Check-out date</span>
-                                <input class="form-control" type="date" id="checkout" name="checkout" th:field="*{checkOutDate}" th:requred="required">
-                            </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text col-5">Check-in date</span>
+                            <input class="form-control" type="date" id="checkin" name="checkin" th:field="*{checkInDate}" th:required="required">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text col-5">Check-out date</span>
+                            <input class="form-control" type="date" id="checkout" name="checkout" th:field="*{checkOutDate}" th:requred="required">
                         </div>
                     </form>
 

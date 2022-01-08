@@ -14,73 +14,70 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div style="width:80%; margin: auto">
-
-                        <div class="d-flex">
-                            <div class="pe-4" style="width: 50%; float: left">
-                                <p class="h5">Guest</p>
-                                <span th:text="${stayDetails.guestFirstName} + ' '  + ${stayDetails.guestLastName}"></span>
-                                <br>
-                                <span th:text="${stayDetails.streetName} + ' '  + ${stayDetails.streetNumber}"></span>
-                                <br>
-                                <span th:text="${stayDetails.zipCode} + ' '  + ${stayDetails.city}"></span>
-                                <br>
-                                <span th:text="${stayDetails.country}"></span>
-                            </div>
-
-                            <div class="ps-4" style="width: 50%; float: left">
-                                <p class="h5">Booking</p>
-                                <table>
-                                    <tbody>
-                                    <tr>
-                                        <td>Date:</td>
-                                        <td th:text="${stayDetails.checkInDate} + ' - ' + ${stayDetails.checkOutDate}"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Adults:</td>
-                                        <td th:text="${stayDetails.amountOfAdults}"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Children:&nbsp;&nbsp;&nbsp;</td>
-                                        <td th:text="${stayDetails.amountOfChildren}"></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                    <div class="d-flex">
+                        <div class="pe-4" style="width: 50%; float: left">
+                            <p class="h5">Guest</p>
+                            <span th:text="${stayDetails.guestFirstName} + ' '  + ${stayDetails.guestLastName}"></span>
+                            <br>
+                            <span th:text="${stayDetails.streetName} + ' '  + ${stayDetails.streetNumber}"></span>
+                            <br>
+                            <span th:text="${stayDetails.zipCode} + ' '  + ${stayDetails.city}"></span>
+                            <br>
+                            <span th:text="${stayDetails.country}"></span>
                         </div>
 
-                        <br>
+                        <div class="ps-4" style="width: 50%; float: left">
+                            <p class="h5">Booking</p>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td>Date:</td>
+                                    <td th:text="${stayDetails.checkInDate} + ' - ' + ${stayDetails.checkOutDate}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Adults:</td>
+                                    <td th:text="${stayDetails.amountOfAdults}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Children:&nbsp;&nbsp;&nbsp;</td>
+                                    <td th:text="${stayDetails.amountOfChildren}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
-                        <form id="myform" th:action="@{/invoice/{id}(id=${stayDetails.id})}" method="get" th:object="${invoiceForm}">
-                            <div class="mt-4">
-                                <p class="h5">Rooms</p>
-                                <table class="table table-striped">
-                                    <tbody>
-                                    <tr th:each="room : ${stayDetails.roomsWithCategories()}">
-                                        <td class="col-1"><input type="checkbox" class="form-check-input" th:field="*{roomNames}" th:value="${room.key}" onclick="test()" /></td>
-                                        <td class="col-6" th:text="${room.value}"></td>
-                                        <td class="col-6" th:text="${room.key}"></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="mt-4">
-                                <p class="h5">Services</p>
-                                <table class="table table-striped">
-                                    <tbody>
-                                    <tr th:each="service : ${stayDetails.services}">
-                                        <td class="col-1"></td>
-                                        <td class="col-6" th:text="${service.key}"></td>
-                                        <td class="col-6" th:text="'€' + ${service.value} + ' per day/room'"></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </form>
+                    <br>
+
+                    <form id="myform" th:action="@{/invoice/{id}(id=${stayDetails.id})}" method="get" th:object="${invoiceForm}">
                         <div class="mt-4">
-                            <p class="h5">Additional information</p>
-                            <textarea style="min-width: 100%" disabled th:text="${stayDetails.additionalInformation}"></textarea>
+                            <p class="h5">Rooms</p>
+                            <table class="table table-striped">
+                                <tbody>
+                                <tr th:each="room : ${stayDetails.roomsWithCategories()}">
+                                    <td class="col-1"><input type="checkbox" class="form-check-input" th:field="*{roomNames}" th:value="${room.key}" onclick="test()" /></td>
+                                    <td class="col-6" th:text="${room.value}"></td>
+                                    <td class="col-6" th:text="${room.key}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
+                        <div class="mt-4">
+                            <p class="h5">Services</p>
+                            <table class="table table-striped">
+                                <tbody>
+                                <tr th:each="service : ${stayDetails.services}">
+                                    <td class="col-1"></td>
+                                    <td class="col-6" th:text="${service.key}"></td>
+                                    <td class="col-6" th:text="'€' + ${service.value} + ' per day/room'"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                    <div class="mt-4">
+                        <p class="h5">Additional information</p>
+                        <textarea style="min-width: 100%" disabled th:text="${stayDetails.additionalInformation}"></textarea>
                     </div>
                 </div>
                 <div class="card-footer">
@@ -89,7 +86,6 @@
                         <button name="action" value="createInvoice" type="submit" form="myform" id="invoice" class="btn btn-secondary" disabled>Create Invoice</button>
                         <button name="action" value="checkOut" type="submit" form="myform" id="checkout" class="btn btn-secondary" disabled>Check-Out</button>
                     </div>
-
                 </div>
             </div>
         </div>

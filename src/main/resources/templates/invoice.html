@@ -11,196 +11,194 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div style="width: 90%; margin: auto">
-                        <form id="myform" th:action="@{/saveinvoice/{id}(id=${stayDetails.id})}" method="get" th:object="${invoiceForm}">
-                            <input type="hidden" id="roomNames" name="roomNames" th:field="*{roomNames}">
+                    <form id="myform" th:action="@{/saveinvoice/{id}(id=${stayDetails.id})}" method="get" th:object="${invoiceForm}">
+                        <input type="hidden" id="roomNames" name="roomNames" th:field="*{roomNames}">
 
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    <p class="h5"><strong>From:</strong></p>
-                                    <div><strong>Hotel Schwarz</strong></div>
-                                    <div>Thomas Schwarz</div>
-                                    <div>Straße 12</div>
-                                    <div>6845 Stadt</div>
-                                    <div>Email: hotel@schwarz.at</div>
-                                    <div>Phone: +43 5512 204576</div>
-                                </div>
-                                <div>
-                                    <p class="h5"><strong>To:</strong></p>
-                                    <br>
-                                    <div th:text="${invoice.guestFirstName} + ' ' + ${invoice.guestLastName}"></div>
-                                    <div th:text="${invoice.streetName} + ' ' + ${invoice.streetNumber}"></div>
-                                    <div th:text="${invoice.zipCode} + ' ' + ${invoice.city}"></div>
-                                </div>
-                                <div>
-                                    <p class="h5"><strong>Details:</strong></p>
-                                    <div>Invoice number: <strong th:text="'#' + ${invoice.invoiceNumber}"></strong></div>
-                                    <div th:text="'Invoice date: ' + ${invoice.invoiceDate}"></div>
-                                    <br>
-                                    <div>BAWAG P.S.K.</div>
-                                    <div>IBAN: <strong>AT02 6000 0000 0134 9870</strong></div>
-                                    <div>BIC: OPSKATWW</div>
-                                </div>
-                            </div>
-
-                            <hr style="opacity: 100%; color: black" class="my-4">
-
+                        <div class="d-flex justify-content-between">
                             <div>
-                                <p class="h5 mb-3"><strong>Stay</strong></p>
-                                <table style="width: 95%; margin: auto">
-                                    <tbody>
-                                        <tr>
-                                            <td class="col-1 text-nowrap">Date:&nbsp;&nbsp;&nbsp;</td>
-                                            <td class="col" th:text="${invoice.checkInDate} + ' - ' + ${invoice.checkOutDate}"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="col-1 text-nowrap">Nights:&nbsp;&nbsp;&nbsp;</td>
-                                            <td class="col" th:text="${invoice.amountOfNights}"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="col-1 text-nowrap">Adults:&nbsp;&nbsp;&nbsp;</td>
-                                            <td class="col" th:text="${invoice.amountOfAdults}"></td>
-                                        </tr>
-                                        <tr th:if="${invoice.amountOfChildren} > 0">
-                                            <td class="col-1 text-nowrap">Children:&nbsp;&nbsp;&nbsp;</td>
-                                            <td class="col" th:text="'Children: ' + ${invoice.amountOfChildren}"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <p class="h5"><strong>From:</strong></p>
+                                <div><strong>Hotel Schwarz</strong></div>
+                                <div>Thomas Schwarz</div>
+                                <div>Straße 12</div>
+                                <div>6845 Stadt</div>
+                                <div>Email: hotel@schwarz.at</div>
+                                <div>Phone: +43 5512 204576</div>
                             </div>
-
-                            <hr style="opacity: 100%; color: black" class="my-4">
-
                             <div>
-                                <p class="h5"><strong>Rooms</strong></p>
-                                <table class="table table-striped" style="width: 95%; margin: auto">
-                                    <thead>
-                                    <tr>
-                                        <th class="col-1">Name&nbsp;&nbsp;&nbsp;&nbsp;</th>
-                                        <th class="col">Category</th>
-                                        <th class="col-2 text-end">Cost per night</th>
-                                        <th class="col-2 text-end">Total</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr th:each="room : ${invoice.roomNames}">
-                                        <td th:text="${room}"></td>
-                                        <td th:text="${invoice.categoryNames[roomStat.index]}"></td>
-                                        <td class="text-end" th:text="'€' + ${invoice.categoryPrices[roomStat.index]}"></td>
-                                        <td class="text-end" th:text="'€' + ${invoice.categoryPrices[roomStat.index]} * ${invoice.amountOfNights}"></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                <p class="h5"><strong>To:</strong></p>
+                                <br>
+                                <div th:text="${invoice.guestFirstName} + ' ' + ${invoice.guestLastName}"></div>
+                                <div th:text="${invoice.streetName} + ' ' + ${invoice.streetNumber}"></div>
+                                <div th:text="${invoice.zipCode} + ' ' + ${invoice.city}"></div>
                             </div>
-
-                            <div class="my-4">
-                                <p class="h5"><strong>Services</strong></p>
-                                <table class="table table-striped" style="width: 95%; margin: auto">
-                                    <thead>
-                                    <tr>
-                                        <th class="col-1">Quantity</th>
-                                        <th class="col">Service</th>
-                                        <th class="col-2 text-end">Cost per night</th>
-                                        <th class="col-2 text-end">Total</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr th:each="entry : ${invoice.services}" th:with="price = ${entry.value}">
-                                        <td th:text="${invoice.categoryNames.size}"></td>
-                                        <td th:text="${entry.key}"></td>
-                                        <td class="text-end" th:text="'€' + ${price}"></td>
-                                        <td class="text-end" th:text="'€' + ${price} * ${invoice.amountOfNights} * ${invoice.categoryNames.size}"></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                            <div>
+                                <p class="h5"><strong>Details:</strong></p>
+                                <div>Invoice number: <strong th:text="'#' + ${invoice.invoiceNumber}"></strong></div>
+                                <div th:text="'Invoice date: ' + ${invoice.invoiceDate}"></div>
+                                <br>
+                                <div>BAWAG P.S.K.</div>
+                                <div>IBAN: <strong>AT02 6000 0000 0134 9870</strong></div>
+                                <div>BIC: OPSKATWW</div>
                             </div>
+                        </div>
 
-                            <div class="pb-3">
-                                <p class="h5" th:if="${invoice.localTaxTotal > 0}"><strong>Other</strong></p>
-                                <table class="table table-striped" style="width: 95%; margin: auto" th:if="${invoice.localTaxTotal > 0}">
-                                    <thead>
+                        <hr style="opacity: 100%; color: black" class="my-4">
+
+                        <div>
+                            <p class="h5 mb-3"><strong>Stay</strong></p>
+                            <table style="width: 95%; margin: auto">
+                                <tbody>
                                     <tr>
-                                        <th class="col-1">Quantity</th>
-                                        <th class="col">Description</th>
-                                        <th class="col-2 text-end">Cost per adult</th>
-                                        <th class="col-2 text-end">Total</th>
+                                        <td class="col-1 text-nowrap">Date:&nbsp;&nbsp;&nbsp;</td>
+                                        <td class="col" th:text="${invoice.checkInDate} + ' - ' + ${invoice.checkOutDate}"></td>
                                     </tr>
-                                    </thead>
-                                    <tbody>
                                     <tr>
-                                        <td th:text="${invoice.amountOfAdults}"></td>
-                                        <td th:text="'Local Tax'"></td>
-                                        <td class="text-end" th:text="'€' + ${invoice.localTaxPerPerson}"></td>
-                                        <td class="text-end" th:text="'€' + ${invoice.localTaxTotal}"></td>
+                                        <td class="col-1 text-nowrap">Nights:&nbsp;&nbsp;&nbsp;</td>
+                                        <td class="col" th:text="${invoice.amountOfNights}"></td>
                                     </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                                    <tr>
+                                        <td class="col-1 text-nowrap">Adults:&nbsp;&nbsp;&nbsp;</td>
+                                        <td class="col" th:text="${invoice.amountOfAdults}"></td>
+                                    </tr>
+                                    <tr th:if="${invoice.amountOfChildren} > 0">
+                                        <td class="col-1 text-nowrap">Children:&nbsp;&nbsp;&nbsp;</td>
+                                        <td class="col" th:text="'Children: ' + ${invoice.amountOfChildren}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                            <hr style="opacity: 100%; color: black" class="my-4">
+                        <hr style="opacity: 100%; color: black" class="my-4">
 
-                            <div class="pt-2">
-                                <div class="d-flex justify-content-between" style="width: 97.5%">
-                                    <div>
-                                        <span>Please indicate the invoice number as the purpose of payment.</span>
-                                    </div>
-                                    <div>
-                                        <table class="table table-clear">
-                                            <tbody>
-                                            <tr>
-                                                <td class="col text-nowrap">
-                                                    <strong>Net amount</strong>
-                                                </td>
-                                                <td class="col-3 text-end">
-                                                    <strong  th:text="'€' + ${invoice.totalNetAmountBeforeDiscount}"></strong>
-                                                </td>
-                                            </tr>
+                        <div>
+                            <p class="h5"><strong>Rooms</strong></p>
+                            <table class="table table-striped" style="width: 95%; margin: auto">
+                                <thead>
+                                <tr>
+                                    <th class="col-1">Name&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                                    <th class="col">Category</th>
+                                    <th class="col-2 text-end">Cost per night</th>
+                                    <th class="col-2 text-end">Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="room : ${invoice.roomNames}">
+                                    <td th:text="${room}"></td>
+                                    <td th:text="${invoice.categoryNames[roomStat.index]}"></td>
+                                    <td class="text-end" th:text="'€' + ${invoice.categoryPrices[roomStat.index]}"></td>
+                                    <td class="text-end" th:text="'€' + ${invoice.categoryPrices[roomStat.index]} * ${invoice.amountOfNights}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                                            <tr th:if="${invoice.discountInPercent} > 0">
-                                                <td class="col text-nowrap">
-                                                    <strong th:text="Discount + ' (' + ${invoice.discountInPercent} + '%)'"></strong>
-                                                </td>
-                                                <td class="col-3 text-end" th:text="'- €' + ${invoice.discountInEuro}" ></td>
-                                            </tr>
+                        <div class="my-4">
+                            <p class="h5"><strong>Services</strong></p>
+                            <table class="table table-striped" style="width: 95%; margin: auto">
+                                <thead>
+                                <tr>
+                                    <th class="col-1">Quantity</th>
+                                    <th class="col">Service</th>
+                                    <th class="col-2 text-end">Cost per night</th>
+                                    <th class="col-2 text-end">Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="entry : ${invoice.services}" th:with="price = ${entry.value}">
+                                    <td th:text="${invoice.categoryNames.size}"></td>
+                                    <td th:text="${entry.key}"></td>
+                                    <td class="text-end" th:text="'€' + ${price}"></td>
+                                    <td class="text-end" th:text="'€' + ${price} * ${invoice.amountOfNights} * ${invoice.categoryNames.size}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                                            <tr th:if="${invoice.discountInPercent} > 0">
-                                                <td class="col text-nowrap">
-                                                    <strong>Net amount after discount</strong>
-                                                </td>
-                                                <td class="col-3 text-end">
-                                                    <strong th:text="'€' + ${invoice.totalNetAmountAfterDiscount}"></strong>
-                                                </td>
-                                            </tr>
+                        <div class="pb-3">
+                            <p class="h5" th:if="${invoice.localTaxTotal > 0}"><strong>Other</strong></p>
+                            <table class="table table-striped" style="width: 95%; margin: auto" th:if="${invoice.localTaxTotal > 0}">
+                                <thead>
+                                <tr>
+                                    <th class="col-1">Quantity</th>
+                                    <th class="col">Description</th>
+                                    <th class="col-2 text-end">Cost per adult</th>
+                                    <th class="col-2 text-end">Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td th:text="${invoice.amountOfAdults}"></td>
+                                    <td th:text="'Local Tax'"></td>
+                                    <td class="text-end" th:text="'€' + ${invoice.localTaxPerPerson}"></td>
+                                    <td class="text-end" th:text="'€' + ${invoice.localTaxTotal}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                                            <tr>
-                                                <td class="col text-nowrap">
-                                                    <strong th:text="VAT + ' (' + ${invoice.valueAddedTaxInPercent * 100} + '%)'"></strong>
-                                                </td>
-                                                <td class="col-3 text-end" th:text="'€' + ${invoice.valueAddedTaxInEuro}"></td>
-                                            </tr>
+                        <hr style="opacity: 100%; color: black" class="my-4">
 
-                                            <tr th:if="${invoice.localTaxTotal > 0}">
-                                                <td class="col text-nowrap">
-                                                    <strong>Local tax total</strong>
-                                                </td>
-                                                <td class="col-3 text-end" th:text="'€' + ${invoice.localTaxTotal}"></td>
-                                            </tr>
+                        <div class="pt-2">
+                            <div class="d-flex justify-content-between" style="width: 97.5%">
+                                <div>
+                                    <span>Please indicate the invoice number as the purpose of payment.</span>
+                                </div>
+                                <div>
+                                    <table class="table table-clear">
+                                        <tbody>
+                                        <tr>
+                                            <td class="col text-nowrap">
+                                                <strong>Net amount</strong>
+                                            </td>
+                                            <td class="col-3 text-end">
+                                                <strong  th:text="'€' + ${invoice.totalNetAmountBeforeDiscount}"></strong>
+                                            </td>
+                                        </tr>
 
-                                            <tr>
-                                                <td class="col text-nowrap">
-                                                    <strong>Total</strong>
-                                                </td>
-                                                <td class="col-3 text-end">
-                                                    <strong th:text="'€' + ${invoice.totalGrossAmount}"></strong>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                        <tr th:if="${invoice.discountInPercent} > 0">
+                                            <td class="col text-nowrap">
+                                                <strong th:text="Discount + ' (' + ${invoice.discountInPercent} + '%)'"></strong>
+                                            </td>
+                                            <td class="col-3 text-end" th:text="'- €' + ${invoice.discountInEuro}" ></td>
+                                        </tr>
+
+                                        <tr th:if="${invoice.discountInPercent} > 0">
+                                            <td class="col text-nowrap">
+                                                <strong>Net amount after discount</strong>
+                                            </td>
+                                            <td class="col-3 text-end">
+                                                <strong th:text="'€' + ${invoice.totalNetAmountAfterDiscount}"></strong>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="col text-nowrap">
+                                                <strong th:text="VAT + ' (' + ${invoice.valueAddedTaxInPercent * 100} + '%)'"></strong>
+                                            </td>
+                                            <td class="col-3 text-end" th:text="'€' + ${invoice.valueAddedTaxInEuro}"></td>
+                                        </tr>
+
+                                        <tr th:if="${invoice.localTaxTotal > 0}">
+                                            <td class="col text-nowrap">
+                                                <strong>Local tax total</strong>
+                                            </td>
+                                            <td class="col-3 text-end" th:text="'€' + ${invoice.localTaxTotal}"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="col text-nowrap">
+                                                <strong>Total</strong>
+                                            </td>
+                                            <td class="col-3 text-end">
+                                                <strong th:text="'€' + ${invoice.totalGrossAmount}"></strong>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
                 <div class="card-footer">
                     <a th:href="@{/staydetails/{id}(id=${invoice.stayId})}" class="btn btn-primary">Back</a>
