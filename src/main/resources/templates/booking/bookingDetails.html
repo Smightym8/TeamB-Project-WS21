@@ -24,7 +24,7 @@
                                     <td th:text="${bookingDetails.checkInDate}"></td>
                                 </tr>
                                 <tr>
-                                    <td>Check-out:&nbsp;&nbsp;&nbsp;</td>
+                                    <td>Check-out:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                     <td th:text="${bookingDetails.checkOutDate}"></td>
                                 </tr>
                                 <tr>
@@ -63,9 +63,9 @@
 
                     <div class="mb-4 mt-2">
                         <p class="h5">Room Categories</p>
-                        <table class="table table-striped">
+                        <table class="table table-sm table-hover">
                             <tbody>
-                            <tr th:each="category : ${bookingDetails.categoriesWithAmounts}" th:if="${category.value != 0}" th:with="name = ${category.key}, amount = ${category.value}">
+                            <tr style="border: hidden" th:each="category : ${bookingDetails.categoriesWithAmounts}" th:if="${category.value != 0}" th:with="name = ${category.key}, amount = ${category.value}">
                                 <td class="align-middle col" th:text="${name}"></td>
                                 <td class="align-middle col-3" th:text="${amount}"></td>
                             </tr>
@@ -75,9 +75,9 @@
 
                     <div class="mb-4">
                         <p class="h5">Services</p>
-                        <table class="table table-striped">
+                        <table class="table table-sm table-hover">
                             <tbody>
-                            <tr th:each="service : ${bookingDetails.services}" th:with="name = ${service.key}, price = ${service.value}">
+                            <tr style="border: hidden" th:each="service : ${bookingDetails.services}" th:with="name = ${service.key}, price = ${service.value}">
                                 <td class="align-middle col" th:text="${name}"></td>
                                 <td class="align-middle col-3" th:text="'€' + ${price} + ' per day/room'"></td>
                             </tr>

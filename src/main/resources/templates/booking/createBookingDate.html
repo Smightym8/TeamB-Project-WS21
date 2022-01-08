@@ -5,7 +5,7 @@
     <div layout:fragment="content">
 
         <div class="div-width-s">
-            <div class="card">
+            <div class="card" style="min-height: 50vh; margin: auto">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
@@ -17,8 +17,7 @@
                         <div class="progress-bar" role="progressbar" style="width: 20%">1/5</div>
                     </div>
                 </div>
-                <div class="card-body">
-
+                <div class="card-body px-5 py-4">
                     <form id="myform" action="/createbooking/category" method="post" th:object="${bookingForm}">
                         <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}"/>
                         <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}"/>
@@ -28,16 +27,17 @@
                         <input type="hidden" id="amountOfChildren" name="amountOfChildren" th:field="*{amountOfChildren}"/>
                         <input type="hidden" id="additionalInformation" name="additionalInformation" th:field="*{additionalInformation}"/>
 
-                        <div class="input-group mb-3">
-                            <span class="input-group-text col-5">Check-in date</span>
-                            <input class="form-control" type="date" id="checkin" name="checkin" th:field="*{checkInDate}" th:required="required">
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text col-5">Check-out date</span>
-                            <input class="form-control" type="date" id="checkout" name="checkout" th:field="*{checkOutDate}" th:requred="required">
+                        <div style="width: 40%; margin: auto">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text col-5">Check-in date</span>
+                                <input class="form-control" type="date" id="checkin" name="checkin" th:field="*{checkInDate}" th:required="required">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-text col-5">Check-out date</span>
+                                <input class="form-control" type="date" id="checkout" name="checkout" th:field="*{checkOutDate}" th:requred="required">
+                            </div>
                         </div>
                     </form>
-
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-primary float-end" form="myform" type="submit" onClick="DateValidation()">Next</button>
@@ -71,7 +71,6 @@
                 }
             }
         </script>
-
     </div>
 
 </body>

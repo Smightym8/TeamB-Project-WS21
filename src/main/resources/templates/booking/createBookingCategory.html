@@ -5,7 +5,7 @@
     <div layout:fragment="content">
 
         <div class="div-width-s">
-            <div class="card">
+            <div class="card" style="min-height: 50vh; margin: auto">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
@@ -17,8 +17,7 @@
                         <div class="progress-bar" role="progressbar" style="width: 40%">2/5</div>
                     </div>
                 </div>
-                <div class="card-body">
-
+                <div class="card-body px-5 py-4">
                     <form id="myform" action="/createbooking/service" method="post" th:object="${bookingForm}">
                         <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}"/>
                         <input type="hidden" id="serviceId" name="serviceId" th:field="*{serviceIds}"/>
@@ -28,15 +27,16 @@
                         <input type="hidden" id="amountOfChildren" name="amountOfChildren" th:field="*{amountOfChildren}"/>
                         <input type="hidden" id="additionalInformation" name="additionalInformation" th:field="*{additionalInformation}"/>
 
-                        <div th:each="category : ${categories}">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text col-5" th:text="${category.name}"></span>
-                                <input class="form-control" type="number" id="amount" name="amount" min="0" th:name="amountsOfRoomCategories" th:value="${0}" th:placeholder="0">
+                        <div style="width: 40%; margin: auto">
+                            <div th:each="category : ${categories}">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text col-5" th:text="${category.name}"></span>
+                                    <input class="form-control" type="number" id="amount" name="amount" min="0" th:name="amountsOfRoomCategories" th:value="${0}" th:placeholder="0">
+                                </div>
+                                <input class="form-control" id="roomCategoryId" hidden th:name="roomCategoryIds" th:value="${category.id}" >
                             </div>
-                            <input class="form-control" id="roomCategoryId" hidden th:name="roomCategoryIds" th:value="${category.id}" >
                         </div>
                     </form>
-
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-primary" onclick="history.back()">Back</button>
@@ -64,7 +64,6 @@
                 }
             }
         </script>
-
     </div>
 
 </body>

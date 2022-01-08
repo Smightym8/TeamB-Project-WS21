@@ -297,6 +297,10 @@ public class TestData implements ApplicationRunner {
 
 
 /*----- Services -----*/
+        for (int i = 0; i < 15; i++) {
+            Service tv = Service.create(serviceRepository.nextIdentity(), new ServiceName("TV"), new Price(new BigDecimal("10")));
+            this.serviceRepository.add(tv);
+        }
         Service tv = Service.create(serviceRepository.nextIdentity(), new ServiceName("TV"), new Price(new BigDecimal("10")));
         this.serviceRepository.add(tv);
 
@@ -330,6 +334,20 @@ public class TestData implements ApplicationRunner {
 
 
 /*----- Guests -----*/
+        for (int i = 0; i < 15; i++) {
+            Guest ali = Guest.create(guestRepository.nextIdentity(),
+                    new FullName("Ali", "Cinar"),
+                    Gender.MALE,
+                    new Address("Hauptplatz", "73", "Oberkulm", "4210", "Austria"),
+                    LocalDate.of(1997, 8, 27),
+                    "+43 680 7994750",
+                    "ali.cinar@gmail.at",
+                    0,
+                    Collections.emptyList()
+            );
+            this.guestRepository.add(ali);
+        }
+
         Guest ali = Guest.create(guestRepository.nextIdentity(),
                 new FullName("Ali", "Cinar"),
                 Gender.MALE,

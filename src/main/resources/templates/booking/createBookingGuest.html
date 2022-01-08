@@ -16,7 +16,7 @@
     <div layout:fragment="content">
 
         <div class="div-width-s">
-            <div class="card">
+            <div class="card card-height">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
@@ -37,8 +37,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="card-body">
-
+                <div class="card-body px-5 py-4">
                     <form id="myform" action="/createbooking/summary?isCreated=false" method="post" th:object="${guestForm}">
                         <input type="hidden" id="roomCategoryIds" name="roomCategoryIds" th:field="${bookingForm.roomCategoryIds}"/>
                         <input type="hidden" id="amountsOfRoomCategories" name="amountsOfRoomCategories" th:field="${bookingForm.amountsOfRoomCategories}"/>
@@ -47,7 +46,7 @@
                         <input type="hidden" id="checkOutDate" name="checkOutDate" th:field="${bookingForm.checkOutDate}"/>
                         <input type="hidden" id="additionalInformation" name="additionalInformation" th:field="${bookingForm.additionalInformation}"/>
 
-                        <div class="tab-content p-3">
+                        <div class="tab-content p-3" style="background-color: #f7f7f7; min-height: 57vh">
                             <div id="createGuestForm" class="tab-pane fade show active" role="tabpanel">
                                 <div class="d-flex justify-content-between">
                                     <div class="form-floating" style="width: 25%;">
@@ -144,47 +143,43 @@
                             </div>
 
                             <div class="tab-pane fade show active" id="chooseGuest" role="tabpanel" style="display: none">
-
-                                <div style="min-height: 36vh">
-                                    <table id="t1" class="table stripe">
-                                        <thead>
-                                        <tr>
-                                            <th style="width: 20px !important;"></th>
-                                            <th style="width: 25%">Guest</th>
-                                            <th style="width: 70%">Address</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr th:each="guest : ${guests}">
-                                            <td class="align-middle">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" name="guestId" type="radio" th:field="${bookingForm.guestId}" th:value="${guest.id}">
-                                                </div>
-                                            </td>
-                                            <td class="align-middle">
-                                                <span class="text-nowrap" th:text="${guest.firstName} + ' '"></span>
-                                                <span class="text-nowrap" th:text="${guest.lastName}"></span>
-                                            </td>
-                                            <td class="align-middle">
-                                                <span class="text-nowrap" th:text="${guest.streetName} + ' ' + ${guest.streetNumber} + ', '"></span>
-                                                <span class="text-nowrap" th:text="${guest.zipCode} + ' ' + ${guest.city}"></span>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <table id="t1" class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th class="col-1"></th>
+                                        <th class="col-4">Guest</th>
+                                        <th class="col-6">Address</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="guest : ${guests}">
+                                        <td class="align-middle">
+                                            <div class="form-check">
+                                                <input class="form-check-input" name="guestId" type="radio" th:field="${bookingForm.guestId}" th:value="${guest.id}">
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <span class="text-nowrap" th:text="${guest.firstName} + ' '"></span>
+                                            <span class="text-nowrap" th:text="${guest.lastName}"></span>
+                                        </td>
+                                        <td class="align-middle">
+                                            <span class="text-nowrap" th:text="${guest.streetName} + ' ' + ${guest.streetNumber} + ', '"></span>
+                                            <span class="text-nowrap" th:text="${guest.zipCode} + ' ' + ${guest.city}"></span>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
 
-                        <br>
-
-                        <div class="row " style="width: 80%; margin: auto">
-                            <div class="input-group col">
-                                <span class="input-group-text col-3">Adults</span>
+                        <div class="d-flex p-3 mt-4">
+                            <div class="input-group me-1" style="width: 50%;">
+                                <span class="input-group-text col-5">Adults</span>
                                 <input class="form-control" type="number" id="amountOfAdults" name="amountOfAdults" th:field="${bookingForm.amountOfAdults}" value="1" th:min="1" th:required="required">
+                                <div class="form-text"> </div>
                             </div>
-                            <div class="input-group col">
-                                <span class="input-group-text col-3">Children Ages 0-17 </span>
+                            <div class="input-group ms-1" style="width: 50%;">
+                                <span class="input-group-text col-5">Children [Ages 0-17] </span>
                                 <input class="form-control" type="number" id="amountOfChildren" name="amountOfChildren" th:field="${bookingForm.amountOfChildren}" value="0" th:min="0" th:required="required">
                             </div>
                         </div>
@@ -204,7 +199,6 @@
             function switchToCreateGuest() {
                 let createGuestForm = $('#createGuestForm');
 
-                // Switch only to create guest form if it is currently hidden
                 if(createGuestForm.is((":hidden"))) {
                     $('#chooseGuest').toggle();
                     $(":radio").prop("required", false).prop("checked", false);
@@ -227,7 +221,6 @@
             function switchToChooseGuest() {
                 let chooseGuest = $('#chooseGuest');
 
-                // Switch only to choose guest if it is currently hidden
                 if(chooseGuest.is(":hidden")) {
                     $('#createGuestForm').toggle();
                     $("#gender").prop("required", false);
@@ -249,7 +242,7 @@
                         $('#t1').DataTable({
                             "order": [ 1, "asc" ],
                             "scrollCollapse": true,
-                            "scrollY": "24vh",
+                            "scrollY": "46vh",
                             "paging":   false,
                             "info":     false,
                             columnDefs: [
@@ -262,7 +255,6 @@
                 }
             }
         </script>
-
     </div>
 
 </body>
