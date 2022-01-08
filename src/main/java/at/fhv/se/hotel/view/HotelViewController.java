@@ -4,10 +4,12 @@ import at.fhv.se.hotel.application.api.*;
 import at.fhv.se.hotel.application.api.exception.*;
 import at.fhv.se.hotel.application.dto.*;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
+import at.fhv.se.hotel.view.forms.*;
 import at.fhv.se.hotel.view.forms.BookingForm;
 import at.fhv.se.hotel.view.forms.GuestForm;
 import at.fhv.se.hotel.view.forms.InvoiceForm;
 import at.fhv.se.hotel.view.forms.RoomForm;
+import org.apache.fop.apps.FOPException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +22,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
+import javax.xml.bind.JAXBException;
+import javax.xml.transform.TransformerException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -161,6 +166,9 @@ public class HotelViewController {
     @Autowired
     GuestModifyService guestModifyService;
 
+    @Autowired
+    SeasonListingService seasonListingService;
+
 
     /*--------------------------------------------------------------------------------------------------------------------*/
 
@@ -222,8 +230,11 @@ public class HotelViewController {
     }
 
     /*----- Pricing -----*/
+    // TODO: Change View test
     @GetMapping(PRICING_URL)
     public ModelAndView pricing(Model model) {
+        List<SeasonWithPricesDTO> seasonsWithPrices = seasonListingService.allSeasonsWithPrices();
+        model.addAttribute("seasonsWithPrices", seasonsWithPrices);
 
         return new ModelAndView(PRICING_VIEW);
     }
@@ -278,6 +289,30 @@ public class HotelViewController {
         return CREATE_GUEST_VIEW;
     }
 
+    @PostMapping(CREATE_GUEST_URL)
+    public String createGuestPost(@ModelAttribute("guest") @Valid GuestForm guestForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return CREATE_GUEST_VIEW;
+        }
+
+        guestCreationService.createGuest(
+                guestForm.getFirstName(),
+                guestForm.getLastName(),
+                guestForm.getGender(),
+                guestForm.geteMail(),
+                guestForm.getPhoneNumber(),
+                guestForm.getBirthDate(),
+                guestForm.getStreetName(),
+                guestForm.getStreetNumber(),
+                guestForm.getZipCode(),
+                guestForm.getCity(),
+                guestForm.getCountry(),
+                guestForm.getDiscountInPercent()
+        );
+
+        return "redirect:" + GUESTS_URL;
+    }
+
     /*----- Modify Guest -----*/
     // TODO: Test
     @GetMapping(GUEST_URL)
@@ -313,7 +348,11 @@ public class HotelViewController {
 
     // TODO: Test
     @PostMapping(MODIFY_GUEST_URL)
-    public ModelAndView modifyGuest(@ModelAttribute("guest") GuestForm guestForm) {
+    public ModelAndView modifyGuest(@Valid @ModelAttribute("guest") GuestForm guestForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return new ModelAndView(MODIFY_GUEST_VIEW);
+        }
+
         try {
             guestModifyService.modifyGuest(
                     guestForm.getGuestId(),
@@ -335,30 +374,6 @@ public class HotelViewController {
         }
 
         return new ModelAndView("redirect:" + GUESTS_URL);
-    }
-
-    @PostMapping(CREATE_GUEST_URL)
-    public String createGuestPost(@ModelAttribute("guest") @Valid GuestForm guestForm, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return CREATE_GUEST_VIEW;
-        }
-
-        guestCreationService.createGuest(
-                guestForm.getFirstName(),
-                guestForm.getLastName(),
-                guestForm.getGender(),
-                guestForm.geteMail(),
-                guestForm.getPhoneNumber(),
-                guestForm.getBirthDate(),
-                guestForm.getStreetName(),
-                guestForm.getStreetNumber(),
-                guestForm.getZipCode(),
-                guestForm.getCity(),
-                guestForm.getCountry(),
-                guestForm.getDiscountInPercent()
-        );
-
-        return "redirect:" + GUESTS_URL;
     }
 
     /*----- Create Booking -----*/
@@ -392,25 +407,40 @@ public class HotelViewController {
     }
 
     @PostMapping(CREATE_BOOKING_GUEST_URL)
-    public String createBookingGuest(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model) {
-        final List<GuestListingDTO> guests = guestListingService.allGuests();
+    public ModelAndView createBookingGuest(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model) {
+        GuestForm guestForm = new GuestForm();
+        List<GuestListingDTO> guests = guestListingService.allGuests();
 
-        model.addAttribute("guests", guests);
         model.addAttribute("bookingForm", bookingForm);
+        model.addAttribute("guestForm", guestForm);
+        model.addAttribute("guests", guests);
 
-        return CREATE_BOOKING_GUEST_VIEW;
+        return new ModelAndView(CREATE_BOOKING_GUEST_VIEW);
     }
 
     @PostMapping(CREATE_BOOKING_SUMMARY_URL)
     public ModelAndView createBookingSummary(
             @ModelAttribute("bookingForm") BookingForm bookingForm,
+            @Valid @ModelAttribute("guestForm") GuestForm guestForm,
+            BindingResult guestFormResult,
             @RequestParam("isCreated") boolean isCreated,
             Model model) {
+
+        if((bookingForm.getGuestId() == null) && (guestFormResult.hasErrors())) {
+            return new ModelAndView(CREATE_BOOKING_GUEST_VIEW);
+        }
 
         BookingDetailsDTO bookingDetailsDTO;
         try {
             bookingDetailsDTO = bookingSummaryService.createSummary(
                     bookingForm.getGuestId(),
+                    guestForm.getFirstName(),
+                    guestForm.getLastName(),
+                    guestForm.getStreetName(),
+                    guestForm.getStreetNumber(),
+                    guestForm.getZipCode(),
+                    guestForm.getCity(),
+                    guestForm.getCountry(),
                     bookingForm.getRoomCategoryIds(),
                     bookingForm.getAmountsOfRoomCategories(),
                     bookingForm.getServiceIds(),
@@ -420,7 +450,7 @@ public class HotelViewController {
                     bookingForm.getAmountOfChildren(),
                     bookingForm.getAdditionalInformation()
             );
-        } catch (GuestNotFoundException | ServiceNotFoundException | RoomCategoryNotFoundException e) {
+        } catch (ServiceNotFoundException | RoomCategoryNotFoundException | GuestNotFoundException e) {
             return redirectError(e.getMessage());
         }
 
@@ -432,10 +462,32 @@ public class HotelViewController {
     }
 
     @PostMapping(CREATE_BOOKING_URL)
-    public ModelAndView createBooking(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model) {
+    public ModelAndView createBooking(
+            @ModelAttribute("bookingForm") BookingForm bookingForm,
+            @ModelAttribute("guestForm") GuestForm guestForm,
+            Model model) {
+
         String bookingId;
         try {
-            bookingId = bookingCreationService.book(bookingForm.getGuestId(),
+            String guestId = bookingForm.getGuestId() == null || bookingForm.getGuestId().isEmpty()
+                    ?   guestCreationService.createGuest(
+                            guestForm.getFirstName(),
+                            guestForm.getLastName(),
+                            guestForm.getGender(),
+                            guestForm.geteMail(),
+                            guestForm.getPhoneNumber(),
+                            guestForm.getBirthDate(),
+                            guestForm.getStreetName(),
+                            guestForm.getStreetNumber(),
+                            guestForm.getZipCode(),
+                            guestForm.getCity(),
+                            guestForm.getCountry(),
+                            guestForm.getDiscountInPercent()
+                        )
+                    :   bookingForm.getGuestId();
+
+            bookingId = bookingCreationService.book(
+                    guestId,
                     bookingForm.getRoomCategoryIds(),
                     bookingForm.getAmountsOfRoomCategories(),
                     bookingForm.getServiceIds(),
@@ -504,32 +556,50 @@ public class HotelViewController {
 
     /*----- Check-In -----*/
     @GetMapping(CHECK_IN_URL)
-    public ModelAndView checkIn(
+    public ModelAndView showAssignedRooms(
             @RequestParam("bookingId") String bookingId,
-            @RequestParam("isCheckedIn") boolean isCheckedIn,
             Model model) {
 
+        List<RoomDTO> freeRooms = roomListingService.allFreeRooms();
         List<RoomDTO> assignedRooms;
+        CheckInForm checkInForm;
         try {
+            List<String> roomNames = new ArrayList<>();
             assignedRooms = checkInService.assignRooms(bookingId);
+            assignedRooms.forEach(room -> roomNames.add(room.name()));
+
+            checkInForm = new CheckInForm(bookingId, roomNames);
+
         } catch (BookingNotFoundException e) {
             return redirectError(e.getMessage());
         }
 
-        if(isCheckedIn) {
-            try {
-                checkInService.checkIn(bookingId, assignedRooms);
-            } catch (BookingNotFoundException | RoomNotFoundException e) {
-                return redirectError(e.getMessage());
-            }
-        }
-
         model.addAttribute("bookingId", bookingId);
+        model.addAttribute("checkInForm", checkInForm);
         model.addAttribute("assignedRooms", assignedRooms);
-        model.addAttribute("isCheckedIn", isCheckedIn);
+        model.addAttribute("freeRooms", freeRooms);
 
         return new ModelAndView(CHECK_IN_VIEW);
     }
+
+    @PostMapping(CHECK_IN_URL)
+    public ModelAndView checkIn(@Valid @ModelAttribute("checkInForm") CheckInForm checkInForm, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            return new ModelAndView(CHECK_IN_VIEW);
+        }
+
+        try {
+            checkInService.checkIn(
+                    checkInForm.getBookingId(),
+                    checkInForm.getRoomNames()
+            );
+        } catch (BookingNotFoundException | RoomNotFoundException e) {
+            return redirectError(e.getMessage());
+        }
+
+        return new ModelAndView("redirect:" + STAYS_URL);
+    }
+
 
     /*----- Check-Out -----*/
     @GetMapping(STAY_DETAILS_URL)
@@ -561,7 +631,7 @@ public class HotelViewController {
         try {
             invoiceDTO = checkOutService.createInvoice(id, invoiceForm.getRoomNames(), action);
             stayDetailsDTO = stayDetailsService.detailsById(id);
-        } catch (StayNotFoundException e) {
+        } catch (StayNotFoundException | RoomNotFoundException e) {
             return redirectError(e.getMessage());
         }
         model.addAttribute("invoice", invoiceDTO);
@@ -601,12 +671,12 @@ public class HotelViewController {
 
     /*----- Invoice Download -----*/
     @GetMapping(INVOICE_DOWNLOAD_URL)
-    public ResponseEntity<ByteArrayResource> downloadInvoice(@PathVariable("invoiceNo") String invoiceNo) {
+    public ResponseEntity<ByteArrayResource> downloadInvoice(@PathVariable("invoiceNo") String invoiceNumber) {
         ByteArrayResource resource = null;
 
         try {
-            resource = invoiceDownloadService.download(invoiceNo);
-        } catch (InvoiceNotFoundException e) {
+            resource = invoiceDownloadService.download(invoiceNumber);
+        } catch (InvoiceNotFoundException | FOPException | JAXBException | IOException | TransformerException e) {
             // Don't redirect to errorView because user will only see a window from the browser
             // where it asks to open or to download the pdf file.
             e.printStackTrace();
@@ -614,7 +684,7 @@ public class HotelViewController {
 
         return ResponseEntity.ok()
                 // Content-Disposition
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=Invoice_" + invoiceNo + ".pdf")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=Invoice_" + invoiceNumber + ".pdf")
                 .contentType(MediaType.APPLICATION_PDF)
                 // Content-Length
                 .contentLength(resource.contentLength())
@@ -632,7 +702,7 @@ public class HotelViewController {
 
             model.addAttribute("invoice", invoice);
         } catch (InvoiceNotFoundException e) {
-            e.printStackTrace();
+            return redirectError(e.getMessage());
         }
 
         return new ModelAndView(INVOICE_DETAILS_VIEW);

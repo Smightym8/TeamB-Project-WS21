@@ -334,6 +334,7 @@ public class InvoiceListingServiceTests {
         InvoiceDTO invoiceActual = invoiceListingService.findInvoiceById(invoiceIdExpected.id());
 
         // then
+        assertEquals(invoiceExpected.getInvoiceId().id(), invoiceActual.invoiceId());
         assertEquals(invoiceExpected.getInvoiceNumber(), invoiceActual.invoiceNumber());
         assertEquals(invoiceExpected.getInvoiceDate(), invoiceActual.invoiceDate());
         assertEquals(guestExpected.getName().firstName(), invoiceActual.guestFirstName());
@@ -346,7 +347,7 @@ public class InvoiceListingServiceTests {
         assertEquals(bookingExpected.getAmountOfChildren(), invoiceActual.amountOfChildren());
         assertEquals(invoiceExpected.getServices().size(), invoiceActual.services().size());
         assertEquals(invoiceExpected.getRooms().size(), invoiceActual.roomNames().size());
-        assertEquals(invoiceExpected.getRoomCategoryPriceList().size(), invoiceActual.categoryPrices().size());
+        assertEquals(invoiceExpected.getRooms().size(), invoiceActual.categoryPrices().size()); // DTO should have a price for each room
         assertEquals(bookingExpected.getCheckInDate(), invoiceActual.checkInDate());
         assertEquals(bookingExpected.getCheckOutDate(), invoiceActual.checkOutDate());
         assertEquals(invoiceExpected.getAmountOfNights(), invoiceActual.amountOfNights());

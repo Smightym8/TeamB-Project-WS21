@@ -40,6 +40,25 @@ public class RoomListingServiceImpl implements RoomListingService {
 
     @Transactional(readOnly = true)
     @Override
+    public List<RoomDTO> allFreeRooms() {
+        List<Room> freeRooms = roomRepository.findAllFreeRooms();
+        List<RoomDTO> freeRoomsDTOs = new ArrayList<>();
+
+        for(Room room : freeRooms) {
+            RoomDTO dto = RoomDTO.builder()
+                    .withName(room.getName().name())
+                    .withCategory(room.getRoomCategory().getRoomCategoryName().name())
+                    .withStatus(room.getStatus().name())
+                    .build();
+
+            freeRoomsDTOs.add(dto);
+        }
+
+        return freeRoomsDTOs;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
     public RoomDTO roomByName(String name) throws RoomNotFoundException {
         Room room = roomRepository.roomByName(new RoomName(name)).orElseThrow(
                 () -> new RoomNotFoundException("Room " + name + " not found")

@@ -8,10 +8,6 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
                         <span class="h4 align-middle">Invoice <strong th:text="'#' + ${invoice.invoiceNumber}"></strong></span>
-                        <a class="btn btn-danger" th:href="@{/download-invoice/{invoiceNo}(invoiceNo=${invoice.invoiceNumber})}">
-                            <i class="fas fa-file-pdf me-1"></i>
-                            <span class="align-self-center">PDF</span>
-                        </a>
                     </div>
                 </div>
                 <div class="card-body">

@@ -17,6 +17,8 @@ import java.util.Objects;
 public class InvoiceDTO {
     private String stayId;
 
+    private String invoiceId;
+
     @XmlElement(name = "invoiceNumber")
     private String invoiceNumber;
 
@@ -95,12 +97,10 @@ public class InvoiceDTO {
     @XmlElement(name = "discountInEuro")
     private BigDecimal discountInEuro;
 
-    @XmlElementWrapper(name = "categoryNames")
-    @XmlElement(name = "categoryName")
+    @XmlElement(name = "categoryNames")
     private List<String> categoryNames;
 
-    @XmlElementWrapper(name = "categoryPrices")
-    @XmlElement(name = "categoryPrice")
+    @XmlElement(name = "categoryPrices")
     private List<BigDecimal> categoryPrices;
 
     public static Builder builder() {
@@ -109,6 +109,10 @@ public class InvoiceDTO {
 
     public String stayId() {
         return stayId;
+    }
+
+    public String invoiceId() {
+        return invoiceId;
     }
 
     public String invoiceNumber() {
@@ -228,6 +232,11 @@ public class InvoiceDTO {
 
         public Builder withStayId(String stayId) {
             this.instance.stayId = stayId;
+            return this;
+        }
+
+        public Builder withInvoiceId(String invoiceId) {
+            this.instance.invoiceId = invoiceId;
             return this;
         }
 

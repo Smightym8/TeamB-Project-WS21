@@ -15,9 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -67,6 +69,72 @@ public class RoomCategoryPriceRepositoryImplTests {
 
         // then
         assertEquals(priceExpected.getPrice(), priceActual.getPrice());
+    }
 
+    @Test
+    public void given_3SingleRoomPricesInRepository_when_getAllPrices_then_returnMatchingPrices() {
+        // given
+        RoomCategory singleRoom = RoomCategory.create(
+                new RoomCategoryId(UUID.randomUUID().toString().toUpperCase()),
+                new RoomCategoryName("Single Room"),
+                new Description("This is a single room")
+        );
+
+        Season winterSeason = Season.create(
+                seasonRepository.nextIdentity(),
+                new SeasonName("Winter 2021/2022"),
+                LocalDate.of(2021, 12, 1),
+                LocalDate.of(2022, 1, 31)
+        );
+
+        Season springSeason = Season.create(
+                seasonRepository.nextIdentity(),
+                new SeasonName("Spring 2022"),
+                LocalDate.of(2022, 2, 1),
+                LocalDate.of(2022, 5, 31)
+        );
+
+        Season summerSeason = Season.create(
+                seasonRepository.nextIdentity(),
+                new SeasonName("Summer 2022"),
+                LocalDate.of(2022, 6, 1),
+                LocalDate.of(2022, 11, 30)
+        );
+
+        List<RoomCategoryPrice> pricesExpected = List.of(
+                RoomCategoryPrice.create(
+                        roomCategoryPriceRepository.nextIdentity(),
+                        winterSeason,
+                        singleRoom,
+                        new BigDecimal("300")
+                ),
+                RoomCategoryPrice.create(
+                        roomCategoryPriceRepository.nextIdentity(),
+                        springSeason,
+                        singleRoom,
+                        new BigDecimal("200")
+                ),
+                RoomCategoryPrice.create(
+                        roomCategoryPriceRepository.nextIdentity(),
+                        summerSeason,
+                        singleRoom,
+                        new BigDecimal("100")
+                )
+        );
+
+        seasonRepository.add(winterSeason);
+        seasonRepository.add(springSeason);
+        seasonRepository.add(summerSeason);
+        pricesExpected.forEach(price -> roomCategoryPriceRepository.add(price));
+
+        // when
+        List<RoomCategoryPrice> pricesActual = roomCategoryPriceRepository.allPrices();
+
+        // then
+        assertEquals(pricesExpected.size(), pricesActual.size());
+
+        for(RoomCategoryPrice p : pricesActual) {
+            assertTrue(pricesExpected.contains(p));
+        }
     }
 }

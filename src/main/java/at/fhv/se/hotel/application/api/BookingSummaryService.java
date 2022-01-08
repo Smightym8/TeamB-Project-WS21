@@ -6,6 +6,7 @@ import at.fhv.se.hotel.application.api.exception.RoomCategoryNotFoundException;
 import at.fhv.se.hotel.application.api.exception.ServiceNotFoundException;
 import at.fhv.se.hotel.application.dto.BookingDetailsDTO;
 import at.fhv.se.hotel.application.impl.BookingSummaryServiceImpl;
+import at.fhv.se.hotel.view.forms.GuestForm;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,17 +18,27 @@ import java.util.List;
 public interface BookingSummaryService {
     /**
      * See implementation
-     * {@link BookingSummaryServiceImpl#createSummary(String, List, List, List, LocalDate, LocalDate, int, int, String)}
+     * {@link BookingSummaryServiceImpl#createSummary(String, String, String, String, String, String, String,
+     * List, List, List, LocalDate, LocalDate, int, int, String)}
      */
-    BookingDetailsDTO createSummary(String guestId,
-                                    List<String> roomCategoryIds,
-                                    List<Integer> amounts,
-                                    List<String> serviceIds,
-                                    LocalDate checkInDate,
-                                    LocalDate checkOutDate,
-                                    int amountOfAdults,
-                                    int amountOfChildren,
-                                    String additionalInformation) throws GuestNotFoundException, ServiceNotFoundException, RoomCategoryNotFoundException;
+    BookingDetailsDTO createSummary(
+            String guestId,
+            String firstName,
+            String lastName,
+            String streetName,
+            String streetNumber,
+            String zipCode,
+            String city,
+            String country,
+            List<String> roomCategoryIds,
+            List<Integer> amounts,
+            List<String> serviceIds,
+            LocalDate checkInDate,
+            LocalDate checkOutDate,
+            int amountOfAdults,
+            int amountOfChildren,
+            String additionalInformation
+    ) throws ServiceNotFoundException, RoomCategoryNotFoundException, GuestNotFoundException;
 
     BookingDetailsDTO detailsByBookingId(String bookingId) throws BookingNotFoundException;
 }

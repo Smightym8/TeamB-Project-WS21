@@ -69,22 +69,28 @@ public class InvoiceListingServiceImpl implements InvoiceListingService {
         );
 
         List<String> categoryNames = new ArrayList<>();
-        invoice.getStay().getBooking().getRoomCategories().forEach(roomCategory ->
-                categoryNames.add(
-                        roomCategory.getRoomCategory().getRoomCategoryName().name()
-                )
-        );
-
         List<String> roomNames = new ArrayList<>();
-        invoice.getRooms().forEach(room -> roomNames.add(room.getName().name()));
-
         List<BigDecimal> categoryPrices = new ArrayList<>();
-        invoice.getRoomCategoryPriceList().forEach(roomCategoryPrice ->
-                categoryPrices.add(roomCategoryPrice.getPrice())
+        invoice.getRooms().forEach(room -> {
+                categoryNames.add(room.getRoomCategory().getRoomCategoryName().name());
+                roomNames.add(room.getName().name());
+
+                invoice.getRoomCategoryPriceList().forEach(roomCategoryPrice -> {
+                        if(roomCategoryPrice.getRoomCategory().getRoomCategoryName().name().equals(room.getRoomCategory().getRoomCategoryName().name())) {
+                            categoryPrices.add(roomCategoryPrice.getPrice());
+                        }
+                    }
+                );
+
+            }
         );
+
+
+
 
         InvoiceDTO invoiceDTO = InvoiceDTO.builder()
                 .withInvoiceNumber(invoice.getInvoiceNumber())
+                .withInvoiceId(id)
                 .withInvoiceDate(invoice.getInvoiceDate())
                 .withGuestFirstName(invoice.getStay().getGuest().getName().firstName())
                 .withGuestLastName(invoice.getStay().getGuest().getName().lastName())
