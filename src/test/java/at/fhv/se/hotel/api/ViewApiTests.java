@@ -644,7 +644,6 @@ public class ViewApiTests {
                         ))
                         .accept(org.springframework.http.MediaType.TEXT_PLAIN))
                 .andDo(print())
-                //.andExpect(content().contentType("text/html;charset=UTF-8"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name(
                         "redirect:/createbookingSuccess?bookingId=" + bookingIdExpected

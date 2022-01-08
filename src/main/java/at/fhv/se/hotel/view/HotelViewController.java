@@ -462,7 +462,7 @@ public class HotelViewController {
     }
 
     @PostMapping(CREATE_BOOKING_URL)
-    public ModelAndView createBooking(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model) {
+    public ModelAndView createBooking(@ModelAttribute("bookingForm") BookingForm bookingForm) {
         String bookingId;
         try {
             bookingId = bookingCreationService.book(bookingForm.getGuestId(),
