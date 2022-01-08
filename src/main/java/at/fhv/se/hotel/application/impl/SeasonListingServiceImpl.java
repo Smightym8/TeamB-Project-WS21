@@ -1,7 +1,6 @@
 package at.fhv.se.hotel.application.impl;
 
 import at.fhv.se.hotel.application.api.SeasonListingService;
-import at.fhv.se.hotel.application.api.exception.CategoryPriceNotFoundException;
 import at.fhv.se.hotel.application.dto.SeasonWithPricesDTO;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
@@ -12,7 +11,6 @@ import at.fhv.se.hotel.domain.repository.SeasonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.swing.text.html.Option;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;

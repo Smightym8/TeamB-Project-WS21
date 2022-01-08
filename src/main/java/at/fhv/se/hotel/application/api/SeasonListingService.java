@@ -1,6 +1,5 @@
 package at.fhv.se.hotel.application.api;
 
-import at.fhv.se.hotel.application.api.exception.CategoryPriceNotFoundException;
 import at.fhv.se.hotel.application.dto.SeasonWithPricesDTO;
 
 import java.util.List;
