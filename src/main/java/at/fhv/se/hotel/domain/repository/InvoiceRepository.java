@@ -16,5 +16,7 @@ public interface InvoiceRepository {
 
     Optional<Invoice> invoiceById(InvoiceId invoiceId);
 
+    Optional<Invoice> invoiceByNumber(String invoiceNumber);
+
     List<Invoice> invoicesByDate(LocalDate invoiceDate);
 }

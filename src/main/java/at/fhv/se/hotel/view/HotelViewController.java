@@ -3,9 +3,13 @@ package at.fhv.se.hotel.view;
 import at.fhv.se.hotel.application.api.*;
 import at.fhv.se.hotel.application.api.exception.*;
 import at.fhv.se.hotel.application.dto.*;
-import at.fhv.se.hotel.domain.model.guest.Gender;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.view.forms.*;
+import at.fhv.se.hotel.view.forms.BookingForm;
+import at.fhv.se.hotel.view.forms.GuestForm;
+import at.fhv.se.hotel.view.forms.InvoiceForm;
+import at.fhv.se.hotel.view.forms.RoomForm;
+import org.apache.fop.apps.FOPException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
@@ -18,6 +22,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.security.InvalidParameterException;
+import javax.xml.bind.JAXBException;
+import javax.xml.transform.TransformerException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -624,7 +631,7 @@ public class HotelViewController {
         try {
             invoiceDTO = checkOutService.createInvoice(id, invoiceForm.getRoomNames(), action);
             stayDetailsDTO = stayDetailsService.detailsById(id);
-        } catch (StayNotFoundException e) {
+        } catch (StayNotFoundException | RoomNotFoundException e) {
             return redirectError(e.getMessage());
         }
         model.addAttribute("invoice", invoiceDTO);
@@ -664,12 +671,12 @@ public class HotelViewController {
 
     /*----- Invoice Download -----*/
     @GetMapping(INVOICE_DOWNLOAD_URL)
-    public ResponseEntity<ByteArrayResource> downloadInvoice(@PathVariable("invoiceNo") String invoiceNo) {
+    public ResponseEntity<ByteArrayResource> downloadInvoice(@PathVariable("invoiceNo") String invoiceNumber) {
         ByteArrayResource resource = null;
 
         try {
-            resource = invoiceDownloadService.download(invoiceNo);
-        } catch (InvoiceNotFoundException e) {
+            resource = invoiceDownloadService.download(invoiceNumber);
+        } catch (InvoiceNotFoundException | FOPException | JAXBException | IOException | TransformerException e) {
             // Don't redirect to errorView because user will only see a window from the browser
             // where it asks to open or to download the pdf file.
             e.printStackTrace();
@@ -677,7 +684,7 @@ public class HotelViewController {
 
         return ResponseEntity.ok()
                 // Content-Disposition
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=Invoice_" + invoiceNo + ".pdf")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=Invoice_" + invoiceNumber + ".pdf")
                 .contentType(MediaType.APPLICATION_PDF)
                 // Content-Length
                 .contentLength(resource.contentLength())
@@ -695,7 +702,7 @@ public class HotelViewController {
 
             model.addAttribute("invoice", invoice);
         } catch (InvoiceNotFoundException e) {
-            e.printStackTrace();
+            return redirectError(e.getMessage());
         }
 
         return new ModelAndView(INVOICE_DETAILS_VIEW);

@@ -1,6 +1,7 @@
 package at.fhv.se.hotel.application.impl;
 
 import at.fhv.se.hotel.application.api.CheckOutService;
+import at.fhv.se.hotel.application.api.exception.RoomNotFoundException;
 import at.fhv.se.hotel.application.api.exception.StayNotFoundException;
 import at.fhv.se.hotel.application.dto.InvoiceDTO;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
@@ -39,14 +40,11 @@ public class CheckOutServiceImpl implements CheckOutService {
     RoomRepository roomRepository;
 
     @Autowired
-    InvoicePDFRepository invoicePDFRepository;
-
-    @Autowired
     RoomCategoryRepository roomCategoryRepository;
 
     @Transactional
     @Override
-    public InvoiceDTO createInvoice(String stayId, List<String> roomNames, String action) throws StayNotFoundException {
+    public InvoiceDTO createInvoice(String stayId, List<String> roomNames, String action) throws StayNotFoundException, RoomNotFoundException {
         Stay stay = stayRepository.stayById(new StayId(stayId)).orElseThrow(
                 () -> new StayNotFoundException("Creating invoice failed! Stay with id " + stayId + " not found")
         );
@@ -59,10 +57,7 @@ public class CheckOutServiceImpl implements CheckOutService {
         }
 
         List<String> categoryNames = new ArrayList<>();
-        for (String name : roomNames) {
-            // TODO: EXCEPTION!!!!!!
-            categoryNames.add(roomRepository.roomByName(new RoomName(name)).get().getRoomCategory().getRoomCategoryName().name());
-        }
+        invoice.getRooms().forEach(room -> categoryNames.add(room.getRoomCategory().getRoomCategoryName().name()));
 
         List<BigDecimal> categoryPrices = new ArrayList<>();
         for (String name : categoryNames) {
@@ -113,32 +108,27 @@ public class CheckOutServiceImpl implements CheckOutService {
                 .withCategoryPrices(categoryPrices)
                 .build();
 
-        invoicePDFRepository.saveAsPDF(invoiceDTO);
-
         return invoiceDTO;
-
     }
 
     @Transactional
     @Override
     public void saveInvoice(String stayId, List<String> roomNames, String action) throws StayNotFoundException {
-        if (stayRepository.stayById(new StayId(stayId)).isPresent()) {
-            Stay stay = stayRepository.stayById(new StayId(stayId)).orElseThrow(
-                    () -> new StayNotFoundException("Saving invoice failed! Stay with id " + stayId + " not found")
-            );
+        Stay stay = stayRepository.stayById(new StayId(stayId)).orElseThrow(
+                () -> new StayNotFoundException("Saving invoice failed! Stay with id " + stayId + " not found")
+        );
 
-
-            for (Map.Entry<Room, Boolean> room : stay.getRooms().entrySet()) {
-                for (String roomName : roomNames) {
-                    if (room.getKey().getName().name().equals(roomName)) {
-                        room.setValue(true);
-                    }
+        for (Map.Entry<Room, Boolean> room : stay.getRooms().entrySet()) {
+            for (String roomName : roomNames) {
+                if (room.getKey().getName().name().equals(roomName)) {
+                    room.setValue(true);
                 }
             }
-            Invoice invoice = invoiceSplitService.splitInvoice(stay, roomNames, action);
-
-            invoiceRepository.add(invoice);
         }
+
+        Invoice invoice = invoiceSplitService.splitInvoice(stay, roomNames, action);
+
+        invoiceRepository.add(invoice);
     }
 
     @Transactional
