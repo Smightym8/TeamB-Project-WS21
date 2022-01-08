@@ -714,10 +714,9 @@ public class ViewApiTests {
     }
 
     @Test
-    public void when_get_checkInUrl_with_isCheckedInFalse_then_statusOk_and_checkInView_and_checkInService_called() throws Exception {
+    public void when_get_checkInUrl_then_statusOk_and_checkInView_and_checkInService_called() throws Exception {
         // given
         String bookingIdExpected = "1";
-        String isCheckedInExpected = "false";
 
         List<String> roomNames = List.of("101");
         List<RoomDTO> roomDTOsExpected = List.of(
@@ -733,7 +732,6 @@ public class ViewApiTests {
         // when ... then
         this.mockMvc.perform(get("/check-in")
                 .param("bookingId", bookingIdExpected)
-                .param("isCheckedIn", isCheckedInExpected)
                 .accept(org.springframework.http.MediaType.TEXT_PLAIN))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -746,35 +744,32 @@ public class ViewApiTests {
     }
 
     @Test
-    public void when_get_checkInUrl_with_isCheckedInTrue_then_statusOk_and_checkInView_and_checkInService_called() throws Exception {
+    public void when_post_checkInUrl_with_checkInForm_then_statusRedirect_and_redirectToStaysUrl_and_checkInServiceCalled() throws Exception {
         // given
         String bookingIdExpected = "1";
-        String isCheckedInExpected = "true";
-
-        List<String> roomNames = List.of("101");
-        List<RoomDTO> roomDTOsExpected = List.of(
-                RoomDTO.builder()
-                        .withName("101")
-                        .withCategory("Single Room")
-                        .withStatus(RoomStatus.FREE.name())
-                        .build()
+        List<String> roomNamesExpected = List.of(
+                "101",
+                "102"
         );
+        String roomNamesExpectedStr = roomNamesExpected.get(0) + ',' + roomNamesExpected.get(1);
 
-        Mockito.when(checkInService.assignRooms(bookingIdExpected)).thenReturn(roomDTOsExpected);
-        Mockito.doNothing().when(checkInService).checkIn(bookingIdExpected, roomNames);
+        Mockito.doNothing().when(checkInService).checkIn(bookingIdExpected, roomNamesExpected);
 
         // when ... then
-        this.mockMvc.perform(get("/check-in")
-                        .param("bookingId", bookingIdExpected)
-                        .param("isCheckedIn", isCheckedInExpected)
+        this.mockMvc.perform(post("/check-in")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .content(buildUrlEncodedFormEntity(
+                                "bookingId", bookingIdExpected,
+                                "roomNames", roomNamesExpectedStr
+                        ))
                         .accept(org.springframework.http.MediaType.TEXT_PLAIN))
                 .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().contentType("text/html;charset=UTF-8"))
-                .andExpect(view().name("checkIn"));
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/stays"));
 
         // then
-        Mockito.verify(checkInService, times(1)).assignRooms(bookingIdExpected);
+        Mockito.verify(checkInService, times(1)).checkIn(bookingIdExpected, roomNamesExpected);
+
     }
 
     @Test
