@@ -209,13 +209,8 @@ public class CheckInSteps {
 
     @When("I do the check in for the booking with id {word} and with the room {word}")
     public void iDoTheCheckIn(String bookingId, String roomName) throws BookingNotFoundException, RoomNotFoundException {
-        Room room = roomRepository.roomByName(new RoomName(roomName)).get();
-        RoomDTO roomDTO = RoomDTO.builder()
-                        .withName(room.getName().name())
-                        .withCategory(room.getRoomCategory().getRoomCategoryName().name())
-                        .build();
 
-        checkInService.checkIn(bookingId, List.of(roomDTO));
+        checkInService.checkIn(bookingId, List.of(roomName));
     }
 
     @Then("I should have a matching stay for the booking with id {word}")

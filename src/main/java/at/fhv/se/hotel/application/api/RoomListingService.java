@@ -8,5 +8,7 @@ import java.util.List;
 public interface RoomListingService {
     List<RoomDTO> allRooms();
 
+    List<RoomDTO> allFreeRooms();
+
     RoomDTO roomByName(String name) throws RoomNotFoundException;
 }

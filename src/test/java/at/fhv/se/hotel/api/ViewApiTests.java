@@ -714,6 +714,7 @@ public class ViewApiTests {
         String bookingIdExpected = "1";
         String isCheckedInExpected = "false";
 
+        List<String> roomNames = List.of("101");
         List<RoomDTO> roomDTOsExpected = List.of(
                 RoomDTO.builder()
                         .withName("101")
@@ -736,7 +737,7 @@ public class ViewApiTests {
 
         // then
         Mockito.verify(checkInService, times(1)).assignRooms(bookingIdExpected);
-        Mockito.verify(checkInService, times(0)).checkIn(bookingIdExpected, roomDTOsExpected);
+        Mockito.verify(checkInService, times(0)).checkIn(bookingIdExpected, roomNames);
     }
 
     @Test
@@ -745,6 +746,7 @@ public class ViewApiTests {
         String bookingIdExpected = "1";
         String isCheckedInExpected = "true";
 
+        List<String> roomNames = List.of("101");
         List<RoomDTO> roomDTOsExpected = List.of(
                 RoomDTO.builder()
                         .withName("101")
@@ -754,7 +756,7 @@ public class ViewApiTests {
         );
 
         Mockito.when(checkInService.assignRooms(bookingIdExpected)).thenReturn(roomDTOsExpected);
-        Mockito.doNothing().when(checkInService).checkIn(bookingIdExpected, roomDTOsExpected);
+        Mockito.doNothing().when(checkInService).checkIn(bookingIdExpected, roomNames);
 
         // when ... then
         this.mockMvc.perform(get("/check-in")

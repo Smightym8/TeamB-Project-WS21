@@ -228,7 +228,7 @@ public class CheckInServiceTest {
         Mockito.when(roomRepository.roomByName(new RoomName(roomNamesExpected.get(2)))).thenReturn(Optional.ofNullable(roomsExpected.get(2)));
 
         //when
-        checkInService.checkIn(bookingIdExpected.id(), roomDTOsExpected);
+        checkInService.checkIn(bookingIdExpected.id(), roomNamesExpected);
         ArgumentCaptor<Stay> stayCaptor = ArgumentCaptor.forClass(Stay.class);
         Mockito.verify(stayRepository).add(stayCaptor.capture());
         Stay stayActual = stayCaptor.getValue();
@@ -322,7 +322,7 @@ public class CheckInServiceTest {
 
         //when ... then
         Exception exception = assertThrows(BookingNotFoundException.class, () -> {
-            checkInService.checkIn(bookingIdExpected.id(), roomDTOsExpected);
+            checkInService.checkIn(bookingIdExpected.id(), roomNamesExpected);
         });
 
         String expectedMessage = "Booking with id " + bookingIdExpected.id() + " not found";
@@ -414,7 +414,7 @@ public class CheckInServiceTest {
 
         //when ... then
         Exception exception = assertThrows(RoomNotFoundException.class, () -> {
-            checkInService.checkIn(bookingIdExpected.id(), roomDTOsExpected);
+            checkInService.checkIn(bookingIdExpected.id(), roomNamesExpected);
         });
 
         String expectedMessage = "Room with name " + roomNamesExpected.get(0) + " not found";

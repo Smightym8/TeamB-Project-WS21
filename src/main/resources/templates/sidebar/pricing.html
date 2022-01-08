@@ -20,7 +20,7 @@
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <div>
                         <i class="fas fa-dollar-sign fa-fw fa-lg me-4 align-middle"></i>
-                        <span class="h4 align-middle">Pricing [per night]</span>
+                        <span class="h4 align-middle">Pricing per night</span>
                     </div>
                     <div>
                         <a class="btn btn-primary" id="modify" onclick="changeState()">Modify</a>
@@ -40,53 +40,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="align-middle">Default</td>
-                                <td class="align-middle"></td>
-                                <td class="align-middle"></td>
+                            <tr th:each="seasonWithPrices : ${seasonsWithPrices}">
+                                <td class="align-middle" th:text="${seasonWithPrices.seasonName}"></td>
                                 <td class="align-middle">
+                                    <input type="date" th:value="${seasonWithPrices.startDate}" class="form-control roomdate" disabled>
+                                </td>
+                                <td class="align-middle">
+                                    <input type="date" th:value="${seasonWithPrices.endDate}" class="form-control roomdate" disabled>
+                                </td>
+                                <td class="align-middle" th:each="price : ${seasonWithPrices.prices}">
                                     <div class="input-group">
                                         <span class="input-group-text">€</span>
-                                        <input type="number" value="20" min="0" class="form-control roomprice" disabled>
-                                    </div>
-                                </td>
-                                <td class="align-middle">
-                                    <div class="input-group">
-                                        <span class="input-group-text">€</span>
-                                        <input type="number" value="35" min="0" class="form-control roomprice" disabled>
-                                    </div>
-                                </td>
-                                <td class="align-middle">
-                                    <div class="input-group">
-                                        <span class="input-group-text">€</span>
-                                        <input type="number" value="90" min="0" class="form-control roomprice" disabled>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr th:each="i : ${#numbers.sequence(0, 5)}">
-                                <td class="align-middle">Winter</td>
-                                <td class="align-middle">
-                                    <input type="date" value="2021-12-01" class="form-control roomdate" disabled>
-                                </td>
-                                <td class="align-middle">
-                                    <input type="date" value="2021-12-31" class="form-control roomdate" disabled>
-                                </td>
-                                <td class="align-middle">
-                                    <div class="input-group">
-                                        <span class="input-group-text">€</span>
-                                        <input type="number" value="30" min="0" class="form-control roomprice" disabled>
-                                    </div>
-                                </td>
-                                <td class="align-middle">
-                                    <div class="input-group">
-                                        <span class="input-group-text">€</span>
-                                        <input type="number" value="55" min="0" class="form-control roomprice" disabled>
-                                    </div>
-                                </td>
-                                <td class="align-middle">
-                                    <div class="input-group">
-                                        <span class="input-group-text">€</span>
-                                        <input type="number" value="140" min="0" class="form-control roomprice" disabled>
+                                        <input type="number" th:value="${price}" class="form-control roomprice" disabled>
                                     </div>
                                 </td>
                             </tr>

@@ -85,10 +85,6 @@ public class GuestForm {
         return guestId;
     }
 
-    public void setGuestId(String guestId) {
-        this.guestId = guestId;
-    }
-
     public String getFirstName() {
         return firstName;
     }

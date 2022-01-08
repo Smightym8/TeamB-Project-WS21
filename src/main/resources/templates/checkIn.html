@@ -4,44 +4,77 @@
 
     <div layout:fragment="content">
 
-        <div class="div-width-s">
-            <div class="card card-height">
-                <div class="card-header">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <span class="h4 align-middle">Assign Rooms</span>
-                        </div>
-                    </div>
-                    <div th:if="${isCheckedIn}">
-                        <br>
-                        <div class="alert alert-success" role="alert">Checked in successfully!</div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div style="width:40%; margin: auto">
-                        <div th:each="room : ${assignedRooms}">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text col-5" th:text="${room.categoryName}"></span>
-                                <select class="form-select">
-                                        <option th:value="${room.name}" th:text="${room.name}"></option>
-                                </select>
+        <form th:action="@{/check-in}" method="post" th:object="${checkInForm}">
+            <input type="hidden" id="bookingId" name="bookingId" th:field="*{bookingId}"/>
+
+            <div class="div-width-s">
+                <div class="card card-height">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="h4 align-middle">Assign Rooms</span>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="card-footer">
-                    <div th:if="${!isCheckedIn}">
-                        <button class="btn btn-primary" onclick="history.back()">Back</button>
-                        <a class="btn btn-primary float-end" th:href="@{'/check-in?bookingId=' + ${bookingId} + '&isCheckedIn=true'}">Check-in</a>
-                    </div>
-                    <div th:if="${isCheckedIn}">
-                        <a class="btn btn-primary float-end" th:href="@{/}">Back to main menu</a>
-                    </div>
+                        <div class="card-body">
+                            <div style="width:40%; margin: auto">
+
+                                <div th:each="assignedRoom : ${assignedRooms}">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text col-5" th:text="${assignedRoom.categoryName}"></span>
+                                        <select th:id="${'roomSelect' + assignedRoomStat.index }" class="form-select" th:name="roomNames">
+                                            <option th:each="freeRoom : ${freeRooms}" th:value="${freeRoom.name}"
+                                                    th:text="${freeRoom.name}" th:selected="${freeRoom.name == assignedRoom.name}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a class="btn btn-primary" th:href="@{/bookingdetails/{id}(id=${bookingId})}">Back</a>
+                            <button type="submit" class="btn btn-success float-end">Check-in</button>
+                        </div>
                 </div>
             </div>
-        </div>
+        </form>
 
+        <script src="/js/jquery.js"></script>
+
+        <script>
+            // Disable initially selected rooms
+            window.onload = function() {
+                disableSelectedOptions();
+            };
+
+            // Disable again if another room is selected in any dropdown
+            $(".form-select").change(function(){
+                $(".form-select option").each(function(){
+                    $(this).removeAttr("disabled");
+                });
+
+                disableSelectedOptions();
+            });
+
+            // Disable select option from each dropdown in all other dropdowns
+            function disableSelectedOptions() {
+                // Build a map with the id of the select and the current option
+                const selectedValues = new Map();
+
+                $(".form-select").each(function(){
+                    selectedValues.set($(this).attr("id"), $(this).val());
+                });
+
+                // For each entry in the map get the selects which don't match the key and disable the value
+                for (const [key, value] of selectedValues.entries()) {
+                    $(".form-select").each(function(){
+                        if($(this).attr("id") !== key) {
+                            $('#' + $(this).attr("id") + ' option[value="' + value + '"').attr("disabled", true);
+                        }
+                    });
+                }
+            }
+        </script>
     </div>
-
 </body>
 </html>

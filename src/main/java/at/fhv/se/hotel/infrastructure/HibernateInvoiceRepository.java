@@ -42,6 +42,13 @@ public class HibernateInvoiceRepository implements InvoiceRepository {
     }
 
     @Override
+    public Optional<Invoice> invoiceByNumber(String invoiceNumber) {
+        TypedQuery<Invoice> query = this.em.createQuery("FROM Invoice AS i WHERE i.invoiceNumber = :invoiceNumber", Invoice.class);
+        query.setParameter("invoiceNumber", invoiceNumber);
+        return query.getResultStream().findFirst();
+    }
+
+    @Override
     public List<Invoice> invoicesByDate(LocalDate invoiceDate) {
         TypedQuery<Invoice> query = this.em.createQuery("FROM Invoice AS i WHERE i.invoiceDate = :invoiceDate", Invoice.class);
         query.setParameter("invoiceDate", invoiceDate);

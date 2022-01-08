@@ -334,6 +334,7 @@ public class InvoiceListingServiceTests {
         InvoiceDTO invoiceActual = invoiceListingService.findInvoiceById(invoiceIdExpected.id());
 
         // then
+        assertEquals(invoiceExpected.getInvoiceId().id(), invoiceActual.invoiceId());
         assertEquals(invoiceExpected.getInvoiceNumber(), invoiceActual.invoiceNumber());
         assertEquals(invoiceExpected.getInvoiceDate(), invoiceActual.invoiceDate());
         assertEquals(guestExpected.getName().firstName(), invoiceActual.guestFirstName());

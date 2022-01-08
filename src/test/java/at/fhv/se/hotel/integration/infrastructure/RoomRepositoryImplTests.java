@@ -69,6 +69,62 @@ public class RoomRepositoryImplTests {
     }
 
     @Test
+    public void given_5Rooms3Free1Occupied1CleaningInRepository_when_findAllFreeRooms_then_return3FreeRooms() {
+        // given
+        RoomCategory roomCategoryExpected = RoomCategory.create(
+                new RoomCategoryId(UUID.randomUUID().toString().toUpperCase()),
+                new RoomCategoryName("Single Room"),
+                new Description("This is a single room")
+        );
+
+        List<Room> freeRoomsExpected = List.of(
+                Room.create(
+                        new RoomName("101"),
+                        RoomStatus.FREE,
+                        roomCategoryExpected
+                ),
+                Room.create(
+                        new RoomName("102"),
+                        RoomStatus.FREE,
+                        roomCategoryExpected
+                ),
+                Room.create(
+                        new RoomName("103"),
+                        RoomStatus.FREE,
+                        roomCategoryExpected
+                )
+        );
+
+        List<Room> otherRooms = List.of(
+                Room.create(
+                        new RoomName("104"),
+                        RoomStatus.OCCUPIED,
+                        roomCategoryExpected
+                ),
+                Room.create(
+                        new RoomName("105"),
+                        RoomStatus.CLEANING,
+                        roomCategoryExpected
+                )
+        );
+
+        roomCategoryRepository.add(roomCategoryExpected);
+        freeRoomsExpected.forEach(room -> roomRepository.add(room));
+        otherRooms.forEach(room -> roomRepository.add(room));
+        em.flush();
+
+        // when
+        List<Room> roomsActual = roomRepository.findAllFreeRooms();
+
+        // then
+        assertEquals(freeRoomsExpected.size(), roomsActual.size());
+
+        for(Room r : roomsActual) {
+            assertTrue(freeRoomsExpected.contains(r));
+        }
+    }
+
+    @Test
     void given_room_when_fetchingbyname_then_returnequalsroom() {
         // given
         RoomCategory singleRoom = RoomCategory.create(roomCategoryRepository.nextIdentity(),

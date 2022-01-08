@@ -5,6 +5,7 @@ import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPriceId;
 import at.fhv.se.hotel.domain.model.season.SeasonId;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface RoomCategoryPriceRepository {
@@ -13,4 +14,6 @@ public interface RoomCategoryPriceRepository {
     void add(RoomCategoryPrice roomCategoryPrice);
 
     Optional<RoomCategoryPrice> priceBySeasonAndCategory(SeasonId seasonId, RoomCategoryId roomCategoryId);
+
+    List<RoomCategoryPrice> allPrices();
 }

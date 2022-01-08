@@ -8,10 +8,6 @@ public class InvoiceForm {
     public InvoiceForm(){
     }
 
-    public InvoiceForm(List<String> roomNames){
-        this.roomNames = roomNames;
-    }
-
     public List<String> getRoomNames() {
         return roomNames;
     }

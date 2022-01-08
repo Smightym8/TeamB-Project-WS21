@@ -83,7 +83,7 @@
 
 					<!-- Logo -->
 					<fo:block text-align="right">
-						<fo:external-graphic src="src/main/resources/static/invoices/assets/logo_black.png" content-height="20%"/>
+						<fo:external-graphic src="src/main/resources/static/invoice/assets/logo_black.png" content-height="20%"/>
 					</fo:block>
 
 					<!-- Guest Information -->
@@ -128,10 +128,10 @@
 
 						<fo:block margin-top="1mm">
 							<fo:table font-size="10pt">
-								<fo:table-column column-width="25%"/>
-								<fo:table-column column-width="25%"/>
 								<fo:table-column column-width="30%"/>
-								<fo:table-column column-width="20%"/>
+								<fo:table-column column-width="30%"/>
+								<fo:table-column column-width="30%"/>
+								<fo:table-column column-width="10%"/>
 
 								<fo:table-header border-width="1pt" border-style="solid">
 									<fo:table-row font-weight="bold">
@@ -144,7 +144,7 @@
 										<fo:table-cell padding="3pt">
 											<fo:block>Cost per night</fo:block>
 										</fo:table-cell>
-										<fo:table-cell padding="3pt">
+										<fo:table-cell text-align="right" padding="3pt">
 											<fo:block>Total</fo:block>
 										</fo:table-cell>
 									</fo:table-row>
@@ -170,7 +170,7 @@
 													<xsl:value-of select="/invoice/categoryPrices/categoryPrice[$pos]" />
 												</fo:block>
 											</fo:table-cell>
-											<fo:table-cell padding="3pt">
+											<fo:table-cell text-align="right" padding="3pt">
 												<fo:block>
 													<xsl:text>€ </xsl:text>
 													<xsl:value-of select="format-number((/invoice/categoryPrices/categoryPrice[$pos] * number(/invoice/amountOfNights)), '#.00')" />
@@ -215,10 +215,10 @@
 
 						<fo:block margin-top="1mm">
 							<fo:table font-size="10pt">
-								<fo:table-column column-width="25%"/>
-								<fo:table-column column-width="25%"/>
 								<fo:table-column column-width="30%"/>
-								<fo:table-column column-width="20%"/>
+								<fo:table-column column-width="30%"/>
+								<fo:table-column column-width="30%"/>
+								<fo:table-column column-width="10%"/>
 
 								<fo:table-header border-width="1pt" border-style="solid">
 									<fo:table-row font-weight="bold"  padding="3pt">
@@ -231,7 +231,7 @@
 										<fo:table-cell padding="3pt">
 											<fo:block>Cost per night</fo:block>
 										</fo:table-cell>
-										<fo:table-cell padding="3pt">
+										<fo:table-cell text-align="right" padding="3pt">
 											<fo:block>Total</fo:block>
 										</fo:table-cell>
 									</fo:table-row>
@@ -256,7 +256,7 @@
 													<xsl:value-of select="value" />
 												</fo:block>
 											</fo:table-cell>
-											<fo:table-cell padding="3pt">
+											<fo:table-cell text-align="right" padding="3pt">
 												<fo:block>
 													<xsl:text>€ </xsl:text>
 													<xsl:value-of select="format-number((value * count(/invoice/roomNames) * number(/invoice/amountOfNights)), '#.00')" />
@@ -278,10 +278,10 @@
 
 							<fo:block margin-top="1mm">
 								<fo:table font-size="10pt">
-									<fo:table-column column-width="25%"/>
-									<fo:table-column column-width="25%"/>
 									<fo:table-column column-width="30%"/>
-									<fo:table-column column-width="20%"/>
+									<fo:table-column column-width="30%"/>
+									<fo:table-column column-width="30%"/>
+									<fo:table-column column-width="10%"/>
 
 									<fo:table-header border-width="1pt" border-style="solid">
 										<fo:table-row font-weight="bold">
@@ -294,7 +294,7 @@
 											<fo:table-cell padding="3pt">
 												<fo:block>Cost per Adult</fo:block>
 											</fo:table-cell>
-											<fo:table-cell padding="3pt">
+											<fo:table-cell text-align="right" padding="3pt">
 												<fo:block>Total</fo:block>
 											</fo:table-cell>
 										</fo:table-row>
@@ -318,7 +318,7 @@
 													<xsl:value-of select="invoice/localTaxPerPerson" />
 												</fo:block>
 											</fo:table-cell>
-											<fo:table-cell padding="3pt">
+											<fo:table-cell text-align="right" padding="3pt">
 												<fo:block>
 													<xsl:text>€ </xsl:text>
 													<xsl:value-of select="invoice/localTaxTotal" />

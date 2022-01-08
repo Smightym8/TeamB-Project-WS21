@@ -1,5 +1,6 @@
 package at.fhv.se.hotel.application.api;
 
+import at.fhv.se.hotel.application.api.exception.RoomNotFoundException;
 import at.fhv.se.hotel.application.api.exception.StayNotFoundException;
 import at.fhv.se.hotel.application.dto.InvoiceDTO;
 
@@ -9,7 +10,7 @@ public interface CheckOutService {
 
     void checkOut(String stayId, List<String> roomNames, String action) throws StayNotFoundException;
 
-    InvoiceDTO createInvoice(String stayId, List<String> roomNames, String action) throws StayNotFoundException;
+    InvoiceDTO createInvoice(String stayId, List<String> roomNames, String action) throws StayNotFoundException, RoomNotFoundException;
 
     void saveInvoice(String stayId, List<String> roomNames, String action) throws StayNotFoundException;
 }
