@@ -52,7 +52,7 @@
                                         <tr th:each="guest : ${guests}">
                                             <td class="align-middle">
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="guest" th:field="*{guestId}" th:value="${guest.id}" th:required="required">
+                                                    <input class="form-check-input" type="radio" id="guest" name="guest" th:field="*{guestId}" th:value="${guest.id}">
                                                 </div>
                                             </td>
                                             <td class="align-middle">
@@ -70,11 +70,11 @@
                             <div class="row">
                                 <div class="input-group col">
                                     <span class="input-group-text col-3">Adults</span>
-                                    <input class="form-control" type="number" id="amountOfAdults" name="amountOfAdults" th:field="*{amountOfAdults}" th:value="1" th:min="1" th:required="required">
+                                    <input class="form-control" type="number" id="amountOfAdults" name="amountOfAdults" th:field="*{amountOfAdults}" th:value="1" >
                                 </div>
                                 <div class="input-group col">
                                     <span class="input-group-text col-3">Children</span>
-                                    <input class="form-control" type="number" id="amountOfChildren" name="amountOfChildren" th:field="*{amountOfChildren}" th:value="0" th:min="0" th:required="required">
+                                    <input class="form-control" type="number" id="amountOfChildren" name="amountOfChildren" th:field="*{amountOfChildren}" th:value="0" th:min="0">
                                 </div>
                             </div>
                         </div>
@@ -82,13 +82,24 @@
 
                 </div>
                 <div class="card-footer">
-                    <button class="btn btn-primary" onclick="history.back()">Back</button>
-                    <button class="btn btn-primary float-end" form="myform" type="submit">Next</button>
+                    <button name="action" value="back" class="btn btn-primary" form="myform" type="submit" onclick="notRequired()">Back</button>
+                    <button name="action" value="next" class="btn btn-primary float-end" form="myform" type="submit" onclick="required()">Next</button>
                 </div>
             </div>
         </div>
 
         <script>
+            function required(){
+                document.getElementById("guest").required = true;
+                document.getElementById("amountOfAdults").required = true;
+                document.getElementById("amountOfAdults").min = "1";
+            }
+            function notRequired(){
+                document.getElementById("guest").required = false;
+                document.getElementById("amountOfAdults").required = false;
+                document.getElementById("amountOfAdults").min = "0";
+            }
+
             // table initialization
             let table1 = $('#t1').DataTable({
                 "order": [ 1, "asc" ],

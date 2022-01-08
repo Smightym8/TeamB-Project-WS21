@@ -23,6 +23,7 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ListIterator;
 
 @Controller
 public class HotelViewController {
@@ -382,31 +383,60 @@ public class HotelViewController {
     }
 
     @PostMapping(CREATE_BOOKING_SERVICE_URL)
-    public String createBookingService(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model) {
-        final List<ServiceDTO> services = serviceListingService.allServices();
+    public String createBookingService(@ModelAttribute("bookingForm") BookingForm bookingForm,
+                                       @RequestParam(value="action") String action,
+                                       Model model) {
+        if (action.equals("back")){
+            model.addAttribute("bookingForm", bookingForm);
+            return CREATE_BOOKING_DATE_VIEW;
+        }else {
+            final List<ServiceDTO> services = serviceListingService.allServices();
 
-        model.addAttribute("bookingForm", bookingForm);
-        model.addAttribute("services", services);
+            model.addAttribute("bookingForm", bookingForm);
+            model.addAttribute("services", services);
 
-        return CREATE_BOOKING_SERVICE_VIEW;
+            return CREATE_BOOKING_SERVICE_VIEW;
+        }
+
     }
 
     @PostMapping(CREATE_BOOKING_GUEST_URL)
-    public String createBookingGuest(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model) {
-        final List<GuestListingDTO> guests = guestListingService.allGuests();
+    public String createBookingGuest(@ModelAttribute("bookingForm") BookingForm bookingForm,
+                                     @RequestParam(value="action") String action,
+                                     Model model) {
+        if(action.equals("back")){
+            final List<RoomCategoryDTO> categories = roomCategoryListingService.allRoomCategories();
 
-        model.addAttribute("guests", guests);
-        model.addAttribute("bookingForm", bookingForm);
+            model.addAttribute("booking", bookingForm);
+            model.addAttribute("categories", categories);
+            return CREATE_BOOKING_CATEGORY_VIEW;
+        }else {
+            final List<GuestListingDTO> guests = guestListingService.allGuests();
 
-        return CREATE_BOOKING_GUEST_VIEW;
+            model.addAttribute("guests", guests);
+            model.addAttribute("bookingForm", bookingForm);
+
+            return CREATE_BOOKING_GUEST_VIEW;
+        }
+
+
     }
 
     @PostMapping(CREATE_BOOKING_SUMMARY_URL)
     public ModelAndView createBookingSummary(
             @ModelAttribute("bookingForm") BookingForm bookingForm,
             @RequestParam("isCreated") boolean isCreated,
+            @RequestParam(value="action") String action,
             Model model) {
 
+        if (action.equals("back")){
+            final List<ServiceDTO> services = serviceListingService.allServices();
+
+            model.addAttribute("bookingForm", bookingForm);
+            model.addAttribute("services", services);
+
+            return new ModelAndView(CREATE_BOOKING_SERVICE_VIEW);
+        }
         BookingDetailsDTO bookingDetailsDTO;
         try {
             bookingDetailsDTO = bookingSummaryService.createSummary(
