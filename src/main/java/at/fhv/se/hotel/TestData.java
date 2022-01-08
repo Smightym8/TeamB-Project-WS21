@@ -422,5 +422,20 @@ public class TestData implements ApplicationRunner {
         b1.deactivate();
         roomS1.occupy();
         this.stayRepository.add(stay1);
+
+        Booking b2 = Booking.create(
+                LocalDate.now(),
+                LocalDate.now().plusDays(10),
+                bookingRepository.nextIdentity(),
+                ali,
+                List.of(eBike),
+                2,
+                0,
+                "Vegan"
+        );
+        b2.addRoomCategory(singleRoom, 2);
+        b2.addRoomCategory(doubleRoom, 2);
+        b2.addRoomCategory(luxuryRoom, 2);
+        this.bookingRepository.add(b2);
     }
 }

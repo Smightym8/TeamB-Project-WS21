@@ -22,11 +22,10 @@
                                 <div th:each="assignedRoom : ${assignedRooms}">
                                     <div class="input-group mb-3">
                                         <span class="input-group-text col-5" th:text="${assignedRoom.categoryName}"></span>
-                                        <select class="form-select" th:name="roomNames">
+                                        <select th:id="${'roomSelect' + assignedRoomStat.index }" class="form-select" th:name="roomNames">
                                             <option th:each="freeRoom : ${freeRooms}" th:value="${freeRoom.name}"
                                                     th:text="${freeRoom.name}" th:selected="${freeRoom.name == assignedRoom.name}"></option>
                                         </select>
-
                                     </div>
                                 </div>
 
@@ -39,7 +38,43 @@
                 </div>
             </div>
         </form>
-    </div>
 
+        <script src="/js/jquery.js"></script>
+
+        <script>
+            // Disable initially selected rooms
+            window.onload = function() {
+                disableSelectedOptions();
+            };
+
+            // Disable again if another room is selected in any dropdown
+            $(".form-select").change(function(){
+                $(".form-select option").each(function(){
+                    $(this).removeAttr("disabled");
+                });
+
+                disableSelectedOptions();
+            });
+
+            // Disable select option from each dropdown in all other dropdowns
+            function disableSelectedOptions() {
+                // Build a map with the id of the select and the current option
+                const selectedValues = new Map();
+
+                $(".form-select").each(function(){
+                    selectedValues.set($(this).attr("id"), $(this).val());
+                });
+
+                // For each entry in the map get the selects which don't match the key and disable the value
+                for (const [key, value] of selectedValues.entries()) {
+                    $(".form-select").each(function(){
+                        if($(this).attr("id") !== key) {
+                            $('#' + $(this).attr("id") + ' option[value="' + value + '"').attr("disabled", true);
+                        }
+                    });
+                }
+            }
+        </script>
+    </div>
 </body>
 </html>
