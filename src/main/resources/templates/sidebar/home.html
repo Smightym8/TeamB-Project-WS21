@@ -141,18 +141,6 @@
             filter('1','Today');
             filter('2','Today');
 
-            // add icon to searchbars
-            var searchLabels = document.getElementsByTagName('label');
-            searchLabels = [searchLabels[1],searchLabels[3]];
-
-            for (var i = 0; i < searchLabels.length; i++) {
-                var icon = document.createElement('i');
-                icon.setAttribute('class', 'fas fa-search');
-
-                searchLabels[i].insertBefore(icon, searchLabels[i].firstChild);
-                searchLabels[i].childNodes[1].textContent = " ";
-            }
-
             // set filter date, trigger table, set buttons on active, change heading
             function filter(table, day) {
 
