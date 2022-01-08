@@ -159,6 +159,9 @@ public class HotelViewController {
     @Autowired
     GuestModifyService guestModifyService;
 
+    @Autowired
+    SeasonListingService seasonListingService;
+
 
     /*--------------------------------------------------------------------------------------------------------------------*/
 
@@ -220,8 +223,11 @@ public class HotelViewController {
     }
 
     /*----- Pricing -----*/
+    // TODO: Change View test
     @GetMapping(PRICING_URL)
     public ModelAndView pricing(Model model) {
+        List<SeasonWithPricesDTO> seasonsWithPrices = seasonListingService.allSeasonsWithPrices();
+        model.addAttribute("seasonsWithPrices", seasonsWithPrices);
 
         return new ModelAndView(PRICING_VIEW);
     }
