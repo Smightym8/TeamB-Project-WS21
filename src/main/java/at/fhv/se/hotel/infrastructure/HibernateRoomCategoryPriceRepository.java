@@ -41,7 +41,6 @@ public class HibernateRoomCategoryPriceRepository implements RoomCategoryPriceRe
         return query.getResultStream().findFirst();
     }
 
-    // TODO: Test!
     @Override
     public List<RoomCategoryPrice> allPrices() {
         TypedQuery<RoomCategoryPrice> query = this.em.createQuery("SELECT rcp FROM RoomCategoryPrice rcp", RoomCategoryPrice.class);

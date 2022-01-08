@@ -35,7 +35,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-// TODO: Write test to ensure exception is thrown
 @Component
 public class BookingSummaryServiceImpl implements BookingSummaryService {
     @Autowired

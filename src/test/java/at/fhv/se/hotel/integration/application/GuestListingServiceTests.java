@@ -104,7 +104,6 @@ public class GuestListingServiceTests {
         GuestDetailsDTO guestActual = guestListingService.findGuestById(idExpected.id());
 
         // then
-        // TODO: Assert remaining fields
         assertEquals(guestExpected.getGuestId().id(), guestActual.id());
         assertEquals(guestExpected.getName().firstName(), guestActual.firstName());
         assertEquals(guestExpected.getName().lastName(), guestActual.lastName());

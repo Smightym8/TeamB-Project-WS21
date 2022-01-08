@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Locale;
 
-// TODO: Test
 /**
  * This class contains the functionality to create and to save a new guest.
  */

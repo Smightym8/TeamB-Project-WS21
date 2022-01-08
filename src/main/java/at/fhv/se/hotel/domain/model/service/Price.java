@@ -6,7 +6,6 @@ import javax.xml.bind.annotation.XmlElement;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-// TODO: Test
 public class Price {
     private BigDecimal price;
 

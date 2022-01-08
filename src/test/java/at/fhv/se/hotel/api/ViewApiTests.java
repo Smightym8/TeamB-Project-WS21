@@ -92,6 +92,9 @@ public class ViewApiTests {
     @MockBean
     RoomModifyService roomModifyService;
 
+    @MockBean
+    SeasonListingService seasonListingService;
+
     @Test
     public void when_get_rootUrl_then_statusOk_and_homeView_and_allBookings_and_allStays_called() throws Exception {
         // when ... then
@@ -169,13 +172,15 @@ public class ViewApiTests {
     }
 
     @Test
-    public void when_get_pricingUrl_then_statusOk_and_pricingView_called() throws Exception {
+    public void when_get_pricingUrl_then_statusOk_and_pricingView_and_allSeasonsWithPrices_called() throws Exception {
         // when ... then
         this.mockMvc.perform(get("/pricing").accept(org.springframework.http.MediaType.TEXT_PLAIN))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("text/html;charset=UTF-8"))
                 .andExpect(view().name("sidebar/pricing"));
+        // then
+        Mockito.verify(seasonListingService, times(1)).allSeasonsWithPrices();
     }
 
     @Test

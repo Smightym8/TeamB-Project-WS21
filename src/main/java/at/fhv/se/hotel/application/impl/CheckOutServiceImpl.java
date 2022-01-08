@@ -2,6 +2,7 @@ package at.fhv.se.hotel.application.impl;
 
 import at.fhv.se.hotel.application.api.CheckOutService;
 import at.fhv.se.hotel.application.api.exception.RoomNotFoundException;
+import at.fhv.se.hotel.application.api.exception.SeasonNotFoundException;
 import at.fhv.se.hotel.application.api.exception.StayNotFoundException;
 import at.fhv.se.hotel.application.dto.InvoiceDTO;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
@@ -44,7 +45,7 @@ public class CheckOutServiceImpl implements CheckOutService {
 
     @Transactional
     @Override
-    public InvoiceDTO createInvoice(String stayId, List<String> roomNames, String action) throws StayNotFoundException, RoomNotFoundException {
+    public InvoiceDTO createInvoice(String stayId, List<String> roomNames, String action) throws StayNotFoundException, RoomNotFoundException, SeasonNotFoundException {
         Stay stay = stayRepository.stayById(new StayId(stayId)).orElseThrow(
                 () -> new StayNotFoundException("Creating invoice failed! Stay with id " + stayId + " not found")
         );
@@ -113,7 +114,7 @@ public class CheckOutServiceImpl implements CheckOutService {
 
     @Transactional
     @Override
-    public void saveInvoice(String stayId, List<String> roomNames, String action) throws StayNotFoundException {
+    public void saveInvoice(String stayId, List<String> roomNames, String action) throws StayNotFoundException, RoomNotFoundException, SeasonNotFoundException {
         Stay stay = stayRepository.stayById(new StayId(stayId)).orElseThrow(
                 () -> new StayNotFoundException("Saving invoice failed! Stay with id " + stayId + " not found")
         );
@@ -133,7 +134,7 @@ public class CheckOutServiceImpl implements CheckOutService {
 
     @Transactional
     @Override
-    public void checkOut(String stayId, List<String> roomNames, String action) throws StayNotFoundException {
+    public void checkOut(String stayId, List<String> roomNames, String action) throws StayNotFoundException, RoomNotFoundException, SeasonNotFoundException {
         Stay stay = stayRepository.stayById(new StayId(stayId)).orElseThrow(
                 () -> new StayNotFoundException("Check out failed! Stay with id " + stayId + " doesn't exist.")
         );

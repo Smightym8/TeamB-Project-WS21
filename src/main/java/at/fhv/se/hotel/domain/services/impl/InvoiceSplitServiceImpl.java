@@ -1,5 +1,7 @@
 package at.fhv.se.hotel.domain.services.impl;
 
+import at.fhv.se.hotel.application.api.exception.RoomNotFoundException;
+import at.fhv.se.hotel.application.api.exception.SeasonNotFoundException;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
 import at.fhv.se.hotel.domain.model.room.Room;
 import at.fhv.se.hotel.domain.model.room.RoomName;
@@ -42,7 +44,7 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
     RoomRepository roomRepository;
 
     @Override
-    public Invoice splitInvoice(Stay stay, List<String> roomNames, String action) {
+    public Invoice splitInvoice(Stay stay, List<String> roomNames, String action) throws SeasonNotFoundException, RoomNotFoundException {
 
         int todaysInvoicesAmount = invoiceRepository.invoicesByDate(LocalDate.now()).size() + 1;
         List<RoomCategoryPrice> roomCategoryPriceList = new ArrayList<>();
@@ -80,12 +82,15 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
 
         List<Room> rooms = new ArrayList<>();
         for(int i = 0; i < nights; i++) {
-            // TODO: Throw exception if season isn't present
-            Season currentSeason = seasonRepository.seasonByDate(tempDate).get();
+            LocalDate finalTempDate = tempDate;
+            Season currentSeason = seasonRepository.seasonByDate(tempDate).orElseThrow(
+                    () -> new SeasonNotFoundException("Season for date " + finalTempDate + " not found.")
+            );
 
             for(String name : roomNames) {
-                // TODO: Use RoomNotFoundException
-                Room room = roomRepository.roomByName(new RoomName(name)).get();
+                Room room = roomRepository.roomByName(new RoomName(name)).orElseThrow(
+                        () -> new RoomNotFoundException("Room " + name + " not found.")
+                );
 
                 if(!rooms.contains(room)) {
                     rooms.add(room);
