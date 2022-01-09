@@ -55,6 +55,15 @@ public final class BookingForm {
         return amountsOfRoomCategories;
     }
 
+    public Integer getNextAmountOfRoomCategories(Integer i){
+        if (amountsOfRoomCategories.size() == 0){
+            return 0;
+        }else {
+            return amountsOfRoomCategories.get(i);
+        }
+
+    }
+
     public void setAmountsOfRoomCategories(List<Integer> amountsOfRoomCategories) {
         this.amountsOfRoomCategories = amountsOfRoomCategories;
     }

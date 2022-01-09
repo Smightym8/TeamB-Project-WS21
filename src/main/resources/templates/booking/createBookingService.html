@@ -30,13 +30,26 @@
                 </div>
                 <div class="card-body px-5 py-4">
                     <form id="myform" action="/createbooking/guest" method="post" th:object="${bookingForm}">
-                        <input type="hidden" id="guestId" name="guestId" th:field="*{guestId}"/>
-                        <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="*{roomCategoryIds}"/>
-                        <input type="hidden" id="amounts" name="amounts" th:field="*{amountsOfRoomCategories}"/>
-                        <input type="hidden" id="checkInDate" name="checkInDate" th:field="*{checkInDate}"/>
-                        <input type="hidden" id="checkOutDate" name="checkOutDate" th:field="*{checkOutDate}"/>
-                        <input type="hidden" id="amountOfAdults" name="amountOfAdults" th:field="*{amountOfAdults}"/>
-                        <input type="hidden" id="amountOfChildren" name="amountOfChildren" th:field="*{amountOfChildren}"/>
+                        <input type="hidden" id="guestId" name="guestId" th:field="${bookingForm.guestId}" />
+                        <input type="hidden" id="roomCategoryId" name="roomCategoryId" th:field="${bookingForm.roomCategoryIds}" />
+                        <input type="hidden" id="amounts" name="amounts" th:field="${bookingForm.amountsOfRoomCategories}" />
+                        <input type="hidden" id="checkInDate" name="checkInDate" th:field="${bookingForm.checkInDate}" />
+                        <input type="hidden" id="checkOutDate" name="checkOutDate" th:field="${bookingForm.checkOutDate}" />
+                        <input type="hidden" id="amountOfAdults" name="amountOfAdults" th:field="${bookingForm.amountOfAdults}" />
+                        <input type="hidden" id="amountOfChildren" name="amountOfChildren" th:field="${bookingForm.amountOfChildren}" />
+
+                        <input type="hidden" id="firstName" name="firstName" th:field="${guestForm.firstName}" />
+                        <input type="hidden" id="lastName" name="lastName" th:field="${guestForm.lastName}" />
+                        <input type="hidden" id="gender" name="gender" th:field="${guestForm.gender}" />
+                        <input type="hidden" id="eMail" name="eMail" th:field="${guestForm.eMail}" />
+                        <input type="hidden" id="phoneNumber" name="phoneNumber" th:field="${guestForm.phoneNumber}" />
+                        <input type="hidden" id="birthDate" name="birthDate" th:field="${guestForm.birthDate}" />
+                        <input type="hidden" id="streetName" name="streetName" th:field="${guestForm.streetName}" />
+                        <input type="hidden" id="streetNumber" name="streetNumber" th:field="${guestForm.streetNumber}" />
+                        <input type="hidden" id="zipCode" name="zipCode" th:field="${guestForm.zipCode}" />
+                        <input type="hidden" id="city" name="city" th:field="${guestForm.city}" />
+                        <input type="hidden" id="country" name="country" th:field="${guestForm.country}" />
+                        <input type="hidden" id="discountInPercent" name="discountInPercent" th:field="${guestForm.discountInPercent}" />
 
                         <div class="p-3" style="background-color: #f7f7f7">
                             <div  style="min-height: 62.5vh">
@@ -49,26 +62,26 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="service : ${services}">
-                                        <td class="align-middle">
-                                            <div class="form-check">
-                                                <input th:field="*{serviceIds}" class="form-check-input" type="checkbox" th:value="${service.id}">
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" th:text="${service.name}"></td>
-                                        <td class="align-middle" th:text="${service.price} + '€'"></td>
-                                    </tr>
+                                        <tr th:each="service : ${services}">
+                                            <td class="align-middle">
+                                                <div class="form-check">
+                                                    <input th:field="${bookingForm.serviceIds}" class="form-check-input" type="checkbox" th:value="${service.id}">
+                                                </div>
+                                            </td>
+                                            <td class="align-middle" th:text="${service.name}"></td>
+                                            <td class="align-middle" th:text="${service.price} + '€'"></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
                             <span>Additional information:</span>
-                            <textarea style="min-width: 100%" rows="3" id="additionalInformation" name="additionalInformation" th:field="*{additionalInformation}"></textarea>
+                            <textarea style="min-width: 100%" rows="3" id="additionalInformation" name="additionalInformation" th:field="${bookingForm.additionalInformation}"></textarea>
                         </div>
                     </form>
                 </div>
                 <div class="card-footer">
-                    <button class="btn btn-primary" onclick="history.back()">Back</button>
-                    <button class="btn btn-primary float-end" form="myform" type="submit">Next</button>
+                    <button name="action" value="back"  class="btn btn-primary" form="myform" type="submit">Back</button>
+                    <button name="action" value="next"  class="btn btn-primary float-end" form="myform" type="submit">Next</button>
                 </div>
             </div>
         </div>

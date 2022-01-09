@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ListIterator;
 
 @Controller
 public class HotelViewController {
@@ -379,42 +380,71 @@ public class HotelViewController {
     @GetMapping(CREATE_BOOKING_DATE_URL)
     public String createBookingDate(Model model) {
         BookingForm bookingForm = new BookingForm();
+        GuestForm guestForm = new GuestForm();
 
         model.addAttribute("bookingForm", bookingForm);
+        model.addAttribute("guestForm", guestForm);
 
         return CREATE_BOOKING_DATE_VIEW;
     }
 
     @PostMapping(CREATE_BOOKING_CATEGORY_URL)
-    public String createBookingCategory(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model) {
+    public String createBookingCategory(@ModelAttribute("bookingForm") BookingForm bookingForm,
+                                        @ModelAttribute("guestForm") GuestForm guestForm,
+                                        Model model) {
         final List<RoomCategoryDTO> categories = roomCategoryListingService.allRoomCategories();
 
-        model.addAttribute("booking", bookingForm);
+        model.addAttribute("bookingForm", bookingForm);
+        model.addAttribute("guestForm", guestForm);
         model.addAttribute("categories", categories);
 
         return CREATE_BOOKING_CATEGORY_VIEW;
     }
 
     @PostMapping(CREATE_BOOKING_SERVICE_URL)
-    public String createBookingService(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model) {
-        final List<ServiceDTO> services = serviceListingService.allServices();
+    public String createBookingService(@ModelAttribute("bookingForm") BookingForm bookingForm,
+                                       @ModelAttribute("guestForm") GuestForm guestForm,
+                                       @RequestParam(value="action") String action,
+                                       Model model) {
+        if (action.equals("back")){
+            model.addAttribute("bookingForm", bookingForm);
+            model.addAttribute("guestForm", guestForm);
 
-        model.addAttribute("bookingForm", bookingForm);
-        model.addAttribute("services", services);
+            return CREATE_BOOKING_DATE_VIEW;
+        }else {
+            final List<ServiceDTO> services = serviceListingService.allServices();
 
-        return CREATE_BOOKING_SERVICE_VIEW;
+            model.addAttribute("bookingForm", bookingForm);
+            model.addAttribute("guestForm", guestForm);
+            model.addAttribute("services", services);
+
+            return CREATE_BOOKING_SERVICE_VIEW;
+        }
+
     }
 
     @PostMapping(CREATE_BOOKING_GUEST_URL)
-    public ModelAndView createBookingGuest(@ModelAttribute("bookingForm") BookingForm bookingForm, Model model) {
-        GuestForm guestForm = new GuestForm();
-        List<GuestListingDTO> guests = guestListingService.allGuests();
+    public ModelAndView createBookingGuest(@ModelAttribute("bookingForm") BookingForm bookingForm,
+                                           @ModelAttribute("guestForm") GuestForm guestForm,
+                                           @RequestParam(value="action") String action,
+                                           Model model) {
+        if(action.equals("back")){
+            final List<RoomCategoryDTO> categories = roomCategoryListingService.allRoomCategories();
 
-        model.addAttribute("bookingForm", bookingForm);
-        model.addAttribute("guestForm", guestForm);
-        model.addAttribute("guests", guests);
+            model.addAttribute("bookingForm", bookingForm);
+            model.addAttribute("guestForm", guestForm);
+            model.addAttribute("categories", categories);
 
-        return new ModelAndView(CREATE_BOOKING_GUEST_VIEW);
+            return new ModelAndView(CREATE_BOOKING_CATEGORY_VIEW);
+        } else {
+            List<GuestListingDTO> guests = guestListingService.allGuests();
+
+            model.addAttribute("bookingForm", bookingForm);
+            model.addAttribute("guestForm", guestForm);
+            model.addAttribute("guests", guests);
+
+            return new ModelAndView(CREATE_BOOKING_GUEST_VIEW);
+        }
     }
 
     @PostMapping(CREATE_BOOKING_SUMMARY_URL)
@@ -423,32 +453,42 @@ public class HotelViewController {
             @Valid @ModelAttribute("guestForm") GuestForm guestForm,
             BindingResult guestFormResult,
             @RequestParam("isCreated") boolean isCreated,
+            @RequestParam(value="action") String action,
             Model model) {
 
+        if (action.equals("back")){
+            final List<ServiceDTO> services = serviceListingService.allServices();
+
+            model.addAttribute("bookingForm", bookingForm);
+            model.addAttribute("guestForm", guestForm);
+            model.addAttribute("services", services);
+
+            return new ModelAndView(CREATE_BOOKING_SERVICE_VIEW);
+        }
         if((bookingForm.getGuestId() == null) && (guestFormResult.hasErrors())) {
             return new ModelAndView(CREATE_BOOKING_GUEST_VIEW);
         }
 
         BookingDetailsDTO bookingDetailsDTO;
         try {
-            bookingDetailsDTO = bookingSummaryService.createSummary(
-                    bookingForm.getGuestId(),
-                    guestForm.getFirstName(),
-                    guestForm.getLastName(),
-                    guestForm.getStreetName(),
-                    guestForm.getStreetNumber(),
-                    guestForm.getZipCode(),
-                    guestForm.getCity(),
-                    guestForm.getCountry(),
-                    bookingForm.getRoomCategoryIds(),
-                    bookingForm.getAmountsOfRoomCategories(),
-                    bookingForm.getServiceIds(),
-                    bookingForm.getCheckInDate(),
-                    bookingForm.getCheckOutDate(),
-                    bookingForm.getAmountOfAdults(),
-                    bookingForm.getAmountOfChildren(),
-                    bookingForm.getAdditionalInformation()
-            );
+        bookingDetailsDTO = bookingSummaryService.createSummary(
+                bookingForm.getGuestId(),
+                guestForm.getFirstName(),
+                guestForm.getLastName(),
+                guestForm.getStreetName(),
+                guestForm.getStreetNumber(),
+                guestForm.getZipCode(),
+                guestForm.getCity(),
+                guestForm.getCountry(),
+                bookingForm.getRoomCategoryIds(),
+                bookingForm.getAmountsOfRoomCategories(),
+                bookingForm.getServiceIds(),
+                bookingForm.getCheckInDate(),
+                bookingForm.getCheckOutDate(),
+                bookingForm.getAmountOfAdults(),
+                bookingForm.getAmountOfChildren(),
+                bookingForm.getAdditionalInformation()
+        );
         } catch (ServiceNotFoundException | RoomCategoryNotFoundException | GuestNotFoundException e) {
             return redirectError(e.getMessage());
         }
@@ -461,49 +501,61 @@ public class HotelViewController {
     }
 
     @PostMapping(CREATE_BOOKING_URL)
+    // TODO: TEST
     public ModelAndView createBooking(
             @ModelAttribute("bookingForm") BookingForm bookingForm,
             @ModelAttribute("guestForm") GuestForm guestForm,
+            @RequestParam(value="action") String action,
             Model model) {
 
-        String bookingId;
-        try {
-            String guestId = bookingForm.getGuestId() == null || bookingForm.getGuestId().isEmpty()
-                    ?   guestCreationService.createGuest(
-                            guestForm.getFirstName(),
-                            guestForm.getLastName(),
-                            guestForm.getGender(),
-                            guestForm.geteMail(),
-                            guestForm.getPhoneNumber(),
-                            guestForm.getBirthDate(),
-                            guestForm.getStreetName(),
-                            guestForm.getStreetNumber(),
-                            guestForm.getZipCode(),
-                            guestForm.getCity(),
-                            guestForm.getCountry(),
-                            guestForm.getDiscountInPercent()
-                        )
-                    :   bookingForm.getGuestId();
+        if (action.equals("back")){
+            List<GuestListingDTO> guests = guestListingService.allGuests();
 
-            bookingId = bookingCreationService.book(
-                    guestId,
-                    bookingForm.getRoomCategoryIds(),
-                    bookingForm.getAmountsOfRoomCategories(),
-                    bookingForm.getServiceIds(),
-                    bookingForm.getCheckInDate(),
-                    bookingForm.getCheckOutDate(),
-                    bookingForm.getAmountOfAdults(),
-                    bookingForm.getAmountOfChildren(),
-                    bookingForm.getAdditionalInformation());
-        } catch (GuestNotFoundException | ServiceNotFoundException | RoomCategoryNotFoundException e) {
-            return redirectError(e.getMessage());
+            model.addAttribute("bookingForm", bookingForm);
+            model.addAttribute("guestForm", guestForm);
+            model.addAttribute("guests", guests);
+
+            return new ModelAndView(CREATE_BOOKING_GUEST_VIEW);
+        } else {
+            String bookingId;
+            try {
+                String guestId = bookingForm.getGuestId() == null || bookingForm.getGuestId().isEmpty()
+                        ?   guestCreationService.createGuest(
+                        guestForm.getFirstName(),
+                        guestForm.getLastName(),
+                        guestForm.getGender(),
+                        guestForm.geteMail(),
+                        guestForm.getPhoneNumber(),
+                        guestForm.getBirthDate(),
+                        guestForm.getStreetName(),
+                        guestForm.getStreetNumber(),
+                        guestForm.getZipCode(),
+                        guestForm.getCity(),
+                        guestForm.getCountry(),
+                        guestForm.getDiscountInPercent()
+                )
+                        :   bookingForm.getGuestId();
+
+                bookingId = bookingCreationService.book(
+                        guestId,
+                        bookingForm.getRoomCategoryIds(),
+                        bookingForm.getAmountsOfRoomCategories(),
+                        bookingForm.getServiceIds(),
+                        bookingForm.getCheckInDate(),
+                        bookingForm.getCheckOutDate(),
+                        bookingForm.getAmountOfAdults(),
+                        bookingForm.getAmountOfChildren(),
+                        bookingForm.getAdditionalInformation());
+            } catch (GuestNotFoundException | ServiceNotFoundException | RoomCategoryNotFoundException e) {
+                return redirectError(e.getMessage());
+            }
+
+            return new ModelAndView("redirect:" +
+                    CREATE_BOOKING_SUCCESS_URL +
+                    "?bookingId=" + bookingId +
+                    "&isCreated=" + true
+            );
         }
-
-        return new ModelAndView("redirect:" +
-                CREATE_BOOKING_SUCCESS_URL +
-                "?bookingId=" + bookingId +
-                "&isCreated=" + true
-        );
     }
 
     @GetMapping(CREATE_BOOKING_SUCCESS_URL)
