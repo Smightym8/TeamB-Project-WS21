@@ -15,7 +15,7 @@
 
     <div layout:fragment="content">
 
-        <div class="div-width-l">
+        <div class="div-width-s">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <div>
@@ -49,12 +49,10 @@
         </div>
 
         <script>
-
-            // table initialization
-            let table = $('#t1').DataTable({
+            $('#t1').DataTable({
                 "order": [ 2, "asc" ],
                 "scrollCollapse": true,
-                "scrollY": "73.5vh",
+                "scrollY": "74vh",
                 "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ],
                 "pageLength": -1,
                 columnDefs: [
@@ -81,7 +79,6 @@
                 }
             }
         </script>
-
     </div>
 
 </body>

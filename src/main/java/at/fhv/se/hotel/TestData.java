@@ -423,6 +423,21 @@ public class TestData implements ApplicationRunner {
 
 
 /*----- Bookings -----*/
+        for (int i = 0; i < 25; i++) {
+            Booking b1 = Booking.create(
+                    LocalDate.now().plusDays(0),
+                    LocalDate.now().plusDays(2),
+                    bookingRepository.nextIdentity(),
+                    johannes,
+                    List.of(tv,bike),
+                    1,
+                    0,
+                    ""
+            );
+            b1.addRoomCategory(singleRoom, 1);
+            this.bookingRepository.add(b1);
+        }
+
         Booking b1 = Booking.create(
                 LocalDate.now().plusDays(0),
                 LocalDate.now().plusDays(2),

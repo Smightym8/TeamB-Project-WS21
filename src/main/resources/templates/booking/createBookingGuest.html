@@ -183,30 +183,29 @@
                                 <input class="form-control" type="number" id="amountOfChildren" name="amountOfChildren" th:field="${bookingForm.amountOfChildren}" value="0" th:min="0" th:required="required">
                             </div>
                         </div>
-
-                </form>
-            </div>
-            <div class="card-footer">
-                <button name="action" value="back" class="btn btn-primary" form="myform" type="submit" onclick="notRequired()">Back</button>
-                <button name="action" value="next" class="btn btn-primary float-end" form="myform" type="submit" onclick="required()">Next</button>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <button name="action" value="back" class="btn btn-primary" form="myform" type="submit" onclick="notRequired()">Back</button>
+                    <button name="action" value="next" class="btn btn-primary float-end" form="myform" type="submit" onclick="required()">Next</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <script>
-        let tableInitialized = 0;
+        <script>
+            let tableInitialized = 0;
 
-        function required(){
-            document.getElementById("guest").required = true;
-            document.getElementById("amountOfAdults").required = true;
-            document.getElementById("amountOfAdults").min = "1";
-        }
+            function required(){
+                document.getElementById("guest").required = true;
+                document.getElementById("amountOfAdults").required = true;
+                document.getElementById("amountOfAdults").min = "1";
+            }
 
-        function notRequired(){
-            document.getElementById("guest").required = false;
-            document.getElementById("amountOfAdults").required = false;
-            document.getElementById("amountOfAdults").min = "0";
-        }
+            function notRequired(){
+                document.getElementById("guest").required = false;
+                document.getElementById("amountOfAdults").required = false;
+                document.getElementById("amountOfAdults").min = "0";
+            }
 
 
             function switchToCreateGuest() {

@@ -153,15 +153,12 @@
                 if(day === 'Today') {
                     maxDate.setDate(maxDate.getDate());
                     maxDate = moment(maxDate).format('YYYY-MM-DD');
-
                 } else if(day === 'This week') {
                     maxDate.setDate(maxDate.getDate() + 7);
                     maxDate = moment(maxDate).format('YYYY-MM-DD');
-
                 } else {
                     minDate = "";
                     maxDate = "";
-
                 }
 
                 document.getElementById('min-date').setAttribute('value',minDate);
@@ -173,12 +170,10 @@
                     headingElement = 'h1';
                     buttonElement = 'b1';
                     table1.draw();
-
                 } else if (table === '2') {
                     headingElement = 'h2';
                     buttonElement = 'b2';
                     table2.draw();
-
                 }
 
                 document.getElementById(headingElement).innerText = `--- ${day} ---`;
@@ -186,18 +181,14 @@
                 var buttons = document.getElementById(buttonElement).children;
 
                 for (let i = 0; i < buttons.length; i++) {
-
                     if (day === buttons[i].innerText) {
                         buttons[i].classList.add('active');
-
                     } else {
                         buttons[i].classList.remove('active');
-
                     }
                 }
             }
         </script>
-
     </div>
 
 </body>
