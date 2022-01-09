@@ -14,7 +14,7 @@
                     </a>
                 </div>
             </div>
-            <div class="card-body">
+            <div class="card-body px-5 py-4">
                 <div class="d-flex justify-content-between">
                     <div>
                         <p class="h5"><strong>From:</strong></p>
@@ -73,11 +73,11 @@
 
                 <div>
                     <p class="h5"><strong>Rooms</strong></p>
-                    <table class="table table-striped" style="width: 95%; margin: auto">
+                    <table class="table table-sm table-hover" style="width: 95%; margin: auto">
                         <thead>
                         <tr>
-                            <th class="col">Name</th>
-                            <th class="col">Category</th>
+                            <th class="col-3">Name&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            <th class="col-3">Category</th>
                             <th class="col-2 text-end">Cost per night</th>
                             <th class="col-2 text-end">Total</th>
                         </tr>
@@ -95,11 +95,11 @@
 
                 <div class="my-4">
                     <p class="h5"><strong>Services</strong></p>
-                    <table class="table table-striped" style="width: 95%; margin: auto">
+                    <table class="table table-sm table-hover" style="width: 95%; margin: auto">
                         <thead>
                         <tr>
-                            <th class="col-1">Quantity</th>
-                            <th class="col">Service</th>
+                            <th class="col-3">Quantity</th>
+                            <th class="col-3">Service</th>
                             <th class="col-2 text-end">Cost per night</th>
                             <th class="col-2 text-end">Total</th>
                         </tr>
@@ -117,11 +117,11 @@
 
                 <div class="pb-3">
                     <p class="h5" th:if="${invoice.localTaxTotal > 0}"><strong>Other</strong></p>
-                    <table class="table table-striped" style="width: 95%; margin: auto" th:if="${invoice.localTaxTotal > 0}">
+                    <table class="table table-sm table-hover" style="width: 95%; margin: auto" th:if="${invoice.localTaxTotal > 0}">
                         <thead>
                         <tr>
-                            <th class="col-1">Quantity</th>
-                            <th class="col">Description</th>
+                            <th class="col-3">Quantity</th>
+                            <th class="col-3">Description</th>
                             <th class="col-2 text-end">Cost per adult</th>
                             <th class="col-2 text-end">Total</th>
                         </tr>
@@ -144,7 +144,7 @@
                         <div>
                             <span>Please indicate the invoice number as the purpose of payment.</span>
                         </div>
-                        <div>
+                        <div class="col-3">
                             <table class="table table-clear">
                                 <tbody>
                                 <tr>

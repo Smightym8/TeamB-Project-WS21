@@ -4,7 +4,7 @@
 
     <div layout:fragment="content">
         <div class="div-width-s">
-            <div class="card">
+            <div class="card" style="min-height: 50vh; margin: auto">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
@@ -12,21 +12,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body px-5 py-4">
                     <form id="myform" th:action="@{/modifyRoom}" method="post" th:object="${roomForm}">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text col-5">Name</span>
-                            <input id="roomName" name="roomName" class="form-control" type="text" th:field="*{roomName}" readonly>
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text col-5">Category</span>
-                            <input id="categoryName" name="categoryName" class="form-control" type="text" th:field="*{categoryName}" readonly>
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text col-5">Status</span>
-                            <select class="form-select" name="roomStatus" th:field="*{roomStatus}">
-                                <option th:each="status : ${states}" th:text="${status}" th:value="${status}" th:selected="${status == roomStatus}" th:if="${status} != 'OCCUPIED'"></option>
-                            </select>
+                        <div style="width: 40%; margin: auto">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text col-5">Name</span>
+                                <input id="roomName" name="roomName" class="form-control" type="text" th:field="*{roomName}" readonly>
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text col-5">Category</span>
+                                <input id="categoryName" name="categoryName" class="form-control" type="text" th:field="*{categoryName}" readonly>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-text col-5">Status</span>
+                                <select class="form-select" name="roomStatus" th:field="*{roomStatus}">
+                                    <option th:each="status : ${states}" th:text="${status}" th:value="${status}" th:selected="${status == roomStatus}" th:if="${status} != 'OCCUPIED'"></option>
+                                </select>
+                            </div>
                         </div>
                     </form>
                 </div>
