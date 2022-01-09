@@ -460,6 +460,7 @@ public class HotelViewController {
             final List<ServiceDTO> services = serviceListingService.allServices();
 
             model.addAttribute("bookingForm", bookingForm);
+            model.addAttribute("guestForm", guestForm);
             model.addAttribute("services", services);
 
             return new ModelAndView(CREATE_BOOKING_SERVICE_VIEW);
@@ -500,6 +501,7 @@ public class HotelViewController {
     }
 
     @PostMapping(CREATE_BOOKING_URL)
+    // TODO: TEST
     public ModelAndView createBooking(
             @ModelAttribute("bookingForm") BookingForm bookingForm,
             @ModelAttribute("guestForm") GuestForm guestForm,
