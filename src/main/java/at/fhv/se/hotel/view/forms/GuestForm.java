@@ -2,6 +2,7 @@ package at.fhv.se.hotel.view.forms;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.time.LocalDate;
@@ -10,18 +11,24 @@ import java.time.LocalDate;
 public class GuestForm {
     private String guestId;
 
+    @NotEmpty
     @NotNull
     private String firstName;
 
+    @NotEmpty
     @NotNull
     private String lastName;
 
+    @NotEmpty
     @NotNull
     private String gender;
 
     @Email
+    @NotEmpty
+    @NotNull
     private String eMail;
 
+    @NotEmpty
     @NotNull
     private String phoneNumber;
 
@@ -30,18 +37,23 @@ public class GuestForm {
     @Past
     private LocalDate birthDate;
 
+    @NotEmpty
     @NotNull
     private String streetName;
 
+    @NotEmpty
     @NotNull
     private String streetNumber;
 
+    @NotEmpty
     @NotNull
     private String zipCode;
 
+    @NotEmpty
     @NotNull
     private String city;
 
+    @NotEmpty
     @NotNull
     private String country;
 
@@ -71,6 +83,10 @@ public class GuestForm {
 
     public String getGuestId() {
         return guestId;
+    }
+
+    public void setGuestId(String guestId) {
+        this.guestId = guestId;
     }
 
     public String getFirstName() {

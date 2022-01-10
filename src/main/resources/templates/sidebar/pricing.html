@@ -15,45 +15,32 @@
 
     <div layout:fragment="content">
 
-        <div style="margin: auto">
+        <div class="div-width-l">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <div>
                         <i class="fas fa-dollar-sign fa-fw fa-lg me-4 align-middle"></i>
-                        <span class="h4 align-middle">Pricing per night</span>
-                    </div>
-                    <div>
-                        <a class="btn btn-primary" id="modify" onclick="changeState()">Modify</a>
-                        <a class="btn btn-outline-danger" id="reset" href="/pricing" hidden>Reset</a>
+                        <span class="h4 align-middle">Pricing [per night]</span>
                     </div>
                 </div>
                 <div class="card-body">
                     <table id="t1" class="table stripe">
                         <thead>
                             <tr>
-                                <th class="col-5">Season</th>
+                                <th class="col">Season</th>
                                 <th class="col">Start date</th>
                                 <th class="col">End date</th>
-                                <th class="col">Single room</th>
-                                <th class="col">Double room</th>
-                                <th class="col">Luxury room</th>
+                                <th class="col-2">Single room</th>
+                                <th class="col-2">Double room</th>
+                                <th class="col-2">Luxury room</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr th:each="seasonWithPrices : ${seasonsWithPrices}">
                                 <td class="align-middle" th:text="${seasonWithPrices.seasonName}"></td>
-                                <td class="align-middle">
-                                    <input type="date" th:value="${seasonWithPrices.startDate}" class="form-control roomdate" disabled>
-                                </td>
-                                <td class="align-middle">
-                                    <input type="date" th:value="${seasonWithPrices.endDate}" class="form-control roomdate" disabled>
-                                </td>
-                                <td class="align-middle" th:each="price : ${seasonWithPrices.prices}">
-                                    <div class="input-group">
-                                        <span class="input-group-text">€</span>
-                                        <input type="number" th:value="${price}" class="form-control roomprice" disabled>
-                                    </div>
-                                </td>
+                                <td class="align-middle" th:text="${seasonWithPrices.startDate}"></td>
+                                <td class="align-middle" th:text="${seasonWithPrices.endDate}"></td>
+                                <td class="align-middle" th:each="price : ${seasonWithPrices.prices}" th:text="'€ ' + ${price}"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -62,77 +49,17 @@
         </div>
 
         <script>
-            // table initialization
-            let table = $('#t1').DataTable({
+            $('#t1').DataTable({
                 "order": [ 1, "asc" ],
                 "scrollCollapse": true,
-                "scrollY": "78vh",
+                "scrollY": "74vh",
                 "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ],
                 "pageLength": -1,
                 columnDefs: [
                     { orderable: false, targets: [3,4,5]}
                 ]
             });
-
-            // add icon to searchbars
-            var searchLabel = document.getElementsByTagName('label');
-            searchLabel = searchLabel[1];
-
-            var icon = document.createElement('i');
-            icon.setAttribute('class', 'fas fa-search');
-
-            searchLabel.insertBefore(icon, searchLabel.firstChild);
-            searchLabel.childNodes[1].textContent = " ";
-
-            // activate and deactivate the select fields
-            function changeState() {
-
-                var buttonModify = document.getElementById('modify');
-                var buttonReset = document.getElementById('reset');
-                var priceFields = document.getElementsByClassName('roomprice');
-                var dateFields = document.getElementsByClassName('roomdate');
-
-                if (buttonModify.innerText === 'Modify') {
-
-                    for (var i = 0; i < priceFields.length; i++) {
-
-                        priceFields[i].removeAttribute("disabled");
-                    }
-
-                    for (var i = 0; i < dateFields.length; i++) {
-
-                        dateFields[i].removeAttribute("disabled");
-                    }
-
-                    buttonModify.innerText = 'Save';
-                    buttonModify.setAttribute('class', 'btn btn-outline-success');
-                    buttonModify.setAttribute('href', '#');
-
-                    buttonReset.removeAttribute('hidden');
-
-                } else {
-
-                    for (var i = 0; i < priceFields.length; i++) {
-
-                        priceFields[i].setAttribute("disabled", "disabled");
-                    }
-
-                    for (var i = 0; i < dateFields.length; i++) {
-
-                        dateFields[i].setAttribute("disabled", "disabled");
-                    }
-
-                    buttonModify.innerText = 'Modify';
-                    buttonModify.setAttribute('class', 'btn btn-primary');
-                    buttonModify.removeAttribute('href');
-
-                    buttonReset.setAttribute('hidden', 'true');
-
-                    alert("Set Href for Save Button");
-                }
-            }
         </script>
-
     </div>
 
 </body>

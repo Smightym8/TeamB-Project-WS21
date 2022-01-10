@@ -5,7 +5,6 @@ import at.fhv.se.hotel.domain.Generated;
 import javax.xml.bind.annotation.XmlElement;
 import java.util.Objects;
 
-// TODO: Test
 public class FullName {
     private String firstName;
     private String lastName;

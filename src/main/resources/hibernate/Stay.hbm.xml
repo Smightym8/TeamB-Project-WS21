@@ -22,9 +22,13 @@
             <element column="is_paid" type="boolean"/>
         </map>
 
-        <!-- One to one mapping to the booking -->
-        <one-to-one name="booking" foreign-key="booking_id" class="at.fhv.se.hotel.domain.model.booking.Booking" cascade="save-update">
-        </one-to-one>
+        <!-- One to one mapping to the booking
+            <one-to-one name="booking" foreign-key="booking_id" class="at.fhv.se.hotel.domain.model.booking.Booking" cascade="all">
+            </one-to-one>
+        -->
+        <many-to-one name="booking" class="at.fhv.se.hotel.domain.model.booking.Booking"
+                     column="booking_id" unique="true" not-null="true" cascade="all" />
+
 
         <!-- Primitive datatypes of class stay -->
         <property name="isActive" column="is_active" type="java.lang.Boolean" />

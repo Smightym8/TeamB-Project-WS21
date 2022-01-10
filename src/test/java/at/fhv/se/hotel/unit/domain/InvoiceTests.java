@@ -17,6 +17,7 @@ import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.model.stay.Stay;
+import at.fhv.se.hotel.domain.model.stay.StayId;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -92,7 +93,8 @@ public class InvoiceTests {
         List<Room> roomsForInvoice = new ArrayList<>(rooms.keySet());
 
         // when
-        Stay stayExpected = Stay.create(booking, rooms);
+        StayId stayIdExpected = new StayId("1");
+        Stay stayExpected = Stay.create(stayIdExpected, booking, rooms);
 
         InvoiceId idExpected = new InvoiceId("42");
         String invoiceNumberExpected = "30112021001";

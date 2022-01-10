@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// TODO: Test
 @Component
 public class CheckInServiceImpl implements CheckInService {
     @Autowired
@@ -89,7 +88,7 @@ public class CheckInServiceImpl implements CheckInService {
         }
 
         // Create Stay with the rooms and the booking
-        Stay stay = Stay.create(booking, assignedRooms);
+        Stay stay = Stay.create(stayRepository.nextIdentity(), booking, assignedRooms);
         booking.deactivate();
 
         stayRepository.add(stay);

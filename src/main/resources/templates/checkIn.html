@@ -8,7 +8,7 @@
             <input type="hidden" id="bookingId" name="bookingId" th:field="*{bookingId}"/>
 
             <div class="div-width-s">
-                <div class="card card-height">
+                <div class="card" style="min-height: 50vh; margin: auto">
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -16,19 +16,15 @@
                             </div>
                         </div>
                     </div>
-                        <div class="card-body">
-                            <div style="width:40%; margin: auto">
-
-                                <div th:each="assignedRoom : ${assignedRooms}">
-                                    <div class="input-group mb-3">
-                                        <span class="input-group-text col-5" th:text="${assignedRoom.categoryName}"></span>
-                                        <select th:id="${'roomSelect' + assignedRoomStat.index }" class="form-select" th:name="roomNames">
-                                            <option th:each="freeRoom : ${freeRooms}" th:value="${freeRoom.name}"
-                                                    th:text="${freeRoom.name}" th:selected="${freeRoom.name == assignedRoom.name}"></option>
-                                        </select>
-                                    </div>
+                    <div class="card-body px-5 py-4">
+                            <div th:each="assignedRoom : ${assignedRooms}" style="width: 40%; margin: auto">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text col-5" th:text="${assignedRoom.categoryName}"></span>
+                                    <select th:id="${'roomSelect' + assignedRoomStat.index }" class="form-select" th:name="roomNames">
+                                        <option th:each="freeRoom : ${freeRooms}" th:value="${freeRoom.name}"
+                                                th:text="${freeRoom.name}" th:selected="${freeRoom.name == assignedRoom.name}"></option>
+                                    </select>
                                 </div>
-
                             </div>
                         </div>
                         <div class="card-footer">

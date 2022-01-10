@@ -134,7 +134,6 @@ public class CheckInSteps {
         bookingRepository.add(bookingExpected);
     }
 
-    // TODO: How to access roomDTOs in Then part?
     private List<RoomDTO> roomDTOs = new ArrayList<>();
     @When("I assign the rooms for the booking with the id {word}")
     public void iAssignTheRooms(String bookingId) throws BookingNotFoundException {

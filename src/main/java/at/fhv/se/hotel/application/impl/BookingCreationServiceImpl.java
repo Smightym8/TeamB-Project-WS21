@@ -24,7 +24,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: Write test to ensure exception is thrown
 @Component
 public class BookingCreationServiceImpl implements BookingCreationService {
 

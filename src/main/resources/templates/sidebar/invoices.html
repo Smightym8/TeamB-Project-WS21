@@ -15,7 +15,7 @@
 
     <div layout:fragment="content">
 
-        <div style="margin: auto">
+        <div class="div-width-l">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <div>
@@ -27,29 +27,15 @@
                     <table id="t1" class="table stripe">
                         <thead>
                             <tr>
-                                <th class="col-2">Invoice Number</th>
-                                <th class="col-2">Guest</th>
-                                <th class="col-2">Address</th>
-                                <th class="col-2">Amount</th>
-                                <th class="col-2">Payment Status</th>
+                                <th class="col">Invoice Number</th>
+                                <th class="col">Guest</th>
+                                <th class="col">Address</th>
+                                <th class="col">Amount</th>
+                                <th class="col">Payment Status</th>
                                 <th class="col-1"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="align-middle">01201205480</td>
-                                <td class="align-middle">Fake Guest</td>
-                                <td class="align-middle">Fake Address</td>
-                                <td class="align-middle">€ 405.00</td>
-                                <td class="align-middle">Paid</td>
-                                <td class="align-middle text-nowrap">
-                                    <a class="btn btn-outline-primary btn-sm" href="#">View</a>
-                                    <a href="/" class="btn btn-outline-danger btn-sm">
-                                        <i class="fas fa-file-pdf me-1"></i>
-                                        <span class="align-self-center">PDF</span>
-                                    </a>
-                                </td>
-                            </tr>
                             <tr th:each="invoice : ${invoices}">
                                 <td class="align-middle" th:text="${invoice.invoiceNumber}"></td>
                                 <td class="align-middle">
@@ -64,11 +50,11 @@
                                 <td class="align-middle" th:if="${invoice.isPaid}">Paid</td>
                                 <td class="align-middle" th:unless="${invoice.isPaid}">Pending</td>
                                 <td class="align-middle text-nowrap">
-                                    <a class="btn btn-outline-primary btn-sm" th:href="@{/invoice-details/{id}(id=${invoice.id})}">View</a>
                                     <a class="btn btn-outline-danger btn-sm" th:href="@{/download-invoice/{invoiceNo}(invoiceNo=${invoice.invoiceNumber})}">
                                         <i class="fas fa-file-pdf me-1"></i>
                                         <span class="align-self-center">PDF</span>
                                     </a>
+                                    <a class="btn btn-outline-primary btn-sm" th:href="@{/invoice-details/{id}(id=${invoice.id})}">View</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -78,26 +64,16 @@
         </div>
 
         <script>
-            // table initialization
-            let table1 = $('#t1').DataTable({
+            $('#t1').DataTable({
                 "order": [ 0, "desc" ],
                 "scrollCollapse": true,
-                "scrollY": "78vh",
+                "scrollY": "74vh",
                 "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ],
+                "pageLength": -1,
                 columnDefs: [
                     { orderable: false, targets: [5]}
                 ]
             });
-
-            // add icon to searchbars
-            var searchLabel = document.getElementsByTagName('label');
-            searchLabel = searchLabel[1];
-
-            var icon = document.createElement('i');
-            icon.setAttribute('class', 'fas fa-search');
-
-            searchLabel.insertBefore(icon, searchLabel.firstChild);
-            searchLabel.childNodes[1].textContent = " ";
         </script>
 
     </div>

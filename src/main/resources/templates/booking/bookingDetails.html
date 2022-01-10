@@ -5,85 +5,93 @@
     <div layout:fragment="content">
 
         <div class="div-width-s">
-            <div class="card card-height">
-                <div class="card-header ">
+            <div class="card">
+                <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <span class="h4 align-middle">Booking details</span>
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <div style="width:80%; margin: auto">
-
-                        <div class="d-flex">
-                            <div class="pe-4" style="width: 50%; float: left">
-                                <p class="h5">Guest</p>
-                                <span th:text="${bookingDetails.guestFirstName} + ' '  + ${bookingDetails.guestLastName}"></span>
-                                <br>
-                                <span th:text="${bookingDetails.streetName} + ' '  + ${bookingDetails.streetNumber}"></span>
-                                <br>
-                                <span th:text="${bookingDetails.zipCode} + ' '  + ${bookingDetails.city}"></span>
-                                <br>
-                                <span th:text="${bookingDetails.country}"></span>
-                            </div>
-
-                            <div class="ps-4" style="width: 50%; float: left">
-                                <p class="h5">Booking</p>
-                                <table>
-                                    <tbody>
-                                    <tr>
-                                        <td>Date:</td>
-                                        <td th:text="${bookingDetails.checkInDate} + ' - ' + ${bookingDetails.checkOutDate}"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Adults:</td>
-                                        <td th:text="${bookingDetails.amountOfAdults}"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Children:&nbsp;&nbsp;&nbsp;</td>
-                                        <td th:text="${bookingDetails.amountOfChildren}"></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <br>
-
-                        <div class="mt-4">
-                            <p class="h5">Room Categories</p>
-                            <table class="table table-striped">
+                <div class="card-body px-5 py-4">
+                    <div class="d-flex justify-content-between">
+                        <div style="width: 25%;">
+                            <p class="h5">Booking</p>
+                            <table>
                                 <tbody>
-                                <tr th:each="category : ${bookingDetails.categoriesWithAmounts}" th:if="${category.value != 0}" th:with="name = ${category.key}, amount = ${category.value}">
-                                    <td class="align-middle col" th:text="${name}"></td>
-                                    <td class="align-middle col-3" th:text="${amount}"></td>
+                                <tr>
+                                    <td>Check-in:</td>
+                                    <td th:text="${bookingDetails.checkInDate}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Check-out:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td th:text="${bookingDetails.checkOutDate}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Adults:</td>
+                                    <td th:text="${bookingDetails.amountOfAdults}"></td>
+                                </tr>
+                                <tr>
+                                    <td>Children:</td>
+                                    <td th:text="${bookingDetails.amountOfChildren}"></td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
-
-
-                        <div class="mt-4">
-                            <p class="h5">Services</p>
-                            <table class="table table-striped">
+                        <div style="width: 25%;">
+                            <p class="h5">Guest</p>
+                            <table>
                                 <tbody>
-                                <tr th:each="service : ${bookingDetails.services}" th:with="name = ${service.key}, price = ${service.value}">
-                                    <td class="align-middle col" th:text="${name}"></td>
-                                    <td class="align-middle col-3" th:text="'€' + ${price} + ' per day/room'"></td>
+                                <tr>
+                                    <td th:text="${bookingDetails.guestFirstName} + ' '  + ${bookingDetails.guestLastName}"></td>
+                                </tr>
+                                <tr>
+                                    <td th:text="${bookingDetails.streetName} + ' '  + ${bookingDetails.streetNumber}"></td>
+                                </tr>
+                                <tr>
+                                    <td th:text="${bookingDetails.zipCode} + ' '  + ${bookingDetails.city}"></td>
+                                </tr>
+                                <tr>
+                                    <td th:text="${bookingDetails.country}"></td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
+                    </div>
 
-                        <div class="mt-4">
-                            <p class="h5">Additional information</p>
-                            <textarea style="min-width: 100%" disabled th:text="${bookingDetails.additionalInformation}"></textarea>
-                        </div>
+                    <hr class="my-4">
+
+                    <div class="mb-4 mt-2">
+                        <p class="h5">Room Categories</p>
+                        <table class="table table-sm table-hover">
+                            <tbody>
+                            <tr style="border: hidden" th:each="category : ${bookingDetails.categoriesWithAmounts}" th:if="${category.value != 0}" th:with="name = ${category.key}, amount = ${category.value}">
+                                <td class="align-middle col" th:text="${name}"></td>
+                                <td class="align-middle col-3" th:text="${amount}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mb-4">
+                        <p class="h5">Services</p>
+                        <table class="table table-sm table-hover">
+                            <tbody>
+                            <tr style="border: hidden" th:each="service : ${bookingDetails.services}" th:with="name = ${service.key}, price = ${service.value}">
+                                <td class="align-middle col" th:text="${name}"></td>
+                                <td class="align-middle col-3" th:text="'€' + ${price} + ' per day/room'"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div>
+                        <p class="h5">Additional information</p>
+                        <textarea style="min-width: 100%" disabled th:text="${bookingDetails.additionalInformation}"></textarea>
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button class="btn btn-primary" onclick="history.back()">Back</button>
+                    <a class="btn btn-primary" th:href="@{/}">Back</a>
                     <a class="btn btn-primary float-end" th:href="@{'/check-in?bookingId=' + ${bookingDetails.bookingId()} + '&isCheckedIn=false'}">Assign rooms</a>
                 </div>
             </div>

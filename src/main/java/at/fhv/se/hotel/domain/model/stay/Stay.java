@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-// TODO: Test
 public class Stay {
     // Required by hibernate
     @SuppressWarnings("unused")
@@ -28,12 +27,12 @@ public class Stay {
     protected Stay() {
     }
 
-    public static Stay create(Booking aBooking, Map<Room, Boolean> aRooms) {
-        return new Stay(aBooking, aRooms);
+    public static Stay create(StayId aStayId, Booking aBooking, Map<Room, Boolean> aRooms) {
+        return new Stay(aStayId, aBooking, aRooms);
     }
 
-    private Stay(Booking aBooking, Map<Room, Boolean> aRooms) {
-        this.stayId = new StayId(aBooking.getBookingId().id());
+    private Stay(StayId aStayId, Booking aBooking, Map<Room, Boolean> aRooms) {
+        this.stayId = aStayId;
         this.booking = aBooking;
         this.rooms = aRooms;
         this.isActive = true;

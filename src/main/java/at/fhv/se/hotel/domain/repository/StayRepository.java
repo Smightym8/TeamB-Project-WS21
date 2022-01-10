@@ -11,6 +11,8 @@ import java.util.Optional;
 public interface StayRepository {
     List<Stay> findAllStays();
 
+    StayId nextIdentity();
+
     void add(Stay stay);
 
     Optional<Stay> stayById(StayId stayId);

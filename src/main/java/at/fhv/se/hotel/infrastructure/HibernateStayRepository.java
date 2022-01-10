@@ -11,6 +11,7 @@ import javax.persistence.TypedQuery;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class HibernateStayRepository implements StayRepository {
@@ -21,6 +22,11 @@ public class HibernateStayRepository implements StayRepository {
     public List<Stay> findAllStays() {
         TypedQuery<Stay> query = this.em.createQuery("SELECT s FROM Stay s", Stay.class);
         return query.getResultList(); // to knallts
+    }
+
+    @Override
+    public StayId nextIdentity() {
+        return new StayId(UUID.randomUUID().toString().toUpperCase());
     }
 
     @Override

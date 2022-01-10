@@ -13,21 +13,25 @@ body {
 
 .content {
     margin-left: 230px;
-    min-height: 100vh;
+    padding-top: 2.5vh;
+    padding-bottom: 2.5vh;
+    min-height: 95vh;
 }
 
 .div-width-l {
     width: 80%;
     margin: auto;
+    min-height: 95vh;
 }
 
 .div-width-s {
     width: 60%;
     margin: auto;
+    min-height: 95vh;
 }
 
-.card-height {
-    min-height: 65vh;
+.card-height{
+    min-height: 95vh;
 }
 
 hr {
@@ -36,12 +40,6 @@ hr {
 
 .card-header {
     padding: 1rem !important;
-}
-
-.card-body {
-    padding-right: 1rem !important;
-    padding-left: 1rem !important;
-    padding-top: 2rem !important;
 }
 
 table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {

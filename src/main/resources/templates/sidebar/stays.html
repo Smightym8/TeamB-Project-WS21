@@ -29,7 +29,7 @@
                             <tr>
                                 <th class="col">Guest</th>
                                 <th class="col">Check-out</th>
-                                <th class="col">Room(s)</th>
+                                <th class="col">Rooms</th>
                                 <th class="col">Persons</th>
                                 <th class="col-1"></th>
                             </tr>
@@ -56,29 +56,17 @@
         </div>
 
         <script>
-            // table initialization
-            let table1 = $('#t1').DataTable({
+            $('#t1').DataTable({
                 "order": [ 1, "asc" ],
                 "scrollCollapse": true,
-                "scrollY": "73.5vh",
+                "scrollY": "74vh",
                 "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ],
                 "pageLength": -1,
                 columnDefs: [
                     { orderable: false, targets: [4]}
                 ]
             });
-
-            // add icon to searchbars
-            var searchLabel = document.getElementsByTagName('label');
-            searchLabel = searchLabel[1];
-
-            var icon = document.createElement('i');
-            icon.setAttribute('class', 'fas fa-search');
-
-            searchLabel.insertBefore(icon, searchLabel.firstChild);
-            searchLabel.childNodes[1].textContent = " ";
         </script>
-
     </div>
 
 </body>

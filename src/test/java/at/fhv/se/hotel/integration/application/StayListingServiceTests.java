@@ -17,6 +17,7 @@ import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.model.stay.Stay;
+import at.fhv.se.hotel.domain.model.stay.StayId;
 import at.fhv.se.hotel.domain.repository.StayRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -109,9 +110,9 @@ public class StayListingServiceTests {
         );
 
         List<Stay> staysExpected = List.of(
-                Stay.create(bookingExpected,roomsExpected),
-                Stay.create(bookingExpected2,roomsExpected),
-                Stay.create(bookingExpected3,roomsExpected)
+                Stay.create(new StayId("1"), bookingExpected, roomsExpected),
+                Stay.create(new StayId("2"), bookingExpected2, roomsExpected),
+                Stay.create(new StayId("3"), bookingExpected3, roomsExpected)
         );
 
         Mockito.when(stayRepository.findAllStays()).thenReturn(staysExpected);

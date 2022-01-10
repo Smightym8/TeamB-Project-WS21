@@ -4,7 +4,6 @@ import at.fhv.se.hotel.domain.Generated;
 
 import java.util.Objects;
 
-// TODO: Test
 public class BookingId {
     private String id;
 

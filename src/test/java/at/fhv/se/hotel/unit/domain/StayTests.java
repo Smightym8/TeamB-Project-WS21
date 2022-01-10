@@ -109,6 +109,7 @@ public class StayTests {
 
         // when
         Stay stay = Stay.create(
+                stayId,
                 booking,
                 rooms
         );
@@ -130,7 +131,7 @@ public class StayTests {
     }
 
     @Test
-    void given_stay_when_deactivating_then_return_true() {
+    void given_stay_when_deactivating_then_return_isActiveIsFalse() {
         // when
         Service tvService = Service.create(
                 new ServiceId("1"),
@@ -208,6 +209,7 @@ public class StayTests {
         );
 
         Stay stay = Stay.create(
+                stayId,
                 booking,
                 rooms
         );

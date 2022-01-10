@@ -1,5 +1,8 @@
 package at.fhv.se.hotel.integration.domain;
 
+import at.fhv.se.hotel.application.api.exception.GuestNotFoundException;
+import at.fhv.se.hotel.application.api.exception.RoomNotFoundException;
+import at.fhv.se.hotel.application.api.exception.SeasonNotFoundException;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
 import at.fhv.se.hotel.domain.model.guest.*;
@@ -17,6 +20,7 @@ import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.model.stay.Stay;
+import at.fhv.se.hotel.domain.model.stay.StayId;
 import at.fhv.se.hotel.domain.repository.InvoiceRepository;
 import at.fhv.se.hotel.domain.repository.RoomCategoryPriceRepository;
 import at.fhv.se.hotel.domain.repository.RoomRepository;
@@ -37,6 +41,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -58,7 +63,7 @@ public class InvoiceSplitServiceTest {
     SeasonRepository seasonRepository;
 
     @Test
-    void given_invoicedetails_when_splitInvoice_then_returnexpectedamount() {
+    void given_invoicedetails_when_splitInvoice_then_returnexpectedamount() throws RoomNotFoundException, SeasonNotFoundException {
         // given
         Guest guest = Guest.create(
                 new GuestId("1"),
@@ -125,7 +130,8 @@ public class InvoiceSplitServiceTest {
 
         List<String> selectedRooms = List.of("101");
 
-        Stay stayExpected = Stay.create(booking, rooms);
+        StayId stayIdExpected = new StayId("1");
+        Stay stayExpected = Stay.create(stayIdExpected, booking, rooms);
 
         String invoiceNumberExpected = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001";
         int amountOfNightsExpected = 3;
@@ -177,7 +183,7 @@ public class InvoiceSplitServiceTest {
     }
 
     @Test
-    void given_2rooms_when_splitInvoice_then_returnexpectedamount() {
+    void given_2rooms_when_splitInvoice_then_returnexpectedamount() throws RoomNotFoundException, SeasonNotFoundException {
         // given
         Guest guest = Guest.create(
                 new GuestId("1"),
@@ -244,7 +250,8 @@ public class InvoiceSplitServiceTest {
 
         List<String> selectedRooms = List.of("101", "102");
 
-        Stay stayExpected = Stay.create(booking, rooms);
+        StayId stayIdExpected = new StayId("1");
+        Stay stayExpected = Stay.create(stayIdExpected, booking, rooms);
 
         String invoiceNumberExpected = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001";
         int amountOfNightsExpected = 3;
@@ -267,14 +274,10 @@ public class InvoiceSplitServiceTest {
         Mockito.when(roomRepository.roomByName(new RoomName("101"))).thenReturn(java.util.Optional.of(roomsExpected.get(0)));
         Mockito.when(roomRepository.roomByName(new RoomName("102"))).thenReturn(java.util.Optional.of(roomsExpected.get(1)));
 
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 12, 26)))
-                .thenReturn(Optional.of(winterSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 12, 27)))
-                .thenReturn(Optional.of(winterSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 12, 28)))
-                .thenReturn(Optional.of(winterSeason));
-        Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 12, 29)))
-                .thenReturn(Optional.of(winterSeason));
+        for (int i = 26; i <= 29; i++) {
+            Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 12, i)))
+                    .thenReturn(Optional.of(winterSeason));
+        }
 
         Mockito.when(roomCategoryPriceRepository.priceBySeasonAndCategory(winterSeason.getSeasonId(), roomsExpected.get(0).getRoomCategory().getRoomCategoryId()))
                 .thenReturn(java.util.Optional.of(price));
@@ -294,5 +297,168 @@ public class InvoiceSplitServiceTest {
         assertEquals(totalNetAmountAfterLocalTaxExpected, invoice.getTotalNetAmountAfterLocalTax());
         assertEquals(valueAddedTaxInEuroExpected, invoice.getValueAddedTaxInEuro());
         assertEquals(totalGrossAmountExpected, invoice.getTotalGrossAmount());
+    }
+
+    @Test
+    public void given_missing_season_when_splitInvoice_then_seasonNotFoundExceptionIsThrown() {
+        // given
+        RoomCategory category = RoomCategory.create(
+                new RoomCategoryId("1"),
+                new RoomCategoryName("Single Room"),
+                new Description("This is a single room")
+        );
+
+        List<Service> services = Arrays.asList(
+                Service.create(new ServiceId("1"),
+                        new ServiceName("TV"),
+                        new Price(new BigDecimal("100").setScale(2, RoundingMode.CEILING))),
+                Service.create(new ServiceId("2"),
+                        new ServiceName("Breakfast"),
+                        new Price(new BigDecimal("100").setScale(2, RoundingMode.CEILING)))
+        );
+
+        Guest guest = Guest.create(
+                new GuestId("1"),
+                new FullName("Michael", "Spiegel"),
+                Gender.MALE,
+                new Address("Hochschulstraße",
+                        "1", "Dornbirn",
+                        "6850", "Austria"),
+                LocalDate.of(1999, 3, 20),
+                "+43 660 123 456 789",
+                "michael.spiegel@students.fhv.at",
+                0,
+                Collections.emptyList()
+        );
+
+        Booking booking = Booking.create(
+                LocalDate.of(2021, 12, 26),
+                LocalDate.of(2021,12,29),
+                new BookingId("1"),
+                guest,
+                services,
+                2,
+                1,
+                ""
+        );
+        booking.addRoomCategory(category, 1);
+
+        Map<Room, Boolean> rooms = Map.of(
+                Room.create(new RoomName("101"), RoomStatus.FREE, category), false,
+                Room.create(new RoomName("102"), RoomStatus.FREE, category), false,
+                Room.create(new RoomName("103"), RoomStatus.FREE, category), false
+        );
+
+        List<String> roomNames = List.of(
+                "101",
+                "102",
+                "103"
+        );
+
+        StayId stayIdExpected = new StayId("1");
+        Stay stayExpected = Stay.create(stayIdExpected, booking, rooms);
+
+        String actionExpected = "checkOut";
+
+        Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
+        Mockito.when(seasonRepository.seasonByDate(stayExpected.getCheckInDate())).thenReturn(Optional.empty());
+
+        // when ... then
+        Exception exception = assertThrows(SeasonNotFoundException.class, () -> {
+            invoiceSplitService.splitInvoice(stayExpected, roomNames, actionExpected);
+        });
+
+        String expectedMessage = "Season for date " + stayExpected.getCheckInDate() + " not found.";
+        String actualMessage = exception.getMessage();
+
+        assertEquals(expectedMessage, actualMessage);
+    }
+
+    @Test
+    public void given_missing_room_when_splitInvoice_then_roomNotFoundExceptionIsThrown() {
+        // given
+        RoomCategory category = RoomCategory.create(
+                new RoomCategoryId("1"),
+                new RoomCategoryName("Single Room"),
+                new Description("This is a single room")
+        );
+
+        Season winterSeason = Season.create(
+                new SeasonId("1"),
+                new SeasonName("Winter "),
+                LocalDate.of(2021, 12, 1),
+                LocalDate.of(2022, 1, 31)
+        );
+
+        List<Service> services = Arrays.asList(
+                Service.create(new ServiceId("1"),
+                        new ServiceName("TV"),
+                        new Price(new BigDecimal("100").setScale(2, RoundingMode.CEILING))),
+                Service.create(new ServiceId("2"),
+                        new ServiceName("Breakfast"),
+                        new Price(new BigDecimal("100").setScale(2, RoundingMode.CEILING)))
+        );
+
+        Guest guest = Guest.create(
+                new GuestId("1"),
+                new FullName("Michael", "Spiegel"),
+                Gender.MALE,
+                new Address("Hochschulstraße",
+                        "1", "Dornbirn",
+                        "6850", "Austria"),
+                LocalDate.of(1999, 3, 20),
+                "+43 660 123 456 789",
+                "michael.spiegel@students.fhv.at",
+                0,
+                Collections.emptyList()
+        );
+
+        Booking booking = Booking.create(
+                LocalDate.of(2021, 12, 26),
+                LocalDate.of(2021,12,29),
+                new BookingId("1"),
+                guest,
+                services,
+                2,
+                1,
+                ""
+        );
+        booking.addRoomCategory(category, 1);
+
+        Map<Room, Boolean> rooms = Map.of(
+                Room.create(new RoomName("101"), RoomStatus.FREE, category), false,
+                Room.create(new RoomName("102"), RoomStatus.FREE, category), false,
+                Room.create(new RoomName("103"), RoomStatus.FREE, category), false
+        );
+
+        List<String> roomNames = List.of(
+                "101",
+                "102",
+                "103"
+        );
+
+        StayId stayIdExpected = new StayId("1");
+        Stay stayExpected = Stay.create(stayIdExpected, booking, rooms);
+
+        String actionExpected = "checkOut";
+
+        Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
+
+        for (int i = 26; i <= 29; i++) {
+            Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 12, i)))
+                    .thenReturn(Optional.of(winterSeason));
+        }
+
+        Mockito.when(roomRepository.roomByName(new RoomName(roomNames.get(0)))).thenReturn(Optional.empty());
+
+        // when ... then
+        Exception exception = assertThrows(RoomNotFoundException.class, () -> {
+            invoiceSplitService.splitInvoice(stayExpected, roomNames, actionExpected);
+        });
+
+        String expectedMessage = "Room " + roomNames.get(0) + " not found.";
+        String actualMessage = exception.getMessage();
+
+        assertEquals(expectedMessage, actualMessage);
     }
 }
