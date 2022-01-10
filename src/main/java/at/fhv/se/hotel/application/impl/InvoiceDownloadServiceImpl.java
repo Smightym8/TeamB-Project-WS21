@@ -29,7 +29,7 @@ import java.util.*;
 
 @Component
 public class InvoiceDownloadServiceImpl implements InvoiceDownloadService {
-    private static final String INVOICE_PDF_TEMPLATE = "src/main/resources/static/invoice/xslt/invoice2pdf.xsl";
+    private static final String INVOICE_PDF_TEMPLATE = "src/main/resources/invoice/xslt/invoice2pdf.xsl";
 
     @Autowired
     InvoiceRepository invoiceRepository;
