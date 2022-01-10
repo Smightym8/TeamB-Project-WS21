@@ -83,7 +83,7 @@
 
 					<!-- Logo -->
 					<fo:block text-align="right">
-						<fo:external-graphic src="src/main/resources/static/invoice/assets/logo_black.png" content-height="20%"/>
+						<fo:external-graphic src="src/main/resources/invoice/assets/logo_black.png" content-height="20%"/>
 					</fo:block>
 
 					<!-- Guest Information -->
