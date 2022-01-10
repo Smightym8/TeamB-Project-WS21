@@ -12,6 +12,8 @@ import org.apache.fop.apps.FopFactory;
 import org.apache.xmlgraphics.util.MimeConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 import javax.xml.bind.JAXBContext;
@@ -20,19 +22,19 @@ import javax.xml.bind.Marshaller;
 import javax.xml.transform.*;
 import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.stream.StreamSource;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.util.*;
 
 @Component
 public class InvoiceDownloadServiceImpl implements InvoiceDownloadService {
-    private static final String INVOICE_PDF_TEMPLATE = "src/main/resources/invoice/xslt/invoice2pdf.xsl";
+    private static final String INVOICE_PDF_TEMPLATE = "/invoice/xslt/invoice2pdf.xsl";
 
     @Autowired
     InvoiceRepository invoiceRepository;
+
+    @Autowired
+    ResourceLoader resourceLoader;
 
     @Override
     public ByteArrayResource download(String invoiceNumber) throws InvoiceNotFoundException, JAXBException, FOPException, IOException, TransformerException {
@@ -115,7 +117,8 @@ public class InvoiceDownloadServiceImpl implements InvoiceDownloadService {
         Result result = new SAXResult(fop.getDefaultHandler());
 
         // Setup XSLT
-        File xsltFile = new File(INVOICE_PDF_TEMPLATE);
+        Resource resource = resourceLoader.getResource("classpath:" + INVOICE_PDF_TEMPLATE);
+        InputStream xsltFile = resource.getInputStream();
         TransformerFactory factory = TransformerFactory.newInstance();
         Transformer transformer = factory.newTransformer(new StreamSource(xsltFile));
 
