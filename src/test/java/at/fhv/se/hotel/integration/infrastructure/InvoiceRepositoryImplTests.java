@@ -19,6 +19,7 @@ import at.fhv.se.hotel.domain.model.service.Price;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.model.stay.Stay;
+import at.fhv.se.hotel.domain.model.stay.StayId;
 import at.fhv.se.hotel.domain.repository.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -153,7 +154,8 @@ public class InvoiceRepositoryImplTests {
 
         InvoiceId invoiceIdExpected = new InvoiceId("1337");
         String invoiceNumberExpected = "30112021001";
-        Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
+        StayId stayIdExpected = new StayId("1");
+        Stay stayExpected = Stay.create(stayIdExpected, bookingExpected, roomsExpected);
         int amountOfNightsExpected = 9;
         BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76");
         BigDecimal localTaxTotalExpected = new BigDecimal("1.52");
@@ -348,9 +350,9 @@ public class InvoiceRepositoryImplTests {
         List<Room> roomsForInvoice = new ArrayList<>(roomsExpected.keySet());
 
         List<Stay> staysExpected = List.of(
-                Stay.create(bookingsExpected.get(0), roomsExpected),
-                Stay.create(bookingsExpected.get(1), roomsExpected),
-                Stay.create(bookingsExpected.get(2), roomsExpected)
+                Stay.create(stayRepository.nextIdentity(), bookingsExpected.get(0), roomsExpected),
+                Stay.create(stayRepository.nextIdentity(), bookingsExpected.get(1), roomsExpected),
+                Stay.create(stayRepository.nextIdentity(), bookingsExpected.get(2), roomsExpected)
         );
 
         List<String> invoiceNumbersExpected = List.of(
@@ -544,9 +546,9 @@ public class InvoiceRepositoryImplTests {
         List<Room> roomsForInvoice = new ArrayList<>(roomsExpected.keySet());
 
         List<Stay> staysExpected = List.of(
-                Stay.create(bookingsExpected.get(0), roomsExpected),
-                Stay.create(bookingsExpected.get(1), roomsExpected),
-                Stay.create(bookingsExpected.get(2), roomsExpected)
+                Stay.create(stayRepository.nextIdentity(), bookingsExpected.get(0), roomsExpected),
+                Stay.create(stayRepository.nextIdentity(), bookingsExpected.get(1), roomsExpected),
+                Stay.create(stayRepository.nextIdentity(), bookingsExpected.get(2), roomsExpected)
         );
 
         List<String> invoiceNumbersExpected = List.of(
@@ -697,7 +699,8 @@ public class InvoiceRepositoryImplTests {
 
         InvoiceId invoiceIdExpected = new InvoiceId("1337");
         String invoiceNumberExpected = "30112021001";
-        Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
+        StayId stayIdExpected = new StayId("1");
+        Stay stayExpected = Stay.create(stayIdExpected, bookingExpected, roomsExpected);
         int amountOfNightsExpected = 9;
         BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76");
         BigDecimal localTaxTotalExpected = new BigDecimal("1.52");

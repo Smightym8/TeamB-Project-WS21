@@ -118,7 +118,8 @@ public class StayRepositoryImplTests {
                 ), false
         );
 
-        Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
+        StayId stayIdExpected = new StayId("1");
+        Stay stayExpected = Stay.create(stayIdExpected, bookingExpected, roomsExpected);
 
         // when
         this.guestRepository.add(guestExpected);
@@ -198,7 +199,8 @@ public class StayRepositoryImplTests {
                 ), false
         );
 
-        Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
+        StayId stayIdExpected = new StayId("1");
+        Stay stayExpected = Stay.create(stayIdExpected, bookingExpected, roomsExpected);
 
         // when
         this.guestRepository.add(guestExpected);
@@ -337,9 +339,9 @@ public class StayRepositoryImplTests {
         );
 
         List<Stay> staysExpected = List.of(
-                Stay.create(bookingsExpected.get(0), rooms1),
-                Stay.create(bookingsExpected.get(1), rooms2),
-                Stay.create(bookingsExpected.get(2), rooms3)
+                Stay.create(stayRepository.nextIdentity(), bookingsExpected.get(0), rooms1),
+                Stay.create(stayRepository.nextIdentity(), bookingsExpected.get(1), rooms2),
+                Stay.create(stayRepository.nextIdentity(), bookingsExpected.get(2), rooms3)
         );
 
         // when

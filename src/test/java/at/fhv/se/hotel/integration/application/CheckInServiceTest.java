@@ -35,6 +35,7 @@ import org.springframework.test.context.ActiveProfiles;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -214,14 +215,9 @@ public class CheckInServiceTest {
                 .map(name -> Room.create(new RoomName(name), roomStatusExpected, roomCategoryExpected))
                 .collect(Collectors.toList());
 
-        List<RoomDTO> roomDTOsExpected = roomsExpected.stream()
-                .map(room -> RoomDTO.builder()
-                                .withName(room.getName().name())
-                                .withCategory(room.getRoomCategory().getRoomCategoryName().name())
-                                .withStatus(RoomStatus.FREE.name())
-                                .build())
-                .collect(Collectors.toList());
+        StayId stayIdExpected = new StayId("1");
 
+        Mockito.when(stayRepository.nextIdentity()).thenReturn(stayIdExpected);
         Mockito.when(bookingRepository.bookingById(bookingIdExpected)).thenReturn(Optional.of(bookingExpected));
         Mockito.when(roomRepository.roomByName(new RoomName(roomNamesExpected.get(0)))).thenReturn(Optional.ofNullable(roomsExpected.get(0)));
         Mockito.when(roomRepository.roomByName(new RoomName(roomNamesExpected.get(1)))).thenReturn(Optional.ofNullable(roomsExpected.get(1)));
@@ -237,7 +233,7 @@ public class CheckInServiceTest {
         roomsExpected.forEach(room -> assertEquals(RoomStatus.OCCUPIED, room.getStatus()));
         assertFalse(bookingExpected.isActive());
         assertNotNull(stayActual);
-        assertEquals(bookingExpected.getBookingId().id(), stayActual.getStayId().id());
+        assertEquals(stayIdExpected.id(), stayActual.getStayId().id());
     }
 
     @Test
@@ -399,14 +395,6 @@ public class CheckInServiceTest {
 
         List<Room> roomsExpected = roomNamesExpected.stream()
                 .map(name -> Room.create(new RoomName(name), roomStatusExpected, roomCategoryExpected))
-                .collect(Collectors.toList());
-
-        List<RoomDTO> roomDTOsExpected = roomsExpected.stream()
-                .map(room -> RoomDTO.builder()
-                        .withName(room.getName().name())
-                        .withCategory(room.getRoomCategory().getRoomCategoryName().name())
-                        .withStatus(RoomStatus.FREE.name())
-                        .build())
                 .collect(Collectors.toList());
 
         Mockito.when(bookingRepository.bookingById(bookingIdExpected)).thenReturn(Optional.of(bookingExpected));

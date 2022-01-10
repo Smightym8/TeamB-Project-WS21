@@ -136,8 +136,8 @@ public class CheckOutServiceTest {
 
         List<String> roomNamesExpected = Arrays.asList(roomNameExpected);
 
-        StayId idExpected = new StayId(bookingExpected.getBookingId().id());
-        Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
+        StayId stayIdExpected = new StayId("1");
+        Stay stayExpected = Stay.create(stayIdExpected, bookingExpected, roomsExpected);
 
         int amountOfNightsExpected = 9;
         BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76").setScale(2, RoundingMode.CEILING);
@@ -151,7 +151,7 @@ public class CheckOutServiceTest {
         String action = "checkOut";
 
         Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
-        Mockito.when(stayRepository.stayById(idExpected)).thenReturn(Optional.of(stayExpected));
+        Mockito.when(stayRepository.stayById(stayIdExpected)).thenReturn(Optional.of(stayExpected));
         Mockito.when(roomRepository.roomByName(new RoomName(roomNameExpected))).thenReturn(Optional.of(roomsExpectedList.get(0)));
 
         // Mock each date which occurs in the loop of the calculation to return the proper season
@@ -262,8 +262,8 @@ public class CheckOutServiceTest {
 
         List<String> roomNamesExpected = Arrays.asList(roomNameExpected);
 
-        StayId idExpected = new StayId(bookingExpected.getBookingId().id());
-        Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
+        StayId stayIdExpected = new StayId("1");
+        Stay stayExpected = Stay.create(stayIdExpected, bookingExpected, roomsExpected);
 
         int amountOfNightsExpected = 9;
         BigDecimal localTaxPerPersonExpected = new BigDecimal("0.76").setScale(2, RoundingMode.CEILING);
@@ -278,7 +278,7 @@ public class CheckOutServiceTest {
         String action = "checkOut";
 
         Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
-        Mockito.when(stayRepository.stayById(idExpected)).thenReturn(Optional.of(stayExpected));
+        Mockito.when(stayRepository.stayById(stayIdExpected)).thenReturn(Optional.of(stayExpected));
         Mockito.when(roomRepository.roomByName(new RoomName(roomNameExpected))).thenReturn(Optional.of(roomsExpectedList.get(0)));
 
         // Mock each date which occurs in the loop of the calculation to return the proper season
@@ -388,12 +388,12 @@ public class CheckOutServiceTest {
 
         List<Room> roomsExpectedList = new ArrayList<>(roomsExpected.keySet());
 
-        StayId idExpected = new StayId(bookingExpected.getBookingId().id());
-        Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
+        StayId stayIdExpected = new StayId("1");
+        Stay stayExpected = Stay.create(stayIdExpected, bookingExpected, roomsExpected);
         String action = "checkOut";
 
         Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
-        Mockito.when(stayRepository.stayById(idExpected)).thenReturn(Optional.of(stayExpected));
+        Mockito.when(stayRepository.stayById(stayIdExpected)).thenReturn(Optional.of(stayExpected));
         Mockito.when(roomRepository.roomByName(new RoomName(roomNamesExpected.get(0)))).thenReturn(Optional.of(roomsExpectedList.get(0)));
 
         for(int i = 1; i <= 10 ; i++) {
@@ -486,12 +486,12 @@ public class CheckOutServiceTest {
 
         List<String> roomNamesExpected = Arrays.asList(roomNameExpected);
 
-        StayId idExpected = new StayId(bookingExpectedbooking.getBookingId().id());
-        Stay stayExpected = Stay.create(bookingExpectedbooking, roomsExpected);
+        StayId stayIdExpected = new StayId("1");
+        Stay stayExpected = Stay.create(stayIdExpected, bookingExpectedbooking, roomsExpected);
         String action = "createInvoice";
 
         Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
-        Mockito.when(stayRepository.stayById(idExpected)).thenReturn(Optional.of(stayExpected));
+        Mockito.when(stayRepository.stayById(stayIdExpected)).thenReturn(Optional.of(stayExpected));
         Mockito.when(roomRepository.roomByName(new RoomName(roomNameExpected))).thenReturn(Optional.of(roomsExpectedList.get(0)));
 
         for(int i = 1; i <= 10 ; i++) {
@@ -503,7 +503,7 @@ public class CheckOutServiceTest {
                 .thenReturn(roomCategoryPricesExpected.get(0));
 
         //when
-        checkOutService.saveInvoice(idExpected.id(), roomNamesExpected, action);
+        checkOutService.saveInvoice(stayIdExpected.id(), roomNamesExpected, action);
 
         //then
         for (Map.Entry<Room, Boolean> entry : roomsExpected.entrySet()) {

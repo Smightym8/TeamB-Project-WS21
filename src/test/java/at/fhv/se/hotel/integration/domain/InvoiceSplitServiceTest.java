@@ -20,6 +20,7 @@ import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.service.ServiceId;
 import at.fhv.se.hotel.domain.model.service.ServiceName;
 import at.fhv.se.hotel.domain.model.stay.Stay;
+import at.fhv.se.hotel.domain.model.stay.StayId;
 import at.fhv.se.hotel.domain.repository.InvoiceRepository;
 import at.fhv.se.hotel.domain.repository.RoomCategoryPriceRepository;
 import at.fhv.se.hotel.domain.repository.RoomRepository;
@@ -129,7 +130,8 @@ public class InvoiceSplitServiceTest {
 
         List<String> selectedRooms = List.of("101");
 
-        Stay stayExpected = Stay.create(booking, rooms);
+        StayId stayIdExpected = new StayId("1");
+        Stay stayExpected = Stay.create(stayIdExpected, booking, rooms);
 
         String invoiceNumberExpected = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001";
         int amountOfNightsExpected = 3;
@@ -248,7 +250,8 @@ public class InvoiceSplitServiceTest {
 
         List<String> selectedRooms = List.of("101", "102");
 
-        Stay stayExpected = Stay.create(booking, rooms);
+        StayId stayIdExpected = new StayId("1");
+        Stay stayExpected = Stay.create(stayIdExpected, booking, rooms);
 
         String invoiceNumberExpected = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001";
         int amountOfNightsExpected = 3;
@@ -352,7 +355,8 @@ public class InvoiceSplitServiceTest {
                 "103"
         );
 
-        Stay stayExpected = Stay.create(booking, rooms);
+        StayId stayIdExpected = new StayId("1");
+        Stay stayExpected = Stay.create(stayIdExpected, booking, rooms);
 
         String actionExpected = "checkOut";
 
@@ -433,7 +437,8 @@ public class InvoiceSplitServiceTest {
                 "103"
         );
 
-        Stay stayExpected = Stay.create(booking, rooms);
+        StayId stayIdExpected = new StayId("1");
+        Stay stayExpected = Stay.create(stayIdExpected, booking, rooms);
 
         String actionExpected = "checkOut";
 

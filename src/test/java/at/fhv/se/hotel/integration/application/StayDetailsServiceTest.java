@@ -94,14 +94,15 @@ public class StayDetailsServiceTest {
                 Room.create(new RoomName("S101"), RoomStatus.FREE,categoryExpected), false
         );
 
-        Stay staysExpected = Stay.create(bookingExpected,roomsExpected);
-        Mockito.when(stayRepository.stayById(new StayId(idExpected))).thenReturn(Optional.of(staysExpected));
+        StayId stayIdExpected = new StayId("1");
+        Stay staysExpected = Stay.create(stayIdExpected, bookingExpected, roomsExpected);
+        Mockito.when(stayRepository.stayById(stayIdExpected)).thenReturn(Optional.of(staysExpected));
 
         // when
-        StayDetailsDTO stayDetailsDTOActual = stayDetailsService.detailsById(idExpected);
+        StayDetailsDTO stayDetailsDTOActual = stayDetailsService.detailsById(stayIdExpected.id());
 
         // then
-        assertEquals(idExpected, stayDetailsDTOActual.id());
+        assertEquals(stayIdExpected.id(), stayDetailsDTOActual.id());
         assertEquals(guestExpected.getName().firstName(), stayDetailsDTOActual.guestFirstName());
         assertEquals(guestExpected.getName().lastName(), stayDetailsDTOActual.guestLastName());
         assertEquals(guestExpected.getAddress().streetName(), stayDetailsDTOActual.streetName());

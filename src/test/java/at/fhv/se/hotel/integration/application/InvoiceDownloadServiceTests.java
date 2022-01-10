@@ -110,7 +110,7 @@ public class InvoiceDownloadServiceTests {
 
         List<Room> roomsForInvoice = new ArrayList<>(roomsExpected.keySet());
 
-        Stay stayExpected = Stay.create(bookingExpected, roomsExpected);
+        Stay stayExpected = Stay.create(new StayId("1"), bookingExpected, roomsExpected);
 
         Season winterSeason = Season.create(
                 new SeasonId("1"),
