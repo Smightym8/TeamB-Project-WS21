@@ -88,7 +88,7 @@ public class CheckInServiceImpl implements CheckInService {
         }
 
         // Create Stay with the rooms and the booking
-        Stay stay = Stay.create(booking, assignedRooms);
+        Stay stay = Stay.create(stayRepository.nextIdentity(), booking, assignedRooms);
         booking.deactivate();
 
         stayRepository.add(stay);
