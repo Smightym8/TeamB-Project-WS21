@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+// TODO: Check that all controller are tested
 @SpringBootTest
 public class ViewControllerSmokeTests {
     @Autowired
