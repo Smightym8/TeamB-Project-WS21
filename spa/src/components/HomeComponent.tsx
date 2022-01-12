@@ -4,7 +4,10 @@ class HomeComponent extends Component {
     render() {
         return (
             <div>
-                <h1 className="display-4">Hello, world!</h1>
+                <div className="jumbotron">
+                    <h1 className="display-4">Hello, world!</h1>
+                    <button className="btn btn-success"> Click me! </button>
+                </div>
             </div>
         );
     }
