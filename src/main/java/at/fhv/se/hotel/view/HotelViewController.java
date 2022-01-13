@@ -521,19 +521,19 @@ public class HotelViewController {
             try {
                 String guestId = bookingForm.getGuestId() == null || bookingForm.getGuestId().isEmpty()
                         ?   guestCreationService.createGuest(
-                        guestForm.getFirstName(),
-                        guestForm.getLastName(),
-                        guestForm.getGender(),
-                        guestForm.geteMail(),
-                        guestForm.getPhoneNumber(),
-                        guestForm.getBirthDate(),
-                        guestForm.getStreetName(),
-                        guestForm.getStreetNumber(),
-                        guestForm.getZipCode(),
-                        guestForm.getCity(),
-                        guestForm.getCountry(),
-                        guestForm.getDiscountInPercent()
-                )
+                                guestForm.getFirstName(),
+                                guestForm.getLastName(),
+                                guestForm.getGender(),
+                                guestForm.geteMail(),
+                                guestForm.getPhoneNumber(),
+                                guestForm.getBirthDate(),
+                                guestForm.getStreetName(),
+                                guestForm.getStreetNumber(),
+                                guestForm.getZipCode(),
+                                guestForm.getCity(),
+                                guestForm.getCountry(),
+                                guestForm.getDiscountInPercent()
+                            )
                         :   bookingForm.getGuestId();
 
                 bookingId = bookingCreationService.book(

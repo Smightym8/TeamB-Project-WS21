@@ -1,8 +1,12 @@
 package at.fhv.se.hotel.application.dto;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import org.springframework.boot.jackson.JsonComponent;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
+@JsonComponent
 public class ServiceDTO {
     private String id;
     private String name;
@@ -12,14 +16,17 @@ public class ServiceDTO {
         return new Builder();
     }
 
+    @JsonGetter
     public String id() {
         return this.id;
     }
 
+    @JsonGetter
     public String name() {
         return this.name;
     }
 
+    @JsonGetter
     public BigDecimal price() {
         return this.price;
     }
