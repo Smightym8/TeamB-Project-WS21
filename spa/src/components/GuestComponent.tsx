@@ -166,7 +166,7 @@ class GuestComponent extends Component<{}, GuestState> {
 
                         <br/>
 
-                    <Link to={'/choosedates'}>
+                    <Link to={'/chooseroomcategories'}>
                         <button className="btn btn-primary">Back</button>
                     </Link>
                     <Link to={'/'}>

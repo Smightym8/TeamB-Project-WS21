@@ -1,4 +1,7 @@
 import React, {useState} from 'react';
+import {
+    Link
+} from "react-router-dom";
 
 const RoomCategoryComponent = () => {
 
@@ -45,8 +48,12 @@ const RoomCategoryComponent = () => {
                 </div>
 
                 <div className="card-footer">
-                    <button className="btn btn-primary">Back</button>
-                    <button className="btn btn-primary float-end">Next</button>
+                    <Link to={'/choosedates'}>
+                        <button className="btn btn-primary">Back</button>
+                    </Link>
+                    <Link to={'/guestinformation'}>
+                        <button className="btn btn-primary">Next</button>
+                    </Link>
                 </div>
             </div>
 
