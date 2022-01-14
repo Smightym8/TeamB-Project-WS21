@@ -165,7 +165,7 @@ public class ViewApiTests {
 
         Mockito.when(roomListingService.roomByName(roomName)).thenReturn(roomDTO);
 
-        // when
+        // when ... then
         this.mockMvc.perform(get("/room/" + roomName).accept(org.springframework.http.MediaType.TEXT_PLAIN))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())

@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import './App.css';
 import HomeComponent from "./components/HomeComponent";
+import BookingDateComponent from "./components/BookingDateComponent";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <div className="container">
           <Routes>
             <Route path='/' element={<HomeComponent />} />
+            <Route path='/choosedates' element={<BookingDateComponent />} />
           </Routes>
         </div>
       </Router>

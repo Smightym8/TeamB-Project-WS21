@@ -1,10 +1,21 @@
 import React, {Component} from 'react';
+import {
+    Link
+} from "react-router-dom";
 
-class HomeComponent extends Component {
+
+class HomeComponent extends Component<{}, {}> {
+
     render() {
         return (
             <div>
-                <h1 className="display-4">Hello, world!</h1>
+                <h1>Welcome to Hotel Schwarz!</h1>
+
+                <h2>Book your next holiday now</h2>
+
+                <Link to={'/choosedates'}>
+                    <button className="btn btn-primary">Book now</button>
+                </Link>
             </div>
         );
     }
