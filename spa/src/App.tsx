@@ -7,6 +7,7 @@ import {
 import './App.css';
 import HomeComponent from "./components/HomeComponent";
 import BookingDateComponent from "./components/BookingDateComponent";
+import RoomCategoryComponent from "./components/RoomCategoryComponent"
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Routes>
             <Route path='/' element={<HomeComponent />} />
             <Route path='/choosedates' element={<BookingDateComponent />} />
+            <Route path='/chooseroomcategories' element={<RoomCategoryComponent />} />
           </Routes>
         </div>
       </Router>
