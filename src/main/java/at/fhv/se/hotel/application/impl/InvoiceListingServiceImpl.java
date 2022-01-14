@@ -85,12 +85,10 @@ public class InvoiceListingServiceImpl implements InvoiceListingService {
             }
         );
 
-
-
-
         InvoiceDTO invoiceDTO = InvoiceDTO.builder()
                 .withInvoiceNumber(invoice.getInvoiceNumber())
                 .withInvoiceId(id)
+                .withStayId(invoice.getStay().getStayId().id())
                 .withInvoiceDate(invoice.getInvoiceDate())
                 .withGuestFirstName(invoice.getStay().getGuest().getName().firstName())
                 .withGuestLastName(invoice.getStay().getGuest().getName().lastName())

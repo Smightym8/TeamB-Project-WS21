@@ -314,7 +314,6 @@ public class HotelViewController {
     }
 
     /*----- Modify Guest -----*/
-    // TODO: Test
     @GetMapping(GUEST_URL)
     public ModelAndView guest(@PathVariable("id") String id, Model model) {
         // Get GuestDetailsDTO and fill GuestForm with it
@@ -346,7 +345,6 @@ public class HotelViewController {
         return new ModelAndView(MODIFY_GUEST_VIEW);
     }
 
-    // TODO: Test
     @PostMapping(MODIFY_GUEST_URL)
     public ModelAndView modifyGuest(@Valid @ModelAttribute("guest") GuestForm guestForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -729,8 +727,7 @@ public class HotelViewController {
         try {
             resource = invoiceDownloadService.download(invoiceNumber);
         } catch (InvoiceNotFoundException | FOPException | JAXBException | IOException | TransformerException e) {
-            // Don't redirect to errorView because user will only see a window from the browser
-            // where it asks to open or to download the pdf file.
+            // TODO: How to redirect?
             e.printStackTrace();
         }
 
