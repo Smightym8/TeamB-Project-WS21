@@ -7,7 +7,7 @@ import {
 
 interface Props {
     nextStep: () => void;
-    handleChange: (input: any) => (e: any) => void;
+    handleChange: (input: string, value: any) => void;
     values: any
 }
 
@@ -83,7 +83,7 @@ const DateComponent = ({ nextStep, handleChange, values }: Props) => {
                                 className="form-control"
                                 dateFormat="dd / MM / yyyy"
                                 selected={values.checkInDate}
-                                onChange={handleChange('checkInDate')}
+                                onChange={(date) => handleChange('checkInDate', date)}
                                 minDate={new Date()}
                                 maxDate={values.checkOutDate}
                             />
@@ -98,7 +98,7 @@ const DateComponent = ({ nextStep, handleChange, values }: Props) => {
                                 className="form-control"
                                 dateFormat="dd / MM / yyyy"
                                 selected={values.checkOutDate}
-                                onChange={handleChange('checkOutDate')}
+                                onChange={(date) => handleChange('checkOutDate', date)}
                                 minDate={values.checkInDate}
                             />
                         </div>

@@ -71,7 +71,7 @@ class BookingComponent extends Component<{}, BookingState> {
         });
     }
 
-    handleChange = (stateName: string) => (value: any) => {
+    handleChange = (stateName: string, value: any) => {
         this.setState({
             [stateName]: value
         } as Partial<BookingState> );

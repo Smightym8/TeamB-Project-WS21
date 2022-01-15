@@ -5,7 +5,7 @@ import BookingService from "../services/BookingService";
 interface Props {
     prevStep: () => void;
     nextStep: () => void;
-    handleChange: (input: any) => (e: any) => void;
+    handleChange: (input: string, value: any) => void;
     values: any
 }
 

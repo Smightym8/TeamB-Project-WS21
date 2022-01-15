@@ -5,12 +5,13 @@ import BookingService from "../services/BookingService";
 interface Props {
     prevStep: () => void;
     nextStep: () => void;
-    handleChange: (input: any) => (e: any) => void;
+    handleChange: (input: string, value: any) => void;
     values: any
 }
 
 const RoomCategoryComponent = ({ prevStep, nextStep, handleChange, values }: Props) => {
     const [roomCategories, setRoomCategories] = useState<RoomCategoryDTO[]>();
+    const [selectedAmounts, setSelectedAmounts] = useState<number[]>([]);
 
     useEffect(() => {
         fetchRoomCategories();
@@ -52,7 +53,6 @@ const RoomCategoryComponent = ({ prevStep, nextStep, handleChange, values }: Pro
                             <div className="input-group mb-3" key={roomCategory.id}>
                                 <span className="input-group-text col-5">{roomCategory.name}</span>
                                 <input
-                                    onChange={handleChange('roomCategoryAmounts')}
                                     className="form-control"
                                     type="number"
                                     min="0"

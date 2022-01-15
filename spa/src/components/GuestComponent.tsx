@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 interface Props {
     prevStep: () => void;
     nextStep: () => void;
-    handleChange: (input: any) => (e: any) => void;
+    handleChange: (input: string, value: any) => void;
     values: any
 }
 
@@ -28,7 +28,7 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
             <div className="card-body px-5 py-4">
                 <div className="d-flex justify-content-between">
                     <div className="form-floating">
-                        <select value={values.gender} onChange={handleChange('gender')} className="form-select">
+                        <select value={values.gender} className="form-select">
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                             <option value="Divers">Divers</option>
@@ -41,69 +41,59 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
 
                 <div className="d-flex pb-1">
                     <div className="form-floating me-1">
-                        <input className="form-control" type="text" placeholder=" " name="firstName" value={values.firstName}
-                               onChange={handleChange('firstName')}/>
+                        <input className="form-control" type="text" placeholder=" " name="firstName" value={values.firstName} />
                         <label htmlFor="firstname">Firstname<span>*</span></label>
                     </div>
 
                     <div className="form-floating ms-1">
-                        <input className="form-control" type="text" placeholder=" " name="lastName" value={values.lastName}
-                               onChange={handleChange('lastName')} />
+                        <input className="form-control" type="text" placeholder=" " name="lastName" value={values.lastName} />
                         <label htmlFor="lastname">Last Name<span>*</span></label>
                     </div>
                 </div>
 
                 <div className="d-flex py-1">
                     <div className="form-floating me-1">
-                        <input className="form-control" type="text" placeholder=" " value={values.streetName}
-                               onChange={handleChange('streetName')}/>
+                        <input className="form-control" type="text" placeholder=" " value={values.streetName} />
                         <label htmlFor="streetname">Street name<span>*</span></label>
                     </div>
                     <div className="form-floating ms-1">
-                        <input className="form-control" type="text" placeholder=" " value={values.streetNumber}
-                               onChange={handleChange('streetNumber')}/>
+                        <input className="form-control" type="text" placeholder=" " value={values.streetNumber} />
                         <label htmlFor="streetnumber">Street number<span>*</span></label>
                     </div>
                 </div>
 
                 <div className="d-flex py-1">
                     <div className="form-floating me-1">
-                        <input className="form-control" type="text" placeholder=" " value={values.zipCode}
-                               onChange={handleChange('zipCode')}/>
+                        <input className="form-control" type="text" placeholder=" " value={values.zipCode} />
                         <label htmlFor="zipcode">Zip code<span>*</span></label>
                     </div>
                     <div className="form-floating ms-1">
-                        <input className="form-control" type="text" placeholder=" " value={values.city}
-                               onChange={handleChange('city')}/>
+                        <input className="form-control" type="text" placeholder=" " value={values.city} />
                         <label htmlFor="city">City<span>*</span></label>
                     </div>
                 </div>
 
                 <div className="d-flex pt-1">
                     <div className="form-floating pe-1">
-                        <input className="form-control" type="text" placeholder=" " value={values.country}
-                               onChange={handleChange('country')}/>
+                        <input className="form-control" type="text" placeholder=" " value={values.country} />
                         <label htmlFor="country">Country<span>*</span></label>
                     </div>
                 </div>
 
                 <div className="d-flex">
                     <div className="form-floating pe-1">
-                        <input className="form-control" type="date" placeholder=" " value={values.birthDate}
-                               onChange={handleChange('birthDate')}/>
+                        <input className="form-control" type="date" placeholder=" " value={values.birthDate} />
                         <label htmlFor="birthdate">Date of birth<span>*</span></label>
                     </div>
                 </div>
 
                 <div className="d-flex">
                     <div className="form-floating me-1">
-                        <input className="form-control" type="email" placeholder=" " value={values.eMail}
-                               onChange={handleChange('eMail')}/>
+                        <input className="form-control" type="email" placeholder=" " value={values.eMail} />
                         <label htmlFor="email">Email</label>
                     </div>
                     <div className="form-floating ms-1" >
-                        <input className="form-control" type="tel" placeholder=" " value={values.phoneNumber}
-                               onChange={handleChange('phoneNumber')}/>
+                        <input className="form-control" type="tel" placeholder=" " value={values.phoneNumber} />
                         <label htmlFor="phone">Phone number</label>
 
                     </div>
