@@ -3,7 +3,7 @@ import {Link, useNavigate} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const BookingDateComponent = () => {
+const DateComponent = () => {
     const[checkInDate, setCheckInDate] = useState<Date | null>(new Date());
     const[checkOutDate, setCheckOutDate] = useState<Date | null>(new Date());
     const[checkInDateError, setCheckInDateError] = useState<string>("");
@@ -38,13 +38,17 @@ const BookingDateComponent = () => {
             setCheckInDateError(checkInDateErrorMsg);
             setCheckOutDateError(checkOutDateErrorMsg);
         } else {
-            navigate("/");
+            navigate("/chooseroomcategories");
         }
     }
 
     const cardStyle = {
         minHeight: "50vh",
         margin: "auto"
+    };
+
+    const progressBarStyle = {
+        width: "20%"
     };
 
     const formStyle = {
@@ -62,7 +66,7 @@ const BookingDateComponent = () => {
                 </div>
                 <br />
                 <div className="progress">
-                    <div className="progress-bar" role="progressbar">1/5</div>
+                    <div className="progress-bar" role="progressbar" style={progressBarStyle}>1/5</div>
                 </div>
             </div>
             <div className="card-body">
@@ -108,4 +112,4 @@ const BookingDateComponent = () => {
     );
 }
 
-export default BookingDateComponent;
+export default DateComponent;

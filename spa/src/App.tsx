@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import './App.css';
 import HomeComponent from "./components/HomeComponent";
-import BookingDateComponent from "./components/BookingDateComponent";
+import DateComponent from "./components/DateComponent";
 import RoomCategoryComponent from "./components/RoomCategoryComponent"
 import GuestComponent from "./components/GuestComponent";
 
@@ -17,7 +17,7 @@ function App() {
         <div className="container">
           <Routes>
             <Route path='/' element={<HomeComponent />} />
-            <Route path='/choosedates' element={<BookingDateComponent />} />
+            <Route path='/choosedates' element={<DateComponent />} />
             <Route path='/chooseroomcategories' element={<RoomCategoryComponent />} />
             <Route path='/guestinformation' element={<GuestComponent />} />
           </Routes>

@@ -19,7 +19,7 @@ const RoomCategoryComponent = () => {
 
     const progressBarStyle = {
         width: "40%"
-    }
+    };
 
     return (
         <div className="div-width-s">
@@ -30,7 +30,7 @@ const RoomCategoryComponent = () => {
                             <span className="h4 align-middle">Create booking - room categories</span>
                         </div>
                     </div>
-                    <br/>
+                    <br />
                     <div className="progress">
                         <div className="progress-bar" role="progressbar" style={progressBarStyle}>2/5</div>
                     </div>
@@ -52,7 +52,7 @@ const RoomCategoryComponent = () => {
                         <button className="btn btn-primary">Back</button>
                     </Link>
                     <Link to={'/guestinformation'}>
-                        <button className="btn btn-primary">Next</button>
+                        <button className="btn btn-primary float-end">Next</button>
                     </Link>
                 </div>
             </div>
