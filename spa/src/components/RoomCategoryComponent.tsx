@@ -1,4 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {RoomCategoryDTO} from "../openapi/ts_openapi_client";
+import BookingService from "../services/BookingService";
 
 interface Props {
     prevStep: () => void;
@@ -8,13 +10,17 @@ interface Props {
 }
 
 const RoomCategoryComponent = ({ prevStep, nextStep, handleChange, values }: Props) => {
+    const [roomCategories, setRoomCategories] = useState<RoomCategoryDTO[]>();
 
-    const [categories, setCategories] = useState<string[]>([
-        "Single Room",
-        "Double Room",
-        "Junior Suite",
-        "Suite"
-    ]);
+    useEffect(() => {
+        fetchRoomCategories();
+    }, []);
+
+    const fetchRoomCategories = () => {
+        BookingService.fetchAllRoomCategoriesRest().then(response => {
+            setRoomCategories(response);
+        });
+    }
 
     const cardStyle = {
         minHeight: "50vh",
@@ -42,10 +48,15 @@ const RoomCategoryComponent = ({ prevStep, nextStep, handleChange, values }: Pro
 
                 <div className="card-body px-5 py-4">
                     {
-                        categories.map(category =>
-                            <div className="input-group mb-3">
-                                <span className="input-group-text col-5">{category}</span>
-                                <input className="form-control" type="number" min="0" placeholder="0"/>
+                        roomCategories?.map(roomCategory =>
+                            <div className="input-group mb-3" key={roomCategory.id}>
+                                <span className="input-group-text col-5">{roomCategory.name}</span>
+                                <input
+                                    onChange={handleChange('roomCategoryAmounts')}
+                                    className="form-control"
+                                    type="number"
+                                    min="0"
+                                    placeholder="0"/>
                             </div>
                         )
                     }

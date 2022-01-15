@@ -12,10 +12,10 @@ type BookingState = {
     checkOutDate?: Date,
     roomCategoryIds?: string[],
     roomCategoryNames?: string[],
-    roomCategoryAmounts?: Number[],
+    roomCategoryAmounts?: number[],
     serviceIds?: string[],
     serviceNames?: string[],
-    servicePrices?: Number[],
+    servicePrices?: number[],
     firstName?: string,
     lastName?: string,
     gender?: string,
@@ -71,11 +71,10 @@ class BookingComponent extends Component<{}, BookingState> {
         });
     }
 
-    // TODO: Specify appropriate data type
-    handleChange = (input: any) => (value: any) => {
+    handleChange = (stateName: string) => (value: any) => {
         this.setState({
-            [input]: value
-        });
+            [stateName]: value
+        } as Partial<BookingState> );
     }
 
     render() {
@@ -111,11 +110,21 @@ class BookingComponent extends Component<{}, BookingState> {
                 )
             case 3:
                 return (
-                    <ServiceComponent />
+                    <ServiceComponent
+                        prevStep={ this.prevStep }
+                        nextStep={ this.nextStep }
+                        handleChange={ this.handleChange }
+                        values={ values }
+                    />
                 )
             case 4:
                 return (
-                    <GuestComponent />
+                    <GuestComponent
+                        prevStep={ this.prevStep }
+                        nextStep={ this.nextStep }
+                        handleChange={ this.handleChange }
+                        values={ values }
+                    />
                 )
             case 5:
                 return (

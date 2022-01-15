@@ -1,23 +1,13 @@
-import React, {Component, useState} from 'react';
-import {
-    Link
-} from "react-router-dom";
+import React, {useState} from 'react';
 
+interface Props {
+    prevStep: () => void;
+    nextStep: () => void;
+    handleChange: (input: any) => (e: any) => void;
+    values: any
+}
 
-const GuestComponent = () => {
-    const [firstName, setFirstName] = useState<string>("");
-    const [lastName, setLastName] = useState<string>("");
-
-    const [gender, setGender] = useState<string>("");
-    const [eMail, setEmail] = useState<string>("");
-    const [phoneNumber, setPhoneNumber] = useState<string>("");
-    const [birthDate, setBirthDate] = useState<string>("");
-    const [streetName, setStreetName] = useState<string>("");
-    const [streetNumber, setStreetNumber] = useState<string>("");
-    const [zipCode, setZipCode] = useState<string>("");
-    const [city, setCity] = useState<string>("");
-    const [country, setCountry] = useState<string>("");
-
+const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => {
     const progressBarStyle = {
         width: "80%"
     };
@@ -38,7 +28,7 @@ const GuestComponent = () => {
             <div className="card-body px-5 py-4">
                 <div className="d-flex justify-content-between">
                     <div className="form-floating">
-                        <select value={gender} onChange={(e) => {setGender(e.target.value)}} className="form-select">
+                        <select value={values.gender} onChange={handleChange('gender')} className="form-select">
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                             <option value="Divers">Divers</option>
@@ -51,69 +41,69 @@ const GuestComponent = () => {
 
                 <div className="d-flex pb-1">
                     <div className="form-floating me-1">
-                        <input className="form-control" type="text" placeholder=" " name="firstName" value={firstName}
-                               onChange={(e) => {setFirstName(e.target.value)}}/>
+                        <input className="form-control" type="text" placeholder=" " name="firstName" value={values.firstName}
+                               onChange={handleChange('firstName')}/>
                         <label htmlFor="firstname">Firstname<span>*</span></label>
                     </div>
 
                     <div className="form-floating ms-1">
-                        <input className="form-control" type="text" placeholder=" " name="lastName" value={lastName}
-                               onChange={(e) => {setLastName(e.target.value)}} />
+                        <input className="form-control" type="text" placeholder=" " name="lastName" value={values.lastName}
+                               onChange={handleChange('lastName')} />
                         <label htmlFor="lastname">Last Name<span>*</span></label>
                     </div>
                 </div>
 
                 <div className="d-flex py-1">
                     <div className="form-floating me-1">
-                        <input className="form-control" type="text" placeholder=" " value={streetName}
-                               onChange={(e) => {setStreetName(e.target.value)}}/>
+                        <input className="form-control" type="text" placeholder=" " value={values.streetName}
+                               onChange={handleChange('streetName')}/>
                         <label htmlFor="streetname">Street name<span>*</span></label>
                     </div>
                     <div className="form-floating ms-1">
-                        <input className="form-control" type="text" placeholder=" " value={streetNumber}
-                               onChange={(e) => {setStreetNumber(e.target.value)}}/>
+                        <input className="form-control" type="text" placeholder=" " value={values.streetNumber}
+                               onChange={handleChange('streetNumber')}/>
                         <label htmlFor="streetnumber">Street number<span>*</span></label>
                     </div>
                 </div>
 
                 <div className="d-flex py-1">
                     <div className="form-floating me-1">
-                        <input className="form-control" type="text" placeholder=" " value={zipCode}
-                               onChange={(e) => {setZipCode(e.target.value)}}/>
+                        <input className="form-control" type="text" placeholder=" " value={values.zipCode}
+                               onChange={handleChange('zipCode')}/>
                         <label htmlFor="zipcode">Zip code<span>*</span></label>
                     </div>
                     <div className="form-floating ms-1">
-                        <input className="form-control" type="text" placeholder=" " value={city}
-                               onChange={(e) => {setCity(e.target.value)}}/>
+                        <input className="form-control" type="text" placeholder=" " value={values.city}
+                               onChange={handleChange('city')}/>
                         <label htmlFor="city">City<span>*</span></label>
                     </div>
                 </div>
 
                 <div className="d-flex pt-1">
                     <div className="form-floating pe-1">
-                        <input className="form-control" type="text" placeholder=" " value={country}
-                               onChange={(e) => {setCountry(e.target.value)}}/>
+                        <input className="form-control" type="text" placeholder=" " value={values.country}
+                               onChange={handleChange('country')}/>
                         <label htmlFor="country">Country<span>*</span></label>
                     </div>
                 </div>
 
                 <div className="d-flex">
                     <div className="form-floating pe-1">
-                        <input className="form-control" type="date" placeholder=" " value={birthDate}
-                               onChange={(e) => {setBirthDate(e.target.value)}}/>
-                        <label htmlFor="birthdate">Birthdate<span>*</span></label>
+                        <input className="form-control" type="date" placeholder=" " value={values.birthDate}
+                               onChange={handleChange('birthDate')}/>
+                        <label htmlFor="birthdate">Date of birth<span>*</span></label>
                     </div>
                 </div>
 
                 <div className="d-flex">
                     <div className="form-floating me-1">
-                        <input className="form-control" type="email" placeholder=" " value={eMail}
-                               onChange={(e) => {setEmail(e.target.value)}}/>
+                        <input className="form-control" type="email" placeholder=" " value={values.eMail}
+                               onChange={handleChange('eMail')}/>
                         <label htmlFor="email">Email</label>
                     </div>
                     <div className="form-floating ms-1" >
-                        <input className="form-control" type="tel" placeholder=" " value={phoneNumber}
-                               onChange={(e) => {setPhoneNumber(e.target.value)}}/>
+                        <input className="form-control" type="tel" placeholder=" " value={values.phoneNumber}
+                               onChange={handleChange('phoneNumber')}/>
                         <label htmlFor="phone">Phone number</label>
 
                     </div>
@@ -121,12 +111,8 @@ const GuestComponent = () => {
 
             </div>
             <div className="card-footer">
-                <Link to={'/chooseroomcategories'}>
-                    <button className="btn btn-primary">Back</button>
-                </Link>
-                <Link to={'/'}>
-                    <button className="btn btn-primary float-end">Next</button>
-                </Link>
+                <button className="btn btn-primary" onClick={() => prevStep()}>Back</button>
+                <button className="btn btn-primary float-end" onClick={() => nextStep()}>Next</button>
             </div>
         </div>
     );
