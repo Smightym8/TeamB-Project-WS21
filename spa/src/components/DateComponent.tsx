@@ -1,14 +1,19 @@
 import React, {useState} from 'react';
-import {Link, useNavigate} from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import {
+    Link
+} from "react-router-dom";
 
-const DateComponent = () => {
-    const[checkInDate, setCheckInDate] = useState<Date | null>(new Date());
-    const[checkOutDate, setCheckOutDate] = useState<Date | null>(new Date());
+interface Props {
+    nextStep: () => void;
+    handleChange: (input: any) => (e: any) => void;
+    values: any
+}
+
+const DateComponent = ({ nextStep, handleChange, values }: Props) => {
     const[checkInDateError, setCheckInDateError] = useState<string>("");
     const[checkOutDateError, setCheckOutDateError] = useState<string>("");
-    const navigate = useNavigate();
 
     const handleSubmit = (): void => {
         let isValid: boolean = true;
@@ -18,18 +23,18 @@ const DateComponent = () => {
         let now: Date = new Date();
         now.setDate(now.getDate() - 1);
 
-        if(checkInDate === null) {
+        if(values.checkInDate === null) {
             isValid = false;
             checkInDateErrorMsg = 'You have to enter a check in date!';
-        } else if(checkInDate < now) {
+        } else if(values.checkInDate < now) {
             isValid = false;
             checkInDateErrorMsg = 'Check in date has to be in the future!';
         }
 
-        if(checkOutDate === null) {
+        if(values.checkOutDate === null) {
             isValid = false;
             checkOutDateErrorMsg = 'You have to enter a check out date!';
-        } else if((checkInDate != null) && (checkOutDate <= checkInDate)) {
+        } else if((values.checkInDate != null) && (values.checkOutDate <= values.checkInDate)) {
             isValid = false;
             checkOutDateErrorMsg = 'Check out date has to be after check in date!';
         }
@@ -38,7 +43,7 @@ const DateComponent = () => {
             setCheckInDateError(checkInDateErrorMsg);
             setCheckOutDateError(checkOutDateErrorMsg);
         } else {
-            navigate("/chooseroomcategories");
+            nextStep();
         }
     }
 
@@ -77,10 +82,10 @@ const DateComponent = () => {
                             <DatePicker
                                 className="form-control"
                                 dateFormat="dd / MM / yyyy"
-                                selected={checkInDate}
-                                onChange={(date) => setCheckInDate(date)}
+                                selected={values.checkInDate}
+                                onChange={handleChange('checkInDate')}
                                 minDate={new Date()}
-                                maxDate={checkOutDate}
+                                maxDate={values.checkOutDate}
                             />
                         </div>
                         <span className="text-danger">{checkInDateError}</span>
@@ -92,9 +97,9 @@ const DateComponent = () => {
                             <DatePicker
                                 className="form-control"
                                 dateFormat="dd / MM / yyyy"
-                                selected={checkOutDate}
-                                onChange={(date) => setCheckOutDate(date)}
-                                minDate={checkInDate}
+                                selected={values.checkOutDate}
+                                onChange={handleChange('checkOutDate')}
+                                minDate={values.checkInDate}
                             />
                         </div>
                         <span className="text-danger">{checkOutDateError}</span>
@@ -103,7 +108,7 @@ const DateComponent = () => {
             </div>
             <div className="card-footer">
                 <Link to={'/'}>
-                    <button className="btn btn-primary" type="submit">Back</button>
+                    <button className="btn btn-primary" type="submit">Back to Home</button>
                 </Link>
 
                 <button className="btn btn-primary float-end" onClick={() => handleSubmit()}>Next</button>

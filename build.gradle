@@ -42,6 +42,7 @@ dependencies {
     implementation 'io.cucumber:cucumber-java:7.1.0'
     testImplementation 'io.cucumber:cucumber-junit:7.1.0'
     implementation 'io.cucumber:cucumber-spring:7.1.0'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.3'
 }
 
 configurations {

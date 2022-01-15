@@ -1,0 +1,10 @@
+.openapi-generator-ignore
+api/HotelRestControllerApi.ts
+api/api.ts
+configuration.ts
+git_push.sh
+index.ts
+model/RoomCategoryDTO.ts
+model/ServiceDTO.ts
+model/models.ts
+variables.ts

@@ -13,7 +13,7 @@ class HomeComponent extends Component<{}, {}> {
 
                 <h2>Book your next holiday now</h2>
 
-                <Link to={'/choosedates'}>
+                <Link to={'/booking'}>
                     <button className="btn btn-primary">Book now</button>
                 </Link>
             </div>

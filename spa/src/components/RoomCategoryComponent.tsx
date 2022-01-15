@@ -1,9 +1,13 @@
 import React, {useState} from 'react';
-import {
-    Link
-} from "react-router-dom";
 
-const RoomCategoryComponent = () => {
+interface Props {
+    prevStep: () => void;
+    nextStep: () => void;
+    handleChange: (input: any) => (e: any) => void;
+    values: any
+}
+
+const RoomCategoryComponent = ({ prevStep, nextStep, handleChange, values }: Props) => {
 
     const [categories, setCategories] = useState<string[]>([
         "Single Room",
@@ -48,12 +52,8 @@ const RoomCategoryComponent = () => {
                 </div>
 
                 <div className="card-footer">
-                    <Link to={'/choosedates'}>
-                        <button className="btn btn-primary">Back</button>
-                    </Link>
-                    <Link to={'/guestinformation'}>
-                        <button className="btn btn-primary float-end">Next</button>
-                    </Link>
+                        <button className="btn btn-primary" onClick={() => prevStep()}>Back</button>
+                        <button className="btn btn-primary float-end" onClick={() => nextStep()}>Next</button>
                 </div>
             </div>
 
