@@ -16,6 +16,7 @@ type BookingState = {
     serviceIds?: string[],
     serviceNames?: string[],
     servicePrices?: number[],
+    additionalInformation?: string,
     firstName?: string,
     lastName?: string,
     gender?: string,
@@ -40,6 +41,7 @@ class BookingComponent extends Component<{}, BookingState> {
         serviceIds: [],
         serviceNames: [],
         servicePrices: [],
+        additionalInformation: '',
         firstName: '',
         lastName: '',
         gender: '',
@@ -81,13 +83,13 @@ class BookingComponent extends Component<{}, BookingState> {
         const step = this.state.step;
         const {
             checkInDate, checkOutDate, roomCategoryIds, roomCategoryNames, roomCategoryAmounts, serviceIds,
-            serviceNames, servicePrices, firstName, lastName, gender, eMail, phoneNumber, birthDate, streetName,
-            streetNumber, zipCode, city, country
+            serviceNames, servicePrices, additionalInformation, firstName, lastName, gender, eMail, phoneNumber,
+            birthDate, streetName, streetNumber, zipCode, city, country
         } = this.state;
         const values = {
             checkInDate, checkOutDate, roomCategoryIds, roomCategoryNames, roomCategoryAmounts, serviceIds,
-            serviceNames, servicePrices, firstName, lastName, gender, eMail, phoneNumber, birthDate, streetName,
-            streetNumber, zipCode, city, country
+            serviceNames, servicePrices, additionalInformation, firstName, lastName, gender, eMail, phoneNumber,
+            birthDate, streetName, streetNumber, zipCode, city, country
         };
 
         switch(step) {

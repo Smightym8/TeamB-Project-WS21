@@ -39,8 +39,13 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
         let cityErrorMsg: string = '';
         let countryErrorMsg: string = '';
 
-        let now: Date = new Date();
-        now.setDate(now.getFullYear() - 18);
+        let birthDateLimit: Date = new Date();
+        birthDateLimit.setFullYear(birthDateLimit.getFullYear() - 18);
+
+        if(values.gender === 'Default' || values.gender === '') {
+            isValid = false;
+            genderErrorMsg = 'You have to select your gender!';
+        }
 
         if(values.firstName === '') {
             isValid = false;
@@ -50,11 +55,6 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
         if(values.lastName === '') {
             isValid = false;
             lastNameErrorMsg = 'You have to provide your last name!';
-        }
-
-        if(values.gender === 'Default') {
-            isValid = false;
-            genderErrorMsg = 'You have to select your gender!';
         }
 
         if(values.eMail === '') {
@@ -67,14 +67,14 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
             phoneNumberErrorMsg = 'You have to provide your phone number!';
         }
 
-        if(values.birthDate < now) {
-            isValid = false;
-            birthDateErrorMsg = 'You have to be at least 18 years old!';
-        }
-
         if(values.birthDate === '') {
             isValid = false;
             birthDateErrorMsg = 'You have to provide your birth date!';
+        }
+
+        if(values.birthDate > birthDateLimit) {
+            isValid = false;
+            birthDateErrorMsg = 'You have to be at least 18 years old!';
         }
 
         if(values.streetName === '') {

@@ -11,6 +11,9 @@ interface Props {
 
 const ServiceComponent = ({ prevStep, nextStep, handleChange, values }: Props) => {
     const [services, setServices] = useState<ServiceDTO[]>();
+    const [serviceIds, setServiceIds] = useState<string[]>(values.serviceIds);
+    const [serviceNames, setServiceNames] = useState<string[]>(values.serviceNames);
+    const [servicePrices, setServicePrices] = useState<number[]>(values.servicePrices);
 
     useEffect(() => {
         fetchServices();
@@ -37,6 +40,41 @@ const ServiceComponent = ({ prevStep, nextStep, handleChange, values }: Props) =
     const textAreaStyle = {
         minWidth: "100%"
     };
+
+    const handleService = (id: string,
+                           name: string | undefined,
+                           price: number | undefined,
+                           index: number) => {
+
+        let tmpIds = serviceIds;
+        let tmpNames = serviceNames;
+        let tmpPrices = servicePrices;
+
+        if (name != null && price != null) {
+            // If checkbox is checked, id is not in array, so we add it.
+            // If checkbox is unchecked, id is already in array, so we remove it.
+            if (tmpIds[index] === id) {
+                tmpIds.splice(index, 1);
+                tmpNames.splice(index, 1);
+                tmpPrices.splice(index, 1);
+            } else {
+                tmpIds[index] = id;
+                tmpNames[index] = name;
+                tmpPrices[index] = price;
+            }
+        }
+
+        setServiceIds(tmpIds);
+        setServiceNames(tmpNames);
+        setServicePrices(tmpPrices);
+    }
+
+    const handleNext = () => {
+        handleChange('serviceIds', serviceIds);
+        handleChange('serviceNames', serviceNames);
+        handleChange('servicePrices', servicePrices);
+        nextStep();
+    }
 
     return (
         <div className="card card-height">
@@ -73,7 +111,12 @@ const ServiceComponent = ({ prevStep, nextStep, handleChange, values }: Props) =
                                         <tr key={service.id}>
                                             <td className="align-middle">
                                                 <div className="form-check">
-                                                    <input className="form-check-input" type="checkbox" value={service.id} />
+                                                    <input className="form-check-input"
+                                                           type="checkbox"
+                                                           value={service.id}
+                                                           defaultChecked={values.serviceIds[services?.indexOf(service)]}
+                                                           onChange={(e) => handleService(e.target.value, service.name, service.price, services?.indexOf(service))}
+                                                    />
                                                 </div>
                                             </td>
                                             <td className="align-middle">{service.name}</td>
@@ -86,12 +129,17 @@ const ServiceComponent = ({ prevStep, nextStep, handleChange, values }: Props) =
                     </div>
 
                     <span>Additional information:</span>
-                    <textarea style={textAreaStyle} rows={3}/>
+                    <textarea
+                        style={textAreaStyle}
+                        value={values.additionalInformation}
+                        onChange={(e) => handleChange('additionalInformation', e.target.value)}
+                        rows={3}
+                    />
                 </div>
             </div>
             <div className="card-footer">
                 <button className="btn btn-primary" onClick={() => prevStep()}>Back</button>
-                <button className="btn btn-primary float-end" onClick={() => nextStep()}>Next</button>
+                <button className="btn btn-primary float-end" onClick={() => handleNext()}>Next</button>
             </div>
         </div>
     );

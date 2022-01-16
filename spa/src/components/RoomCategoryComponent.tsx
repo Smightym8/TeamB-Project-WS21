@@ -11,7 +11,10 @@ interface Props {
 
 const RoomCategoryComponent = ({ prevStep, nextStep, handleChange, values }: Props) => {
     const [roomCategories, setRoomCategories] = useState<RoomCategoryDTO[]>();
-    const [selectedAmounts, setSelectedAmounts] = useState<number[]>([]);
+    const [categoryAmounts, setCategoryAmounts] = useState<number[]>(values.roomCategoryAmounts);
+    const [categoryNames, setCategoryNames] = useState<string[] | undefined[]>(values.roomCategoryNames);
+    const [categoryIds, setCategoryIds] = useState<string[] | undefined[]>(values.roomCategoryIds);
+    const [categoryError, setCategoryError] = useState<string>('');
 
     useEffect(() => {
         fetchRoomCategories();
@@ -21,6 +24,50 @@ const RoomCategoryComponent = ({ prevStep, nextStep, handleChange, values }: Pro
         BookingService.fetchAllRoomCategoriesRest().then(response => {
             setRoomCategories(response);
         });
+    }
+
+    const handleAmount = (value: number, index: number) => {
+        let tmpAmounts = categoryAmounts;
+        let tmpNames = categoryNames;
+        let tmpIds = categoryIds;
+
+        if (value > 0 && roomCategories) {
+            tmpAmounts[index] = value;
+            tmpIds[index] = roomCategories[index].id;
+            tmpNames[index] = roomCategories[index].name;
+        } else {
+            tmpAmounts.splice(index, 1);
+            tmpIds.splice(index, 1);
+            tmpNames.splice(index, 1);
+        }
+
+        setCategoryAmounts(tmpAmounts);
+        setCategoryNames(tmpNames);
+        setCategoryIds(tmpIds);
+    }
+
+    const handleNext = () => {
+        let isValid = true;
+        let categoryErrorMsg: string = '';
+
+        let sum = 0;
+        if (categoryAmounts.length > 0) {
+            sum = categoryAmounts.reduce((a, b) => a + b);
+        }
+
+        if (sum === 0) {
+            isValid = false;
+            categoryErrorMsg = 'You have to select at least 1 room category!'
+        }
+
+        if (!isValid) {
+            setCategoryError(categoryErrorMsg);
+        } else {
+            handleChange('roomCategoryIds', categoryIds);
+            handleChange('roomCategoryNames', categoryNames);
+            handleChange('roomCategoryAmounts', categoryAmounts);
+            nextStep();
+        }
     }
 
     const cardStyle = {
@@ -53,6 +100,8 @@ const RoomCategoryComponent = ({ prevStep, nextStep, handleChange, values }: Pro
                             <div className="input-group mb-3" key={roomCategory.id}>
                                 <span className="input-group-text col-5">{roomCategory.name}</span>
                                 <input
+                                    defaultValue={values.roomCategoryAmounts[roomCategories?.indexOf(roomCategory)]}
+                                    onChange={(e) => handleAmount(parseInt(e.target.value), roomCategories?.indexOf(roomCategory))}
                                     className="form-control"
                                     type="number"
                                     min="0"
@@ -60,11 +109,12 @@ const RoomCategoryComponent = ({ prevStep, nextStep, handleChange, values }: Pro
                             </div>
                         )
                     }
+                    <span className="text-danger">{categoryError}</span>
                 </div>
 
                 <div className="card-footer">
                         <button className="btn btn-primary" onClick={() => prevStep()}>Back</button>
-                        <button className="btn btn-primary float-end" onClick={() => nextStep()}>Next</button>
+                        <button className="btn btn-primary float-end" onClick={() => handleNext()}>Next</button>
                 </div>
             </div>
 
