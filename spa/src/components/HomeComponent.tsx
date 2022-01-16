@@ -16,7 +16,7 @@ class HomeComponent extends Component<{}, {}> {
                 <p id="home"> </p>
 
                 <section className="section2">
-                    <Link to={'/choosedates'}>
+                    <Link to={'/booking'}>
                         <a className="section-heading btn btn-warning btn-lg">BOOK NOW!</a>
                     </Link>
                     <div id="carouselExampleControls" className="carousel slide">
