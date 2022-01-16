@@ -1,20 +1,17 @@
-// @flow
 import * as React from 'react';
 
-type Props = {
+interface Props {
+    prevStep: () => void;
+    nextStep: () => void;
+    values: any
+}
 
-};
-type State = {
-    
-};
-
-// TODO: Implement
-export class BookingSummaryComponent extends React.Component<Props, State> {
-    render() {
+const BookingSummaryComponent = ({ prevStep, nextStep, values }: Props) => {
         return (
             <div>
-
+                <p>{values.firstName}</p>
             </div>
         );
-    };
 }
+
+export default BookingSummaryComponent;

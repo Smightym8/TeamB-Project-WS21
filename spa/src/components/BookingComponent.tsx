@@ -3,7 +3,7 @@ import DateComponent from "./DateComponent";
 import RoomCategoryComponent from "./RoomCategoryComponent";
 import ServiceComponent from "./ServiceComponent";
 import GuestComponent from "./GuestComponent";
-import {BookingSummaryComponent} from "./BookingSummaryComponent";
+import BookingSummaryComponent from "./BookingSummaryComponent";
 import {BookingSuccessComponent} from "./BookingSuccessComponent";
 
 type BookingState = {
@@ -130,7 +130,11 @@ class BookingComponent extends Component<{}, BookingState> {
                 )
             case 5:
                 return (
-                    <BookingSummaryComponent />
+                    <BookingSummaryComponent
+                        prevStep={ this.prevStep }
+                        nextStep={ this.nextStep }
+                        values={ values }
+                    />
                 )
             case 6:
                 return (
