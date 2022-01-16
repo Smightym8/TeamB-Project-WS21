@@ -21,6 +21,30 @@ const BookingSummaryComponent = ({ prevStep, values }: Props) => {
     } = values;
 
     const book = () => {
+        let finalRoomCategoryIds: string[] = [];
+        let finalRoomCategoryAmounts: number[] = [];
+        let finalServiceIds: string[] = [];
+
+        // Create new arrays because the other arrays must contain null values
+        // To match the index of the corresponding html element
+        roomCategoryIds.forEach((roomCategoryId: string) => {
+            if(roomCategoryId != null) {
+                finalRoomCategoryIds.push(roomCategoryId);
+            }
+        })
+
+        roomCategoryAmounts.forEach((roomCategoryAmount: number) => {
+           if(roomCategoryAmount != null) {
+               finalRoomCategoryAmounts.push(roomCategoryAmount);
+           }
+        });
+
+        serviceIds.forEach((serviceId: string) => {
+           if(serviceId != null) {
+               finalServiceIds.push(serviceId);
+           }
+        });
+
         let bookingData: BookingData = {
             firstName,
             lastName,
@@ -33,9 +57,9 @@ const BookingSummaryComponent = ({ prevStep, values }: Props) => {
             zipCode,
             city,
             country,
-            roomCategoryIds,
-            roomCategoryAmounts,
-            serviceIds,
+            finalRoomCategoryIds,
+            finalRoomCategoryAmounts,
+            finalServiceIds,
             checkInDate,
             checkOutDate,
             amountOfAdults,
