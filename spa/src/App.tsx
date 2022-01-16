@@ -10,16 +10,12 @@ import BookingDateComponent from "./components/BookingDateComponent";
 
 function App() {
   return (
-    <div>
       <Router>
-        <div className="container">
           <Routes>
             <Route path='/' element={<HomeComponent />} />
             <Route path='/choosedates' element={<BookingDateComponent />} />
           </Routes>
-        </div>
       </Router>
-    </div>
   );
 }
 
