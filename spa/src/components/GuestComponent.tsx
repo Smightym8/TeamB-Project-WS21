@@ -19,7 +19,8 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
     const[zipCodeError, setZipCodeError] = useState<string>("");
     const[cityError, setCityError] = useState<string>("");
     const[countryError, setCountryError] = useState<string>("");
-
+    const[amountOfAdultsError, setAmountOfAdultsError] = useState<string>("");
+    const[amountOfChildrenError, setAmountOfChildrenError] = useState<string>("");
 
     const progressBarStyle = {
         width: "80%"
@@ -38,6 +39,8 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
         let zipCodeErrorMsg: string = '';
         let cityErrorMsg: string = '';
         let countryErrorMsg: string = '';
+        let amountOfAdultsErrorMsg: string = '';
+        let amountOfChildrenErrorMsg: string= '';
 
         let birthDateLimit: Date = new Date();
         birthDateLimit.setFullYear(birthDateLimit.getFullYear() - 18);
@@ -102,6 +105,21 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
             countryErrorMsg = 'You have to provide your country!';
         }
 
+        if(values.amountOfAdults == 0) {
+            isValid = false;
+            amountOfAdultsErrorMsg = 'You have to provide at least 1 number of persons';
+        }
+
+        if(values.amountOfAdults < 0) {
+            isValid = false;
+            amountOfAdultsErrorMsg = 'You can not provide negative number of adults!'
+        }
+
+        if(values.amountOfChildren < 0) {
+            isValid = false;
+            amountOfChildrenErrorMsg = 'You can not provide negative number of children!'
+        }
+
         if(!isValid) {
             setFirstNameError(firstNameErrorMsg);
             setLastNameError(lastNameErrorMsg);
@@ -114,6 +132,8 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
             setZipCodeError(zipCodeErrorMsg);
             setCityError(cityErrorMsg);
             setCountryError(countryErrorMsg);
+            setAmountOfAdultsError(amountOfAdultsErrorMsg);
+            setAmountOfChildrenError(amountOfChildrenErrorMsg)
         } else {
             nextStep();
         }
@@ -268,6 +288,36 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
                         />
                         <label htmlFor="phone">Phone number</label>
                         <span className="text-danger">{phoneNumberError}</span>
+                    </div>
+                </div>
+
+                <div className="d-flex py-1">
+                    <div className="input-group me-1">
+                        <span className="input-group-text col-3">Adults</span>
+                        <input className="form-control"
+                               type="number"
+                               value={values.amountOfAdults}
+                               min={1}
+                               onChange={(e) => handleChange('amountOfAdults', e.target.value)}
+                        />
+                    </div>
+                    <div className="input-group ms-1">
+                        <span className="input-group-text col-3">Children</span>
+                        <input className="form-control"
+                               type="number"
+                               value={values.amountOfChildren}
+                               min={0}
+                               onChange={(e) => handleChange('amountOfChildren', e.target.value)}
+                        />
+                    </div>
+                </div>
+
+                <div className="d-flex py-1">
+                    <div className="input-group me-1">
+                        <span className="text-danger">{amountOfAdultsError}</span>
+                    </div>
+                    <div className="input-group ms-1">
+                        <span className="text-danger">{amountOfChildrenError}</span>
                     </div>
                 </div>
 

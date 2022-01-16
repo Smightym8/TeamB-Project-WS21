@@ -22,6 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/rest/hotel")
+@CrossOrigin(origins = "http://localhost:3000")
 public class HotelRestController {
     private static final String BOOKING_ROOMCATEGORIES_URL = "/roomcategories";
     private static final String BOOKING_SERVICES_URL = "/services";
