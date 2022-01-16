@@ -10,16 +10,12 @@ import BookingComponent from "./components/BookingComponent";
 
 function App() {
   return (
-    <div>
       <Router>
-        <div className="container">
           <Routes>
             <Route path='/' element={<HomeComponent />} />
             <Route path='/booking' element={<BookingComponent />} />
           </Routes>
-        </div>
       </Router>
-    </div>
   );
 }
 
