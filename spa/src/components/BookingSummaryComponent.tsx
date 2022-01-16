@@ -10,7 +10,7 @@ const BookingSummaryComponent = ({ prevStep, nextStep, values }: Props) => {
     const {
         checkInDate, checkOutDate, roomCategoryNames, roomCategoryAmounts,
         serviceNames, servicePrices, additionalInformation, firstName, lastName,
-        streetName, streetNumber, zipCode, city, country
+        streetName, streetNumber, zipCode, city, country, amountOfAdults, amountOfChildren
     } = values;
 
     const guestInformationStyle = {
@@ -24,6 +24,17 @@ const BookingSummaryComponent = ({ prevStep, nextStep, values }: Props) => {
     const textFieldStyle = {
         minWidth: "100%"
     };
+
+    const showChildrenAmount = () => {
+        if(amountOfChildren > 0) {
+            return (
+                <tr>
+                    <td>Children:</td>
+                    <td>{amountOfChildren}</td>
+                </tr>
+            );
+        }
+    }
 
     return (
         <div className="card card-height">
@@ -50,12 +61,11 @@ const BookingSummaryComponent = ({ prevStep, nextStep, values }: Props) => {
                             </tr>
                             <tr>
                                 <td>Adults:</td>
-                                <td>0</td>
+                                <td>{amountOfAdults}</td>
                             </tr>
-                            <tr>
-                                <td>Children:</td>
-                                <td>0</td>
-                            </tr>
+
+                            { showChildrenAmount() }
+
                             </tbody>
                         </table>
                     </div>

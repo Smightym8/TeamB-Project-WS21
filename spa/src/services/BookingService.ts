@@ -18,6 +18,16 @@ class BookingService {
            });
         });
     }
+
+    createBookingRest(bookingData: JSON): Promise<string> {
+        return new Promise<string>((resolve, reject) => {
+            const api = new HotelRestControllerApi();
+
+            api.createBooking(bookingData).then(response => {
+                resolve(response.body);
+            });
+        });
+    }
 }
 
 export default new BookingService();
