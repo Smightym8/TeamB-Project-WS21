@@ -1,4 +1,5 @@
 import {HotelRestControllerApi, RoomCategoryDTO, ServiceDTO} from "../openapi/ts_openapi_client";
+import {BookingData} from "../openapi/ts_openapi_client/model/BookingData";
 
 class BookingService {
     fetchAllRoomCategoriesRest(): Promise<RoomCategoryDTO[]> {
@@ -19,12 +20,14 @@ class BookingService {
         });
     }
 
-    createBookingRest(bookingData: JSON): Promise<string> {
+    createBookingRest(bookingData: BookingData): Promise<string> {
         return new Promise<string>((resolve, reject) => {
             const api = new HotelRestControllerApi();
 
             api.createBooking(bookingData).then(response => {
                 resolve(response.body);
+            }).catch(error => {
+                    reject(error);
             });
         });
     }

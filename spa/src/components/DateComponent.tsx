@@ -1,6 +1,4 @@
 import React, {useState} from 'react';
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import {
     Link
 } from "react-router-dom";
@@ -19,24 +17,28 @@ const DateComponent = ({ nextStep, handleChange, values }: Props) => {
         let isValid: boolean = true;
         let checkInDateErrorMsg: string = '';
         let checkOutDateErrorMsg: string = '';
-
+        let checkInDate: Date = new Date(values.checkInDate);
+        let checkOutDate: Date = new Date(values.checkOutDate);
         let now: Date = new Date();
-        now.setDate(now.getDate() - 1);
 
-        if(values.checkInDate === null) {
+        if(values.checkInDate === '') {
             isValid = false;
-            checkInDateErrorMsg = 'You have to enter a check in date!';
-        } else if(values.checkInDate < now) {
-            isValid = false;
-            checkInDateErrorMsg = 'Check in date has to be in the future!';
+            checkInDateErrorMsg = "You have to enter a check in date!";
         }
 
-        if(values.checkOutDate === null) {
+        if(values.checkOutDate === '') {
             isValid = false;
-            checkOutDateErrorMsg = 'You have to enter a check out date!';
-        } else if((values.checkInDate != null) && (values.checkOutDate <= values.checkInDate)) {
+            checkOutDateErrorMsg = "You have to enter a check out date!";
+        }
+
+        if(checkInDate < now) {
             isValid = false;
-            checkOutDateErrorMsg = 'Check out date has to be after check in date!';
+            checkInDateErrorMsg = "Check in date can not be in the past!";
+        }
+
+        if(checkInDate >= checkOutDate) {
+            isValid = false;
+            checkOutDateErrorMsg = "Check out date has to be after check in date";
         }
 
         if(!isValid) {
@@ -79,13 +81,11 @@ const DateComponent = ({ nextStep, handleChange, values }: Props) => {
                     <div className="mb-3">
                         <div className="input-group">
                             <span className="input-group-text col">Check-in date</span>
-                            <DatePicker
-                                className="form-control"
-                                dateFormat="dd / MM / yyyy"
-                                selected={values.checkInDate}
-                                onChange={(date) => handleChange('checkInDate', date)}
-                                minDate={new Date()}
-                                maxDate={values.checkOutDate}
+                            <input className="form-control"
+                                   type="date"
+                                   placeholder=" "
+                                   value={values.checkInDate}
+                                   onChange={(e) => handleChange('checkInDate', e.target.value)}
                             />
                         </div>
                         <span className="text-danger">{checkInDateError}</span>
@@ -94,12 +94,11 @@ const DateComponent = ({ nextStep, handleChange, values }: Props) => {
                     <div>
                         <div className="input-group">
                             <span className="input-group-text col">Check-out date</span>
-                            <DatePicker
-                                className="form-control"
-                                dateFormat="dd / MM / yyyy"
-                                selected={values.checkOutDate}
-                                onChange={(date) => handleChange('checkOutDate', date)}
-                                minDate={values.checkInDate}
+                            <input className="form-control"
+                                   type="date"
+                                   placeholder=" "
+                                   value={values.checkOutDate}
+                                   onChange={(e) => handleChange('checkOutDate', e.target.value)}
                             />
                         </div>
                         <span className="text-danger">{checkOutDateError}</span>

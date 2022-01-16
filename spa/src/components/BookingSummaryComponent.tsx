@@ -1,17 +1,56 @@
 import * as React from 'react';
+import BookingService from "../services/BookingService";
+import {BookingData} from "../openapi/ts_openapi_client/model/BookingData";
+import {useState} from "react";
+import {Link} from "react-router-dom";
 
 interface Props {
     prevStep: () => void;
-    nextStep: () => void;
     values: any
 }
 
-const BookingSummaryComponent = ({ prevStep, nextStep, values }: Props) => {
+const BookingSummaryComponent = ({ prevStep, values }: Props) => {
+    const [isBookingCreated, setIsBookingCreated] = useState<boolean>(false);
+    const [bookingId, setBookingId] = useState<string>("");
+    const [isError, setIsError] = useState<boolean>(false);
+
     const {
-        checkInDate, checkOutDate, roomCategoryNames, roomCategoryAmounts,
-        serviceNames, servicePrices, additionalInformation, firstName, lastName,
-        streetName, streetNumber, zipCode, city, country, amountOfAdults, amountOfChildren
+        checkInDate, checkOutDate, roomCategoryIds, roomCategoryNames, roomCategoryAmounts, serviceIds,
+        serviceNames, servicePrices, additionalInformation, firstName, lastName, gender, eMail, phoneNumber,
+        birthDate, streetName, streetNumber, zipCode, city, country, amountOfAdults, amountOfChildren
     } = values;
+
+    const book = () => {
+        let bookingData: BookingData = {
+            firstName,
+            lastName,
+            gender,
+            eMail,
+            phoneNumber,
+            birthDate,
+            streetName,
+            streetNumber,
+            zipCode,
+            city,
+            country,
+            roomCategoryIds,
+            roomCategoryAmounts,
+            serviceIds,
+            checkInDate,
+            checkOutDate,
+            amountOfAdults,
+            amountOfChildren,
+            additionalInformation
+        };
+
+        BookingService.createBookingRest(bookingData).then(response => {
+            setBookingId(response);
+            setIsBookingCreated(true);
+        }).catch(error => {
+                console.log(error);
+                setIsError(true);
+        });
+    }
 
     const guestInformationStyle = {
         width: "25%"
@@ -25,6 +64,42 @@ const BookingSummaryComponent = ({ prevStep, nextStep, values }: Props) => {
         minWidth: "100%"
     };
 
+    const progressBarStyle = {
+        width: "100%"
+    };
+
+    const showProgressBar = () => {
+        if(isBookingCreated) {
+            return (
+                <div className="progress">
+                    <div className="progress-bar bg-success" role="progressbar" style={progressBarStyle}>5/5</div>
+                </div>
+            );
+        } else {
+            return (
+                <div className="progress">
+                    <div className="progress-bar" role="progressbar" style={progressBarStyle}>5/5</div>
+                </div>
+            )
+        }
+    }
+
+    const showSuccessOrErrorMessage = () => {
+        if(isBookingCreated) {
+            return (
+                <div className="alert alert-success" role="alert">
+                    Booking {bookingId} successfully created!
+                </div>
+            );
+        } else if(isError) {
+            return (
+                <div className="alert alert-danger" role="alert">
+                    An error occured. Please try again later or contact the hotel.
+                </div>
+            );
+        }
+    }
+
     const showChildrenAmount = () => {
         if(amountOfChildren > 0) {
             return (
@@ -32,6 +107,20 @@ const BookingSummaryComponent = ({ prevStep, nextStep, values }: Props) => {
                     <td>Children:</td>
                     <td>{amountOfChildren}</td>
                 </tr>
+            );
+        }
+    }
+
+    const showNextButton = () => {
+        if(isBookingCreated || isError) {
+            return (
+                <Link to={'/'}>
+                    <button className="btn btn-primary float-end" type="submit">Back to Home</button>
+                </Link>
+            );
+        } else {
+            return (
+                <button className="btn btn-primary float-end" type="submit" onClick={() => book()}>Book</button>
             );
         }
     }
@@ -44,6 +133,14 @@ const BookingSummaryComponent = ({ prevStep, nextStep, values }: Props) => {
                         <span className="h4 align-middle">Create booking - summary</span>
                     </div>
                 </div>
+
+                <br />
+                <div>
+                    { showProgressBar() }
+                </div>
+
+                {showSuccessOrErrorMessage()}
+
             </div>
             <div className="card-body px-5 py-4">
                 <div className="d-flex justify-content-between">
@@ -53,11 +150,11 @@ const BookingSummaryComponent = ({ prevStep, nextStep, values }: Props) => {
                             <tbody>
                             <tr>
                                 <td>Check-in:</td>
-                                <td>{checkInDate.getDate()} / {checkInDate.getMonth() + 1} / {checkInDate.getFullYear()}</td>
+                                <td>{checkInDate}</td>
                             </tr>
                             <tr>
                                 <td>Check-out:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                <td>{checkOutDate.getDate()} / {checkOutDate.getMonth() + 1} / {checkOutDate.getFullYear()}</td>
+                                <td>{checkOutDate}</td>
                             </tr>
                             <tr>
                                 <td>Adults:</td>
@@ -132,6 +229,7 @@ const BookingSummaryComponent = ({ prevStep, nextStep, values }: Props) => {
             </div>
             <div className="card-footer">
                 <button className="btn btn-primary" type="submit" onClick={() => prevStep()}>Back</button>
+                { showNextButton() }
             </div>
         </div>
     );

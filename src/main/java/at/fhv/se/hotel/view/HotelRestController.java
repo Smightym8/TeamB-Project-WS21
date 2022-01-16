@@ -14,7 +14,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -68,7 +70,7 @@ public class HotelRestController {
         String firstName = bookingData.get("firstName").asText();
         String lastName = bookingData.get("lastName").asText();
         String gender = bookingData.get("gender").asText();
-        String email = bookingData.get("email").asText();
+        String email = bookingData.get("eMail").asText();
         String phoneNumber = bookingData.get("phoneNumber").asText();
         LocalDate birthDate = LocalDate.parse(bookingData.get("birthDate").asText());
         String streetName = bookingData.get("streetName").asText();
@@ -98,7 +100,7 @@ public class HotelRestController {
         List<String> serviceIds;
         try {
             roomCategoryIds = stringListReader.readValue(bookingData.findValue("roomCategoryIds"));
-            amounts = integerListReader.readValue(bookingData.findValue("amounts"));
+            amounts = integerListReader.readValue(bookingData.findValue("roomCategoryAmounts"));
             serviceIds = stringListReader.readValue(bookingData.findValue("serviceIds"));
         } catch (IOException e) {
             return e.getMessage();
@@ -124,7 +126,7 @@ public class HotelRestController {
                     additionalInformation
             );
         } catch (GuestNotFoundException | ServiceNotFoundException | RoomCategoryNotFoundException e) {
-           return e.getMessage();
+           throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
 
         return bookingId;

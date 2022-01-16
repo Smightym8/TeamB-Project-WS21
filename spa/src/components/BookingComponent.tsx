@@ -4,12 +4,11 @@ import RoomCategoryComponent from "./RoomCategoryComponent";
 import ServiceComponent from "./ServiceComponent";
 import GuestComponent from "./GuestComponent";
 import BookingSummaryComponent from "./BookingSummaryComponent";
-import {BookingSuccessComponent} from "./BookingSuccessComponent";
 
 type BookingState = {
     step?: number,
-    checkInDate?: Date,
-    checkOutDate?: Date,
+    checkInDate?: string,
+    checkOutDate?: string,
     roomCategoryIds?: string[],
     roomCategoryNames?: string[],
     roomCategoryAmounts?: number[],
@@ -35,8 +34,8 @@ type BookingState = {
 class BookingComponent extends Component<{}, BookingState> {
     state = {
         step: 1,
-        checkInDate: new Date(),
-        checkOutDate: new Date(),
+        checkInDate: '',
+        checkOutDate: '',
         roomCategoryIds: [],
         roomCategoryNames: [],
         roomCategoryAmounts: [],
@@ -136,13 +135,8 @@ class BookingComponent extends Component<{}, BookingState> {
                 return (
                     <BookingSummaryComponent
                         prevStep={ this.prevStep }
-                        nextStep={ this.nextStep }
                         values={ values }
                     />
-                )
-            case 6:
-                return (
-                    <BookingSuccessComponent />
                 )
             default:
                 // do nothing
