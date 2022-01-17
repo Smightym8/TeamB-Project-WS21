@@ -24,7 +24,7 @@ nav {
     perspective: 1px;
     transform-style: preserve-3d;
     scroll-behavior: smooth;
-    /*background-image: url(""); !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    background-image: url("./images/hotel.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -72,18 +72,31 @@ section {
     min-width: 100%;
 }
 
-
-
-
-.bg-color1 {
+/******************************
+    IMAGE CAROUSEL
+******************************/
+.card {
     background-color: #363636 !important;
-    color: white;
+    color: white !important;
 }
 
-.bg-color2 {
+.card-body {
     background-color: #3b3b3b !important;
-    color: white;
+    color: white !important;
 }
+
+.bg-warning {
+    color: black !important;
+}
+
+
+
+
+
+
+
+
+
 
 .progress {
     background-color: #606060 !important;
