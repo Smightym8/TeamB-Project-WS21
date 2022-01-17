@@ -630,4 +630,96 @@ public class CheckInServiceTest {
             i++;
         }
     }
+
+    @Test
+    void given_occupiedRoom_when_checkInBooking_then_RoomAlreadyOccupiedExceptionIsThrown() {
+        // given
+        LocalDate checkInDateExpected = LocalDate.of(2021,12,1);
+        LocalDate checkOutDateExpected = LocalDate.of(2021,12,2);
+        BookingId bookingIdExpected = new BookingId("1");
+
+        Guest guestExpected = Guest.create(
+                new GuestId("1"),
+                new FullName("Ali", "Cinar"),
+                Gender.MALE,
+                new Address("Hochschulstraße",
+                        "1", "Dornbirn",
+                        "6850", "Austria"),
+                LocalDate.of(1997, 8, 27),
+                "+43 676 123 456 789",
+                "ali.cinar@students.fhv.at",
+                0.0,
+                Collections.emptyList()
+        );
+
+        List<Service> servicesExpected = List.of(
+                Service.create(
+                        new ServiceId("1"),
+                        new ServiceName("TV"),
+                        new Price(
+                                new BigDecimal("100")
+                        )
+                ),
+                Service.create(
+                        new ServiceId("2"),
+                        new ServiceName("Breakfast"),
+                        new Price(
+                                new BigDecimal("100")
+                        )
+                )
+        );
+
+        RoomCategory roomCategoryExpected = RoomCategory.create(new RoomCategoryId("1"),
+                new RoomCategoryName("Single Room"),
+                new Description("This is a single room")
+        );
+
+        int roomCategoryAmountExpected = 4;
+
+        int amountOfAdultsExpected = 2;
+        int amountOfChildrenExpected = 0;
+        String additionalInformationExpected = "Vegan";
+        String bookingNumberExpected = checkInDateExpected.format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001";
+
+        Booking bookingExpected = Booking.create(
+                checkInDateExpected,
+                checkOutDateExpected,
+                bookingIdExpected,
+                guestExpected,
+                servicesExpected,
+                amountOfAdultsExpected,
+                amountOfChildrenExpected,
+                additionalInformationExpected,
+                bookingNumberExpected
+        );
+
+        List<String> roomNamesExpected = Arrays.asList("101", "102", "103");
+
+        bookingExpected.addRoomCategory(roomCategoryExpected, roomCategoryAmountExpected);
+
+        RoomStatus roomStatusFreeExpected = RoomStatus.FREE;
+
+        Room freeRoom1 = Room.create(new RoomName("101"), roomStatusFreeExpected, roomCategoryExpected);
+
+        Room freeRoom2 = Room.create(new RoomName("102"), roomStatusFreeExpected, roomCategoryExpected);
+
+        Room occupiedRoom = Room.create(new RoomName("103"), RoomStatus.OCCUPIED, roomCategoryExpected);
+
+        List<Room> roomsExpected = List.of(freeRoom1, freeRoom2, occupiedRoom);
+
+        Mockito.when(bookingRepository.bookingById(bookingIdExpected)).thenReturn(Optional.of(bookingExpected));
+        Mockito.when(roomRepository.roomByName(new RoomName(roomNamesExpected.get(0)))).thenReturn(Optional.of(roomsExpected.get(0)));
+        Mockito.when(roomRepository.roomByName(new RoomName(roomNamesExpected.get(1)))).thenReturn(Optional.of(roomsExpected.get(1)));
+        Mockito.when(roomRepository.roomByName(new RoomName(roomNamesExpected.get(2)))).thenReturn(Optional.of(roomsExpected.get(2)));
+
+        // when ... then
+        Exception exception = assertThrows(RoomAlreadyOccupiedException.class, () -> {
+            checkInService.checkIn(bookingIdExpected.id(), roomNamesExpected);
+        });
+
+        String expectedMessage = "One of the assigned rooms was already occupied. Please start again with assigning rooms.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
 }
