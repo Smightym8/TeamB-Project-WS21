@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
-import {
-    Link
-} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 interface Props {
     nextStep: () => void;
@@ -49,20 +47,13 @@ const DateComponent = ({ nextStep, handleChange, values }: Props) => {
         }
     }
 
-
-
     const progressBarStyle = {
         width: "20%"
     };
 
-    const formStyle = {
-        width: "40%",
-        margin: "auto"
-    };
-
     return (
-        <div className="container p-5 h-100">
-            <div className="card w-75 h-50 m-auto text-white bg-color1">
+        <div className="container h-100 p-5 ">
+            <div className="card w-75 h-50 m-auto">
                 <div className="card-header">
                     <div className="d-flex justify-content-between align-items-center">
                         <div>
@@ -74,9 +65,9 @@ const DateComponent = ({ nextStep, handleChange, values }: Props) => {
                         <div className="progress-bar" role="progressbar" style={progressBarStyle}>1/5</div>
                     </div>
                 </div>
-                <div className="card-body bg-color2">
-                    <div style={formStyle}>
-                        <div className="mb-3">
+                <div className="card-body overflow-auto">
+                    <div className="p-2 w-50 m-auto">
+                        <div className="p-3">
                             <div className="input-group">
                                 <span className="input-group-text col">Check-in date</span>
                                 <input className="form-control"
@@ -88,8 +79,7 @@ const DateComponent = ({ nextStep, handleChange, values }: Props) => {
                             </div>
                             <span className="text-danger">{checkInDateError}</span>
                         </div>
-
-                        <div>
+                        <div className="p-3">
                             <div className="input-group">
                                 <span className="input-group-text col">Check-out date</span>
                                 <input className="form-control"

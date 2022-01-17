@@ -81,6 +81,12 @@ public class TestData implements ApplicationRunner {
         );
         this.roomCategoryRepository.add(luxuryRoom);
 
+        RoomCategory suite = RoomCategory.create(roomCategoryRepository.nextIdentity(),
+                new RoomCategoryName("Suite"),
+                new Description("Suite")
+        );
+        this.roomCategoryRepository.add(suite);
+
 
 
 /*----- Seasons -----*/
@@ -215,6 +221,33 @@ public class TestData implements ApplicationRunner {
         this.roomCategoryPriceRepository.add(luxuryRoomSummerPrice1);
 
 
+        // suite
+        RoomCategoryPrice suiteWinterPrice1 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                winterSeason1,
+                suite,
+                new BigDecimal("350")
+        );
+
+        RoomCategoryPrice suiteSpringPrice1 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                springSeason1,
+                suite,
+                new BigDecimal("275")
+        );
+
+        RoomCategoryPrice suiteSummerPrice1 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                summerSeason1,
+                suite,
+                new BigDecimal("325")
+        );
+
+        this.roomCategoryPriceRepository.add(suiteWinterPrice1);
+        this.roomCategoryPriceRepository.add(suiteSpringPrice1);
+        this.roomCategoryPriceRepository.add(suiteSummerPrice1);
+
+
 
 /*----- Rooms -----*/
         Room roomS0 = Room.create(new RoomName("S100"), RoomStatus.FREE, singleRoom);
@@ -295,12 +328,24 @@ public class TestData implements ApplicationRunner {
         this.roomRepository.add(roomL4);
 
 
+        Room roomSU0 = Room.create(new RoomName("SU300"), RoomStatus.FREE, suite);
+        this.roomRepository.add(roomSU0);
+
+        Room roomSU1 = Room.create(new RoomName("SU301"), RoomStatus.FREE, suite);
+        this.roomRepository.add(roomSU1);
+
+        Room roomSU2 = Room.create(new RoomName("SU302"), RoomStatus.FREE, suite);
+        this.roomRepository.add(roomSU2);
+
+        Room roomSU3 = Room.create(new RoomName("SU303"), RoomStatus.FREE, suite);
+        this.roomRepository.add(roomSU3);
+
+        Room roomSU4 = Room.create(new RoomName("SU304"), RoomStatus.FREE, suite);
+        this.roomRepository.add(roomSU4);
+
 
 
 /*----- Services -----*/
-        Service tv = Service.create(serviceRepository.nextIdentity(), new ServiceName("TV"), new Price(new BigDecimal("10")));
-        this.serviceRepository.add(tv);
-
         Service wlan = Service.create(serviceRepository.nextIdentity(), new ServiceName("WLAN"), new Price(new BigDecimal("5")));
         this.serviceRepository.add(wlan);
 
@@ -309,12 +354,6 @@ public class TestData implements ApplicationRunner {
 
         Service sauna = Service.create(serviceRepository.nextIdentity(), new ServiceName("Sauna"), new Price(new BigDecimal("7")));
         this.serviceRepository.add(sauna);
-
-        Service bike = Service.create(serviceRepository.nextIdentity(), new ServiceName("Bike"), new Price(new BigDecimal("6")));
-        this.serviceRepository.add(bike);
-
-        Service eBike = Service.create(serviceRepository.nextIdentity(), new ServiceName("E-Bike"), new Price(new BigDecimal("10")));
-        this.serviceRepository.add(eBike);
 
         Service fitnessRoom = Service.create(serviceRepository.nextIdentity(), new ServiceName("Fitness Room"), new Price(new BigDecimal("8")));
         this.serviceRepository.add(fitnessRoom);
@@ -411,7 +450,7 @@ public class TestData implements ApplicationRunner {
                 LocalDate.now().plusDays(2),
                 bookingRepository.nextIdentity(),
                 johannes,
-                List.of(tv,bike),
+                List.of(swimmingPool,wlan),
                 1,
                 0,
                 "",
@@ -430,7 +469,7 @@ public class TestData implements ApplicationRunner {
                 LocalDate.now().plusDays(10),
                 bookingRepository.nextIdentity(),
                 ali,
-                List.of(eBike),
+                List.of(sauna),
                 2,
                 0,
                 "Vegan",

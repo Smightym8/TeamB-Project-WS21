@@ -13,18 +13,18 @@ html, body {
 }
 
 nav {
-    height: 6%;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+    height: 7.5%;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
 }
 
 #root {
-    height: 94%;
+    height: 92.5%;
     overflow-x: hidden;
     overflow-y: auto;
     perspective: 1px;
     transform-style: preserve-3d;
     scroll-behavior: smooth;
-    background-image: url("./images/background.jpg");
+    background-image: url("./images/apartment1.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -55,14 +55,10 @@ section {
 }
 
 .section-heading {
-    font-size: 3rem;
-    text-align: center;
     position: absolute;
-    padding: 1rem;
-    background: #fafafa;
-    box-shadow: 0 0 20px #333;
     top: 90%;
     left: 50%;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
     transform: translateZ(-.3px) scale(1.3) translate(-39%, -39%);
     z-index: 3;
 }
@@ -70,43 +66,30 @@ section {
 /******************************
     IMAGE CAROUSEL
 ******************************/
-.carousel-item {
-    height: 100%;
-    background: no-repeat center center scroll;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+
+.pic {
+    min-height: 100%;
+    min-width: 100%;
 }
 
-.bg-color1 {
+/******************************
+    IMAGE CAROUSEL
+******************************/
+.card, .input-group-text {
     background-color: #363636 !important;
-    color: white;
+    color: white !important;
 }
 
-.bg-color2 {
+.card-body {
     background-color: #3b3b3b !important;
-    color: white;
-}
-
-.progress {
-    background-color: #606060 !important;
-}
-
-.input-group-text {
-    background-color: #606060 !important;
     color: white !important;
-
 }
 
-.form-control {
-    background-color: #888888 !important;
+.table-dark {
+    --bs-table-bg: transparent !important;
+}
+
+.form-control, .form-select, .progress {
+    background-color: #565656 !important;
     color: white !important;
-
 }
-
-
-
-
-
-
