@@ -75,7 +75,7 @@ section {
 /******************************
     IMAGE CAROUSEL
 ******************************/
-.card {
+.card, .input-group-text {
     background-color: #363636 !important;
     color: white !important;
 }
@@ -89,30 +89,7 @@ section {
     --bs-table-bg: transparent !important;
 }
 
-
-
-
-
-
-
-.progress {
-    background-color: #606060 !important;
-}
-
-.input-group-text {
-    background-color: #606060 !important;
+.form-control, .form-select, .progress {
+    background-color: #565656 !important;
     color: white !important;
-
 }
-
-.form-control, .form-select {
-    background-color: #888888 !important;
-    color: white !important;
-
-}
-
-
-
-
-
-
