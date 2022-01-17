@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
-import {
-    Link
-} from "react-router-dom";
-import logo from '../images/background.jpg';
-import logo2 from '../images/fruhstuck.jpg';
-import schwarz from '../images/Schwarz_Thomas.jpg';
+import {Link} from "react-router-dom";
 
+import hotel from '../images/hotel.jpg';
+import pool from '../images/pool.jpg';
+import sauna from '../images/sauna.jpg';
+import apartment1 from '../images/apartment1.jpg';
+import apartment2 from '../images/apartment2.jpg';
+import room from '../images/room.jpg';
+import thomas from '../images/thomas.jpg';
 
 class HomeComponent extends Component<{}, {}> {
 
@@ -16,13 +18,25 @@ class HomeComponent extends Component<{}, {}> {
                     <Link to={'/booking'}>
                         <button className="section-heading btn btn-warning btn-lg fw-bold">BOOK NOW!</button>
                     </Link>
-                    <div id="image-carousel" className="carousel slide carousel-fade">
-                        <div className="carousel-inner">
-                            <div className="carousel-item active" data-bs-interval="5000">
-                                <img src={logo2} className="d-block h-100" alt="image"/>
+                    <div id="image-carousel" className="carousel slide carousel-fade h-100 overflow-hidden" data-bs-ride="carousel" data-bs-interval="6000" data-interval="true">
+                        <div className="carousel-inner h-100">
+                            <div className="carousel-item h-100 active">
+                                <img src={hotel} className="d-block pic" alt="image"/>
                             </div>
-                            <div className="carousel-item" data-bs-interval="5000">
-                                <img src={logo} className="d-block h-100" alt="image"/>
+                            <div className="carousel-item h-100">
+                                <img src={pool} className="d-block pic" alt="image"/>
+                            </div>
+                            <div className="carousel-item h-100">
+                                <img src={sauna} className="d-block pic" alt="image"/>
+                            </div>
+                            <div className="carousel-item h-100">
+                                <img src={apartment1} className="d-block pic" alt="image"/>
+                            </div>
+                            <div className="carousel-item h-100">
+                                <img src={apartment2} className="d-block pic" alt="image"/>
+                            </div>
+                            <div className="carousel-item h-100">
+                                <img src={room} className="d-block pic" alt="image"/>
                             </div>
                         </div>
                         <button className="carousel-control-prev" data-bs-target="#image-carousel" data-bs-slide="prev">
@@ -36,7 +50,7 @@ class HomeComponent extends Component<{}, {}> {
                 <section className="section1 p-5 bg-dark" id="about">
                     <div className="container row mx-auto bg-light p-4 overflow-auto">
                         <div className="col p-5 my-auto">
-                            <img src={schwarz} height="auto" width="100%" alt="image"/>
+                            <img src={thomas} height="auto" width="100%" alt="image"/>
                         </div>
                         <div className="col p-5 fs-5">
                             <span><span className="fw-bold">Moving history and tradition</span>, which can be felt in every corner of our house and radiates security and consistency - and yet does not close itself to the new.
