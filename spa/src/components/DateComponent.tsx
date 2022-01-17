@@ -51,11 +51,6 @@ const DateComponent = ({ nextStep, handleChange, values }: Props) => {
         width: "20%"
     };
 
-    const formStyle = {
-        width: "40%",
-        margin: "auto"
-    };
-
     return (
         <div className="container h-100 p-5 ">
             <div className="card w-75 h-50 m-auto">
@@ -70,7 +65,7 @@ const DateComponent = ({ nextStep, handleChange, values }: Props) => {
                         <div className="progress-bar bg-warning" role="progressbar" style={progressBarStyle}>1/5</div>
                     </div>
                 </div>
-                <div className="card-body">
+                <div className="card-body overflow-auto">
                     <div className="p-2 w-50 m-auto">
                         <div className="p-3">
                             <div className="input-group">
