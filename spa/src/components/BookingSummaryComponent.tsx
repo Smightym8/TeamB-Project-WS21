@@ -112,13 +112,13 @@ const BookingSummaryComponent = ({ prevStep, values }: Props) => {
         if(isBookingCreated) {
             return (
                 <div className="alert alert-success" role="alert">
-                    Booking {bookingId} successfully created!
+                    Successfully booked! Your booking no. is {bookingId}
                 </div>
             );
         } else if(isError) {
             return (
                 <div className="alert alert-danger" role="alert">
-                    An error occured. Please try again later or contact the hotel.
+                    An error occurred. Please try again or contact the hotel.
                 </div>
             );
         }

@@ -30,6 +30,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -75,6 +76,9 @@ public class StayDetailsServiceTest {
                 0,
                 Collections.emptyList()
         );
+
+        String bookingNumberExpected = checkInExpected.format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001";
+
         Booking bookingExpected = Booking.create(
                 checkInExpected,
                 checkOutExpected,
@@ -83,7 +87,8 @@ public class StayDetailsServiceTest {
                 servicesExpected,
                 amountOfAdultsExpected,
                 amountOfChildrenExpected,
-                additionalInformationExpected
+                additionalInformationExpected,
+                bookingNumberExpected
         );
         RoomCategory categoryExpected = RoomCategory.create(
                 new RoomCategoryId("1"),

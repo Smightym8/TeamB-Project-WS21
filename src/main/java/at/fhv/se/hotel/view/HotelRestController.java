@@ -1,14 +1,13 @@
 package at.fhv.se.hotel.view;
 
-import at.fhv.se.hotel.application.api.BookingCreationService;
-import at.fhv.se.hotel.application.api.GuestCreationService;
-import at.fhv.se.hotel.application.api.RoomCategoryListingService;
-import at.fhv.se.hotel.application.api.ServiceListingService;
+import at.fhv.se.hotel.application.api.*;
+import at.fhv.se.hotel.application.api.exception.BookingNotFoundException;
 import at.fhv.se.hotel.application.api.exception.GuestNotFoundException;
 import at.fhv.se.hotel.application.api.exception.RoomCategoryNotFoundException;
 import at.fhv.se.hotel.application.api.exception.ServiceNotFoundException;
 import at.fhv.se.hotel.application.dto.RoomCategoryDTO;
 import at.fhv.se.hotel.application.dto.ServiceDTO;
+import at.fhv.se.hotel.domain.model.booking.Booking;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
@@ -41,6 +40,9 @@ public class HotelRestController {
 
     @Autowired
     BookingCreationService bookingCreationService;
+
+    @Autowired
+    BookingSummaryService bookingSummaryService;
 
     @GetMapping(BOOKING_ROOMCATEGORIES_URL)
     @ResponseBody
@@ -129,6 +131,13 @@ public class HotelRestController {
            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
 
-        return bookingId;
+        String bookingNumber;
+        try {
+            bookingNumber = bookingSummaryService.detailsByBookingId(bookingId).bookingNumber();
+        } catch (BookingNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
+
+        return bookingNumber;
     }
 }

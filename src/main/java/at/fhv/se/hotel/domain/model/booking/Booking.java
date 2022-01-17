@@ -25,6 +25,8 @@ public class Booking {
     private int amountOfAdults;
     private int amountOfChildren;
     private String additionalInformation;
+    private LocalDate bookingDate;
+    private String bookingNumber;
 
     // Required by hibernate
     @SuppressWarnings("unused")
@@ -34,7 +36,7 @@ public class Booking {
     public static Booking create(LocalDate aCheckInDate, LocalDate aCheckOutDate,
                                  BookingId aBookingId, Guest aGuest,
                                  List<Service> aServices,int anAmountOfAdults,
-                                 int anAmountOfChildren, String anAdditionalInformation) {
+                                 int anAmountOfChildren, String anAdditionalInformation, String aBookingNumber) {
 
         // If no additional information is provided use 'Nothing' as default
         anAdditionalInformation = anAdditionalInformation.isEmpty() ? "Nothing" : anAdditionalInformation;
@@ -42,14 +44,15 @@ public class Booking {
         return new Booking(
                 aCheckInDate, aCheckOutDate, aBookingId, aGuest,
                 aServices, anAmountOfAdults, anAmountOfChildren,
-                anAdditionalInformation
+                anAdditionalInformation, LocalDate.now(), aBookingNumber
         );
     }
 
     private Booking(LocalDate aCheckInDate, LocalDate aCheckOutDate,
                     BookingId aBookingId, Guest aGuest,
                     List<Service> aServices, int anAmountOfAdults,
-                    int anAmountOfChildren, String anAdditionalInformation) {
+                    int anAmountOfChildren, String anAdditionalInformation,
+                    LocalDate aBookingDate, String aBookingNumber) {
 
         this.checkInDate = aCheckInDate;
         this.checkOutDate = aCheckOutDate;
@@ -61,6 +64,8 @@ public class Booking {
         this.amountOfAdults = anAmountOfAdults;
         this.amountOfChildren = anAmountOfChildren;
         this.additionalInformation = anAdditionalInformation;
+        this.bookingDate = aBookingDate;
+        this.bookingNumber = aBookingNumber;
     }
 
     public void addRoomCategory(RoomCategory aRoomCategory, int anAmount) {
@@ -112,6 +117,14 @@ public class Booking {
         return additionalInformation;
     }
 
+    public LocalDate getBookingDate() {
+        return bookingDate;
+    }
+
+    public String getBookingNumber() {
+        return bookingNumber;
+    }
+
     public void deactivate() {
         isActive = false;
     }
@@ -122,12 +135,12 @@ public class Booking {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Booking booking = (Booking) o;
-        return isActive == booking.isActive && amountOfAdults == booking.amountOfAdults && amountOfChildren == booking.amountOfChildren && Objects.equals(id, booking.id) && Objects.equals(checkInDate, booking.checkInDate) && Objects.equals(checkOutDate, booking.checkOutDate) && Objects.equals(bookingId, booking.bookingId) && Objects.equals(guest, booking.guest) && Objects.equals(roomCategories, booking.roomCategories) && Objects.equals(services, booking.services) && Objects.equals(additionalInformation, booking.additionalInformation);
+        return isActive == booking.isActive && amountOfAdults == booking.amountOfAdults && amountOfChildren == booking.amountOfChildren && Objects.equals(id, booking.id) && Objects.equals(checkInDate, booking.checkInDate) && Objects.equals(checkOutDate, booking.checkOutDate) && Objects.equals(bookingId, booking.bookingId) && Objects.equals(guest, booking.guest) && Objects.equals(roomCategories, booking.roomCategories) && Objects.equals(services, booking.services) && Objects.equals(additionalInformation, booking.additionalInformation) && Objects.equals(bookingDate, booking.bookingDate) && Objects.equals(bookingNumber, booking.bookingNumber);
     }
 
     @Generated
     @Override
     public int hashCode() {
-        return Objects.hash(id, checkInDate, checkOutDate, isActive, bookingId, guest, roomCategories, services, amountOfAdults, amountOfChildren, additionalInformation);
+        return Objects.hash(id, checkInDate, checkOutDate, isActive, bookingId, guest, roomCategories, services, amountOfAdults, amountOfChildren, additionalInformation, bookingDate, bookingNumber);
     }
 }

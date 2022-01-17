@@ -3,6 +3,7 @@ package at.fhv.se.hotel.domain.repository;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,4 +15,6 @@ public interface BookingRepository {
     void add(Booking booking);
 
     Optional<Booking> bookingById(BookingId bookingId);
+
+    int amountOfBookingsByDate(LocalDate bookingDate);
 }

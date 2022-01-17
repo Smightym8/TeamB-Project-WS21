@@ -31,6 +31,7 @@ import org.springframework.test.context.ActiveProfiles;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -133,7 +134,6 @@ public class BookingSummaryServiceTests {
         LocalDate checkOutDateExpected = LocalDate.of(2022, 1, 20);
         int amountOfAdultsExpected = 2;
         int amountOfChildrenExpected = 2;
-
 
         Guest guestExpected = Guest.create(
                 guestIdExpected,
@@ -429,6 +429,8 @@ public class BookingSummaryServiceTests {
                 new Price(new BigDecimal("100"))
         );
 
+        String bookingNumber = checkInDateExpected.format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001";
+
         Booking bookingExpected = Booking.create(
                 checkInDateExpected,
                 checkOutDateExpected,
@@ -437,7 +439,8 @@ public class BookingSummaryServiceTests {
                 List.of(serviceExpected),
                 amountOfAdultsExpected,
                 amountOfChildrenExpected,
-                "None"
+                "None",
+                bookingNumber
         );
         bookingExpected.addRoomCategory(roomCategoryExpected, 1);
 

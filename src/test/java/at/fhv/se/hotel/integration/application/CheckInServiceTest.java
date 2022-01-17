@@ -37,6 +37,7 @@ import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -92,7 +93,8 @@ public class CheckInServiceTest {
                 servicesExpected,
                 2,
                 1,
-                "Nothing"
+                "Nothing",
+                "20210801001"
         );
 
         RoomCategory roomCategoryExpected = RoomCategory.create(new RoomCategoryId("1"),
@@ -193,6 +195,7 @@ public class CheckInServiceTest {
         int amountOfAdultsExpected = 2;
         int amountOfChildrenExpected = 0;
         String additionalInformationExpected = "Vegan";
+        String bookingNumberExpected = checkInDateExpected.format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001";
 
         Booking bookingExpected = Booking.create(
                 checkInDateExpected,
@@ -202,7 +205,8 @@ public class CheckInServiceTest {
                 servicesExpected,
                 amountOfAdultsExpected,
                 amountOfChildrenExpected,
-                additionalInformationExpected
+                additionalInformationExpected,
+                bookingNumberExpected
         );
 
         bookingExpected.addRoomCategory(roomCategoryExpected, roomCategoryAmountExpected);
@@ -284,6 +288,7 @@ public class CheckInServiceTest {
         int amountOfAdultsExpected = 2;
         int amountOfChildrenExpected = 0;
         String additionalInformationExpected = "Vegan";
+        String bookingNumberExpected = checkInDateExpected.format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001";
 
         Booking bookingExpected = Booking.create(
                 checkInDateExpected,
@@ -293,7 +298,8 @@ public class CheckInServiceTest {
                 servicesExpected,
                 amountOfAdultsExpected,
                 amountOfChildrenExpected,
-                additionalInformationExpected
+                additionalInformationExpected,
+                bookingNumberExpected
         );
 
         bookingExpected.addRoomCategory(roomCategoryExpected, roomCategoryAmountExpected);
@@ -375,6 +381,7 @@ public class CheckInServiceTest {
         int amountOfAdultsExpected = 2;
         int amountOfChildrenExpected = 0;
         String additionalInformationExpected = "Vegan";
+        String bookingNumberExpected = checkInDateExpected.format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001";
 
         Booking bookingExpected = Booking.create(
                 checkInDateExpected,
@@ -384,7 +391,8 @@ public class CheckInServiceTest {
                 servicesExpected,
                 amountOfAdultsExpected,
                 amountOfChildrenExpected,
-                additionalInformationExpected
+                additionalInformationExpected,
+                bookingNumberExpected
         );
 
         bookingExpected.addRoomCategory(roomCategoryExpected, roomCategoryAmountExpected);

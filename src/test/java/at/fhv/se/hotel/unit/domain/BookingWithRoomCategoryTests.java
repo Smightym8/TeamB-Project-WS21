@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 
@@ -56,7 +57,8 @@ public class BookingWithRoomCategoryTests {
                 List.of(service),
                 2,
                 0,
-                "Extra pillow"
+                "Extra pillow",
+                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
         );
 
         RoomCategory roomCategory = RoomCategory.create(

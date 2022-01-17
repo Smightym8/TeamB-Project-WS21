@@ -45,8 +45,8 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
 
     @Override
     public Invoice splitInvoice(Stay stay, List<String> roomNames, String action) throws SeasonNotFoundException, RoomNotFoundException {
-
-        int todaysInvoicesAmount = invoiceRepository.invoicesByDate(LocalDate.now()).size() + 1;
+        // TODO: Write own method in repo to get amount of invoices in repo
+        int todaysInvoicesAmount = invoiceRepository.amountOfInvoicesByDate(LocalDate.now()) + 1;
         List<RoomCategoryPrice> roomCategoryPriceList = new ArrayList<>();
 
         String invoiceSuffix = "";

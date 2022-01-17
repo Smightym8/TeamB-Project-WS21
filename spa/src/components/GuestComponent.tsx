@@ -42,7 +42,7 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
         let amountOfAdultsErrorMsg: string = '';
         let amountOfChildrenErrorMsg: string= '';
 
-        let birthDate : Date = new Date(values.birthDate);
+        let birthDate: Date = new Date(values.birthDate);
         let birthDateLimit: Date = new Date();
         birthDateLimit.setFullYear(birthDateLimit.getFullYear() - 18);
 
