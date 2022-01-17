@@ -126,110 +126,113 @@ const BookingSummaryComponent = ({ prevStep, values }: Props) => {
     }
 
     return (
-        <div className="card card-height">
-            <div className="card-header">
-                <div className="d-flex justify-content-between align-items-center">
+        <div className="container p-5">
+
+            <div className="card card-height bg-color1">
+                <div className="card-header">
+                    <div className="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span className="h4 align-middle">Create booking - summary</span>
+                        </div>
+                    </div>
+
+                    <br />
                     <div>
-                        <span className="h4 align-middle">Create booking - summary</span>
+                        { showProgressBar() }
                     </div>
+
+                    {showSuccessOrErrorMessage()}
+
                 </div>
-
-                <br />
-                <div>
-                    { showProgressBar() }
-                </div>
-
-                {showSuccessOrErrorMessage()}
-
-            </div>
-            <div className="card-body px-5 py-4">
-                <div className="d-flex justify-content-between">
-                    <div style={guestInformationStyle}>
-                        <p className="h5">Booking</p>
-                        <table>
-                            <tbody>
-                            <tr>
-                                <td>Check-in:</td>
-                                <td>{checkInDate}</td>
-                            </tr>
-                            <tr>
-                                <td>Check-out:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                <td>{checkOutDate}</td>
-                            </tr>
-                            <tr>
-                                <td>Adults:</td>
-                                <td>{amountOfAdults}</td>
-                            </tr>
-
-                            { showChildrenAmount() }
-
-                            </tbody>
-                        </table>
-                    </div>
-                    <div style={guestInformationStyle}>
-                        <p className="h5">Guest</p>
-                        <table>
-                            <tbody>
-                            <tr>
-                                <td> {firstName} {lastName} </td>
-                            </tr>
-                            <tr>
-                                <td> {streetName} {streetNumber} </td>
-                            </tr>
-                            <tr>
-                                <td> {zipCode} {city} </td>
-                            </tr>
-                            <tr>
-                                <td> {country} </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <hr className="my-4" />
-
-                <div className="mb-4 mt-2">
-                    <p className="h5">Room Categories</p>
-                    <table className="table table-sm table-hover">
-                        <tbody>
-                        {
-                            roomCategoryNames.map((roomCategoryName: string, index: number) =>
-                                <tr style={tableStyle}>
-                                    <td className="align-middle col">{roomCategoryName}</td>
-                                    <td className="align-middle col-3">{roomCategoryAmounts[index]}</td>
+                <div className="card-body px-5 py-4 bg-color2">
+                    <div className="d-flex justify-content-between">
+                        <div style={guestInformationStyle}>
+                            <p className="h5">Booking</p>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td>Check-in:</td>
+                                    <td>{checkInDate}</td>
                                 </tr>
-                            )
-                        }
-                        </tbody>
-                    </table>
-                </div>
+                                <tr>
+                                    <td>Check-out:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    <td>{checkOutDate}</td>
+                                </tr>
+                                <tr>
+                                    <td>Adults:</td>
+                                    <td>{amountOfAdults}</td>
+                                </tr>
 
-                <div className="mb-4 mt-2">
-                    <p className="h5">Services</p>
-                    <table className="table table-sm table-hover">
-                        <tbody>
+                                { showChildrenAmount() }
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div style={guestInformationStyle}>
+                            <p className="h5">Guest</p>
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td> {firstName} {lastName} </td>
+                                </tr>
+                                <tr>
+                                    <td> {streetName} {streetNumber} </td>
+                                </tr>
+                                <tr>
+                                    <td> {zipCode} {city} </td>
+                                </tr>
+                                <tr>
+                                    <td> {country} </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <hr className="my-4" />
+
+                    <div className="mb-4 mt-2">
+                        <p className="h5">Room Categories</p>
+                        <table className="table table-sm table-hover">
+                            <tbody>
                             {
-                                serviceNames.map((serviceName: string, index: number) =>
+                                roomCategoryNames.map((roomCategoryName: string, index: number) =>
                                     <tr style={tableStyle}>
-                                        <td className="align-middle col">{serviceName}</td>
-                                        <td className="align-middle col-3">€ {servicePrices[index]} per day/room</td>
+                                        <td className="align-middle col">{roomCategoryName}</td>
+                                        <td className="align-middle col-3">{roomCategoryAmounts[index]}</td>
                                     </tr>
                                 )
                             }
-                        </tbody>
-                    </table>
-                </div>
+                            </tbody>
+                        </table>
+                    </div>
 
-                <div>
-                    <p className="h5">Additional information</p>
-                    <textarea style={textFieldStyle} disabled>{additionalInformation}</textarea>
-                </div>
+                    <div className="mb-4 mt-2">
+                        <p className="h5">Services</p>
+                        <table className="table table-sm table-hover">
+                            <tbody>
+                                {
+                                    serviceNames.map((serviceName: string, index: number) =>
+                                        <tr style={tableStyle}>
+                                            <td className="align-middle col">{serviceName}</td>
+                                            <td className="align-middle col-3">€ {servicePrices[index]} per day/room</td>
+                                        </tr>
+                                    )
+                                }
+                            </tbody>
+                        </table>
+                    </div>
 
-            </div>
-            <div className="card-footer">
-                <button className="btn btn-primary" type="submit" onClick={() => prevStep()}>Back</button>
-                { showNextButton() }
+                    <div>
+                        <p className="h5">Additional information</p>
+                        <textarea style={textFieldStyle} disabled>{additionalInformation}</textarea>
+                    </div>
+
+                </div>
+                <div className="card-footer">
+                    <button className="btn btn-primary" type="submit" onClick={() => prevStep()}>Back</button>
+                    { showNextButton() }
+                </div>
             </div>
         </div>
     );

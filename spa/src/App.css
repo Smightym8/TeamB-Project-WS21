@@ -20,10 +20,14 @@ nav {
 #root {
     height: 94%;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
     perspective: 1px;
     transform-style: preserve-3d;
     scroll-behavior: smooth;
+    background-image: url("./images/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 /******************************
@@ -31,7 +35,7 @@ nav {
 ******************************/
 section {
     position: relative;
-    height: 100%;
+    min-height: 100%;
     transform-style: inherit;
 }
 
@@ -41,7 +45,7 @@ section {
     z-index: 1;
 }
 
-.section2::before, #carouselExampleControls {
+.section2::before, #image-carousel {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -74,3 +78,35 @@ section {
     -o-background-size: cover;
     background-size: cover;
 }
+
+.bg-color1 {
+    background-color: #363636 !important;
+    color: white;
+}
+
+.bg-color2 {
+    background-color: #3b3b3b !important;
+    color: white;
+}
+
+.progress {
+    background-color: #606060 !important;
+}
+
+.input-group-text {
+    background-color: #606060 !important;
+    color: white !important;
+
+}
+
+.form-control {
+    background-color: #888888 !important;
+    color: white !important;
+
+}
+
+
+
+
+
+
