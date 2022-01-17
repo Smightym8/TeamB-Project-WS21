@@ -99,9 +99,9 @@ public class HotelRestController {
         List<Integer> amounts;
         List<String> serviceIds;
         try {
-            roomCategoryIds = stringListReader.readValue(bookingData.findValue("roomCategoryIds"));
-            amounts = integerListReader.readValue(bookingData.findValue("roomCategoryAmounts"));
-            serviceIds = stringListReader.readValue(bookingData.findValue("serviceIds"));
+            roomCategoryIds = stringListReader.readValue(bookingData.findValue("finalRoomCategoryIds"));
+            amounts = integerListReader.readValue(bookingData.findValue("finalRoomCategoryAmounts"));
+            serviceIds = stringListReader.readValue(bookingData.findValue("finalServiceIds"));
         } catch (IOException e) {
             return e.getMessage();
         }
