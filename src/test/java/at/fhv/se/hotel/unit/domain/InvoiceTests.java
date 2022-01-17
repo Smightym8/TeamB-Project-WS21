@@ -66,7 +66,8 @@ public class InvoiceTests {
                 services,
                 2,
                 1,
-                ""
+                "",
+                "20210801001"
         );
         booking.addRoomCategory(category, 1);
 

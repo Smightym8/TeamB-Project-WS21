@@ -29,6 +29,7 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -123,7 +124,8 @@ public class BookingListingServiceTests {
                 List.of(serviceExpected1),
                 2,
                 0,
-                "Extra pillow"
+                "Extra pillow",
+                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
         );
         bookingExpected1.addRoomCategory(categoryExpected1, 1);
 
@@ -135,7 +137,8 @@ public class BookingListingServiceTests {
                 List.of(serviceExpected2),
                 2,
                 1,
-                "Vegan"
+                "Vegan",
+                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "002"
         );
         bookingExpected2.addRoomCategory(categoryExpected1, 1);
         bookingExpected2.addRoomCategory(categoryExpected2, 1);
@@ -148,7 +151,8 @@ public class BookingListingServiceTests {
                 List.of(serviceExpected1),
                 2,
                 4,
-                "Vegan"
+                "Vegan",
+                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "003"
         );
         bookingExpected3.addRoomCategory(categoryExpected1, 2);
         bookingExpected3.addRoomCategory(categoryExpected2, 2);

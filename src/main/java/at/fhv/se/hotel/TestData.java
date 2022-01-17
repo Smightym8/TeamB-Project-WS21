@@ -26,6 +26,7 @@ import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.sql.Array;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -413,7 +414,8 @@ public class TestData implements ApplicationRunner {
                 List.of(tv,bike),
                 1,
                 0,
-                ""
+                "",
+                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
         );
         b1.addRoomCategory(singleRoom, 1);
         this.bookingRepository.add(b1);
@@ -431,7 +433,8 @@ public class TestData implements ApplicationRunner {
                 List.of(eBike),
                 2,
                 0,
-                "Vegan"
+                "Vegan",
+                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "002"
         );
         b2.addRoomCategory(singleRoom, 2);
         b2.addRoomCategory(doubleRoom, 2);

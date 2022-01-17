@@ -1,12 +1,11 @@
 package at.fhv.se.hotel.api;
 
-import at.fhv.se.hotel.application.api.BookingCreationService;
-import at.fhv.se.hotel.application.api.GuestCreationService;
-import at.fhv.se.hotel.application.api.RoomCategoryListingService;
-import at.fhv.se.hotel.application.api.ServiceListingService;
+import at.fhv.se.hotel.application.api.*;
+import at.fhv.se.hotel.application.api.exception.BookingNotFoundException;
 import at.fhv.se.hotel.application.api.exception.GuestNotFoundException;
 import at.fhv.se.hotel.application.api.exception.RoomCategoryNotFoundException;
 import at.fhv.se.hotel.application.api.exception.ServiceNotFoundException;
+import at.fhv.se.hotel.application.dto.BookingDetailsDTO;
 import at.fhv.se.hotel.application.dto.RoomCategoryDTO;
 import at.fhv.se.hotel.application.dto.ServiceDTO;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -24,7 +23,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -47,6 +48,9 @@ public class RestApiTests {
 
     @MockBean
     BookingCreationService bookingCreationService;
+
+    @MockBean
+    BookingSummaryService bookingSummaryService;
 
     @Test
     public void given_roomCategories_when_fetchingAllCategoriesThroughRest_then_returnEqualsCategories() {
@@ -106,7 +110,7 @@ public class RestApiTests {
     }
 
     @Test
-    public void given_bookingData_when_book_then_returnBookingId() throws RoomCategoryNotFoundException, ServiceNotFoundException, GuestNotFoundException {
+    public void given_bookingData_when_book_then_returnBookingId() throws RoomCategoryNotFoundException, ServiceNotFoundException, GuestNotFoundException, BookingNotFoundException {
         // given
         String firstName = "John";
         String lastName = "Doe";
@@ -121,16 +125,40 @@ public class RestApiTests {
         String country = "Austria";
         double discountInPercent = 0;
 
-        String bookingIdExpected = "1";
+        String bookingId = "1";
         String guestId = "1";
-        List<String> roomCategoryIds = List.of("1", "2");
-        List<Integer> amounts = List.of(2, 0);
+        List<String> roomCategoryIds = List.of("1");
+        List<Integer> amounts = List.of(2);
+        Map<String, Integer> categoriesWithAmount = Map.of("Single Room", 2);
         List<String> serviceIds = List.of("1", "2");
+        Map<String, BigDecimal> services = Map.of("TV", new BigDecimal("10"), "WLAN", new BigDecimal("5"));
         LocalDate checkInDate = LocalDate.of(2022, 1, 15);
         LocalDate checkOutDate = LocalDate.of(2022, 1, 20);
         int amountOfAdults = 2;
         int amountOfChildren = 0;
         String additionalInformation = "Vegan";
+        String bookingNumberExpected = checkInDate.format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001";
+
+        BookingDetailsDTO bookingDetailsDTO = BookingDetailsDTO.builder()
+                .withBookingId(bookingId)
+                .withGuestFirstName(firstName)
+                .withGuestLastName(lastName)
+                .withStreetName(streetName)
+                .withStreetNumber(streetNumber)
+                .withZipCode(zipCode)
+                .withCity(city)
+                .withCountry(country)
+                .withRoomCategoriesAndAmounts(categoriesWithAmount)
+                .withCategoryIds(roomCategoryIds)
+                .withServices(services)
+                .withServiceIds(serviceIds)
+                .withCheckInDate(checkInDate)
+                .withCheckOutDate(checkOutDate)
+                .withAdditionalInformation(additionalInformation)
+                .withAmountOfAdults(amountOfAdults)
+                .withAmountOfChildren(amountOfChildren)
+                .withBookingNumber(bookingNumberExpected)
+                .build();
 
         Mockito.when(guestCreationService.createGuest(
                 firstName,
@@ -157,14 +185,16 @@ public class RestApiTests {
                 amountOfAdults,
                 amountOfChildren,
                 additionalInformation
-        )).thenReturn(bookingIdExpected);
+        )).thenReturn(bookingId);
+
+        Mockito.when(bookingSummaryService.detailsByBookingId(bookingId)).thenReturn(bookingDetailsDTO);
 
         final ObjectMapper mapper = new ObjectMapper();
         final ObjectNode requestData = mapper.createObjectNode();
         requestData.set("firstName", mapper.convertValue(firstName, JsonNode.class));
         requestData.set("lastName", mapper.convertValue(lastName, JsonNode.class));
         requestData.set("gender", mapper.convertValue(gender, JsonNode.class));
-        requestData.set("email", mapper.convertValue(email, JsonNode.class));
+        requestData.set("eMail", mapper.convertValue(email, JsonNode.class));
         requestData.set("phoneNumber", mapper.convertValue(phoneNumber, JsonNode.class));
         requestData.set("birthDate", mapper.convertValue(birthDate.toString(), JsonNode.class));
         requestData.set("streetName", mapper.convertValue(streetName, JsonNode.class));
@@ -173,9 +203,9 @@ public class RestApiTests {
         requestData.set("city", mapper.convertValue(city, JsonNode.class));
         requestData.set("country", mapper.convertValue(country, JsonNode.class));
 
-        requestData.set("roomCategoryIds", mapper.convertValue(roomCategoryIds, JsonNode.class));
-        requestData.set("amounts", mapper.convertValue(amounts, JsonNode.class));
-        requestData.set("serviceIds", mapper.convertValue(serviceIds, JsonNode.class));
+        requestData.set("finalRoomCategoryIds", mapper.convertValue(roomCategoryIds, JsonNode.class));
+        requestData.set("finalRoomCategoryAmounts", mapper.convertValue(amounts, JsonNode.class));
+        requestData.set("finalServiceIds", mapper.convertValue(serviceIds, JsonNode.class));
         requestData.set("checkInDate", mapper.convertValue(checkInDate.toString(), JsonNode.class));
         requestData.set("checkOutDate", mapper.convertValue(checkOutDate.toString(), JsonNode.class));
         requestData.set("amountOfAdults", mapper.convertValue(amountOfAdults, JsonNode.class));
@@ -186,9 +216,9 @@ public class RestApiTests {
         URI uri = UriComponentsBuilder.fromUriString("http://localhost:" + port)
                 .path("/rest/hotel/book").build().encode().toUri();
 
-        String bookingIdActual = this.restTemplate.postForObject(uri, requestData, String.class);
+        String bookingNumberActual = this.restTemplate.postForObject(uri, requestData, String.class);
 
         // then
-        assertEquals(bookingIdExpected, bookingIdActual);
+        assertEquals(bookingNumberExpected, bookingNumberActual);
     }
 }

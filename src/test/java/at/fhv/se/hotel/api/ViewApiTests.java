@@ -637,6 +637,7 @@ public class ViewApiTests {
         String serviceIds = "1,2";
         List<String> serviceIdsList = List.of("1", "2");
         String additionalInformation = "Vegan";
+        String bookingNumber = "20210801001";
 
         Map<String, Integer> categoriesWithAmounts = Map.of(
                 "Single Room", 1
@@ -663,6 +664,7 @@ public class ViewApiTests {
                 .withAdditionalInformation(additionalInformation)
                 .withAmountOfAdults(Integer.parseInt(amountOfAdults))
                 .withAmountOfChildren(Integer.parseInt(amountOfChildren))
+                .withBookingNumber(bookingNumber)
                 .build();
 
         Mockito.when(bookingSummaryService.createSummary(
@@ -1003,6 +1005,7 @@ public class ViewApiTests {
         String bookingId = "1";
         LocalDate checkInDate = LocalDate.of(2021, 8, 1);
         LocalDate checkOutDate = LocalDate.of(2021, 8, 10);
+        String bookingNumber = "20210801001";
 
         Map<String, Integer> categoriesWithAmounts = Map.of(
                 "Single Room", 1
@@ -1031,6 +1034,7 @@ public class ViewApiTests {
                 .withAdditionalInformation("Nothing to say")
                 .withAmountOfAdults(2)
                 .withAmountOfChildren(2)
+                .withBookingNumber(bookingNumber)
                 .build();
 
         Mockito.when(bookingSummaryService.detailsByBookingId(bookingId)).thenReturn(bookingDetailsDTO);
@@ -1056,6 +1060,7 @@ public class ViewApiTests {
         String bookingId = "1";
         LocalDate checkInDate = LocalDate.of(2021, 8, 1);
         LocalDate checkOutDate = LocalDate.of(2021, 8, 10);
+        String bookingNumber = "20210801001";
 
         Map<String, Integer> categoriesWithAmounts = Map.of(
             "Single Room", 1
@@ -1084,6 +1089,7 @@ public class ViewApiTests {
                 .withAmountOfAdults(2)
                 .withAmountOfChildren(0)
                 .withAdditionalInformation("Vegan")
+                .withBookingNumber(bookingNumber)
                 .build();
 
         Mockito.when(bookingSummaryService.detailsByBookingId(bookingId)).thenReturn(bookingDetails);

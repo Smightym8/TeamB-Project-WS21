@@ -174,6 +174,7 @@ public class BookingSummaryServiceImpl implements BookingSummaryService {
                 .withAdditionalInformation(booking.getAdditionalInformation())
                 .withAmountOfAdults(booking.getAmountOfAdults())
                 .withAmountOfChildren(booking.getAmountOfChildren())
+                .withBookingNumber(booking.getBookingNumber())
                 .build();
 
         return bookingDetailsDTO;

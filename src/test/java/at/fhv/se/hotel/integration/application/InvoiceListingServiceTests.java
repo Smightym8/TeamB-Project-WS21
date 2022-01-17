@@ -32,6 +32,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -94,7 +95,8 @@ public class InvoiceListingServiceTests {
                         servicesExpected,
                         2,
                         1,
-                        ""
+                        "",
+                        LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
                 ),
                 Booking.create(
                         LocalDate.now().plusDays(10),
@@ -104,7 +106,8 @@ public class InvoiceListingServiceTests {
                         servicesExpected,
                         2,
                         1,
-                        ""
+                        "",
+                        LocalDate.now().plusDays(10).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
                 ),
                 Booking.create(
                         LocalDate.now().plusDays(50),
@@ -114,7 +117,8 @@ public class InvoiceListingServiceTests {
                         servicesExpected,
                         2,
                         1,
-                        ""
+                        "",
+                        LocalDate.now().plusDays(50).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
                 )
         );
 
@@ -275,7 +279,8 @@ public class InvoiceListingServiceTests {
                 servicesExpected,
                 2,
                 1,
-                ""
+                "",
+                "20211205001"
         );
 
         RoomCategory categoryExpected = RoomCategory.create(

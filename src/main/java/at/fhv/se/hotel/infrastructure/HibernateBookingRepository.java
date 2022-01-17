@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -38,6 +39,13 @@ public class HibernateBookingRepository implements BookingRepository {
         TypedQuery<Booking> query = this.em.createQuery("FROM Booking AS b WHERE b.bookingId = :bookingId", Booking.class);
         query.setParameter("bookingId", bookingId);
         return query.getResultStream().findFirst();
+    }
+
+    @Override
+    public int amountOfBookingsByDate(LocalDate bookingDate) {
+        TypedQuery<Booking> query = this.em.createQuery("FROM Booking AS b WHERE b.bookingDate = :bookingDate", Booking.class);
+        query.setParameter("bookingDate", bookingDate);
+        return query.getResultList().size();
     }
 
 }

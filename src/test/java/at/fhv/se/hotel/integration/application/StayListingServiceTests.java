@@ -28,6 +28,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -76,7 +77,8 @@ public class StayListingServiceTests {
                     servicesExpected,
                 2,
                 1,
-                ""
+                "",
+                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
                 );
         Booking bookingExpected2 = Booking.create(
                         LocalDate.now(),
@@ -86,7 +88,8 @@ public class StayListingServiceTests {
                         servicesExpected,
                 2,
                 1,
-                ""
+                "",
+                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "002"
                 );
         Booking bookingExpected3 = Booking.create(
                         LocalDate.now(),
@@ -96,7 +99,8 @@ public class StayListingServiceTests {
                         servicesExpected,
                 2,
                 1,
-                ""
+                "",
+                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "003"
                 );
         RoomCategory categoryExpected = RoomCategory.create(
                 new RoomCategoryId("1"),

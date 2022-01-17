@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +54,19 @@ public class BookingCreationServiceImpl implements BookingCreationService {
 
         BookingId bookingId = bookingRepository.nextIdentity();
 
+        int todaysBookingsAmount = bookingRepository.amountOfBookingsByDate(LocalDate.now()) + 1;
+        String bookingSuffix = "";
+
+        if(todaysBookingsAmount < 10) {
+            bookingSuffix = "00" + todaysBookingsAmount;
+        } else if(todaysBookingsAmount < 100) {
+            bookingSuffix = "0" + todaysBookingsAmount;
+        } else {
+            bookingSuffix = String.valueOf(todaysBookingsAmount);
+        }
+
+        String bookingNumber = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + bookingSuffix;
+
         Guest guest = guestRepository.guestById(new GuestId(guestId)).orElseThrow(
                 () -> new GuestNotFoundException("Guest with id " + guestId + " not found")
         );
@@ -67,7 +81,8 @@ public class BookingCreationServiceImpl implements BookingCreationService {
 
         Booking booking = Booking.create(
                 checkInDate, checkOutDate, bookingId,
-                guest, services, amountOfAdults, amountOfChildren, additionalInformation
+                guest, services, amountOfAdults, amountOfChildren,
+                additionalInformation, bookingNumber
         );
 
         int i = 0;

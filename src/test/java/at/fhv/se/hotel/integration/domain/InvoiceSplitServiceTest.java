@@ -102,7 +102,8 @@ public class InvoiceSplitServiceTest {
                 services,
                 2,
                 1,
-                ""
+                "",
+                "20211226001"
         );
         booking.addRoomCategory(category, 1);
 
@@ -149,7 +150,7 @@ public class InvoiceSplitServiceTest {
         String action = "createInvoice";
 
         // when
-        Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
+        Mockito.when(invoiceRepository.amountOfInvoicesByDate(LocalDate.now())).thenReturn(0);
 
         Mockito.when(roomRepository.roomByName(new RoomName("101"))).thenReturn(java.util.Optional.of(roomsExpected.get(0)));
 
@@ -222,7 +223,8 @@ public class InvoiceSplitServiceTest {
                 services,
                 2,
                 1,
-                ""
+                "",
+                "20211226001"
         );
         booking.addRoomCategory(category, 1);
 
@@ -269,7 +271,7 @@ public class InvoiceSplitServiceTest {
         InvoiceId invoiceId = new InvoiceId("1");
 
         // when
-        Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
+        Mockito.when(invoiceRepository.amountOfInvoicesByDate(LocalDate.now())).thenReturn(0);
 
         Mockito.when(roomRepository.roomByName(new RoomName("101"))).thenReturn(java.util.Optional.of(roomsExpected.get(0)));
         Mockito.when(roomRepository.roomByName(new RoomName("102"))).thenReturn(java.util.Optional.of(roomsExpected.get(1)));
@@ -339,7 +341,8 @@ public class InvoiceSplitServiceTest {
                 services,
                 2,
                 1,
-                ""
+                "",
+                "20211226001"
         );
         booking.addRoomCategory(category, 1);
 
@@ -360,7 +363,7 @@ public class InvoiceSplitServiceTest {
 
         String actionExpected = "checkOut";
 
-        Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
+        Mockito.when(invoiceRepository.amountOfInvoicesByDate(LocalDate.now())).thenReturn(0);
         Mockito.when(seasonRepository.seasonByDate(stayExpected.getCheckInDate())).thenReturn(Optional.empty());
 
         // when ... then
@@ -421,7 +424,8 @@ public class InvoiceSplitServiceTest {
                 services,
                 2,
                 1,
-                ""
+                "",
+                "20211226001"
         );
         booking.addRoomCategory(category, 1);
 
@@ -442,7 +446,7 @@ public class InvoiceSplitServiceTest {
 
         String actionExpected = "checkOut";
 
-        Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
+        Mockito.when(invoiceRepository.amountOfInvoicesByDate(LocalDate.now())).thenReturn(0);
 
         for (int i = 26; i <= 29; i++) {
             Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 12, i)))

@@ -26,6 +26,7 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -93,7 +94,8 @@ public class BookingRepositoryImplTests {
                 servicesExpected,
                 amountOfAdultsExpected,
                 amountOfChildrenExpected,
-                ""
+                "",
+                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
         );
         bookingExpected.addRoomCategory(categoryExpected, 1);
 
@@ -115,6 +117,8 @@ public class BookingRepositoryImplTests {
         assertEquals(bookingExpected.getAmountOfAdults(), bookingActual.getAmountOfAdults());
         assertEquals(bookingExpected.getAmountOfChildren(), bookingActual.getAmountOfChildren());
         assertEquals(additionalInfoExpected, bookingActual.getAdditionalInformation());
+        assertEquals(bookingExpected.getBookingDate(), bookingActual.getBookingDate());
+        assertEquals(bookingExpected.getBookingNumber(), bookingExpected.getBookingNumber());
     }
 
     @Test
@@ -190,7 +194,8 @@ public class BookingRepositoryImplTests {
                 servicesExpected1,
                 amountOfAdultsExpected,
                 amountOfChildrenExpected,
-                additionalInfoExpected
+                additionalInfoExpected,
+                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
         );
 
         BookingId idExpected2 = new BookingId("1337");
@@ -202,7 +207,8 @@ public class BookingRepositoryImplTests {
                 servicesExpected2,
                 amountOfAdultsExpected,
                 amountOfChildrenExpected,
-                additionalInfoExpected
+                additionalInfoExpected,
+                LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
         );
 
         bookingExpected1.addRoomCategory(categoryExpected1, 1);
@@ -234,6 +240,21 @@ public class BookingRepositoryImplTests {
             assertEquals(bookingsExpected.get(i).getAmountOfAdults(), bookingsActual.get(i).getAmountOfAdults());
             assertEquals(bookingsExpected.get(i).getAmountOfChildren(), bookingsActual.get(i).getAmountOfChildren());
             assertEquals(bookingsExpected.get(i).getAdditionalInformation(), bookingsActual.get(i).getAdditionalInformation());
+            assertEquals(bookingsExpected.get(i).getBookingDate(), bookingsActual.get(i).getBookingDate());
+            assertEquals(bookingsExpected.get(i).getBookingNumber(), bookingsActual.get(i).getBookingNumber());
         }
+    }
+
+    @Test
+    public void given_0BookingsInRepo_when_amountOfBookingsByDate_then_return_expectedAmount() {
+        // given
+        int amountOfBookingsExpected = 0;
+        LocalDate today = LocalDate.now();
+
+        // when
+        int amountOfBookingsActual = bookingRepository.amountOfBookingsByDate(today);
+
+        // then
+        assertEquals(amountOfBookingsExpected, amountOfBookingsActual);
     }
 }

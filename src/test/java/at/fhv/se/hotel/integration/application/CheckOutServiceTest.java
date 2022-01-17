@@ -100,7 +100,8 @@ public class CheckOutServiceTest {
                 servicesExpected,
                 2,
                 1,
-                "Nothing"
+                "Nothing",
+                "20210801001"
         );
 
         categoriesExpected.forEach(roomCategory -> bookingExpected.addRoomCategory(roomCategory, 1));
@@ -226,7 +227,8 @@ public class CheckOutServiceTest {
                 servicesExpected,
                 2,
                 1,
-                "Nothing"
+                "Nothing",
+                "20210801001"
         );
 
         categoriesExpected.forEach(roomCategory -> bookingExpected.addRoomCategory(roomCategory, 1));
@@ -354,7 +356,8 @@ public class CheckOutServiceTest {
                 servicesExpected,
                 2,
                 1,
-                "Nothing"
+                "Nothing",
+                "20210801001"
         );
 
         categoriesExpected.forEach(roomCategory -> bookingExpected.addRoomCategory(roomCategory, 1));
@@ -450,7 +453,8 @@ public class CheckOutServiceTest {
                 servicesExpected,
                 2,
                 1,
-                "Nothing"
+                "Nothing",
+                "20210801001"
         );
 
         categoriesExpected.forEach(roomCategory -> bookingExpectedbooking.addRoomCategory(roomCategory, 1));

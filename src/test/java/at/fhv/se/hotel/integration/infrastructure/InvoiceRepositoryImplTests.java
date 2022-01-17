@@ -22,6 +22,7 @@ import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.model.stay.StayId;
 import at.fhv.se.hotel.domain.repository.*;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -30,6 +31,7 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -104,7 +106,8 @@ public class InvoiceRepositoryImplTests {
                 servicesExpected,
                 2,
                 1,
-                "Nothing"
+                "Nothing",
+                "20211205001"
         );
         List<RoomCategory> categoriesExpected = Arrays.asList(
                 RoomCategory.create(roomCategoryRepository.nextIdentity(),
@@ -287,21 +290,27 @@ public class InvoiceRepositoryImplTests {
                         bookingRepository.nextIdentity(),
                         guestsExpected.get(0),
                         servicesExpected,  2, 1,
-                        "Nothing"),
+                        "Nothing",
+                        LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
+                ),
                 Booking.create(
                         LocalDate.now(),
                         LocalDate.now().plusDays(10),
                         bookingRepository.nextIdentity(),
                         guestsExpected.get(1),
                         servicesExpected, 2, 1,
-                        "Nothing"),
+                        "Nothing",
+                        LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "002"
+                ),
                 Booking.create(
                         LocalDate.now(),
                         LocalDate.now().plusDays(10),
                         bookingRepository.nextIdentity(),
                         guestsExpected.get(2),
                         servicesExpected, 2, 1,
-                        "Nothing")
+                        "Nothing",
+                        LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "003"
+                )
         );
         bookingsExpected.get(0).addRoomCategory(categoriesExpected.get(0), 1);
         bookingsExpected.get(1).addRoomCategory(categoriesExpected.get(1), 1);
@@ -483,21 +492,27 @@ public class InvoiceRepositoryImplTests {
                         bookingRepository.nextIdentity(),
                         guestsExpected.get(0),
                         servicesExpected,  2, 1,
-                        "Nothing"),
+                        "Nothing",
+                        LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
+                ),
                 Booking.create(
                         LocalDate.now(),
                         LocalDate.now().plusDays(10),
                         bookingRepository.nextIdentity(),
                         guestsExpected.get(1),
                         servicesExpected, 2, 1,
-                        "Nothing"),
+                        "Nothing",
+                        LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "002"
+                ),
                 Booking.create(
                         LocalDate.now(),
                         LocalDate.now().plusDays(10),
                         bookingRepository.nextIdentity(),
                         guestsExpected.get(2),
                         servicesExpected, 2, 1,
-                        "Nothing")
+                        "Nothing",
+                        LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "003"
+                )
         );
         bookingsExpected.get(0).addRoomCategory(categoriesExpected.get(0), 1);
         bookingsExpected.get(1).addRoomCategory(categoriesExpected.get(1), 1);
@@ -649,7 +664,8 @@ public class InvoiceRepositoryImplTests {
                 servicesExpected,
                 2,
                 1,
-                "Nothing"
+                "Nothing",
+                "20211205001"
         );
         List<RoomCategory> categoriesExpected = Arrays.asList(
                 RoomCategory.create(roomCategoryRepository.nextIdentity(),
@@ -764,5 +780,18 @@ public class InvoiceRepositoryImplTests {
         assertEquals(totalNetAmountAfterDiscountExpected, invoiceActual.getTotalNetAmountAfterDiscount());
         assertEquals(totalNetAmountAfterLocalTaxExpected, invoiceActual.getTotalNetAmountAfterLocalTax());
         assertEquals(totalGrossAmountExpected, invoiceActual.getTotalGrossAmount());
+    }
+
+    @Test
+    public void given_0InvoicesInRepository_when_getAmountOfInvoicesByDate_then_return_expectedInvoiceAmount() {
+        // given
+        int amountOfInvoicesExpected = 0;
+        LocalDate today = LocalDate.now();
+
+        // when
+        int amountOfInvoicesActual = invoiceRepository.amountOfInvoicesByDate(today);
+
+        // then
+        assertEquals(amountOfInvoicesExpected, amountOfInvoicesActual);
     }
 }

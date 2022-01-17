@@ -116,7 +116,8 @@ public class CheckInSteps {
                 servicesExpected,
                 2,
                 1,
-                "Nothing"
+                "Nothing",
+                "20210801001"
         );
 
         bookingExpected.addRoomCategory(roomCategoryExpected, 1);
@@ -188,7 +189,8 @@ public class CheckInSteps {
                 servicesExpected,
                 2,
                 1,
-                "Nothing"
+                "Nothing",
+                "20210801001"
         );
 
         bookingExpected.addRoomCategory(roomCategoryExpected, 1);
