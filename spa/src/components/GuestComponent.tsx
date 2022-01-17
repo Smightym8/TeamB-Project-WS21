@@ -42,6 +42,7 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
         let amountOfAdultsErrorMsg: string = '';
         let amountOfChildrenErrorMsg: string= '';
 
+        let birthDate : Date = new Date(values.birthDate);
         let birthDateLimit: Date = new Date();
         birthDateLimit.setFullYear(birthDateLimit.getFullYear() - 18);
 
@@ -75,7 +76,7 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
             birthDateErrorMsg = 'You have to provide your birth date!';
         }
 
-        if(values.birthDate > birthDateLimit) {
+        if(birthDate > birthDateLimit) {
             isValid = false;
             birthDateErrorMsg = 'You have to be at least 18 years old!';
         }
