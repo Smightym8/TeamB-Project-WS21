@@ -78,46 +78,51 @@ const RoomCategoryComponent = ({ prevStep, nextStep, handleChange, values }: Pro
     const progressBarStyle = {
         width: "40%"
     };
+    const formStyle = {
+        width: "40%",
+        margin: "auto"
+    };
 
     return (
-        <div className="div-width-s">
-            <div className="card" style={cardStyle}>
-                <div className="card-header">
-                    <div className="d-flex justify-content-between align-items-center">
-                        <div>
-                            <span className="h4 align-middle">Create booking - room categories</span>
+        <div className="container p-5 h-100">
+            <div className="card w-75 h-50 m-auto text-white bg-color1">
+                    <div className="card-header">
+                        <div className="d-flex justify-content-between align-items-center">
+                            <div>
+                                <span className="h4 align-middle">Create booking - room categories</span>
+                            </div>
+                        </div>
+                        <br />
+                        <div className="progress">
+                            <div className="progress-bar" role="progressbar" style={progressBarStyle}>2/5</div>
                         </div>
                     </div>
-                    <br />
-                    <div className="progress">
-                        <div className="progress-bar" role="progressbar" style={progressBarStyle}>2/5</div>
+
+                    <div className="card-body px-5 py-4 bg-color2">
+                        <div style={formStyle}>
+                            {
+                                roomCategories?.map(roomCategory =>
+                                    <div className="input-group mb-3" key={roomCategory.id}>
+                                        <span className="input-group-text col-5">{roomCategory.name}</span>
+                                        <input
+                                            defaultValue={values.roomCategoryAmounts[roomCategories?.indexOf(roomCategory)]}
+                                            onChange={(e) => handleAmount(parseInt(e.target.value), roomCategories?.indexOf(roomCategory))}
+                                            className="form-control"
+                                            type="number"
+                                            min="0"
+                                            placeholder="0"/>
+                                    </div>
+                                )
+                            }
+                        </div>
+                        <span className="text-danger">{categoryError}</span>
+                    </div>
+
+                    <div className="card-footer">
+                            <button className="btn btn-primary" onClick={() => prevStep()}>Back</button>
+                            <button className="btn btn-primary float-end" onClick={() => handleNext()}>Next</button>
                     </div>
                 </div>
-
-                <div className="card-body px-5 py-4">
-                    {
-                        roomCategories?.map(roomCategory =>
-                            <div className="input-group mb-3" key={roomCategory.id}>
-                                <span className="input-group-text col-5">{roomCategory.name}</span>
-                                <input
-                                    defaultValue={values.roomCategoryAmounts[roomCategories?.indexOf(roomCategory)]}
-                                    onChange={(e) => handleAmount(parseInt(e.target.value), roomCategories?.indexOf(roomCategory))}
-                                    className="form-control"
-                                    type="number"
-                                    min="0"
-                                    placeholder="0"/>
-                            </div>
-                        )
-                    }
-                    <span className="text-danger">{categoryError}</span>
-                </div>
-
-                <div className="card-footer">
-                        <button className="btn btn-primary" onClick={() => prevStep()}>Back</button>
-                        <button className="btn btn-primary float-end" onClick={() => handleNext()}>Next</button>
-                </div>
-            </div>
-
         </div>
     );
 }

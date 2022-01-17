@@ -77,69 +77,72 @@ const ServiceComponent = ({ prevStep, nextStep, handleChange, values }: Props) =
     }
 
     return (
-        <div className="card card-height">
-            <div className="card-header">
-                <div className="d-flex justify-content-between align-items-center">
-                    <div>
-                        <span className="h4 align-middle">Create booking - services</span>
-                    </div>
-                </div>
+        <div className="container p-5">
 
-                <br />
-
-                <div className="progress">
-                    <div className="progress-bar" role="progressbar" style={progressBarStyle}>3/5</div>
-                </div>
-            </div>
-            <div className="card-body px-5 py-4">
-                <div className="p-3" style={tableOuterDivStyle}>
-
-                    <div style={tableInnerDivStyle}>
-
-                        <table id="t1" className="table table-hover">
-                            <thead>
-                            <tr>
-                                <th className="col-1"/>
-                                <th className="col-6">Name</th>
-                                <th className="col-4">Price per day</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {
-                                services?.map(
-                                    service =>
-                                        <tr key={service.id}>
-                                            <td className="align-middle">
-                                                <div className="form-check">
-                                                    <input className="form-check-input"
-                                                           type="checkbox"
-                                                           value={service.id}
-                                                           defaultChecked={values.serviceIds[services?.indexOf(service)]}
-                                                           onChange={(e) => handleService(e.target.value, service.name, service.price, services?.indexOf(service))}
-                                                    />
-                                                </div>
-                                            </td>
-                                            <td className="align-middle">{service.name}</td>
-                                            <td className="align-middle">{service.price} €</td>
-                                        </tr>
-                                )
-                            }
-                            </tbody>
-                        </table>
+            <div className="card card-height bg-color1">
+                <div className="card-header">
+                    <div className="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span className="h4 align-middle">Create booking - services</span>
+                        </div>
                     </div>
 
-                    <span>Additional information:</span>
-                    <textarea
-                        style={textAreaStyle}
-                        value={values.additionalInformation}
-                        onChange={(e) => handleChange('additionalInformation', e.target.value)}
-                        rows={3}
-                    />
+                    <br />
+
+                    <div className="progress">
+                        <div className="progress-bar" role="progressbar" style={progressBarStyle}>3/5</div>
+                    </div>
                 </div>
-            </div>
-            <div className="card-footer">
-                <button className="btn btn-primary" onClick={() => prevStep()}>Back</button>
-                <button className="btn btn-primary float-end" onClick={() => handleNext()}>Next</button>
+                <div className="card-body px-5 py-4 bg-color2">
+                    <div className="p-3" style={tableOuterDivStyle}>
+
+                        <div style={tableInnerDivStyle}>
+
+                            <table id="t1" className="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th className="col-1"/>
+                                    <th className="col-6">Name</th>
+                                    <th className="col-4">Price per day</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {
+                                    services?.map(
+                                        service =>
+                                            <tr key={service.id}>
+                                                <td className="align-middle">
+                                                    <div className="form-check">
+                                                        <input className="form-check-input"
+                                                               type="checkbox"
+                                                               value={service.id}
+                                                               defaultChecked={values.serviceIds[services?.indexOf(service)]}
+                                                               onChange={(e) => handleService(e.target.value, service.name, service.price, services?.indexOf(service))}
+                                                        />
+                                                    </div>
+                                                </td>
+                                                <td className="align-middle">{service.name}</td>
+                                                <td className="align-middle">{service.price} €</td>
+                                            </tr>
+                                    )
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <span>Additional information:</span>
+                        <textarea
+                            style={textAreaStyle}
+                            value={values.additionalInformation}
+                            onChange={(e) => handleChange('additionalInformation', e.target.value)}
+                            rows={3}
+                        />
+                    </div>
+                </div>
+                <div className="card-footer">
+                    <button className="btn btn-primary" onClick={() => prevStep()}>Back</button>
+                    <button className="btn btn-primary float-end" onClick={() => handleNext()}>Next</button>
+                </div>
             </div>
         </div>
     );
