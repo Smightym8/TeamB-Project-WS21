@@ -619,7 +619,7 @@ public class HotelViewController {
 
             checkInForm = new CheckInForm(bookingId, roomNames);
 
-        } catch (BookingNotFoundException e) {
+        } catch (BookingNotFoundException | NotEnoughRoomsException e) {
             return redirectError(e.getMessage());
         }
 

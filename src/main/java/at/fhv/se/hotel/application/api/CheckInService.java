@@ -1,6 +1,7 @@
 package at.fhv.se.hotel.application.api;
 
 import at.fhv.se.hotel.application.api.exception.BookingNotFoundException;
+import at.fhv.se.hotel.application.api.exception.NotEnoughRoomsException;
 import at.fhv.se.hotel.application.api.exception.RoomNotFoundException;
 import at.fhv.se.hotel.application.dto.RoomDTO;
 import at.fhv.se.hotel.application.impl.CheckInServiceImpl;
@@ -16,7 +17,7 @@ public interface CheckInService {
     /**
      * See implementation {@link CheckInServiceImpl#assignRooms(String)}
      */
-    List<RoomDTO> assignRooms(String bookingId) throws BookingNotFoundException;
+    List<RoomDTO> assignRooms(String bookingId) throws BookingNotFoundException, NotEnoughRoomsException;
 
     /**
      * See implementation {@link CheckInServiceImpl#checkIn(String, List)}
