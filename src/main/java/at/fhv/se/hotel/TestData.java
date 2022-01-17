@@ -310,12 +310,6 @@ public class TestData implements ApplicationRunner {
         Service sauna = Service.create(serviceRepository.nextIdentity(), new ServiceName("Sauna"), new Price(new BigDecimal("7")));
         this.serviceRepository.add(sauna);
 
-        Service bike = Service.create(serviceRepository.nextIdentity(), new ServiceName("Bike"), new Price(new BigDecimal("6")));
-        this.serviceRepository.add(bike);
-
-        Service eBike = Service.create(serviceRepository.nextIdentity(), new ServiceName("E-Bike"), new Price(new BigDecimal("10")));
-        this.serviceRepository.add(eBike);
-
         Service fitnessRoom = Service.create(serviceRepository.nextIdentity(), new ServiceName("Fitness Room"), new Price(new BigDecimal("8")));
         this.serviceRepository.add(fitnessRoom);
 
@@ -411,7 +405,7 @@ public class TestData implements ApplicationRunner {
                 LocalDate.now().plusDays(2),
                 bookingRepository.nextIdentity(),
                 johannes,
-                List.of(tv,bike),
+                List.of(tv,wlan),
                 1,
                 0,
                 "",
@@ -430,7 +424,7 @@ public class TestData implements ApplicationRunner {
                 LocalDate.now().plusDays(10),
                 bookingRepository.nextIdentity(),
                 ali,
-                List.of(eBike),
+                List.of(tv),
                 2,
                 0,
                 "Vegan",

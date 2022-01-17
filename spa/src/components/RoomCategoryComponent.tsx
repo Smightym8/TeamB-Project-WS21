@@ -85,7 +85,7 @@ const RoomCategoryComponent = ({ prevStep, nextStep, handleChange, values }: Pro
                         </div>
                     <br />
                     <div className="progress">
-                        <div className="progress-bar bg-warning" role="progressbar" style={progressBarStyle}>2/5</div>
+                        <div className="progress-bar" role="progressbar" style={progressBarStyle}>2/5</div>
                     </div>
                 </div>
                 <div className="card-body overflow-auto">
@@ -109,8 +109,8 @@ const RoomCategoryComponent = ({ prevStep, nextStep, handleChange, values }: Pro
                     </div>
                 </div>
                     <div className="card-footer">
-                        <button className="btn btn-warning" onClick={() => prevStep()}>Back</button>
-                        <button className="btn btn-warning float-end" onClick={() => handleNext()}>Next</button>
+                        <button className="btn btn-primary" onClick={() => prevStep()}>Back</button>
+                        <button className="btn btn-primary float-end" onClick={() => handleNext()}>Next</button>
                     </div>
                 </div>
         </div>

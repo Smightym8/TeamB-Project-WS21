@@ -85,12 +85,9 @@ section {
     color: white !important;
 }
 
-.bg-warning {
-    color: black !important;
+.table-dark {
+    --bs-table-bg: transparent !important;
 }
-
-
-
 
 
 

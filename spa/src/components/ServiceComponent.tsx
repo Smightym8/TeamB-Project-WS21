@@ -25,22 +25,6 @@ const ServiceComponent = ({ prevStep, nextStep, handleChange, values }: Props) =
         });
     }
 
-    const progressBarStyle = {
-        width: "60%"
-    };
-
-    const tableOuterDivStyle = {
-        backgroundColor: "#f7f7f7"
-    };
-
-    const tableInnerDivStyle = {
-        minHeight: "62.5vh"
-    };
-
-    const textAreaStyle = {
-        minWidth: "100%"
-    };
-
     const handleService = (id: string,
                            name: string | undefined,
                            price: number | undefined,
@@ -76,29 +60,32 @@ const ServiceComponent = ({ prevStep, nextStep, handleChange, values }: Props) =
         nextStep();
     }
 
-    return (
-        <div className="container p-5">
+    const progressBarStyle = {
+        width: "60%"
+    };
 
-            <div className="card card-height bg-color1">
+    const textAreaStyle = {
+        minWidth: "100%"
+    };
+
+    return (
+        <div className="container h-100 p-5 ">
+            <div className="card w-75 h-75 m-auto">
                 <div className="card-header">
                     <div className="d-flex justify-content-between align-items-center">
                         <div>
                             <span className="h4 align-middle">Create booking - services</span>
                         </div>
                     </div>
-
                     <br />
-
                     <div className="progress">
                         <div className="progress-bar" role="progressbar" style={progressBarStyle}>3/5</div>
                     </div>
                 </div>
-                <div className="card-body px-5 py-4 bg-color2">
-                    <div className="p-3" style={tableOuterDivStyle}>
-
-                        <div style={tableInnerDivStyle}>
-
-                            <table id="t1" className="table table-hover">
+                <div className="card-body overflow-auto">
+                    <div className="px-3 h-100">
+                        <div className="h-75 mb-4 overflow-auto">
+                            <table id="t1" className="table table-hover table-dark">
                                 <thead>
                                 <tr>
                                     <th className="col-1"/>
@@ -129,14 +116,15 @@ const ServiceComponent = ({ prevStep, nextStep, handleChange, values }: Props) =
                                 </tbody>
                             </table>
                         </div>
-
-                        <span>Additional information:</span>
-                        <textarea
-                            style={textAreaStyle}
-                            value={values.additionalInformation}
-                            onChange={(e) => handleChange('additionalInformation', e.target.value)}
-                            rows={3}
-                        />
+                        <div>
+                            <span>Additional information:</span>
+                            <textarea
+                                style={textAreaStyle}
+                                value={values.additionalInformation}
+                                onChange={(e) => handleChange('additionalInformation', e.target.value)}
+                                rows={3}
+                            />
+                        </div>
                     </div>
                 </div>
                 <div className="card-footer">
