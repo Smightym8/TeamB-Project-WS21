@@ -45,7 +45,7 @@ class BookingComponent extends Component<{}, BookingState> {
         additionalInformation: '',
         firstName: '',
         lastName: '',
-        gender: '',
+        gender: 'male',
         eMail: '',
         phoneNumber: '',
         birthDate: '',

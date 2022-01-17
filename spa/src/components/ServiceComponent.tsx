@@ -70,7 +70,7 @@ const ServiceComponent = ({ prevStep, nextStep, handleChange, values }: Props) =
 
     return (
         <div className="container h-100 p-5 ">
-            <div className="card w-75 h-75 m-auto">
+            <div className="card w-75 h-100 m-auto">
                 <div className="card-header">
                     <div className="d-flex justify-content-between align-items-center">
                         <div>
@@ -84,7 +84,7 @@ const ServiceComponent = ({ prevStep, nextStep, handleChange, values }: Props) =
                 </div>
                 <div className="card-body overflow-auto">
                     <div className="px-3 h-100">
-                        <div className="h-75 mb-4 overflow-auto">
+                        <div className="h-75 overflow-auto">
                             <table id="t1" className="table table-hover table-dark">
                                 <thead>
                                 <tr>
@@ -116,13 +116,13 @@ const ServiceComponent = ({ prevStep, nextStep, handleChange, values }: Props) =
                                 </tbody>
                             </table>
                         </div>
-                        <div>
+                        <div className="pt-5 h-25">
                             <span>Additional information:</span>
                             <textarea
                                 style={textAreaStyle}
                                 value={values.additionalInformation}
                                 onChange={(e) => handleChange('additionalInformation', e.target.value)}
-                                rows={3}
+                                rows={4}
                             />
                         </div>
                     </div>

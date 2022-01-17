@@ -24,7 +24,7 @@ nav {
     perspective: 1px;
     transform-style: preserve-3d;
     scroll-behavior: smooth;
-    background-image: url("./images/hotel.jpg");
+    background-image: url("./images/apartment1.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
@@ -105,7 +105,7 @@ section {
 
 }
 
-.form-control {
+.form-control, .form-select {
     background-color: #888888 !important;
     color: white !important;
 

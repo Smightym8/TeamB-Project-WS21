@@ -76,7 +76,7 @@ const RoomCategoryComponent = ({ prevStep, nextStep, handleChange, values }: Pro
 
     return (
         <div className="container h-100 p-5 ">
-            <div className="card w-75 h-50 m-auto">
+            <div className="card w-75 h-100 m-auto">
                 <div className="card-header">
                     <div className="d-flex justify-content-between align-items-center">
                             <div>
