@@ -642,7 +642,7 @@ public class HotelViewController {
                     checkInForm.getBookingId(),
                     checkInForm.getRoomNames()
             );
-        } catch (BookingNotFoundException | RoomNotFoundException e) {
+        } catch (BookingNotFoundException | RoomNotFoundException | RoomAlreadyOccupiedException e) {
             return redirectError(e.getMessage());
         }
 

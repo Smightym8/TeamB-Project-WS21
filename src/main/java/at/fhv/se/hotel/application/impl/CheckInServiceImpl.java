@@ -3,6 +3,7 @@ package at.fhv.se.hotel.application.impl;
 import at.fhv.se.hotel.application.api.CheckInService;
 import at.fhv.se.hotel.application.api.exception.BookingNotFoundException;
 import at.fhv.se.hotel.application.api.exception.NotEnoughRoomsException;
+import at.fhv.se.hotel.application.api.exception.RoomAlreadyOccupiedException;
 import at.fhv.se.hotel.application.api.exception.RoomNotFoundException;
 import at.fhv.se.hotel.application.dto.RoomDTO;
 import at.fhv.se.hotel.domain.model.booking.Booking;
@@ -51,7 +52,6 @@ public class CheckInServiceImpl implements CheckInService {
         boolean enoughRoomsExisting = true;
         int totalBookedAmount = 0;
 
-        // TODO: How to react if there are not enough rooms
         for(BookingWithRoomCategory brc : booking.getRoomCategories()) {
             totalBookedAmount += brc.getAmount();
 
@@ -122,7 +122,7 @@ public class CheckInServiceImpl implements CheckInService {
 
     @Transactional
     @Override
-    public void checkIn(String bookingId, List<String> roomNames) throws BookingNotFoundException, RoomNotFoundException {
+    public void checkIn(String bookingId, List<String> roomNames) throws BookingNotFoundException, RoomNotFoundException, RoomAlreadyOccupiedException {
         //TODO: Check if rooms are occupied
         Booking booking = bookingRepository.bookingById(new BookingId(bookingId)).orElseThrow(
                 () -> new BookingNotFoundException("Booking with id " + bookingId + " not found")
@@ -133,11 +133,20 @@ public class CheckInServiceImpl implements CheckInService {
             Room room = roomRepository.roomByName(new RoomName(roomName)).orElseThrow(
                     () -> new RoomNotFoundException("Room with name " + roomName + " not found")
             );
+
             assignedRooms.put(room, false);
 
-            // Change room status to occupied
-            room.occupy();
+            if(room.getStatus().equals(RoomStatus.OCCUPIED)) {
+                throw new RoomAlreadyOccupiedException(
+                        "One of the assigned rooms was already occupied. Please start again with assigning rooms."
+                );
+            }
         }
+
+        // Occupy rooms after all rooms are checked
+        assignedRooms.forEach((room, v) -> {
+            room.occupy();
+        });
 
         // Create Stay with the rooms and the booking
         Stay stay = Stay.create(stayRepository.nextIdentity(), booking, assignedRooms);
