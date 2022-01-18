@@ -6,7 +6,7 @@ import at.fhv.se.hotel.application.impl.GuestModifyServiceImpl;
 import java.time.LocalDate;
 
 /**
- * This class represents an interface that defines the functionality to modify a guests.
+ * This class represents an interface that defines the functionality to modify a guest.
  * The implementation is in {@link GuestModifyServiceImpl}
  */
 public interface GuestModifyService {

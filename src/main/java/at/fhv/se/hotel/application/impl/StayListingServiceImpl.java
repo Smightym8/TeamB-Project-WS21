@@ -10,12 +10,20 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class represents the implementation of the interface {@link StayListingService}
+ * It provides the functionality to get all stays.
+ */
 @Component
 public class StayListingServiceImpl implements StayListingService {
 
     @Autowired
     StayRepository stayRepository;
 
+    /**
+     * This method provides all stays.
+     * @return a list of StayListingDTO objects.
+     */
     @Override
     public List<StayListingDTO> allStays() {
         List<Stay> stays = stayRepository.findAllStays();

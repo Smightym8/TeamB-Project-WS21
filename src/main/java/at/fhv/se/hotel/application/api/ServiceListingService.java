@@ -17,5 +17,8 @@ public interface ServiceListingService {
      */
     List<ServiceDTO> allServices();
 
+    /**
+     * See implementation {@link ServiceListingServiceImpl#findServiceById(String)}
+     */
     Optional<ServiceDTO> findServiceById(String id) throws ServiceNotFoundException;
 }

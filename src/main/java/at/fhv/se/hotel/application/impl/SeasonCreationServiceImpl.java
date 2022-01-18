@@ -16,7 +16,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
- * This class contains the functionality to create and to save a new season.
+ * This class represents the implementation of the interface {@link SeasonCreationService}
+ * It contains the functionality to create and to save a new season.
  */
 @Component
 public class SeasonCreationServiceImpl implements SeasonCreationService {

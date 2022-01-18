@@ -14,6 +14,10 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class represents the implementation of the interface {@link StayDetailsService}
+ * It provides the functionality to get details of a stay.
+ * */
 @Component
 public class StayDetailsServiceImpl implements StayDetailsService {
 
@@ -23,6 +27,12 @@ public class StayDetailsServiceImpl implements StayDetailsService {
     @Autowired
     RoomCategoryPriceRepository roomCategoryPriceRepository;
 
+    /**
+     * This method provides stay details by id.
+     * @param stayId contains the id of the stay.
+     * @return a StayDetailsDTO object.
+     * @throws StayNotFoundException if the stay could not be found.
+     */
     @Override
     public StayDetailsDTO detailsById(String stayId) throws StayNotFoundException {
         Stay stay = stayRepository.stayById(new StayId(stayId)).orElseThrow(
