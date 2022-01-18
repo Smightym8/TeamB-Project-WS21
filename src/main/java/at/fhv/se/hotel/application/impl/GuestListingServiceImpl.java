@@ -25,7 +25,7 @@ public class GuestListingServiceImpl implements GuestListingService {
     GuestRepository guestRepository;
 
     /**
-     * This method provides all bookings.
+     * This method provides all guests.
      * @return a list of GuestListingDTO objects.
      */
     @Transactional(readOnly=true)

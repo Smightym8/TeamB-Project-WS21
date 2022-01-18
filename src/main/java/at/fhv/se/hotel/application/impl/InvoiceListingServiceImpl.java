@@ -18,6 +18,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class represents the implementation of the interface {@link InvoiceListingService}
+ * It provides the functionality to get all invoices
+ */
 @Component
 public class InvoiceListingServiceImpl implements InvoiceListingService {
     @Autowired
@@ -26,6 +30,10 @@ public class InvoiceListingServiceImpl implements InvoiceListingService {
     @Autowired
     RoomRepository roomRepository;
 
+    /**
+     * This method provides all invoices.
+     * @return a list of InvoiceListingDTO objects.
+     */
     @Transactional(readOnly = true)
     @Override
     public List<InvoiceListingDTO> allInvoices() {
@@ -52,6 +60,12 @@ public class InvoiceListingServiceImpl implements InvoiceListingService {
         return invoiceListingDTOs;
     }
 
+    /**
+     * This method provides details of an invoice by id.
+     * @param id contains the id of the invoice.
+     * @return a InvoiceDTO object.
+     * @throws InvoiceNotFoundException
+     */
     @Override
     public InvoiceDTO findInvoiceById(String id) throws InvoiceNotFoundException {
         Invoice invoice = invoiceRepository.invoiceById(new InvoiceId(id)).orElseThrow(

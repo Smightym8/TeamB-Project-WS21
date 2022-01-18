@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public interface GuestModifyService {
     /**
      * See implementation
-     * {@link at.fhv.se.hotel.application.impl.GuestModifyServiceImpl#modifyGuest(
+     * {@link GuestModifyServiceImpl#modifyGuest(
      * String, String, String, String, String, String, String, String, String, LocalDate, String, String, double)}
      */
     void modifyGuest(
