@@ -1,6 +1,5 @@
 package at.fhv.se.hotel.integration.domain;
 
-import at.fhv.se.hotel.application.api.exception.GuestNotFoundException;
 import at.fhv.se.hotel.application.api.exception.RoomNotFoundException;
 import at.fhv.se.hotel.application.api.exception.SeasonNotFoundException;
 import at.fhv.se.hotel.domain.model.booking.Booking;
@@ -25,7 +24,7 @@ import at.fhv.se.hotel.domain.repository.InvoiceRepository;
 import at.fhv.se.hotel.domain.repository.RoomCategoryPriceRepository;
 import at.fhv.se.hotel.domain.repository.RoomRepository;
 import at.fhv.se.hotel.domain.repository.SeasonRepository;
-import at.fhv.se.hotel.domain.services.api.InvoiceSplitService;
+import at.fhv.se.hotel.domain.services.api.InvoiceCreationService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +45,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ActiveProfiles("test")
 @SpringBootTest
 @Transactional
-public class InvoiceSplitServiceTest {
+public class InvoiceCreationServiceTest {
     @Autowired
-    InvoiceSplitService invoiceSplitService;
+    InvoiceCreationService invoiceCreationService;
 
     @MockBean
     RoomCategoryPriceRepository roomCategoryPriceRepository;
@@ -102,7 +101,8 @@ public class InvoiceSplitServiceTest {
                 services,
                 2,
                 1,
-                ""
+                "",
+                "20211226001"
         );
         booking.addRoomCategory(category, 1);
 
@@ -149,7 +149,7 @@ public class InvoiceSplitServiceTest {
         String action = "createInvoice";
 
         // when
-        Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
+        Mockito.when(invoiceRepository.amountOfInvoicesByDate(LocalDate.now())).thenReturn(0);
 
         Mockito.when(roomRepository.roomByName(new RoomName("101"))).thenReturn(java.util.Optional.of(roomsExpected.get(0)));
 
@@ -167,7 +167,7 @@ public class InvoiceSplitServiceTest {
 
         Mockito.when(invoiceRepository.nextIdentity()).thenReturn(invoiceId);
 
-        Invoice invoice = invoiceSplitService.splitInvoice(stayExpected, selectedRooms, action);
+        Invoice invoice = invoiceCreationService.createInvoice(stayExpected, selectedRooms, action);
 
         // then
         assertEquals(invoiceNumberExpected, invoice.getInvoiceNumber());
@@ -222,7 +222,8 @@ public class InvoiceSplitServiceTest {
                 services,
                 2,
                 1,
-                ""
+                "",
+                "20211226001"
         );
         booking.addRoomCategory(category, 1);
 
@@ -269,7 +270,7 @@ public class InvoiceSplitServiceTest {
         InvoiceId invoiceId = new InvoiceId("1");
 
         // when
-        Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
+        Mockito.when(invoiceRepository.amountOfInvoicesByDate(LocalDate.now())).thenReturn(0);
 
         Mockito.when(roomRepository.roomByName(new RoomName("101"))).thenReturn(java.util.Optional.of(roomsExpected.get(0)));
         Mockito.when(roomRepository.roomByName(new RoomName("102"))).thenReturn(java.util.Optional.of(roomsExpected.get(1)));
@@ -284,7 +285,7 @@ public class InvoiceSplitServiceTest {
 
         Mockito.when(invoiceRepository.nextIdentity()).thenReturn(invoiceId);
 
-        Invoice invoice = invoiceSplitService.splitInvoice(stayExpected, selectedRooms, action);
+        Invoice invoice = invoiceCreationService.createInvoice(stayExpected, selectedRooms, action);
 
         // then
         assertEquals(invoiceNumberExpected, invoice.getInvoiceNumber());
@@ -339,7 +340,8 @@ public class InvoiceSplitServiceTest {
                 services,
                 2,
                 1,
-                ""
+                "",
+                "20211226001"
         );
         booking.addRoomCategory(category, 1);
 
@@ -360,12 +362,12 @@ public class InvoiceSplitServiceTest {
 
         String actionExpected = "checkOut";
 
-        Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
+        Mockito.when(invoiceRepository.amountOfInvoicesByDate(LocalDate.now())).thenReturn(0);
         Mockito.when(seasonRepository.seasonByDate(stayExpected.getCheckInDate())).thenReturn(Optional.empty());
 
         // when ... then
         Exception exception = assertThrows(SeasonNotFoundException.class, () -> {
-            invoiceSplitService.splitInvoice(stayExpected, roomNames, actionExpected);
+            invoiceCreationService.createInvoice(stayExpected, roomNames, actionExpected);
         });
 
         String expectedMessage = "Season for date " + stayExpected.getCheckInDate() + " not found.";
@@ -421,7 +423,8 @@ public class InvoiceSplitServiceTest {
                 services,
                 2,
                 1,
-                ""
+                "",
+                "20211226001"
         );
         booking.addRoomCategory(category, 1);
 
@@ -442,7 +445,7 @@ public class InvoiceSplitServiceTest {
 
         String actionExpected = "checkOut";
 
-        Mockito.when(invoiceRepository.invoicesByDate(LocalDate.now())).thenReturn(Collections.emptyList());
+        Mockito.when(invoiceRepository.amountOfInvoicesByDate(LocalDate.now())).thenReturn(0);
 
         for (int i = 26; i <= 29; i++) {
             Mockito.when(seasonRepository.seasonByDate(LocalDate.of(2021, 12, i)))
@@ -453,7 +456,7 @@ public class InvoiceSplitServiceTest {
 
         // when ... then
         Exception exception = assertThrows(RoomNotFoundException.class, () -> {
-            invoiceSplitService.splitInvoice(stayExpected, roomNames, actionExpected);
+            invoiceCreationService.createInvoice(stayExpected, roomNames, actionExpected);
         });
 
         String expectedMessage = "Room " + roomNames.get(0) + " not found.";

@@ -7,13 +7,15 @@ import at.fhv.se.hotel.application.api.exception.StayNotFoundException;
 import at.fhv.se.hotel.application.dto.InvoiceDTO;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
 import at.fhv.se.hotel.domain.model.room.Room;
-import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
 import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.model.stay.StayId;
-import at.fhv.se.hotel.domain.repository.*;
-import at.fhv.se.hotel.domain.services.api.InvoiceSplitService;
+import at.fhv.se.hotel.domain.repository.InvoiceRepository;
+import at.fhv.se.hotel.domain.repository.RoomCategoryRepository;
+import at.fhv.se.hotel.domain.repository.RoomRepository;
+import at.fhv.se.hotel.domain.repository.StayRepository;
+import at.fhv.se.hotel.domain.services.api.InvoiceCreationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +27,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class represents the implementation of the interface {@link CheckOutService}
+ * It provides the functionality of
+ * the check out of a stay
+ * the creation of an invoice
+ * the saving of an invoice into the database.
+ */
 @Component
 public class CheckOutServiceImpl implements CheckOutService {
 
@@ -35,7 +44,7 @@ public class CheckOutServiceImpl implements CheckOutService {
     InvoiceRepository invoiceRepository;
 
     @Autowired
-    InvoiceSplitService invoiceSplitService;
+    InvoiceCreationService invoiceCreationService;
 
     @Autowired
     RoomRepository roomRepository;
@@ -43,6 +52,16 @@ public class CheckOutServiceImpl implements CheckOutService {
     @Autowired
     RoomCategoryRepository roomCategoryRepository;
 
+    /**
+     * This method creates an invoice for a stay.
+     * @param stayId contains the id of a stay.
+     * @param roomNames contains the names of the rooms to be paid.
+     * @param action contains the information so either the stay will be checked out or an invoice will be created.
+     * @return an InvoiceDTO object.
+     * @throws StayNotFoundException if the stay could not be found.
+     * @throws RoomNotFoundException if the room could not be found.
+     * @throws SeasonNotFoundException if the season could not be found.
+     */
     @Transactional
     @Override
     public InvoiceDTO createInvoice(String stayId, List<String> roomNames, String action) throws StayNotFoundException, RoomNotFoundException, SeasonNotFoundException {
@@ -50,7 +69,7 @@ public class CheckOutServiceImpl implements CheckOutService {
                 () -> new StayNotFoundException("Creating invoice failed! Stay with id " + stayId + " not found")
         );
 
-        Invoice invoice = invoiceSplitService.splitInvoice(stay, roomNames, action);
+        Invoice invoice = invoiceCreationService.createInvoice(stay, roomNames, action);
 
         Map<String, BigDecimal> services = new HashMap<>();
         for(Service s : invoice.getServices()) {
@@ -112,6 +131,16 @@ public class CheckOutServiceImpl implements CheckOutService {
         return invoiceDTO;
     }
 
+    // TODO: Make this method private because it is only used in this class
+    /**
+     * This class saves the invoice into the database.
+     * @param stayId contains the id of the stay.
+     * @param roomNames contains the names of the rooms to be paid.
+     * @param action contains the information so either the stay will be checked out or an invoice will be created.
+     * @throws StayNotFoundException if the stay could not be found.
+     * @throws RoomNotFoundException if the room could not be found.
+     * @throws SeasonNotFoundException if the season could not be found.
+     */
     @Transactional
     @Override
     public void saveInvoice(String stayId, List<String> roomNames, String action) throws StayNotFoundException, RoomNotFoundException, SeasonNotFoundException {
@@ -127,11 +156,20 @@ public class CheckOutServiceImpl implements CheckOutService {
             }
         }
 
-        Invoice invoice = invoiceSplitService.splitInvoice(stay, roomNames, action);
+        Invoice invoice = invoiceCreationService.createInvoice(stay, roomNames, action);
 
         invoiceRepository.add(invoice);
     }
 
+    /**
+     * This method deactivates a stay and performs a check out.
+     * @param stayId contains the id of the stay.
+     * @param roomNames contains the names of the rooms to be paid.
+     * @param action contains the information so either the stay will be checked out or an invoice will be created.
+     * @throws StayNotFoundException if the stay could not be found.
+     * @throws RoomNotFoundException if the room could not be found.
+     * @throws SeasonNotFoundException if the season could not be found.
+     */
     @Transactional
     @Override
     public void checkOut(String stayId, List<String> roomNames, String action) throws StayNotFoundException, RoomNotFoundException, SeasonNotFoundException {
@@ -139,7 +177,7 @@ public class CheckOutServiceImpl implements CheckOutService {
                 () -> new StayNotFoundException("Check out failed! Stay with id " + stayId + " doesn't exist.")
         );
 
-        Invoice invoice = invoiceSplitService.splitInvoice(stay, roomNames, action);
+        Invoice invoice = invoiceCreationService.createInvoice(stay, roomNames, action);
 
         invoiceRepository.add(invoice);
 

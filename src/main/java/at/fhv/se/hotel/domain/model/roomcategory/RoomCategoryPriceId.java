@@ -4,17 +4,21 @@ import at.fhv.se.hotel.domain.Generated;
 
 import java.util.Objects;
 
+/**
+ * This class is a value object for RoomCategoryPrice which contains the id
+ */
 public class RoomCategoryPriceId {
     private String id;
 
-    public RoomCategoryPriceId (String id) {
+    public RoomCategoryPriceId(String id) {
         this.id = id;
     }
 
     // Required by hibernate
     @SuppressWarnings("unused")
     @Generated
-    private RoomCategoryPriceId (){}
+    private RoomCategoryPriceId() {
+    }
 
     public String id() {
         return this.id;

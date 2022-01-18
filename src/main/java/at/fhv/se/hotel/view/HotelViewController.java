@@ -5,10 +5,6 @@ import at.fhv.se.hotel.application.api.exception.*;
 import at.fhv.se.hotel.application.dto.*;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.view.forms.*;
-import at.fhv.se.hotel.view.forms.BookingForm;
-import at.fhv.se.hotel.view.forms.GuestForm;
-import at.fhv.se.hotel.view.forms.InvoiceForm;
-import at.fhv.se.hotel.view.forms.RoomForm;
 import org.apache.fop.apps.FOPException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -20,15 +16,15 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.validation.Valid;
-import java.security.InvalidParameterException;
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ListIterator;
 
 @Controller
 public class HotelViewController {
@@ -314,7 +310,6 @@ public class HotelViewController {
     }
 
     /*----- Modify Guest -----*/
-    // TODO: Test
     @GetMapping(GUEST_URL)
     public ModelAndView guest(@PathVariable("id") String id, Model model) {
         // Get GuestDetailsDTO and fill GuestForm with it
@@ -346,7 +341,6 @@ public class HotelViewController {
         return new ModelAndView(MODIFY_GUEST_VIEW);
     }
 
-    // TODO: Test
     @PostMapping(MODIFY_GUEST_URL)
     public ModelAndView modifyGuest(@Valid @ModelAttribute("guest") GuestForm guestForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -521,19 +515,19 @@ public class HotelViewController {
             try {
                 String guestId = bookingForm.getGuestId() == null || bookingForm.getGuestId().isEmpty()
                         ?   guestCreationService.createGuest(
-                        guestForm.getFirstName(),
-                        guestForm.getLastName(),
-                        guestForm.getGender(),
-                        guestForm.geteMail(),
-                        guestForm.getPhoneNumber(),
-                        guestForm.getBirthDate(),
-                        guestForm.getStreetName(),
-                        guestForm.getStreetNumber(),
-                        guestForm.getZipCode(),
-                        guestForm.getCity(),
-                        guestForm.getCountry(),
-                        guestForm.getDiscountInPercent()
-                )
+                                guestForm.getFirstName(),
+                                guestForm.getLastName(),
+                                guestForm.getGender(),
+                                guestForm.geteMail(),
+                                guestForm.getPhoneNumber(),
+                                guestForm.getBirthDate(),
+                                guestForm.getStreetName(),
+                                guestForm.getStreetNumber(),
+                                guestForm.getZipCode(),
+                                guestForm.getCity(),
+                                guestForm.getCountry(),
+                                guestForm.getDiscountInPercent()
+                            )
                         :   bookingForm.getGuestId();
 
                 bookingId = bookingCreationService.book(
@@ -621,7 +615,7 @@ public class HotelViewController {
 
             checkInForm = new CheckInForm(bookingId, roomNames);
 
-        } catch (BookingNotFoundException e) {
+        } catch (BookingNotFoundException | NotEnoughRoomsException e) {
             return redirectError(e.getMessage());
         }
 
@@ -644,7 +638,7 @@ public class HotelViewController {
                     checkInForm.getBookingId(),
                     checkInForm.getRoomNames()
             );
-        } catch (BookingNotFoundException | RoomNotFoundException e) {
+        } catch (BookingNotFoundException | RoomNotFoundException | RoomAlreadyOccupiedException e) {
             return redirectError(e.getMessage());
         }
 
@@ -729,8 +723,7 @@ public class HotelViewController {
         try {
             resource = invoiceDownloadService.download(invoiceNumber);
         } catch (InvoiceNotFoundException | FOPException | JAXBException | IOException | TransformerException e) {
-            // Don't redirect to errorView because user will only see a window from the browser
-            // where it asks to open or to download the pdf file.
+            // TODO: How to redirect?
             e.printStackTrace();
         }
 

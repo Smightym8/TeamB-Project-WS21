@@ -1,10 +1,9 @@
 package at.fhv.se.hotel.application.api;
 
+import at.fhv.se.hotel.application.impl.SeasonCreationServiceImpl;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
-
-import at.fhv.se.hotel.application.impl.SeasonCreationServiceImpl;
 
 /**
  * This class represents an interface that defines the creation of a season.

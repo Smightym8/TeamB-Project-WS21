@@ -10,26 +10,31 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 
+/**
+ * This class represents the implementation of the interface {@link GuestModifyService}
+ * It provides the functionality to modify a guest.
+ */
 @Component
 public class GuestModifyServiceImpl implements GuestModifyService {
     @Autowired
     GuestRepository guestRepository;
 
     /**
-     *
-     * @param guestId
-     * @param firstName
-     * @param lastName
-     * @param gender
-     * @param streetName
-     * @param streetNumber
-     * @param city
-     * @param zipCode
-     * @param country
-     * @param birthDate
-     * @param phoneNumber
-     * @param mailAddress
-     * @param discount
+     * This method provides the functionality to modify a guest.
+     * @param guestId contains the id of the guest.
+     * @param firstName contains the first name of the guest.
+     * @param lastName contains the last name of the guest.
+     * @param gender contains the gender of the guest.
+     * @param streetName contains the streetname of the guest.
+     * @param streetNumber contains the streetnumber of the guest.
+     * @param zipCode contains the zipcode of the guest.
+     * @param city contains the city of the guest.
+     * @param country contains the country of the guest.
+     * @param birthDate contains the birthdate of the guest.
+     * @param phoneNumber contains the phone number of the guest.
+     * @param mailAddress contains the mail address of the guest.
+     * @param discount contains the discount of the guest.
+     * @throws GuestNotFoundException if the guest could not be found.
      */
     @Transactional
     @Override

@@ -12,7 +12,8 @@ import java.util.Collections;
 import java.util.Locale;
 
 /**
- * This class contains the functionality to create and to save a new guest.
+ * This class represents the implementation of the interface {@link GuestCreationService}
+ * It contains the functionality to create and to save a new guest.
  */
 @Component
 public class GuestCreationServiceImpl implements GuestCreationService {

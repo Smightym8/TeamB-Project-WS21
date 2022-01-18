@@ -16,6 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This class represents the implementation of the interface {@link SeasonListingService}
+ * It provides the functionality to get all seasons with prices.
+ */
 @Component
 public class SeasonListingServiceImpl implements SeasonListingService {
     @Autowired
@@ -27,6 +31,10 @@ public class SeasonListingServiceImpl implements SeasonListingService {
     @Autowired
     RoomCategoryPriceRepository roomCategoryPriceRepository;
 
+    /**
+     * This method provides all seasons with prices.
+     * @return a list of SeasonWithPricesDTO objects.
+     */
     @Override
     public List<SeasonWithPricesDTO> allSeasonsWithPrices() {
         List<Season> seasons = seasonRepository.findAllSeasons();

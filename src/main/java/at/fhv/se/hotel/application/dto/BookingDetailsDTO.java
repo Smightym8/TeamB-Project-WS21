@@ -8,6 +8,7 @@ import java.util.Objects;
 
 public class BookingDetailsDTO {
     private String bookingId;
+    private String bookingNumber;
     private String guestId;
     private String guestFirstName;
     private String guestLastName;
@@ -99,6 +100,10 @@ public class BookingDetailsDTO {
     }
 
     public String additionalInformation() { return additionalInformation; };
+
+    public String bookingNumber() {
+        return bookingNumber;
+    }
 
     public static class Builder {
         private final BookingDetailsDTO instance;
@@ -194,6 +199,11 @@ public class BookingDetailsDTO {
 
         public Builder withAdditionalInformation(String additionalInformation) {
             this.instance.additionalInformation = additionalInformation;
+            return this;
+        }
+
+        public Builder withBookingNumber(String bookingNumber) {
+            this.instance.bookingNumber = bookingNumber;
             return this;
         }
 

@@ -11,6 +11,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * This class represents an invoice
+ */
 public class Invoice {
     // Required by hibernate
     @SuppressWarnings("unused")

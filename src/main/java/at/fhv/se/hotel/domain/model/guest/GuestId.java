@@ -4,6 +4,9 @@ import at.fhv.se.hotel.domain.Generated;
 
 import java.util.Objects;
 
+/**
+ * This class is a value object for the guest which contains the id
+ */
 public class GuestId {
     private String id;
 
@@ -13,11 +16,11 @@ public class GuestId {
     private GuestId() {
     }
 
-    public GuestId(String id){
+    public GuestId(String id) {
         this.id = id;
     }
 
-    public String id(){
+    public String id() {
         return this.id;
     }
 

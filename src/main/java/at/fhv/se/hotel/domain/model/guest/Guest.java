@@ -7,6 +7,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * This class represents a hotel guest
+ */
 public class Guest {
     // Required by hibernate
     @SuppressWarnings("unused")
@@ -24,10 +27,11 @@ public class Guest {
     // Required by hibernate
     @SuppressWarnings("unused")
     @Generated
-    protected Guest() {}
+    protected Guest() {
+    }
 
-    public static Guest create (GuestId aGuestId, FullName aName, Gender aGender, Address aAddress, LocalDate aBirthdate,
-                                String aPhoneNumber, String aMailAddress, double aDiscountInPercent, List<Booking> aBookings) {
+    public static Guest create(GuestId aGuestId, FullName aName, Gender aGender, Address aAddress, LocalDate aBirthdate,
+                               String aPhoneNumber, String aMailAddress, double aDiscountInPercent, List<Booking> aBookings) {
         return new Guest(aGuestId, aName, aGender, aAddress, aBirthdate,
                 aPhoneNumber, aMailAddress, aDiscountInPercent, aBookings);
     }
@@ -61,7 +65,9 @@ public class Guest {
         return address;
     }
 
-    public LocalDate getBirthDate() { return birthDate; }
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
 
     public String getPhoneNumber() {
         return phoneNumber;

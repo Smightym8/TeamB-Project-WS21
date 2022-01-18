@@ -2,10 +2,11 @@ package at.fhv.se.hotel.domain.model.service;
 
 import at.fhv.se.hotel.domain.Generated;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Objects;
 
+/**
+ * This class represents a service that can be booked
+ */
 public class Service {
     // Required by hibernate
     @SuppressWarnings("unused")
@@ -20,13 +21,13 @@ public class Service {
     protected Service() {
     }
 
-    public static Service create (ServiceId aServiceId, ServiceName aServiceName,
-                                  Price aServicePrice) {
+    public static Service create(ServiceId aServiceId, ServiceName aServiceName,
+                                 Price aServicePrice) {
         return new Service(aServiceId, aServiceName, aServicePrice);
     }
 
-    private Service (ServiceId aServiceId, ServiceName aServiceName,
-                    Price aServicePrice){
+    private Service(ServiceId aServiceId, ServiceName aServiceName,
+                    Price aServicePrice) {
         this.serviceId = aServiceId;
         this.serviceName = aServiceName;
         this.servicePrice = aServicePrice;

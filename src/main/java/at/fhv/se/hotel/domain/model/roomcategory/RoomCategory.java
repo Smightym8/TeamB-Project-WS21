@@ -2,9 +2,11 @@ package at.fhv.se.hotel.domain.model.roomcategory;
 
 import at.fhv.se.hotel.domain.Generated;
 
-import javax.xml.bind.annotation.XmlElement;
 import java.util.Objects;
 
+/**
+ * This class represents a room category for the rooms of the hotel
+ */
 public class RoomCategory {
     // Required by hibernate
     @SuppressWarnings("unused")
@@ -19,13 +21,13 @@ public class RoomCategory {
     protected RoomCategory() {
     }
 
-    public static RoomCategory create (RoomCategoryId aRoomCategoryId, RoomCategoryName aRoomCategoryName,
-                                       Description aDescription) {
+    public static RoomCategory create(RoomCategoryId aRoomCategoryId, RoomCategoryName aRoomCategoryName,
+                                      Description aDescription) {
         return new RoomCategory(aRoomCategoryId, aRoomCategoryName, aDescription);
     }
 
-    private RoomCategory (RoomCategoryId aRoomCategoryId, RoomCategoryName aRoomCategoryName,
-                         Description aDescription){
+    private RoomCategory(RoomCategoryId aRoomCategoryId, RoomCategoryName aRoomCategoryName,
+                         Description aDescription) {
         this.roomCategoryId = aRoomCategoryId;
         this.roomCategoryName = aRoomCategoryName;
         this.description = aDescription;

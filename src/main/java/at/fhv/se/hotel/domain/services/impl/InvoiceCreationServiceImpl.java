@@ -12,7 +12,7 @@ import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.repository.InvoiceRepository;
 import at.fhv.se.hotel.domain.repository.RoomRepository;
 import at.fhv.se.hotel.domain.repository.SeasonRepository;
-import at.fhv.se.hotel.domain.services.api.InvoiceSplitService;
+import at.fhv.se.hotel.domain.services.api.InvoiceCreationService;
 import at.fhv.se.hotel.domain.services.api.RoomCategoryPriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class InvoiceSplitServiceImpl implements InvoiceSplitService {
+public class InvoiceCreationServiceImpl implements InvoiceCreationService {
 
     private static final BigDecimal localTaxInEuro = new BigDecimal("0.76");
     private static final BigDecimal valueAddedTaxPercentage = new BigDecimal("0.10");
@@ -44,9 +44,8 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
     RoomRepository roomRepository;
 
     @Override
-    public Invoice splitInvoice(Stay stay, List<String> roomNames, String action) throws SeasonNotFoundException, RoomNotFoundException {
-
-        int todaysInvoicesAmount = invoiceRepository.invoicesByDate(LocalDate.now()).size() + 1;
+    public Invoice createInvoice(Stay stay, List<String> roomNames, String action) throws SeasonNotFoundException, RoomNotFoundException {
+        int todaysInvoicesAmount = invoiceRepository.amountOfInvoicesByDate(LocalDate.now()) + 1;
         List<RoomCategoryPrice> roomCategoryPriceList = new ArrayList<>();
 
         String invoiceSuffix = "";
@@ -81,18 +80,18 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
         LocalDate tempDate = stay.getCheckInDate();
 
         List<Room> rooms = new ArrayList<>();
-        for(int i = 0; i < nights; i++) {
+        for (int i = 0; i < nights; i++) {
             LocalDate finalTempDate = tempDate;
             Season currentSeason = seasonRepository.seasonByDate(tempDate).orElseThrow(
                     () -> new SeasonNotFoundException("Season for date " + finalTempDate + " not found.")
             );
 
-            for(String name : roomNames) {
+            for (String name : roomNames) {
                 Room room = roomRepository.roomByName(new RoomName(name)).orElseThrow(
                         () -> new RoomNotFoundException("Room " + name + " not found.")
                 );
 
-                if(!rooms.contains(room)) {
+                if (!rooms.contains(room)) {
                     rooms.add(room);
                 }
 
@@ -102,7 +101,7 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
 
                 totalNetAmountBeforeDiscount = totalNetAmountBeforeDiscount.add((currentCategoryPrice.getPrice()));
 
-                if(!roomCategoryPriceList.contains(currentCategoryPrice)) {
+                if (!roomCategoryPriceList.contains(currentCategoryPrice)) {
                     roomCategoryPriceList.add(currentCategoryPrice);
                 }
             }

@@ -1,6 +1,8 @@
 package at.fhv.se.hotel.infrastructure;
 
-import at.fhv.se.hotel.domain.model.roomcategory.*;
+import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryId;
+import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
+import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPriceId;
 import at.fhv.se.hotel.domain.model.season.SeasonId;
 import at.fhv.se.hotel.domain.repository.RoomCategoryPriceRepository;
 import org.springframework.stereotype.Component;

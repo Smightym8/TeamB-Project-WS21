@@ -6,6 +6,10 @@ import at.fhv.se.hotel.domain.model.season.Season;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * This class is acts as connection between room category, season and RoomCategoryPrice.
+ * It is used to add a price depending on the season to the room category.
+ */
 public class RoomCategoryPrice {
     // Required by hibernate
     @SuppressWarnings("unused")
@@ -18,13 +22,14 @@ public class RoomCategoryPrice {
     // Required by hibernate
     @SuppressWarnings("unused")
     @Generated
-    private RoomCategoryPrice(){}
+    private RoomCategoryPrice() {
+    }
 
     public static RoomCategoryPrice create(RoomCategoryPriceId aRoomCategoryPriceId, Season aSeason, RoomCategory aRoomCategory, BigDecimal aPrice) {
         return new RoomCategoryPrice(aRoomCategoryPriceId, aSeason, aRoomCategory, aPrice);
     }
 
-    private RoomCategoryPrice(RoomCategoryPriceId aRoomCategoryPriceId, Season aSeason, RoomCategory aRoomCategory, BigDecimal aPrice){
+    private RoomCategoryPrice(RoomCategoryPriceId aRoomCategoryPriceId, Season aSeason, RoomCategory aRoomCategory, BigDecimal aPrice) {
         this.roomCategoryPriceId = aRoomCategoryPriceId;
         this.season = aSeason;
         this.roomCategory = aRoomCategory;

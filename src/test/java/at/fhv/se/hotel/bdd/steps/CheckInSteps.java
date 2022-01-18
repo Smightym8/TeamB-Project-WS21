@@ -2,6 +2,8 @@ package at.fhv.se.hotel.bdd.steps;
 
 import at.fhv.se.hotel.application.api.CheckInService;
 import at.fhv.se.hotel.application.api.exception.BookingNotFoundException;
+import at.fhv.se.hotel.application.api.exception.NotEnoughRoomsException;
+import at.fhv.se.hotel.application.api.exception.RoomAlreadyOccupiedException;
 import at.fhv.se.hotel.application.api.exception.RoomNotFoundException;
 import at.fhv.se.hotel.application.dto.RoomDTO;
 import at.fhv.se.hotel.domain.model.booking.Booking;
@@ -116,7 +118,8 @@ public class CheckInSteps {
                 servicesExpected,
                 2,
                 1,
-                "Nothing"
+                "Nothing",
+                "20210801001"
         );
 
         bookingExpected.addRoomCategory(roomCategoryExpected, 1);
@@ -136,7 +139,7 @@ public class CheckInSteps {
 
     private List<RoomDTO> roomDTOs = new ArrayList<>();
     @When("I assign the rooms for the booking with the id {word}")
-    public void iAssignTheRooms(String bookingId) throws BookingNotFoundException {
+    public void iAssignTheRooms(String bookingId) throws BookingNotFoundException, NotEnoughRoomsException {
         roomDTOs = checkInService.assignRooms(bookingId);
     }
 
@@ -188,7 +191,8 @@ public class CheckInSteps {
                 servicesExpected,
                 2,
                 1,
-                "Nothing"
+                "Nothing",
+                "20210801001"
         );
 
         bookingExpected.addRoomCategory(roomCategoryExpected, 1);
@@ -207,7 +211,7 @@ public class CheckInSteps {
     }
 
     @When("I do the check in for the booking with id {word} and with the room {word}")
-    public void iDoTheCheckIn(String bookingId, String roomName) throws BookingNotFoundException, RoomNotFoundException {
+    public void iDoTheCheckIn(String bookingId, String roomName) throws BookingNotFoundException, RoomNotFoundException, RoomAlreadyOccupiedException {
 
         checkInService.checkIn(bookingId, List.of(roomName));
     }

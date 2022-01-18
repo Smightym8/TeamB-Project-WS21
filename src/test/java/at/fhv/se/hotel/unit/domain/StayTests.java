@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +68,7 @@ public class StayTests {
 
         LocalDate checkInDate = LocalDate.of(2021,12,1);
         LocalDate checkOutDate = LocalDate.of(2021,12,4);
+        String bookingNumber = checkInDate.format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001";
 
         Booking booking = Booking.create(
                 checkInDate,
@@ -76,7 +78,8 @@ public class StayTests {
                 services,
                 1,
                 0,
-                "Extra pillow"
+                "Extra pillow",
+                bookingNumber
         );
 
         int amount = 1;
@@ -168,6 +171,7 @@ public class StayTests {
 
         LocalDate checkInDate = LocalDate.of(2021,12,1);
         LocalDate checkOutDate = LocalDate.of(2021,12,4);
+        String bookingNumber = checkInDate.format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001";
 
         Booking booking = Booking.create(
                 checkInDate,
@@ -177,7 +181,8 @@ public class StayTests {
                 services,
                 1,
                 0,
-                "Extra pillow"
+                "Extra pillow",
+                bookingNumber
         );
 
         int amount = 1;

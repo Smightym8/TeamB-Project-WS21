@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -102,7 +103,8 @@ public class StayRepositoryImplTests {
                 servicesExpected,
                 2,
                 1,
-                "Nothing"
+                "Nothing",
+                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
         );
         bookingExpected.addRoomCategory(categoriesExpected.get(0), 1);
         bookingExpected.addRoomCategory(categoriesExpected.get(1), 1);
@@ -175,6 +177,8 @@ public class StayRepositoryImplTests {
         BookingId idExpected = new BookingId("1");
         LocalDate checkInDateExpected = LocalDate.of(2022, 5, 1);
         LocalDate checkOutDateExpected = LocalDate.of(2022, 5, 10);
+        String bookingNumberExpected = checkInDateExpected.format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001";
+
         Booking bookingExpected = Booking.create(
                 checkInDateExpected,
                 checkOutDateExpected,
@@ -183,7 +187,8 @@ public class StayRepositoryImplTests {
                 servicesExpected,
                 2,
                 1,
-                "Nothing"
+                "Nothing",
+                bookingNumberExpected
         );
         bookingExpected.addRoomCategory(categoriesExpected.get(0), 1);
         bookingExpected.addRoomCategory(categoriesExpected.get(1), 1);
@@ -288,7 +293,9 @@ public class StayRepositoryImplTests {
                         servicesExpected,
                         2,
                         1,
-                        "Nothing"),
+                        "Nothing",
+                        LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
+                ),
                 Booking.create(
                         LocalDate.now(),
                         LocalDate.now().plusDays(10),
@@ -297,7 +304,9 @@ public class StayRepositoryImplTests {
                         servicesExpected,
                         2,
                         1,
-                        "Nothing"),
+                        "Nothing",
+                        LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "002"
+                ),
                 Booking.create(
                         LocalDate.now(),
                         LocalDate.now().plusDays(10),
@@ -306,7 +315,9 @@ public class StayRepositoryImplTests {
                         servicesExpected,
                         2,
                         1,
-                        "Nothing")
+                        "Nothing",
+                        LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "003"
+                )
         );
 
         bookingsExpected.get(0).addRoomCategory(categoriesExpected.get(0), 1);

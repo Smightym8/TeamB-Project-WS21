@@ -84,7 +84,8 @@ public class InvoiceDownloadServiceTests {
                 servicesExpected,
                 2,
                 1,
-                "Nothing"
+                "Nothing",
+                "20211205001"
         );
         List<RoomCategory> categoriesExpected = Arrays.asList(
                 RoomCategory.create(new RoomCategoryId("1"),

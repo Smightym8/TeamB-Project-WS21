@@ -2,9 +2,11 @@ package at.fhv.se.hotel.domain.model.service;
 
 import at.fhv.se.hotel.domain.Generated;
 
-import javax.xml.bind.annotation.XmlElement;
 import java.util.Objects;
 
+/**
+ * This class is a value object for the service which contains the name
+ */
 public class ServiceName {
     private String name;
 
@@ -14,7 +16,7 @@ public class ServiceName {
     private ServiceName() {
     }
 
-    public ServiceName(String aName){
+    public ServiceName(String aName) {
         this.name = aName;
     }
 

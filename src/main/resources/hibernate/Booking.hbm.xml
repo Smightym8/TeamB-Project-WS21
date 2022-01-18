@@ -17,6 +17,8 @@
         <property name="amountOfAdults" column="amount_of_adults" type="java.lang.Integer" />
         <property name="amountOfChildren" column="amount_of_children" type="java.lang.Integer" />
         <property name="additionalInformation" column="additional_information" type="java.lang.String" />
+        <property name="bookingDate" column="booking_date" type="java.time.LocalDate" />
+        <property name="bookingNumber" column="booking_number" type="java.lang.String" />
 
         <!-- Mapping to booking id class -->
         <component name="bookingId" class="at.fhv.se.hotel.domain.model.booking.BookingId">

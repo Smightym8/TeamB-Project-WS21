@@ -2,9 +2,11 @@ package at.fhv.se.hotel.domain.model.roomcategory;
 
 import at.fhv.se.hotel.domain.Generated;
 
-import javax.xml.bind.annotation.XmlElement;
 import java.util.Objects;
 
+/**
+ * This class is a value object for the room category which contains the name
+ */
 public class RoomCategoryName {
     private String name;
 
@@ -14,7 +16,7 @@ public class RoomCategoryName {
     private RoomCategoryName() {
     }
 
-    public RoomCategoryName(String aName){
+    public RoomCategoryName(String aName) {
         this.name = aName;
     }
 

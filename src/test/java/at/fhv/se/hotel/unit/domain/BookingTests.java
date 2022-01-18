@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 
@@ -58,6 +59,7 @@ public class BookingTests {
         int amountOfAdults = 2;
         int amountOfChildren = 0;
         String additionalInformation = "Vegan";
+        String bookingNumber = checkInDate.format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001";
 
         // when
         Booking booking = Booking.create(
@@ -68,7 +70,8 @@ public class BookingTests {
                 services,
                 amountOfAdults,
                 amountOfChildren,
-                additionalInformation
+                additionalInformation,
+                bookingNumber
         );
 
         // then
@@ -83,7 +86,7 @@ public class BookingTests {
         assertEquals(amountOfAdults, booking.getAmountOfAdults());
         assertEquals(amountOfChildren, booking.getAmountOfChildren());
         assertEquals(additionalInformation, booking.getAdditionalInformation());
-
+        assertEquals(bookingNumber, booking.getBookingNumber());
     }
 
     @Test
@@ -93,6 +96,7 @@ public class BookingTests {
         LocalDate checkOutDate = LocalDate.of(2021,12,2);
         String bookingIdStr = "1";
         BookingId bookingId = new BookingId(bookingIdStr);
+        String bookingNumber = checkInDate.format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001";
 
         Guest guest = Guest.create(
                 new GuestId("1"),
@@ -135,7 +139,8 @@ public class BookingTests {
                 services,
                 amountOfAdults,
                 amountOfChildren,
-                additionalInformation
+                additionalInformation,
+                bookingNumber
         );
 
         // when
@@ -152,11 +157,13 @@ public class BookingTests {
         LocalDate checkOutDate1 = LocalDate.of(2021,12,2);
         String bookingIdStr1 = "1";
         BookingId bookingId1 = new BookingId(bookingIdStr1);
+        String bookingNumber1 = checkInDate1.format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001";
 
         LocalDate checkInDate2 = LocalDate.of(2021,12,3);
         LocalDate checkOutDate2 = LocalDate.of(2021,12,4);
         String bookingIdStr2 = "2";
         BookingId bookingId2 = new BookingId(bookingIdStr2);
+        String bookingNumber2 = checkInDate2.format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001";
 
         Guest guest = Guest.create(
                 new GuestId("1"),
@@ -199,7 +206,8 @@ public class BookingTests {
                 services,
                 amountOfAdults,
                 amountOfChildren,
-                additionalInformation
+                additionalInformation,
+                bookingNumber1
         );
 
         Booking booking2 = Booking.create(
@@ -210,7 +218,8 @@ public class BookingTests {
                 services,
                 amountOfAdults,
                 amountOfChildren,
-                additionalInformation
+                additionalInformation,
+                bookingNumber2
         );
 
         Booking booking3 = Booking.create(
@@ -221,7 +230,8 @@ public class BookingTests {
                 services,
                 amountOfAdults,
                 amountOfChildren,
-                additionalInformation
+                additionalInformation,
+                bookingNumber2
         );
 
         // when ... then

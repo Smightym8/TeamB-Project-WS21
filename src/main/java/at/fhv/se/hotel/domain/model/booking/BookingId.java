@@ -4,19 +4,23 @@ import at.fhv.se.hotel.domain.Generated;
 
 import java.util.Objects;
 
+/**
+ * This class is a value object for the booking which contains the id
+ */
 public class BookingId {
     private String id;
 
     // Required by hibernate
     @SuppressWarnings("unused")
     @Generated
-    private BookingId() {}
+    private BookingId() {
+    }
 
-    public BookingId(String id){
+    public BookingId(String id) {
         this.id = id;
     }
 
-    public String id(){
+    public String id() {
         return this.id;
     }
 

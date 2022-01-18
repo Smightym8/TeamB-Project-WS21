@@ -4,6 +4,9 @@ import at.fhv.se.hotel.domain.Generated;
 
 import java.util.Objects;
 
+/**
+ * This class is a value object for the room category which contains the description
+ */
 public class Description {
     private String description;
 
@@ -13,7 +16,7 @@ public class Description {
     private Description() {
     }
 
-    public Description(String aDescription){
+    public Description(String aDescription) {
         this.description = aDescription;
     }
 

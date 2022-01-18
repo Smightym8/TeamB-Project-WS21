@@ -21,9 +21,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class represents the implementation of the interface {@link BookingCreationService}.
+ * It provides the functionality to create a booking.
+ */
 @Component
 public class BookingCreationServiceImpl implements BookingCreationService {
 
@@ -39,6 +44,22 @@ public class BookingCreationServiceImpl implements BookingCreationService {
     @Autowired
     ServiceRepository serviceRepository;
 
+    /**
+     * This method creates a new booking and saves it into the database.
+     * @param guestId contains the id of the guest.
+     * @param roomCategoryIds contains the id of the room categories.
+     * @param amounts contains the number of booked room categories.
+     * @param serviceIds contains the ids of the services.
+     * @param checkInDate contains the check-in date.
+     * @param checkOutDate contains the check-out date.
+     * @param amountOfAdults contains the number of adults.
+     * @param amountOfChildren contains the number of children.
+     * @param additionalInformation contains additional information.
+     * @return The bookingId.
+     * @throws GuestNotFoundException if the guest could not be found.
+     * @throws ServiceNotFoundException if the service could not be found.
+     * @throws RoomCategoryNotFoundException if the room category could not be found.
+     */
     @Transactional
     @Override
     public String book(String guestId,
@@ -52,6 +73,19 @@ public class BookingCreationServiceImpl implements BookingCreationService {
                      String additionalInformation) throws GuestNotFoundException, ServiceNotFoundException, RoomCategoryNotFoundException {
 
         BookingId bookingId = bookingRepository.nextIdentity();
+
+        int todaysBookingsAmount = bookingRepository.amountOfBookingsByDate(LocalDate.now()) + 1;
+        String bookingSuffix = "";
+
+        if(todaysBookingsAmount < 10) {
+            bookingSuffix = "00" + todaysBookingsAmount;
+        } else if(todaysBookingsAmount < 100) {
+            bookingSuffix = "0" + todaysBookingsAmount;
+        } else {
+            bookingSuffix = String.valueOf(todaysBookingsAmount);
+        }
+
+        String bookingNumber = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + bookingSuffix;
 
         Guest guest = guestRepository.guestById(new GuestId(guestId)).orElseThrow(
                 () -> new GuestNotFoundException("Guest with id " + guestId + " not found")
@@ -67,7 +101,8 @@ public class BookingCreationServiceImpl implements BookingCreationService {
 
         Booking booking = Booking.create(
                 checkInDate, checkOutDate, bookingId,
-                guest, services, amountOfAdults, amountOfChildren, additionalInformation
+                guest, services, amountOfAdults, amountOfChildren,
+                additionalInformation, bookingNumber
         );
 
         int i = 0;

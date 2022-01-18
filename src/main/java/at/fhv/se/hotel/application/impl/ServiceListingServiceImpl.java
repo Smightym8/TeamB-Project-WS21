@@ -14,12 +14,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This class represents the implementation of the interface {@link ServiceListingService}
+ * It provides the functionality to
+ * get all services
+ * get a specific service by id
+ */
 @Component
 public class ServiceListingServiceImpl implements ServiceListingService {
 
     @Autowired
     ServiceRepository serviceRepository;
 
+    /**
+     * This method provides all services.
+     * @return a list of ServiceDTO objects.
+     */
     @Transactional(readOnly=true)
     @Override
     public List<ServiceDTO> allServices() {
@@ -39,6 +49,12 @@ public class ServiceListingServiceImpl implements ServiceListingService {
         return dtos;
     }
 
+    /**
+     * This method provides details of a service by id.
+     * @param id contains the id of the service.
+     * @return a ServiceDTO object.
+     * @throws ServiceNotFoundException if the service could not be found.
+     */
     @Override
     public Optional<ServiceDTO> findServiceById(String id) throws ServiceNotFoundException {
         Service service = serviceRepository.serviceById(new ServiceId(id)).orElseThrow(

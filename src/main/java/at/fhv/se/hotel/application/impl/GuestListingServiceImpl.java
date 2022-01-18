@@ -11,14 +11,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * This class represents the implementation of the interface {@link GuestListingService}
+ * It provides the functionality to
+ * get all guests
+ * get a specific guest by id
+ */
 @Component
 public class GuestListingServiceImpl implements GuestListingService {
 
     @Autowired
     GuestRepository guestRepository;
 
+    /**
+     * This method provides all guests.
+     * @return a list of GuestListingDTO objects.
+     */
     @Transactional(readOnly=true)
     @Override
     public List<GuestListingDTO> allGuests() {
@@ -45,6 +56,12 @@ public class GuestListingServiceImpl implements GuestListingService {
         return dtos;
     }
 
+    /**
+     * This method provides details of a guest by id.
+     * @param id contains the id of the guest.
+     * @return a GuestDetailsDTO object.
+     * @throws GuestNotFoundException if the guest could not be found.
+     */
     @Override
     public GuestDetailsDTO findGuestById(String id) throws GuestNotFoundException {
         Guest guest = guestRepository.guestById(new GuestId(id)).orElseThrow(

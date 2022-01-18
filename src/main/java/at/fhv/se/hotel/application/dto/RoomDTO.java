@@ -1,5 +1,7 @@
 package at.fhv.se.hotel.application.dto;
 
+import at.fhv.se.hotel.domain.Generated;
+
 import java.util.Objects;
 
 public class RoomDTO {
@@ -52,5 +54,20 @@ public class RoomDTO {
 
             return this.instance;
         }
+    }
+
+    @Generated
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RoomDTO roomDTO = (RoomDTO) o;
+        return Objects.equals(name, roomDTO.name) && Objects.equals(categoryName, roomDTO.categoryName) && Objects.equals(roomStatus, roomDTO.roomStatus);
+    }
+
+    @Generated
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, categoryName, roomStatus);
     }
 }

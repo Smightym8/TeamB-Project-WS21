@@ -1,7 +1,11 @@
 package at.fhv.se.hotel.application.dto;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import org.springframework.boot.jackson.JsonComponent;
+
 import java.util.Objects;
 
+@JsonComponent
 public class RoomCategoryDTO {
     private String id;
     private String name;
@@ -10,15 +14,18 @@ public class RoomCategoryDTO {
         return new Builder();
     }
 
+    @JsonGetter
     public String id() {
         return this.id;
     }
+
+    @JsonGetter
     public String name() {
         return this.name;
     }
 
     public static class Builder {
-        private RoomCategoryDTO instance;
+        private final RoomCategoryDTO instance;
 
         private Builder () {
             this.instance = new RoomCategoryDTO();

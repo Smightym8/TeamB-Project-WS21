@@ -24,8 +24,15 @@ import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+/**
+ * This class represents the implementation of the interface {@link InvoiceDownloadService}
+ * It provides the functionality to download an invoice.
+ */
 @Component
 public class InvoiceDownloadServiceImpl implements InvoiceDownloadService {
     private static final String INVOICE_PDF_TEMPLATE = "/invoice/xslt/invoice2pdf.xsl";
@@ -36,6 +43,16 @@ public class InvoiceDownloadServiceImpl implements InvoiceDownloadService {
     @Autowired
     ResourceLoader resourceLoader;
 
+    /**
+     * This method provides the functionality to download an invoice.
+     * @param invoiceNumber contains the number of the invoice.
+     * @return a ByteArrayResource object.
+     * @throws InvoiceNotFoundException if the invoice could not be found.
+     * @throws JAXBException
+     * @throws FOPException
+     * @throws IOException
+     * @throws TransformerException
+     */
     @Override
     public ByteArrayResource download(String invoiceNumber) throws InvoiceNotFoundException, JAXBException, FOPException, IOException, TransformerException {
         Invoice invoice = invoiceRepository.invoiceByNumber(invoiceNumber).orElseThrow(

@@ -8,17 +8,27 @@ import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class represents the implementation of the interface {@link RoomListingService}
+ * It provides the functionality to
+ * get all rooms
+ * get all free rooms
+ * get a specific room by name
+ */
 @Component
 public class RoomListingServiceImpl implements RoomListingService {
     @Autowired
     RoomRepository roomRepository;
 
+    /**
+     * This method provides all rooms.
+     * @return a list of RoomDTO objects.
+     */
     @Transactional(readOnly = true)
     @Override
     public List<RoomDTO> allRooms() {
@@ -38,6 +48,10 @@ public class RoomListingServiceImpl implements RoomListingService {
         return roomDTOs;
     }
 
+    /**
+     * This method provides all free rooms.
+     * @return a list of RoomDTO objects.
+     */
     @Transactional(readOnly = true)
     @Override
     public List<RoomDTO> allFreeRooms() {
@@ -57,6 +71,12 @@ public class RoomListingServiceImpl implements RoomListingService {
         return freeRoomsDTOs;
     }
 
+    /**
+     * This method provides a room by room name.
+     * @param name contains the name of the room.
+     * @return a RoomDTO object.
+     * @throws RoomNotFoundException if room could not be found.
+     */
     @Transactional(readOnly = true)
     @Override
     public RoomDTO roomByName(String name) throws RoomNotFoundException {

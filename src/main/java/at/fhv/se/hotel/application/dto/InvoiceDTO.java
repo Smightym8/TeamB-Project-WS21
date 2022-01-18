@@ -1,10 +1,8 @@
 package at.fhv.se.hotel.application.dto;
 
-
 import at.fhv.se.hotel.application.LocalDateAdapter;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.math.BigDecimal;

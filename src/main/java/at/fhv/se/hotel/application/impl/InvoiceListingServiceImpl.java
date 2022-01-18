@@ -6,10 +6,6 @@ import at.fhv.se.hotel.application.dto.InvoiceDTO;
 import at.fhv.se.hotel.application.dto.InvoiceListingDTO;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
 import at.fhv.se.hotel.domain.model.invoice.InvoiceId;
-import at.fhv.se.hotel.domain.model.room.Room;
-import at.fhv.se.hotel.domain.model.room.RoomName;
-import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
-import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.repository.InvoiceRepository;
 import at.fhv.se.hotel.domain.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +13,17 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class represents the implementation of the interface {@link InvoiceListingService}
+ * It provides the functionality to
+ * get all invoices
+ * a specific invoice by id
+ */
 @Component
 public class InvoiceListingServiceImpl implements InvoiceListingService {
     @Autowired
@@ -31,6 +32,10 @@ public class InvoiceListingServiceImpl implements InvoiceListingService {
     @Autowired
     RoomRepository roomRepository;
 
+    /**
+     * This method provides all invoices.
+     * @return a list of InvoiceListingDTO objects.
+     */
     @Transactional(readOnly = true)
     @Override
     public List<InvoiceListingDTO> allInvoices() {
@@ -57,6 +62,12 @@ public class InvoiceListingServiceImpl implements InvoiceListingService {
         return invoiceListingDTOs;
     }
 
+    /**
+     * This method provides details of an invoice by id.
+     * @param id contains the id of the invoice.
+     * @return a InvoiceDTO object.
+     * @throws InvoiceNotFoundException if the invoice could not be found.
+     */
     @Override
     public InvoiceDTO findInvoiceById(String id) throws InvoiceNotFoundException {
         Invoice invoice = invoiceRepository.invoiceById(new InvoiceId(id)).orElseThrow(
@@ -85,12 +96,10 @@ public class InvoiceListingServiceImpl implements InvoiceListingService {
             }
         );
 
-
-
-
         InvoiceDTO invoiceDTO = InvoiceDTO.builder()
                 .withInvoiceNumber(invoice.getInvoiceNumber())
                 .withInvoiceId(id)
+                .withStayId(invoice.getStay().getStayId().id())
                 .withInvoiceDate(invoice.getInvoiceDate())
                 .withGuestFirstName(invoice.getStay().getGuest().getName().firstName())
                 .withGuestLastName(invoice.getStay().getGuest().getName().lastName())

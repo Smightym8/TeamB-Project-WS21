@@ -6,12 +6,14 @@ import at.fhv.se.hotel.domain.model.guest.Guest;
 import at.fhv.se.hotel.domain.model.room.Room;
 import at.fhv.se.hotel.domain.model.service.Service;
 
-import javax.xml.bind.annotation.XmlElement;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * This class represents a stay
+ */
 public class Stay {
     // Required by hibernate
     @SuppressWarnings("unused")

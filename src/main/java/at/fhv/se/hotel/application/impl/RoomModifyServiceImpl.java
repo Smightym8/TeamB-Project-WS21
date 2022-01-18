@@ -12,16 +12,21 @@ import org.springframework.stereotype.Component;
 import javax.transaction.Transactional;
 import java.security.InvalidParameterException;
 
+/**
+ * This class represents the implementation of the interface {@link RoomModifyService}
+ * It provides the functionality to modify a room.
+ */
 @Component
 public class RoomModifyServiceImpl implements RoomModifyService {
     @Autowired
     RoomRepository roomRepository;
 
     /**
-     * This method updates the status of a room
-     * @param roomName contains the name of the room whose status will be updated
-     * @param roomStatus contains the new status of the room
-     * @throws RoomNotFoundException if the room can't be found
+     * This method updates the status of a room.
+     * @param roomName contains the name of the room whose status will be updated.
+     * @param roomStatus contains the new status of the room.
+     * @throws RoomNotFoundException if the room could not be found.
+     * @throws InvalidParameterException if an invalid room status is provided
      */
     @Transactional
     @Override

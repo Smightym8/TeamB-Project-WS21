@@ -2,9 +2,11 @@ package at.fhv.se.hotel.domain.model.guest;
 
 import at.fhv.se.hotel.domain.Generated;
 
-import javax.xml.bind.annotation.XmlElement;
 import java.util.Objects;
 
+/**
+ * This class is a value object for the guest which contains the address information
+ */
 public class Address {
     private String streetName;
     private String streetNumber;
@@ -15,7 +17,8 @@ public class Address {
     // Required by hibernate
     @SuppressWarnings("unused")
     @Generated
-    private Address(){}
+    private Address() {
+    }
 
     public Address(String aStreetName, String aStreetNumber, String aCity, String aZipCode, String aCountry) {
         this.streetName = aStreetName;
