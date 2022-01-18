@@ -1,488 +1,605 @@
-
 --- Room Categories
 insert into room_category(domain_id, name, description)
-VALUES ('1', 'Single Room', 'A room for one person.');
+VALUES (''1 '', ''Single Room'', ''You love spending the whole day in nature,
+        exploring the mountain world extensively and are a fan of beautiful rooms with a casual stylish look,
+        without wanting too much of a good thing. Our lovely double room Casual, with approx.25 m², offers all the amenities that mountain enthusiasts like after a full day: comfortable box spring bed for a wonderful night`s sleep,
+        beautiful bathroom with large rain shower, mini - fridge(not filled), Nespresso machine, kettle,
+        balcony and much more. The \"Casual\" can also be booked for single use'');
 
 insert into room_category(domain_id, name, description)
-VALUES ('2', 'Double Room', 'A room for two persons.');
+VALUES (''2'', ''Double Room'', ''In our double room \"Stylish\" you will be pampered with a king-size box-spring bed. You will sleep pleasantly quiet and fully relax on holiday - like a prince and princess. With approx. 30 m², the two of you have plenty of space. You will enjoy using the stylish sofa or the recliner to relax, while your wife occupies the bathroom for evening styling. The balcony with its magnificent view will tempt you out in the morning to enjoy a private cup of Nespresso coffee together.'');
 
 insert into room_category(domain_id, name, description)
-VALUES ('3', 'Junior Suite', 'A luxury small suite.');
+VALUES (''3'', ''Junior Suite'', ''In our junior suite \"Lifestyle\", we placed great emphasis on the balance between the living and sleeping areas. Spaciously divided, the sofa bed corner invites you to relax during the day. In the box spring bed you will wake up the next morning fully rested and relaxed. The bathroom with integrated infrared cabin, two washbasins, separately integrated WC and a large rain shower is already a great feel-good bathroom. Flat screen TV, Nespresso machine, mini-fridge (not filled), kettle and many other small details are part of the standard equipment'');
 
 insert into room_category(domain_id, name, description)
-VALUES ('4', 'Suite', 'A luxury big suite.');
+VALUES (''4'', ''Suite'', ''You will reside in our WOW suite as if in your own little flat. Step inside - you will be amazed. You will find everything you need for a perfect wellness holiday with lots of privacy and amenities that have been thought out down to the smallest detail. The separate living room with open fireplace is your personal retreat with a glass of good wine in the evening. In the bathroom you are welcome to use your own sauna and then cool off in the outdoor jacuzzi on the secluded terrace. If you have visitors, there is a guest toilet available.'');
 
 --- Seasons
 insert into season(start_date, end_date, domain_id, name)
-VALUES('2021-12-01', '2022-01-31', '1', 'Winter 2021/2022');
+VALUES(''2021-12-01'', ''2022-01-31'', ''1'', ''Winter 2021/2022'');
 
 insert into season(start_date, end_date, domain_id, name)
-VALUES('2022-02-01', '2022-05-31', '2', 'Spring 2022');
+VALUES(''2022-02-01'', ''2022-05-31'', ''2'', ''Spring 2022'');
 
 insert into season(start_date, end_date, domain_id, name)
-VALUES('2022-06-01', '2022-09-30', '3', 'Summer 2022');
+VALUES(''2022-06-01'', ''2022-09-30'', ''3'', ''Summer 2022'');
 
 insert into season(start_date, end_date, domain_id, name)
-VALUES('2022-10-01', '2022-11-30', '4', 'Fall 2022');
+VALUES(''2022-10-01'', ''2022-11-30'', ''4'', ''Fall 2022'');
 
 insert into season(start_date, end_date, domain_id, name)
-VALUES('2022-12-01', '2023-01-31', '5', 'Winter 2022/2023');
+VALUES(''2022-12-01'', ''2023-01-31'', ''5'', ''Winter 2022/2023'');
 
 insert into season(start_date, end_date, domain_id, name)
-VALUES('2023-02-01', '2023-05-31', '6', 'Spring 2023');
+VALUES(''2023-02-01'', ''2023-05-31'', ''6'', ''Spring 2023'');
 
 insert into season(start_date, end_date, domain_id, name)
-VALUES('2023-06-01', '2023-09-30', '7', 'Summer 2023');
+VALUES(''2023-06-01'', ''2023-09-30'', ''7'', ''Summer 2023'');
 
 insert into season(start_date, end_date, domain_id, name)
-VALUES('2023-10-01', '2023-11-30', '8', 'Fall 2023');
+VALUES(''2023-10-01'', ''2023-11-30'', ''8'', ''Fall 2023'');
 
 insert into season(start_date, end_date, domain_id, name)
-VALUES('2023-12-01', '2024-01-31', '9', 'Winter 2023/2024');
+VALUES(''2023-12-01'', ''2024-01-31'', ''9'', ''Winter 2023/2024'');
 
 --- Category Prices
     --- Single Room
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('1', '1', '1', 50);
+VALUES (''1'', ''1'', ''1'', 50);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('2', '2', '1', 30);
+VALUES (''2'', ''2'', ''1'', 30);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('3', '3', '1', 40);
+VALUES (''3'', ''3'', ''1'', 40);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('4', '4', '1', 20);
+VALUES (''4'', ''4'', ''1'', 20);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('5', '5', '1', 50);
+VALUES (''5'', ''5'', ''1'', 50);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('6', '6', '1', 30);
+VALUES (''6'', ''6'', ''1'', 30);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('7', '7', '1', 40);
+VALUES (''7'', ''7'', ''1'', 40);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('8', '8', '1', 20);
+VALUES (''8'', ''8'', ''1'', 20);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('9', '9', '1', 50);
+VALUES (''9'', ''9'', ''1'', 50);
 
     --- Double Room
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('10', '1', '2', 90);
+VALUES (''10'', ''1'', ''2'', 90);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('11', '2', '2', 60);
+VALUES (''11'', ''2'', ''2'', 60);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('12', '3', '2', 80);
+VALUES (''12'', ''3'', ''2'', 80);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('13', '4', '2', 50);
+VALUES (''13'', ''4'', ''2'', 50);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('14', '5', '2', 90);
+VALUES (''14'', ''5'', ''2'', 90);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('15', '6', '2', 60);
+VALUES (''15'', ''6'', ''2'', 60);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('16', '7', '2', 80);
+VALUES (''16'', ''7'', ''2'', 80);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('17', '8', '2', 50);
+VALUES (''17'', ''8'', ''2'', 50);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('18', '9', '2', 90);
+VALUES (''18'', ''9'', ''2'', 90);
 
     --- Junior Suite
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('19', '1', '3', 120);
+VALUES (''19'', ''1'', ''3'', 120);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('20', '2', '3', 90);
+VALUES (''20'', ''2'', ''3'', 90);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('21', '3', '3', 110);
+VALUES (''21'', ''3'', ''3'', 110);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('22', '4', '3', 80);
+VALUES (''22'', ''4'', ''3'', 80);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('23', '5', '3', 120);
+VALUES (''23'', ''5'', ''3'', 120);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('24', '6', '3', 90);
+VALUES (''24'', ''6'', ''3'', 90);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('25', '7', '3', 110);
+VALUES (''25'', ''7'', ''3'', 110);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('26', '8', '3', 80);
+VALUES (''26'', ''8'', ''3'', 80);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('27', '9', '3', 120);
+VALUES (''27'', ''9'', ''3'', 120);
 
     --- Suite
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('28', '1', '4', 150);
+VALUES (''28'', ''1'', ''4'', 150);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('29', '2', '4', 120);
+VALUES (''29'', ''2'', ''4'', 120);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('30', '3', '4', 140);
+VALUES (''30'', ''3'', ''4'', 140);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('31', '4', '4', 110);
+VALUES (''31'', ''4'', ''4'', 110);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('32', '5', '4', 150);
+VALUES (''32'', ''5'', ''4'', 150);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('33', '6', '4', 120);
+VALUES (''33'', ''6'', ''4'', 120);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('34', '7', '4', 140);
+VALUES (''34'', ''7'', ''4'', 140);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('35', '8', '4', 110);
+VALUES (''35'', ''8'', ''4'', 110);
 
 insert into room_category_price(domain_id, season_id, roomcategory_id, price)
-VALUES ('36', '9', '4', 150);
+VALUES (''36'', ''9'', ''4'', 150);
+
+--- Guests
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1999-01-02'', ''+43 680 7994750'', ''ali.cinar@gmail.at'', 20, 0, ''1'', ''Ali'', ''Cinar'', ''Hauptplatz'', ''73'', ''Oberkulm'', ''4210'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1999-01-02'', ''+43 650 7131945'', ''michael.spiegel@gmx.at'', 30, 0, ''2'', ''Michael'', ''Spiegel'', ''Polletstraße'', ''26'', ''Wien'', ''1220'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1999-01-01'', ''+43 660 2648080'', ''johannes.moosbrugger@gmx.at'', 20, 0, ''3'', ''Johannes'', ''Moosbrugger'', ''Birkenweg'', ''9'', ''Radstadt'', ''5550'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1999-01-01'', ''+43 676 4679464'', ''dario.birbamer@gmail.at'', 20, 0, ''4'', ''Dario'', ''Birbarmer'', ''Forststraße'', ''8'', ''Kirchbichl'', ''6322'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1999-01-01'', ''+43 680 4589452'', ''umut.caglayan@gmx.at'', 20, 0, ''5'', ''Umut'', ''Caglayan'', ''Maternaweg'', ''18'', ''Wien'', ''1160'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1985-03-08'', ''+43 680 1593698'', ''rainer.zufall@students.fhv.at'', 0, 0, ''6'', ''Rainer'', ''Zufall'', ''Floridusgasse'', ''96'', ''Wiederndorf'', ''9150'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1989-08-12'', ''+43 680 9534658'', ''klara.fall@students.fhv.at'', 0, 1, ''7'', ''Klara'', ''Fall'', ''Pazmaniteng'', ''25'', ''Aham'', ''4800'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1975-03-20'', ''+43 680 3576523'', ''ernst.haft@students.fhv.at'', 0, 0, ''8'', ''Ernst'', ''Haft'', ''Stubengraben'', ''47'', ''Ebersdorf'', ''8342'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1950-09-23'', ''+43 7633331220389'', ''thomas.pfeifer@gmx.at'', 0, 0, ''9'', ''Thomas'', ''Pfeifer'', ''Enzingerstr.'', ''8'', ''Perg'', ''6298'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1954-07-25'', ''+43 6280644508803'', ''mateo.weninger@ddd.at'', 0, 0, ''10'', ''Mateo'', ''Weninger'', ''Krausplatz'', ''3'', ''Sankt Johann im Pongau'', ''7403'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1933-06-14'', ''+43 7692974705660'', ''marvin.froschauer@gmx.at'', 0, 2, ''11'', ''Marvin'', ''Froschauer'', ''Cornelius-Koch-Straße'', ''8'', ''Leoben'', ''1908'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1937-05-11'', ''+43 3815405747977'', ''selena.heinzl@yahoo.com'', 0, 1, ''12'', ''Selena'', ''Heinzl'', ''Bachlerweg'', ''9/1'', ''Zistersdorf'', ''8230'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''2000-03-09'', ''+43 2906032928062'', ''jannis.zechner@outlook.de'', 0, 0, ''13'', ''Jannis'', ''Zechner'', ''Grünwaldgasse'', ''0/5'', ''Leoben'', ''5842'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1976-04-19'', ''+43 4523507680223'', ''julia.probst@ddd.at'', 0, 1, ''14'', ''Julia'', ''Probst'', ''Rachel-Fankhauser-Gasse'', ''806'', ''Marchtrenk'', ''5544'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1994-06-17'', ''+43 3950357810429'', ''natan.loibl@outlook.de'', 0, 0, ''15'', ''Natan'', ''Loibl'', ''Adamgasse'', ''73'', ''Grieskirchen'', ''8540'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1962-02-10'', ''+43 4658770110593'', ''lukas.kastner@yahoo.com'', 0, 0, ''16'', ''Lukas'', ''Kastner'', ''Gschaiderring'', ''6/0'', ''Dürnstein'', ''5697'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1930-04-07'', ''+43 0444413756617'', ''igor.paul@tdd.at'', 0, 0, ''17'', ''Igor'', ''Paul'', ''Rosa-Kopp-Ring'', ''5/2'', ''Marchegg'', ''3765'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1963-03-01'', ''+43 5530530488509'', ''anja.neumann@ddd.at'', 0, 1, ''18'', ''Anja'', ''Neumann'', ''Madeleine-Brandl-Gasse'', ''82'', ''Stockerau'', ''3773'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1972-08-16'', ''+43 0716275539087'', ''matteo.zettl@outlook.de'', 0, 2, ''19'', ''Matteo'', ''Zettl'', ''Faschingweg'', ''18'', ''Mautern an der Donau'', ''8180'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1941-07-19'', ''+43 8636272687471'', ''david.klinger@ddd.at'', 0, 0, ''20'', ''David'', ''Klinger'', ''Luana-Geiger-Weg'', ''51'', ''Ybbs an der Donau'', ''8910'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1961-11-02'', ''+43 4416281800124'', ''constanze.krainz@tdd.at'', 0, 1, ''21'', ''Constanze'', ''Krainz'', ''Lucia-Köhler-Ring'', ''245'', ''Radenthein'', ''6045'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1946-11-01'', ''+43 2983915208049'', ''nele.steinkellner@tdd.at'', 0, 1, ''22'', ''Nele'', ''Steinkellner'', ''Robert-Trimmel-Gasse'', ''1/1'', ''Rattenberg'', ''8717'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''2003-12-19'', ''+43 9052354113676'', ''sandro.wöhrer@gmx.at'', 0, 0, ''23'', ''Sandro'', ''Wöhrer'', ''Leonie-Deutschmann-Platz'', ''28'', ''Purbach am Neusiedler See'', ''7273'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1976-12-30'', ''+43 5993884607636'', ''josef.lagler@tdd.at'', 0, 0, ''24'', ''Josef'', ''Lagler'', ''Lucia-Wolf-Gasse'', ''50'', ''Fehring'', ''8950'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1990-01-27'', ''+43 5209125220099'', ''elsa.adler@outlook.de'', 0, 1, ''25'', ''Elsa'', ''Adler'', ''Aylin-Wagner-Straße'', ''3/7'', ''Zeltweg'', ''3360'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1956-02-19'', ''+43 2506943446949'', ''franz.macher@tdd.at'', 0, 0, ''26'', ''Franz'', ''Macher'', ''Stolzweg'', ''6'', ''Gföhl'', ''7280'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1953-11-13'', ''+43 9565324776770'', ''felix.hirschmann@tdd.at'', 0, 0, ''27'', ''Felix'', ''Hirschmann'', ''Verena-Wurzinger-Straße'', ''809'', ''Güssing'', ''6243'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1932-06-19'', ''+43 2753910325075'', ''ilias.köhler@gmx.at'', 0, 0, ''28'', ''Ilias'', ''Köhler'', ''Bertholdgasse'', ''1/5'', ''Salzburg'', ''9868'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1995-02-14'', ''+43 7590596973157'', ''lionel.hausberger@outlook.de'', 0, 0, ''29'', ''Lionel'', ''Hausberger'', ''Hinterbergergasse'', ''8'', ''Ebreichsdorf'', ''6835'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1975-06-13'', ''+43 6343305560269'', ''jan.koch@gmail.com'', 0, 0, ''30'', ''Jan'', ''Koch'', ''Dünserstr.'', ''5'', ''Friedberg'', ''9921'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1996-02-15'', ''+43 0824776320970'', ''raphael.bernhard@tdd.at'', 0, 0, ''31'', ''Raphael'', ''Bernhard'', ''Elona-Pfister-Gasse'', ''8'', ''Sankt Andrä im Lavanttal'', ''7202'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''2000-01-31'', ''+43 5880979916541'', ''stefan.frisch@tdd.at'', 0, 0, ''32'', ''Stefan'', ''Frisch'', ''Boris-Teufl-Ring'', ''10'', ''Wien'', ''7484'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1941-01-01'', ''+43 1794031018893'', ''amelia.hahn@gmail.com'', 0, 1, ''33'', ''Amelia'', ''Hahn'', ''Schinaglstraße'', ''6'', ''Lienz'', ''3818'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1963-04-11'', ''+43 6625086665358'', ''charlotte.denk@outlook.de'', 0, 1, ''34'', ''Charlotte'', ''Denk'', ''Wurmring'', ''2'', ''Ternitz'', ''6734'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1970-01-22'', ''+43 4159350342871'', ''luka.stummer@gmail.com'', 0, 0, ''35'', ''Luka'', ''Stummer'', ''Haiderstraße'', ''2'', ''Steyr'', ''9962'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1973-08-28'', ''+43 7900077434320'', ''anna-lena.schlögl@yahoo.com'', 0, 1, ''36'', ''Anna-Lena'', ''Schlögl'', ''Krainerweg'', ''280'', ''Wolkersdorf'', ''2077'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1926-03-19'', ''+43 4383680981043'', ''raffael.hofinger@outlook.de'', 0, 0, ''37'', ''Raffael'', ''Hofinger'', ''Wandlweg'', ''965'', ''Imst'', ''6480'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1933-05-22'', ''+43 1442191223500'', ''fernando.neuner@gmail.com'', 0, 0, ''38'', ''Fernando'', ''Neuner'', ''Tanja-Klein-Platz'', ''574'', ''Tulln an der Donau'', ''4055'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1954-07-02'', ''+43 0521671396561'', ''christian.lammer@gmx.at'', 0, 0, ''39'', ''Christian'', ''Lammer'', ''Antonio-Kraft-Weg'', ''2/7'', ''Bleiburg'', ''8646'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1924-05-22'', ''+43 6037141021798'', ''damian.wallner@gmx.at'', 0, 0, ''40'', ''Damian'', ''Wallner'', ''Josefine-Holzmann-Platz'', ''08'', ''Gmunden'', ''7622'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1938-05-27'', ''+43 2783823488152'', ''lucia.jöbstl@gmx.at'', 0, 1, ''41'', ''Lucia'', ''Jöbstl'', ''Kummerstraße'', ''0/7'', ''Spittal an der Drau'', ''8730'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1948-09-13'', ''+43 3055445543242'', ''leander.konrad@yahoo.com'', 0, 0, ''42'', ''Leander'', ''Konrad'', ''Ackerlplatz'', ''68'', ''Attnang-Puchheim'', ''5262'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1972-07-20'', ''+43 2478489204221'', ''lino.burtscher@yahoo.com'', 0, 0, ''43'', ''Lino'', ''Burtscher'', ''Hornring'', ''4/9'', ''Tulln an der Donau'', ''6800'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1967-08-15'', ''+43 4035557814764'', ''dana.vogt@gmx.at'', 0, 2, ''44'', ''Dana'', ''Vogt'', ''Schwendingerweg'', ''2/4'', ''Scheibbs'', ''2096'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1939-09-07'', ''+43 4079464633366'', ''emanuel.hausberger@tdd.at'', 0, 2, ''45'', ''Emanuel'', ''Hausberger'', ''Laurenz-Kraxner-Platz'', ''531'', ''Ebreichsdorf'', ''7978'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1990-08-07'', ''+43 4198295885627'', ''alara.grabner@yahoo.com'', 0, 1, ''46'', ''Alara'', ''Grabner'', ''Melisa-Spitzer-Gasse'', ''11'', ''Oberwart'', ''5450'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1980-10-04'', ''+43 3993330843446'', ''jasmine.heller@outlook.de'', 0, 1, ''47'', ''Jasmine'', ''Heller'', ''Pröllgasse'', ''3/9'', ''Raabs an der Thaya'', ''3115'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1973-06-12'', ''+43 4463525565106'', ''miriam.böhm@gmx.at'', 0, 1, ''48'', ''Miriam'', ''Böhm'', ''Brandnerring'', ''1/3'', ''Gmünd in Kärnten'', ''1858'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1928-11-19'', ''+43 9792623973258'', ''eva.mader@gmail.com'', 0, 1, ''49'', ''Eva'', ''Mader'', ''Nageleweg'', ''75'', ''Wörgl'', ''4105'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1995-08-06'', ''+43 6382346448636'', ''linus.sommer@gmail.com'', 0, 0, ''50'', ''Linus'', ''Sommer'', ''Glaserweg'', ''141'', ''Wolkersdorf'', ''6939'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1998-02-11'', ''+43 2100658683227'', ''daniela.hofbauer@yahoo.com'', 0, 1, ''51'', ''Daniela'', ''Hofbauer'', ''John-Pöll-Platz'', ''78'', ''Ansfelden'', ''4921'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1955-11-28'', ''+43 9863790868436'', ''leonie.hofmann@outlook.de'', 0, 1, ''52'', ''Leonie'', ''Hofmann'', ''Schimplweg'', ''35'', ''Pöchlarn'', ''8740'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''2000-07-29'', ''+43 7200712700521'', ''anna-lena.brandstätter@tdd.at'', 0, 1, ''53'', ''Anna-Lena'', ''Brandstätter'', ''Petzstraße'', ''4'', ''Landeck'', ''2311'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1978-02-28'', ''+43 4428076627844'', ''leon.ebner@outlook.de'', 0, 0, ''54'', ''Leon'', ''Ebner'', ''Marxplatz'', ''6'', ''Neunkirchen'', ''6865'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1956-09-13'', ''+43 1975281232340'', ''dora.konrad@outlook.de'', 0, 1, ''55'', ''Dora'', ''Konrad'', ''Seilerstr.'', ''0/8'', ''Altheim'', ''3839'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1995-11-15'', ''+43 6333854768367'', ''jasmina.pieber@gmx.at'', 0, 1, ''56'', ''Jasmina'', ''Pieber'', ''Karina-Zauner-Platz'', ''04'', ''Oberndorf bei Salzburg'', ''4096'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1965-03-07'', ''+43 3569474773282'', ''benjamin.gratzl@tdd.at'', 0, 0, ''57'', ''Benjamin'', ''Gratzl'', ''Marie-Krall-Weg'', ''35'', ''Waidhofen an der Ybbs'', ''3945'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1936-01-27'', ''+43 5689462996604'', ''sonja.neuner@ddd.at'', 0, 1, ''58'', ''Sonja'', ''Neuner'', ''Mayrstr.'', ''2'', ''Neusiedl am See'', ''7402'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1978-12-02'', ''+43 8450558299273'', ''dennis.ritter@tdd.at'', 0, 0, ''59'', ''Dennis'', ''Ritter'', ''Lilly-Hochreiter-Gasse'', ''84'', ''Purbach am Neusiedler See'', ''1620'', ''Austria'');
+
+insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
+VALUES(''1985-01-01'', ''+43 1234567891'', ''jonathan.thaler@tdd.fhv.at'', 100, 0, ''60'', ''Jonathan'', ''Thaler'', ''Hochschulstraße'', ''1'', ''Dornbirn'', ''6850'', ''Austria'');
+
+--- Services
+insert into service(domain_id, name, price)
+VALUES(''1'', ''WLAN'', 5);
+
+insert into service(domain_id, name, price)
+VALUES(''2'', ''Swimming Pool'', 12);
+
+insert into service(domain_id, name, price)
+VALUES(''3'', ''Sauna'', 7);
+
+insert into service(domain_id, name, price)
+VALUES(''4'', ''Fitness Room'', 8);
+
+insert into service(domain_id, name, price)
+VALUES(''5'', ''News Paper'', 2);
+
+insert into service(domain_id, name, price)
+VALUES(''6'', ''Parking Place'', 10);
+
+insert into service(domain_id, name, price)
+VALUES(''7'', ''Minibar'', 15);
 
 --- Rooms
     --- Single Rooms
 insert into room(room_name, status, roomcategory_id)
-VALUES('S101', 0, '1');
+VALUES(''S101'', 0, ''1'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('S102', 0, '1');
+VALUES(''S102'', 0, ''1'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('S103', 0, '1');
+VALUES(''S103'', 0, ''1'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('S104', 0, '1');
+VALUES(''S104'', 0, ''1'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('S105', 0, '1');
+VALUES(''S105'', 0, ''1'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('S201', 0, '1');
+VALUES(''S201'', 0, ''1'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('S202', 0, '1');
+VALUES(''S202'', 0, ''1'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('S203', 0, '1');
+VALUES(''S203'', 0, ''1'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('S204', 0, '1');
+VALUES(''S204'', 0, ''1'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('S205', 0, '1');
+VALUES(''S205'', 0, ''1'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('S301', 0, '1');
+VALUES(''S301'', 0, ''1'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('S302', 0, '1');
+VALUES(''S302'', 0, ''1'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('S303', 0, '1');
+VALUES(''S303'', 0, ''1'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('S304', 0, '1');
+VALUES(''S304'', 0, ''1'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('S305', 0, '1');
+VALUES(''S305'', 0, ''1'');
 
     --- Double Rooms
 insert into room(room_name, status, roomcategory_id)
-VALUES('D106', 0, '2');
+VALUES(''D106'', 0, ''2'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('D107', 0, '2');
+VALUES(''D107'', 0, ''2'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('D108', 0, '2');
+VALUES(''D108'', 0, ''2'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('D109', 0, '2');
+VALUES(''D109'', 0, ''2'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('D110', 0, '2');
+VALUES(''D110'', 0, ''2'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('D206', 0, '2');
+VALUES(''D111'', 0, ''2'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('D207', 0, '2');
+VALUES(''D112'', 0, ''2'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('D208', 0, '2');
+VALUES(''D113'', 0, ''2'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('D209', 0, '2');
+VALUES(''D114'', 0, ''2'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('D210', 0, '2');
+VALUES(''D115'', 0, ''2'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('D306', 0, '2');
+VALUES(''D116'', 0, ''2'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('D307', 0, '2');
+VALUES(''D117'', 0, ''2'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('D308', 0, '2');
+VALUES(''D118'', 0, ''2'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('D309', 0, '2');
+VALUES(''D119'', 0, ''2'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('D310', 0, '2');
+VALUES(''D120'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D206'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D207'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D208'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D209'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D210'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D211'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D212'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D213'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D214'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D215'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D216'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D217'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D218'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D219'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D220'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D306'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D307'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D308'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D309'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D310'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D311'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D312'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D313'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D314'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D315'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D316'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D317'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D318'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D319'', 0, ''2'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''D320'', 0, ''2'');
 
     --- Junior Suite
 insert into room(room_name, status, roomcategory_id)
-VALUES('J401', 0, '3');
+VALUES(''J401'', 0, ''3'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('J402', 0, '3');
+VALUES(''J402'', 0, ''3'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('J403', 0, '3');
+VALUES(''J403'', 0, ''3'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('J404', 0, '3');
+VALUES(''J404'', 0, ''3'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('J405', 0, '3');
+VALUES(''J405'', 0, ''3'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('J501', 0, '3');
+VALUES(''J406'', 0, ''3'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('J502', 0, '3');
+VALUES(''J407'', 0, ''3'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('J503', 0, '3');
+VALUES(''J408'', 0, ''3'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('J504', 0, '3');
+VALUES(''J409'', 0, ''3'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('J505', 0, '3');
+VALUES(''J410'', 0, ''3'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''J411'', 0, ''3'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''J412'', 0, ''3'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''J413'', 0, ''3'');
+
+insert into room(room_name, status, roomcategory_id)
+VALUES(''J414'', 0, ''3'');
 
     --- Suite
 insert into room(room_name, status, roomcategory_id)
-VALUES('SU406', 0, '4');
+VALUES(''SU415'', 0, ''4'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('SU407', 0, '4');
+VALUES(''SU416'', 0, ''4'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('SU408', 0, '4');
+VALUES(''SU417'', 0, ''4'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('SU409', 0, '4');
+VALUES(''SU418'', 0, ''4'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('SU410', 0, '4');
+VALUES(''SU419'', 0, ''4'');
 
 insert into room(room_name, status, roomcategory_id)
-VALUES('SU506', 0, '4');
-
-insert into room(room_name, status, roomcategory_id)
-VALUES('SU507', 0, '4');
-
-insert into room(room_name, status, roomcategory_id)
-VALUES('SU508', 0, '4');
-
-insert into room(room_name, status, roomcategory_id)
-VALUES('SU509', 0, '4');
-
-insert into room(room_name, status, roomcategory_id)
-VALUES('SU510', 0, '4');
-
---- Services
-insert into service(domain_id, name, price)
-VALUES('1', 'TV', 10);
-
-insert into service(domain_id, name, price)
-VALUES('2', 'WLAN', 5);
-
-insert into service(domain_id, name, price)
-VALUES('3', 'Swimming Pool', 12);
-
-insert into service(domain_id, name, price)
-VALUES('4', 'Sauna', 7);
-
-insert into service(domain_id, name, price)
-VALUES('5', 'Bike', 6);
-
-insert into service(domain_id, name, price)
-VALUES('6', 'E-Bike', 10);
-
-insert into service(domain_id, name, price)
-VALUES('7', 'Fitness Room', 8);
-
-insert into service(domain_id, name, price)
-VALUES('8', 'News Paper', 2);
-
-insert into service(domain_id, name, price)
-VALUES('9', 'Parking Place', 10);
-
-insert into service(domain_id, name, price)
-VALUES('10', 'Minibar', 15);
-
---- Guests
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1999-01-02', '+43 680 7994750', 'ali.cinar@gmail.at', 0, 0, '1', 'Ali', 'Cinar', 'Hauptplatz', '73', 'Oberkulm', '4210', 'Austria');
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1999-01-02', '+43 650 7131945', 'michael.spiegel@gmx.at', 0, 0, '2', 'Michael', 'Spiegel', 'Polletstraße', '26', 'Wien', '1220', 'Austria');
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1999-01-01', '+43 660 2648080', 'johannes.moosbrugger@gmx.at', 0, 0, '3', 'Johannes', 'Moosbrugger', 'Birkenweg', '9', 'Radstadt', '5550', 'Austria');
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1979-10-01', '+43 660 2649080', 'herbert.steurer@yahoo.at', 0, 0, '4', 'Herbert', 'Steurer', 'Kielmansggasse', '29', 'Radstadt', '5550', 'Austria');
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1999-01-01', '+43 676 4679464', 'dario.birbarmer@gmail.at', 0, 0, '5', 'Dario', 'Birbarmer', 'Forststraße', '8', 'Kirchbichl', '6322', 'Austria');
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1999-01-01', '+43 680 4589452', 'umut.caglayan@gmx.at', 0, 0, '6', 'Umut', 'Caglayan', 'Maternaweg', '18', 'Wien', '1160', 'Austria');
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1969-06-09', '+43 2799702444450', 'emely.steinlechner@gmail.com', 0, 0, '8', 'Emely', 'Steinlechner', 'Piebergasse', '6/6', 'Dürnstein', '6332', 'Austria')
-
-    insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1981-02-25', '+43 0607150720710', 'paula.schwarzl@gmail.com', 0, 0, '9', 'Paula', 'Schwarzl', 'Kai-Mayerhofer-Weg', '27', 'Gänserndorf', '9390', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1963-08-22', '+43 2496303123339', 'natan.buchinger@gmail.com', 0, 0, '10', 'Natan', 'Buchinger', 'Rabitschplatz', '4', 'Friesach', '1012', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1976-05-18', '+43 3405871542869', 'maria.reinthaler@gmail.com', 0, 0, '11', 'Maria', 'Reinthaler', 'Richterweg', '75', 'Knittelfeld', '5188', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1999-02-03', '+43 9021313156625', 'anabella.vogel@gmail.com', 0, 0, '12', 'Anabella', 'Vogel', 'Siebererstraße', '7/7', 'Wilhelmsburg', '5516', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1944-06-18', '+43 3231123694514', 'cristiano.bischof@gmail.com', 0, 0, '13', 'Cristiano', 'Bischof', 'Larcherring', '4', 'Radstadt', '6864', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1982-12-23', '+43 4475869561793', 'david.toth@gmail.com', 0, 0, '14', 'David', 'Toth', 'Natan-Mathis-Platz', '1', 'Lienz', '2151', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('2001-05-21', '+43 1312786324633', 'karina.schuster@gmail.com', 0, 0, '15', 'Karina', 'Schuster', 'Kratzerweg', '87', 'Hallein', '8276', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1987-10-11', '+43 1182768225707', 'viola.rausch@gmail.com', 0, 0, '16', 'Viola', 'Rausch', 'Reichlweg', '9', 'Gerasdorf bei Wien', '4625', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1996-03-23', '+43 1435451663454', 'hubert.ortner@gmail.com', 0, 0, '17', 'Hubert', 'Ortner', 'Finn-Weninger-Gasse', '4/1', 'Zell am See', '1352', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1992-09-21', '+43 0986726580032', 'helene.zettl@gmail.com', 0, 0, '18', 'Helene', 'Zettl', 'Steinböckgasse', '8', 'Steyregg', '4554', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1931-07-07', '+43 4703839823899', 'sarah.staudacher@gmail.com', 0, 0, '19', 'Sarah', 'Staudacher', 'Niederlplatz', '1', 'Eferding', '6009', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('2003-03-14', '+43 3756004640283', 'boris.haderer@gmail.com', 0, 0, '20', 'Boris', 'Haderer', 'Felberweg', '4', 'Feldbach', '5610', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1967-03-04', '+43 4888295828962', 'tristan.riedler@gmail.com', 0, 0, '21', 'Tristan', 'Riedler', 'Hebenstreitring', '918', 'Salzburg', '1749', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1990-04-26', '+43 8080950102717', 'kyra.mörth@gmail.com', 0, 0, '22', 'Kyra', 'Mörth', 'Vera-Mayerhofer-Platz', '91', 'Dornbirn', '4526', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1970-12-17', '+43 0774980536743', 'elsa.kastner@gmail.com', 0, 0, '23', 'Elsa', 'Kastner', 'Karrerstr.', '783', 'Bad Leonfelden', '6250', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1992-06-29', '+43 8116152248054', 'ismail.eberhard@gmail.com', 0, 0, '24', 'Ismail', 'Eberhard', 'Alexandra-Paulitsch-Gasse', '51', 'Schwaz', '4581', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1934-12-04', '+43 8842254617642', 'miriam.grill@gmail.com', 0, 0, '25', 'Miriam', 'Grill', 'Junggasse', '053', 'Feldbach', '6035', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1932-11-12', '+43 7028666804847', 'laurenz.jovanovic@gmail.com', 0, 0, '26', 'Laurenz', 'Jovanovic', 'Kalteneggerring', '0/7', 'Haag', '2818', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1999-08-28', '+43 3072090960758', 'michelle.jost@gmail.com', 0, 0, '27', 'Michelle', 'Jost', 'Tothring', '07', 'Eisenstadt', '4826', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1993-08-24', '+43 7513936523192', 'lara-sophie.kocher@gmail.com', 0, 0, '28', 'Lara-Sophie', 'Kocher', 'Huberring', '88', 'Sankt Valentin', '6625', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1968-09-13', '+43 3740258167135', 'alexa.fehringer@gmail.com', 0, 0, '29', 'Alexa', 'Fehringer', 'Wittmannstraße', '4/7', 'Marchtrenk', '1600', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1995-05-24', '+43 2941389215704', 'mira.steinwender@gmail.com', 0, 0, '30', 'Mira', 'Steinwender', 'Grafstraße', '113', 'Eferding', '4592', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1974-07-23', '+43 8976474920437', 'leander.riedmann@gmail.com', 0, 0, '31', 'Leander', 'Riedmann', 'Gasserring', '6', 'Völkermarkt', '2572', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1930-10-16', '+43 8244767862419', 'ronja.walder@gmail.com', 0, 0, '32', 'Ronja', 'Walder', 'Gratzlring', '50', 'Weiz', '6345', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1970-01-12', '+43 7807311926795', 'andrea.unterberger@gmail.com', 0, 0, '33', 'Andrea', 'Unterberger', 'Sofija-Fuchs-Platz', '95', 'Köflach', '6755', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1985-10-22', '+43 9896563372912', 'lotta.jauk@gmail.com', 0, 0, '34', 'Lotta', 'Jauk', 'Anastasia-Foidl-Straße', '5/7', 'Gföhl', '6325', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1943-01-04', '+43 5248212628646', 'lucia.leitgeb@gmail.com', 0, 0, '35', 'Lucia', 'Leitgeb', 'Florian-Erler-Ring', '75', 'Sankt Andrä im Lavanttal', '6699', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1966-09-20', '+43 7277239696890', 'liam.kratzer@gmail.com', 0, 0, '36', 'Liam', 'Kratzer', 'Hofstetterring', '2', 'Bad Vöslau', '8573', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1945-08-30', '+43 1074959378032', 'annalena.frank@gmail.com', 0, 0, '37', 'Annalena', 'Frank', 'Schröderplatz', '7', 'Gloggnitz', '8359', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1947-06-27', '+43 0537593710366', 'aurelio.rosenberger@gmail.com', 0, 0, '38', 'Aurelio', 'Rosenberger', 'Carina-Reinprecht-Weg', '0', 'Sankt Pölten', '9287', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1976-06-16', '+43 1436067571901', 'emmanuel.stocker@gmail.com', 0, 0, '39', 'Emmanuel', 'Stocker', 'Vogelplatz', '32', 'Imst', '1066', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1968-06-10', '+43 8624753950531', 'marie-louise.thalhammer@gmail.com', 0, 0, '40', 'Marie-Louise', 'Thalhammer', 'Krammerweg', '53', 'Marchtrenk', '7663', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1972-03-26', '+43 3172731450064', 'dario.ecker@gmail.com', 0, 0, '41', 'Dario', 'Ecker', 'Raphael-Linder-Ring', '487', 'Herzogenburg', '5440', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1981-06-02', '+43 3313601213448', 'peter.tauber@gmail.com', 0, 0, '42', 'Peter', 'Tauber', 'Bittnergasse', '9', 'Friesach', '7461', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1928-12-12', '+43 7698935357271', 'hubert.reindl@gmail.com', 0, 0, '43', 'Hubert', 'Reindl', 'Kilian-Berger-Platz', '2', 'Frohnleiten', '1859', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1929-05-13', '+43 9466446640895', 'charlotte.steidl@gmail.com', 0, 0, '44', 'Charlotte', 'Steidl', 'Gassnergasse', '4', 'Frohnleiten', '5466', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1994-01-24', '+43 4428107019285', 'adriana.burgstaller@gmail.com', 0, 0, '45', 'Adriana', 'Burgstaller', 'Kollerstraße', '4/0', 'Gföhl', '5111', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1927-10-12', '+43 4721552053484', 'ina.steurer@gmail.com', 0, 0, '46', 'Ina', 'Steurer', 'Larchergasse', '099', 'Wolfsberg', '2273', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1993-09-25', '+43 1739007162113', 'ela.reischl@gmail.com', 0, 0, '47', 'Ela', 'Reischl', 'Zoe-Sammer-Gasse', '7', 'Salzburg', '2878', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1983-08-17', '+43 9840871646916', 'marco.landl@gmail.com', 0, 0, '48', 'Marco', 'Landl', 'Rettenbacherstraße', '3', 'Gmünd in Kärnten', '1515', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1952-12-04', '+43 4485930774268', 'naomi.walch@gmail.com', 0, 0, '49', 'Naomi', 'Walch', 'Lucie-Froschauer-Platz', '8', 'Schrems', '8686', 'Austria')
-
-insert into guest(birth_date, phone_number, mail_address, discount_in_percent, gender, domain_id, first_name, last_name, street_name, street_number, city, zip_code, country)
-VALUES('1964-01-03', '+43 5207680540965', 'lorenzo.kalcher@gmail.com', 0, 0, '50', 'Lorenzo', 'Kalcher', 'Zachring', '8', 'Sankt Veit an der Glan', '6071', 'Austria')
+VALUES(''SU420'', 0, ''4'');
