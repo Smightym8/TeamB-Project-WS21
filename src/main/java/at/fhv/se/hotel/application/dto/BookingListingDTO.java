@@ -8,6 +8,7 @@ import java.util.Objects;
  */
 public class BookingListingDTO {
     private String id;
+    private String bookingNumber;
     private String guestFirstName;
     private String guestLastName;
     private String streetName;
@@ -24,6 +25,10 @@ public class BookingListingDTO {
 
     public String id() {
         return this.id;
+    }
+
+    public String bookingNumber() {
+        return bookingNumber;
     }
 
     public String guestFirstName() {
@@ -74,6 +79,11 @@ public class BookingListingDTO {
             return this;
         }
 
+        public Builder withBookingNumber(String bookingNumber) {
+            this.instance.bookingNumber = bookingNumber;
+            return this;
+        }
+
         public Builder withGuestFirstName(String firstName) {
             this.instance.guestFirstName = firstName;
             return this;
@@ -121,6 +131,7 @@ public class BookingListingDTO {
 
         public BookingListingDTO build() {
             Objects.requireNonNull(this.instance.id, "id must be set in BookingListingDTO");
+            Objects.requireNonNull(this.instance.bookingNumber, "bookingNumber must be set in BookingListingDTO");
             Objects.requireNonNull(this.instance.guestFirstName, "guestFirstName must be set in BookingListingDTO");
             Objects.requireNonNull(this.instance.guestLastName, "guestLastName must be set in BookingListingDTO");
             Objects.requireNonNull(this.instance.streetName, "streetName must be set in BookingListingDTO");
