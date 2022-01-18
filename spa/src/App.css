@@ -31,7 +31,7 @@ nav {
 }
 
 .maxlen {
-    max-width: 50px !important;
+    max-width: 60px !important;
 }
 
 .card {
@@ -39,8 +39,28 @@ nav {
 }
 
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+    -webkit-appearance: none !important;
+    margin: 0 !important;
+}
+input[type=number] {
+    -moz-appearance: textfield !important;
+}
+
+.carousel-control-next, .carousel-control-prev {
+    opacity: 100% !important;
+}
+
+::placeholder {
+    color: white !important;
+    opacity: 0.5 !important;
+}
+
+:-ms-input-placeholder {
+    color: white !important;
+}
+
+::-ms-input-placeholder {
+    color: white !important;
 }
 
 /******************************
@@ -119,7 +139,7 @@ section {
 }
 
 ::-webkit-scrollbar-track {
-    background: transparent;
+    background: #3b3b3b;
 }
 
 ::-webkit-scrollbar-thumb {
