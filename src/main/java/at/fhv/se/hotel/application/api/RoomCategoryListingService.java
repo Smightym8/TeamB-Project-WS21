@@ -12,9 +12,12 @@ import java.util.List;
  */
 public interface RoomCategoryListingService {
     /**
-     * See implementation {@link RoomCategoryListingServiceImpl#allRoomCategories )}
+     * See implementation {@link RoomCategoryListingServiceImpl#allRoomCategories()}
      */
     List<RoomCategoryDTO> allRoomCategories();
 
+    /**
+     * See implementation {@link RoomCategoryListingServiceImpl#findRoomCategoryById(String)}  )}
+     */
     RoomCategoryDTO findRoomCategoryById(String id) throws RoomCategoryNotFoundException;
 }

@@ -64,7 +64,7 @@ public class InvoiceListingServiceImpl implements InvoiceListingService {
      * This method provides details of an invoice by id.
      * @param id contains the id of the invoice.
      * @return a InvoiceDTO object.
-     * @throws InvoiceNotFoundException
+     * @throws InvoiceNotFoundException if the invoice could not be found.
      */
     @Override
     public InvoiceDTO findInvoiceById(String id) throws InvoiceNotFoundException {
