@@ -23,8 +23,8 @@
                             <div class="progress-bar bg-success" role="progressbar" style="width: 100%">5/5</div>
                         </div>
                     </div>
-                    <div th:if="${isCreated}" class="alert alert-success" role="alert">
-                        Booking successfully created!
+                    <div th:if="${isCreated}" class="alert alert-success" role="alert"
+                         th:text="${'Booking #' + bookingSummary.bookingNumber + ' successfully created!'}">
                     </div>
                 </div>
                 <div class="card-body px-5 py-4">
