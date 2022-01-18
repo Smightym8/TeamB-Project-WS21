@@ -1,9 +1,14 @@
 package at.fhv.se.hotel.application.api;
 
 import at.fhv.se.hotel.application.api.exception.GuestNotFoundException;
+import at.fhv.se.hotel.application.impl.GuestModifyServiceImpl;
 
 import java.time.LocalDate;
 
+/**
+ * This class represents an interface that defines the functionality to modify a guests.
+ * The implementation is in {@link GuestModifyServiceImpl}
+ */
 public interface GuestModifyService {
     /**
      * See implementation

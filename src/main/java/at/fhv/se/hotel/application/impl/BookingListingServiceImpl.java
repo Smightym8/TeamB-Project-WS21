@@ -22,8 +22,8 @@ public class BookingListingServiceImpl implements BookingListingService {
     BookingRepository bookingRepository;
 
     /**
-     * This method provides bookings.
-     * @return bookings contains the booking objects.
+     * This method provides all bookings.
+     * @return a list of BookingListDTO objects.
      */
     @Transactional(readOnly=true)
     @Override

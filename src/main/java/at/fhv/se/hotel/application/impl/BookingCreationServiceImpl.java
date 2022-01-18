@@ -25,6 +25,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class represents the implementation of the interface {@link BookingCreationService}.
+ * It provides the functionality to get all bookings.
+ */
 @Component
 public class BookingCreationServiceImpl implements BookingCreationService {
 
@@ -40,6 +44,22 @@ public class BookingCreationServiceImpl implements BookingCreationService {
     @Autowired
     ServiceRepository serviceRepository;
 
+    /**
+     * This method creates a new booking and saves it into the database.
+     * @param guestId contains the id of the guest.
+     * @param roomCategoryIds contains the id of the room categories.
+     * @param amounts contains the number of booked room categories.
+     * @param serviceIds contains the ids of the services.
+     * @param checkInDate contains the check-in date.
+     * @param checkOutDate contains the check-out date.
+     * @param amountOfAdults contains the number of adults.
+     * @param amountOfChildren contains the number of children.
+     * @param additionalInformation contains additional information.
+     * @return The bookingId.
+     * @throws GuestNotFoundException if the guest could not be found.
+     * @throws ServiceNotFoundException if the service could not be found.
+     * @throws RoomCategoryNotFoundException if the room category could not be found.
+     */
     @Transactional
     @Override
     public String book(String guestId,

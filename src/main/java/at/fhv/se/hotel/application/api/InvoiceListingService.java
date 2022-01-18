@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface InvoiceListingService {
     List<InvoiceListingDTO> allInvoices();
+
     InvoiceDTO findInvoiceById(String id) throws InvoiceNotFoundException;
 }

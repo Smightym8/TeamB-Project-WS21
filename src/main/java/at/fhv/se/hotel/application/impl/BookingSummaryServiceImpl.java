@@ -5,7 +5,7 @@ import at.fhv.se.hotel.application.api.exception.BookingNotFoundException;
 import at.fhv.se.hotel.application.api.exception.GuestNotFoundException;
 import at.fhv.se.hotel.application.api.exception.RoomCategoryNotFoundException;
 import at.fhv.se.hotel.application.api.exception.ServiceNotFoundException;
-import at.fhv.se.hotel.application.dto.*;
+import at.fhv.se.hotel.application.dto.BookingDetailsDTO;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
 import at.fhv.se.hotel.domain.model.guest.Guest;
@@ -28,6 +28,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class represents the implementation of the interface {@link BookingSummaryService}
+ * It provides the functionality to get a booking summary.
+ */
 @Component
 public class BookingSummaryServiceImpl implements BookingSummaryService {
     @Autowired
@@ -42,6 +46,29 @@ public class BookingSummaryServiceImpl implements BookingSummaryService {
     @Autowired
     ServiceRepository serviceRepository;
 
+    /**
+     * This method provides a summary of the booking.
+     * @param guestId contains the id of the guest.
+     * @param firstName contains the first name of the guest.
+     * @param lastName contains the last name of the guest.
+     * @param streetName contains the street name of the address of the guest.
+     * @param streetNumber contains the street number of the address of the guest.
+     * @param zipCode contains the zip code of the address of the guest.
+     * @param city contains the city of the address of the guest.
+     * @param country contains the country of the address of the guest.
+     * @param roomCategoryIds contains
+     * @param amounts contains the number of booked room categories.
+     * @param serviceIds contains the ids of the services.
+     * @param checkInDate contains the check-in date.
+     * @param checkOutDate contains the check-out date.
+     * @param amountOfAdults contains the number of adults.
+     * @param amountOfChildren contains the number of children.
+     * @param additionalInformation contains additional information.
+     * @return A BookingDetailsDTO object.
+     * @throws ServiceNotFoundException if the service could not be found.
+     * @throws RoomCategoryNotFoundException if the room category could not be found.
+     * @throws GuestNotFoundException if the guest could not be found.
+     */
     @Override
     public BookingDetailsDTO createSummary(
             String guestId,
@@ -123,6 +150,12 @@ public class BookingSummaryServiceImpl implements BookingSummaryService {
         }
     }
 
+    /**
+     * This method provides details of a booking by id.
+     * @param bookingId contains the booking id.
+     * @return A BookingDetailsDTO object.
+     * @throws BookingNotFoundException if the booking could not be found.
+     */
     @Override
     public BookingDetailsDTO detailsByBookingId(String bookingId) throws BookingNotFoundException {
         Booking booking = bookingRepository.bookingById(new BookingId(bookingId)).orElseThrow(

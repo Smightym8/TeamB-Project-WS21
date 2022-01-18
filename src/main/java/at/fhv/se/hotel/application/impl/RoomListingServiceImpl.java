@@ -8,7 +8,6 @@ import at.fhv.se.hotel.domain.model.room.RoomName;
 import at.fhv.se.hotel.domain.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;

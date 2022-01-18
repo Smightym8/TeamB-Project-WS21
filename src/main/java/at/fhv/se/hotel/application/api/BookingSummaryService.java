@@ -6,7 +6,6 @@ import at.fhv.se.hotel.application.api.exception.RoomCategoryNotFoundException;
 import at.fhv.se.hotel.application.api.exception.ServiceNotFoundException;
 import at.fhv.se.hotel.application.dto.BookingDetailsDTO;
 import at.fhv.se.hotel.application.impl.BookingSummaryServiceImpl;
-import at.fhv.se.hotel.view.forms.GuestForm;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,7 +18,7 @@ public interface BookingSummaryService {
     /**
      * See implementation
      * {@link BookingSummaryServiceImpl#createSummary(String, String, String, String, String, String, String,
-     * List, List, List, LocalDate, LocalDate, int, int, String)}
+     * String, List, List, List, LocalDate, LocalDate, int, int, String)}
      */
     BookingDetailsDTO createSummary(
             String guestId,
@@ -40,5 +39,9 @@ public interface BookingSummaryService {
             String additionalInformation
     ) throws ServiceNotFoundException, RoomCategoryNotFoundException, GuestNotFoundException;
 
+    /**
+     * See implementation
+     * {@link BookingSummaryServiceImpl#detailsByBookingId(String)}
+     */
     BookingDetailsDTO detailsByBookingId(String bookingId) throws BookingNotFoundException;
 }

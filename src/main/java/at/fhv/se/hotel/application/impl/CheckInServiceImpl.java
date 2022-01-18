@@ -27,6 +27,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class represents the implementation of the interface {@link CheckInService}
+ * It provides the funcionality of a stay creation.
+ */
 @Component
 public class CheckInServiceImpl implements CheckInService {
     @Autowired
@@ -41,6 +45,13 @@ public class CheckInServiceImpl implements CheckInService {
     @Autowired
     StayRepository stayRepository;
 
+    /**
+     * This method assigns rooms accordingly to the booked roomcategories.
+     * @param bookingId contains the id of the booking.
+     * @return A List of RoomDTO objects.
+     * @throws BookingNotFoundException if the booking could not be found.
+     * @throws NotEnoughRoomsException if there were not enough rooms available.
+     */
     @Transactional
     @Override
     public List<RoomDTO> assignRooms(String bookingId) throws BookingNotFoundException, NotEnoughRoomsException {
@@ -120,10 +131,17 @@ public class CheckInServiceImpl implements CheckInService {
         return assignedRooms;
     }
 
+    /**
+     * This method creates a stay accordingly to the booking.
+     * @param bookingId contains the id of the booking.
+     * @param roomNames contains the names of the assigned rooms.
+     * @throws BookingNotFoundException if the booking could not be found.
+     * @throws RoomNotFoundException if the room could not be found.
+     * @throws RoomAlreadyOccupiedException if the room was already occupied.
+     */
     @Transactional
     @Override
     public void checkIn(String bookingId, List<String> roomNames) throws BookingNotFoundException, RoomNotFoundException, RoomAlreadyOccupiedException {
-        //TODO: Check if rooms are occupied
         Booking booking = bookingRepository.bookingById(new BookingId(bookingId)).orElseThrow(
                 () -> new BookingNotFoundException("Booking with id " + bookingId + " not found")
         );
