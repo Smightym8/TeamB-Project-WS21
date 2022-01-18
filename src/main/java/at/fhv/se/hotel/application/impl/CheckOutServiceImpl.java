@@ -131,6 +131,7 @@ public class CheckOutServiceImpl implements CheckOutService {
         return invoiceDTO;
     }
 
+    // TODO: Make this method private because it is only used in this class
     /**
      * This class saves the invoice into the database.
      * @param stayId contains the id of the stay.

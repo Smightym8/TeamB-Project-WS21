@@ -29,7 +29,7 @@ import java.util.Map;
 
 /**
  * This class represents the implementation of the interface {@link CheckInService}
- * It provides the funcionality of a stay creation.
+ * It provides the functionality that is necessary to create a stay.
  */
 @Component
 public class CheckInServiceImpl implements CheckInService {
@@ -124,6 +124,7 @@ public class CheckInServiceImpl implements CheckInService {
             }
         }
 
+        // At the end the assignedRooms has to be equal to the booked amount independently of the categories
         if(assignedRooms.size() != totalBookedAmount) {
             throw new NotEnoughRoomsException("There were not enough rooms");
         }

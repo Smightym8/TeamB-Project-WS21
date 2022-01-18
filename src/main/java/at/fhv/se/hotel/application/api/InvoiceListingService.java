@@ -8,7 +8,7 @@ import at.fhv.se.hotel.application.dto.InvoiceListingDTO;
 import java.util.List;
 
 /**
- * This class represents an interface that defines the functionality to get all invoices.
+ * This class represents an interface that defines the functionality to get all invoices or a specific one by id.
  * The implementation is in {@link InvoiceListingServiceImpl}
  */
 public interface InvoiceListingService {

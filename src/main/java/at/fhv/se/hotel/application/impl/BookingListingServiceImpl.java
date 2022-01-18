@@ -23,7 +23,7 @@ public class BookingListingServiceImpl implements BookingListingService {
 
     /**
      * This method provides all bookings.
-     * @return a list of BookingListDTO objects.
+     * @return a list of BookingListingDTO objects.
      */
     @Transactional(readOnly=true)
     @Override

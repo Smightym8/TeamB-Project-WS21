@@ -27,7 +27,7 @@ import java.util.List;
 
 /**
  * This class represents the implementation of the interface {@link BookingCreationService}.
- * It provides the functionality to get all bookings.
+ * It provides the functionality to create a booking.
  */
 @Component
 public class BookingCreationServiceImpl implements BookingCreationService {

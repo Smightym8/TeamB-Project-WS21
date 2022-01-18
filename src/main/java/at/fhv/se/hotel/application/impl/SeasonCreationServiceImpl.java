@@ -87,6 +87,5 @@ public class SeasonCreationServiceImpl implements SeasonCreationService {
         roomCategoryPriceRepository.add(doubleRoomRCP);
         roomCategoryPriceRepository.add(juniorSuiteRCP);
         roomCategoryPriceRepository.add(suiteRCP);
-
     }
 }

@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * This class represents the implementation of the interface {@link StayDetailsService}
  * It provides the functionality to get details of a stay.
- * */
+ */
 @Component
 public class StayDetailsServiceImpl implements StayDetailsService {
 

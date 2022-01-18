@@ -30,7 +30,7 @@ import java.util.Map;
 
 /**
  * This class represents the implementation of the interface {@link BookingSummaryService}
- * It provides the functionality to get a booking summary.
+ * It provides the functionality to get a booking summary after the creation of a booking or later by id.
  */
 @Component
 public class BookingSummaryServiceImpl implements BookingSummaryService {

@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * This class represents an interface that defines the functionality to get all services
+ * This class represents an interface that defines the functionality to
+ * get all services
+ * a service by id
  * The implementation is in {@link ServiceListingServiceImpl}
  */
 public interface ServiceListingService {

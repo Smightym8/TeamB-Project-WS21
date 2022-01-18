@@ -20,7 +20,9 @@ import java.util.Map;
 
 /**
  * This class represents the implementation of the interface {@link InvoiceListingService}
- * It provides the functionality to get all invoices
+ * It provides the functionality to
+ * get all invoices
+ * a specific invoice by id
  */
 @Component
 public class InvoiceListingServiceImpl implements InvoiceListingService {

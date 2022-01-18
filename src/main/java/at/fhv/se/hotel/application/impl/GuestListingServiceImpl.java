@@ -16,7 +16,9 @@ import java.util.List;
 
 /**
  * This class represents the implementation of the interface {@link GuestListingService}
- * It provides the functionality to get all guests.
+ * It provides the functionality to
+ * get all guests
+ * get a specific guest by id
  */
 @Component
 public class GuestListingServiceImpl implements GuestListingService {

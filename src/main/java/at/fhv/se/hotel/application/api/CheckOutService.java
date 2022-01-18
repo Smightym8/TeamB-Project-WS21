@@ -9,7 +9,7 @@ import at.fhv.se.hotel.application.impl.CheckOutServiceImpl;
 import java.util.List;
 
 /**
- * This class respresents an interface that defines
+ * This class represents an interface that defines
  * the check out of a stay
  * the creation of an invoice
  * the saving of an invoice into the database.
@@ -18,17 +18,17 @@ import java.util.List;
 public interface CheckOutService {
 
     /**
-     * See implementation {@link CheckOutService#checkOut(String, List, String)}
+     * See implementation {@link CheckOutServiceImpl#checkOut(String, List, String)}
      */
     void checkOut(String stayId, List<String> roomNames, String action) throws StayNotFoundException, RoomNotFoundException, SeasonNotFoundException;
 
     /**
-     * See implementation {@link CheckOutService#createInvoice(String, List, String)}
+     * See implementation {@link CheckOutServiceImpl#createInvoice(String, List, String)}
      */
     InvoiceDTO createInvoice(String stayId, List<String> roomNames, String action) throws StayNotFoundException, RoomNotFoundException, SeasonNotFoundException;
 
     /**
-     * See implementation {@link CheckOutService#saveInvoice(String, List, String)}
+     * See implementation {@link CheckOutServiceImpl#saveInvoice(String, List, String)}
      */
     void saveInvoice(String stayId, List<String> roomNames, String action) throws StayNotFoundException, RoomNotFoundException, SeasonNotFoundException;
 }

@@ -15,7 +15,10 @@ import java.util.List;
 
 /**
  * This class represents the implementation of the interface {@link RoomListingService}
- * It provides the functionality to get all rooms.
+ * It provides the functionality to
+ * get all rooms
+ * get all free rooms
+ * get a specific room by name
  */
 @Component
 public class RoomListingServiceImpl implements RoomListingService {

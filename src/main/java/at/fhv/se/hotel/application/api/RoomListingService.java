@@ -7,7 +7,10 @@ import at.fhv.se.hotel.application.dto.RoomDTO;
 import java.util.List;
 
 /**
- * This class represents an interface that defines the functionality to get all rooms.
+ * This class represents an interface that defines the functionality to
+ * get all rooms
+ * get all free rooms
+ * a room by name
  * The implementation is in {@link RoomListingServiceImpl}
  */
 public interface RoomListingService {

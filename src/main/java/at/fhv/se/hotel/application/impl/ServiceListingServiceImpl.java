@@ -16,7 +16,9 @@ import java.util.Optional;
 
 /**
  * This class represents the implementation of the interface {@link ServiceListingService}
- * It provides the functionality to get all services.
+ * It provides the functionality to
+ * get all services
+ * get a specific service by id
  */
 @Component
 public class ServiceListingServiceImpl implements ServiceListingService {

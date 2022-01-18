@@ -26,6 +26,7 @@ public class RoomModifyServiceImpl implements RoomModifyService {
      * @param roomName contains the name of the room whose status will be updated.
      * @param roomStatus contains the new status of the room.
      * @throws RoomNotFoundException if the room could not be found.
+     * @throws InvalidParameterException if an invalid room status is provided
      */
     @Transactional
     @Override
