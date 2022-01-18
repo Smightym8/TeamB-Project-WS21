@@ -128,7 +128,10 @@ const BookingSummaryComponent = ({ prevStep, values }: Props) => {
             );
         } else {
             return (
-                <button className="btn btn-success float-end" type="submit" onClick={() => book()}>Book</button>
+                <div>
+                    <button className="btn btn-primary" type="submit" onClick={() => prevStep()}>Back</button>
+                    <button className="btn btn-success float-end" type="submit" onClick={() => book()}>Book</button>
+                </div>
             );
         }
     }
@@ -251,7 +254,6 @@ const BookingSummaryComponent = ({ prevStep, values }: Props) => {
                     </div>
                 </div>
                 <div className="card-footer">
-                    <button className="btn btn-primary" type="submit" onClick={() => prevStep()}>Back</button>
                     { showNextButton() }
                 </div>
             </div>
