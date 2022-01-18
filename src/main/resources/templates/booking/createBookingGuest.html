@@ -174,12 +174,12 @@
 
                         <div class="d-flex p-3 mt-4">
                             <div class="input-group me-1" style="width: 50%;">
-                                <span class="input-group-text col-5">Adults</span>
+                                <span class="input-group-text col-5">Adults [15-99 yrs.]</span>
                                 <input class="form-control" type="number" id="amountOfAdults" name="amountOfAdults" th:field="${bookingForm.amountOfAdults}" value="1" th:min="1" th:required="required">
                                 <div class="form-text"> </div>
                             </div>
                             <div class="input-group ms-1" style="width: 50%;">
-                                <span class="input-group-text col-5">Children [Ages 0-17] </span>
+                                <span class="input-group-text col-5">Children [0-14 yrs.]</span>
                                 <input class="form-control" type="number" id="amountOfChildren" name="amountOfChildren" th:field="${bookingForm.amountOfChildren}" value="0" th:min="0" th:required="required">
                             </div>
                         </div>

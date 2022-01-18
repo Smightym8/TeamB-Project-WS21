@@ -47,19 +47,19 @@
 										</xsl:element>
 
 										<xsl:element name="fo:block">
-											<xsl:text>Straße 12</xsl:text>
+											<xsl:text>Untermarktstraße 17</xsl:text>
 										</xsl:element>
 
 										<xsl:element name="fo:block">
-											<xsl:text>6845 Stadt</xsl:text>
+											<xsl:text>6410 Telfs</xsl:text>
 										</xsl:element>
 									</xsl:element>
 									<xsl:element name="fo:table-cell">
 										<xsl:element name="fo:block">
-											<xsl:text>Email: hotel@schwarz.at</xsl:text>
+											<xsl:text>Email: hotel@schwarz.com</xsl:text>
 										</xsl:element>
 										<xsl:element name="fo:block">
-											<xsl:text>Phone: +43 5512 204576</xsl:text>
+											<xsl:text>Phone: +43 5513 87506</xsl:text>
 										</xsl:element>
 									</xsl:element>
 									<xsl:element name="fo:table-cell">
