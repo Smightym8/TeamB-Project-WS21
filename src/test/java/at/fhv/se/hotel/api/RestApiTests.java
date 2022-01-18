@@ -59,10 +59,12 @@ public class RestApiTests {
                 RoomCategoryDTO.builder()
                         .withId("1")
                         .withName("Single Room")
+                        .withDescription("This is a single room")
                         .build(),
                 RoomCategoryDTO.builder()
                         .withId("2")
                         .withName("Double Room")
+                        .withDescription("This is a double room")
                         .build()
         );
 
@@ -80,6 +82,7 @@ public class RestApiTests {
         for(int i = 0; i < categoryDTOsExpected.size(); i++) {
             assertEquals(categoryDTOsExpected.get(i).id(), categoryDTOsActual[i].id());
             assertEquals(categoryDTOsExpected.get(i).name(), categoryDTOsActual[i].name());
+            assertEquals(categoryDTOsExpected.get(i).description(), categoryDTOsActual[i].description());
         }
     }
 

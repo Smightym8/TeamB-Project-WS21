@@ -6,7 +6,7 @@ package at.fhv.se.hotel.domain.model.guest;
 public enum Gender {
     MALE("Male"),
     FEMALE("Female"),
-    DIVERS("Divers");
+    DIVERSE("Diverse");
 
     private final String friendlyName;
 

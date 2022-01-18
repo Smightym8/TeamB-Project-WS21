@@ -86,15 +86,9 @@ const RoomCategoryComponent = ({ prevStep, nextStep, handleChange, values }: Pro
         }
     }
 
-    const [FIPath, setPathForFirstImage] = useState<string[]>([SR01, DR01, JS01, SS01]);
-    const [SIPath, setPathForSecondImage] = useState<string[]>([SR02, DR02, JS02, SS02]);
-    const [TIPath, setPathForThirdImage] = useState<string[]>([SR03, DR03, JS03, SS03]);
-    const [DPath, setDescriptions] = useState<string[]>([
-        "You love spending the whole day in nature, exploring the mountain world extensively and are a fan of beautiful rooms with a casual stylish look, without wanting too much of a good thing. Our lovely double room Casual, with approx. 25 m², offers all the amenities that mountain enthusiasts like after a full day: comfortable box spring bed for a wonderful night's sleep, beautiful bathroom with large rain shower, mini-fridge (not filled), Nespresso machine, kettle, balcony and much more. The \"Casual\" can also be booked for single use.",
-        "In our double room \"Stylish\" you will be pampered with a king-size box-spring bed. You will sleep pleasantly quiet and fully relax on holiday - like a prince and princess. With approx. 30 m², the two of you have plenty of space. You will enjoy using the stylish sofa or the recliner to relax, while your wife occupies the bathroom for evening styling. The balcony with its magnificent view will tempt you out in the morning to enjoy a private cup of Nespresso coffee together.",
-        "In our junior suite \"Lifestyle\", we placed great emphasis on the balance between the living and sleeping areas. Spaciously divided, the sofa bed corner invites you to relax during the day. In the box spring bed you will wake up the next morning fully rested and relaxed. The bathroom with integrated infrared cabin, two washbasins, separately integrated WC and a large rain shower is already a great feel-good bathroom. Flat screen TV, Nespresso machine, mini-fridge (not filled), kettle and many other small details are part of the standard equipment.",
-        "You will reside in our WOW suite as if in your own little flat. Step inside - you will be amazed. You will find everything you need for a perfect wellness holiday with lots of privacy and amenities that have been thought out down to the smallest detail. The separate living room with open fireplace is your personal retreat with a glass of good wine in the evening. In the bathroom you are welcome to use your own sauna and then cool off in the outdoor jacuzzi on the secluded terrace. If you have visitors, there is a guest toilet available.",
-    ]);
+    const [FIPath] = useState<string[]>([SR01, DR01, JS01, SS01]);
+    const [SIPath] = useState<string[]>([SR02, DR02, JS02, SS02]);
+    const [TIPath] = useState<string[]>([SR03, DR03, JS03, SS03]);
 
     const progressBarStyle = {
         width: "40%"
@@ -133,7 +127,7 @@ const RoomCategoryComponent = ({ prevStep, nextStep, handleChange, values }: Pro
                                                 />
                                             </div>
                                             <div className="d-flex p-3">
-                                                <span>{DPath[roomCategories?.indexOf(roomCategory)]}</span>
+                                                <span>{roomCategory.description}</span>
                                             </div>
                                         </div>
 
