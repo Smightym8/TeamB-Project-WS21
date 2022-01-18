@@ -213,7 +213,7 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
                                        onChange={(e) => handleChange('firstName', e.target.value)}
                                 />
 
-                                <label htmlFor="firstname">Firstname<span className="text-danger">*</span></label>
+                                <label htmlFor="firstname">First name<span className="text-danger">*</span></label>
                                 <span className="text-danger">{firstNameError}</span>
                             </div>
                             <div className="form-floating w-50 ms-2">
@@ -223,7 +223,7 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
                                        value={values.lastName}
                                        onChange={(e) => handleChange('lastName', e.target.value)}
                                 />
-                                <label htmlFor="lastname">Last Name<span className="text-danger">*</span></label>
+                                <label htmlFor="lastname">Last name<span className="text-danger">*</span></label>
                                 <span className="text-danger">{lastNameError}</span>
                             </div>
                         </div>
