@@ -39,7 +39,6 @@ public class GuestForm {
     @Size(min = 1, max = 6, message = "Street number has to be between 1 and 6 characters")
     private String streetNumber;
 
-
     @Size(min = 2, max = 8, message = "Zip code has to be between 2 and 8 characters")
     private String zipCode;
 

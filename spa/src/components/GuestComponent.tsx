@@ -42,12 +42,19 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
         let birthDateLimit: Date = new Date();
         birthDateLimit.setFullYear(birthDateLimit.getFullYear() - 18);
 
+        let validName : RegExp = /[a-zA-Z]+/;
+        let validStreetName: RegExp = /[a-zA-Z]+/;
+        let validStreetNumber: RegExp = /^[0-9]+[a-z]?/;
+        let validZipCode : RegExp = /[a-zA-Z\d]{2,8}/;
+        let validCity: RegExp = /[a-zA-Z]+/;
+        let validCountry: RegExp = /[a-zA-Z]+/;
+        let validMail : RegExp = /^[a-zA-Z0-9_\.\+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-\.]+$/;
+        let validPhoneNumber : RegExp = /\+?\(?\d{2,4}\)?[\d\s-]{3,}/;
+
         if(values.gender === 'Default' || values.gender === '') {
             isValid = false;
             genderErrorMsg = 'Please select your gender!';
         }
-
-        let validName : RegExp = /^[a-zA-Z]+/;
 
         if(values.firstName === '') {
             isValid = false;
@@ -65,8 +72,6 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
             lastNameErrorMsg = "Your last name must start with a letter!"
         }
 
-        let validStreetName: RegExp = /[a-zA-Z]/;
-
         if(values.streetName === '') {
             isValid = false;
             streetNameErrorMsg = 'Please provide your street name!';
@@ -74,8 +79,6 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
             isValid = false;
             streetNameErrorMsg = 'Please provide a valid street name!'
         }
-
-        let validStreetNumber: RegExp = /^[0-9]+/;
 
         if(values.streetNumber === '') {
             isValid = false;
@@ -85,8 +88,6 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
             streetNumberErrorMsg = 'Please provide a valid street number!';
         }
 
-        let validZipCode : RegExp = /^\d{4,5}$/;
-
         if(values.zipCode === '') {
             isValid = false;
             zipCodeErrorMsg = 'Please provide your zip code!';
@@ -95,8 +96,6 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
             zipCodeErrorMsg = 'Please provide a valid zip code!';
         }
 
-        let validCity: RegExp = /[a-zA-Z]/;
-
         if(values.city === '') {
             isValid = false;
             cityErrorMsg = 'Please provide your city!';
@@ -104,8 +103,6 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
             isValid = false;
             cityErrorMsg = 'Please provide a valid city!';
         }
-
-        let validCountry: RegExp = /[a-zA-Z]/;
 
         if(values.country === '') {
             isValid = false;
@@ -123,8 +120,6 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
             birthDateErrorMsg = 'Please be at least 18 years old!';
         }
 
-        let validMail : RegExp = /^[a-zA-Z0-9_\.\+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-\.]+$/;
-
         if(values.eMail === '') {
             isValid = false;
             eMailErrorMsg = 'Please provide your e-mail!';
@@ -132,8 +127,6 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
             isValid = false;
             eMailErrorMsg = 'Please provide a valid email!';
         }
-
-        let validPhoneNumber : RegExp = /\+?\(?\d{2,4}\)?[\d\s-]{3,}/;
 
         if(values.phoneNumber === '') {
             isValid = false;
