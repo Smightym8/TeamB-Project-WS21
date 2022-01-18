@@ -129,14 +129,12 @@
                                 <div class="d-flex">
                                     <div class="form-floating me-1" style="width: 50%;">
                                         <input class="form-control" id="email" type="email" placeholder=" " required th:field="*{eMail}">
-                                        <label for="email">Email</label>
-                                        <div class="form-text">Email or Phone number is required</div>
+                                        <label for="email">Email<span style="color:red;">*</span></label>
                                         <div class="alert alert-warning" th:if="${#fields.hasErrors('eMail')}" th:errors="*{eMail}"></div>
                                     </div>
                                     <div class="form-floating ms-1" style="width: 50%;">
                                         <input class="form-control" id="phonenumber" type="tel" placeholder=" " required th:field="*{phoneNumber}">
-                                        <label for="phonenumber">Phone number</label>
-                                        <div class="form-text">Backendimplementierung fehlt !!!!!!!!!!!!!!!!!!!</div>
+                                        <label for="phonenumber">Phone number<span style="color:red;">*</span></label>
                                         <div class="alert alert-warning" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></div>
                                     </div>
                                 </div>
@@ -174,12 +172,12 @@
 
                         <div class="d-flex p-3 mt-4">
                             <div class="input-group me-1" style="width: 50%;">
-                                <span class="input-group-text col-5">Adults</span>
+                                <span class="input-group-text col-5">Adults [15-99 yrs.]</span>
                                 <input class="form-control" type="number" id="amountOfAdults" name="amountOfAdults" th:field="${bookingForm.amountOfAdults}" value="1" th:min="1" th:required="required">
                                 <div class="form-text"> </div>
                             </div>
                             <div class="input-group ms-1" style="width: 50%;">
-                                <span class="input-group-text col-5">Children [Ages 0-17] </span>
+                                <span class="input-group-text col-5">Children [0-14 yrs.]</span>
                                 <input class="form-control" type="number" id="amountOfChildren" name="amountOfChildren" th:field="${bookingForm.amountOfChildren}" value="0" th:min="0" th:required="required">
                             </div>
                         </div>
