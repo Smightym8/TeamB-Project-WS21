@@ -1,6 +1,5 @@
 package at.fhv.se.hotel.integration.domain;
 
-import at.fhv.se.hotel.application.api.exception.GuestNotFoundException;
 import at.fhv.se.hotel.application.api.exception.RoomNotFoundException;
 import at.fhv.se.hotel.application.api.exception.SeasonNotFoundException;
 import at.fhv.se.hotel.domain.model.booking.Booking;
@@ -25,7 +24,7 @@ import at.fhv.se.hotel.domain.repository.InvoiceRepository;
 import at.fhv.se.hotel.domain.repository.RoomCategoryPriceRepository;
 import at.fhv.se.hotel.domain.repository.RoomRepository;
 import at.fhv.se.hotel.domain.repository.SeasonRepository;
-import at.fhv.se.hotel.domain.services.api.InvoiceSplitService;
+import at.fhv.se.hotel.domain.services.api.InvoiceCreationService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +45,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ActiveProfiles("test")
 @SpringBootTest
 @Transactional
-public class InvoiceSplitServiceTest {
+public class InvoiceCreationServiceTest {
     @Autowired
-    InvoiceSplitService invoiceSplitService;
+    InvoiceCreationService invoiceCreationService;
 
     @MockBean
     RoomCategoryPriceRepository roomCategoryPriceRepository;
@@ -168,7 +167,7 @@ public class InvoiceSplitServiceTest {
 
         Mockito.when(invoiceRepository.nextIdentity()).thenReturn(invoiceId);
 
-        Invoice invoice = invoiceSplitService.splitInvoice(stayExpected, selectedRooms, action);
+        Invoice invoice = invoiceCreationService.createInvoice(stayExpected, selectedRooms, action);
 
         // then
         assertEquals(invoiceNumberExpected, invoice.getInvoiceNumber());
@@ -286,7 +285,7 @@ public class InvoiceSplitServiceTest {
 
         Mockito.when(invoiceRepository.nextIdentity()).thenReturn(invoiceId);
 
-        Invoice invoice = invoiceSplitService.splitInvoice(stayExpected, selectedRooms, action);
+        Invoice invoice = invoiceCreationService.createInvoice(stayExpected, selectedRooms, action);
 
         // then
         assertEquals(invoiceNumberExpected, invoice.getInvoiceNumber());
@@ -368,7 +367,7 @@ public class InvoiceSplitServiceTest {
 
         // when ... then
         Exception exception = assertThrows(SeasonNotFoundException.class, () -> {
-            invoiceSplitService.splitInvoice(stayExpected, roomNames, actionExpected);
+            invoiceCreationService.createInvoice(stayExpected, roomNames, actionExpected);
         });
 
         String expectedMessage = "Season for date " + stayExpected.getCheckInDate() + " not found.";
@@ -457,7 +456,7 @@ public class InvoiceSplitServiceTest {
 
         // when ... then
         Exception exception = assertThrows(RoomNotFoundException.class, () -> {
-            invoiceSplitService.splitInvoice(stayExpected, roomNames, actionExpected);
+            invoiceCreationService.createInvoice(stayExpected, roomNames, actionExpected);
         });
 
         String expectedMessage = "Room " + roomNames.get(0) + " not found.";

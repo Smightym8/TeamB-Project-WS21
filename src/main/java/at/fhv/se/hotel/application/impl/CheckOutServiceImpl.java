@@ -15,7 +15,7 @@ import at.fhv.se.hotel.domain.repository.InvoiceRepository;
 import at.fhv.se.hotel.domain.repository.RoomCategoryRepository;
 import at.fhv.se.hotel.domain.repository.RoomRepository;
 import at.fhv.se.hotel.domain.repository.StayRepository;
-import at.fhv.se.hotel.domain.services.api.InvoiceSplitService;
+import at.fhv.se.hotel.domain.services.api.InvoiceCreationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,7 +44,7 @@ public class CheckOutServiceImpl implements CheckOutService {
     InvoiceRepository invoiceRepository;
 
     @Autowired
-    InvoiceSplitService invoiceSplitService;
+    InvoiceCreationService invoiceCreationService;
 
     @Autowired
     RoomRepository roomRepository;
@@ -69,7 +69,7 @@ public class CheckOutServiceImpl implements CheckOutService {
                 () -> new StayNotFoundException("Creating invoice failed! Stay with id " + stayId + " not found")
         );
 
-        Invoice invoice = invoiceSplitService.splitInvoice(stay, roomNames, action);
+        Invoice invoice = invoiceCreationService.createInvoice(stay, roomNames, action);
 
         Map<String, BigDecimal> services = new HashMap<>();
         for(Service s : invoice.getServices()) {
@@ -155,7 +155,7 @@ public class CheckOutServiceImpl implements CheckOutService {
             }
         }
 
-        Invoice invoice = invoiceSplitService.splitInvoice(stay, roomNames, action);
+        Invoice invoice = invoiceCreationService.createInvoice(stay, roomNames, action);
 
         invoiceRepository.add(invoice);
     }
@@ -176,7 +176,7 @@ public class CheckOutServiceImpl implements CheckOutService {
                 () -> new StayNotFoundException("Check out failed! Stay with id " + stayId + " doesn't exist.")
         );
 
-        Invoice invoice = invoiceSplitService.splitInvoice(stay, roomNames, action);
+        Invoice invoice = invoiceCreationService.createInvoice(stay, roomNames, action);
 
         invoiceRepository.add(invoice);
 

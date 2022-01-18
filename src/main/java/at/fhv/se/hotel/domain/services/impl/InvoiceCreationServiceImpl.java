@@ -12,7 +12,7 @@ import at.fhv.se.hotel.domain.model.stay.Stay;
 import at.fhv.se.hotel.domain.repository.InvoiceRepository;
 import at.fhv.se.hotel.domain.repository.RoomRepository;
 import at.fhv.se.hotel.domain.repository.SeasonRepository;
-import at.fhv.se.hotel.domain.services.api.InvoiceSplitService;
+import at.fhv.se.hotel.domain.services.api.InvoiceCreationService;
 import at.fhv.se.hotel.domain.services.api.RoomCategoryPriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class InvoiceSplitServiceImpl implements InvoiceSplitService {
+public class InvoiceCreationServiceImpl implements InvoiceCreationService {
 
     private static final BigDecimal localTaxInEuro = new BigDecimal("0.76");
     private static final BigDecimal valueAddedTaxPercentage = new BigDecimal("0.10");
@@ -44,8 +44,7 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
     RoomRepository roomRepository;
 
     @Override
-    public Invoice splitInvoice(Stay stay, List<String> roomNames, String action) throws SeasonNotFoundException, RoomNotFoundException {
-        // TODO: Write own method in repo to get amount of invoices in repo
+    public Invoice createInvoice(Stay stay, List<String> roomNames, String action) throws SeasonNotFoundException, RoomNotFoundException {
         int todaysInvoicesAmount = invoiceRepository.amountOfInvoicesByDate(LocalDate.now()) + 1;
         List<RoomCategoryPrice> roomCategoryPriceList = new ArrayList<>();
 
