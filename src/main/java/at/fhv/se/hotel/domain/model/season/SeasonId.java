@@ -3,7 +3,9 @@ package at.fhv.se.hotel.domain.model.season;
 import at.fhv.se.hotel.domain.Generated;
 
 import java.util.Objects;
-
+/**
+ * This class is a value object for the season which contains the id
+ */
 public class SeasonId {
     private String id;
 

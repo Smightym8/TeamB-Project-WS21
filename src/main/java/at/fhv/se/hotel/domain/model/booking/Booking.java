@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * This class represents a hotel booking.
+ */
 public class Booking {
     // Required by hibernate
     @SuppressWarnings("unused")

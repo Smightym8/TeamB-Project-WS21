@@ -4,6 +4,9 @@ import at.fhv.se.hotel.domain.Generated;
 
 import java.util.Objects;
 
+/**
+ * This class is a value object for the service which contains the id
+ */
 public class ServiceId {
     private String id;
 

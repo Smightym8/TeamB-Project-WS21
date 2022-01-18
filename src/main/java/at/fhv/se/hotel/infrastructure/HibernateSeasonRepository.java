@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class HibernateSeasonRepositoryImpl implements SeasonRepository {
+public class HibernateSeasonRepository implements SeasonRepository {
     @PersistenceContext
     private EntityManager em;
 

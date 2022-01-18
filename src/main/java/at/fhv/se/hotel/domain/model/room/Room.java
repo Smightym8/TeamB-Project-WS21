@@ -5,6 +5,9 @@ import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
 
 import java.util.Objects;
 
+/**
+ * This class represents a physical room in the hotel
+ */
 public class Room {
     // Required by hibernate
     @SuppressWarnings("unused")

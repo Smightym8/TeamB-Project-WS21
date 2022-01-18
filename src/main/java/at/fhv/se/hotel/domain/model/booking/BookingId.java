@@ -4,6 +4,9 @@ import at.fhv.se.hotel.domain.Generated;
 
 import java.util.Objects;
 
+/**
+ * This class is a value object for the booking which contains the id
+ */
 public class BookingId {
     private String id;
 

@@ -6,6 +6,10 @@ import at.fhv.se.hotel.domain.model.season.Season;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * This class is acts as connection between room category, season and RoomCategoryPrice.
+ * It is used to add a price depending on the season to the room category.
+ */
 public class RoomCategoryPrice {
     // Required by hibernate
     @SuppressWarnings("unused")

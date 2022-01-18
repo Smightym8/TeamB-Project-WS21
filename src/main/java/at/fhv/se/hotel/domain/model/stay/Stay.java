@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * This class represents a stay
+ */
 public class Stay {
     // Required by hibernate
     @SuppressWarnings("unused")

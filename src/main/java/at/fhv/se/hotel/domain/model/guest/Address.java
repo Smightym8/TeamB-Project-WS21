@@ -4,6 +4,9 @@ import at.fhv.se.hotel.domain.Generated;
 
 import java.util.Objects;
 
+/**
+ * This class is a value object for the guest which contains the address information
+ */
 public class Address {
     private String streetName;
     private String streetNumber;

@@ -4,6 +4,9 @@ import at.fhv.se.hotel.domain.Generated;
 
 import java.util.Objects;
 
+/**
+ * This class represents a service that can be booked
+ */
 public class Service {
     // Required by hibernate
     @SuppressWarnings("unused")

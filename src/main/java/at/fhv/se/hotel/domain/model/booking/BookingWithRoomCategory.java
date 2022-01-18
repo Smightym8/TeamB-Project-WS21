@@ -5,6 +5,10 @@ import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
 
 import java.util.Objects;
 
+/**
+ * This class acts as relationship between Booking and RoomCategory.
+ * It is used to create a many to many relationship with the additional field amount.
+ */
 public class BookingWithRoomCategory {
     // Required by hibernate
     @SuppressWarnings("unused")

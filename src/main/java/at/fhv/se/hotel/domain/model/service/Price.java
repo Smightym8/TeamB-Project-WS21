@@ -5,6 +5,9 @@ import at.fhv.se.hotel.domain.Generated;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * This class is a value object for the service which contains the price
+ */
 public class Price {
     private BigDecimal price;
 

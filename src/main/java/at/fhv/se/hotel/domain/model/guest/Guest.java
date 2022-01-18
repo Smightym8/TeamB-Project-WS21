@@ -7,6 +7,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * This class represents a hotel guest
+ */
 public class Guest {
     // Required by hibernate
     @SuppressWarnings("unused")

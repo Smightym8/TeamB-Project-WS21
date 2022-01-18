@@ -5,6 +5,9 @@ import at.fhv.se.hotel.domain.Generated;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * This class represents a season to define prices for room categories
+ */
 public class Season {
     // Required by hibernate
     @SuppressWarnings("unused")
