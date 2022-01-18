@@ -163,7 +163,7 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
                                         className="form-select">
                                     <option value='Male'>Male</option>
                                     <option value='Female'>Female</option>
-                                    <option value='Divers'>Divers</option>
+                                    <option value='Diverse'>Diverse</option>
                                 </select>
                                 <label htmlFor="gender">Gender<span className="text-danger">*</span></label>
                                 <span className="text-danger">{genderError}</span>

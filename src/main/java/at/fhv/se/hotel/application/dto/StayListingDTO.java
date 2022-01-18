@@ -1,6 +1,7 @@
 package at.fhv.se.hotel.application.dto;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -74,6 +75,7 @@ public class StayListingDTO {
         }
 
         public Builder withRooms(List<String> rooms) {
+            Collections.sort(rooms); // Sort rooms alphabetically
             this.instance.rooms = rooms;
             return this;
         }
