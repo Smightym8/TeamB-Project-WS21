@@ -20,7 +20,7 @@
                             <div th:each="assignedRoom : ${assignedRooms}" style="width: 40%; margin: auto">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text col-5" th:text="${assignedRoom.categoryName}"></span>
-                                    <select th:id="${'roomSelect' + assignedRoomStat.index }" class="form-select" th:name="roomNames">
+                                    <select th:id="${'roomSelect' + assignedRoomStat.index }" class="form-select room" th:name="roomNames">
                                         <option th:each="freeRoom : ${freeRooms}" th:value="${freeRoom.name}"
                                                 th:text="${freeRoom.name}" th:selected="${freeRoom.name == assignedRoom.name}"></option>
                                     </select>
@@ -46,7 +46,7 @@
             // Disable again if another room is selected in any dropdown
             $(".form-select").change(function(){
                 $(".form-select option").each(function(){
-                    $(this).removeAttr("disabled");
+                    $(this).removeAttr("disabled style");
                 });
 
                 disableSelectedOptions();
@@ -65,7 +65,7 @@
                 for (const [key, value] of selectedValues.entries()) {
                     $(".form-select").each(function(){
                         if($(this).attr("id") !== key) {
-                            $('#' + $(this).attr("id") + ' option[value="' + value + '"').attr("disabled", true);
+                            $('#' + $(this).attr("id") + ' option[value="' + value + '"').attr({disabled: "true", style: "color: red"});
                         }
                     });
                 }

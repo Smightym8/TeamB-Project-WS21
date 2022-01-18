@@ -230,7 +230,10 @@ public class HotelViewController {
     @GetMapping(PRICING_URL)
     public ModelAndView pricing(Model model) {
         List<SeasonWithPricesDTO> seasonsWithPrices = seasonListingService.allSeasonsWithPrices();
+        List<RoomCategoryDTO> roomCategories = roomCategoryListingService.allRoomCategories();
+
         model.addAttribute("seasonsWithPrices", seasonsWithPrices);
+        model.addAttribute("roomCategories", roomCategories);
 
         return new ModelAndView(PRICING_VIEW);
     }
