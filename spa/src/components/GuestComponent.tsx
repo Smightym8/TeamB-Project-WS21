@@ -44,70 +44,109 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
 
         if(values.gender === 'Default' || values.gender === '') {
             isValid = false;
-            genderErrorMsg = 'You have to select your gender!';
+            genderErrorMsg = 'Please select your gender!';
         }
+
+        let validName : RegExp = /^[a-zA-Z]+/;
 
         if(values.firstName === '') {
             isValid = false;
-            firstNameErrorMsg = 'You have to provide your first name!';
+            firstNameErrorMsg = 'Please provide your first name!';
+        } else if(!validName.test(values.firstName)) {
+            isValid = false;
+            firstNameErrorMsg = "Your first name must start with a letter!"
         }
 
         if(values.lastName === '') {
             isValid = false;
-            lastNameErrorMsg = 'You have to provide your last name!';
+            lastNameErrorMsg = 'Please provide your last name!';
+        } else if(!validName.test(values.lastName)) {
+            isValid = false;
+            lastNameErrorMsg = "Your last name must start with a letter!"
         }
 
-        if(values.eMail === '') {
+        let validStreetName: RegExp = /[a-zA-Z]/;
+
+        if(values.streetName === '') {
             isValid = false;
-            eMailErrorMsg = 'You have to provide your e-mail!';
+            streetNameErrorMsg = 'Please provide your street name!';
+        } else if(!validStreetName.test(values.streetName)) {
+            isValid = false;
+            streetNameErrorMsg = 'Please provide a valid street name!'
         }
 
-        if(values.phoneNumber === '') {
+        let validStreetNumber: RegExp = /^[0-9]+/;
+
+        if(values.streetNumber === '') {
             isValid = false;
-            phoneNumberErrorMsg = 'You have to provide your phone number!';
+            streetNumberErrorMsg = 'Please provide your street number!';
+        } else if(!validStreetNumber.test(values.streetNumber)) {
+            isValid = false;
+            streetNumberErrorMsg = 'Please provide a valid street number!';
+        }
+
+        let validZipCode : RegExp = /^\d{4,5}$/;
+
+        if(values.zipCode === '') {
+            isValid = false;
+            zipCodeErrorMsg = 'Please provide your zip code!';
+        } else if(!validZipCode.test(values.zipCode)) {
+            isValid = false;
+            zipCodeErrorMsg = 'Please provide a valid zip code!';
+        }
+
+        let validCity: RegExp = /[a-zA-Z]/;
+
+        if(values.city === '') {
+            isValid = false;
+            cityErrorMsg = 'Please provide your city!';
+        } else if(!validCity.test(values.city)) {
+            isValid = false;
+            cityErrorMsg = 'Please provide a valid city!';
+        }
+
+        let validCountry: RegExp = /[a-zA-Z]/;
+
+        if(values.country === '') {
+            isValid = false;
+            countryErrorMsg = 'Please provide your country!';
+        } else if(!validCountry.test(values.country)) {
+            isValid = false;
+            countryErrorMsg = 'Please provide a valid country!';
         }
 
         if(values.birthDate === '') {
             isValid = false;
-            birthDateErrorMsg = 'You have to provide your birth date!';
+            birthDateErrorMsg = 'Please provide your birth date!';
+        } else if(birthDate > birthDateLimit) {
+            isValid = false;
+            birthDateErrorMsg = 'Please be at least 18 years old!';
         }
 
-        if(birthDate > birthDateLimit) {
+        let validMail : RegExp = /^[a-zA-Z0-9_\.\+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-\.]+$/;
+
+        if(values.eMail === '') {
             isValid = false;
-            birthDateErrorMsg = 'You have to be at least 18 years old!';
+            eMailErrorMsg = 'Please provide your e-mail!';
+        } else if(!validMail.test(values.eMail)) {
+            isValid = false;
+            eMailErrorMsg = 'Please provide a valid email!';
         }
 
-        if(values.streetName === '') {
-            isValid = false;
-            streetNameErrorMsg = 'You have to provide your street name!';
-        }
+        let validPhoneNumber : RegExp = /\+?\(?\d{2,4}\)?[\d\s-]{3,}/;
 
-        if(values.streetNumber === '') {
+        if(values.phoneNumber === '') {
             isValid = false;
-            streetNumberErrorMsg = 'You have to provide your street number!';
-        }
-
-        if(values.zipCode === '') {
+            phoneNumberErrorMsg = 'Please provide your phone number!';
+        } else if(!validPhoneNumber.test(values.phoneNumber)) {
             isValid = false;
-            zipCodeErrorMsg = 'You have to provide your zip code!';
-        }
-
-        if(values.city === '') {
-            isValid = false;
-            cityErrorMsg = 'You have to provide your city!';
-        }
-
-        if(values.country === '') {
-            isValid = false;
-            countryErrorMsg = 'You have to provide your country!';
+            phoneNumberErrorMsg = 'Please provide a valid phone number!';
         }
 
         if(values.amountOfAdults == 0) {
             isValid = false;
-            amountOfAdultsErrorMsg = 'You have to provide at least 1 number of persons';
-        }
-
-        if(values.amountOfAdults < 0) {
+            amountOfAdultsErrorMsg = 'Please provide at least 1 number of persons!';
+        } else if(values.amountOfAdults < 0) {
             isValid = false;
             amountOfAdultsErrorMsg = 'You can not provide negative number of adults!'
         }
@@ -301,7 +340,7 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
 
                         <div className="d-flex">
                             <div className="input-group me-2">
-                                <span className="input-group-text col">Adults [15-99 yrs.]</span>
+                                <span className="input-group-text col">Adults [15-99 yrs.]<span className="text-danger">*</span></span>
                                 <input className="form-control"
                                        type="number"
                                        value={values.amountOfAdults}
@@ -328,9 +367,6 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
                             </div>
                         </div>
                     </div>
-
-
-
 
                 </div>
                 <div className="card-footer">
