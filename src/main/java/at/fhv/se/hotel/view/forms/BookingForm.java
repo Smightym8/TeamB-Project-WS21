@@ -2,6 +2,8 @@ package at.fhv.se.hotel.view.forms;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.FutureOrPresent;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -9,11 +11,17 @@ public final class BookingForm {
     private String guestId;
     private List<String> roomCategoryIds;
     private List<String> serviceIds;
+
+    @FutureOrPresent(message = "Check in date has to be today or in the future")
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate checkInDate;
+
+    @Future(message = "Check out date has to be in the future")
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private LocalDate checkOutDate;
+
     private List<Integer> amountsOfRoomCategories;
+
     private int amountOfAdults;
     private int amountOfChildren;
     String additionalInformation;
