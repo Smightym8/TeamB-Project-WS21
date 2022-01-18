@@ -18,13 +18,14 @@ public class RoomCategoryPrice {
     // Required by hibernate
     @SuppressWarnings("unused")
     @Generated
-    private RoomCategoryPrice(){}
+    private RoomCategoryPrice() {
+    }
 
     public static RoomCategoryPrice create(RoomCategoryPriceId aRoomCategoryPriceId, Season aSeason, RoomCategory aRoomCategory, BigDecimal aPrice) {
         return new RoomCategoryPrice(aRoomCategoryPriceId, aSeason, aRoomCategory, aPrice);
     }
 
-    private RoomCategoryPrice(RoomCategoryPriceId aRoomCategoryPriceId, Season aSeason, RoomCategory aRoomCategory, BigDecimal aPrice){
+    private RoomCategoryPrice(RoomCategoryPriceId aRoomCategoryPriceId, Season aSeason, RoomCategory aRoomCategory, BigDecimal aPrice) {
         this.roomCategoryPriceId = aRoomCategoryPriceId;
         this.season = aSeason;
         this.roomCategory = aRoomCategory;

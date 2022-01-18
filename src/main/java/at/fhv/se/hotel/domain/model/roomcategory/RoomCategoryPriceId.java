@@ -7,14 +7,15 @@ import java.util.Objects;
 public class RoomCategoryPriceId {
     private String id;
 
-    public RoomCategoryPriceId (String id) {
+    public RoomCategoryPriceId(String id) {
         this.id = id;
     }
 
     // Required by hibernate
     @SuppressWarnings("unused")
     @Generated
-    private RoomCategoryPriceId (){}
+    private RoomCategoryPriceId() {
+    }
 
     public String id() {
         return this.id;

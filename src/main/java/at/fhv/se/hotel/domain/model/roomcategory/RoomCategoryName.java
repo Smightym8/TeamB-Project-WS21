@@ -2,7 +2,6 @@ package at.fhv.se.hotel.domain.model.roomcategory;
 
 import at.fhv.se.hotel.domain.Generated;
 
-import javax.xml.bind.annotation.XmlElement;
 import java.util.Objects;
 
 public class RoomCategoryName {
@@ -14,7 +13,7 @@ public class RoomCategoryName {
     private RoomCategoryName() {
     }
 
-    public RoomCategoryName(String aName){
+    public RoomCategoryName(String aName) {
         this.name = aName;
     }
 

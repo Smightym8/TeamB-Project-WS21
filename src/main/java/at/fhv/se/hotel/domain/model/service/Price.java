@@ -2,7 +2,6 @@ package at.fhv.se.hotel.domain.model.service;
 
 import at.fhv.se.hotel.domain.Generated;
 
-import javax.xml.bind.annotation.XmlElement;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -15,11 +14,11 @@ public class Price {
     private Price() {
     }
 
-    public Price (BigDecimal aPrice){
+    public Price(BigDecimal aPrice) {
         this.price = aPrice;
     }
 
-    public BigDecimal price(){
+    public BigDecimal price() {
         return this.price;
     }
 

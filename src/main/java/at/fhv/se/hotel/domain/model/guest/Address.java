@@ -2,7 +2,6 @@ package at.fhv.se.hotel.domain.model.guest;
 
 import at.fhv.se.hotel.domain.Generated;
 
-import javax.xml.bind.annotation.XmlElement;
 import java.util.Objects;
 
 public class Address {
@@ -15,7 +14,8 @@ public class Address {
     // Required by hibernate
     @SuppressWarnings("unused")
     @Generated
-    private Address(){}
+    private Address() {
+    }
 
     public Address(String aStreetName, String aStreetNumber, String aCity, String aZipCode, String aCountry) {
         this.streetName = aStreetName;

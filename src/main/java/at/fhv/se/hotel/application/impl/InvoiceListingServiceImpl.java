@@ -6,10 +6,6 @@ import at.fhv.se.hotel.application.dto.InvoiceDTO;
 import at.fhv.se.hotel.application.dto.InvoiceListingDTO;
 import at.fhv.se.hotel.domain.model.invoice.Invoice;
 import at.fhv.se.hotel.domain.model.invoice.InvoiceId;
-import at.fhv.se.hotel.domain.model.room.Room;
-import at.fhv.se.hotel.domain.model.room.RoomName;
-import at.fhv.se.hotel.domain.model.roomcategory.RoomCategoryPrice;
-import at.fhv.se.hotel.domain.model.service.Service;
 import at.fhv.se.hotel.domain.repository.InvoiceRepository;
 import at.fhv.se.hotel.domain.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

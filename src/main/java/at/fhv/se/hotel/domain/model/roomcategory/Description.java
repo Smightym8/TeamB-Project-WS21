@@ -13,7 +13,7 @@ public class Description {
     private Description() {
     }
 
-    public Description(String aDescription){
+    public Description(String aDescription) {
         this.description = aDescription;
     }
 

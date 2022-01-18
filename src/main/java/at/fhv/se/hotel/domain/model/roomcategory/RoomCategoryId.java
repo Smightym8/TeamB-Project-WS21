@@ -13,11 +13,11 @@ public class RoomCategoryId {
     private RoomCategoryId() {
     }
 
-    public RoomCategoryId(String id){
+    public RoomCategoryId(String id) {
         this.id = id;
     }
 
-    public String id(){
+    public String id() {
         return this.id;
     }
 

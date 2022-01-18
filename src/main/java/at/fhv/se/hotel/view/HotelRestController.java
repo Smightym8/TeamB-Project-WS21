@@ -7,7 +7,6 @@ import at.fhv.se.hotel.application.api.exception.RoomCategoryNotFoundException;
 import at.fhv.se.hotel.application.api.exception.ServiceNotFoundException;
 import at.fhv.se.hotel.application.dto.RoomCategoryDTO;
 import at.fhv.se.hotel.application.dto.ServiceDTO;
-import at.fhv.se.hotel.domain.model.booking.Booking;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
@@ -65,8 +64,10 @@ public class HotelRestController {
     @PostMapping(CREATE_BOOKING_URL)
     public String createBooking(@RequestBody ObjectNode bookingData) {
         ObjectMapper mapper = new ObjectMapper();
-        ObjectReader stringListReader = mapper.readerFor(new TypeReference<List<String>>() {});
-        ObjectReader integerListReader = mapper.readerFor(new TypeReference<List<Integer>>() {});
+        ObjectReader stringListReader = mapper.readerFor(new TypeReference<List<String>>() {
+        });
+        ObjectReader integerListReader = mapper.readerFor(new TypeReference<List<Integer>>() {
+        });
 
         // Get Guest data and create guest for booking
         String firstName = bookingData.get("firstName").asText();
@@ -128,7 +129,7 @@ public class HotelRestController {
                     additionalInformation
             );
         } catch (GuestNotFoundException | ServiceNotFoundException | RoomCategoryNotFoundException e) {
-           throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
 
         String bookingNumber;

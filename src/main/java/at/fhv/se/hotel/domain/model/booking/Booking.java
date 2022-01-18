@@ -5,7 +5,6 @@ import at.fhv.se.hotel.domain.model.guest.Guest;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
 import at.fhv.se.hotel.domain.model.service.Service;
 
-import javax.xml.bind.annotation.XmlElement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +30,12 @@ public class Booking {
     // Required by hibernate
     @SuppressWarnings("unused")
     @Generated
-    protected Booking() {}
+    protected Booking() {
+    }
 
     public static Booking create(LocalDate aCheckInDate, LocalDate aCheckOutDate,
                                  BookingId aBookingId, Guest aGuest,
-                                 List<Service> aServices,int anAmountOfAdults,
+                                 List<Service> aServices, int anAmountOfAdults,
                                  int anAmountOfChildren, String anAdditionalInformation, String aBookingNumber) {
 
         // If no additional information is provided use 'Nothing' as default
@@ -71,7 +71,7 @@ public class Booking {
     public void addRoomCategory(RoomCategory aRoomCategory, int anAmount) {
         BookingWithRoomCategory bookingWithRoomCategory = BookingWithRoomCategory.create(
                 new BookingWithRoomCategoryId(this, aRoomCategory),
-                 anAmount
+                anAmount
         );
 
         this.roomCategories.add(bookingWithRoomCategory);

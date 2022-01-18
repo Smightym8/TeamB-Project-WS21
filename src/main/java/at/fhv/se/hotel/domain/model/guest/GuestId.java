@@ -13,11 +13,11 @@ public class GuestId {
     private GuestId() {
     }
 
-    public GuestId(String id){
+    public GuestId(String id) {
         this.id = id;
     }
 
-    public String id(){
+    public String id() {
         return this.id;
     }
 

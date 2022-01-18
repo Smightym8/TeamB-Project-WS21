@@ -2,7 +2,6 @@ package at.fhv.se.hotel.domain.model.guest;
 
 import at.fhv.se.hotel.domain.Generated;
 
-import javax.xml.bind.annotation.XmlElement;
 import java.util.Objects;
 
 public class FullName {
@@ -12,9 +11,10 @@ public class FullName {
     // Required by hibernate
     @SuppressWarnings("unused")
     @Generated
-    private FullName(){}
+    private FullName() {
+    }
 
-    public FullName(String aFirstName, String aLastName){
+    public FullName(String aFirstName, String aLastName) {
         this.firstName = aFirstName;
         this.lastName = aLastName;
     }

@@ -2,7 +2,6 @@ package at.fhv.se.hotel.domain.model.service;
 
 import at.fhv.se.hotel.domain.Generated;
 
-import javax.xml.bind.annotation.XmlElement;
 import java.util.Objects;
 
 public class ServiceName {
@@ -14,7 +13,7 @@ public class ServiceName {
     private ServiceName() {
     }
 
-    public ServiceName(String aName){
+    public ServiceName(String aName) {
         this.name = aName;
     }
 

@@ -13,11 +13,11 @@ public class ServiceId {
     private ServiceId() {
     }
 
-    public ServiceId(String id){
+    public ServiceId(String id) {
         this.id = id;
     }
 
-    public String id(){
+    public String id() {
         return this.id;
     }
 

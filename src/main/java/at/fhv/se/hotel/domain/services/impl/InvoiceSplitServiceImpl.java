@@ -81,18 +81,18 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
         LocalDate tempDate = stay.getCheckInDate();
 
         List<Room> rooms = new ArrayList<>();
-        for(int i = 0; i < nights; i++) {
+        for (int i = 0; i < nights; i++) {
             LocalDate finalTempDate = tempDate;
             Season currentSeason = seasonRepository.seasonByDate(tempDate).orElseThrow(
                     () -> new SeasonNotFoundException("Season for date " + finalTempDate + " not found.")
             );
 
-            for(String name : roomNames) {
+            for (String name : roomNames) {
                 Room room = roomRepository.roomByName(new RoomName(name)).orElseThrow(
                         () -> new RoomNotFoundException("Room " + name + " not found.")
                 );
 
-                if(!rooms.contains(room)) {
+                if (!rooms.contains(room)) {
                     rooms.add(room);
                 }
 
@@ -102,7 +102,7 @@ public class InvoiceSplitServiceImpl implements InvoiceSplitService {
 
                 totalNetAmountBeforeDiscount = totalNetAmountBeforeDiscount.add((currentCategoryPrice.getPrice()));
 
-                if(!roomCategoryPriceList.contains(currentCategoryPrice)) {
+                if (!roomCategoryPriceList.contains(currentCategoryPrice)) {
                     roomCategoryPriceList.add(currentCategoryPrice);
                 }
             }

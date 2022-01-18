@@ -5,10 +5,6 @@ import at.fhv.se.hotel.application.api.exception.*;
 import at.fhv.se.hotel.application.dto.*;
 import at.fhv.se.hotel.domain.model.room.RoomStatus;
 import at.fhv.se.hotel.view.forms.*;
-import at.fhv.se.hotel.view.forms.BookingForm;
-import at.fhv.se.hotel.view.forms.GuestForm;
-import at.fhv.se.hotel.view.forms.InvoiceForm;
-import at.fhv.se.hotel.view.forms.RoomForm;
 import org.apache.fop.apps.FOPException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -20,15 +16,15 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.validation.Valid;
-import java.security.InvalidParameterException;
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ListIterator;
 
 @Controller
 public class HotelViewController {

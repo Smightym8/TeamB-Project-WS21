@@ -10,13 +10,14 @@ public class BookingId {
     // Required by hibernate
     @SuppressWarnings("unused")
     @Generated
-    private BookingId() {}
+    private BookingId() {
+    }
 
-    public BookingId(String id){
+    public BookingId(String id) {
         this.id = id;
     }
 
-    public String id(){
+    public String id() {
         return this.id;
     }
 

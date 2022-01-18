@@ -1,9 +1,6 @@
 package at.fhv.se.hotel.application.impl;
 
 import at.fhv.se.hotel.application.api.BookingSummaryService;
-import at.fhv.se.hotel.application.api.GuestListingService;
-import at.fhv.se.hotel.application.api.RoomCategoryListingService;
-import at.fhv.se.hotel.application.api.ServiceListingService;
 import at.fhv.se.hotel.application.api.exception.BookingNotFoundException;
 import at.fhv.se.hotel.application.api.exception.GuestNotFoundException;
 import at.fhv.se.hotel.application.api.exception.RoomCategoryNotFoundException;
@@ -11,7 +8,6 @@ import at.fhv.se.hotel.application.api.exception.ServiceNotFoundException;
 import at.fhv.se.hotel.application.dto.*;
 import at.fhv.se.hotel.domain.model.booking.Booking;
 import at.fhv.se.hotel.domain.model.booking.BookingId;
-import at.fhv.se.hotel.domain.model.booking.BookingWithRoomCategory;
 import at.fhv.se.hotel.domain.model.guest.Guest;
 import at.fhv.se.hotel.domain.model.guest.GuestId;
 import at.fhv.se.hotel.domain.model.roomcategory.RoomCategory;
@@ -22,7 +18,6 @@ import at.fhv.se.hotel.domain.repository.BookingRepository;
 import at.fhv.se.hotel.domain.repository.GuestRepository;
 import at.fhv.se.hotel.domain.repository.RoomCategoryRepository;
 import at.fhv.se.hotel.domain.repository.ServiceRepository;
-import at.fhv.se.hotel.view.forms.GuestForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,8 +27,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Component
 public class BookingSummaryServiceImpl implements BookingSummaryService {

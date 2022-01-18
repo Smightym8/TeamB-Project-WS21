@@ -16,13 +16,14 @@ public class Room {
     // Required by hibernate
     @SuppressWarnings("unused")
     @Generated
-    protected Room(){}
+    protected Room() {
+    }
 
-    public static Room create (RoomName aName, RoomStatus aStatus, RoomCategory aRoomCategory){
+    public static Room create(RoomName aName, RoomStatus aStatus, RoomCategory aRoomCategory) {
         return new Room(aName, aStatus, aRoomCategory);
     }
 
-    private Room (RoomName aName, RoomStatus aStatus, RoomCategory aRoomCategory) {
+    private Room(RoomName aName, RoomStatus aStatus, RoomCategory aRoomCategory) {
         this.roomName = aName;
         this.status = aStatus;
         this.roomCategory = aRoomCategory;

@@ -1,6 +1,7 @@
 package at.fhv.se.hotel.domain.model.season;
 
 import at.fhv.se.hotel.domain.Generated;
+
 import java.time.LocalDate;
 import java.util.Objects;
 

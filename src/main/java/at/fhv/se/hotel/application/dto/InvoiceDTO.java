@@ -1,6 +1,5 @@
 package at.fhv.se.hotel.application.dto;
 
-
 import at.fhv.se.hotel.application.LocalDateAdapter;
 
 import javax.xml.bind.annotation.XmlElement;
