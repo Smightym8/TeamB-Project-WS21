@@ -11,7 +11,7 @@
 
 </head>
 
-<body id="Bookings">
+<body id="Bookings" onload="isGuestSelected()">
 
     <div layout:fragment="content">
 
@@ -129,14 +129,12 @@
                                 <div class="d-flex">
                                     <div class="form-floating me-1" style="width: 50%;">
                                         <input class="form-control" id="email" type="email" placeholder=" " required th:field="*{eMail}">
-                                        <label for="email">Email</label>
-                                        <div class="form-text">Email or Phone number is required</div>
+                                        <label for="email">Email<span style="color:red;">*</span></label>
                                         <div class="alert alert-warning" th:if="${#fields.hasErrors('eMail')}" th:errors="*{eMail}"></div>
                                     </div>
                                     <div class="form-floating ms-1" style="width: 50%;">
                                         <input class="form-control" id="phonenumber" type="tel" placeholder=" " required th:field="*{phoneNumber}">
-                                        <label for="phonenumber">Phone number</label>
-                                        <div class="form-text">Backendimplementierung fehlt !!!!!!!!!!!!!!!!!!!</div>
+                                        <label for="phonenumber">Phone number<span style="color:red;">*</span></label>
                                         <div class="alert alert-warning" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></div>
                                     </div>
                                 </div>
@@ -155,7 +153,7 @@
                                     <tr th:each="guest : ${guests}">
                                         <td class="align-middle">
                                             <div class="form-check">
-                                                <input class="form-check-input" name="guestId" type="radio" th:field="${bookingForm.guestId}" th:value="${guest.id}">
+                                                <input class="form-check-input" id="guestId" name="guestId" type="radio" th:field="${bookingForm.guestId}" th:value="${guest.id}">
                                             </div>
                                         </td>
                                         <td class="align-middle">
@@ -174,20 +172,20 @@
 
                         <div class="d-flex p-3 mt-4">
                             <div class="input-group me-1" style="width: 50%;">
-                                <span class="input-group-text col-5">Adults</span>
-                                <input class="form-control" type="number" id="amountOfAdults" name="amountOfAdults" th:field="${bookingForm.amountOfAdults}" value="1" th:min="1" th:required="required">
+                                <span class="input-group-text col-5">Adults [15-99 yrs.]</span>
+                                <input class="form-control" type="number" id="amountOfAdults" name="amountOfAdults" th:field="${bookingForm.amountOfAdults}" value="1" >
                                 <div class="form-text"> </div>
                             </div>
                             <div class="input-group ms-1" style="width: 50%;">
-                                <span class="input-group-text col-5">Children [Ages 0-17] </span>
-                                <input class="form-control" type="number" id="amountOfChildren" name="amountOfChildren" th:field="${bookingForm.amountOfChildren}" value="0" th:min="0" th:required="required">
+                                <span class="input-group-text col-5">Children [0-14 yrs.]</span>
+                                <input class="form-control" type="number" id="amountOfChildren" name="amountOfChildren" th:field="${bookingForm.amountOfChildren}" value="0" th:min="0" >
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="card-footer">
                     <button name="action" value="back" class="btn btn-primary" form="myform" type="submit" onclick="notRequired()">Back</button>
-                    <button name="action" value="next" class="btn btn-primary float-end" form="myform" type="submit" onclick="required()">Next</button>
+                    <button name="action" value="next" class="btn btn-primary float-end" form="myform" type="submit" >Next</button>
                 </div>
             </div>
         </div>
@@ -196,17 +194,38 @@
             let tableInitialized = 0;
 
             function required(){
-                document.getElementById("guest").required = true;
+                document.getElementById("guestId").required = true;
                 document.getElementById("amountOfAdults").required = true;
                 document.getElementById("amountOfAdults").min = "1";
             }
 
+            //When clicking back, inputs are not required
             function notRequired(){
-                document.getElementById("guest").required = false;
-                document.getElementById("amountOfAdults").required = false;
+                $(":radio").prop("required", false);
+
+                $("#gender").prop("required", false);
+                $("#firstname").prop("required", false);
+                $("#lastname").prop("required", false);
+                $("#streetname").prop("required", false);
+                $("#streetnumber").prop("required", false);
+                $("#zipcode").prop("required", false);
+                $("#city").prop("required", false);
+                $("#country").prop("required", false);
+                $("#email").prop("required", false);
+                $("#phonenumber").prop("required", false);
+                $("#birthdate").prop("required", false);
                 document.getElementById("amountOfAdults").min = "0";
             }
 
+            function isGuestSelected(){
+                //Check if one radio button is checked
+                let radioButtons = $('input[id=guestId]:checked');
+                if (radioButtons.length > 0){
+                    switchToChooseGuest();          //if one guest is selected, then show list of Guests
+                } else{
+                    switchToCreateGuest();          //else show guest form
+                }
+            }
 
             function switchToCreateGuest() {
                 let createGuestForm = $('#createGuestForm');
@@ -227,6 +246,7 @@
                     $("#email").prop("required", true);
                     $("#phonenumber").prop("required", true);
                     $("#birthdate").prop("required", true);
+                    document.getElementById("amountOfAdults").min = "1"
                 }
             }
 
@@ -249,6 +269,7 @@
 
                     chooseGuest.toggle();
                     $(":radio").prop("required", true);
+                    document.getElementById("amountOfAdults").min = "1"
 
                     if(tableInitialized === 0) {
                         $('#t1').DataTable({

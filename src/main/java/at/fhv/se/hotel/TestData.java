@@ -940,7 +940,7 @@ public class TestData implements ApplicationRunner {
                 10,
                 0,
                 "",
-                LocalDate.now().plusDays(2).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
+                LocalDate.now().minusDays(2).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
         );
         b11.addRoomCategory(singleRoom, 1);
         b11.addRoomCategory(doubleRoom, 3);
@@ -957,7 +957,7 @@ public class TestData implements ApplicationRunner {
                 3,
                 0,
                 "Vegetarian",
-                LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
+                LocalDate.now().minusDays(3).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
         );
         b12.addRoomCategory(singleRoom, 1);
         b12.addRoomCategory(doubleRoom, 1);
@@ -972,7 +972,7 @@ public class TestData implements ApplicationRunner {
                 1,
                 0,
                 "",
-                LocalDate.now().plusDays(5).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
+                LocalDate.now().minusDays(5).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
         );
         b13.addRoomCategory(suite, 1);
         this.bookingRepository.add(b13);
@@ -987,7 +987,7 @@ public class TestData implements ApplicationRunner {
                 1,
                 0,
                 "Vegan",
-                LocalDate.now().plusDays(10).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
+                LocalDate.now().minusDays(10).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
         );
         b14.addRoomCategory(juniorSuite, 1);
         this.bookingRepository.add(b14);
@@ -1001,7 +1001,7 @@ public class TestData implements ApplicationRunner {
                 2,
                 0,
                 "Vegan",
-                LocalDate.now().plusDays(15).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
+                LocalDate.now().minusDays(15).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
         );
         b15.addRoomCategory(doubleRoom, 1);
         this.bookingRepository.add(b15);
@@ -1015,7 +1015,7 @@ public class TestData implements ApplicationRunner {
                 4,
                 0,
                 "",
-                LocalDate.now().plusDays(20).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
+                LocalDate.now().minusDays(20).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
         );
         b16.addRoomCategory(doubleRoom, 2);
         this.bookingRepository.add(b16);
@@ -1029,7 +1029,7 @@ public class TestData implements ApplicationRunner {
                 3,
                 0,
                 "Vegan",
-                LocalDate.now().plusDays(30).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
+                LocalDate.now().minusDays(30).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
         );
         b17.addRoomCategory(singleRoom, 1);
         b17.addRoomCategory(doubleRoom, 2);

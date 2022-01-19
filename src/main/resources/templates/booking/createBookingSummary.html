@@ -23,8 +23,8 @@
                             <div class="progress-bar bg-success" role="progressbar" style="width: 100%">5/5</div>
                         </div>
                     </div>
-                    <div th:if="${isCreated}" class="alert alert-success" role="alert">
-                        Booking successfully created!
+                    <div th:if="${isCreated}" class="alert alert-success" role="alert"
+                         th:text="${'Booking #' + bookingSummary.bookingNumber + ' successfully created!'}">
                     </div>
                 </div>
                 <div class="card-body px-5 py-4">
@@ -135,7 +135,7 @@
                         <button name="action" value="create" class="btn btn-success float-end" form="myform" type="submit" onClick="amountValidation()">Create booking</button>
                     </div>
                     <div th:if="${isCreated}">
-                        <a class="btn btn-primary float-end" th:href="@{/}">Back to main menu</a>
+                        <a class="btn btn-primary float-end" th:href="@{/bookings}">Back to bookings</a>
                     </div>
                 </div>
             </div>

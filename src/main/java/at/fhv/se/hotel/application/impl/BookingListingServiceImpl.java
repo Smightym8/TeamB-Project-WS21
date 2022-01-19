@@ -34,6 +34,7 @@ public class BookingListingServiceImpl implements BookingListingService {
         for (Booking b : bookings) {
             BookingListingDTO dto = BookingListingDTO.builder()
                     .withId(b.getBookingId().id())
+                    .withBookingNumber(b.getBookingNumber())
                     .withGuestFirstName(b.getGuest().getName().firstName())
                     .withGuestLastName(b.getGuest().getName().lastName())
                     .withStreetName(b.getGuest().getAddress().streetName())

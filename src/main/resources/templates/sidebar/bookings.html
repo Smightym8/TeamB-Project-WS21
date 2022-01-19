@@ -31,6 +31,7 @@
                     <table id="t1" class="table stripe">
                         <thead>
                             <tr>
+                                <th class="col">Booking Number</th>
                                 <th class="col">Guest</th>
                                 <th class="col">Address</th>
                                 <th class="col">Check-in</th>
@@ -40,6 +41,7 @@
                         </thead>
                         <tbody>
                             <tr th:each="booking : ${bookings}" th:if="${booking.isActive}">
+                                <td class="align-middle text-nowrap" th:text="${booking.bookingNumber}"></td>
                                 <td class="align-middle">
                                     <span class="text-nowrap" th:text="${booking.guestFirstName} + ' '"></span>
                                     <span class="text-nowrap" th:text="${booking.guestLastName}"></span>

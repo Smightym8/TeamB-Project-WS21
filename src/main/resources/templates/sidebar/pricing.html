@@ -27,12 +27,10 @@
                     <table id="t1" class="table stripe">
                         <thead>
                             <tr>
-                                <th class="col">Season</th>
-                                <th class="col">Start date</th>
-                                <th class="col">End date</th>
-                                <th class="col-2">Single room</th>
-                                <th class="col-2">Double room</th>
-                                <th class="col-2">Luxury room</th>
+                                <th class="col-1">Season</th>
+                                <th class="col-1">Start date</th>
+                                <th class="col-1">End date</th>
+                                <th class="col-1 text-center" th:each="roomCategory : ${roomCategories}" th:text="${roomCategory.name}"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,7 +38,7 @@
                                 <td class="align-middle" th:text="${seasonWithPrices.seasonName}"></td>
                                 <td class="align-middle" th:text="${seasonWithPrices.startDate}"></td>
                                 <td class="align-middle" th:text="${seasonWithPrices.endDate}"></td>
-                                <td class="align-middle" th:each="price : ${seasonWithPrices.prices}" th:text="'€ ' + ${price}"></td>
+                                <td class="align-middle text-end" th:each="price : ${seasonWithPrices.prices}" th:text="'€ ' + ${price}"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -55,9 +53,6 @@
                 "scrollY": "74vh",
                 "lengthMenu": [ [10, 20, -1], [10, 20, "All"] ],
                 "pageLength": -1,
-                columnDefs: [
-                    { orderable: false, targets: [3,4,5]}
-                ]
             });
         </script>
     </div>

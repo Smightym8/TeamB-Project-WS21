@@ -172,6 +172,7 @@ public class BookingListingServiceTests {
         assertEquals(bookingsExpected.size(), bookingsActual.size());
         for(int i = 0; i < bookingsExpected.size(); i++) {
             assertEquals(bookingsExpected.get(i).getBookingId().id(), bookingsActual.get(i).id());
+            assertEquals(bookingsExpected.get(i).getBookingNumber(), bookingsActual.get(i).bookingNumber());
             assertEquals(bookingsExpected.get(i).getCheckInDate(), bookingsActual.get(i).checkInDate());
             assertEquals(bookingsExpected.get(i).getCheckOutDate(), bookingsActual.get(i).checkOutDate());
             assertEquals(bookingsExpected.get(i).isActive(), bookingsActual.get(i).isActive());

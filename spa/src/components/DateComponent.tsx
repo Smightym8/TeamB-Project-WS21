@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {Link} from "react-router-dom";
+import Popup from "./Popup";
+import {useNavigate} from "react-router-dom";
 
 interface Props {
     nextStep: () => void;
@@ -10,6 +11,8 @@ interface Props {
 const DateComponent = ({ nextStep, handleChange, values }: Props) => {
     const[checkInDateError, setCheckInDateError] = useState<string>("");
     const[checkOutDateError, setCheckOutDateError] = useState<string>("");
+    const[isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
+    const navigate = useNavigate();
 
     const handleSubmit = (): void => {
         let isValid: boolean = true;
@@ -18,6 +21,8 @@ const DateComponent = ({ nextStep, handleChange, values }: Props) => {
         let checkInDate: Date = new Date(values.checkInDate);
         let checkOutDate: Date = new Date(values.checkOutDate);
         let now: Date = new Date();
+        // Subtract one day so today can also be used as check in date
+        now.setDate(now.getDate() - 1);
 
         if(values.checkInDate === '') {
             isValid = false;
@@ -94,13 +99,19 @@ const DateComponent = ({ nextStep, handleChange, values }: Props) => {
                     </div>
                 </div>
                 <div className="card-footer">
-                    <Link to={'/'}>
-                        <button className="btn btn-primary" type="submit">Back home</button>
-                    </Link>
+                    <button className="btn btn-primary" onClick={() => setIsPopupOpen(true)}>Back home</button>
 
                     <button className="btn btn-primary float-end" onClick={() => handleSubmit()}>Next</button>
                 </div>
             </div>
+
+             <Popup
+                 content={"Do you want to go back to the home screen? All data will be lost."}
+                 handleClose={() => setIsPopupOpen(false)}
+                 handleAccept={() => navigate("/")}
+                 show={isPopupOpen}
+             />
+
         </div>
     );
 }

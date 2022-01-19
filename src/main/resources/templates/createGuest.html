@@ -98,14 +98,12 @@
                             <div class="d-flex">
                                 <div class="form-floating me-1" style="width: 50%;">
                                     <input class="form-control" id="email" type="email" placeholder=" " required th:field="*{eMail}">
-                                    <label for="email">Email</label>
-                                    <div class="form-text">Email or Phone number is required</div>
+                                    <label for="email">Email<span style="color:red;">*</span></label>
                                     <div class="alert alert-warning" th:if="${#fields.hasErrors('eMail')}" th:errors="*{eMail}"></div>
                                 </div>
                                 <div class="form-floating ms-1" style="width: 50%;">
                                     <input class="form-control" id="phone" type="tel" placeholder=" " required th:field="*{phoneNumber}">
-                                    <label for="phone">Phone number</label>
-                                    <div class="form-text">Backendimplementierung fehlt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</div>
+                                    <label for="phone">Phone number<span style="color:red;">*</span></label>
                                     <div class="alert alert-warning" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></div>
                                 </div>
                             </div>
@@ -113,7 +111,7 @@
                     </form>
                 </div>
                 <div class="card-footer">
-                    <button class="btn btn-primary" onclick="history.back()">Back</button>
+                    <a class="btn btn-primary" href="/">Back to home</a>
                     <div class="float-end">
                     <button type="reset" class="btn btn-danger">Reset</button>
                     <button type="submit" form="myform" class="btn btn-success">Create guest</button>
