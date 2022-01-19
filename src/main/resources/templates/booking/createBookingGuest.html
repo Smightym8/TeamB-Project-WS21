@@ -30,10 +30,10 @@
                     <br>
                     <ul class="nav nav-tabs card-header-tabs d-flex justify-content-between" id="myTab" role="tablist">
                         <li class="nav-item col text-center" role="presentation">
-                            <a class="btn btn-outline-dark active" data-bs-toggle="tab" href="#createGuestForm" role="tab" onclick="switchToCreateGuest()">New guest</a>
+                            <a class="btn btn-outline-dark active" data-bs-toggle="tab" href="#createGuestForm" role="tab" id="btnCreateGuest" onclick="switchToCreateGuest()">New guest</a>
                         </li>
                         <li class="nav-item col text-center" role="presentation">
-                            <a class="btn btn-outline-dark" data-bs-toggle="tab" href="#chooseGuest" role="tab" onclick="switchToChooseGuest()">Load guest</a>
+                            <a class="btn btn-outline-dark" data-bs-toggle="tab" href="#chooseGuest" role="tab" id="btnChooseGuest" onclick="switchToChooseGuest()">Load guest</a>
                         </li>
                     </ul>
                 </div>
@@ -216,6 +216,8 @@
                 let radioButtons = $('input[id=guestId]:checked');
                 if (radioButtons.length > 0){
                     switchToChooseGuest();          //if one guest is selected, then show list of Guests
+                    document.getElementById("btnCreateGuest").classList.remove("active");
+                    document.getElementById("btnChooseGuest").classList.add("active");
                 } else{
                     switchToCreateGuest();          //else show guest form
                 }
