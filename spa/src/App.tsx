@@ -12,8 +12,8 @@ function App() {
   return (
       <Router>
           <Routes>
-            <Route path='/' element={<HomeComponent />} />
-            <Route path='/booking' element={<BookingComponent />} />
+            <Route path='/spa' element={<HomeComponent />} />
+            <Route path='/spa/booking' element={<BookingComponent />} />
           </Routes>
       </Router>
   );
