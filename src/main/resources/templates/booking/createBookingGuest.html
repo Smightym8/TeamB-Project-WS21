@@ -193,12 +193,6 @@
         <script>
             let tableInitialized = 0;
 
-            function required(){
-                document.getElementById("guestId").required = true;
-                document.getElementById("amountOfAdults").required = true;
-                document.getElementById("amountOfAdults").min = "1";
-            }
-
             //When clicking back, inputs are not required
             function notRequired(){
                 $(":radio").prop("required", false);

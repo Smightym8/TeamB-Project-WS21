@@ -340,7 +340,7 @@ public class TestData implements ApplicationRunner {
         Room roomD9 = Room.create(new RoomName("D109"), RoomStatus.FREE, doubleRoom);
         this.roomRepository.add(roomD9);
 
-        Room roomD10 = Room.create(new RoomName("D100"), RoomStatus.FREE, doubleRoom);
+        Room roomD10 = Room.create(new RoomName("D110"), RoomStatus.FREE, doubleRoom);
         this.roomRepository.add(roomD10);
 
         Room roomD11 = Room.create(new RoomName("D111"), RoomStatus.FREE, doubleRoom);
