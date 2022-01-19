@@ -30,6 +30,11 @@ import java.util.List;
 public class HotelViewController {
 // TODO: change in html value to th:value, href to to:href
 
+    /* ----- SPA ----- */
+    private static final String SPA_URL = "/spa";
+    // Starts searching in templates
+    private static final String SPA_VIEW = "index";
+
     /* ----- Sidebar ----- */
     private static final String HOME_URL = "/";
     private static final String HOME_VIEW = "sidebar/home";
@@ -167,6 +172,12 @@ public class HotelViewController {
 
 
     /*--------------------------------------------------------------------------------------------------------------------*/
+
+    /*----- SPA -----*/
+    @GetMapping(SPA_URL)
+    public ModelAndView spa() {
+        return new ModelAndView(SPA_VIEW);
+    }
 
     /*----- Home -----*/
     @GetMapping(HOME_URL)
