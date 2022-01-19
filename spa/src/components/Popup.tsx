@@ -10,12 +10,11 @@ interface Props {
 
 const Popup = ({ content, handleClose, handleAccept, show }: Props) => {
     return (
-        <Modal show={show} centered >
-
-            <Modal.Body>
+        <Modal show={show} centered>
+            <Modal.Body className="popup bg-dark">
                 {content}
             </Modal.Body>
-            <Modal.Footer>
+            <Modal.Footer className="bg-dark">
                 <Button onClick={handleClose}>Close</Button>
                 <Button onClick={handleAccept}>Confirm</Button>
             </Modal.Footer>

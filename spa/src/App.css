@@ -149,3 +149,7 @@ section {
 ::-webkit-scrollbar-thumb:hover {
     background: #656565;
 }
+
+.popup {
+    color: white;
+}
