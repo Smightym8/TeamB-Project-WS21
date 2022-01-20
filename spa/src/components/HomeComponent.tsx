@@ -15,7 +15,7 @@ class HomeComponent extends Component<{}, {}> {
         return (
             <React.Fragment>
                 <section className="section2" id="home">
-                    <Link to={'/spa/booking'}>
+                    <Link to={'/booking'}>
                         <button className="section-heading btn btn-primary btn-lg fw-bold">BOOK NOW!</button>
                     </Link>
                     <div id="image-carousel" className="carousel slide carousel-fade h-100 overflow-hidden" data-bs-ride="carousel" data-bs-interval="6000" data-interval="true">

@@ -15,8 +15,8 @@ const Popup = ({ content, handleClose, handleAccept, show }: Props) => {
                 {content}
             </Modal.Body>
             <Modal.Footer className="bg-dark">
-                <Button onClick={handleClose}>Close</Button>
-                <Button onClick={handleAccept}>Confirm</Button>
+                <Button variant="danger" onClick={handleClose}>Close</Button>
+                <Button variant="success" onClick={handleAccept}>Confirm</Button>
             </Modal.Footer>
         </Modal>
     );
