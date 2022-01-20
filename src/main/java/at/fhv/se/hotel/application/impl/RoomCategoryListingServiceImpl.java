@@ -38,6 +38,7 @@ public class RoomCategoryListingServiceImpl implements RoomCategoryListingServic
             RoomCategoryDTO dto = RoomCategoryDTO.builder()
                     .withId(roomCategory.getRoomCategoryId().id())
                     .withName(roomCategory.getRoomCategoryName().name())
+                    .withDescription(roomCategory.getDescription().description())
                     .build();
 
             dtos.add(dto);
@@ -61,6 +62,7 @@ public class RoomCategoryListingServiceImpl implements RoomCategoryListingServic
         RoomCategoryDTO dto = RoomCategoryDTO.builder()
                 .withId(roomCategory.getRoomCategoryId().id())
                 .withName(roomCategory.getRoomCategoryName().name())
+                .withDescription(roomCategory.getDescription().description())
                 .build();
 
         return dto;

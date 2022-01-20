@@ -22,7 +22,7 @@
 
         <!-- One to one mapping to the description class -->
         <component name="description" class="at.fhv.se.hotel.domain.model.roomcategory.Description">
-            <property name="description" column="description" type="java.lang.String" />
+            <property name="description" column="description" type="java.lang.String" length="1000000" />
         </component>
     </class>
 </hibernate-mapping>

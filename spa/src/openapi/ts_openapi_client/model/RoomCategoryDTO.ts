@@ -17,4 +17,5 @@ export interface RoomCategoryDTO {
 
     name?: string;
 
+    description?: string;
 }

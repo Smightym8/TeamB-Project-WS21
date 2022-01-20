@@ -9,6 +9,7 @@ import java.util.Objects;
 public class RoomCategoryDTO {
     private String id;
     private String name;
+    private String description;
 
     public static Builder builder() {
         return new Builder();
@@ -23,6 +24,9 @@ public class RoomCategoryDTO {
     public String name() {
         return this.name;
     }
+
+    @JsonGetter
+    public String description() { return this.description; }
 
     public static class Builder {
         private final RoomCategoryDTO instance;
@@ -41,9 +45,16 @@ public class RoomCategoryDTO {
             return this;
         }
 
+        public Builder withDescription(String description) {
+            this.instance.description = description;
+            return this;
+        }
+
         public RoomCategoryDTO build() {
-            Objects.requireNonNull(this.instance.id, "id must be set in RoomCategory");
-            Objects.requireNonNull(this.instance.name, "name must be set in RoomCategory");
+            Objects.requireNonNull(this.instance.id, "id must be set in RoomCategoryDTO");
+            Objects.requireNonNull(this.instance.name, "name must be set in RoomCategoryDTO");
+            Objects.requireNonNull(this.instance.description, "description must be set in RoomCategoryDTO");
+
             return this.instance;
         }
     }

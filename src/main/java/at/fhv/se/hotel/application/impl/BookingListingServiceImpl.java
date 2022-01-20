@@ -19,7 +19,7 @@ import java.util.List;
 public class BookingListingServiceImpl implements BookingListingService {
 
     @Autowired
-    BookingRepository bookingRepository;
+    private BookingRepository bookingRepository;
 
     /**
      * This method provides all bookings.
@@ -34,6 +34,7 @@ public class BookingListingServiceImpl implements BookingListingService {
         for (Booking b : bookings) {
             BookingListingDTO dto = BookingListingDTO.builder()
                     .withId(b.getBookingId().id())
+                    .withBookingNumber(b.getBookingNumber())
                     .withGuestFirstName(b.getGuest().getName().firstName())
                     .withGuestLastName(b.getGuest().getName().lastName())
                     .withStreetName(b.getGuest().getAddress().streetName())

@@ -24,7 +24,7 @@ import java.util.Optional;
 public class ServiceListingServiceImpl implements ServiceListingService {
 
     @Autowired
-    ServiceRepository serviceRepository;
+    private ServiceRepository serviceRepository;
 
     /**
      * This method provides all services.

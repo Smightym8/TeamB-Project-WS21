@@ -22,10 +22,10 @@ import java.util.Map;
 public class StayDetailsServiceImpl implements StayDetailsService {
 
     @Autowired
-    StayRepository stayRepository;
+    private StayRepository stayRepository;
 
     @Autowired
-    RoomCategoryPriceRepository roomCategoryPriceRepository;
+    private RoomCategoryPriceRepository roomCategoryPriceRepository;
 
     /**
      * This method provides stay details by id.

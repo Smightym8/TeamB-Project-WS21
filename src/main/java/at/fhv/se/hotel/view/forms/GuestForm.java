@@ -1,60 +1,53 @@
 package at.fhv.se.hotel.view.forms;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
+
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
-// TODO: Please add some meaningful validation
 public class GuestForm {
     private String guestId;
 
-    @NotEmpty
-    @NotNull
+    @Pattern(regexp = "[a-zA-Z]+", message = "Please provide a valid firstname")
+    @Size(min = 2, max = 30, message = "Firstname has to be between 2 and 30 characters")
     private String firstName;
 
-    @NotEmpty
-    @NotNull
+    @Pattern(regexp = "[a-zA-Z]+", message = "Please provide a valid lastname")
+    @Size(min = 2, max = 30, message = "Lastname has to be between 2 and 30 characters")
     private String lastName;
 
     @NotEmpty
     @NotNull
     private String gender;
 
-    @Email
-    @NotEmpty
-    @NotNull
+    @Pattern(regexp = "^[a-zA-Z0-9_\\.\\+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-\\.]+$", message = "Please provide a valid email")
     private String eMail;
 
-    @NotEmpty
-    @NotNull
+    @Pattern(regexp = "\\+?\\(?\\d{2,4}\\)?[\\d\\s-]{3,}", message = "Please provide a valid phone-number")
     private String phoneNumber;
 
     @NotNull
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    @Past
+    @Past(message = "Must be in the past")
     private LocalDate birthDate;
 
-    @NotEmpty
-    @NotNull
+    @Pattern(regexp = "[a-zA-Z]+", message = "Please provide a valid street name")
+    @Size(min = 2, max = 30, message = "Street name has to be between 2 and 30 characters")
     private String streetName;
 
-    @NotEmpty
-    @NotNull
+    @Pattern(regexp = "^[0-9]+[a-z]?", message = "Please provide a valid street number")
+    @Size(min = 1, max = 6, message = "Street number has to be between 1 and 6 characters")
     private String streetNumber;
 
-    @NotEmpty
-    @NotNull
+    @Size(min = 2, max = 8, message = "Zip code has to be between 2 and 8 characters")
     private String zipCode;
 
-    @NotEmpty
-    @NotNull
+    @Pattern(regexp = "[a-zA-Z]+", message = "Please provide a valid city")
+    @Size(min = 2, max = 30, message = "City has to be between 2 and 30 characters")
     private String city;
 
-    @NotEmpty
-    @NotNull
+    @Pattern(regexp = "[a-zA-Z]+", message = "Please provide a valid country")
+    @Size(min = 5, max = 30, message = "Country has to be between 5 and 30 characters")
     private String country;
 
     @NotNull

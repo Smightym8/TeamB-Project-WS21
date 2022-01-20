@@ -50,6 +50,7 @@ public class RoomCategoryListingServiceTests {
         // then
         assertEquals(categoryExpected.getRoomCategoryId().id(), categoryActual.id());
         assertEquals(categoryExpected.getRoomCategoryName().name(), categoryActual.name());
+        assertEquals(categoryExpected.getDescription().description(), categoryActual.description());
     }
 
     @Test
@@ -87,6 +88,7 @@ public class RoomCategoryListingServiceTests {
         for(int i = 0; i < categoriesExpected.size(); i++) {
             assertEquals(categoriesExpected.get(i).getRoomCategoryId().id(), categoriesActual.get(i).id());
             assertEquals(categoriesExpected.get(i).getRoomCategoryName().name(), categoriesActual.get(i).name());
+            assertEquals(categoriesExpected.get(i).getDescription().description(), categoriesActual.get(i).description());
         }
     }
 

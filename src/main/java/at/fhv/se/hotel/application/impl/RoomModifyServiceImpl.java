@@ -19,7 +19,7 @@ import java.security.InvalidParameterException;
 @Component
 public class RoomModifyServiceImpl implements RoomModifyService {
     @Autowired
-    RoomRepository roomRepository;
+    private RoomRepository roomRepository;
 
     /**
      * This method updates the status of a room.

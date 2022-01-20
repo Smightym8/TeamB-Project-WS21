@@ -28,7 +28,12 @@ import java.util.List;
 
 @Controller
 public class HotelViewController {
-// TODO: change in html value to th:value, href to to:href
+// TODO: change in html value to th:value, href to th:href
+
+    /* ----- SPA ----- */
+    private static final String SPA_URL = "/spa";
+    // Starts searching in templates
+    private static final String SPA_VIEW = "index";
 
     /* ----- Sidebar ----- */
     private static final String HOME_URL = "/";
@@ -154,19 +159,24 @@ public class HotelViewController {
     private InvoiceDownloadService invoiceDownloadService;
 
     @Autowired
-    RoomListingService roomListingService;
+    private RoomListingService roomListingService;
 
     @Autowired
-    RoomModifyService roomModifyService;
+    private RoomModifyService roomModifyService;
 
     @Autowired
-    GuestModifyService guestModifyService;
+    private GuestModifyService guestModifyService;
 
     @Autowired
-    SeasonListingService seasonListingService;
-
+    private SeasonListingService seasonListingService;
 
     /*--------------------------------------------------------------------------------------------------------------------*/
+
+    /*----- SPA -----*/
+    @GetMapping(SPA_URL)
+    public ModelAndView spa() {
+        return new ModelAndView(SPA_VIEW);
+    }
 
     /*----- Home -----*/
     @GetMapping(HOME_URL)
@@ -230,7 +240,10 @@ public class HotelViewController {
     @GetMapping(PRICING_URL)
     public ModelAndView pricing(Model model) {
         List<SeasonWithPricesDTO> seasonsWithPrices = seasonListingService.allSeasonsWithPrices();
+        List<RoomCategoryDTO> roomCategories = roomCategoryListingService.allRoomCategories();
+
         model.addAttribute("seasonsWithPrices", seasonsWithPrices);
+        model.addAttribute("roomCategories", roomCategories);
 
         return new ModelAndView(PRICING_VIEW);
     }

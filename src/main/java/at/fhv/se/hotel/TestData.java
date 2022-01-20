@@ -60,35 +60,34 @@ public class TestData implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-
-/*----- Room Categories -----*/
+        /*----- Room Categories -----*/
         RoomCategory singleRoom = RoomCategory.create(roomCategoryRepository.nextIdentity(),
                 new RoomCategoryName("Single room"),
-                new Description("Single room")
+                new Description("You love spending the whole day in nature, exploring the mountain world extensively and are a fan of beautiful rooms with a casual stylish look, without wanting too much of a good thing. Our lovely double room Casual, with approx. 25 m², offers all the amenities that mountain enthusiasts like after a full day: comfortable box spring bed for a wonderful night's sleep, beautiful bathroom with large rain shower, mini-fridge (not filled), Nespresso machine, kettle, balcony and much more. The \"Casual\" can also be booked for single use.")
         );
         this.roomCategoryRepository.add(singleRoom);
 
         RoomCategory doubleRoom = RoomCategory.create(roomCategoryRepository.nextIdentity(),
                 new RoomCategoryName("Double room"),
-                new Description("Double room")
+                new Description("In our double room \"Stylish\" you will be pampered with a king-size box-spring bed. You will sleep pleasantly quiet and fully relax on holiday - like a prince and princess. With approx. 30 m², the two of you have plenty of space. You will enjoy using the stylish sofa or the recliner to relax, while your wife occupies the bathroom for evening styling. The balcony with its magnificent view will tempt you out in the morning to enjoy a private cup of Nespresso coffee together.")
         );
         this.roomCategoryRepository.add(doubleRoom);
 
-        RoomCategory luxuryRoom = RoomCategory.create(roomCategoryRepository.nextIdentity(),
-                new RoomCategoryName("Luxury room"),
-                new Description("Luxury room")
+        RoomCategory juniorSuite = RoomCategory.create(roomCategoryRepository.nextIdentity(),
+                new RoomCategoryName("Junior Suite"),
+                new Description("In our junior suite \"Lifestyle\", we placed great emphasis on the balance between the living and sleeping areas. Spaciously divided, the sofa bed corner invites you to relax during the day. In the box spring bed you will wake up the next morning fully rested and relaxed. The bathroom with integrated infrared cabin, two washbasins, separately integrated WC and a large rain shower is already a great feel-good bathroom. Flat screen TV, Nespresso machine, mini-fridge (not filled), kettle and many other small details are part of the standard equipment.")
         );
-        this.roomCategoryRepository.add(luxuryRoom);
+        this.roomCategoryRepository.add(juniorSuite);
 
         RoomCategory suite = RoomCategory.create(roomCategoryRepository.nextIdentity(),
                 new RoomCategoryName("Suite"),
-                new Description("Suite")
+                new Description("You will reside in our WOW suite as if in your own little flat. Step inside - you will be amazed. You will find everything you need for a perfect wellness holiday with lots of privacy and amenities that have been thought out down to the smallest detail. The separate living room with open fireplace is your personal retreat with a glass of good wine in the evening. In the bathroom you are welcome to use your own sauna and then cool off in the outdoor jacuzzi on the secluded terrace. If you have visitors, there is a guest toilet available.")
         );
         this.roomCategoryRepository.add(suite);
 
 
 
-/*----- Seasons -----*/
+        /*----- Seasons -----*/
         Season winterSeason1 = Season.create(
                 seasonRepository.nextIdentity(),
                 new SeasonName("Winter 2021/2022"),
@@ -139,8 +138,8 @@ public class TestData implements ApplicationRunner {
 
 
 
-/*----- Category Prices -----*/
-    // single
+        /*----- Category Prices -----*/
+        // single
         RoomCategoryPrice singleRoomWinterPrice1 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
                 winterSeason1,
@@ -166,7 +165,7 @@ public class TestData implements ApplicationRunner {
         this.roomCategoryPriceRepository.add(singleRoomSpringPrice1);
         this.roomCategoryPriceRepository.add(singleRoomSummerPrice1);
 
-    // double
+        // double
         RoomCategoryPrice doubleRoomWinterPrice1 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
                 winterSeason1,
@@ -193,25 +192,25 @@ public class TestData implements ApplicationRunner {
         this.roomCategoryPriceRepository.add(doubleRoomSummerPrice1);
 
 
-    // luxury
+        // luxury
         RoomCategoryPrice luxuryRoomWinterPrice1 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
                 winterSeason1,
-                luxuryRoom,
+                juniorSuite,
                 new BigDecimal("250")
         );
 
         RoomCategoryPrice luxuryRoomSpringPrice1 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
                 springSeason1,
-                luxuryRoom,
+                juniorSuite,
                 new BigDecimal("175")
         );
 
         RoomCategoryPrice luxuryRoomSummerPrice1 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
                 summerSeason1,
-                luxuryRoom,
+                juniorSuite,
                 new BigDecimal("225")
         );
 
@@ -248,7 +247,7 @@ public class TestData implements ApplicationRunner {
 
 
 
-/*----- Rooms -----*/
+        /*----- Rooms -----*/
         Room roomS0 = Room.create(new RoomName("S100"), RoomStatus.FREE, singleRoom);
         this.roomRepository.add(roomS0);
 
@@ -340,7 +339,7 @@ public class TestData implements ApplicationRunner {
         Room roomD9 = Room.create(new RoomName("D109"), RoomStatus.FREE, doubleRoom);
         this.roomRepository.add(roomD9);
 
-        Room roomD10 = Room.create(new RoomName("D100"), RoomStatus.FREE, doubleRoom);
+        Room roomD10 = Room.create(new RoomName("D110"), RoomStatus.FREE, doubleRoom);
         this.roomRepository.add(roomD10);
 
         Room roomD11 = Room.create(new RoomName("D111"), RoomStatus.FREE, doubleRoom);
@@ -371,22 +370,22 @@ public class TestData implements ApplicationRunner {
         this.roomRepository.add(roomD19);
 
 
-        Room roomL0 = Room.create(new RoomName("L200"), RoomStatus.FREE, luxuryRoom);
+        Room roomL0 = Room.create(new RoomName("L200"), RoomStatus.FREE, juniorSuite);
         this.roomRepository.add(roomL0);
 
-        Room roomL1 = Room.create(new RoomName("L201"), RoomStatus.FREE, luxuryRoom);
+        Room roomL1 = Room.create(new RoomName("L201"), RoomStatus.FREE, juniorSuite);
         this.roomRepository.add(roomL1);
 
-        Room roomL2 = Room.create(new RoomName("L202"), RoomStatus.FREE, luxuryRoom);
+        Room roomL2 = Room.create(new RoomName("L202"), RoomStatus.FREE, juniorSuite);
         this.roomRepository.add(roomL2);
 
-        Room roomL3 = Room.create(new RoomName("L203"), RoomStatus.FREE, luxuryRoom);
+        Room roomL3 = Room.create(new RoomName("L203"), RoomStatus.FREE, juniorSuite);
         this.roomRepository.add(roomL3);
 
-        Room roomL4 = Room.create(new RoomName("L204"), RoomStatus.FREE, luxuryRoom);
+        Room roomL4 = Room.create(new RoomName("L204"), RoomStatus.FREE, juniorSuite);
         this.roomRepository.add(roomL4);
 
-        Room roomL5 = Room.create(new RoomName("L205"), RoomStatus.FREE, luxuryRoom);
+        Room roomL5 = Room.create(new RoomName("L205"), RoomStatus.FREE, juniorSuite);
         this.roomRepository.add(roomL5);
 
 
@@ -403,7 +402,7 @@ public class TestData implements ApplicationRunner {
         this.roomRepository.add(roomSU3);
 
 
-/*----- Services -----*/
+        /*----- Services -----*/
         Service wlan = Service.create(serviceRepository.nextIdentity(), new ServiceName("WLAN"), new Price(new BigDecimal("5")));
         this.serviceRepository.add(wlan);
 
@@ -718,7 +717,7 @@ public class TestData implements ApplicationRunner {
 
 
 
-/*----- Bookings for Stay-----*/
+        /*----- Bookings for Stay-----*/
         Booking b1 = Booking.create(
                 LocalDate.now(),
                 LocalDate.now().plusDays(10),
@@ -884,7 +883,7 @@ public class TestData implements ApplicationRunner {
         roomD10.occupy();
         this.stayRepository.add(stay7);
 
-/*----- Bookings for Checkin-----*/
+        /*----- Bookings for Checkin-----*/
 
         Booking b8 = Booking.create(
                 LocalDate.now(),
@@ -899,7 +898,7 @@ public class TestData implements ApplicationRunner {
         );
         b8.addRoomCategory(singleRoom, 2);
         b8.addRoomCategory(doubleRoom, 2);
-        b8.addRoomCategory(luxuryRoom, 2);
+        b8.addRoomCategory(juniorSuite, 2);
         this.bookingRepository.add(b8);
 
         Booking b9 = Booking.create(
@@ -914,7 +913,7 @@ public class TestData implements ApplicationRunner {
                 LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "004"
         );
         b9.addRoomCategory(singleRoom, 2);
-        b9.addRoomCategory(luxuryRoom, 1);
+        b9.addRoomCategory(juniorSuite, 1);
         this.bookingRepository.add(b9);
 
         Booking b10 = Booking.create(
@@ -940,11 +939,11 @@ public class TestData implements ApplicationRunner {
                 10,
                 0,
                 "",
-                LocalDate.now().plusDays(2).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
+                LocalDate.now().minusDays(2).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
         );
         b11.addRoomCategory(singleRoom, 1);
         b11.addRoomCategory(doubleRoom, 3);
-        b11.addRoomCategory(luxuryRoom, 1);
+        b11.addRoomCategory(juniorSuite, 1);
         b11.addRoomCategory(suite, 2);
         this.bookingRepository.add(b11);
 
@@ -957,7 +956,7 @@ public class TestData implements ApplicationRunner {
                 3,
                 0,
                 "Vegetarian",
-                LocalDate.now().plusDays(3).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
+                LocalDate.now().minusDays(3).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
         );
         b12.addRoomCategory(singleRoom, 1);
         b12.addRoomCategory(doubleRoom, 1);
@@ -972,7 +971,7 @@ public class TestData implements ApplicationRunner {
                 1,
                 0,
                 "",
-                LocalDate.now().plusDays(5).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
+                LocalDate.now().minusDays(5).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
         );
         b13.addRoomCategory(suite, 1);
         this.bookingRepository.add(b13);
@@ -987,9 +986,9 @@ public class TestData implements ApplicationRunner {
                 1,
                 0,
                 "Vegan",
-                LocalDate.now().plusDays(10).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
+                LocalDate.now().minusDays(10).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
         );
-        b14.addRoomCategory(luxuryRoom, 1);
+        b14.addRoomCategory(juniorSuite, 1);
         this.bookingRepository.add(b14);
 
         Booking b15 = Booking.create(
@@ -1001,7 +1000,7 @@ public class TestData implements ApplicationRunner {
                 2,
                 0,
                 "Vegan",
-                LocalDate.now().plusDays(15).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
+                LocalDate.now().minusDays(15).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
         );
         b15.addRoomCategory(doubleRoom, 1);
         this.bookingRepository.add(b15);
@@ -1015,7 +1014,7 @@ public class TestData implements ApplicationRunner {
                 4,
                 0,
                 "",
-                LocalDate.now().plusDays(20).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
+                LocalDate.now().minusDays(20).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
         );
         b16.addRoomCategory(doubleRoom, 2);
         this.bookingRepository.add(b16);
@@ -1029,7 +1028,7 @@ public class TestData implements ApplicationRunner {
                 3,
                 0,
                 "Vegan",
-                LocalDate.now().plusDays(30).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
+                LocalDate.now().minusDays(30).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
         );
         b17.addRoomCategory(singleRoom, 1);
         b17.addRoomCategory(doubleRoom, 2);

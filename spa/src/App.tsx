@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Routes,
   Route
 } from "react-router-dom";
@@ -8,6 +8,7 @@ import './App.css';
 import HomeComponent from "./components/HomeComponent";
 import BookingComponent from "./components/BookingComponent";
 
+// HashRouter
 function App() {
   return (
       <Router>

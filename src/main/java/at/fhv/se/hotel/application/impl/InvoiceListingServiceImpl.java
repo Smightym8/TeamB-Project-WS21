@@ -27,10 +27,10 @@ import java.util.Map;
 @Component
 public class InvoiceListingServiceImpl implements InvoiceListingService {
     @Autowired
-    InvoiceRepository invoiceRepository;
+    private InvoiceRepository invoiceRepository;
 
     @Autowired
-    RoomRepository roomRepository;
+    private RoomRepository roomRepository;
 
     /**
      * This method provides all invoices.

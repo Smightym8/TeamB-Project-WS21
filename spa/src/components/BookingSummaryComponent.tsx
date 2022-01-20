@@ -3,6 +3,7 @@ import BookingService from "../services/BookingService";
 import {BookingData} from "../openapi/ts_openapi_client/model/BookingData";
 import {useState} from "react";
 import {Link} from "react-router-dom";
+import Popup from "./Popup";
 
 interface Props {
     prevStep: () => void;
@@ -13,6 +14,7 @@ const BookingSummaryComponent = ({ prevStep, values }: Props) => {
     const [isBookingCreated, setIsBookingCreated] = useState<boolean>(false);
     const [bookingId, setBookingId] = useState<string>("");
     const [isError, setIsError] = useState<boolean>(false);
+    const[isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
 
     const {
         checkInDate, checkOutDate, roomCategoryIds, roomCategoryNames, roomCategoryAmounts, serviceIds,
@@ -74,6 +76,8 @@ const BookingSummaryComponent = ({ prevStep, values }: Props) => {
                 console.log(error);
                 setIsError(true);
         });
+
+        setIsPopupOpen(false);
     }
 
     const showProgressBar = () => {
@@ -130,7 +134,7 @@ const BookingSummaryComponent = ({ prevStep, values }: Props) => {
             return (
                 <div>
                     <button className="btn btn-primary" type="submit" onClick={() => prevStep()}>Back</button>
-                    <button className="btn btn-success float-end" type="submit" onClick={() => book()}>Book</button>
+                    <button className="btn btn-success float-end" type="submit" onClick={() => setIsPopupOpen(true)}>Book</button>
                 </div>
             );
         }
@@ -257,6 +261,14 @@ const BookingSummaryComponent = ({ prevStep, values }: Props) => {
                     { showNextButton() }
                 </div>
             </div>
+
+            <Popup
+                content={"Please confirm your booking."}
+                handleClose={() => setIsPopupOpen(false)}
+                handleAccept={() => book()}
+                show={isPopupOpen}
+            />
+
         </div>
     );
 }

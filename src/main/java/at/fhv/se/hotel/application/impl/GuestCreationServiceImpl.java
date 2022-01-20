@@ -18,7 +18,7 @@ import java.util.Locale;
 @Component
 public class GuestCreationServiceImpl implements GuestCreationService {
     @Autowired
-    GuestRepository guestRepository;
+    private GuestRepository guestRepository;
 
     /**
      * This method creates a new guest and saves the guest into the database.
