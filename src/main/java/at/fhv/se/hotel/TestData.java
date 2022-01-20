@@ -60,8 +60,7 @@ public class TestData implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-
-/*----- Room Categories -----*/
+        /*----- Room Categories -----*/
         RoomCategory singleRoom = RoomCategory.create(roomCategoryRepository.nextIdentity(),
                 new RoomCategoryName("Single room"),
                 new Description("You love spending the whole day in nature, exploring the mountain world extensively and are a fan of beautiful rooms with a casual stylish look, without wanting too much of a good thing. Our lovely double room Casual, with approx. 25 m², offers all the amenities that mountain enthusiasts like after a full day: comfortable box spring bed for a wonderful night's sleep, beautiful bathroom with large rain shower, mini-fridge (not filled), Nespresso machine, kettle, balcony and much more. The \"Casual\" can also be booked for single use.")
@@ -88,7 +87,7 @@ public class TestData implements ApplicationRunner {
 
 
 
-/*----- Seasons -----*/
+        /*----- Seasons -----*/
         Season winterSeason1 = Season.create(
                 seasonRepository.nextIdentity(),
                 new SeasonName("Winter 2021/2022"),
@@ -139,8 +138,8 @@ public class TestData implements ApplicationRunner {
 
 
 
-/*----- Category Prices -----*/
-    // single
+        /*----- Category Prices -----*/
+        // single
         RoomCategoryPrice singleRoomWinterPrice1 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
                 winterSeason1,
@@ -166,7 +165,7 @@ public class TestData implements ApplicationRunner {
         this.roomCategoryPriceRepository.add(singleRoomSpringPrice1);
         this.roomCategoryPriceRepository.add(singleRoomSummerPrice1);
 
-    // double
+        // double
         RoomCategoryPrice doubleRoomWinterPrice1 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
                 winterSeason1,
@@ -193,7 +192,7 @@ public class TestData implements ApplicationRunner {
         this.roomCategoryPriceRepository.add(doubleRoomSummerPrice1);
 
 
-    // luxury
+        // luxury
         RoomCategoryPrice luxuryRoomWinterPrice1 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
                 winterSeason1,
@@ -248,7 +247,7 @@ public class TestData implements ApplicationRunner {
 
 
 
-/*----- Rooms -----*/
+        /*----- Rooms -----*/
         Room roomS0 = Room.create(new RoomName("S100"), RoomStatus.FREE, singleRoom);
         this.roomRepository.add(roomS0);
 
@@ -403,7 +402,7 @@ public class TestData implements ApplicationRunner {
         this.roomRepository.add(roomSU3);
 
 
-/*----- Services -----*/
+        /*----- Services -----*/
         Service wlan = Service.create(serviceRepository.nextIdentity(), new ServiceName("WLAN"), new Price(new BigDecimal("5")));
         this.serviceRepository.add(wlan);
 
@@ -718,7 +717,7 @@ public class TestData implements ApplicationRunner {
 
 
 
-/*----- Bookings for Stay-----*/
+        /*----- Bookings for Stay-----*/
         Booking b1 = Booking.create(
                 LocalDate.now(),
                 LocalDate.now().plusDays(10),
@@ -884,7 +883,7 @@ public class TestData implements ApplicationRunner {
         roomD10.occupy();
         this.stayRepository.add(stay7);
 
-/*----- Bookings for Checkin-----*/
+        /*----- Bookings for Checkin-----*/
 
         Booking b8 = Booking.create(
                 LocalDate.now(),
