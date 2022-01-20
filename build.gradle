@@ -26,6 +26,15 @@ jacocoTestReport {
         csv.enabled false
         html.destination file("${buildDir}/jacocoHtml")
     }
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    "at/fhv/se/hotel/HotelApplication.class",
+                    "at/fhv/se/hotel/TestData.class"
+            ])
+        }))
+    }
 }
 
 dependencies {
