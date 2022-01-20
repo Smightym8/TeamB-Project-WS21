@@ -144,6 +144,10 @@ const BookingSummaryComponent = ({ prevStep, values }: Props) => {
         width: "25%"
     };
 
+    const tableInfoStyle = {
+        color: "white"
+    };
+
     const tableStyle = {
         border: "hidden"
     };
@@ -176,7 +180,7 @@ const BookingSummaryComponent = ({ prevStep, values }: Props) => {
                         <div className="d-flex justify-content-between">
                             <div style={guestInformationStyle}>
                                 <p className="h5">Booking</p>
-                                <table>
+                                <table style={tableInfoStyle}>
                                     <tbody>
                                     <tr>
                                         <td>Check-in:</td>
@@ -198,7 +202,7 @@ const BookingSummaryComponent = ({ prevStep, values }: Props) => {
                             </div>
                             <div style={guestInformationStyle}>
                                 <p className="h5">Guest</p>
-                                <table>
+                                <table style={tableInfoStyle}>
                                     <tbody>
                                     <tr>
                                         <td> {firstName} {lastName} </td>
