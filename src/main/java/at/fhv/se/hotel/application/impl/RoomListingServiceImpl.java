@@ -23,7 +23,7 @@ import java.util.List;
 @Component
 public class RoomListingServiceImpl implements RoomListingService {
     @Autowired
-    RoomRepository roomRepository;
+    private RoomRepository roomRepository;
 
     /**
      * This method provides all rooms.

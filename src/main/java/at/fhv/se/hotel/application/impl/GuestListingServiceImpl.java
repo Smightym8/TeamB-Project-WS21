@@ -24,7 +24,7 @@ import java.util.List;
 public class GuestListingServiceImpl implements GuestListingService {
 
     @Autowired
-    GuestRepository guestRepository;
+    private GuestRepository guestRepository;
 
     /**
      * This method provides all guests.

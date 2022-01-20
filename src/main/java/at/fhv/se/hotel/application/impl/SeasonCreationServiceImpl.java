@@ -22,13 +22,13 @@ import java.time.LocalDate;
 @Component
 public class SeasonCreationServiceImpl implements SeasonCreationService {
     @Autowired
-    SeasonRepository seasonRepository;
+    private SeasonRepository seasonRepository;
 
     @Autowired
-    RoomCategoryRepository roomCategoryRepository;
+    private RoomCategoryRepository roomCategoryRepository;
 
     @Autowired
-    RoomCategoryPriceRepository roomCategoryPriceRepository;
+    private RoomCategoryPriceRepository roomCategoryPriceRepository;
 
     /**
      * This method creates a new season and saves the season and the seasonal prices into the database.

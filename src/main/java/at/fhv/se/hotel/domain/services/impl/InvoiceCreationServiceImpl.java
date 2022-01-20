@@ -32,16 +32,16 @@ public class InvoiceCreationServiceImpl implements InvoiceCreationService {
     private static final BigDecimal valueAddedTaxPercentage = new BigDecimal("0.10");
 
     @Autowired
-    InvoiceRepository invoiceRepository;
+    private InvoiceRepository invoiceRepository;
 
     @Autowired
-    RoomCategoryPriceService roomCategoryPriceService;
+    private RoomCategoryPriceService roomCategoryPriceService;
 
     @Autowired
-    SeasonRepository seasonRepository;
+    private SeasonRepository seasonRepository;
 
     @Autowired
-    RoomRepository roomRepository;
+    private RoomRepository roomRepository;
 
     @Override
     public Invoice createInvoice(Stay stay, List<String> roomNames, String action) throws SeasonNotFoundException, RoomNotFoundException {
