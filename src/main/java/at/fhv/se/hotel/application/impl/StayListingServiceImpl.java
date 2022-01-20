@@ -18,7 +18,7 @@ import java.util.List;
 public class StayListingServiceImpl implements StayListingService {
 
     @Autowired
-    StayRepository stayRepository;
+    private StayRepository stayRepository;
 
     /**
      * This method provides all stays.

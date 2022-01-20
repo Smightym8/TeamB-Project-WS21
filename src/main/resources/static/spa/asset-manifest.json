@@ -1,0 +1,34 @@
+{
+  "files": {
+    "main.css": "/spa/static/css/main.e1f4aea6.css",
+    "main.js": "/spa/static/js/main.49c236da.js",
+    "static/js/787.ce76ad8f.chunk.js": "/spa/static/js/787.ce76ad8f.chunk.js",
+    "static/media/apartment1.jpg": "/spa/static/media/apartment1.0690da78a4a812b114b3.jpg",
+    "static/media/hotel.jpg": "/spa/static/media/hotel.cd575232b0d416885696.jpg",
+    "static/media/pool.jpg": "/spa/static/media/pool.ef1ca9e171fbd785e32e.jpg",
+    "static/media/room.jpg": "/spa/static/media/room.667eee0e05e6a52ec73e.jpg",
+    "static/media/sauna.jpg": "/spa/static/media/sauna.441b6edef98764ebce9e.jpg",
+    "static/media/apartment2.jpg": "/spa/static/media/apartment2.2f0e45d2f762ae0fd610.jpg",
+    "static/media/thomas.jpg": "/spa/static/media/thomas.6d2c43f778a63a166392.jpg",
+    "static/media/SS02.jpg": "/spa/static/media/SS02.c505ba5e72525db16a30.jpg",
+    "static/media/JS01.jpg": "/spa/static/media/JS01.7f36b9ea3f639219581c.jpg",
+    "static/media/DR02.jpg": "/spa/static/media/DR02.d91c5b3582b752bd9763.jpg",
+    "static/media/SR02.jpg": "/spa/static/media/SR02.df674006dc78ce0019c3.jpg",
+    "static/media/SR01.jpg": "/spa/static/media/SR01.ead7306f45f2e8f59aa9.jpg",
+    "static/media/JS02.jpg": "/spa/static/media/JS02.da7abe9bd4f31fc9b665.jpg",
+    "static/media/SS01.jpg": "/spa/static/media/SS01.b889af97665275b90924.jpg",
+    "static/media/DR01.jpg": "/spa/static/media/DR01.640325b654f5c4e22d05.jpg",
+    "static/media/DR03.jpg": "/spa/static/media/DR03.07dd6962a73b2bb52401.jpg",
+    "static/media/SR03.jpg": "/spa/static/media/SR03.8c9c7264a655e7c45c85.jpg",
+    "static/media/SS03.jpg": "/spa/static/media/SS03.c063a752b4773122dba0.jpg",
+    "static/media/JS03.jpg": "/spa/static/media/JS03.89b49649d0ecd282ff49.jpg",
+    "index.html": "/spa/index.html",
+    "main.e1f4aea6.css.map": "/spa/static/css/main.e1f4aea6.css.map",
+    "main.49c236da.js.map": "/spa/static/js/main.49c236da.js.map",
+    "787.ce76ad8f.chunk.js.map": "/spa/static/js/787.ce76ad8f.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e1f4aea6.css",
+    "static/js/main.49c236da.js"
+  ]
+}

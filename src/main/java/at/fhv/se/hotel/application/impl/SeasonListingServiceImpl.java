@@ -23,13 +23,13 @@ import java.util.Optional;
 @Component
 public class SeasonListingServiceImpl implements SeasonListingService {
     @Autowired
-    SeasonRepository seasonRepository;
+    private SeasonRepository seasonRepository;
 
     @Autowired
-    RoomCategoryRepository roomCategoryRepository;
+    private RoomCategoryRepository roomCategoryRepository;
 
     @Autowired
-    RoomCategoryPriceRepository roomCategoryPriceRepository;
+    private RoomCategoryPriceRepository roomCategoryPriceRepository;
 
     /**
      * This method provides all seasons with prices.

@@ -19,7 +19,7 @@ import java.util.List;
 public class BookingListingServiceImpl implements BookingListingService {
 
     @Autowired
-    BookingRepository bookingRepository;
+    private BookingRepository bookingRepository;
 
     /**
      * This method provides all bookings.

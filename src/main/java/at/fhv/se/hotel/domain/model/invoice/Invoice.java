@@ -38,8 +38,6 @@ public class Invoice {
     private BigDecimal totalGrossAmount;
     private boolean isPaid;
 
-    // TODO: paymentMethod
-
     // Required by hibernate
     @SuppressWarnings("unused")
     @Generated

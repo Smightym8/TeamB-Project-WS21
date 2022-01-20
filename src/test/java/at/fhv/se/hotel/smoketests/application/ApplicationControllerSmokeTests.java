@@ -7,7 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-// TODO: Check that all services are tested
 @SpringBootTest
 public class ApplicationControllerSmokeTests {
     @Autowired

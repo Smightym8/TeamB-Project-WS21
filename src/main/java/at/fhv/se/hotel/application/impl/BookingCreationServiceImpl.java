@@ -33,16 +33,16 @@ import java.util.List;
 public class BookingCreationServiceImpl implements BookingCreationService {
 
     @Autowired
-    GuestRepository guestRepository;
+    private GuestRepository guestRepository;
 
     @Autowired
-    BookingRepository bookingRepository;
+    private BookingRepository bookingRepository;
 
     @Autowired
-    RoomCategoryRepository roomCategoryRepository;
+    private RoomCategoryRepository roomCategoryRepository;
 
     @Autowired
-    ServiceRepository serviceRepository;
+    private ServiceRepository serviceRepository;
 
     /**
      * This method creates a new booking and saves it into the database.

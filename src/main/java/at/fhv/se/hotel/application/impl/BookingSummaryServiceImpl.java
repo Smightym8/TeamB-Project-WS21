@@ -35,16 +35,16 @@ import java.util.Map;
 @Component
 public class BookingSummaryServiceImpl implements BookingSummaryService {
     @Autowired
-    BookingRepository bookingRepository;
+    private BookingRepository bookingRepository;
 
     @Autowired
-    GuestRepository guestRepository;
+    private GuestRepository guestRepository;
 
     @Autowired
-    RoomCategoryRepository roomCategoryRepository;
+    private RoomCategoryRepository roomCategoryRepository;
 
     @Autowired
-    ServiceRepository serviceRepository;
+    private ServiceRepository serviceRepository;
 
     /**
      * This method provides a summary of the booking.

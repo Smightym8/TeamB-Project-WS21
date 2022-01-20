@@ -29,19 +29,19 @@ public class HotelRestController {
     private static final String CREATE_BOOKING_URL = "/book";
 
     @Autowired
-    RoomCategoryListingService roomCategoryListingService;
+    private RoomCategoryListingService roomCategoryListingService;
 
     @Autowired
-    ServiceListingService serviceListingService;
+    private ServiceListingService serviceListingService;
 
     @Autowired
-    GuestCreationService guestCreationService;
+    private GuestCreationService guestCreationService;
 
     @Autowired
-    BookingCreationService bookingCreationService;
+    private BookingCreationService bookingCreationService;
 
     @Autowired
-    BookingSummaryService bookingSummaryService;
+    private BookingSummaryService bookingSummaryService;
 
     @GetMapping(BOOKING_ROOMCATEGORIES_URL)
     @ResponseBody

@@ -38,19 +38,19 @@ import java.util.Map;
 public class CheckOutServiceImpl implements CheckOutService {
 
     @Autowired
-    StayRepository stayRepository;
+    private StayRepository stayRepository;
 
     @Autowired
-    InvoiceRepository invoiceRepository;
+    private InvoiceRepository invoiceRepository;
 
     @Autowired
-    InvoiceCreationService invoiceCreationService;
+    private InvoiceCreationService invoiceCreationService;
 
     @Autowired
-    RoomRepository roomRepository;
+    private RoomRepository roomRepository;
 
     @Autowired
-    RoomCategoryRepository roomCategoryRepository;
+    private RoomCategoryRepository roomCategoryRepository;
 
     /**
      * This method creates an invoice for a stay.
@@ -131,7 +131,6 @@ public class CheckOutServiceImpl implements CheckOutService {
         return invoiceDTO;
     }
 
-    // TODO: Make this method private because it is only used in this class
     /**
      * This class saves the invoice into the database.
      * @param stayId contains the id of the stay.

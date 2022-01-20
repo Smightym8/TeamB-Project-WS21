@@ -38,10 +38,10 @@ public class InvoiceDownloadServiceImpl implements InvoiceDownloadService {
     private static final String INVOICE_PDF_TEMPLATE = "/invoice/xslt/invoice2pdf.xsl";
 
     @Autowired
-    InvoiceRepository invoiceRepository;
+    private InvoiceRepository invoiceRepository;
 
     @Autowired
-    ResourceLoader resourceLoader;
+    private ResourceLoader resourceLoader;
 
     /**
      * This method provides the functionality to download an invoice.

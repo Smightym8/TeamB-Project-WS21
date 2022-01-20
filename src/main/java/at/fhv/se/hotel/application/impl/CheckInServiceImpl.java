@@ -34,16 +34,16 @@ import java.util.Map;
 @Component
 public class CheckInServiceImpl implements CheckInService {
     @Autowired
-    BookingRepository bookingRepository;
+    private BookingRepository bookingRepository;
 
     @Autowired
-    RoomCategoryRepository roomCategoryRepository;
+    private RoomCategoryRepository roomCategoryRepository;
 
     @Autowired
-    RoomRepository roomRepository;
+    private RoomRepository roomRepository;
 
     @Autowired
-    StayRepository stayRepository;
+    private StayRepository stayRepository;
 
     /**
      * This method assigns rooms accordingly to the booked roomcategories.

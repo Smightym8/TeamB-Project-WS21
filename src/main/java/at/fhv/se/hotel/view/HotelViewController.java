@@ -28,7 +28,7 @@ import java.util.List;
 
 @Controller
 public class HotelViewController {
-// TODO: change in html value to th:value, href to to:href
+// TODO: change in html value to th:value, href to th:href
 
     /* ----- SPA ----- */
     private static final String SPA_URL = "/spa";
@@ -159,17 +159,16 @@ public class HotelViewController {
     private InvoiceDownloadService invoiceDownloadService;
 
     @Autowired
-    RoomListingService roomListingService;
+    private RoomListingService roomListingService;
 
     @Autowired
-    RoomModifyService roomModifyService;
+    private RoomModifyService roomModifyService;
 
     @Autowired
-    GuestModifyService guestModifyService;
+    private GuestModifyService guestModifyService;
 
     @Autowired
-    SeasonListingService seasonListingService;
-
+    private SeasonListingService seasonListingService;
 
     /*--------------------------------------------------------------------------------------------------------------------*/
 

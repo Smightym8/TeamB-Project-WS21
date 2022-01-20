@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @Component
 public class GuestModifyServiceImpl implements GuestModifyService {
     @Autowired
-    GuestRepository guestRepository;
+    private GuestRepository guestRepository;
 
     /**
      * This method provides the functionality to modify a guest.
