@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import Header from "./Header";
 import Popup from "./Popup";
 import {useNavigate} from "react-router-dom";
 
@@ -57,62 +58,67 @@ const DateComponent = ({ nextStep, handleChange, values }: Props) => {
     };
 
     return (
-        <div className="container h-100 p-5 ">
-            <div className="card w-75 h-50 m-auto">
-                <div className="card-header">
-                    <div className="d-flex justify-content-between align-items-center">
-                        <div>
-                            <span className="h4 align-middle">Create booking - dates</span>
-                        </div>
-                    </div>
-                    <br />
-                    <div className="progress">
-                        <div className="progress-bar" role="progressbar" style={progressBarStyle}>1/5</div>
-                    </div>
-                </div>
-                <div className="card-body overflow-auto">
-                    <div className="p-2 w-50 m-auto">
-                        <div className="p-3">
-                            <div className="input-group">
-                                <span className="input-group-text col">Check-in date</span>
-                                <input className="form-control"
-                                       type="date"
-                                       placeholder=" "
-                                       value={values.checkInDate}
-                                       onChange={(e) => handleChange('checkInDate', e.target.value)}
-                                />
+        <React.Fragment>
+            <Header/>
+            <div className="content">
+                <div className="container h-100 p-5 ">
+                    <div className="card w-75 h-50 m-auto">
+                        <div className="card-header">
+                            <div className="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span className="h4 align-middle">Create booking - dates</span>
+                                </div>
                             </div>
-                            <span className="text-danger">{checkInDateError}</span>
-                        </div>
-                        <div className="p-3">
-                            <div className="input-group">
-                                <span className="input-group-text col">Check-out date</span>
-                                <input className="form-control"
-                                       type="date"
-                                       placeholder=" "
-                                       value={values.checkOutDate}
-                                       onChange={(e) => handleChange('checkOutDate', e.target.value)}
-                                />
+                            <br />
+                            <div className="progress">
+                                <div className="progress-bar" role="progressbar" style={progressBarStyle}>1/5</div>
                             </div>
-                            <span className="text-danger">{checkOutDateError}</span>
                         </div>
-                    </div>
-                </div>
-                <div className="card-footer">
-                    <button className="btn btn-primary" onClick={() => setIsPopupOpen(true)}>Back home</button>
+                        <div className="card-body overflow-auto">
+                            <div className="p-2 w-50 m-auto">
+                                <div className="p-3">
+                                    <div className="input-group">
+                                        <span className="input-group-text col">Check-in date</span>
+                                        <input className="form-control"
+                                               type="date"
+                                               placeholder=" "
+                                               value={values.checkInDate}
+                                               onChange={(e) => handleChange('checkInDate', e.target.value)}
+                                        />
+                                    </div>
+                                    <span className="text-danger">{checkInDateError}</span>
+                                </div>
+                                <div className="p-3">
+                                    <div className="input-group">
+                                        <span className="input-group-text col">Check-out date</span>
+                                        <input className="form-control"
+                                               type="date"
+                                               placeholder=" "
+                                               value={values.checkOutDate}
+                                               onChange={(e) => handleChange('checkOutDate', e.target.value)}
+                                        />
+                                    </div>
+                                    <span className="text-danger">{checkOutDateError}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card-footer">
+                            <button className="btn btn-primary" onClick={() => setIsPopupOpen(true)}>Back home</button>
 
-                    <button className="btn btn-primary float-end" onClick={() => handleSubmit()}>Next</button>
+                            <button className="btn btn-primary float-end" onClick={() => handleSubmit()}>Next</button>
+                        </div>
+                    </div>
+
+                     <Popup
+                         content={"Do you want to go back to the home screen? All data will be lost."}
+                         handleClose={() => setIsPopupOpen(false)}
+                         handleAccept={() => navigate("/")}
+                         show={isPopupOpen}
+                     />
+
                 </div>
             </div>
-
-             <Popup
-                 content={"Do you want to go back to the home screen? All data will be lost."}
-                 handleClose={() => setIsPopupOpen(false)}
-                 handleAccept={() => navigate("/")}
-                 show={isPopupOpen}
-             />
-
-        </div>
+        </React.Fragment>
     );
 }
 

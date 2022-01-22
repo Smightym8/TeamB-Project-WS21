@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {ServiceDTO} from "../openapi/ts_openapi_client";
 import BookingService from "../services/BookingService";
+import Header from './Header';
 
 interface Props {
     prevStep: () => void;
@@ -69,70 +70,75 @@ const ServiceComponent = ({ prevStep, nextStep, handleChange, values }: Props) =
     };
 
     return (
-        <div className="container h-100 p-5 ">
-            <div className="card w-75 h-100 m-auto">
-                <div className="card-header">
-                    <div className="d-flex justify-content-between align-items-center">
-                        <div>
-                            <span className="h4 align-middle">Create booking - services</span>
+        <React.Fragment>
+            <Header/>
+            <div className="content">
+                <div className="container h-100 p-5 ">
+                    <div className="card w-75 h-100 m-auto">
+                        <div className="card-header">
+                            <div className="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span className="h4 align-middle">Create booking - services</span>
+                                </div>
+                            </div>
+                            <br />
+                            <div className="progress">
+                                <div className="progress-bar" role="progressbar" style={progressBarStyle}>3/5</div>
+                            </div>
+                        </div>
+                        <div className="card-body overflow-auto">
+                            <div className="px-3 h-100">
+                                <div className="h-75 overflow-auto">
+                                    <table id="t1" className="table table-hover table-dark">
+                                        <thead>
+                                        <tr>
+                                            <th className="col-1"/>
+                                            <th className="col-6">Name</th>
+                                            <th className="col-4">Price per day</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {
+                                            services?.map(
+                                                service =>
+                                                    <tr key={service.id}>
+                                                        <td className="align-middle">
+                                                            <div className="form-check">
+                                                                <input className="form-check-input"
+                                                                       type="checkbox"
+                                                                       value={service.id}
+                                                                       defaultChecked={values.serviceIds[services?.indexOf(service)]}
+                                                                       onChange={(e) => handleService(e.target.value, service.name, service.price, services?.indexOf(service))}
+                                                                />
+                                                            </div>
+                                                        </td>
+                                                        <td className="align-middle">{service.name}</td>
+                                                        <td className="align-middle">{service.price} €</td>
+                                                    </tr>
+                                            )
+                                        }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div className="pt-5 h-25">
+                                    <span>Additional information:</span>
+                                    <textarea
+                                        style={textAreaStyle}
+                                        value={values.additionalInformation}
+                                        onChange={(e) => handleChange('additionalInformation', e.target.value)}
+                                        rows={4}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card-footer">
+                            <button className="btn btn-primary" onClick={() => prevStep()}>Back</button>
+                            <button className="btn btn-primary float-end" onClick={() => handleNext()}>Next</button>
                         </div>
                     </div>
-                    <br />
-                    <div className="progress">
-                        <div className="progress-bar" role="progressbar" style={progressBarStyle}>3/5</div>
-                    </div>
-                </div>
-                <div className="card-body overflow-auto">
-                    <div className="px-3 h-100">
-                        <div className="h-75 overflow-auto">
-                            <table id="t1" className="table table-hover table-dark">
-                                <thead>
-                                <tr>
-                                    <th className="col-1"/>
-                                    <th className="col-6">Name</th>
-                                    <th className="col-4">Price per day</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {
-                                    services?.map(
-                                        service =>
-                                            <tr key={service.id}>
-                                                <td className="align-middle">
-                                                    <div className="form-check">
-                                                        <input className="form-check-input"
-                                                               type="checkbox"
-                                                               value={service.id}
-                                                               defaultChecked={values.serviceIds[services?.indexOf(service)]}
-                                                               onChange={(e) => handleService(e.target.value, service.name, service.price, services?.indexOf(service))}
-                                                        />
-                                                    </div>
-                                                </td>
-                                                <td className="align-middle">{service.name}</td>
-                                                <td className="align-middle">{service.price} €</td>
-                                            </tr>
-                                    )
-                                }
-                                </tbody>
-                            </table>
-                        </div>
-                        <div className="pt-5 h-25">
-                            <span>Additional information:</span>
-                            <textarea
-                                style={textAreaStyle}
-                                value={values.additionalInformation}
-                                onChange={(e) => handleChange('additionalInformation', e.target.value)}
-                                rows={4}
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div className="card-footer">
-                    <button className="btn btn-primary" onClick={() => prevStep()}>Back</button>
-                    <button className="btn btn-primary float-end" onClick={() => handleNext()}>Next</button>
                 </div>
             </div>
-        </div>
+        </React.Fragment>
     );
 }
 
