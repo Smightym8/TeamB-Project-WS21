@@ -29,7 +29,6 @@ import java.util.List;
 
 @Controller
 public class HotelViewController {
-// TODO: change in html value to th:value, href to th:href
 
     /* ----- Sidebar ----- */
     private static final String HOME_URL = "/";

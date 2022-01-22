@@ -7,6 +7,9 @@ import javax.validation.constraints.FutureOrPresent;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * This class represents a form to store the booking data that are entered in the UI
+ */
 public final class BookingForm {
     private String guestId;
     private List<String> roomCategoryIds;
