@@ -9,6 +9,7 @@ import org.apache.fop.apps.FOPException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -29,11 +30,6 @@ import java.util.List;
 @Controller
 public class HotelViewController {
 // TODO: change in html value to th:value, href to th:href
-
-    /* ----- SPA ----- */
-    private static final String SPA_URL = "/spa";
-    // Starts searching in templates
-    private static final String SPA_VIEW = "index";
 
     /* ----- Sidebar ----- */
     private static final String HOME_URL = "/";
@@ -172,12 +168,6 @@ public class HotelViewController {
 
     /*--------------------------------------------------------------------------------------------------------------------*/
 
-    /*----- SPA -----*/
-    @GetMapping(SPA_URL)
-    public ModelAndView spa() {
-        return new ModelAndView(SPA_VIEW);
-    }
-
     /*----- Home -----*/
     @GetMapping(HOME_URL)
     public ModelAndView home(Model model) {
@@ -236,7 +226,6 @@ public class HotelViewController {
     }
 
     /*----- Pricing -----*/
-    // TODO: Change View test
     @GetMapping(PRICING_URL)
     public ModelAndView pricing(Model model) {
         List<SeasonWithPricesDTO> seasonsWithPrices = seasonListingService.allSeasonsWithPrices();
@@ -508,7 +497,6 @@ public class HotelViewController {
     }
 
     @PostMapping(CREATE_BOOKING_URL)
-    // TODO: TEST
     public ModelAndView createBooking(
             @ModelAttribute("bookingForm") BookingForm bookingForm,
             @ModelAttribute("guestForm") GuestForm guestForm,
@@ -731,13 +719,12 @@ public class HotelViewController {
     /*----- Invoice Download -----*/
     @GetMapping(INVOICE_DOWNLOAD_URL)
     public ResponseEntity<ByteArrayResource> downloadInvoice(@PathVariable("invoiceNo") String invoiceNumber) {
-        ByteArrayResource resource = null;
+        ByteArrayResource resource;
 
         try {
             resource = invoiceDownloadService.download(invoiceNumber);
         } catch (InvoiceNotFoundException | FOPException | JAXBException | IOException | TransformerException e) {
-            // TODO: How to redirect?
-            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         return ResponseEntity.ok()
@@ -750,7 +737,6 @@ public class HotelViewController {
     }
 
     /*----- Invoice Details -----*/
-    // TODO: Test
     @GetMapping(INVOICE_DETAILS_URL)
     public ModelAndView invoiceDetails(@PathVariable("id") String id, Model model) {
         // Get InvoiceDTO

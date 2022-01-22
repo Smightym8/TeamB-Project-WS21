@@ -208,8 +208,10 @@ public class ViewApiTests {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("text/html;charset=UTF-8"))
                 .andExpect(view().name("sidebar/pricing"));
+
         // then
         Mockito.verify(seasonListingService, times(1)).allSeasonsWithPrices();
+        Mockito.verify(roomCategoryListingService, times(1)).allRoomCategories();
     }
 
     @Test

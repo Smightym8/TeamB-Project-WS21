@@ -20,6 +20,7 @@ import { Configuration } from '../configuration';
 
 
 export class HotelRestControllerApi {
+    // TODO: Change to server ip!!!!!!!
     protected basePath = 'http://localhost:8080';
     public defaultHeaders: Array<string> = [];
     public defaultExtraJQueryAjaxSettings?: JQueryAjaxSettings = undefined;
