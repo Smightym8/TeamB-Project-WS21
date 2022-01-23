@@ -91,14 +91,14 @@ public class TestData implements ApplicationRunner {
                 seasonRepository.nextIdentity(),
                 new SeasonName("Winter 2021/22"),
                 LocalDate.of(2021, 12, 1),
-                LocalDate.of(2022, 1, 31)
+                LocalDate.of(2022, 3, 31)
         );
         seasonRepository.add(winterSeason21_22);
 
         Season springSeason22 = Season.create(
                 seasonRepository.nextIdentity(),
                 new SeasonName("Spring 2022"),
-                LocalDate.of(2022, 2, 1),
+                LocalDate.of(2022, 4, 1),
                 LocalDate.of(2022, 5, 31)
         );
         seasonRepository.add(springSeason22);
@@ -124,14 +124,14 @@ public class TestData implements ApplicationRunner {
                 seasonRepository.nextIdentity(),
                 new SeasonName("Winter 2022/23"),
                 LocalDate.of(2022, 12, 1),
-                LocalDate.of(2023, 1, 31)
+                LocalDate.of(2023, 3, 31)
         );
         seasonRepository.add(winterSeason22_23);
 
         Season springSeason23 = Season.create(
                 seasonRepository.nextIdentity(),
                 new SeasonName("Spring 2023"),
-                LocalDate.of(2023, 2, 1),
+                LocalDate.of(2023, 4, 1),
                 LocalDate.of(2023, 5, 31)
         );
         seasonRepository.add(springSeason23);
@@ -156,7 +156,7 @@ public class TestData implements ApplicationRunner {
                 seasonRepository.nextIdentity(),
                 new SeasonName("Winter 2023/24"),
                 LocalDate.of(2023, 12, 1),
-                LocalDate.of(2024, 1, 31)
+                LocalDate.of(2024, 3, 31)
         );
         seasonRepository.add(winterSeason23_24);
 

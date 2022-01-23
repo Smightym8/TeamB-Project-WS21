@@ -29,9 +29,6 @@ public class InvoiceListingServiceImpl implements InvoiceListingService {
     @Autowired
     private InvoiceRepository invoiceRepository;
 
-    @Autowired
-    private RoomRepository roomRepository;
-
     /**
      * This method provides all invoices.
      * @return a list of InvoiceListingDTO objects.

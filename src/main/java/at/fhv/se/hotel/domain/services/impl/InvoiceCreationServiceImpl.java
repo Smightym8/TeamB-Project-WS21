@@ -99,6 +99,7 @@ public class InvoiceCreationServiceImpl implements InvoiceCreationService {
                     () -> new SeasonNotFoundException("Season for date " + finalTempDate + " not found.")
             );
 
+
             for (String name : roomNames) {
                 Room room = roomRepository.roomByName(new RoomName(name)).orElseThrow(
                         () -> new RoomNotFoundException("Room " + name + " not found.")
@@ -121,6 +122,7 @@ public class InvoiceCreationServiceImpl implements InvoiceCreationService {
 
             tempDate = tempDate.plusDays(1);
         }
+
 
         // Calculate discount
         BigDecimal discountInPercent = BigDecimal.valueOf(stay.getGuest().getDiscountInPercent());
