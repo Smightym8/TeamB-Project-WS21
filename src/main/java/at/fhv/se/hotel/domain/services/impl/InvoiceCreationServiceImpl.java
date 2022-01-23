@@ -160,7 +160,7 @@ public class InvoiceCreationServiceImpl implements InvoiceCreationService {
                 valueAddedTaxTotal.setScale(2, RoundingMode.CEILING),
                 totalNetAmountBeforeDiscount.setScale(2, RoundingMode.CEILING),
                 discountInPercent,
-                discountInEuro,
+                discountInEuro.setScale(2, RoundingMode.CEILING),
                 totalNetAmountAfterDiscount.setScale(2, RoundingMode.CEILING),
                 totalNetAmountAfterLocalTax.setScale(2, RoundingMode.CEILING),
                 totalGrossAmount.setScale(2, RoundingMode.CEILING)

@@ -46,12 +46,6 @@ public class CheckOutServiceImpl implements CheckOutService {
     @Autowired
     private InvoiceCreationService invoiceCreationService;
 
-    @Autowired
-    private RoomRepository roomRepository;
-
-    @Autowired
-    private RoomCategoryRepository roomCategoryRepository;
-
     /**
      * This method creates an invoice for a stay.
      * @param stayId contains the id of a stay.
@@ -88,16 +82,6 @@ public class CheckOutServiceImpl implements CheckOutService {
             }
         }
 
-        BigDecimal discountInEuro = new BigDecimal("0");
-
-        if (invoice.getStay().getGuest().getDiscountInPercent() > 0) {
-            discountInEuro = discountInEuro.add(
-                    invoice.getTotalNetAmountBeforeDiscount()
-                            .divide(BigDecimal.valueOf(100))
-                            .multiply(BigDecimal.valueOf(invoice.getStay().getGuest()
-                                    .getDiscountInPercent())).setScale(2, RoundingMode.CEILING));
-        }
-
         InvoiceDTO invoiceDTO = InvoiceDTO.builder()
                 .withStayId(stayId)
                 .withInvoiceNumber(invoice.getInvoiceNumber())
@@ -124,7 +108,7 @@ public class CheckOutServiceImpl implements CheckOutService {
                 .withTotalNetAmountAfterLocalTax(invoice.getTotalNetAmountAfterLocalTax())
                 .withTotalGrossAmount(invoice.getTotalGrossAmount())
                 .withDiscountInPercent(invoice.getStay().getGuest().getDiscountInPercent())
-                .withDiscountInEuro(discountInEuro)
+                .withDiscountInEuro(invoice.getDiscountInEuro())
                 .withCategoryNames(categoryNames)
                 .withCategoryPrices(categoryPrices)
                 .build();
