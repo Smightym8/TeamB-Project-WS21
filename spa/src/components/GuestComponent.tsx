@@ -43,12 +43,6 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
         let birthDateLimit: Date = new Date();
         birthDateLimit.setFullYear(birthDateLimit.getFullYear() - 18);
 
-        let validName : RegExp = /[a-zA-Z]+/;
-        let validStreetName: RegExp = /[a-zA-Z- ]+/;
-        let validStreetNumber: RegExp = /^[0-9]+[a-z]?/;
-        let validZipCode : RegExp = /[a-zA-Z\d]{2,8}/;
-        let validCity: RegExp = /[a-zA-Z]+/;
-        let validCountry: RegExp = /[a-zA-Z]+/;
         let validMail : RegExp = /^[a-zA-Z0-9_\.\+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-\.]+$/;
         let validPhoneNumber : RegExp = /\+?\(?\d{2,4}\)?[\d\s-]{3,}/;
 
@@ -60,57 +54,36 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
         if(values.firstName === '') {
             isValid = false;
             firstNameErrorMsg = 'Please provide your first name!';
-        } else if(!validName.test(values.firstName)) {
-            isValid = false;
-            firstNameErrorMsg = "Your first name must start with a letter!"
         }
 
         if(values.lastName === '') {
             isValid = false;
             lastNameErrorMsg = 'Please provide your last name!';
-        } else if(!validName.test(values.lastName)) {
-            isValid = false;
-            lastNameErrorMsg = "Your last name must start with a letter!"
         }
 
         if(values.streetName === '') {
             isValid = false;
             streetNameErrorMsg = 'Please provide your street name!';
-        } else if(!validStreetName.test(values.streetName)) {
-            isValid = false;
-            streetNameErrorMsg = 'Please provide a valid street name!'
         }
 
         if(values.streetNumber === '') {
             isValid = false;
             streetNumberErrorMsg = 'Please provide your street number!';
-        } else if(!validStreetNumber.test(values.streetNumber)) {
-            isValid = false;
-            streetNumberErrorMsg = 'Please provide a valid street number!';
         }
 
         if(values.zipCode === '') {
             isValid = false;
             zipCodeErrorMsg = 'Please provide your zip code!';
-        } else if(!validZipCode.test(values.zipCode)) {
-            isValid = false;
-            zipCodeErrorMsg = 'Please provide a valid zip code!';
         }
 
         if(values.city === '') {
             isValid = false;
             cityErrorMsg = 'Please provide your city!';
-        } else if(!validCity.test(values.city)) {
-            isValid = false;
-            cityErrorMsg = 'Please provide a valid city!';
         }
 
         if(values.country === '') {
             isValid = false;
             countryErrorMsg = 'Please provide your country!';
-        } else if(!validCountry.test(values.country)) {
-            isValid = false;
-            countryErrorMsg = 'Please provide a valid country!';
         }
 
         if(values.birthDate === '') {
