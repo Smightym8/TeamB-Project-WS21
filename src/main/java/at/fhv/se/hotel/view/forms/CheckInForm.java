@@ -2,7 +2,10 @@ package at.fhv.se.hotel.view.forms;
 
 import java.util.List;
 
-public class CheckInForm {
+/**
+ * This class represents a form to store the check in data that are entered in the UI
+ */
+public final class CheckInForm {
     private String bookingId;
     private List<String> roomNames;
 

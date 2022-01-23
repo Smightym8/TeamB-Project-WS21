@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {RoomCategoryDTO} from "../openapi/ts_openapi_client";
 import BookingService from "../services/BookingService";
+import Header from './Header';
 
 import SR01 from '../images/SR/SR01.jpg'
 import SR02 from '../images/SR/SR02.jpg'
@@ -95,74 +96,79 @@ const RoomCategoryComponent = ({ prevStep, nextStep, handleChange, values }: Pro
     };
 
     return (
-        <div className="container h-100 p-5 ">
-            <div className="card w-75 h-100 m-auto">
-                <div className="card-header">
-                    <div className="d-flex justify-content-between align-items-center">
-                            <div>
-                                <span className="h4 align-middle">Create booking - room categories</span>
+        <React.Fragment>
+            <Header/>
+            <div className="content">
+                <div className="container h-100 p-5 ">
+                    <div className="card w-75 h-100 m-auto">
+                        <div className="card-header">
+                            <div className="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <span className="h4 align-middle">Create booking - room categories</span>
+                                    </div>
+                                </div>
+                            <br />
+                            <div className="progress">
+                                <div className="progress-bar" role="progressbar" style={progressBarStyle}>2/5</div>
                             </div>
                         </div>
-                    <br />
-                    <div className="progress">
-                        <div className="progress-bar" role="progressbar" style={progressBarStyle}>2/5</div>
-                    </div>
-                </div>
-                <div className="card-body overflow-auto">
-                    <div className="px-2 h-100">
-                        <span className="text-danger">{categoryError}</span>
-                            {
-                                roomCategories?.map(roomCategory =>
-                                    <div className="d-flex py-4">
-                                        <div className="w-50 pe-2">
-                                            <div className="d-flex input-group" key={roomCategory.id}>
-                                                <span className="input-group-text col">{roomCategory.name}</span>
-                                                <input
-                                                    defaultValue={values.roomCategoryAmounts[roomCategories?.indexOf(roomCategory)]}
-                                                    onChange={(e) => handleAmount(parseInt(e.target.value), roomCategories?.indexOf(roomCategory))}
-                                                    className="form-control text-end maxlen"
-                                                    type="number"
-                                                    min="0"
-                                                    placeholder="0"
-                                                />
-                                            </div>
-                                            <div className="d-flex p-3">
-                                                <span>{roomCategory.description}</span>
-                                            </div>
-                                        </div>
-
-                                        <div className="w-50 ps-2">
-                                            <div id={"carousel" + roomCategories?.indexOf(roomCategory)} className="carousel slide carousel-fade overflow-hidden" data-bs-interval="false" data-interval="false">
-                                                <div className="carousel-inner h-100">
-                                                    <div className="carousel-item h-100 active">
-                                                        <img src={FIPath[roomCategories?.indexOf(roomCategory)]} className="d-block pic" alt="image"/>
+                        <div className="card-body overflow-auto">
+                            <div className="px-2 h-100">
+                                <span className="text-danger">{categoryError}</span>
+                                    {
+                                        roomCategories?.map(roomCategory =>
+                                            <div className="d-flex py-4">
+                                                <div className="w-50 pe-2">
+                                                    <div className="d-flex input-group" key={roomCategory.id}>
+                                                        <span className="input-group-text col">{roomCategory.name}</span>
+                                                        <input
+                                                            defaultValue={values.roomCategoryAmounts[roomCategories?.indexOf(roomCategory)]}
+                                                            onChange={(e) => handleAmount(parseInt(e.target.value), roomCategories?.indexOf(roomCategory))}
+                                                            className="form-control text-end maxlen"
+                                                            type="number"
+                                                            min="0"
+                                                            placeholder="0"
+                                                        />
                                                     </div>
-                                                    <div className="carousel-item h-100">
-                                                        <img src={SIPath[roomCategories?.indexOf(roomCategory)]} className="d-block pic" alt="image"/>
-                                                    </div>
-                                                    <div className="carousel-item h-100">
-                                                        <img src={TIPath[roomCategories?.indexOf(roomCategory)]} className="d-block pic" alt="image"/>
+                                                    <div className="d-flex p-3">
+                                                        <span>{roomCategory.description}</span>
                                                     </div>
                                                 </div>
-                                                <button className="carousel-control-prev" data-bs-target={"#carousel" + roomCategories?.indexOf(roomCategory)} data-bs-slide="prev">
-                                                    <span className="carousel-control-prev-icon"/>
-                                                </button>
-                                                <button className="carousel-control-next" data-bs-target={"#carousel" + roomCategories?.indexOf(roomCategory)} data-bs-slide="next">
-                                                    <span className="carousel-control-next-icon"/>
-                                                </button>
+
+                                                <div className="w-50 ps-2">
+                                                    <div id={"carousel" + roomCategories?.indexOf(roomCategory)} className="carousel slide carousel-fade overflow-hidden" data-bs-interval="false" data-interval="false">
+                                                        <div className="carousel-inner h-100">
+                                                            <div className="carousel-item h-100 active">
+                                                                <img src={FIPath[roomCategories?.indexOf(roomCategory)]} className="d-block pic" alt="image"/>
+                                                            </div>
+                                                            <div className="carousel-item h-100">
+                                                                <img src={SIPath[roomCategories?.indexOf(roomCategory)]} className="d-block pic" alt="image"/>
+                                                            </div>
+                                                            <div className="carousel-item h-100">
+                                                                <img src={TIPath[roomCategories?.indexOf(roomCategory)]} className="d-block pic" alt="image"/>
+                                                            </div>
+                                                        </div>
+                                                        <button className="carousel-control-prev" data-bs-target={"#carousel" + roomCategories?.indexOf(roomCategory)} data-bs-slide="prev">
+                                                            <span className="carousel-control-prev-icon"/>
+                                                        </button>
+                                                        <button className="carousel-control-next" data-bs-target={"#carousel" + roomCategories?.indexOf(roomCategory)} data-bs-slide="next">
+                                                            <span className="carousel-control-next-icon"/>
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                )
-                            }
-                    </div>
+                                        )
+                                    }
+                            </div>
+                        </div>
+                            <div className="card-footer">
+                                <button className="btn btn-primary" onClick={() => prevStep()}>Back</button>
+                                <button className="btn btn-primary float-end" onClick={() => handleNext()}>Next</button>
+                            </div>
+                        </div>
                 </div>
-                    <div className="card-footer">
-                        <button className="btn btn-primary" onClick={() => prevStep()}>Back</button>
-                        <button className="btn btn-primary float-end" onClick={() => handleNext()}>Next</button>
-                    </div>
-                </div>
-        </div>
+            </div>
+        </React.Fragment>
     );
 }
 

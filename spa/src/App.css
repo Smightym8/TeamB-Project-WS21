@@ -1,19 +1,21 @@
-/******************************
-    BASIC STYLES
-******************************/
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html, body {
+html, body, #root {
     overflow: hidden;
     height: 100%;
 }
 
-#root {
-    height: 100%;
+nav {
+    height: 7.5%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.content {
+    height: 92.5%;
     overflow-x: hidden;
     overflow-y: auto;
     perspective: 1px;
@@ -29,6 +31,10 @@ html, body {
     max-width: 60px !important;
 }
 
+.popup {
+    color: white;
+}
+
 .card {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
@@ -37,8 +43,14 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     -webkit-appearance: none !important;
     margin: 0 !important;
 }
+
 input[type=number] {
     -moz-appearance: textfield !important;
+}
+
+.pic {
+    min-height: 100%;
+    min-width: 100%;
 }
 
 .carousel-control-next, .carousel-control-prev {
@@ -78,25 +90,17 @@ section {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
     display: block;
-    transform: translate(-.5px) scale(1.6);
+    transform: translateZ(-.5px) scale(1.6);
     z-index: -1;
 }
 
 .section-heading {
     position: absolute;
-    top: 85%;
+    top: 90%;
     left: 50%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    transform: translate(-.3px) scale(1.3) translate(-39%, -39%);
+    transform: translateZ(-.3px) scale(1.3) translate(-39%, -39%);
     z-index: 3;
-}
-
-/******************************
-    IMAGE CAROUSEL
-******************************/
-.pic {
-    min-height: 100%;
-    min-width: 100%;
 }
 
 /******************************
@@ -143,8 +147,4 @@ section {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #656565;
-}
-
-.popup {
-    color: white;
 }
