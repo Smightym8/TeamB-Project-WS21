@@ -85,167 +85,373 @@ public class TestData implements ApplicationRunner {
         );
         this.roomCategoryRepository.add(suite);
 
-
-
         /*----- Seasons -----*/
-        Season winterSeason1 = Season.create(
+        /*----- First Year 21/22 -----*/
+        Season winterSeason21_22 = Season.create(
                 seasonRepository.nextIdentity(),
-                new SeasonName("Winter 2021/2022"),
+                new SeasonName("Winter 2021/22"),
                 LocalDate.of(2021, 12, 1),
-                LocalDate.of(2022, 1, 31)
+                LocalDate.of(2022, 3, 31)
         );
-        seasonRepository.add(winterSeason1);
+        seasonRepository.add(winterSeason21_22);
 
-        Season springSeason1 = Season.create(
+        Season springSeason22 = Season.create(
                 seasonRepository.nextIdentity(),
                 new SeasonName("Spring 2022"),
-                LocalDate.of(2022, 2, 1),
+                LocalDate.of(2022, 4, 1),
                 LocalDate.of(2022, 5, 31)
         );
-        seasonRepository.add(springSeason1);
+        seasonRepository.add(springSeason22);
 
-        Season summerSeason1 = Season.create(
+        Season summerSeason22 = Season.create(
                 seasonRepository.nextIdentity(),
                 new SeasonName("Summer 2022"),
                 LocalDate.of(2022, 6, 1),
+                LocalDate.of(2022, 9, 30)
+        );
+        seasonRepository.add(summerSeason22);
+
+        Season fallSeason22 = Season.create(
+                seasonRepository.nextIdentity(),
+                new SeasonName("Fall 2022"),
+                LocalDate.of(2022, 10, 1),
                 LocalDate.of(2022, 11, 30)
         );
-        seasonRepository.add(summerSeason1);
+        seasonRepository.add(fallSeason22);
 
-        Season winterSeason2 = Season.create(
+        /*----- Second Year 22/23 -----*/
+        Season winterSeason22_23 = Season.create(
                 seasonRepository.nextIdentity(),
-                new SeasonName("Winter 2022/2023"),
+                new SeasonName("Winter 2022/23"),
                 LocalDate.of(2022, 12, 1),
-                LocalDate.of(2023, 1, 31)
+                LocalDate.of(2023, 3, 31)
         );
-        seasonRepository.add(winterSeason2);
+        seasonRepository.add(winterSeason22_23);
 
-        Season springSeason2 = Season.create(
+        Season springSeason23 = Season.create(
                 seasonRepository.nextIdentity(),
                 new SeasonName("Spring 2023"),
-                LocalDate.of(2023, 2, 1),
+                LocalDate.of(2023, 4, 1),
                 LocalDate.of(2023, 5, 31)
         );
-        seasonRepository.add(springSeason2);
+        seasonRepository.add(springSeason23);
 
-        Season summerSeason2 = Season.create(
+        Season summerSeason23 = Season.create(
                 seasonRepository.nextIdentity(),
                 new SeasonName("Summer 2023"),
                 LocalDate.of(2023, 6, 1),
+                LocalDate.of(2023, 9, 30)
+        );
+        seasonRepository.add(summerSeason23);
+
+        Season fallSeason23 = Season.create(
+                seasonRepository.nextIdentity(),
+                new SeasonName("Fall 2023"),
+                LocalDate.of(2023, 10, 1),
                 LocalDate.of(2023, 11, 30)
         );
-        seasonRepository.add(summerSeason2);
+        seasonRepository.add(fallSeason23);
 
-
+        Season winterSeason23_24 = Season.create(
+                seasonRepository.nextIdentity(),
+                new SeasonName("Winter 2023/24"),
+                LocalDate.of(2023, 12, 1),
+                LocalDate.of(2024, 3, 31)
+        );
+        seasonRepository.add(winterSeason23_24);
 
         /*----- Category Prices -----*/
         // single
-        RoomCategoryPrice singleRoomWinterPrice1 = RoomCategoryPrice.create(
+        RoomCategoryPrice singleRoomWinter21_22 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
-                winterSeason1,
+                winterSeason21_22,
                 singleRoom,
                 new BigDecimal("50")
         );
+        roomCategoryPriceRepository.add(singleRoomWinter21_22);
 
-        RoomCategoryPrice singleRoomSpringPrice1 = RoomCategoryPrice.create(
+        RoomCategoryPrice singleRoomSpring22 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
-                springSeason1,
+                springSeason22,
                 singleRoom,
                 new BigDecimal("30")
         );
+        roomCategoryPriceRepository.add(singleRoomSpring22);
 
-        RoomCategoryPrice singleRoomSummerPrice1 = RoomCategoryPrice.create(
+        RoomCategoryPrice singleRoomSummer22 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
-                summerSeason1,
+                summerSeason22,
                 singleRoom,
                 new BigDecimal("40")
         );
+        roomCategoryPriceRepository.add(singleRoomSummer22);
 
-        this.roomCategoryPriceRepository.add(singleRoomWinterPrice1);
-        this.roomCategoryPriceRepository.add(singleRoomSpringPrice1);
-        this.roomCategoryPriceRepository.add(singleRoomSummerPrice1);
+        RoomCategoryPrice singleRoomFall22 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                fallSeason22,
+                singleRoom,
+                new BigDecimal("20")
+        );
+        roomCategoryPriceRepository.add(singleRoomFall22);
+
+        RoomCategoryPrice singleRoomWinter22_23 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                winterSeason22_23,
+                singleRoom,
+                new BigDecimal("50")
+        );
+        roomCategoryPriceRepository.add(singleRoomWinter22_23);
+
+        RoomCategoryPrice singleRoomSpring23 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                springSeason23,
+                singleRoom,
+                new BigDecimal("30")
+        );
+        roomCategoryPriceRepository.add(singleRoomSpring23);
+
+        RoomCategoryPrice singleRoomSummer23 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                summerSeason23,
+                singleRoom,
+                new BigDecimal("40")
+        );
+        roomCategoryPriceRepository.add(singleRoomSummer23);
+
+        RoomCategoryPrice singleRoomFall23 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                fallSeason23,
+                singleRoom,
+                new BigDecimal("20")
+        );
+        roomCategoryPriceRepository.add(singleRoomFall23);
+
+        RoomCategoryPrice singleRoomWinter23_24 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                winterSeason23_24,
+                singleRoom,
+                new BigDecimal("50")
+        );
+        roomCategoryPriceRepository.add(singleRoomWinter23_24);
 
         // double
-        RoomCategoryPrice doubleRoomWinterPrice1 = RoomCategoryPrice.create(
+        RoomCategoryPrice doubleRoomWinter21_22 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
-                winterSeason1,
+                winterSeason21_22,
                 doubleRoom,
                 new BigDecimal("90")
         );
+        roomCategoryPriceRepository.add(doubleRoomWinter21_22);
 
-        RoomCategoryPrice doubleRoomSpringPrice1 = RoomCategoryPrice.create(
+        RoomCategoryPrice doubleRoomSpring22 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
-                springSeason1,
+                springSeason22,
                 doubleRoom,
                 new BigDecimal("60")
         );
+        roomCategoryPriceRepository.add(doubleRoomSpring22);
 
-        RoomCategoryPrice doubleRoomSummerPrice1 = RoomCategoryPrice.create(
+        RoomCategoryPrice doubleRoomSummer22 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
-                summerSeason1,
+                summerSeason22,
                 doubleRoom,
                 new BigDecimal("80")
         );
+        roomCategoryPriceRepository.add(doubleRoomSummer22);
 
-        this.roomCategoryPriceRepository.add(doubleRoomWinterPrice1);
-        this.roomCategoryPriceRepository.add(doubleRoomSpringPrice1);
-        this.roomCategoryPriceRepository.add(doubleRoomSummerPrice1);
-
-
-        // luxury
-        RoomCategoryPrice luxuryRoomWinterPrice1 = RoomCategoryPrice.create(
+        RoomCategoryPrice doubleRoomFall22 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
-                winterSeason1,
-                juniorSuite,
-                new BigDecimal("250")
+                fallSeason22,
+                doubleRoom,
+                new BigDecimal("50")
         );
+        roomCategoryPriceRepository.add(doubleRoomFall22);
 
-        RoomCategoryPrice luxuryRoomSpringPrice1 = RoomCategoryPrice.create(
+        RoomCategoryPrice doubleRoomWinter22_23 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
-                springSeason1,
-                juniorSuite,
-                new BigDecimal("175")
+                winterSeason22_23,
+                doubleRoom,
+                new BigDecimal("90")
         );
+        roomCategoryPriceRepository.add(doubleRoomWinter22_23);
 
-        RoomCategoryPrice luxuryRoomSummerPrice1 = RoomCategoryPrice.create(
+        RoomCategoryPrice doubleRoomSpring23 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
-                summerSeason1,
-                juniorSuite,
-                new BigDecimal("225")
+                springSeason23,
+                doubleRoom,
+                new BigDecimal("60")
         );
+        roomCategoryPriceRepository.add(doubleRoomSpring23);
 
-        this.roomCategoryPriceRepository.add(luxuryRoomWinterPrice1);
-        this.roomCategoryPriceRepository.add(luxuryRoomSpringPrice1);
-        this.roomCategoryPriceRepository.add(luxuryRoomSummerPrice1);
+        RoomCategoryPrice doubleRoomSummer23 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                summerSeason23,
+                doubleRoom,
+                new BigDecimal("80")
+        );
+        roomCategoryPriceRepository.add(doubleRoomSummer23);
 
+        RoomCategoryPrice doubleRoomFall23 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                fallSeason23,
+                doubleRoom,
+                new BigDecimal("50")
+        );
+        roomCategoryPriceRepository.add(doubleRoomFall23);
+
+        RoomCategoryPrice doubleRoomWinter23_24 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                winterSeason23_24,
+                doubleRoom,
+                new BigDecimal("90")
+        );
+        roomCategoryPriceRepository.add(doubleRoomWinter23_24);
+
+        // junior suite
+        RoomCategoryPrice juniorSuiteWinter21_22 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                winterSeason21_22,
+                juniorSuite,
+                new BigDecimal("120")
+        );
+        roomCategoryPriceRepository.add(juniorSuiteWinter21_22);
+
+        RoomCategoryPrice juniorSuiteSpring22 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                springSeason22,
+                juniorSuite,
+                new BigDecimal("90")
+        );
+        roomCategoryPriceRepository.add(juniorSuiteSpring22);
+
+        RoomCategoryPrice juniorSuiteSummer22 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                summerSeason22,
+                juniorSuite,
+                new BigDecimal("110")
+        );
+        roomCategoryPriceRepository.add(juniorSuiteSummer22);
+
+        RoomCategoryPrice juniorSuiteFall22 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                fallSeason22,
+                juniorSuite,
+                new BigDecimal("80")
+        );
+        roomCategoryPriceRepository.add(juniorSuiteFall22);
+
+        RoomCategoryPrice juniorSuiteWinter22_23 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                winterSeason22_23,
+                juniorSuite,
+                new BigDecimal("120")
+        );
+        roomCategoryPriceRepository.add(juniorSuiteWinter22_23);
+
+        RoomCategoryPrice juniorSuiteSpring23 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                springSeason23,
+                juniorSuite,
+                new BigDecimal("90")
+        );
+        roomCategoryPriceRepository.add(juniorSuiteSpring23);
+
+        RoomCategoryPrice juniorSuiteSummer23 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                summerSeason23,
+                juniorSuite,
+                new BigDecimal("110")
+        );
+        roomCategoryPriceRepository.add(juniorSuiteSummer23);
+
+        RoomCategoryPrice juniorSuiteFall23 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                fallSeason23,
+                juniorSuite,
+                new BigDecimal("80")
+        );
+        roomCategoryPriceRepository.add(juniorSuiteFall23);
+
+        RoomCategoryPrice juniorSuiteWinter23_24 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                winterSeason23_24,
+                juniorSuite,
+                new BigDecimal("120")
+        );
+        roomCategoryPriceRepository.add(juniorSuiteWinter23_24);
 
         // suite
-        RoomCategoryPrice suiteWinterPrice1 = RoomCategoryPrice.create(
+        RoomCategoryPrice suiteWinter21_22 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
-                winterSeason1,
+                winterSeason21_22,
                 suite,
-                new BigDecimal("350")
+                new BigDecimal("150")
         );
+        roomCategoryPriceRepository.add(suiteWinter21_22);
 
-        RoomCategoryPrice suiteSpringPrice1 = RoomCategoryPrice.create(
+        RoomCategoryPrice suiteSpring22 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
-                springSeason1,
+                springSeason22,
                 suite,
-                new BigDecimal("275")
+                new BigDecimal("120")
         );
+        roomCategoryPriceRepository.add(suiteSpring22);
 
-        RoomCategoryPrice suiteSummerPrice1 = RoomCategoryPrice.create(
+        RoomCategoryPrice suiteSummer22 = RoomCategoryPrice.create(
                 roomCategoryPriceRepository.nextIdentity(),
-                summerSeason1,
+                summerSeason22,
                 suite,
-                new BigDecimal("325")
+                new BigDecimal("140")
         );
+        roomCategoryPriceRepository.add(suiteSummer22);
 
-        this.roomCategoryPriceRepository.add(suiteWinterPrice1);
-        this.roomCategoryPriceRepository.add(suiteSpringPrice1);
-        this.roomCategoryPriceRepository.add(suiteSummerPrice1);
+        RoomCategoryPrice suiteFall22 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                fallSeason22,
+                suite,
+                new BigDecimal("110")
+        );
+        roomCategoryPriceRepository.add(suiteFall22);
 
+        RoomCategoryPrice suiteWinter22_23 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                winterSeason22_23,
+                suite,
+                new BigDecimal("150")
+        );
+        roomCategoryPriceRepository.add(suiteWinter22_23);
 
+        RoomCategoryPrice suiteSpring23 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                springSeason23,
+                suite,
+                new BigDecimal("120")
+        );
+        roomCategoryPriceRepository.add(suiteSpring23);
+
+        RoomCategoryPrice suiteSummer23 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                summerSeason23,
+                suite,
+                new BigDecimal("140")
+        );
+        roomCategoryPriceRepository.add(suiteSummer23);
+
+        RoomCategoryPrice suiteFall23 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                fallSeason23,
+                suite,
+                new BigDecimal("110")
+        );
+        roomCategoryPriceRepository.add(suiteFall23);
+
+        RoomCategoryPrice suiteWinter23_24 = RoomCategoryPrice.create(
+                roomCategoryPriceRepository.nextIdentity(),
+                winterSeason23_24,
+                suite,
+                new BigDecimal("150")
+        );
+        roomCategoryPriceRepository.add(suiteWinter23_24);
 
         /*----- Rooms -----*/
         Room roomS110 = Room.create(new RoomName("S100"), RoomStatus.FREE, singleRoom);

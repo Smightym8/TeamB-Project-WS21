@@ -34,7 +34,7 @@ public final class GuestForm {
     @Past(message = "Must be in the past")
     private LocalDate birthDate;
 
-    @Pattern(regexp = "[a-zA-Z]+", message = "Please provide a valid street name")
+    @Pattern(regexp = "[a-zA-Z- ]+", message = "Please provide a valid street name")
     @Size(min = 2, max = 30, message = "Street name has to be between 2 and 30 characters")
     private String streetName;
 

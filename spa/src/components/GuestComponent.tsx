@@ -44,7 +44,7 @@ const GuestComponent = ({ prevStep, nextStep, handleChange, values }: Props) => 
         birthDateLimit.setFullYear(birthDateLimit.getFullYear() - 18);
 
         let validName : RegExp = /[a-zA-Z]+/;
-        let validStreetName: RegExp = /[a-zA-Z]+/;
+        let validStreetName: RegExp = /[a-zA-Z- ]+/;
         let validStreetNumber: RegExp = /^[0-9]+[a-z]?/;
         let validZipCode : RegExp = /[a-zA-Z\d]{2,8}/;
         let validCity: RegExp = /[a-zA-Z]+/;

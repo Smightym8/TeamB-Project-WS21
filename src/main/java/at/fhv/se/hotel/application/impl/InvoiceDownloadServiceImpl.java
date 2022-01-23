@@ -126,6 +126,7 @@ public class InvoiceDownloadServiceImpl implements InvoiceDownloadService {
 
         ByteArrayOutputStream xmlOutput = new ByteArrayOutputStream();
         marshaller.marshal(invoiceDTO, xmlOutput);
+
         byte[] o = xmlOutput.toByteArray();
         xmlOutput.close();
         ByteArrayInputStream inputStream = new ByteArrayInputStream(o);

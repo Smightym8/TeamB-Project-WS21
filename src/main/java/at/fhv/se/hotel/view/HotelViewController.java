@@ -168,12 +168,6 @@ public class HotelViewController {
     /*--------------------------------------------------------------------------------------------------------------------*/
 
     /*----- Home -----*/
-
-    /**
-     * This method provides the home view with bookings and stays.
-     * @param model contains the model which binds the data to the view
-     * @return HOME_VIEW contains the home view template file
-     */
     @GetMapping(HOME_URL)
     public ModelAndView home(Model model) {
         final List<BookingListingDTO> bookings = bookingListingService.allBookings();
