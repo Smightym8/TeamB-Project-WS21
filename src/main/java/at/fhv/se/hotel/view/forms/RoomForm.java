@@ -1,5 +1,8 @@
 package at.fhv.se.hotel.view.forms;
 
+/**
+ * This class represents a form to store the room data that are entered in the UI
+ */
 public final class RoomForm {
     private String roomName;
     private String categoryName;

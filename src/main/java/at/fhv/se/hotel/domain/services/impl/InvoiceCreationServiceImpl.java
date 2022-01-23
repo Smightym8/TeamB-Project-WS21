@@ -25,6 +25,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class represents the implementation of the interface {@link InvoiceCreationService}.
+ * It provides the functionality to create an invoice.
+ */
 @Component
 public class InvoiceCreationServiceImpl implements InvoiceCreationService {
 
@@ -43,6 +47,15 @@ public class InvoiceCreationServiceImpl implements InvoiceCreationService {
     @Autowired
     private RoomRepository roomRepository;
 
+    /**
+     * This method takes a stay, room names and an action to create an invoice or to directly check out the stay.
+     * @param stay contains the stay for the invoice
+     * @param roomNames contains the room names which will be billed
+     * @param action contains the action and determines whether only an invoice is created or the stay is also checked out
+     * @return the created invoice
+     * @throws SeasonNotFoundException if there is no season found to get the prices for the room category
+     * @throws RoomNotFoundException if a room can't be found
+     */
     @Override
     public Invoice createInvoice(Stay stay, List<String> roomNames, String action) throws SeasonNotFoundException, RoomNotFoundException {
         int todaysInvoicesAmount = invoiceRepository.amountOfInvoicesByDate(LocalDate.now()) + 1;
@@ -147,7 +160,7 @@ public class InvoiceCreationServiceImpl implements InvoiceCreationService {
                 valueAddedTaxTotal.setScale(2, RoundingMode.CEILING),
                 totalNetAmountBeforeDiscount.setScale(2, RoundingMode.CEILING),
                 discountInPercent,
-                discountInEuro,
+                discountInEuro.setScale(2, RoundingMode.CEILING),
                 totalNetAmountAfterDiscount.setScale(2, RoundingMode.CEILING),
                 totalNetAmountAfterLocalTax.setScale(2, RoundingMode.CEILING),
                 totalGrossAmount.setScale(2, RoundingMode.CEILING)

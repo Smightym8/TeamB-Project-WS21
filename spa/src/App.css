@@ -1,13 +1,10 @@
-/******************************
-    BASIC STYLES
-******************************/
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html, body {
+html, body, #root {
     overflow: hidden;
     height: 100%;
 }
@@ -17,7 +14,7 @@ nav {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-#root {
+.content {
     height: 92.5%;
     overflow-x: hidden;
     overflow-y: auto;
@@ -34,6 +31,10 @@ nav {
     max-width: 60px !important;
 }
 
+.popup {
+    color: white;
+}
+
 .card {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
@@ -42,8 +43,14 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     -webkit-appearance: none !important;
     margin: 0 !important;
 }
+
 input[type=number] {
     -moz-appearance: textfield !important;
+}
+
+.pic {
+    min-height: 100%;
+    min-width: 100%;
 }
 
 .carousel-control-next, .carousel-control-prev {
@@ -97,14 +104,6 @@ section {
 }
 
 /******************************
-    IMAGE CAROUSEL
-******************************/
-.pic {
-    min-height: 100%;
-    min-width: 100%;
-}
-
-/******************************
     DARK MODE
 ******************************/
 .card, .input-group-text {
@@ -148,8 +147,4 @@ section {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #656565;
-}
-
-.popup {
-    color: white;
 }

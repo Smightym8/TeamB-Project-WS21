@@ -5,7 +5,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 
-public class GuestForm {
+/**
+ * This class represents a form to store the guest data that are entered in the UI
+ */
+public final class GuestForm {
     private String guestId;
 
     @Pattern(regexp = "[a-zA-Z]+", message = "Please provide a valid firstname")

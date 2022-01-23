@@ -1,5 +1,6 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Link} from "react-router-dom";
+import Header from './Header';
 
 import hotel from '../images/hotel.jpg';
 import pool from '../images/pool.jpg';
@@ -9,16 +10,17 @@ import apartment2 from '../images/apartment2.jpg';
 import room from '../images/room.jpg';
 import thomas from '../images/thomas.jpg';
 
-class HomeComponent extends Component<{}, {}> {
+const HomeComponent = () => {
 
-    render() {
-        return (
-            <React.Fragment>
+    return (
+        <React.Fragment>
+            <Header/>
+            <div className="content">
                 <section className="section2" id="home">
                     <Link to={'/booking'}>
                         <button className="section-heading btn btn-primary btn-lg fw-bold">BOOK NOW!</button>
                     </Link>
-                    <div id="image-carousel" className="carousel slide carousel-fade h-100 overflow-hidden" data-bs-ride="carousel" data-bs-interval="6000" data-interval="true">
+                    <div id="image-carousel" className="carousel slide carousel-fade h-100 overflow-hidden" data-bs-ride="carousel" data-bs-interval="6000" data-interval="true" data-bs-pause="false">
                         <div className="carousel-inner h-100">
                             <div className="carousel-item h-100 active">
                                 <img src={hotel} className="d-block pic" alt="image"/>
@@ -68,9 +70,9 @@ class HomeComponent extends Component<{}, {}> {
                         </div>
                     </div>
                 </section>
-            </React.Fragment>
-        );
-    }
+            </div>
+        </React.Fragment>
+    );
 }
 
 export default HomeComponent;
