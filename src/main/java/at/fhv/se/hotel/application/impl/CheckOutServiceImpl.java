@@ -93,7 +93,8 @@ public class CheckOutServiceImpl implements CheckOutService {
         if (invoice.getStay().getGuest().getDiscountInPercent() > 0) {
             discountInEuro = discountInEuro.add(
                     invoice.getTotalNetAmountBeforeDiscount()
-                            .divide(BigDecimal.valueOf(invoice.getStay().getGuest()
+                            .divide(BigDecimal.valueOf(100))
+                            .multiply(BigDecimal.valueOf(invoice.getStay().getGuest()
                                     .getDiscountInPercent())).setScale(2, RoundingMode.CEILING));
         }
 

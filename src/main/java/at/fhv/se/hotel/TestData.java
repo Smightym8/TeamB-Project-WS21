@@ -248,158 +248,251 @@ public class TestData implements ApplicationRunner {
 
 
         /*----- Rooms -----*/
-        Room roomS0 = Room.create(new RoomName("S100"), RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(roomS0);
+        Room roomS110 = Room.create(new RoomName("S100"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS110);
 
-        Room roomS1 = Room.create(new RoomName("S101"), RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(roomS1);
+        Room roomS101 = Room.create(new RoomName("S101"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS101);
 
-        Room roomS2 = Room.create(new RoomName("S102"), RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(roomS2);
+        Room roomS102 = Room.create(new RoomName("S102"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS102);
 
-        Room roomS3 = Room.create(new RoomName("S103"), RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(roomS3);
+        Room roomS103 = Room.create(new RoomName("S103"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS103);
 
-        Room roomS4 = Room.create(new RoomName("S104"), RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(roomS4);
+        Room roomS104 = Room.create(new RoomName("S104"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS104);
 
-        Room roomS5 = Room.create(new RoomName("S105"), RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(roomS5);
+        Room roomS105 = Room.create(new RoomName("S105"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS105);
 
-        Room roomS6 = Room.create(new RoomName("S106"), RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(roomS6);
+        Room roomS201 = Room.create(new RoomName("S201"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS201);
 
-        Room roomS7 = Room.create(new RoomName("S107"), RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(roomS7);
+        Room roomS202 = Room.create(new RoomName("S202"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS202);
 
-        Room roomS8 = Room.create(new RoomName("S108"), RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(roomS8);
+        Room roomS203 = Room.create(new RoomName("S203"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS203);
 
-        Room roomS9 = Room.create(new RoomName("S109"), RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(roomS9);
+        Room roomS204 = Room.create(new RoomName("S204"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS204);
 
-        Room roomS10 = Room.create(new RoomName("S110"), RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(roomS10);
+        Room roomS205 = Room.create(new RoomName("S205"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS205);
 
-        Room roomS11 = Room.create(new RoomName("S111"), RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(roomS11);
+        Room roomS301 = Room.create(new RoomName("S301"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS301);
 
-        Room roomS12 = Room.create(new RoomName("S112"), RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(roomS12);
+        Room roomS302 = Room.create(new RoomName("S302"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS302);
 
-        Room roomS13 = Room.create(new RoomName("S113"), RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(roomS13);
+        Room roomS303 = Room.create(new RoomName("S303"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS303);
 
-        Room roomS14 = Room.create(new RoomName("S114"), RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(roomS14);
+        Room roomS304 = Room.create(new RoomName("S304"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS304);
 
-        Room roomS15 = Room.create(new RoomName("S115"), RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(roomS15);
+        Room roomS305 = Room.create(new RoomName("S305"), RoomStatus.FREE, singleRoom);
+        this.roomRepository.add(roomS305);
 
-        Room roomS16 = Room.create(new RoomName("S116"), RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(roomS16);
+        Room roomD106 = Room.create(new RoomName("D106"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD106);
 
-        Room roomS17 = Room.create(new RoomName("S117"), RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(roomS17);
+        Room roomD107 = Room.create(new RoomName("D107"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD107);
 
-        Room roomS18 = Room.create(new RoomName("S118"), RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(roomS18);
+        Room roomD108 = Room.create(new RoomName("D108"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD108);
 
-        Room roomS19 = Room.create(new RoomName("S119"), RoomStatus.FREE, singleRoom);
-        this.roomRepository.add(roomS19);
+        Room roomD109 = Room.create(new RoomName("D109"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD109);
 
+        Room roomD110 = Room.create(new RoomName("D110"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD110);
 
-        Room roomD0 = Room.create(new RoomName("D100"), RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(roomD0);
+        Room roomD111 = Room.create(new RoomName("D111"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD111);
 
-        Room roomD1 = Room.create(new RoomName("D101"), RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(roomD1);
+        Room roomD112 = Room.create(new RoomName("D112"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD112);
 
-        Room roomD2 = Room.create(new RoomName("D102"), RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(roomD2);
+        Room roomD113 = Room.create(new RoomName("D113"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD113);
 
-        Room roomD3 = Room.create(new RoomName("D103"), RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(roomD3);
+        Room roomD114 = Room.create(new RoomName("D114"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD114);
 
-        Room roomD4 = Room.create(new RoomName("D104"), RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(roomD4);
+        Room roomD115 = Room.create(new RoomName("D115"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD115);
 
-        Room roomD5 = Room.create(new RoomName("D105"), RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(roomD5);
+        Room roomD116 = Room.create(new RoomName("D116"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD116);
 
-        Room roomD6 = Room.create(new RoomName("D106"), RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(roomD6);
+        Room roomD117 = Room.create(new RoomName("D117"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD117);
 
-        Room roomD7 = Room.create(new RoomName("D107"), RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(roomD7);
+        Room roomD118 = Room.create(new RoomName("D118"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD118);
 
-        Room roomD8 = Room.create(new RoomName("D108"), RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(roomD8);
+        Room roomD119 = Room.create(new RoomName("D119"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD119);
 
-        Room roomD9 = Room.create(new RoomName("D109"), RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(roomD9);
+        Room roomD120 = Room.create(new RoomName("D120"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD120);
 
-        Room roomD10 = Room.create(new RoomName("D110"), RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(roomD10);
+        Room roomD206 = Room.create(new RoomName("D206"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD206);
 
-        Room roomD11 = Room.create(new RoomName("D111"), RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(roomD11);
+        Room roomD207 = Room.create(new RoomName("D207"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD207);
 
-        Room roomD12 = Room.create(new RoomName("D112"), RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(roomD12);
+        Room roomD208 = Room.create(new RoomName("D208"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD208);
 
-        Room roomD13 = Room.create(new RoomName("D113"), RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(roomD13);
+        Room roomD209 = Room.create(new RoomName("D209"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD209);
 
-        Room roomD14 = Room.create(new RoomName("D114"), RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(roomD14);
+        Room roomD210 = Room.create(new RoomName("D210"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD210);
 
-        Room roomD15 = Room.create(new RoomName("D115"), RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(roomD15);
+        Room roomD211 = Room.create(new RoomName("D211"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD211);
 
-        Room roomD16 = Room.create(new RoomName("D116"), RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(roomD16);
+        Room roomD212 = Room.create(new RoomName("D212"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD212);
 
-        Room roomD17 = Room.create(new RoomName("D117"), RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(roomD17);
+        Room roomD213 = Room.create(new RoomName("D213"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD213);
 
-        Room roomD18 = Room.create(new RoomName("D118"), RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(roomD18);
+        Room roomD214 = Room.create(new RoomName("D214"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD214);
 
-        Room roomD19 = Room.create(new RoomName("D119"), RoomStatus.FREE, doubleRoom);
-        this.roomRepository.add(roomD19);
+        Room roomD215 = Room.create(new RoomName("D215"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD215);
 
+        Room roomD216 = Room.create(new RoomName("D216"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD216);
 
-        Room roomL0 = Room.create(new RoomName("L200"), RoomStatus.FREE, juniorSuite);
-        this.roomRepository.add(roomL0);
+        Room roomD217 = Room.create(new RoomName("D217"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD217);
 
-        Room roomL1 = Room.create(new RoomName("L201"), RoomStatus.FREE, juniorSuite);
-        this.roomRepository.add(roomL1);
+        Room roomD218 = Room.create(new RoomName("D218"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD218);
 
-        Room roomL2 = Room.create(new RoomName("L202"), RoomStatus.FREE, juniorSuite);
-        this.roomRepository.add(roomL2);
+        Room roomD219 = Room.create(new RoomName("D219"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD219);
 
-        Room roomL3 = Room.create(new RoomName("L203"), RoomStatus.FREE, juniorSuite);
-        this.roomRepository.add(roomL3);
+        Room roomD220 = Room.create(new RoomName("D220"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD220);
 
-        Room roomL4 = Room.create(new RoomName("L204"), RoomStatus.FREE, juniorSuite);
-        this.roomRepository.add(roomL4);
+        Room roomD306 = Room.create(new RoomName("D306"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD306);
 
-        Room roomL5 = Room.create(new RoomName("L205"), RoomStatus.FREE, juniorSuite);
-        this.roomRepository.add(roomL5);
+        Room roomD307 = Room.create(new RoomName("D307"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD307);
 
+        Room roomD308 = Room.create(new RoomName("D308"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD308);
 
-        Room roomSU0 = Room.create(new RoomName("SU300"), RoomStatus.FREE, suite);
-        this.roomRepository.add(roomSU0);
+        Room roomD309 = Room.create(new RoomName("D309"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD309);
 
-        Room roomSU1 = Room.create(new RoomName("SU301"), RoomStatus.FREE, suite);
-        this.roomRepository.add(roomSU1);
+        Room roomD310 = Room.create(new RoomName("D310"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD310);
 
-        Room roomSU2 = Room.create(new RoomName("SU302"), RoomStatus.FREE, suite);
-        this.roomRepository.add(roomSU2);
+        Room roomD311 = Room.create(new RoomName("D311"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD311);
 
-        Room roomSU3 = Room.create(new RoomName("SU303"), RoomStatus.FREE, suite);
-        this.roomRepository.add(roomSU3);
+        Room roomD312 = Room.create(new RoomName("D312"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD312);
+
+        Room roomD313 = Room.create(new RoomName("D313"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD313);
+
+        Room roomD314 = Room.create(new RoomName("D314"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD314);
+
+        Room roomD315 = Room.create(new RoomName("D315"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD315);
+
+        Room roomD316 = Room.create(new RoomName("D316"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD316);
+
+        Room roomD317 = Room.create(new RoomName("D317"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD317);
+
+        Room roomD318 = Room.create(new RoomName("D318"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD318);
+
+        Room roomD319 = Room.create(new RoomName("D319"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD319);
+
+        Room roomD320 = Room.create(new RoomName("D320"), RoomStatus.FREE, doubleRoom);
+        this.roomRepository.add(roomD320);
+
+        Room roomJ401 = Room.create(new RoomName("J401"), RoomStatus.FREE, juniorSuite);
+        this.roomRepository.add(roomJ401);
+
+        Room roomJ402 = Room.create(new RoomName("J402"), RoomStatus.FREE, juniorSuite);
+        this.roomRepository.add(roomJ402);
+
+        Room roomJ403 = Room.create(new RoomName("J403"), RoomStatus.FREE, juniorSuite);
+        this.roomRepository.add(roomJ403);
+
+        Room roomJ404 = Room.create(new RoomName("J404"), RoomStatus.FREE, juniorSuite);
+        this.roomRepository.add(roomJ404);
+
+        Room roomJ405 = Room.create(new RoomName("J405"), RoomStatus.FREE, juniorSuite);
+        this.roomRepository.add(roomJ405);
+
+        Room roomJ406 = Room.create(new RoomName("J406"), RoomStatus.FREE, juniorSuite);
+        this.roomRepository.add(roomJ406);
+
+        Room roomJ407 = Room.create(new RoomName("J407"), RoomStatus.FREE, juniorSuite);
+        this.roomRepository.add(roomJ407);
+
+        Room roomJ408 = Room.create(new RoomName("J408"), RoomStatus.FREE, juniorSuite);
+        this.roomRepository.add(roomJ408);
+
+        Room roomJ409 = Room.create(new RoomName("J409"), RoomStatus.FREE, juniorSuite);
+        this.roomRepository.add(roomJ409);
+
+        Room roomJ410 = Room.create(new RoomName("J410"), RoomStatus.FREE, juniorSuite);
+        this.roomRepository.add(roomJ410);
+
+        Room roomJ411 = Room.create(new RoomName("J411"), RoomStatus.FREE, juniorSuite);
+        this.roomRepository.add(roomJ411);
+
+        Room roomJ412 = Room.create(new RoomName("J412"), RoomStatus.FREE, juniorSuite);
+        this.roomRepository.add(roomJ412);
+
+        Room roomJ413 = Room.create(new RoomName("J413"), RoomStatus.FREE, juniorSuite);
+        this.roomRepository.add(roomJ413);
+
+        Room roomJ414 = Room.create(new RoomName("J414"), RoomStatus.FREE, juniorSuite);
+        this.roomRepository.add(roomJ414);
+
+        Room roomJ415 = Room.create(new RoomName("J415"), RoomStatus.FREE, juniorSuite);
+        this.roomRepository.add(roomJ415);
+
+        Room roomSU415 = Room.create(new RoomName("SU415"), RoomStatus.FREE, suite);
+        this.roomRepository.add(roomSU415);
+
+        Room roomSU416 = Room.create(new RoomName("SU416"), RoomStatus.FREE, suite);
+        this.roomRepository.add(roomSU416);
+
+        Room roomSU417 = Room.create(new RoomName("SU417"), RoomStatus.FREE, suite);
+        this.roomRepository.add(roomSU417);
+
+        Room roomSU418 = Room.create(new RoomName("SU418"), RoomStatus.FREE, suite);
+        this.roomRepository.add(roomSU418);
+
+        Room roomSU419 = Room.create(new RoomName("SU419"), RoomStatus.FREE, suite);
+        this.roomRepository.add(roomSU419);
+
+        Room roomSU420 = Room.create(new RoomName("SU420"), RoomStatus.FREE, suite);
+        this.roomRepository.add(roomSU420);
 
 
         /*----- Services -----*/
@@ -434,7 +527,7 @@ public class TestData implements ApplicationRunner {
                 LocalDate.of(1997, 8, 27),
                 "+43 680 7994750",
                 "ali.cinar@gmail.at",
-                0,
+                20,
                 Collections.emptyList()
         );
         this.guestRepository.add(ali);
@@ -446,7 +539,7 @@ public class TestData implements ApplicationRunner {
                 LocalDate.of(1995, 9, 24),
                 "+43 650 7131945",
                 "michael.spiegel@gmx.at",
-                0,
+                20,
                 Collections.emptyList()
         );
         this.guestRepository.add(michael);
@@ -458,7 +551,7 @@ public class TestData implements ApplicationRunner {
                 LocalDate.of(1999, 1, 1),
                 "+43 660 2648080",
                 "johannes.moosbrugger@gmx.at",
-                0,
+                20,
                 Collections.emptyList()
         );
         this.guestRepository.add(johannes);
@@ -482,7 +575,7 @@ public class TestData implements ApplicationRunner {
                 LocalDate.of(1998, 8, 27),
                 "+43 676 4679464",
                 "dario.birbarmer@students.fhv.at",
-                0,
+                20,
                 Collections.emptyList()
         );
         this.guestRepository.add(dario);
@@ -494,7 +587,7 @@ public class TestData implements ApplicationRunner {
                 LocalDate.of(1999, 7, 7),
                 "+43 680 4589452",
                 "umut.caglayan@students.fhv.at",
-                0,
+                20,
                 Collections.emptyList()
         );
         this.guestRepository.add(umut);
@@ -586,7 +679,7 @@ public class TestData implements ApplicationRunner {
         Guest hellaWahnsinn = Guest.create(guestRepository.nextIdentity(),
                 new FullName("Hella", "Wahnsinn"),
                 Gender.MALE,
-                new Address("Bonygasse", "99", "InnerhÖtzendorf", "4152", "Austria"),
+                new Address("Bonygasse", "99", "Innerhötzendorf", "4152", "Austria"),
                 LocalDate.of(1975, 4, 24),
                 "+43 680 1593640",
                 "hella.wahnsinn@students.fhv.at",
@@ -715,6 +808,78 @@ public class TestData implements ApplicationRunner {
         );
         this.guestRepository.add(teddyBaer);
 
+        Guest lionelHausberger = Guest.create(guestRepository.nextIdentity(),
+                new FullName("Lionel", "Hausberger"),
+                Gender.MALE,
+                new Address("Hinterbergergasse", "8", "Ebreichsdorf", "6835", "Austria"),
+                LocalDate.of(1995, 2, 14),
+                "+43 759 5969731",
+                "lionel.hausberger@outlook.de",
+                0,
+                Collections.emptyList()
+        );
+        this.guestRepository.add(lionelHausberger);
+
+        Guest janKoch = Guest.create(guestRepository.nextIdentity(),
+                new FullName("Jan", "Koch"),
+                Gender.MALE,
+                new Address("Dünserstr", "5", "Friedberg", "9921", "Austria"),
+                LocalDate.of(1975, 6, 13),
+                "+43 634 3305560",
+                "jan.koch@gmail.com",
+                0,
+                Collections.emptyList()
+        );
+        this.guestRepository.add(janKoch);
+
+        Guest ameliaHahn = Guest.create(guestRepository.nextIdentity(),
+                new FullName("Amelia", "Hahn"),
+                Gender.FEMALE,
+                new Address("Schinaglstraße", "6", "Lienz", "3818", "Austria"),
+                LocalDate.of(1941, 1, 1),
+                "+43 179 4031018",
+                "amelia.hahn@gmail.com",
+                0,
+                Collections.emptyList()
+        );
+        this.guestRepository.add(ameliaHahn);
+
+        Guest annaLenaSchlögl = Guest.create(guestRepository.nextIdentity(),
+                new FullName("Anna-Lena", "Schlögl"),
+                Gender.FEMALE,
+                new Address("Krainerweg", "280", "Wolkersdorf", "2077", "Austria"),
+                LocalDate.of(1973, 8, 28),
+                "+43 790 7743432",
+                "anna-lena.schlögl@yahoo.com",
+                0,
+                Collections.emptyList()
+        );
+        this.guestRepository.add(annaLenaSchlögl);
+
+        Guest dennisRitter = Guest.create(guestRepository.nextIdentity(),
+                new FullName("Dennis", "Ritter"),
+                Gender.MALE,
+                new Address("Lilly-Hochreiter-Gasse", "84", "Purbach am Neusiedler See", "1620", "Austria"),
+                LocalDate.of(1978, 12, 2),
+                "+43 845 0558299",
+                "dennis.ritter@tdd.at",
+                0,
+                Collections.emptyList()
+        );
+        this.guestRepository.add(dennisRitter);
+
+        Guest jonathanThaler = Guest.create(guestRepository.nextIdentity(),
+                new FullName("Jonathan", "Thaler"),
+                Gender.MALE,
+                new Address("Hochschulstraße", "1", "Dornbirn", "6850", "Austria"),
+                LocalDate.of(1985, 1, 11),
+                "+43 680 1597620",
+                "jonathan.thaler@tdd.fhv.at",
+                100,
+                Collections.emptyList()
+        );
+        this.guestRepository.add(jonathanThaler);
+
 
 
         /*----- Bookings for Stay-----*/
@@ -732,9 +897,9 @@ public class TestData implements ApplicationRunner {
         b1.addRoomCategory(singleRoom, 1);
         this.bookingRepository.add(b1);
 
-        Stay stay1 = Stay.create(stayRepository.nextIdentity(), b1, Map.of(roomS0, false));
+        Stay stay1 = Stay.create(stayRepository.nextIdentity(), b1, Map.of(roomS110, false));
         b1.deactivate();
-        roomS0.occupy();
+        roomS110.occupy();
         this.stayRepository.add(stay1);
 
         Booking b2 = Booking.create(
@@ -751,9 +916,9 @@ public class TestData implements ApplicationRunner {
         b2.addRoomCategory(singleRoom, 1);
         this.bookingRepository.add(b2);
 
-        Stay stay2 = Stay.create(stayRepository.nextIdentity(), b2, Map.of(roomS1, false));
+        Stay stay2 = Stay.create(stayRepository.nextIdentity(), b2, Map.of(roomS101, false));
         b2.deactivate();
-        roomS1.occupy();
+        roomS101.occupy();
         this.stayRepository.add(stay2);
 
         Booking b3 = Booking.create(
@@ -770,9 +935,9 @@ public class TestData implements ApplicationRunner {
         b3.addRoomCategory(doubleRoom, 1);
         this.bookingRepository.add(b3);
 
-        Stay stay3 = Stay.create(stayRepository.nextIdentity(), b3, Map.of(roomD0, false));
+        Stay stay3 = Stay.create(stayRepository.nextIdentity(), b3, Map.of(roomD106, false));
         b3.deactivate();
-        roomD0.occupy();
+        roomD106.occupy();
         this.stayRepository.add(stay3);
 
         Booking b4 = Booking.create(
@@ -789,10 +954,10 @@ public class TestData implements ApplicationRunner {
         b4.addRoomCategory(singleRoom, 2);
         this.bookingRepository.add(b4);
 
-        Stay stay4 = Stay.create(stayRepository.nextIdentity(), b4, Map.of(roomS2, false, roomS3, false));
+        Stay stay4 = Stay.create(stayRepository.nextIdentity(), b4, Map.of(roomS102, false, roomS103, false));
         b4.deactivate();
-        roomS2.occupy();
-        roomS3.occupy();
+        roomS102.occupy();
+        roomS103.occupy();
         this.stayRepository.add(stay4);
 
         Booking b5 = Booking.create(
@@ -809,10 +974,10 @@ public class TestData implements ApplicationRunner {
         b5.addRoomCategory(doubleRoom, 2);
         this.bookingRepository.add(b5);
 
-        Stay stay5 = Stay.create(stayRepository.nextIdentity(), b5, Map.of(roomD1, false, roomD2, false));
+        Stay stay5 = Stay.create(stayRepository.nextIdentity(), b5, Map.of(roomD107, false, roomD108, false));
         b5.deactivate();
-        roomD1.occupy();
-        roomD2.occupy();
+        roomD107.occupy();
+        roomD108.occupy();
         this.stayRepository.add(stay5);
 
         Booking b6 = Booking.create(
@@ -832,22 +997,22 @@ public class TestData implements ApplicationRunner {
         this.bookingRepository.add(b6);
 
         Stay stay6 = Stay.create(stayRepository.nextIdentity(), b6, Map.of(
-                roomS4, false,
-                roomS5, false,
-                roomS6, false,
-                roomS7, false,
-                roomS8, false,
-                roomD3, false,
-                roomSU0, false
+                roomS104, false,
+                roomS105, false,
+                roomS201, false,
+                roomS202, false,
+                roomS203, false,
+                roomD109, false,
+                roomSU415, false
         ));
         b6.deactivate();
-        roomS4.occupy();
-        roomS5.occupy();
-        roomS6.occupy();
-        roomS7.occupy();
-        roomS8.occupy();
-        roomD3.occupy();
-        roomSU0.occupy();
+        roomS104.occupy();
+        roomS105.occupy();
+        roomS201.occupy();
+        roomS202.occupy();
+        roomS203.occupy();
+        roomD109.occupy();
+        roomSU415.occupy();
         this.stayRepository.add(stay6);
 
         Booking b7 = Booking.create(
@@ -865,22 +1030,22 @@ public class TestData implements ApplicationRunner {
         this.bookingRepository.add(b7);
 
         Stay stay7 = Stay.create(stayRepository.nextIdentity(), b7, Map.of(
-                roomD4, false,
-                roomD5, false,
-                roomD6, false,
-                roomD7, false,
-                roomD8, false,
-                roomD9, false,
-                roomD10, false
+                roomD110, false,
+                roomD111, false,
+                roomD112, false,
+                roomD113, false,
+                roomD114, false,
+                roomD117, false,
+                roomD116, false
         ));
         b7.deactivate();
-        roomD4.occupy();
-        roomD5.occupy();
-        roomD6.occupy();
-        roomD7.occupy();
-        roomD8.occupy();
-        roomD9.occupy();
-        roomD10.occupy();
+        roomD110.occupy();
+        roomD111.occupy();
+        roomD112.occupy();
+        roomD113.occupy();
+        roomD114.occupy();
+        roomD117.occupy();
+        roomD116.occupy();
         this.stayRepository.add(stay7);
 
         /*----- Bookings for Checkin-----*/
@@ -1033,5 +1198,120 @@ public class TestData implements ApplicationRunner {
         b17.addRoomCategory(singleRoom, 1);
         b17.addRoomCategory(doubleRoom, 2);
         this.bookingRepository.add(b17);
+
+        Booking b18 = Booking.create(
+                LocalDate.now(),
+                LocalDate.now().plusDays(10),
+                bookingRepository.nextIdentity(),
+                jonathanThaler,
+                List.of(wlan, fitnessRoom, sauna, swimmingPool, parkingPlace, miniBar),
+                2,
+                0,
+                "",
+                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "006"
+        );
+        b18.addRoomCategory(suite, 1);
+        this.bookingRepository.add(b18);
+
+        Booking b19 = Booking.create(
+                LocalDate.now().plusDays(50),
+                LocalDate.now().plusDays(55),
+                bookingRepository.nextIdentity(),
+                annaLenaSchlögl,
+                List.of(wlan),
+                3,
+                0,
+                "Vegan",
+                LocalDate.now().minusDays(32).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
+        );
+        b19.addRoomCategory(doubleRoom, 2);
+        this.bookingRepository.add(b19);
+
+        Booking b20 = Booking.create(
+                LocalDate.now().plusDays(52),
+                LocalDate.now().plusDays(57),
+                bookingRepository.nextIdentity(),
+                dennisRitter,
+                List.of(parkingPlace),
+                4,
+                0,
+                "",
+                LocalDate.now().minusDays(34).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
+        );
+        b20.addRoomCategory(doubleRoom, 2);
+        this.bookingRepository.add(b20);
+
+        Booking b21 = Booking.create(
+                LocalDate.now().plusDays(55),
+                LocalDate.now().plusDays(60),
+                bookingRepository.nextIdentity(),
+                ameliaHahn,
+                List.of(wlan),
+                3,
+                0,
+                "Vegan",
+                LocalDate.now().minusDays(36).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
+        );
+        b21.addRoomCategory(singleRoom, 1);
+        this.bookingRepository.add(b21);
+
+        Booking b22 = Booking.create(
+                LocalDate.now().plusDays(60),
+                LocalDate.now().plusDays(61),
+                bookingRepository.nextIdentity(),
+                janKoch,
+                List.of(wlan, parkingPlace),
+                1,
+                0,
+                "",
+                LocalDate.now().minusDays(37).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
+        );
+        b22.addRoomCategory(juniorSuite, 1);
+        this.bookingRepository.add(b22);
+
+        Booking b23 = Booking.create(
+                LocalDate.now().plusDays(60),
+                LocalDate.now().plusDays(66),
+                bookingRepository.nextIdentity(),
+                lionelHausberger,
+                List.of(wlan, fitnessRoom),
+                3,
+                0,
+                "",
+                LocalDate.now().minusDays(36).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
+        );
+        b23.addRoomCategory(singleRoom, 1);
+        b23.addRoomCategory(doubleRoom, 1);
+        this.bookingRepository.add(b23);
+
+
+        Booking b24 = Booking.create(
+                LocalDate.now().plusDays(70),
+                LocalDate.now().plusDays(80),
+                bookingRepository.nextIdentity(),
+                teddyBaer,
+                List.of(wlan),
+                2,
+                0,
+                "Vegan",
+                LocalDate.now().minusDays(38).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
+        );
+        b24.addRoomCategory(doubleRoom, 1);
+        this.bookingRepository.add(b24);
+
+
+        Booking b25 = Booking.create(
+                LocalDate.now().plusDays(90),
+                LocalDate.now().plusDays(95),
+                bookingRepository.nextIdentity(),
+                moniTor,
+                List.of(fitnessRoom, sauna),
+                2,
+                0,
+                "",
+                LocalDate.now().minusDays(40).format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "001"
+        );
+        b25.addRoomCategory(juniorSuite, 1);
+        this.bookingRepository.add(b25);
     }
 }
