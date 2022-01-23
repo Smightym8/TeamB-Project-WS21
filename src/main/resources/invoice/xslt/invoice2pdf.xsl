@@ -208,66 +208,68 @@
 					</fo:block>
 
 					<!-- Services and prices -->
-					<fo:block margin-top="8mm">
-						<fo:inline font-size="12pt" font-weight="bold">
-							<xsl:text>Services&#xd;</xsl:text>
-						</fo:inline>
+					<xsl:if test="invoice/services/entry">
+						<fo:block margin-top="8mm">
+							<fo:inline font-size="12pt" font-weight="bold">
+								<xsl:text>Services&#xd;</xsl:text>
+							</fo:inline>
 
-						<fo:block margin-top="1mm">
-							<fo:table font-size="10pt">
-								<fo:table-column column-width="30%"/>
-								<fo:table-column column-width="30%"/>
-								<fo:table-column column-width="30%"/>
-								<fo:table-column column-width="10%"/>
+							<fo:block margin-top="1mm">
+								<fo:table font-size="10pt">
+									<fo:table-column column-width="30%"/>
+									<fo:table-column column-width="30%"/>
+									<fo:table-column column-width="30%"/>
+									<fo:table-column column-width="10%"/>
 
-								<fo:table-header border-width="1pt" border-style="solid">
-									<fo:table-row font-weight="bold"  padding="3pt">
-										<fo:table-cell padding="3pt">
-											<fo:block>Quantity</fo:block>
-										</fo:table-cell>
-										<fo:table-cell padding="3pt">
-											<fo:block>Service</fo:block>
-										</fo:table-cell>
-										<fo:table-cell padding="3pt">
-											<fo:block>Cost per night</fo:block>
-										</fo:table-cell>
-										<fo:table-cell text-align="right" padding="3pt">
-											<fo:block>Total</fo:block>
-										</fo:table-cell>
-									</fo:table-row>
-								</fo:table-header>
-
-								<fo:table-body border-width="1pt" border-style="solid">
-									<xsl:for-each select="invoice/services/entry">
-										<fo:table-row>
+									<fo:table-header border-width="1pt" border-style="solid">
+										<fo:table-row font-weight="bold"  padding="3pt">
 											<fo:table-cell padding="3pt">
-												<fo:block>
-													<xsl:value-of select="count(/invoice/roomNames)"/>
-												</fo:block>
+												<fo:block>Quantity</fo:block>
 											</fo:table-cell>
 											<fo:table-cell padding="3pt">
-												<fo:block>
-													<xsl:value-of select="key" />
-												</fo:block>
+												<fo:block>Service</fo:block>
 											</fo:table-cell>
 											<fo:table-cell padding="3pt">
-												<fo:block>
-													<xsl:text>€ </xsl:text>
-													<xsl:value-of select="value" />
-												</fo:block>
+												<fo:block>Cost per night</fo:block>
 											</fo:table-cell>
 											<fo:table-cell text-align="right" padding="3pt">
-												<fo:block>
-													<xsl:text>€ </xsl:text>
-													<xsl:value-of select="format-number((value * count(/invoice/roomNames) * number(/invoice/amountOfNights)), '#.00')" />
-												</fo:block>
+												<fo:block>Total</fo:block>
 											</fo:table-cell>
 										</fo:table-row>
-									</xsl:for-each>
-								</fo:table-body>
-							</fo:table>
+									</fo:table-header>
+
+									<fo:table-body border-width="1pt" border-style="solid">
+										<xsl:for-each select="invoice/services/entry">
+											<fo:table-row>
+												<fo:table-cell padding="3pt">
+													<fo:block>
+														<xsl:value-of select="count(/invoice/roomNames)"/>
+													</fo:block>
+												</fo:table-cell>
+												<fo:table-cell padding="3pt">
+													<fo:block>
+														<xsl:value-of select="key" />
+													</fo:block>
+												</fo:table-cell>
+												<fo:table-cell padding="3pt">
+													<fo:block>
+														<xsl:text>€ </xsl:text>
+														<xsl:value-of select="value" />
+													</fo:block>
+												</fo:table-cell>
+												<fo:table-cell text-align="right" padding="3pt">
+													<fo:block>
+														<xsl:text>€ </xsl:text>
+														<xsl:value-of select="format-number((value * count(/invoice/roomNames) * number(/invoice/amountOfNights)), '#.00')" />
+													</fo:block>
+												</fo:table-cell>
+											</fo:table-row>
+										</xsl:for-each>
+									</fo:table-body>
+								</fo:table>
+							</fo:block>
 						</fo:block>
-					</fo:block>
+					</xsl:if>
 
 					<!-- Localtax -->
 					<xsl:if test="(invoice/localTaxTotal) > 0">
