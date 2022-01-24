@@ -11,11 +11,9 @@ import java.time.LocalDate;
 public final class GuestForm {
     private String guestId;
 
-    @Pattern(regexp = "[a-zA-Z]+", message = "Please provide a valid firstname")
     @Size(min = 2, max = 30, message = "Firstname has to be between 2 and 30 characters")
     private String firstName;
 
-    @Pattern(regexp = "[a-zA-Z]+", message = "Please provide a valid lastname")
     @Size(min = 2, max = 30, message = "Lastname has to be between 2 and 30 characters")
     private String lastName;
 
@@ -34,22 +32,18 @@ public final class GuestForm {
     @Past(message = "Must be in the past")
     private LocalDate birthDate;
 
-    @Pattern(regexp = "[a-zA-Z- ]+", message = "Please provide a valid street name")
     @Size(min = 2, max = 30, message = "Street name has to be between 2 and 30 characters")
     private String streetName;
 
-    @Pattern(regexp = "^[0-9]+[a-z]?", message = "Please provide a valid street number")
     @Size(min = 1, max = 6, message = "Street number has to be between 1 and 6 characters")
     private String streetNumber;
 
     @Size(min = 2, max = 8, message = "Zip code has to be between 2 and 8 characters")
     private String zipCode;
 
-    @Pattern(regexp = "[a-zA-Z]+", message = "Please provide a valid city")
     @Size(min = 2, max = 30, message = "City has to be between 2 and 30 characters")
     private String city;
 
-    @Pattern(regexp = "[a-zA-Z]+", message = "Please provide a valid country")
     @Size(min = 5, max = 30, message = "Country has to be between 5 and 30 characters")
     private String country;
 
